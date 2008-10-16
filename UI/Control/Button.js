@@ -1,0 +1,91 @@
+/*
+Class: UI.Button
+	Creates button and let you attach events action
+
+Arguments:
+	options
+
+Options: 
+	className - (string) css classname for the given button
+	buttonType - ()
+
+Example:
+	(start code)
+		var button = new UI.Button({
+			onClick		: {},
+			onMouseOver	: {},
+			onDblClick	: {}
+		});
+	(end)
+*/
+
+UI.Button = new Class({
+	Extends				: UI.Control,
+	Implements			: [Events, Options],
+	
+	options				: {
+		component		: 'button',
+		
+		// default options
+		label			: 'Button',
+		submit			: false
+	},
+	
+	initialize: function(options) {
+		this.parent(options);
+	},
+	
+	/* 
+		Method: build
+		
+			Create a div and a hidden input to receive the selected value
+	*/
+	
+	build : function(){
+		//create a new div as button element
+		//console.log(this.options.component, this.skinProperties.components.label.styles);
+		this.parent();
+		if(this.options.label) {
+			this.textLabel = new UI.Label({
+				html : this.options.label,
+				styles : this.skinProperties.components.label.styles
+			}).inject(this.element);
+		}
+	},
+	
+	/* 
+		Method: setState
+		
+			Set the button state
+	*/
+	setState : function(state){
+		if (this.textLabel) {
+			this.textLabel.setStyles(this.skin[state].components.label.styles);
+		}
+		this.parent(state);
+	},
+	
+	/* 
+		Method: addActions
+		
+			Set actions
+	*/
+	setBehavior : function() {
+		this.parent();
+		
+		//we add mouse event
+		this.element.addEvents({
+			mouseenter	: this.setState.bind(this, 'over'),
+			mousedown	: this.setState.bind(this, 'down'),
+			mouseleave	: this.setState.bind(this, 'default'),	
+			mouseup		: function(){
+				if (this.options.submit == 'submit') this.submit();
+				this.setState('over');
+			}.bind(this),
+		});
+	},
+	
+	submit : function() {
+		this.getForm().submit();
+	}
+});
