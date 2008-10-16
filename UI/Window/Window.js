@@ -182,7 +182,7 @@ UI.Window = new Class({
 			className			: this.className + '-view',
 			styles				: {
 				marginLeft: this.skinProperties.borderSize
-			},
+			}
 			//overflow			: (this.options.tabView) ? 'hidden' : 'scrollbar'
 		}).inject(this.element);
 		
@@ -194,7 +194,7 @@ UI.Window = new Class({
 			//onResizeDrag	: function() { this.view.fireEvent('onResize');  },
 			onMinimize 		: function() { this.view.hide(); },
 			onNormalize 	: function() { this.view.show(); },
-			onLoadComplete	:  function() { this.view.updateSize(); },
+			onLoadComplete	: function() { this.view.updateSize(); }
 		});
 	},
 

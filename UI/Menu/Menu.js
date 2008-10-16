@@ -116,7 +116,6 @@ UI.Menu = new Class({
 		var list = (menu) ? menu : this.options.menu;
 		list.each(function(item){
 			if (item.text == 'separator') {
-				console.log(this.skinProperties.components);
 				var menuItem = new UI.Label({
 					elementTag	: this.options.itemTag,
 					html		: '',
@@ -125,41 +124,25 @@ UI.Menu = new Class({
 				menuItem.separator = true;
 			} else {
 				var content = (this.lang.get(item.text)) ? this.lang.get(item.text) : item.text;
+				/*
 				var menuItem = new Element(this.options.itemTag, item.options)
 					.addClass(this.options.className + '-' + item.text)
 					.setStyles(this.skinProperties.components.menuItem.styles);
-				
 				if (item.action) menuItem.addEvent('action', item.action);
-
-				if (this.skinProperties.presentation == 'text') {
-					menuItem.set('html', content);
-				} else {
-					var iconContainer = new Element('div');
-					if (this.skinProperties.presentation != 'icon') menuItem.set('html', content);
-					item.icon = item.icon || {};
-					item.icon.src = item.icon.src || {};
-					
-					if (this.skinProperties.iconPosition == 'top') {
-						iconContainer.setStyles({
-							'padding': this.skinProperties.iconPadding,
-							height: this.skinProperties.iconSize,
-							width: this.skinProperties.iconSize,
-							background: 'url(' + item.icon.src + ') no-repeat center bottom',
-							display: 'block',
-							margin: '0 auto'
-						});
-					} else if (this.skinProperties.iconPosition == 'left') {
-						iconContainer.setStyles({
-							'padding': this.skinProperties.iconPadding,
-							'float': 'left',
-							'clear': 'left',
-							margin: '0 auto'
-						});
-					}
-					iconContainer.inject(menuItem, 'top');
-				}
-				
+				menuItem.set('html', content);
 				menuItem.inject(this.content).disableSelect();
+				*/
+				
+				var menuItem = new UI.Label({
+					elementTag	: this.options.itemTag,
+					html		: content,
+					styles		: this.skinProperties.components.menuItem.styles
+				}).set(item.options);
+				
+				if (item.action) menuItem.element.addEvent('action', item.action);
+				
+				menuItem.inject(this.content);
+				
 			}
 			this.addSubmenuEvents(item, menuItem);
 		},this);
@@ -241,12 +224,12 @@ UI.Menu = new Class({
 			type: 'menuRightArrow',
 			styles : {
 				'padding': 0,
-				'position': 'relative',
-				'float': 'right',
+				'position': 'absolute',
+				right		: 8,
 				display: 'block',
-				margin: '2px -30px 0 0'
+				margin: '4px 0 0 0'
 			}
-		}).inject(menuItem, 'top');
+		}).inject(menuItem.element, 'top');
 		menuItem.addEvents({
 			'mouseenter': function(){
 				menuItem.arrow.setState('over');
@@ -499,6 +482,8 @@ UI.Menu = new Class({
 						position: 'absolute',
 						width: '100%',
 						height: '100%',
+						background	: '#FFF',
+						opacity: 0.000001,
 						top: 0,
 						left: 0,
 						zIndex: this.options.zIndex-1
@@ -518,11 +503,11 @@ UI.Menu = new Class({
 						}
 					}
 				}).inject(document.body);
-				this.removeOverlayEvent = function(){
+				this.removeUnderlayEvent = function(){
 					this.underlay.fireEvent('click');
-					window.removeEvent('resize', this.removeOverlayEvent);
+					window.removeEvent('resize', this.removeUnderlayEvent);
 				}.bind(this);
-				window.addEvent('resize', this.removeOverlayEvent);
+				window.addEvent('resize', this.removeUnderlayEvent);
 			}
 		}
 	},

@@ -112,7 +112,7 @@ UI.Skin.implement({
 							opacity		: [.1, .7],
 							radius		: [4, 4, 7, 7]
 						}
-					},
+					}
 				},
 				over : {
 					layers				: {
@@ -427,7 +427,7 @@ UI.Skin.implement({
 						},
 						main			: {
 							radius		: 3,
-							color		: ['#c3c3c3','#d4d4d4'],
+							color		: ['#c3c3c3','#d4d4d4']
 						},
 						reflect			: {
 							color		: ['#FFF', '#FFF'],
@@ -753,7 +753,7 @@ UI.Skin.implement({
 						shadow			: {
 							size		: 8,
 							offsetX		: 0, 
-							offsetY		: 8, 
+							offsetY		: 8
 						},
 						background		: {
 							opacity		: 0.17
@@ -929,14 +929,18 @@ UI.Skin.implement({
 							styles		: {
 								padding		: '2px 40px 2px 16px',
 								lineHeight	: '1em',
-								whiteSpace	: 'nowrap'
+								whiteSpace	: 'nowrap',
+								display		: 'block'
 							}
 						},
 						separator		: {
 							styles		: {
 								paddingBottom 	: '5px',
+								fontSize		: 1,
 								borderBottom 	: '1px solid #e4e4e4',
-								margin 			: '0 1px 5px'
+								margin 			: '0 1px 5px',
+								display			: 'block',
+								height			: 0
 							}
 						}
 					},
@@ -968,17 +972,10 @@ UI.Skin.implement({
 					},
 					
 					/* others */
-					displayMode			: 'both',
-					selectFxDuration	: 0,
 					selectFontColor		: '#ddd',
 					selectBorderSize	: 1,
-					selectBorderColor	: '#000',
-					
-					iconSize			: 16,
-					iconPadding			: '7px 5px 0 0',
-					iconPosition		: 'left',
-					iconMargin			: '0 auto'
-				},
+					selectBorderColor	: '#000'
+				}
 			},
 			context: {
 				'default': {
@@ -998,7 +995,7 @@ UI.Skin.implement({
 					components			: {
 						menuItem		: {
 							styles		: {
-								padding		: '2px 10px',
+								padding		: '30px 10px 5px',
 								lineHeight	: '1em',
 								whiteSpace	: 'nowrap'
 							}
@@ -1014,7 +1011,7 @@ UI.Skin.implement({
 					padding				: '0 0 0 10px',
 
 					styles				: {
-						padding			: '2px 8px 4px 8px',
+						padding			: '2px 0 4px 0'
 					},
 					
 					
@@ -1103,7 +1100,7 @@ UI.Skin.implement({
 							color		: ['#6b737b','#555e69'],
 							offset		: [1, 0]
 						}
-					},
+					}
 				}
 			},
 			toolbarRollover : {
@@ -1286,7 +1283,7 @@ UI.Skin.implement({
 					reflectOffset		: ['2px', '0px', 'auto'],
 					reflectColor		: ['#F1F1F1', '#FFF'],
 					reflectOpacity		: 1,
-					reflectRadius		: [7, 7, 0, 0],
+					reflectRadius		: [7, 7, 0, 0]
 				}
 			}
 		},

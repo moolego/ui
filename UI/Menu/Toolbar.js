@@ -45,7 +45,7 @@ UI.Toolbar = new Class({
 		zIndex			: 2500,
 		
 		// styles
-		component		: 'toolbar',
+		component		: 'toolbar'
 	},
 	
 	/* 

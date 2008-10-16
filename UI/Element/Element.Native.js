@@ -87,6 +87,27 @@ UI.Element.implement({
 	},
 	
 	/*
+	 * Function: addEvent
+	 * 	implement addEvent from de wrapper
+	 */
+	
+	addEvent: function(event, action) {
+		this.element.addEvent(event, action);
+		return this;	
+	},
+	
+	/*
+	 * Function: addEvents
+	 * 	implement addEvents from de wrapper
+	 */
+	
+	addEvents: function(events) {
+		this.element.addEvents(events);
+		
+		return this;	
+	},
+	
+	/*
 	 * Function: addClass
 	 * 	implement element set method
 	 */
@@ -106,12 +127,21 @@ UI.Element.implement({
 	},
 	
 	/*
-	 * Function: get
-	 * 	implement element get method
+	 * Function: getSize
+	 * 	implement element getSize method
 	 */
 	
 	getSize: function() {
 		return this.element.getSize();	
+	},
+	
+	/*
+	 * Function: getCoordinates
+	 * 	implement element getCoordinates method
+	 */
+	
+	getCoordinates: function(ref) {
+		return this.element.getCoordinates(ref);
 	},
 
 

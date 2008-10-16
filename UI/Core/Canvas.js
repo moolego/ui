@@ -136,6 +136,12 @@ UI.Canvas = new Class({
 	
 	drawShadows : function(){
 		this.drawShadowsCalled = true;
+		if (Browser.Engine.trident) {
+			this.shadowSet = true;
+			this.drawShadowsCalled = false;
+			this.draw();
+			return;
+		} 
 		if (this.shadowsLoaded) {
 			this.drawShadowLayers();
 		} else {

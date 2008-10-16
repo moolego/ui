@@ -28,7 +28,7 @@ UI.Input = new Class({
 		
 		// default options
 		name			: 'ui-input',
-		value			: '',
+		value			: ''
 	},
 	
 	initialize: function(options) {
@@ -64,7 +64,7 @@ UI.Input = new Class({
 		this.parent();
 		this.input.addEvents({
 			blur	: this.setState.bind(this, 'default'),
-			focus	: this.setState.bind(this, 'focus'),
+			focus	: this.setState.bind(this, 'focus')
 		})
 	}
 });

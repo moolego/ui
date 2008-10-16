@@ -101,7 +101,7 @@ UI.Menu.Scroller = new Class({
 		} else if (elementCoordinates.top <= this.margin) {
 			//stick out on top
 			this.content.setStyles({
-				'top' : elementCoordinates.top - this.margin,
+				'top' : elementCoordinates.top - this.margin
 			});
 			this.element.setStyles({
 				'top': this.margin,
