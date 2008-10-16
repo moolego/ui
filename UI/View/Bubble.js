@@ -134,5 +134,5 @@ UI.Bubble = new Class({
 	fade : function(way){
 		this.fx.start('opacity', way);
 		return this;
-	},
+	}
 });

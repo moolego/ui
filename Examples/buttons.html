@@ -4,7 +4,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		
 		<script type="text/javascript" src="mootools/core.js"></script>
-		<script type="text/javascript" src="mootools/more.js"></script>
 		
 		<script type="text/javascript" src="../Utils/Singleton.js"></script>
 		<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
@@ -23,9 +22,6 @@
 		<script type="text/javascript" src="../UI/Control/Label.js"></script>
 		<script type="text/javascript" src="../UI/Control/Button.js"></script>
 
-	
-
-		
 		<script type="text/javascript" src="../UI/Skins/GreyGlass.js"></script>
 		
 		<title>Buttons Demo</title>
@@ -34,6 +30,7 @@
 			window.addEvent('domready', function(){
 				new UI.Button({
 					label	: 'Hello world!',
+					onClick	: function(){alert('Hello world!')},
 					styles	: {
 						margin	: 10
 					}

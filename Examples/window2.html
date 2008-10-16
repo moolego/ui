@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="UTF-8">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="css/reset.css" />
+
+	<title>Floor Desktop</title>
+	
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="mootools/more.js"></script>
+
+	<script type="text/javascript" src="../Utils/Singleton.js"></script>
+	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+
+	<script type="text/javascript" src="../UI/Core/UI.js"></script>
+	<script type="text/javascript" src="../UI/Core/Controller.js"></script>
+	<script type="text/javascript" src="../UI/Core/Canvas.js"></script>
+	<script type="text/javascript" src="../UI/Core/Skin.js"></script>
+
+	<script type="text/javascript" src="../UI/Element/Element.js"></script>
+	<script type="text/javascript" src="../UI/Element/Element.Native.js"></script>
+	<script type="text/javascript" src="../UI/Element/Element.Coordinates.js"></script>
+	<script type="text/javascript" src="../UI/Element/Element.Behavior.js"></script>
+
+	<script type="text/javascript" src="../UI/Control/Control.js"></script>
+	<script type="text/javascript" src="../UI/Control/Label.js"></script>
+	<script type="text/javascript" src="../UI/Control/Input.js"></script>
+	<script type="text/javascript" src="../UI/Control/Button.js"></script>
+	<script type="text/javascript" src="../UI/Control/Textarea.js"></script>
+	<script type="text/javascript" src="../UI/Control/Checkbox.js"></script>
+	<script type="text/javascript" src="../UI/Control/RadiosGroup.js"></script>
+	<script type="text/javascript" src="../UI/Control/Select.js"></script>
+	<script type="text/javascript" src="../UI/Control/Slider.js"></script>
+	<script type="text/javascript" src="../UI/Control/Scrollbar.js"></script>
+
+	<script type="text/javascript" src="../UI/Menu/Menu.js"></script>
+	<script type="text/javascript" src="../UI/Menu/Toolbar.js"></script>
+	<script type="text/javascript" src="../UI/Menu/Context.js"></script>
+	<script type="text/javascript" src="../UI/Menu/Scroller.js"></script>
+
+	<script type="text/javascript" src="../UI/View/View.js"></script>
+	<script type="text/javascript" src="../UI/View/PanelView.js"></script>
+	<script type="text/javascript" src="../UI/View/TabView.js"></script>
+	<script type="text/javascript" src="../UI/View/SplitView.js"></script>
+	<script type="text/javascript" src="../UI/View/Bubble.js"></script>
+
+	<script type="text/javascript" src="../UI/Window/Window.js"></script>
+	<script type="text/javascript" src="../UI/Window/Window.Controller.js"></script>
+	<script type="text/javascript" src="../UI/Window/Panel.js"></script>
+	
+	<script type="text/javascript" src="../UI/Skins/GreyGlass.js"></script>
+	
+	<script type="text/javascript" src="../Calls/Calls.js"></script>
+	<script type="text/javascript" src="../Calls/..Apps.js"></script>
+	<script type="text/javascript" src="../App/App.js"></script>
+	<script type="text/javascript" src="../App/ControlTest.js"></script>
+	<script type="text/javascript" src="../App/Interface.js"></script>
+	<script type="text/javascript" src="../App/Finder.js"></script>
+	<script type="text/javascript" src="../App/FileManager.js"></script>
+	<script type="text/javascript" src="../App/Calc.js"></script>
+	
+	<script type="text/javascript">
+		window.addEvent('domready', function() {
+			var time = $time();
+			
+			/* Elements in page */
+			var form = new Element('form', {
+				id				: 'controltest',
+				method			: 'get',
+				action			: 'http://iframework.floor.ch/Client/Source/admin.html'
+			}).inject(document.body);
+			
+			button = new UI.Button({
+				label : "Launch a new Control test",
+				labelStyles : {
+					fontWeight : 'bold',
+					padding : '10px 20px'
+				},
+				onClick : function(){
+					var time2 = $time();
+					var window = new UI.Window();
+					//console.log('draw this window take : ', $time()-time2);
+				},
+				skinProperties : {
+					'default' : {
+						layers		: {
+							shadow	: {
+								size	: 16
+							}
+						}
+					}
+				},
+				styles		: {
+					margin	: 10
+				}
+			}).inject(form);
+			//console.log('window.html', $time()-time);
+		});
+	</script>
+</head>
+
+<body></body>
+
+</html>

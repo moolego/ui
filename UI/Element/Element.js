@@ -38,7 +38,7 @@ UI.Element = new Class({
 		onResizeComplete	: $empty,
 		onDragStart			: $empty,
 		onDrag				: $empty,
-		onDragComplete		: $empty,
+		onDragComplete		: $empty
 	},
 
 	/* 
@@ -134,8 +134,8 @@ UI.Element = new Class({
 			height			: this.element.y
 		}).inject(this.element);
 		
-		this.addEvent('setCanvasSize', function(){
-			this.canvas.setSize(this.element.x,this.element.y, this.skinProperties);
+		this.addEvent('setCanvasSize', function(state){
+			this.canvas.setSize(this.element.x,this.element.y, this.skin[state]);
 		});
 	},
 	
@@ -156,8 +156,7 @@ UI.Element = new Class({
 	setState : function(state){
 		if (this.skin[state]) {
 			this.state = state;
-			this.setSize();
-			this.canvas.draw(this.skin[state]);
+			this.setSize(false, false, state);
 		}
 	}
 });

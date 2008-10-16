@@ -16,14 +16,14 @@ UI.Element.implement({
 	 * 		Set size of the element and its canvas
 	 */
 	
-	setSize : function(width,height){
+	setSize : function(width,height, state){
 		this.element.x = width || this.options.width || this.skinProperties.width || this.element.getSize().x;
 		this.element.y = height || this.options.height || this.skinProperties.height || this.element.getSize().y;
 
 		if (this.element.x) this.element.setStyle('width', this.element.x);
 		if (this.element.y) this.element.setStyle('height', this.element.y);
 		
-		this.fireEvent('setCanvasSize');
+		this.fireEvent('setCanvasSize', state);
 		return this;
 	},
 	

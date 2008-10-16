@@ -1,0 +1,1284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="UTF-8">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="css/reset.css" />
+
+	<title>Floor Desktop</title>
+	
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="mootools/more.js"></script>
+
+	<script type="text/javascript" src="../Utils/Singleton.js"></script>
+	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+
+	<script type="text/javascript" src="../UI/Core/UI.js"></script>
+	<script type="text/javascript" src="../UI/Core/Controller.js"></script>
+	<script type="text/javascript" src="../UI/Core/Canvas.js"></script>
+	<script type="text/javascript" src="../UI/Core/Skin.js"></script>
+
+	<script type="text/javascript" src="../UI/Element/Element.js"></script>
+	<script type="text/javascript" src="../UI/Element/Element.Native.js"></script>
+	<script type="text/javascript" src="../UI/Element/Element.Coordinates.js"></script>
+	<script type="text/javascript" src="../UI/Element/Element.Behavior.js"></script>
+
+	<script type="text/javascript" src="../UI/Control/Control.js"></script>
+	<script type="text/javascript" src="../UI/Control/Label.js"></script>
+	<script type="text/javascript" src="../UI/Control/Input.js"></script>
+	<script type="text/javascript" src="../UI/Control/Button.js"></script>
+	<script type="text/javascript" src="../UI/Control/Textarea.js"></script>
+	<script type="text/javascript" src="../UI/Control/Checkbox.js"></script>
+	<script type="text/javascript" src="../UI/Control/RadiosGroup.js"></script>
+	<script type="text/javascript" src="../UI/Control/Select.js"></script>
+	<script type="text/javascript" src="../UI/Control/Slider.js"></script>
+	<script type="text/javascript" src="../UI/Control/Scrollbar.js"></script>
+
+	<script type="text/javascript" src="../UI/Menu/Menu.js"></script>
+	<script type="text/javascript" src="../UI/Menu/Toolbar.js"></script>
+	<script type="text/javascript" src="../UI/Menu/Context.js"></script>
+	<script type="text/javascript" src="../UI/Menu/Scroller.js"></script>
+
+	<script type="text/javascript" src="../UI/View/View.js"></script>
+	<script type="text/javascript" src="../UI/View/PanelView.js"></script>
+	<script type="text/javascript" src="../UI/View/TabView.js"></script>
+	<script type="text/javascript" src="../UI/View/SplitView.js"></script>
+	<script type="text/javascript" src="../UI/View/Bubble.js"></script>
+
+	<script type="text/javascript" src="../UI/Window/Window.js"></script>
+	<script type="text/javascript" src="../UI/Window/Window.Controller.js"></script>
+	<script type="text/javascript" src="../UI/Window/Panel.js"></script>
+	
+	<script type="text/javascript" src="../UI/Skins/GreyGlass.js"></script>
+	
+	<script type="text/javascript" src="../Calls/Calls.js"></script>
+	<script type="text/javascript" src="../Calls/..Apps.js"></script>
+	<script type="text/javascript" src="../App/App.js"></script>
+	<script type="text/javascript" src="../App/ControlTest.js"></script>
+	<script type="text/javascript" src="../App/Interface.js"></script>
+	<script type="text/javascript" src="../App/Finder.js"></script>
+	<script type="text/javascript" src="../App/FileManager.js"></script>
+	<script type="text/javascript" src="../App/Calc.js"></script>
+	
+	<script type="text/javascript">
+		window.addEvent('domready', function() {
+			var time = $time();
+			
+			this.toolbar = new UI['Toolbar']({
+				displayMode : 'text',
+				draggable	: false,
+				menu		: [
+					{
+						text	: 'Floor Business',
+						options	: {	'class' : 'ui-dd-floor'	},
+						styles	: {
+							position	: 'relative'
+						},
+						menu : [
+							{
+								text : 'About',
+								action : function() { new App.SysInfo() }
+							},
+							{ 
+								text 		: 'Software version...',
+								action : function() { this.test('about'); alert('click')}.bind(this)
+							},
+							{ text		: 'separator' },
+							{ 
+								text 		: 'Préférences systemes...',
+								action : function() { new App.Settings() }
+							},
+							{ text		: 'separator' },
+							{ text		: 'Applications',
+								menu : [
+									{ 
+										text		: 'Finder',
+										action: function(){
+											this.finder = new App.Finder()
+										}
+									},
+									{ 
+										text		: 'FileManager',
+										action: function(){
+											this.finder = new App.FileManager()
+										}
+									},
+									{ 
+										text		: 'Browser',
+										action: function(){
+											this.browser = new App.Browser()
+										}
+									},
+									{ 
+										text		: 'Image',
+										action		: function(){ 
+											this.image = new App.Image() 
+										}
+									},
+									{ 
+										text		: 'Console',
+										action: function(){
+											this.console = new App.Console()
+										}
+									},
+									{ 
+										text		: 'Calculator',
+										action: function(){
+											this.console = new App.Calc()
+										}
+									},
+									{ 
+										text		: 'Control Test',
+										action: function(){
+											this.console = new App.ControlTest()
+										}
+									}
+								]},
+	
+							{
+								text : 'Elements Récents'
+							},
+							{ text		: 'separator' },
+							{
+								text : 'Fermer la session'
+							}
+						]
+					},
+					{
+						text : 'Nouveau',
+						options : {'class' : 'ui-dd-new'},
+						menu		: [
+							{
+								text : 'Element contenu',
+								action : function() { this.test('about'); alert('click')}.bind(this)
+							},
+							{ 
+								text 		: 'Actualité',
+								action : function() { this.test('about'); alert('click')}.bind(this)
+							},
+							{ text		: 'Evenement' },
+							{ text		: 'Produit'},
+							{ text		: 'separator' },
+							{ text		: 'Alias'},
+							{ text		: 'separator' },
+							{
+								text : 'Catégorie / Page'
+							},
+							{
+								text : 'Album photos'
+							}
+						]
+					},
+					{
+						text : 'Présentation',
+						options : {'class' : 'ui-dd-new'},
+						menu		: [
+							{
+								text : 'Afficher le selector',
+								action : function() { this.disableSelector() }.bind(this)
+							},
+							{ 
+								text 		: 'Afficher les sections',
+								action : function() { this.toggleBorders() }.bind(this)
+							},
+							{ 
+								text		: 'Afficher les menus contextuels',
+								action : function() { this.toggleContext() }.bind(this)
+							}
+						]
+					},
+					{
+						text : 'Window',
+						options : {'class' : 'ui-dd-new'},
+						menu		: [
+							{
+								text : 'About',
+								action : function() { this.test('about'); alert('click')}.bind(this)
+							},
+							{ text 		: 'Minimizer'},
+							{ text		: 'separator' },
+							{ text		: 'Cascade',
+							  action: function(){
+							  	this.windowManager.resetCascade()
+							  }.bind(this)
+							  
+							}
+						]
+					},
+					{
+						text : 'Help',
+						options : {'class' : 'ui-dd-help'},
+						menu : [
+							{ text : 'Welcome' },
+							{ text : 'separator' },
+							{ text : 'Update...' },
+							{ text : 'separator' },
+							{ text : 'Settings...' },
+							{ text : 'Dock...' }
+						]
+					}
+				]						
+			}).inject(document.body,'top');
+			
+			
+			/* Elements in page */
+			var form = new Element('form', {
+				id				: 'controltest',
+				method			: 'get',
+				action			: 'http://iframework.floor.ch/Client/Source/admin.html'
+			}).inject(document.body);
+			
+			var radiosGroup = new UI.RadiosGroup({
+				name			: 'radiotest'
+			});
+			
+			var radio = radiosGroup.newRadio({
+				label	: 'Test 1',
+				value 	: 'test_1',
+				selected: true,
+				styles				: {
+					margin			: 10
+				}
+			}).inject(form);
+			
+			
+			radiosGroup.newRadio({
+				label	: 'Test 2',
+				value : 'test_2',
+				styles				: {
+					margin			: 10
+				}
+			}).inject(form);
+			
+			
+			button = new UI.Button({
+				label : "Launch a new Control test",
+				labelStyles : {
+					fontWeight : 'bold',
+					padding : '10px 20px'
+				},
+				onClick : function(){
+					var time2 = $time();
+					var window = new UI.Window();
+			
+					new UI.Button({
+						width			: 270,
+						label			: 'A new button for button to button',
+						onClick			: function(){
+							new App.ControlTest();
+						},
+						labelStyles		: {
+							padding		: '20px 30px',
+							fontWeight : 'normal'
+						},
+						skinProperties	: {
+							over		: {
+								components : {
+									label	: {
+										styles : {
+											padding		: '20px',
+											fontWeight : 'bold'
+										}
+									}
+								}
+							},
+							down		: {
+								components : {
+									label	: {
+										styles : {
+											padding		: '20px',
+											fontWeight : 'bold'
+										}
+									}
+								}
+							}
+						},
+						styles			: {
+							margin		: 10
+						}
+					}).inject(window.content);
+					
+					new UI.Button({
+						label			: 'Second button',
+						styles			: {
+							margin		: 10
+						}
+					}).inject(window.content);
+					
+					new UI.Button({
+						label			: 'Third button',
+						styles			: {
+							margin		: 10
+						}
+					}).inject(window.content);
+					
+					
+					
+					var cbstyles = {
+						margin		: '0 10px 5px',
+						display		: 'block'
+					};
+					
+					new UI.Checkbox({
+						label			: '1 checkbox',
+						styles			: cbstyles
+					}).inject(window.content);
+					
+					new UI.Checkbox({
+						label			: '2 checkbox',
+						styles			: cbstyles
+					}).inject(window.content);
+					
+					new UI.Checkbox({
+						label			: '3 checkbox',
+						styles			: cbstyles
+					}).inject(window.content);
+					
+					
+					
+					var radiosGroup = new UI.RadiosGroup({
+						name			: 'radios'
+					});
+					
+					var radio = radiosGroup.newRadio({
+						label			: 'Radio 1',
+						selected		: true,
+						styles			: cbstyles
+					}).inject(window.content);
+					
+					var radio = radiosGroup.newRadio({
+						label			: 'Radio 2',
+						styles			: cbstyles
+					}).inject(window.content);
+					
+					var radio = radiosGroup.newRadio({
+						label			: 'Radio 3',
+						styles			: cbstyles
+					}).inject(window.content);
+					
+					var radio = radiosGroup.newRadio({
+						label			: 'Radio 4',
+						styles			: cbstyles
+					}).inject(window.content);
+					
+		
+					
+					new UI.Select({
+						list			: [
+							{text		: 'Please choose'},
+							{text		: 'Core'},
+							{text		: 'Control'},
+							{text		: 'Desktop is a long entry'},
+							{text		: 'Menu'},
+							{text		: 'Form'},
+							{text		: 'Un menu'},
+							{text		: 'Plage'},
+							{text		: 'Venise'}
+						],
+						styles			: {
+							margin		: 10
+						}
+					}).inject(window.content);
+					
+					new UI.Select({
+						list			: [
+							{text		: 'Please choose'},
+							{text		: 'It is long because of this entry in the list'},
+						],
+						styles			: {
+							margin		: 10
+						}
+					}).inject(window.content);
+					
+					
+					
+					new UI.Input({
+						value			: 'An input field',
+						styles			: {
+							margin		: 10
+						}
+					}).inject(window.content);
+					
+					
+					
+					new UI.Textarea({
+						value			: 'A textarea to write long essay. More usefull for that than a UI.Input()',
+						styles			: {
+							margin		: 10
+						}
+					}).inject(window.content);
+					
+					
+					
+					new UI.Slider({
+						width			: 400,
+						height			: 22,
+						styles			: {
+							margin		: 10
+						}
+					}).inject(window.content);
+					console.log('TEST', $time()-time2);
+				},
+				skinProperties : {
+					'default' : {
+						layers		: {
+							shadow	: {
+								size	: 16
+							}
+						}
+					}
+				},
+				styles		: {
+					margin	: 10
+				}
+			}).inject(form);
+			
+			
+			this.slider = new UI.Slider({
+				width				: 200,
+				height				: 22,
+				styles				: {
+					margin			: 20
+				}
+			}).inject(form);
+			
+			ip = new UI.Input({
+				name : 'text-input-canvas',
+				value : 'A text input with canvas, a very long text',
+				id : 'test',
+				styles : {
+					margin	: 10
+				}
+			}).inject(form);
+			/*
+			this.textarea = new UI.Textarea({
+				name : 'textarea-input-canvas',
+				value : 'Please write your comment here',
+				onFocus : function(){
+					this.input.value = ''
+					this.tipArea = new UI.Bubble({
+						target : this,
+						skinProperties : {
+							'default' : {
+								backgroundColor : ['#A00','#000']
+							}
+						},
+						label : "Your comment here!"
+					});
+				},
+				onBlur : function(){
+					this.tipArea.element.destroy();
+					delete this.tipArea;
+				},
+				styles : {
+					margin	: 10
+				}
+			}).inject(form);
+			
+			
+			this.tip = new UI.Bubble({
+				target : this.slider,
+				skinProperties : {
+					'default' : {
+						layers			: {
+							background	: {
+								color	: ['#A00','#000']
+							}
+						}
+					}
+				},
+				label : "Under Construction!"
+			});
+
+			
+			
+			
+			this.tip = new UI.Bubble({
+				target : button,
+				skinProperties : {
+					'default' : {
+						backgroundColor : ['#A00','#000']
+					}
+				},
+				label : "<p>Babybel c'est de la balle</p><p>Mais que fait la police?</p>"
+			});
+			*/
+			
+			this.googlemap = new UI.Button({
+				label				: 'Window',
+				labelStyles			: {
+					fontSize		: '26px',
+					fontWeight		: 'bold',
+					opacity			: '.7',
+					padding			: '18px 26px',
+					color			: '#fff'
+				},
+				onClick: function(){
+					this.tip.fade(0);
+				}.bind(this),
+				skinProperties				: {
+					'default'				: {
+						layers				: {
+							reorder			: ['emboss','background','front','reflect'],
+							
+							emboss			: {
+								offset		: '0px',
+								color		: '#000',
+								opacity		: .17,
+								radius		: 7
+							},
+							background		: {
+								offset		: 3,
+								color		: ['#2a5179','#2a5179'],
+								opacity		: 1,
+								radius		: 5
+							},
+							front			: {
+								offset		: 1,
+								color		: ['#6094cf','#1d5591'],
+							 	opacity		: 1,
+								radius		: 4
+							},
+							reflect			: {
+								offset		: ['1px', '1px', '35%'],
+								color		: ['#FFF', '#FFF'],
+								opacity		: [.9, .1],
+								radius		: [3, 3, 3, 3]
+							}
+						}
+					},
+					over					: {
+						components			: {
+							label			: {
+								styles		: {
+									opacity : .8
+								}
+							}
+						}
+					},
+					down					: {
+						components			: {
+							label			: {
+								styles		: {
+									color 	: '#ccc'
+								}
+							}
+						}
+					}
+				},
+				styles		: {
+					margin	: 10
+				}
+			}).inject(form);
+			
+			
+			this.youtube = new UI.Button({
+				label				: 'Youtube',
+				labelStyles			: {
+					fontSize		: '42px',
+					fontWeight		: 'bold',
+					padding			: '8px 16px',
+					color			: '#fff'
+				},
+				onClick: function(){
+					new UI.Window({
+						viewOverflow		: 'hidden'
+					}).setContent('iframe','http://www.youtube.com');
+				}.bind(this),
+				skinProperties				: {
+					'default'				: {
+						layers				: {
+							reorder			: ['background','front','reflect'],
+							
+							background		: {
+								offset		: 0,
+								color		: ['#fe3333','#fe3333'],
+								opacity		: 1,
+								radius		: 10
+							},
+							front			: {
+								position	: 'absolute',
+								offset		: ['60%', '0px', '0px'],
+								color		: ['#fe3333','#c32222'],
+							 	opacity		: 1,
+								radius		: [0,0,8,8]
+							},
+							reflect			: {
+								position		: 'absolute',
+								offset		: ['2px', '2px', '65%'],
+								color		: ['#FFF', '#FFF'],
+								opacity		: [.7, .1],
+								radius		: [8,8,0,0]
+							}
+						}
+					},
+					over					: {
+						components			: {
+							label			: {
+								styles		: {
+									opacity : .8
+								}
+							}
+						}
+					},
+					down					: {
+						components			: {
+							label			: {
+								styles		: {
+									color 	: '#ccc'
+								}
+							}
+						}
+					}
+				},
+				styles		: {
+					margin	: 10
+				}
+			}).inject(form);
+			
+			
+			
+			this.daselect = new UI.Select({
+				name			: 'testselect',
+				width			: 400,
+				styles			: {
+					margin		: 10
+				},
+				list			: [
+					{text		: 'Please choose'},
+					{text		: 'Core'},
+					{text		: 'Control'},
+					{text		: 'Desktop is a long entry'},
+					{text		: 'Menu'},
+					{text		: 'Form'},
+					{text		: 'Un menu'},
+					{text		: 'Plage'},
+					{text		: 'Venise'}
+				],
+				onMouseDown				:  function(){ this.selecttup.hide(); }.bind(this),
+				onChange				:  function(){ this.selecttup.show(); }.bind(this)
+			}).inject(form);
+			
+			
+			this.selecttup = new UI.Bubble({
+				target 			: this.daselect,
+				targetEvent		: 'onMouseOver',
+				type			: 'bottom',
+				
+				skinProperties : {
+					'default' : {
+						layers	: {
+							reorder	: ['background','arrow'],
+							
+							background	: {
+								color	: ['#000','#000']
+							}
+						}
+					}
+				},
+				label : "il faut préparer un package<br /> googlemap tips replacement!<br/>"
+			});
+			
+			/*
+			var counter = 1;
+			
+			this.counter = new UI.Button({
+				label				: 'Bubble counter',
+				labelStyles			: {
+					fontSize		: '20px',
+					fontWeight		: 'bold',
+					opacity			: '1',
+					color			: '#fff',
+					padding			: '10px 26px'
+				},
+				location			: 'center',
+				submit				: true,
+				draggable			: true,
+				onClick				: function() { 
+					
+					if (this.bubble) this.bubble.destroy();
+
+					this.bubble = new UI.Bubble({
+						target 						: this,
+						skinProperties 				: {
+							'default' 				: {
+								layers				: {
+									background		: {
+										offset		: [0,0,4],
+										color 		: ['#33cc33','#000'],
+										opacity		: 1
+									},
+									arrow			: {
+										size		: [9,4],
+										offset		: ['auto', 9,0]
+									}
+								}
+							}
+						},
+						label 						: counter++,
+						labelStyles					: {
+							fontSize		: '74px',
+							fontWeight		: 'bold',
+							padding			: '4px 10px 10px'
+						}
+					});
+				},
+				skinProperties				: {
+					'default'				: {
+						layers				: {
+							reorder			: ['emboss','underlay','front','reflect'],
+							
+							emboss			: {
+								offset		: 0,
+								color		: '#4b5461',
+								opacity		: 1,
+								radius		: 12
+							},
+							underlay		: {
+								offset		: [3,3,2,3],
+								color		: ['#eeb7bf','#262c32']
+							},
+							front			: {
+								offset		: [1,0],
+								color		: ['#c4020e','#f81e0f'],
+							 	opacity		: 1,
+								radius		: [9,9,8,8]
+							},
+							reflect			: {
+								offset		: ['0px', '0px', '50%'],
+								color		: ['#FFF', '#FFF'],
+								opacity		: [.5, .2],
+								radius		: [8, 8, 0, 0]
+							}
+						}
+					},
+					over					: {
+						components			: {
+							label			: {
+								styles		: { opacity	: .8 }
+							}
+						},
+						layers				: {
+							emboss			: {
+								color		: '#00CC00'
+							}
+						}
+					},
+					down					: {
+						components			: {
+							label			: {
+								styles		: { color	: '#ccc' }
+							}
+						}
+					}
+				},
+				styles						: {
+					margin					: 5
+				}
+			}).inject(form);
+			*/
+			
+			
+			this.cancel = new UI.Button({
+				label				: 'Cancel',
+				labelStyles			: {
+					fontSize		: '20px',
+					fontWeight		: 'bold',
+					fontOpacity		: '1',
+					color			: '#fff',
+					padding			: '10px 26px'
+				},
+				submit				: true,
+				skinProperties				: {
+					'default'				: {
+						layers				: {
+							reorder			: ['emboss','underlay','front','reflect'],
+							
+							emboss			: {
+								offset		: 0,
+								color		: '#4b5461',
+								opacity		: 1,
+								radius		: 12
+							},
+							underlay		: {
+								offset		: [3,3,2,3],
+								color		: ['#6b6e74','#262c32']
+							},
+							front			: {
+								offset		: [1,0],
+								color		: ['#0f1621','#282d37'],
+							 	opacity		: 1,
+								radius		: 8
+							},
+							reflect			: {
+								offset		: ['0px', '0px', '50%'],
+								color		: ['#FFF', '#FFF'],
+								opacity		: [.5, .3],
+								radius		: [8, 8, 0, 0]
+							}
+						}
+					},
+					over					: {
+						components			: {
+							label			: {
+								styles		: { opacity	: .8 }
+							}
+						},
+						layers				: {
+							emboss			: {
+								color		: '#00CC00'
+							}
+						}
+					},
+					down					: {
+						components			: {
+							label			: {
+								styles		: { color	: '#ccc' }
+							}
+						}
+					}
+				},
+				styles						: {
+					margin					: 5
+				}
+			}).inject(form);
+			
+			
+			new UI.Button({
+				label						: '18:07',
+				labelStyles					: {
+					fontSize				: '46px',
+					fontWeight				: 'bold',
+					opacity					: '.7',
+					padding					: '12px 26px',
+					color					: '#fff'
+				},
+				draggable					: true,
+				skinProperties				: {
+					'default'				: {
+						layers				: {
+							reorder			: ['emboss','front','reflect','reflect2'],
+							
+							emboss			: {
+								offset		: 0,
+								color		: ['#000','#fff'],
+								opacity		: .3,
+								radius		: 9
+							},
+							front			: {
+								offset		: 2,
+								color		: ['#b11a23','#000'],
+							 	opacity		: 1,
+								radius		: 7
+							},
+							reflect			: {
+								offset		: ['1px', '1px', '60%'],
+								color		: ['#FFF', '#FFF'],
+								opacity		: [.6, .1],
+								radius		: [5, 5, 9, 9]
+							},
+							reflect2		: {
+								offset		: ['1px', '1px', '2px'],
+								color		: ['#000', '#000'],
+								opacity		: [.1,0],
+								radius		: [7, 7, 9, 9]
+							}
+						}
+					},
+					over					: {
+						components			: {
+							label			: {
+								styles		: { opacity	: .8 }
+							}
+						},
+						layers				: {
+							emboss			: { color : '#00CC00' }
+						}
+					},
+					down					: {
+						components			: {
+							label			: {
+								styles		: { color : '#ccc' }
+							}
+						}
+					}
+				},
+				styles						: {
+					margin					: 5
+				}
+			}).inject(form);
+			
+			
+			this.digitalclock = new UI.Button({
+				label				: '18:07',
+				labelStyles					: {
+					fontSize			: '46px',
+					fontWeight			: 'bold',
+					opacity				: '.7',
+					padding				: '12px 26px',
+					color				: '#fff'
+				},
+				draggable				: true,
+				skinProperties				: {
+					'default'				: {
+						layers				: {
+							reorder			: ['emboss','front','reflect','reflect2'],
+							
+							emboss			: {
+								offset		: 0,
+								color		: ['#000','#fff'],
+								opacity		: .3,
+								radius		: 9
+							},
+							front			: {
+								offset		: 2,
+								color		: ['#1624a7','#000'],
+							 	opacity		: 1,
+								radius		: 6
+							},
+							reflect			: {
+								offset		: ['1px', '1px', '60%'],
+								color		: ['#FFF', '#FFF'],
+								opacity		: [.6, .2],
+								radius		: [5, 5, 9, 9]
+							},
+							reflect2		: {
+								offset		: ['1px', '1px', '2px'],
+								color		: ['#000', '#000'],
+								opacity		: [.1,0],
+								radius		: [7, 7, 9, 9]
+							}
+						}
+					},
+					over					: {
+						components			: {
+							label			: {
+								styles		: { opacity	: .8 }
+							}
+						},
+						layers				: {
+							emboss			: { color : '#00CC00' }
+						}
+					},
+					down					: {
+						components			: {
+							label			: {
+								styles		: { color : '#ccc' }
+							}
+						}
+					}
+				},
+				styles						: {
+					margin					: 5
+				}
+			}).inject(form);
+			
+			
+			this.hardest = new UI.Button({
+				label				: 'Hardest Button to Button',
+				labelStyles			: {
+					fontSize			: '16px',
+					fontWeight			: 'bold',
+					opacity				: '.7',
+					padding				: '18px 26px',
+					color				: '#fff'
+				},
+				submit				: true,
+				onClick				: function() {
+					new UI.Window({
+						title		: 'Hardest Button to Button',
+						controls	: ['close'],
+						resizable	: false,
+						width		: 427,
+						height		: 388
+					}).setContent('content','<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>');
+				},
+				skinProperties				: {
+					'default'				: {
+						layers				: {
+							reorder			: ['emboss','front','reflect'],
+							
+							emboss			: {
+								offset		: 0,
+								color		: '#000',
+								opacity		: .17,
+								radius		: 9
+							},
+							front			: {
+								offset		: 3,
+								color		: ['#cc0033','#1d5591'],
+							 	opacity		: 1,
+								radius		: 7
+							},
+							reflect			: {
+								offset		: ['2px', '2px', '65%'],
+								color		: ['#FFF', '#FFF'],
+								opacity		: [.8, .0],
+								radius		: [5, 5, 14, 14]
+							}
+						}
+					},
+					over					: {
+						layers				: {
+							emboss			: {
+								color		: '#00CC00'
+							}
+						}
+					},
+					down					: {
+						components			: {
+							label			: {
+								styles		: { color : '#ccc' }
+							}
+						}
+					}
+				},
+				styles						: {
+					margin					: 5
+				}
+			}).inject(form);
+
+			
+			/*
+			new UI.Bubble({
+				target 						: this.hardest,
+				label 						: 'réalisation: Michel Gondry',
+				labelStyles					: {
+					padding					: '10px 10px 16px'
+				},
+				skinProperties 				: {
+					'default' 				: {
+						layers				: {
+							background		: {
+								offset		: [0,0,4],
+								color 		: ['#33cc33','#000']
+							},
+							arrow			: {
+								size		: [9,4],
+								offset		: ['auto', 9,0]
+							}
+						}
+					}
+				}
+			});
+			
+			
+			
+			submit = new UI.Button({
+				label				: 'Cancel NOW',
+				labelStyles			: {
+					fontSize			: '2em',
+					fontWeight			: 'bold',
+					opacity				: '8',
+					padding				: '18px 26px',
+					color				: '#fff'
+				},
+				submit				: true,
+				skinProperties				: {
+					'default'				: {
+						layers				: {
+							reorder			: ['emboss','front','reflect', 'dark'],
+							
+							emboss			: {
+								offset		: 0,
+								color		: '#cc0033',
+								opacity		: .17,
+								radius		: 9
+							},
+							front			: {
+								offset		: 3,
+								color		: ['#cc0033','#cc0033'],
+							 	opacity		: 1,
+								radius		: 7
+							},
+							reflect			: {
+								offset		: ['1px', '1px', '65%'],
+								color		: ['#FFF', '#FFF'],
+								opacity		: [.8, .0],
+								radius		: [5, 5, 14, 14]
+							},
+							dark			: {
+								size		: ['auto','20px'],						
+								offset		: ['39px', '0px', '0px'],
+								color		: ['#fff', '#fff'],
+								opacity		: [0, .5],
+								radius		: [14, 14, 5, 5]
+							}
+						}
+					},
+					over					: {
+						components			: {
+							label			: {
+								styles		: { opacity : .5 }
+							}
+						},
+						layers				: {
+							emboss			: { color : '#00AA00' }
+						}
+					},
+					down					: {
+						components			: {
+							label			: {
+								styles		: {
+									opacity : .5,
+									color	: '#000'
+								}
+							}
+						},
+						layers				: {
+							emboss			: { color : '#00AA00' }
+						}
+					}
+				},
+				styles						: {
+					margin					: 5
+				}
+			}).inject(form);
+			
+			
+			this.checkbox = new UI.Checkbox({
+				label		: 'check or not?',
+				styles		: {
+					margin	: 10
+				}
+			}).inject(form);
+					
+			
+			
+			this.checkbox = new UI.Checkbox({
+				type						: 'touch',
+				styles				: {
+					margin			: '20px'
+				},
+				skinProperties 				: {
+				
+					'default'				: {
+					
+						width				: 94,
+						height				: 27,
+						
+						layers				: {
+							reorder			: ['border','front','fakeShadow','on','on1','reflect','checkShadow','checkShadow2','checkBg','check','checkFront'],
+							
+							border			: {
+								offset		: ['0px', '0px', '0px','1px'],
+								color			: ['#093889','#5289d7'],
+								opacity		: 1,
+								radius		: 4
+							},
+							front			: {
+								position	: 'absolute',
+								offset		: 1,
+								color		: ['#3672dc','#4085ec'],
+							 	opacity		: 1,
+								radius		: [4,4,4,4]
+							},
+							fakeShadow		: {
+								position	: 'absolute',
+								offset		: ['1px', '1px', '23px'],
+								color		: ['#000','#000'],
+							 	opacity		: [.2,0],
+								radius		: [5,5,0,0]
+							},
+							on				: {
+								position	: 'absolute',
+								shape		: 'circle',
+								offset		: ['14px', 'auto', '1px','67px'],
+								color		: '#FFF',
+								opacity		: 1,
+								radius		: 9
+							},
+							on1				: {
+								position	: 'absolute',
+								shape		: 'circle',
+								offset		: ['14px', 'auto', '1px','67px'],
+								color		: '#407ee3',
+								opacity		: 1,
+								radius		: 6.5
+							},
+							reflect			: {
+								position	: 'absolute',
+								offset		: ['50%', '1px', '1px'],
+								color		: ['#FFF', '#FFF'],
+								opacity		: [.05, .3],
+								radius		: [4,4,4,4]
+							},
+							checkShadow		: {
+								position	: 'absolute',
+								offset		: ['0px', '52px', '0px','0px'],
+								color		: ['#000', '#000'],
+								opacity		: 0.1,
+								radius		: [5,5,5,5]
+							},
+							checkShadow2	: {
+								position	: 'absolute',
+								offset		: ['0px', '53px', '0px','0px'],
+								color		: ['#000', '#000'],
+								opacity		: 0.1,
+								radius		: [5,5,5,5]
+							},
+							checkBg			: {
+								position	: 'absolute',
+								offset		: ['0px', '54px', '0px','0px'],
+								color		: ['#919191', '#979797'],
+								opacity		: 1,
+								radius		: [5,5,5,5]
+							},
+							check			: {
+								position	: 'absolute',
+								offset		: ['1px', '54px', '1px','1px'],
+								color		: ['#FFF', '#FFF'],
+								opacity		: 1,
+								radius		: [4,4,4,4]
+							},
+							checkFront		: {
+								position	: 'absolute',
+								offset		: ['2px', '54px', '1px','1px'],
+								color		: ['#000', '#000'],
+								opacity		: [.18,.02],
+								radius		: [4,4,4,4]
+							}
+						}
+					},
+					'checked' : {
+						layers				: {
+							reorder			: ['border','front','fakeShadow','off','reflect','checkShadow','checkShadow2','checkBg','check','checkFront'],
+							
+							border			: {
+								offset		: ['0px', '1px', '0px','0px']
+							},
+							off				: {
+								position	: 'absolute',  
+								shape		: 'roundedRect',
+								offset		: ['5px', '65px', '5px','26px'],
+								color		: '#FFF',
+								opacity		: 1,
+								radius		: 2
+							},
+							checkShadow		: {
+								offset		: ['0px', '0px', '0px','52px']
+							},
+							checkShadow2	: {
+								offset		: ['0px', '0px', '0px','53px']
+							},
+							checkBg			: {
+								offset		: ['0px', '0px', '0px','54px']
+							},
+							check			: {
+								offset		: ['1px', '1px', '1px','54px']
+							},
+							checkFront		: {
+								offset		: ['2px', '1px', '1px','54px']
+							}
+						}
+					}
+				}
+			}).inject(form);
+			//console.log('window.html', $time()-time);
+			*/
+		});
+	</script>
+</head>
+
+<body></body>
+
+</html>

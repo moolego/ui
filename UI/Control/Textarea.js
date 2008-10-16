@@ -28,7 +28,7 @@ UI.Textarea = new Class({
 		
 		// default options
 		name			: 'ui-input',
-		value			: '',
+		value			: ''
 	},
 	
 	initialize: function(options) {
@@ -52,8 +52,7 @@ UI.Textarea = new Class({
 				width : this.skinProperties.width - this.input.getStyle('paddingLeft').toInt() - this.input.getStyle('paddingRight').toInt(),
 				height : this.skinProperties.height - this.input.getStyle('paddingTop').toInt() - this.input.getStyle('paddingBottom').toInt(),
 				overflow : 'hidden'
-			},
-			
+			}
 		});
 	},
 	

@@ -81,7 +81,7 @@ UI.Button = new Class({
 			mouseup		: function(){
 				if (this.options.submit == 'submit') this.submit();
 				this.setState('over');
-			}.bind(this),
+			}.bind(this)
 		});
 	},
 	

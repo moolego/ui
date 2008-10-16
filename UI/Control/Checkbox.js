@@ -33,7 +33,7 @@ UI.Checkbox = new Class({
 		checked			: false,
 		
 		// styles
-		component		: 'checkbox',
+		component		: 'checkbox'
 	},
 	
 	initialize: function(options) {

@@ -37,7 +37,7 @@ UI.Control = new Class({
 	 * 		setSize of Element
 	 */
 	
-	setSize : function(width,height){
+	setSize : function(width,height, state){
 		if (this.textLabel) {
 			var twidth = width || this.options.width || this.skinProperties.width || this.textLabel.getSize().x;
 			var theight = height || this.options.height || this.skinProperties.height || this.textLabel.getSize().y;
@@ -46,7 +46,7 @@ UI.Control = new Class({
 			var theight = height || this.options.height || this.skinProperties.height || this.input.getSize().y;
 		}
 		
-		this.parent(twidth, theight);
+		this.parent(twidth, theight, state);
 	},
 	
 	/* 
@@ -61,7 +61,7 @@ UI.Control = new Class({
 
 		this.input = new Element(tag, {
 			type 		: type,
-			name 		: this.options.name,
+			name 		: this.options.name
 		}).inject(this.control);
 		switch (tag) {
 			case 'input' :
@@ -98,7 +98,7 @@ UI.Control = new Class({
 		if (!this.input) return;
 		this.input.addEvents({
 			blur	: this.fireEvent.bind(this, 'blur'),
-			focus	: this.fireEvent.bind(this, 'focus'),
+			focus	: this.fireEvent.bind(this, 'focus')
 		});
 	},
 

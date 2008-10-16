@@ -40,7 +40,7 @@ UI.Slider = new Class({
 		shadow			: false,
 		
 		// implemented events
-		onChange		: $empty,
+		onChange		: $empty
 	},
 	
 	initialize: function(options) {
