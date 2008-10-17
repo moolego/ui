@@ -124,15 +124,6 @@ UI.Menu = new Class({
 				menuItem.separator = true;
 			} else {
 				var content = (this.lang.get(item.text)) ? this.lang.get(item.text) : item.text;
-				/*
-				var menuItem = new Element(this.options.itemTag, item.options)
-					.addClass(this.options.className + '-' + item.text)
-					.setStyles(this.skinProperties.components.menuItem.styles);
-				if (item.action) menuItem.addEvent('action', item.action);
-				menuItem.set('html', content);
-				menuItem.inject(this.content).disableSelect();
-				*/
-				
 				var menuItem = new UI.Label({
 					elementTag	: this.options.itemTag,
 					html		: content,
@@ -142,7 +133,6 @@ UI.Menu = new Class({
 				if (item.action) menuItem.element.addEvent('action', item.action);
 				
 				menuItem.inject(this.content);
-				
 			}
 			this.addSubmenuEvents(item, menuItem);
 		},this);
@@ -230,7 +220,7 @@ UI.Menu = new Class({
 				margin: '4px 0 0 0'
 			}
 		}).inject(menuItem.element, 'top');
-		menuItem.addEvents({
+		menuItem.element.addEvents({
 			'mouseenter': function(){
 				menuItem.arrow.setState('over');
 			},
@@ -253,14 +243,12 @@ UI.Menu = new Class({
 				duration	: 100,
 				onComplete	: function(){
 					if (this.selected) this.selected.selected = false;
-					this.selected = menuItem;
-					menuItem.selected = true;
+					this.selected = menuItem.element;
+					menuItem.element.selected = true;
 					this.underlay.fireEvent('click');
-					menuItem.fireEvent('action');
+					menuItem.element.fireEvent('action');
 				}.bind(this)
 			}).start('opacity', 0, 1);
-			
-			
 		}
 	},
 	
@@ -291,7 +279,7 @@ UI.Menu = new Class({
 		if (!this.rollover) this.setRollover();
 		
 		if (this.activeItem) {
-			this.activeItem.fireEvent('defaultArrow');
+			this.activeItem.element.fireEvent('defaultArrow');
 			this.activeItem.setStyles({
 				color : this.skinProperties.fontColor
 			});
@@ -337,6 +325,7 @@ UI.Menu = new Class({
 	
 	removeSubmenu : function(){
 		if(this.activeItem && this.activeItem.submenu) {
+			this.activeItem.element.fireEvent('defaultArrow');
 			this.activeItem.submenu.hide();
 		}
 	},
@@ -504,7 +493,7 @@ UI.Menu = new Class({
 					}
 				}).inject(document.body);
 				this.removeUnderlayEvent = function(){
-					this.underlay.fireEvent('click');
+					if (this.underlay) this.underlay.fireEvent('click');
 					window.removeEvent('resize', this.removeUnderlayEvent);
 				}.bind(this);
 				window.addEvent('resize', this.removeUnderlayEvent);
@@ -546,6 +535,8 @@ UI.Menu = new Class({
 			this.options.target ? this.setPosition(this.options.target) : this.setPosition(element);
 			this.setStyle('visibility', 'visible');
 			this.addUnderlay();
+		} else if (!Browser.Engine.trident) {
+			this.setStyle('display', 'none');
 		}
 		
 		return this;

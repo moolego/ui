@@ -113,7 +113,7 @@ UI.Window = new Class({
 		
 		// call parent constructor
 		this.parent(options);
-		this.focus();
+		//this.focus();
 	},
 
 	
@@ -137,7 +137,6 @@ UI.Window = new Class({
 		
 		this.inject(this.options.container || document.body);
 	},
-
 	
 
 	/* 
@@ -438,9 +437,7 @@ UI.Window = new Class({
 				styles		: {
 					margin : this.skinProperties.components.controls.padding
 				},
-				onClick		: function() { 
-					this.control(action);
-				}.bind(this)
+				onClick		: this.control.bind(this, action)
 			}).inject(this.controls);	
 		},this);
 		
@@ -452,7 +449,6 @@ UI.Window = new Class({
 				this.controls.show();
 			}
 		});
-		
 	},
 
 
@@ -525,8 +521,6 @@ UI.Window = new Class({
 				width	: element.x - borderOffset
 			});
 		}
-
-		this.fireEvent('setCanvasSize');
 		this.view.updateSize();
 	},
 
@@ -556,12 +550,7 @@ UI.Window = new Class({
 
 		this.lastState = this.state;
 		this.state = 'maximized';
-
-		this.coordinates = this.element.getCoordinates();
-		this.element.setStyles({
-			top		: 53,
-			left	: 0
-		});
+				
 		this.setSize(window.getWidth(),window.getHeight());
 		this.fireEvent('onMaximize');
 	},
@@ -641,7 +630,9 @@ UI.Window = new Class({
 	
 	close : function() {
 		this.hide();
+		
 		this.controller.destroy(this);
+		
 		this.fireEvent('onClose');
 	}
 });

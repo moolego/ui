@@ -46,7 +46,7 @@ UI.Textarea = new Class({
 		this.parent();
 		
 		//create input
-		this.setInput('', 'textarea');
+		this.setInput(false, 'textarea');
 		this.input.set({
 			styles : {
 				width : this.skinProperties.width - this.input.getStyle('paddingLeft').toInt() - this.input.getStyle('paddingRight').toInt(),
@@ -63,17 +63,14 @@ UI.Textarea = new Class({
 	*/
 	setState : function(state){
 		this.parent(state);
-		this.input.setStyles(this.skin[state].components.input.styles);
+		//this.input.setStyles(this.skin[state].components.input.styles);
 	},
 	
 	setBehavior : function() {
 		this.parent();
 		this.input.addEvents({
 			blur	: this.setState.bind(this, 'default'),
-			focus	: this.setState.bind(this, 'focus'),
-			resize	: function(){
-				console.log('resize');
-			}
+			focus	: this.setState.bind(this, 'focus')
 		})
 	}
 });

@@ -59,10 +59,17 @@ UI.Control = new Class({
 		if (!$defined(tag)) tag	= 'input';
 		if (!$defined(type)) type = 'hidden';
 
-		this.input = new Element(tag, {
-			type 		: type,
-			name 		: this.options.name
-		}).inject(this.control);
+		if (type) {
+			this.input = new Element(tag, {
+				type		: type,
+				name 		: this.options.name
+			}).inject(this.control);
+		} else {
+			this.input = new Element(tag, {
+				name 		: this.options.name
+			}).inject(this.control);
+		}
+		
 		switch (tag) {
 			case 'input' :
 				this.input.set('value', this.options.value);

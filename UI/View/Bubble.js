@@ -51,7 +51,6 @@ UI.Bubble = new Class({
 	build : function(){
 		this.parent();
 		this.control = this.element;
-		
 		//we create a span for text
 		if(this.options.label) {
 			this.textLabel = new UI.Label({
@@ -82,14 +81,7 @@ UI.Bubble = new Class({
 	
 	setLocation : function(){
 		var tipCoord = this.element.getCoordinates();
-		switch ($type(this.options.target)) {
-			case 'element' :
-				var coord = this.options.target.getCoordinates();
-				break;
-			case 'object' :
-				var coord = this.options.target.element.getCoordinates();
-				break;	
-		}
+		var coord = this.options.target.getCoordinates();
 		
 		var left = 0;
 		var top = 0;

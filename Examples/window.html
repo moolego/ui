@@ -60,7 +60,7 @@
 	<script type="text/javascript" src="../App/Calc.js"></script>
 	
 	<script type="text/javascript">
-		window.addEvent('domready', function() {
+		window.addEvent('load', function() {
 			var time = $time();
 			
 			this.toolbar = new UI['Toolbar']({
@@ -382,7 +382,7 @@
 					new UI.Select({
 						list			: [
 							{text		: 'Please choose'},
-							{text		: 'It is long because of this entry in the list'},
+							{text		: 'It is long because of this entry in the list'}
 						],
 						styles			: {
 							margin		: 10
@@ -416,7 +416,7 @@
 							margin		: 10
 						}
 					}).inject(window.content);
-					console.log('TEST', $time()-time2);
+					//console.log('TEST', $time()-time2);
 				},
 				skinProperties : {
 					'default' : {
@@ -441,22 +441,14 @@
 				}
 			}).inject(form);
 			
-			ip = new UI.Input({
-				name : 'text-input-canvas',
-				value : 'A text input with canvas, a very long text',
-				id : 'test',
-				styles : {
-					margin	: 10
-				}
-			}).inject(form);
-			/*
 			this.textarea = new UI.Textarea({
 				name : 'textarea-input-canvas',
 				value : 'Please write your comment here',
 				onFocus : function(){
 					this.input.value = ''
 					this.tipArea = new UI.Bubble({
-						target : this,
+						type	: 'bottom',
+						target : this.element,
 						skinProperties : {
 							'default' : {
 								backgroundColor : ['#A00','#000']
@@ -466,7 +458,7 @@
 					});
 				},
 				onBlur : function(){
-					this.tipArea.element.destroy();
+					this.tipArea.destroy();
 					delete this.tipArea;
 				},
 				styles : {
@@ -475,8 +467,20 @@
 			}).inject(form);
 			
 			
+			ip = new UI.Input({
+				name : 'text-input-canvas',
+				value : 'A text input with canvas, a very long text',
+				id : 'test',
+				styles : {
+					margin	: 10
+				}
+			}).inject(form);
+			
+			
+			
+			
 			this.tip = new UI.Bubble({
-				target : this.slider,
+				target : $(this.slider),
 				skinProperties : {
 					'default' : {
 						layers			: {
@@ -491,9 +495,8 @@
 
 			
 			
-			
 			this.tip = new UI.Bubble({
-				target : button,
+				target : $(button),
 				skinProperties : {
 					'default' : {
 						backgroundColor : ['#A00','#000']
@@ -501,7 +504,7 @@
 				},
 				label : "<p>Babybel c'est de la balle</p><p>Mais que fait la police?</p>"
 			});
-			*/
+			
 			
 			this.googlemap = new UI.Button({
 				label				: 'Window',
@@ -637,48 +640,6 @@
 			
 			
 			
-			this.daselect = new UI.Select({
-				name			: 'testselect',
-				width			: 400,
-				styles			: {
-					margin		: 10
-				},
-				list			: [
-					{text		: 'Please choose'},
-					{text		: 'Core'},
-					{text		: 'Control'},
-					{text		: 'Desktop is a long entry'},
-					{text		: 'Menu'},
-					{text		: 'Form'},
-					{text		: 'Un menu'},
-					{text		: 'Plage'},
-					{text		: 'Venise'}
-				],
-				onMouseDown				:  function(){ this.selecttup.hide(); }.bind(this),
-				onChange				:  function(){ this.selecttup.show(); }.bind(this)
-			}).inject(form);
-			
-			
-			this.selecttup = new UI.Bubble({
-				target 			: this.daselect,
-				targetEvent		: 'onMouseOver',
-				type			: 'bottom',
-				
-				skinProperties : {
-					'default' : {
-						layers	: {
-							reorder	: ['background','arrow'],
-							
-							background	: {
-								color	: ['#000','#000']
-							}
-						}
-					}
-				},
-				label : "il faut préparer un package<br /> googlemap tips replacement!<br/>"
-			});
-			
-			/*
 			var counter = 1;
 			
 			this.counter = new UI.Button({
@@ -698,7 +659,7 @@
 					if (this.bubble) this.bubble.destroy();
 
 					this.bubble = new UI.Bubble({
-						target 						: this,
+						target 						: $(this),
 						skinProperties 				: {
 							'default' 				: {
 								layers				: {
@@ -775,7 +736,49 @@
 					margin					: 5
 				}
 			}).inject(form);
-			*/
+			
+			
+			
+			this.daselect = new UI.Select({
+				name			: 'testselect',
+				width			: 400,
+				styles			: {
+					margin		: 10
+				},
+				list			: [
+					{text		: 'Please choose'},
+					{text		: 'Core'},
+					{text		: 'Control'},
+					{text		: 'Desktop is a long entry'},
+					{text		: 'Menu'},
+					{text		: 'Form'},
+					{text		: 'Un menu'},
+					{text		: 'Plage'},
+					{text		: 'Venise'}
+				],
+				onMouseDown				:  function(){ this.selecttup.hide(); }.bind(this),
+				onChange				:  function(){ this.selecttup.show(); }.bind(this)
+			}).inject(form);
+			
+			
+			this.selecttup = new UI.Bubble({
+				target 			: this.daselect,
+				targetEvent		: 'onMouseOver',
+				type			: 'bottom',
+				
+				skinProperties : {
+					'default' : {
+						layers	: {
+							reorder	: ['background','arrow'],
+							background	: {
+								color	: ['#000','#000']
+							}
+						}
+					}
+				},
+				label : "il faut préparer un package<br /> googlemap tips replacement!<br/>"
+			});
+			
 			
 			
 			this.cancel = new UI.Button({
@@ -1038,9 +1041,9 @@
 			}).inject(form);
 
 			
-			/*
+			
 			new UI.Bubble({
-				target 						: this.hardest,
+				target 						: $(this.hardest),
 				label 						: 'réalisation: Michel Gondry',
 				labelStyles					: {
 					padding					: '10px 10px 16px'
@@ -1060,7 +1063,6 @@
 					}
 				}
 			});
-			*/
 			
 			
 			submit = new UI.Button({
@@ -1141,8 +1143,6 @@
 					margin	: 10
 				}
 			}).inject(form);
-					
-			
 			
 			this.checkbox = new UI.Checkbox({
 				type						: 'touch',

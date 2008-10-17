@@ -119,7 +119,7 @@ UI.Select = new Class({
 
 	addMenuActions : function(list) {
 		list.each(function(el){
-			if (!el.menu && 'text' != 'separator') {
+			if (!el.menu && el.text != 'separator') {
 				el.action = function(){
 					this.input.value = (el.value) ? el.value : el.text;
 					this.textLabel.set('html', el.text);
