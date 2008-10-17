@@ -39,6 +39,7 @@ UI.Element = new Class({
 		onDragStart			: $empty,
 		onDrag				: $empty,
 		onDragComplete		: $empty
+		
 	},
 
 	/* 
@@ -60,6 +61,10 @@ UI.Element = new Class({
 
 		this.setBehavior();
 	},
+	
+	toElement : function(){
+		return this.element;
+	},
 
 	/* 
 		Method: build
@@ -77,7 +82,7 @@ UI.Element = new Class({
 			id		: this.options.id,
 			html	: this.options.html,
 			'for'	: this.options['for']
-		})
+		});
 		this.element.setStyle('visibility', 'hidden');
 		if (!this.options.selectable) this.element.disableSelect();
 		this.element.ui = true;
@@ -133,9 +138,12 @@ UI.Element = new Class({
 			width			: this.element.x,
 			height			: this.element.y
 		}).inject(this.element);
-		
 		this.addEvent('setCanvasSize', function(state){
-			this.canvas.setSize(this.element.x,this.element.y, this.skin[state]);
+			if (!state)
+				var skinProperties = this.skinProperties;
+			else
+				var skinProperties = this.skin[state];
+			this.canvas.setSize(this.element.x,this.element.y, skinProperties);
 		});
 	},
 	

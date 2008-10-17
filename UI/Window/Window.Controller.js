@@ -86,8 +86,9 @@ UI.Controller.Window = new Class({
 	destroy: function(elementClass) {
 		for (var i = UI.elements.window.length - 1; i >= 0; i--) {
 			if (UI.elements.window[i] == elementClass) {
-				UI.elements.window[i].destroy();
+				elementClass.destroy();
 				delete UI.elements.window[i];
+				UI.elements.window = UI.elements.window.clean();
 			}
 		}
 	},

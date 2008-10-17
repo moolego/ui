@@ -175,8 +175,6 @@ UI.Element.implement({
 	*/
 
 	destroy: function() {
-		this.fireEvent('destroy');
-		
 		/*
 		//we get inner element
 		if (this.element.elements) {
@@ -190,9 +188,10 @@ UI.Element.implement({
 			});
 		}
 		*/
+		
 		this.element.destroy();
 
-		return true;
+		return;
 	}
 
 });
