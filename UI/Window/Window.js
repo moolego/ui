@@ -1,8 +1,7 @@
 /*
 
 Class: UI.Window
-	The UI.Window class defines objects that manage and coordinate the windows 
-	an application displays on the screen.
+	The UI.Window class defines objects that manage and coordinate the windows an application displays on the screen.
 
 Require:
 	UI.Element, UI.Canvas, UI.Skin, UI.Button, UI.View.
