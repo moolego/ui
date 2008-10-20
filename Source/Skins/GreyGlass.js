@@ -15,11 +15,6 @@ UI.Skin.implement({
 		'default'				: {
 			/* css properties */
 			styles				: {
-				color			: '#1d1d1d',
-				fontFamily		: 'Helvetica, Lucida Grande, Verdana, Arial, sans-serif',
-				fontSize		: '14px',
-				fontWeight		: 'normal',
-				lineHeight		: '1.2em'
 			},
 
 			/* layers properties */
