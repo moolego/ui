@@ -26,11 +26,6 @@ UI.Scrollbar = new Class({
 	},
 
 	initialize: function(options){
-		this.options.styles['float'] = 'right';
-		this.options.styles.height = '100%';
-		this.options.styles.position = 'relative';
-		this.options.styles.zIndex = '10000';
-		
 		this.parent(options);
 		
 		this.bound = {
@@ -56,12 +51,6 @@ UI.Scrollbar = new Class({
 			component		: this.options.component,
 			type			: 'thumb'
 		}).inject(this.element);
-		
-		this.thumb.element.setStyles({
-			position		: 'relative',
-			width			: this.options.width,
-			margin			: '5px 0'
-		});
 	},
 	
 	update: function(){

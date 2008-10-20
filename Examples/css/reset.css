@@ -7,8 +7,7 @@
 
 html {
 	color: #000;
-	font-family : 'Helvetica';
-	font-size : .8em;
+	font-family : Helvetica, Arial, sans-serif;
 }
 
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {

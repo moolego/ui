@@ -1285,6 +1285,12 @@ UI.Skin.implement({
 		scrollbar						: {
 			track						: {
 				'default'					: {
+					styles                                          : {
+						'float'                                 : 'right',
+						height                                  : '100%',
+						position                                : 'relative',
+						zIndex                                  : '10000'
+					},
 					layers				: {
 						'default'		: {
 							position	: 'absolute',
@@ -1307,6 +1313,10 @@ UI.Skin.implement({
 			},
 			thumb						: {
 				'default'				: {
+					styles 				: {
+						position		: 'relative',
+						margin			: '5px 0'
+					},
 					layers				: {
 						'default'		: {
 							direction	: 'vertical'
