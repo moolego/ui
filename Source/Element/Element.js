@@ -15,7 +15,7 @@ UI.Element = new Class({
 		type				: 'default',
 		state				: 'default',		
 		
-		elementTag			: 'div',
+		tag					: 'div',
 		
 		resizable			: false,
 		draggable			: false,
@@ -75,7 +75,7 @@ UI.Element = new Class({
 	build : function(){
 		this.fireEvent('build');
 
-		this.element = new Element(this.options.elementTag, {
+		this.element = new Element(this.options.tag, {
 			'class' : this.className,
 			styles	: this.skinProperties.styles,
 			events	: this.options.events,

@@ -61,7 +61,7 @@ UI.Window = new Class({
 		left					: 0,	
 		zIndex					: 'auto',   // to get zIndex from themanager or an Int as zIndex
 		
-		elementTag				: 'div',
+		tag						: 'div',
 		
 		// Components Options
 		head					: true,

@@ -50,7 +50,7 @@ UI.View = new Class({
 
 		overflow			: 'scrollbar',		// hide, scrollbar or scrollmenu
 
-		elementTag			: 'div',
+		tag					: 'div',
 		contentTag			: 'div',			// 
 
 		content				: {},
