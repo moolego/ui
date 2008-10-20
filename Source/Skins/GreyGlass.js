@@ -12,9 +12,9 @@ Arguments:
 
 UI.Skin.implement({
 	GreyGlass : {		
-		'default'				: {
+		'default' : {
 			/* css properties */
-			styles				: {
+			styles : {
 			},
 
 			/* layers properties */
@@ -37,7 +37,7 @@ UI.Skin.implement({
 			},
 			
 			/* shadows properties */
-			shadows				: [
+			shadows : [
 				'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAEqSURBVHja7JZRjsMwCEQzmNz/yKm0UlYOZTCwXvWnkVBaO848D5gW13Udn7zk+PD1BVA7AGDHe9EG+A+RaJ1uFkV1nW4QRvAcdjiAgiiS82mASNy+GM78Cq5dAyDCIGMUXAu7z4iyoDDa2LknLuRzBJMGYOKeKLtTEC3az8TnAPleAmBQcKyfYzhjoRuaFD0W4mO6DwLjQnSKUAJxXUCIhdBN9s/iM4QH83BCk6IHER9G9AxAXIiOAxJAeGEhHqnQRgeMIG6QMwnR7oQIilAdiHvOFia0IcxOAkvFaWriUQva3D07CRaCpeJ3XeXX0BakLCA8R95q4S99wEKMxKloAaDYkDyYQTqlaCLv7O8VEulgaSmnYJWKDkQLYAUkhfiBkE27XzlD4yXAAD9iBzTvoIgoAAAAAElFTkSuQmCC',
 				'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABQAAAAAgCAYAAABNcNVmAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAEpSURBVHja7NzZCcQwEAVB3978E9Yy4CiaKpgE3mcjtK+1NgAAAACg6TABAAAAAHQJgAAAAAAQJgACAAAAQNj+HQAAAAAQdG0CIAAAAABkCYAAAAAAEDYB0D+AAAAAABA1AfA0AwAAAAA0CYAAAAAAECYAAgAAAEDY9R0AAAAAEDTx7zYDAAAAADQJgAAAAAAQJgACAAAAQNgEwMcMAAAAANA0AfA1AwAAAAA0CYAAAAAAECYAAgAAAEDYBMCfGQAAAACgyQtAAAAAAAgTAAEAAAAgTAAEAAAAgLAJgI8ZAAAAAKBpAuBtBgAAAABoEgABAAAAIEwABAAAAICw6zsAAAAAIGji32kGAAAAAGgSAAEAAAAgTAAEAAAAgLAJgIcZAAAAAKDpL8AAARYD73dGJasAAAAASUVORK5CYII=',
 				'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAF5SURBVHja7JfhigMxCISju9f2/Z/3okchC4NMotk76J8LSLYldT5dY1Jx9/bJoe3D4x9AhlXHrwsm1txJADwB/lM4BiAFp57A+Q6ALpxLweEKxu8AxB/6hkMnIJ4BHBMnEcLBoYTvWvi+DHEO8wWAk2cPzhlcuQbODVFm7DUIqSW/A8DMwvOsVqRahF8FYYNZ4HMja7YgMgAUtrFjEKLBrAGs9BreAI9C1GisG9rdZjQDYOIdZtaWjQCk/eMN8CTiRsR1zNnhZbtF+JxE3oviHiKW3Vb8SsQv+x4gsmjDCOGVmsAMsLSjOIvMw/ZUAlF+BTvimC0FYQ9r062IuwDFj5ByIRHbWBf7g1RPQgZwiXdIaSPiR2hOSiCkeho+QkSdRN6COK7TILqVhasVY/pnwiiuQVyTC256GtokfSz1CrMsMiDVVswAonAn4ln6WwXiupLNovZQmJpEzv5vLG9KGYBtiG+lngGgsCZ2W3B1LfcJgNy00vgRYACL8w5ybY12GwAAAABJRU5ErkJggg==',
@@ -53,9 +53,9 @@ UI.Skin.implement({
 			'default' : {
 				'default' : {
 					/* components properties */
-					components		: {
-						label		: {
-							styles	: {
+					components : {
+						label : {
+							styles : {
 								zIndex		: 1,
 								fontWeight	: 'normal',
 								position	: 'absolute',
@@ -542,7 +542,7 @@ UI.Skin.implement({
 								zIndex			: 1,
 								position		: 'absolute',
 								left			: 0,
-								padding			: '4px 25px 3px 16px',
+								padding			: '4px 25px 4px 16px',
 								whiteSpace		:'nowrap'
 							}
 						}
