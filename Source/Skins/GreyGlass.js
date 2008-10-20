@@ -62,7 +62,7 @@ UI.Skin.implement({
 								cursor		: 'pointer',
 								top			: 0,
 								left		: 0,
-								padding		: '5px 16px',
+								padding		: '4px 16px',
 								whiteSpace	:'nowrap'
 							}
 						}
@@ -102,9 +102,9 @@ UI.Skin.implement({
 						},
 						light			: {
 							position	: 'absolute',
-							offset		: ['65%', '5px', '2px'],
+							offset		: ['50%', '5px', '2px'],
 							color		: ['#FFF', '#FFF'],
-							opacity		: [.1, .7],
+							opacity		: [0, .9],
 							radius		: [4, 4, 7, 7]
 						}
 					}
@@ -119,7 +119,7 @@ UI.Skin.implement({
 				'down' : {
 					layers				: {
 						main			: {
-							color		: ['#3e8ddc','#3e8ddc']
+							color		: ['#7b8997','#7b8997']
 						}
 					}
 				}
@@ -938,7 +938,7 @@ UI.Skin.implement({
 					components			: {
 						menuItem		: {
 							styles		: {
-								padding		: '2px 40px 2px 16px',
+								padding		: '3px 40px 3px 16px',
 								lineHeight	: '1em',
 								whiteSpace	: 'nowrap',
 								display		: 'block'
