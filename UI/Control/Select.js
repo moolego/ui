@@ -94,6 +94,7 @@ UI.Select = new Class({
 		var width = this.menu.content.getFirst().getSize().x;
 		width -=  this.menu.content.getFirst().getStyle('paddingRight').toInt();
 		width -=  this.menu.content.getFirst().getStyle('paddingLeft').toInt();
+		this.menu.setStyle('display', 'none');
 		
 		this.textLabel = new UI.Label({
 			width	: width,

@@ -535,8 +535,6 @@ UI.Menu = new Class({
 			this.options.target ? this.setPosition(this.options.target) : this.setPosition(element);
 			this.setStyle('visibility', 'visible');
 			this.addUnderlay();
-		} else if (!Browser.Engine.trident) {
-			this.setStyle('display', 'none');
 		}
 		
 		return this;
