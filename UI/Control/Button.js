@@ -43,12 +43,12 @@ UI.Button = new Class({
 	
 	build : function(){
 		//create a new div as button element
-		//console.log(this.options.component, this.skinProperties.components.label.styles);
+		//console.log(this.options.component, this.props.components.label.styles);
 		this.parent();
 		if(this.options.label) {
 			this.textLabel = new UI.Label({
 				html : this.options.label,
-				styles : this.skinProperties.components.label.styles
+				styles : this.props.components.label.styles
 			}).inject(this.element);
 		}
 	},

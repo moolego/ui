@@ -145,7 +145,7 @@ UI.Window = new Class({
 	*/	
 
 	setHead : function() {
-		var bs = this.skinProperties.borderSize;
+		var bs = this.props.borderSize;
 		this.head = new Element('div', { 
 			'class' 		: this.className +'-head',
 			styles 			: {
@@ -176,11 +176,11 @@ UI.Window = new Class({
 
 	setView : function() {
 		this.view = new UI.View({
-			type				: this.skinProperties.components.view.type,
+			type				: this.props.components.view.type,
 			overflow			: this.options.viewOverflow,
 			className			: this.className + '-view',
 			styles				: {
-				marginLeft: this.skinProperties.borderSize
+				marginLeft: this.props.borderSize
 			}
 			//overflow			: (this.options.tabView) ? 'hidden' : 'scrollbar'
 		}).inject(this.element);
@@ -224,8 +224,8 @@ UI.Window = new Class({
 					position		: 'relative',
 				    right			: '0',
 				   	width			: '100%',
-					height			: this.skinProperties.footHeight,
-					left 			: this.skinProperties.borderSize
+					height			: this.props.footHeight,
+					left 			: this.props.borderSize
 				}  
 			}).inject(this.element);
 			this.foot.disableSelect();
@@ -263,7 +263,7 @@ UI.Window = new Class({
 		this.toolbar = new UI.Toolbar(toolbar).inject(this.head);
 
 		// not really nice... 
-		this.skinProperties.layers.underlay.size[1] = this.head.getSize().y;
+		this.props.layers.underlay.size[1] = this.head.getSize().y;
 
 		this.updateSize();
 		
@@ -309,12 +309,12 @@ UI.Window = new Class({
 	
 	toggleToolbar: function() {
 		if (this.toolbar.element.getStyle('display') == 'block') {
-			this.skinProperties.layers.underlay.size[1] = this.head.getSize().y;
+			this.props.layers.underlay.size[1] = this.head.getSize().y;
 			this.toolbar.element.hide();
 			this.updateSize();
 		} else {
 			this.toolbar.element.show();
-			this.skinProperties.layers.underlay.size[1] = this.head.getSize().y;
+			this.props.layers.underlay.size[1] = this.head.getSize().y;
 			this.updateSize();
 		}
 	},
@@ -323,7 +323,7 @@ UI.Window = new Class({
 		if (!this.status) {
 			this.status = new Element('div', {
 				styles: {
-					fontFamily: this.skinProperties.fontFamily,
+					fontFamily: this.props.fontFamily,
 					fontSize: '0.75em',
 					padding: '3px 16px',
 					height: '16px',
@@ -422,20 +422,20 @@ UI.Window = new Class({
 		this.controls = new Element('div',{
 			 styles : {
 			 	'float'				: 'left',
-	    		padding				: this.skinProperties.controlsPadding,
-				height				: this.skinProperties.controlHeight
+	    		padding				: this.props.controlsPadding,
+				height				: this.props.controlHeight
 			}
 		 }).inject(this.head);
 		
 		actions.each(function(action){
 			new UI.Button({
-				type		: this.skinProperties.components.control.type,
+				type		: this.props.components.control.type,
 				className	: this.className + '-' + action,
 				label		: false,
-				width		: this.skinProperties.components.control.width,
-				height		: this.skinProperties.components.control.height,
+				width		: this.props.components.control.width,
+				height		: this.props.components.control.height,
 				styles		: {
-					margin : this.skinProperties.components.controls.padding
+					margin : this.props.components.controls.padding
 				},
 				onClick		: this.control.bind(this, action)
 			}).inject(this.controls);	
@@ -471,7 +471,7 @@ UI.Window = new Class({
 	updateSize : function(opt) {
 		var element = this.element.getSize();
 		
-		var bs = this.skinProperties.borderSize;
+		var bs = this.props.borderSize;
 		var borderOffset = bs*2;
 		
 		var offsetHeight = 0;
@@ -499,7 +499,7 @@ UI.Window = new Class({
 				width: element.x - borderOffset
 			});
 		}
-		this.skinProperties.layers.underlay.size[1] = this.head.getSize().y;
+		this.props.layers.underlay.size[1] = this.head.getSize().y;
 		
 		if (this.options.tabView) {
 			this.tabView.tabs.setStyles({

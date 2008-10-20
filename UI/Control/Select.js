@@ -98,7 +98,7 @@ UI.Select = new Class({
 		
 		this.textLabel = new UI.Label({
 			width	: width,
-			styles	: this.skinProperties.components.label.styles,
+			styles	: this.props.components.label.styles,
 			html	: this.options.list[0].text
 		}).inject(this.element);
 	},

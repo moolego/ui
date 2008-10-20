@@ -17,8 +17,8 @@ UI.Element.implement({
 	 */
 	
 	setSize : function(width, height, state){
-		this.element.x = width || this.options.width || this.skinProperties.width || this.element.getSize().x;
-		this.element.y = height || this.options.height || this.skinProperties.height || this.element.getSize().y;
+		this.element.x = width || this.options.width || this.props.width || this.element.getSize().x;
+		this.element.y = height || this.options.height || this.props.height || this.element.getSize().y;
 
 		if (this.element.x) this.element.setStyle('width', this.element.x);
 		if (this.element.y) this.element.setStyle('height', this.element.y);
@@ -33,8 +33,8 @@ UI.Element.implement({
 	*/
 	
 	setLocation	: function(left,top) {
-		this.element.left = left || this.options.left || this.skinProperties.defaultLeft || this.element.getCoordinates().x - this.skinProperties.shadowMagnify * 2;
-		this.element.top = top || this.options.top || this.skinProperties.defaultTop || this.element.getCoordinates().y - this.skinProperties.shadowMagnify * 2;
+		this.element.left = left || this.options.left || this.props.defaultLeft || this.element.getCoordinates().x - this.props.shadowMagnify * 2;
+		this.element.top = top || this.options.top || this.props.defaultTop || this.element.getCoordinates().y - this.props.shadowMagnify * 2;
 		this.element.setStyles({
 			top	: this.element.left,
 			left : this.element.top
