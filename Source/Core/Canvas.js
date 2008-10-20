@@ -17,7 +17,7 @@ UI.Canvas = new Class({
 
 	options: {	
 		target			: false,
-		props	: {},
+		props			: {},
 		
 		onComplete		: $empty
 	},
