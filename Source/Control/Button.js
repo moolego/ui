@@ -6,15 +6,16 @@ Arguments:
 	options
 
 Options: 
-	className - (string) css classname for the given button
+	label - (string) css classname for the given button
 	buttonType - ()
 
 Example:
 	(start code)
 		var button = new UI.Button({
+			label		: 'Button',
+			submit		: false
 			onClick		: {},
-			onMouseOver	: {},
-			onDblClick	: {}
+			onMouseOver	: {}
 		});
 	(end)
 */
@@ -42,8 +43,6 @@ UI.Button = new Class({
 	*/
 	
 	build : function(){
-		//create a new div as button element
-		//console.log(this.options.component, this.skinProperties.components.label.styles);
 		this.parent();
 		if(this.options.label) {
 			this.textLabel = new UI.Label({
