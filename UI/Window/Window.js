@@ -113,7 +113,11 @@ UI.Window = new Class({
 		
 		// call parent constructor
 		this.parent(options);
-		//this.focus();
+		
+		this.controller.focus(this);
+		this.fireEvent('onFocus');
+		this.isActive = true;
+		
 	},
 
 	
@@ -154,8 +158,7 @@ UI.Window = new Class({
 				width		: '100%',
 			 	left		: bs,
 			 	top			: bs,
-			 	width		: this.options.width - (bs * 2),
-				zIndex		: 1
+			 	zIndex		: 1
 			}
 		}).inject(this.element);
 		this.head.disableSelect();
