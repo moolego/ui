@@ -37,7 +37,7 @@ Example:
 
 */
 
-UI.Menu.Scroller = new Class({
+UI.MenuScroller = new Class({
 	Implements: [Events, Options],
 
 	options: {

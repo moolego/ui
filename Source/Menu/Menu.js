@@ -434,7 +434,7 @@ UI.Menu = new Class({
 	*/
 	
 	addScrolls : function() {
-		this.scrolls = new UI.Menu.Scroller({
+		this.scrolls = new UI.MenuScroller({
 			element			: this.element,
 			content 		: this.content,
 			margin			: this.options.scrollMargin,

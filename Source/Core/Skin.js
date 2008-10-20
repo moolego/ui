@@ -112,11 +112,6 @@ UI.Skin = new Class({
 				if(type[key].shortcuts) {
 					new Hash(state.shortcuts).each(function(shortcut, name){
 						if (className.options[name]) {
-							//console.log(name);
-							//console.log(className.options.labelStyles);
-							//eval('console.log(className.options.labelStyles)');
-							//console.log('type[\'' + key + '\'].' + shortcut + ' = $merge(type[\'' + key + '\'].' + shortcut + ',className.options.' + name + ')');
-							//console.log(eval('type[\'' + key + '\'].' + shortcut));
 							eval('type[\'' + key + '\'].' + shortcut + ' = $merge(type[\'' + key + '\'].' + shortcut + ',className.options.' + name + ')');
 						}
 					});
@@ -136,6 +131,11 @@ UI.Skin = new Class({
 					type[key].styles = $merge(type[key].styles, props.styles);
 			}
 		});
+		
+		//remove shadows if not used
+		if (type['default'].layers.shadow.size == 0) {
+			delete type['default'].shadows;
+		}
 
 		//return type with all attributes for each state
 		return type;
