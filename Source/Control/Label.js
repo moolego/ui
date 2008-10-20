@@ -10,7 +10,7 @@ UI.Label = new Class({
 	options: {
 		component			: 'label',
 		
-		elementTag			: 'span',
+		tag					: 'span',
 		html				: 'Label',
 		
 		selectable			: false

@@ -13,7 +13,7 @@ UI.Control = new Class({
 		
 	options: {
 		// implement events
-		elementTag			: 'span',
+		tag					: 'span',
 		onChange			: $empty
 	},
 

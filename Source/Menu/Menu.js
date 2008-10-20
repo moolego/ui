@@ -117,7 +117,7 @@ UI.Menu = new Class({
 		list.each(function(item){
 			if (item.text == 'separator') {
 				var menuItem = new UI.Label({
-					elementTag	: this.options.itemTag,
+					tag			: this.options.itemTag,
 					html		: '',
 					styles		: this.skinProperties.components.separator.styles
 				}).inject(this.content);
@@ -125,7 +125,7 @@ UI.Menu = new Class({
 			} else {
 				var content = (this.lang.get(item.text)) ? this.lang.get(item.text) : item.text;
 				var menuItem = new UI.Label({
-					elementTag	: this.options.itemTag,
+					tag			: this.options.itemTag,
 					html		: content,
 					styles		: this.skinProperties.components.menuItem.styles
 				}).set(item.options);
