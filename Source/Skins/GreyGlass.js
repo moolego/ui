@@ -130,7 +130,8 @@ UI.Skin.implement({
 						'default'		: {
 							position	: 'absolute',
 							shape		: 'circle',
-							radius		: 7
+							radius		: 7,
+							opacity		: 1
 						},
 						emboss			: {
 							offset		: [8, 8],
@@ -140,7 +141,8 @@ UI.Skin.implement({
 						background		: {
 							offset		: [7, 8],
 							radius		: 7,
-							color		: ['#2e323d','#848995']
+							color		: ['#2e323d','#848995'],
+							opacity		: 1
 						},
 						main			: {
 							radius		: 5.5,
@@ -540,7 +542,7 @@ UI.Skin.implement({
 								zIndex			: 1,
 								position		: 'absolute',
 								left			: 0,
-								padding			: '3px 25px 3px 16px',
+								padding			: '4px 25px 3px 16px',
 								whiteSpace		:'nowrap'
 							}
 						}
@@ -558,11 +560,18 @@ UI.Skin.implement({
 							radius		: 4,
 							position	: 'absolute'
 						},
+						littleshadow	: {
+							offset		: ['0px', '0px', '0px','0px'],
+							opacity		: [.1,.1],
+							color		: ['#000','#000'],
+							radius		: [8,8,8,8],
+							position	: 'relative'
+						},
 						background		: {
 							offset		: ['0px', '1px', '1px','1px'],
 							opacity		: [1,1],
 							color		: ['#5d5d5d','#5e5e5e'],
-							radius		: 5,
+							radius		: [5,10,5,5],
 							position	: 'relative'
 						},
 						main			: {
@@ -570,30 +579,37 @@ UI.Skin.implement({
 							color		: ['#c3c3c3','#d4d4d4'],
 							radius		: [4, 0, 0, 4]
 						},
+						backButton			: {
+							size		: [21, 'auto'],
+							offset		: [0, 1, 3, 'auto'],
+							color		: ['#3b3b55','#798491'],
+							radius		: [0, 5, 5, 0]
+						},
 						button			: {
 							size		: [19, 'auto'],
 							offset		: [1, 2, 2, 'auto'],
-							color		: ['#3e8ddc','#3e8ddc'],
+							color		: ['#7b8997','#7b8997'],
 							radius		: [0, 4, 4, 0]
 						},
+						
 						reflect			: {
 							color		: ['#FFF', '#FFF'],
 							size		: ['auto', '36%'],
-							opacity		: [.8, .2],
+							opacity		: [.5, .3],
 							offset		: [1, 3, 'auto', 3],
 							radius		: [3, 3, 4, 4]
 						},
 						light			: {
-							offset		: ['65%', '2px', '2px'],
+							offset		: ['45%', '2px', '2px'],
 							color		: ['#FFF', '#FFF'],
-							opacity		: [.1, .5],
-							radius		: [4, 4, 4, 4]
+							opacity		: [0, 0.9],
+							radius		: [5, 5, 4, 4]
 						},
 						arrowUp			: {
 							shape		: 'triangleUp',
 							color		: '#000',
 							size		: [5, 4],
-							offset		: ['auto', 10, '63%', 'auto']
+							offset		: ['auto', 10, '65%', 'auto']
 						},
 						arrowDown		: {
 							shape		: 'triangleDown',
