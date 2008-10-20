@@ -17,7 +17,7 @@ UI.Canvas = new Class({
 
 	options: {	
 		target			: false,
-		skinProperties	: {},
+		props	: {},
 		
 		onComplete		: $empty
 	},
@@ -32,12 +32,12 @@ UI.Canvas = new Class({
 	Options: 
 		className		- default : ui-canvas
 		target			- target element for the canvas
-		skinProperties	- skinProperties from UI.skin
+		props	- props from UI.skin
 	*/
 	
 	initialize: function(options){
 		this.setOptions(options);
-		this.skinProperties = this.options.skinProperties;
+		this.props = this.options.props;
 		this.canvas = new Canvas({
 			'class'	: this.options.className,
 			styles	: {
@@ -59,14 +59,14 @@ UI.Canvas = new Class({
 		return this;
 	},
 	
-	setSize : function(width, height, skinProperties){
+	setSize : function(width, height, props){
 		
-		if (skinProperties) this.skinProperties = skinProperties;
-		this.shadowSize = this.skinProperties.layers.shadow.size;
-		this.shadowMagnify = this.skinProperties.layers.shadow.magnify;
+		if (props) this.props = props;
+		this.shadowSize = this.props.layers.shadow.size;
+		this.shadowMagnify = this.props.layers.shadow.magnify;
 		this.shadowOffset = [
-			this.skinProperties.layers.shadow.offsetX,
-			this.skinProperties.layers.shadow.offsetY
+			this.props.layers.shadow.offsetX,
+			this.props.layers.shadow.offsetY
 		];
 		
 		this.shadowThikness = this.shadowSize/2 + this.shadowMagnify;
@@ -102,21 +102,21 @@ UI.Canvas = new Class({
 	
 		Draw layers
 		
-	Arguments: skinProperties
+	Arguments: props
 	*/
 	
-	draw : function(skinProperties)  {
+	draw : function(props)  {
 		if (!this.shadowSet) {
-			if (skinProperties) this.skinProperties = skinProperties;
+			if (props) this.props = props;
 			this.ctx.clearRect(0, 0, this.canvasSize[0], this.canvasSize[1]);
 			if (this.shadowSize != 0 && !this.drawShadowsCalled) {
 				this.drawShadows();
 				return;
 			}
 		}
-		var layers = new Hash(this.skinProperties.layers);
-		if(this.skinProperties.layers.reorder){
-			this.skinProperties.layers.reorder.each(function(key){
+		var layers = new Hash(this.props.layers);
+		if(this.props.layers.reorder){
+			this.props.layers.reorder.each(function(key){
 				if (key != 'default' && key != 'reorder' && key != 'shadow') this.trace(key);
 			}, this);
 		} else {
@@ -148,7 +148,7 @@ UI.Canvas = new Class({
 			this.shadowImg = [];
 			for (var i = 0; i < 8; i++) {
 				this.shadowImg[i] = new Image();
-				this.shadowImg[i].src = this.skinProperties.shadows[i];
+				this.shadowImg[i].src = this.props.shadows[i];
 			}
 			this.imgGroup = new Group(this.shadowImg).addEvent('load', function(){
 				this.shadowsLoaded = true;
@@ -402,19 +402,19 @@ UI.Canvas = new Class({
 		var properties = {};
 		
 		// +position
-		properties.position = (this.skinProperties.layers[key].position) ?
-			this.skinProperties.layers[key].position :
-			this.skinProperties.layers['default'].position;
+		properties.position = (this.props.layers[key].position) ?
+			this.props.layers[key].position :
+			this.props.layers['default'].position;
 			
 		// +size
-		properties.size = ($defined(this.skinProperties.layers[key].size)) ?
-			this.skinProperties.layers[key].size :
+		properties.size = ($defined(this.props.layers[key].size)) ?
+			this.props.layers[key].size :
 			false;
 
 		// we test the position
-		var coordinates = ($defined(this.skinProperties.layers[key].offset)) ?
-			this.skinProperties.layers[key].offset :
-			this.skinProperties.layers['default'].offset
+		var coordinates = ($defined(this.props.layers[key].offset)) ?
+			this.props.layers[key].offset :
+			this.props.layers['default'].offset
 		if ($type(coordinates) == 'array') {
 			//4 sides defined
 			if ($defined(coordinates[3])) {
@@ -436,34 +436,34 @@ UI.Canvas = new Class({
 		properties.size = [coordinates[2], coordinates[3]];
 		
 		// +shape
-		properties.shape = (this.skinProperties.layers[key].shape) ?
-			this.skinProperties.layers[key].shape :
-			this.skinProperties.layers['default'].shape;
+		properties.shape = (this.props.layers[key].shape) ?
+			this.props.layers[key].shape :
+			this.props.layers['default'].shape;
 		
 		// +color
-		properties.color = (this.skinProperties.layers[key].color) ?
-			this.skinProperties.layers[key].color :
-			this.skinProperties.layers['default'].color;
+		properties.color = (this.props.layers[key].color) ?
+			this.props.layers[key].color :
+			this.props.layers['default'].color;
 			
 		// +stroke
-		properties.stroke = (this.skinProperties.layers[key].stroke) ?
-			this.skinProperties.layers[key].stroke :
-			this.skinProperties.layers['default'].stroke;
+		properties.stroke = (this.props.layers[key].stroke) ?
+			this.props.layers[key].stroke :
+			this.props.layers['default'].stroke;
 		
 		// +opacity
-		properties.opacity = ($defined(this.skinProperties.layers[key].opacity)) ?
-			this.skinProperties.layers[key].opacity :
-			this.skinProperties.layers['default'].opacity;
+		properties.opacity = ($defined(this.props.layers[key].opacity)) ?
+			this.props.layers[key].opacity :
+			this.props.layers['default'].opacity;
 			
 		// +direction
-		properties.direction = ($defined(this.skinProperties.layers[key].direction)) ?
-			this.skinProperties.layers[key].direction :
-			this.skinProperties.layers['default'].direction;
+		properties.direction = ($defined(this.props.layers[key].direction)) ?
+			this.props.layers[key].direction :
+			this.props.layers['default'].direction;
 		
 		// +radius
-		var radius = ($defined(this.skinProperties.layers[key].radius)) ?
-			this.skinProperties.layers[key].radius :
-			this.skinProperties.layers['default'].radius;
+		var radius = ($defined(this.props.layers[key].radius)) ?
+			this.props.layers[key].radius :
+			this.props.layers['default'].radius;
 		
 		if ($type(radius) == 'array') {
 			if($defined(radius[3])) {

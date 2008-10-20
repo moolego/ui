@@ -90,7 +90,7 @@ UI.Toolbar = new Class({
 			item.options = item.options || {};
 			item.options.styles = {
 				'float'	: 'left',
-				color	: this.skinProperties.fontColor
+				color	: this.props.fontColor
 			}
 		}, this);
 	},
@@ -116,7 +116,7 @@ UI.Toolbar = new Class({
 							this.menuWithAction = (function(){
 								this.addSubmenu(item, menuItem, 'bottom');
 								this.menuWithAction = false;
-							}).delay(this.skinProperties.delay, this);
+							}).delay(this.props.delay, this);
 						}
 					}
 				}.bind(this),
@@ -136,7 +136,7 @@ UI.Toolbar = new Class({
 				'hideSubmenu' : function(){
 					if (!menuItem.submenu) return;
 					this.hideFx = new Fx.Tween(menuItem.submenu.element, {
-						duration	: this.skinProperties.hideFxDuration,
+						duration	: this.props.hideFxDuration,
 						onComplete	: function(){
 							this.removeRollover();
 							if (this.underlay) this.underlay.fireEvent('click');

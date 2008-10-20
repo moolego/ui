@@ -87,7 +87,7 @@ UI.Menu = new Class({
 			styles : {
 				zIndex		: 2,
 				position	: 'relative',
-				padding		: this.skinProperties.padding,
+				padding		: this.props.padding,
 				margin		: 0,
 				listStyle	: 'none',
 				lineHeight	: '1em'
@@ -119,7 +119,7 @@ UI.Menu = new Class({
 				var menuItem = new UI.Label({
 					elementTag	: this.options.itemTag,
 					html		: '',
-					styles		: this.skinProperties.components.separator.styles
+					styles		: this.props.components.separator.styles
 				}).inject(this.content);
 				menuItem.separator = true;
 			} else {
@@ -127,7 +127,7 @@ UI.Menu = new Class({
 				var menuItem = new UI.Label({
 					elementTag	: this.options.itemTag,
 					html		: content,
-					styles		: this.skinProperties.components.menuItem.styles
+					styles		: this.props.components.menuItem.styles
 				}).set(item.options);
 				
 				if (item.action) menuItem.element.addEvent('action', item.action);
@@ -187,7 +187,7 @@ UI.Menu = new Class({
 					target			: menuItem,
 					underlay		: this.underlay,
 					menu			: item.menu,
-					skinProperties	: this.skinProperties,
+					props	: this.props,
 					position		: position,
 					zIndex			: this.options.zIndex + 1,
 					events			: {
@@ -198,7 +198,7 @@ UI.Menu = new Class({
 				menuItem.submenu.underlay = this.underlay;
 				menuItem.submenu.show(menuItem);
 			}
-		}.bind(this)).delay(this.skinProperties.showDelay);
+		}.bind(this)).delay(this.props.showDelay);
 	},
 	
 	/* 
@@ -281,7 +281,7 @@ UI.Menu = new Class({
 		if (this.activeItem) {
 			this.activeItem.element.fireEvent('defaultArrow');
 			this.activeItem.setStyles({
-				color : this.skinProperties.fontColor
+				color : this.props.fontColor
 			});
 		}
 		
@@ -292,7 +292,7 @@ UI.Menu = new Class({
 			top : coord.top,
 			left : coord.left
 		});
-		menuItem.setStyle('color', this.skinProperties.selectFontColor);
+		menuItem.setStyle('color', this.props.selectFontColor);
 
 		this.activeItem = menuItem;
 	},
@@ -310,7 +310,7 @@ UI.Menu = new Class({
 		if (this.activeItem) {
 			this.activeItem.fireEvent('defaultArrow');
 			this.activeItem.setStyles({
-				color : this.skinProperties.fontColor
+				color : this.props.fontColor
 			});
 		}
 		
@@ -424,7 +424,7 @@ UI.Menu = new Class({
 	*/
 	
 	setCorners: function(corners) {
-		this.skinProperties.layers['default'].radius = corners;
+		this.props.layers['default'].radius = corners;
 	},
 	
 	/* 
@@ -438,7 +438,7 @@ UI.Menu = new Class({
 			element			: this.element,
 			content 		: this.content,
 			margin			: this.options.scrollMargin,
-			skinProperties	: this.skinProperties,
+			props	: this.props,
 			onScroll 		: function(){
 				this.removeSubmenu();
 				this.removeRollover();
@@ -564,7 +564,7 @@ UI.Menu = new Class({
 	 */
 	
 	hide: function(duration){
-		if (!$defined(duration)) duration = this.skinProperties.hideFxDuration;
+		if (!$defined(duration)) duration = this.props.hideFxDuration;
 		this.fireEvent('hide');
 		this.removeSubmenu();
 		new Fx.Tween(this.element, {

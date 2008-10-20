@@ -270,7 +270,7 @@
 							padding		: '20px 30px',
 							fontWeight : 'normal'
 						},
-						skinProperties	: {
+						props	: {
 							over		: {
 								components : {
 									label	: {
@@ -418,7 +418,7 @@
 					}).inject(window.content);
 					//console.log('TEST', $time()-time2);
 				},
-				skinProperties : {
+				props : {
 					'default' : {
 						layers		: {
 							shadow	: {
@@ -449,7 +449,7 @@
 					this.tipArea = new UI.Bubble({
 						type	: 'bottom',
 						target : this.element,
-						skinProperties : {
+						props : {
 							'default' : {
 								backgroundColor : ['#A00','#000']
 							}
@@ -481,7 +481,7 @@
 			
 			this.tip = new UI.Bubble({
 				target : $(this.slider),
-				skinProperties : {
+				props : {
 					'default' : {
 						layers			: {
 							background	: {
@@ -497,7 +497,7 @@
 			
 			this.tip = new UI.Bubble({
 				target : $(button),
-				skinProperties : {
+				props : {
 					'default' : {
 						backgroundColor : ['#A00','#000']
 					}
@@ -518,7 +518,7 @@
 				onClick: function(){
 					this.tip.fade(0);
 				}.bind(this),
-				skinProperties				: {
+				props				: {
 					'default'				: {
 						layers				: {
 							reorder			: ['emboss','background','front','reflect'],
@@ -587,7 +587,7 @@
 						viewOverflow		: 'hidden'
 					}).setContent('iframe','http://www.youtube.com');
 				}.bind(this),
-				skinProperties				: {
+				props				: {
 					'default'				: {
 						layers				: {
 							reorder			: ['background','front','reflect'],
@@ -660,7 +660,7 @@
 
 					this.bubble = new UI.Bubble({
 						target 						: $(this),
-						skinProperties 				: {
+						props 				: {
 							'default' 				: {
 								layers				: {
 									background		: {
@@ -683,7 +683,7 @@
 						}
 					});
 				},
-				skinProperties				: {
+				props				: {
 					'default'				: {
 						layers				: {
 							reorder			: ['emboss','underlay','front','reflect'],
@@ -766,7 +766,7 @@
 				targetEvent		: 'onMouseOver',
 				type			: 'bottom',
 				
-				skinProperties : {
+				props : {
 					'default' : {
 						layers	: {
 							reorder	: ['background','arrow'],
@@ -791,7 +791,7 @@
 					padding			: '10px 26px'
 				},
 				submit				: true,
-				skinProperties				: {
+				props				: {
 					'default'				: {
 						layers				: {
 							reorder			: ['emboss','underlay','front','reflect'],
@@ -856,7 +856,7 @@
 					color					: '#fff'
 				},
 				draggable					: true,
-				skinProperties				: {
+				props				: {
 					'default'				: {
 						layers				: {
 							reorder			: ['emboss','front','reflect','reflect2'],
@@ -921,7 +921,7 @@
 					color				: '#fff'
 				},
 				draggable				: true,
-				skinProperties				: {
+				props				: {
 					'default'				: {
 						layers				: {
 							reorder			: ['emboss','front','reflect','reflect2'],
@@ -995,7 +995,7 @@
 						height		: 388
 					}).setContent('content','<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>');
 				},
-				skinProperties				: {
+				props				: {
 					'default'				: {
 						layers				: {
 							reorder			: ['emboss','front','reflect'],
@@ -1048,7 +1048,7 @@
 				labelStyles					: {
 					padding					: '10px 10px 16px'
 				},
-				skinProperties 				: {
+				props 				: {
 					'default' 				: {
 						layers				: {
 							background		: {
@@ -1075,7 +1075,7 @@
 					color				: '#fff'
 				},
 				submit				: true,
-				skinProperties				: {
+				props				: {
 					'default'				: {
 						layers				: {
 							reorder			: ['emboss','front','reflect', 'dark'],
@@ -1149,7 +1149,7 @@
 				styles				: {
 					margin			: '20px'
 				},
-				skinProperties 				: {
+				props 				: {
 				
 					'default'				: {
 					

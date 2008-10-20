@@ -20,7 +20,7 @@ Example:
 			skin : this.options.skin,
 			component : this.options.name, 
 			type : this.options.type, 
-			skinProperties : this.options.skinProperties
+			props : this.options.props
 		});
 	(end)
 */
@@ -93,7 +93,7 @@ UI.Skin = new Class({
 			skin				: className.options.skin,
 			component 			: className.options.component, 
 			type 				: className.options.type, 
-			skinProperties 		: className.options.skinProperties,
+			props 		: className.options.props,
 			styles				: className.options.styles
 		}
 		
@@ -124,12 +124,12 @@ UI.Skin = new Class({
 				}
 				
 				//merge custom default properties
-				if (props.skinProperties && props.skinProperties['default'])
-					type[key] = $merge(type[key], props.skinProperties['default']);
+				if (props.props && props.props['default'])
+					type[key] = $merge(type[key], props.props['default']);
 					
 				//merge state default properties
-				if (props.skinProperties && props.skinProperties[key])
-					type[key] = $merge(type[key], props.skinProperties[key]);
+				if (props.props && props.props[key])
+					type[key] = $merge(type[key], props.props[key]);
 				
 				//merge custom options.styles
 				if (props.styles)
