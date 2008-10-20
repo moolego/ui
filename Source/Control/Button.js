@@ -7,15 +7,12 @@ Arguments:
 
 Options: 
 	label - (string) css classname for the given button
-	buttonType - ()
 
 Example:
 	(start code)
 		var button = new UI.Button({
-			label		: 'Button',
-			submit		: false
-			onClick		: {},
-			onMouseOver	: {}
+			label		: 'i am a new UI.Button',
+			onClick		: { alert('click') }
 		});
 	(end)
 */
