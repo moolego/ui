@@ -59,15 +59,22 @@
 				draggable	: false,
 				menu		: [
 					{
-						text	: 'Floor Business',
-						options	: {	'class' : 'ui-dd-floor'	},
+						text	: 'UI',
 						styles	: {
 							position	: 'relative'
 						},
 						menu : [
 							{
 								text : 'About',
-								action : function() { new App.SysInfo() }
+								action : function() { 
+									new UI.Window({
+										title			: 'about',
+										width			: 300,
+										height			: 160,
+										viewOverflow 	: 'hidden',
+										controls		: ['close']
+									});
+								}
 							},
 							{ 
 								text 		: 'Software version...',
@@ -78,54 +85,7 @@
 								text 		: 'Préférences systemes...',
 								action : function() { new App.Settings() }
 							},
-							{ text		: 'separator' },
-							{ text		: 'Applications',
-								menu : [
-									{ 
-										text		: 'Finder',
-										action: function(){
-											this.finder = new App.Finder()
-										}
-									},
-									{ 
-										text		: 'FileManager',
-										action: function(){
-											this.finder = new App.FileManager()
-										}
-									},
-									{ 
-										text		: 'Browser',
-										action: function(){
-											this.browser = new App.Browser()
-										}
-									},
-									{ 
-										text		: 'Image',
-										action		: function(){ 
-											this.image = new App.Image() 
-										}
-									},
-									{ 
-										text		: 'Console',
-										action: function(){
-											this.console = new App.Console()
-										}
-									},
-									{ 
-										text		: 'Calculator',
-										action: function(){
-											this.console = new App.Calc()
-										}
-									},
-									{ 
-										text		: 'Control Test',
-										action: function(){
-											this.console = new App.ControlTest()
-										}
-									}
-								]},
-	
-							{
+							{ text		: 'separator' },{
 								text : 'Elements Récents'
 							},
 							{ text		: 'separator' },
@@ -135,45 +95,21 @@
 						]
 					},
 					{
-						text : 'Nouveau',
+						text : 'New',
 						options : {'class' : 'ui-dd-new'},
 						menu		: [
 							{
-								text : 'Element contenu',
-								action : function() { this.test('about'); alert('click')}.bind(this)
+								text : 'Button',
+								action : function() { 
+									
+								
+								}.bind(this)
 							},
 							{ 
-								text 		: 'Actualité',
-								action : function() { this.test('about'); alert('click')}.bind(this)
-							},
-							{ text		: 'Evenement' },
-							{ text		: 'Produit'},
-							{ text		: 'separator' },
-							{ text		: 'Alias'},
-							{ text		: 'separator' },
-							{
-								text : 'Catégorie / Page'
-							},
-							{
-								text : 'Album photos'
-							}
-						]
-					},
-					{
-						text : 'Présentation',
-						options : {'class' : 'ui-dd-new'},
-						menu		: [
-							{
-								text : 'Afficher le selector',
-								action : function() { this.disableSelector() }.bind(this)
-							},
-							{ 
-								text 		: 'Afficher les sections',
-								action : function() { this.toggleBorders() }.bind(this)
-							},
-							{ 
-								text		: 'Afficher les menus contextuels',
-								action : function() { this.toggleContext() }.bind(this)
+								text 		: 'Window',
+								action : function() { 
+								
+								}.bind(this)
 							}
 						]
 					},
@@ -203,8 +139,7 @@
 							{ text : 'separator' },
 							{ text : 'Update...' },
 							{ text : 'separator' },
-							{ text : 'Settings...' },
-							{ text : 'Dock...' }
+							{ text : 'Settings...' }
 						]
 					}
 				]						
@@ -256,32 +191,6 @@
 						label			: 'A new button for button to button',
 						onClick			: function(){
 							new App.ControlTest();
-						},
-						labelStyles		: {
-							padding		: '20px 30px',
-							fontWeight : 'normal'
-						},
-						skinProperties	: {
-							over		: {
-								components : {
-									label	: {
-										styles : {
-											padding		: '20px',
-											fontWeight : 'bold'
-										}
-									}
-								}
-							},
-							down		: {
-								components : {
-									label	: {
-										styles : {
-											padding		: '20px',
-											fontWeight : 'bold'
-										}
-									}
-								}
-							}
 						},
 						styles			: {
 							margin		: 10
