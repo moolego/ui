@@ -1299,28 +1299,33 @@ UI.Skin.implement({
 		},
 		box : {
 			'default' : {
-				'default' : {
+				'default': {
 					/* css properties */
-					padding				: '2px 16px 4px 16px',
+					padding: '2px 16px 4px 16px',
 					
 					/* layers properties */
-					layers				: ['background','main','reflect'],
 					
-					backgroundOffset	: ['0px', '1px', '1px','1px'],
-					backgroundColor		: '#cccccc',
-					backgroundOpacity	: 1,
-					backgroundRadius	: 8,
-					
-					mainOffset			: ['1px', '1px', '4px','1px'],
-					mainColor			: '#FFF',
-					mainOpacity			: 1,
-					mainRadius			: 7,
-					
-					reflectSize			: ['auto',30],
-					reflectOffset		: ['2px', '0px', 'auto'],
-					reflectColor		: ['#F1F1F1', '#FFF'],
-					reflectOpacity		: 1,
-					reflectRadius		: [7, 7, 0, 0]
+					layers: {
+						background	: {
+							offset: ['0px', '1px', '1px', '1px'],
+							color: '#cccccc',
+							opacity: 1,
+							radius: 8
+						},
+						main: {
+							mainOffset: ['1px', '1px', '4px', '1px'],
+							mainColor: '#FFF',
+							mainOpacity: 1,
+							mainRadius: 7
+						},
+						reflect: {
+							size: ['auto', 30],
+							offset: ['2px', '0px', 'auto'],
+							color: ['#F1F1F1', '#FFF'],
+							opacity: 1,
+							radius: [7, 7, 0, 0]
+						}
+					}
 				}
 			}
 		},
