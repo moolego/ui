@@ -29,16 +29,19 @@ UI.Bubble = new Class({
 		// default options
 		label			: 'Bubble',
 		target			: 'element',
+		resetPosition	: true,
 		zIndex			: 1000
-
 	},
 	
 	initialize: function(options) {
 		this.parent(options);
-		
 		this.inject(document.body);
-		this.setLocation();
-		this.fade(1);
+		
+		window.addEvent('load', function(){
+			console.log('loaded');
+			this.setLocation();
+			this.fade(1);
+		}.bind(this));
 	},
 
 	
@@ -80,26 +83,49 @@ UI.Bubble = new Class({
 	*/
 	
 	setLocation : function(){
+		var coord = this.getLocation();
+		this.element.setStyles({
+			left 	: coord.left,
+			top 	: coord.top
+		});
+		
+		if (this.options.resetPosition) {
+			this.reposition = function(){
+				var dest = this.getLocation();
+				new Fx.Morph(this.element).start({
+					'left': dest.left,
+					'top': dest.top
+				});
+			}.bind(this);
+			
+			//add event on windows resize
+			window.addEvent('resize', this.reposition);
+		}
+	},
+	
+	/* 
+		Method: getLocation
+		
+			Get the location for the bubble
+	*/
+	
+	getLocation : function(){
 		var tipCoord = this.element.getCoordinates();
 		var coord = this.options.target.getCoordinates();
 		
-		var left = 0;
-		var top = 0;
-		
 		// should implement left and right as location too
-		
 		if (this.options.type == 'default') {
-			left = coord.right - 40;
-			top = coord.top - tipCoord.height - 10;
+			var left = coord.right - 40;
+			var top = coord.top - tipCoord.height - 10;
 		} else if (this.options.type == 'bottom') {
-			left =  coord.right - 40;
-			top = coord.top + coord.height + 10;
+			var left =  coord.right - 40;
+			var top = coord.top + coord.height + 10;
 		};
 		
-		this.element.setStyles({
-			left 	: left,
-			top 	: top
-		});
+		return {
+			top : top,
+			left: left
+		}
 	},
 
 	/* 
@@ -126,5 +152,16 @@ UI.Bubble = new Class({
 	fade : function(way){
 		this.fx.start('opacity', way);
 		return this;
+	},
+	
+	/* 
+		Method: destroy
+		
+			Destroy the element, and remove the event on window
+	*/
+	
+	destroy : function(){
+		this.window.removeEvent('resize', this.reposition);
+		this.parent();
 	}
 });
