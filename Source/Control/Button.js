@@ -44,7 +44,7 @@ UI.Button = new Class({
 		if(this.options.label) {
 			this.textLabel = new UI.Label({
 				html : this.options.label,
-				styles : this.skinProperties.components.label.styles
+				styles : this.props.components.label.styles
 			}).inject(this.element);
 		}
 	},

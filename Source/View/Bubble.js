@@ -55,7 +55,7 @@ UI.Bubble = new Class({
 		if(this.options.label) {
 			this.textLabel = new UI.Label({
 				html : this.options.label,
-				styles : this.skinProperties.components.label.styles
+				styles : this.props.components.label.styles
 			}).inject(this.element);
 		}
 		
@@ -110,8 +110,8 @@ UI.Bubble = new Class({
 	
 	setSize : function(width,height){
 		if (this.textLabel) {
-			this.options.width = width || this.options.width || this.skinProperties.width || this.textLabel.getSize().x;
-			this.options.height = height || this.options.height || this.skinProperties.height || this.textLabel.getSize().y;
+			this.options.width = width || this.options.width || this.props.width || this.textLabel.getSize().x;
+			this.options.height = height || this.options.height || this.props.height || this.textLabel.getSize().y;
 		};
 		
 		this.parent();

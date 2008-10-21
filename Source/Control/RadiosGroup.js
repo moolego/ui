@@ -33,7 +33,7 @@ UI.RadiosGroup = new Class({
 		type			: 'default',
 		state			: 'default',
 		skin			: false,
-		skinProperties	: false,
+		props	: false,
 
 		// implemented events
 		onClick			: $empty,
@@ -63,7 +63,7 @@ UI.RadiosGroup = new Class({
 			var label = new UI.Label({
 				'for'		: this.options.name,
 				html 		: opt.label,
-				styles 		: this.skinProperties.styles
+				styles 		: this.props.styles
 			}).inject(radio);
 		}
 		
@@ -103,17 +103,17 @@ UI.RadiosGroup = new Class({
 	*/
 	
 	setCanvas : function(radio){
-		if (radio.canvas || (this.skinProperties && !this.skinProperties.layers) || (this.skinProperties && this.skinProperties.layers && this.skinProperties.layers.length == 0))
+		if (radio.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && this.props.layers.length == 0))
 			return false;
 			
 		radio.canvas = new UI.Canvas({
-			skinProperties 	: this.skinProperties,
-			width			: this.skinProperties.width,
-			height			: this.skinProperties.height
+			props 	: this.props,
+			width			: this.props.width,
+			height			: this.props.height
 		}).inject(radio);
 		
 		radio.addEvent('setCanvasSize', function(){
-			this.canvas.setSize(this.element.x,this.element.y, this.skinProperties);
+			this.canvas.setSize(this.element.x,this.element.y, this.props);
 		});
 	},
 	

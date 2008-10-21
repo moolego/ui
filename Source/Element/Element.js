@@ -23,7 +23,7 @@ UI.Element = new Class({
 		onlyCanvas			: false,	
 
 		skin				: 'GreyGlass',
-		skinProperties		: false,
+		props		: false,
 		
 		styles				: {},
 		
@@ -77,7 +77,7 @@ UI.Element = new Class({
 
 		this.element = new Element(this.options.tag, {
 			'class' : this.className,
-			styles	: this.skinProperties.styles,
+			styles	: this.props.styles,
 			events	: this.options.events,
 			id		: this.options.id,
 			html	: this.options.html,
@@ -118,8 +118,8 @@ UI.Element = new Class({
 		
 		this.skin = UI.skin.get(this);
 		
-		this.skinProperties = this.skin[this.options.state];
-		this.skinProperties.layers = new Hash(this.skinProperties.layers);
+		this.props = this.skin[this.options.state];
+		this.props.layers = new Hash(this.props.layers);
 	},
 	
 	/* 
@@ -130,20 +130,20 @@ UI.Element = new Class({
 	
 	setCanvas : function(){
 		
-		if (this.canvas || (this.skinProperties && !this.skinProperties.layers) || (this.skinProperties && this.skinProperties.layers && this.skinProperties.layers.getLength() <= 2))
+		if (this.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && this.props.layers.getLength() <= 2))
 			return false;
 
 		this.canvas = new UI.Canvas({
-			skinProperties 	: this.skinProperties,
+			props 	: this.props,
 			width			: this.element.x,
 			height			: this.element.y
 		}).inject(this.element);
 		this.addEvent('setCanvasSize', function(state){
 			if (!state)
-				var skinProperties = this.skinProperties;
+				var props = this.props;
 			else
-				var skinProperties = this.skin[state];
-			this.canvas.setSize(this.element.x,this.element.y, skinProperties);
+				var props = this.skin[state];
+			this.canvas.setSize(this.element.x,this.element.y, props);
 		});
 	},
 	

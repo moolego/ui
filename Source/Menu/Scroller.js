@@ -37,7 +37,7 @@ Example:
 
 */
 
-UI.Menu.Scroller = new Class({
+UI.MenuScroller = new Class({
 	Implements: [Events, Options],
 
 	options: {
@@ -47,7 +47,7 @@ UI.Menu.Scroller = new Class({
 		margin			: 20,
 		target			: 'element',
 		wrapper			: false,
-		skinProperties	: {},
+		props	: {},
 		onScroll		: $empty,
 		onResize		: $empty
 	},
@@ -61,7 +61,7 @@ UI.Menu.Scroller = new Class({
 	initialize: function(options){
 		this.setOptions(options);
 		
-		this.skinProperties = this.options.skinProperties;
+		this.props = this.options.props;
 		this.element = this.options.element,
 		this.content = this.options.content;
 		this.margin  = this.options.margin;
