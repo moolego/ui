@@ -62,7 +62,7 @@ UI.Skin.implement({
 								cursor		: 'pointer',
 								top			: 0,
 								left		: 0,
-								padding		: '4px 16px',
+								padding		: '3px 16px 4px',
 								whiteSpace	:'nowrap'
 							}
 						}

@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		
+		<script type="text/javascript" src="mootools/core.js"></script>
+		
+		<script type="text/javascript" src="../Utils/Singleton.js"></script>
+		<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+		
+		<script type="text/javascript" src="../Source/Core/UI.js"></script>
+		<script type="text/javascript" src="../Source/Core/Controller.js"></script>
+		<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
+		<script type="text/javascript" src="../Source/Core/Skin.js"></script>
+	
+		<script type="text/javascript" src="../Source/Element/Element.js"></script>
+		<script type="text/javascript" src="../Source/Element/Element.Native.js"></script>
+		<script type="text/javascript" src="../Source/Element/Element.Coordinates.js"></script>
+		<script type="text/javascript" src="../Source/Element/Element.Behavior.js"></script>
+	
+		<script type="text/javascript" src="../Source/Control/Control.js"></script>
+		<script type="text/javascript" src="../Source/Control/Label.js"></script>
+		<script type="text/javascript" src="../Source/Control/Button.js"></script>
+
+		<script type="text/javascript" src="../Source/Skins/GreyGlass.js"></script>
+		
+		<title>Buttons Demo</title>
+		
+		<script type="text/javascript">
+			window.addEvent('domready', function(){
+				
+				button = new UI.Button({
+					label	: 'Hello world!',
+					onClick	: function(){ alert('Hello world!') },
+					styles	: {
+						margin	: 10,
+						fontFamily	: 'arial, helvetica, sans-serif',
+						fontSize	: '13px'
+					}
+				}).inject(document.body);
+				
+			});
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
