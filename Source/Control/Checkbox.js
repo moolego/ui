@@ -54,7 +54,7 @@ UI.Checkbox = new Class({
 			this.textLabel = new UI.Label({
 				'for'		: this.options.name,
 				html 		: this.options.label,
-				styles 		: this.skinProperties.labelStyles
+				styles 		: this.props.labelStyles
 			}).inject(this.element);
 		}
 		this.control.store('value', this.options.value);

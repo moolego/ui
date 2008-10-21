@@ -20,7 +20,7 @@ Example:
 			skin : this.options.skin,
 			component : this.options.name, 
 			type : this.options.type, 
-			skinProperties : this.options.skinProperties
+			props : this.options.props
 		});
 	(end)
 */
@@ -93,7 +93,7 @@ UI.Skin = new Class({
 			skin				: className.options.skin,
 			component 			: className.options.component, 
 			type 				: className.options.type, 
-			skinProperties 		: className.options.skinProperties,
+			props 		: className.options.props,
 			styles				: className.options.styles
 		}
 		
@@ -112,11 +112,6 @@ UI.Skin = new Class({
 				if(type[key].shortcuts) {
 					new Hash(state.shortcuts).each(function(shortcut, name){
 						if (className.options[name]) {
-							//console.log(name);
-							//console.log(className.options.labelStyles);
-							//eval('console.log(className.options.labelStyles)');
-							//console.log('type[\'' + key + '\'].' + shortcut + ' = $merge(type[\'' + key + '\'].' + shortcut + ',className.options.' + name + ')');
-							//console.log(eval('type[\'' + key + '\'].' + shortcut));
 							eval('type[\'' + key + '\'].' + shortcut + ' = $merge(type[\'' + key + '\'].' + shortcut + ',className.options.' + name + ')');
 						}
 					});
@@ -124,18 +119,23 @@ UI.Skin = new Class({
 				}
 				
 				//merge custom default properties
-				if (props.skinProperties && props.skinProperties['default'])
-					type[key] = $merge(type[key], props.skinProperties['default']);
+				if (props.props && props.props['default'])
+					type[key] = $merge(type[key], props.props['default']);
 					
 				//merge state default properties
-				if (props.skinProperties && props.skinProperties[key])
-					type[key] = $merge(type[key], props.skinProperties[key]);
+				if (props.props && props.props[key])
+					type[key] = $merge(type[key], props.props[key]);
 				
 				//merge custom options.styles
 				if (props.styles)
 					type[key].styles = $merge(type[key].styles, props.styles);
 			}
 		});
+		
+		//remove shadows if not used
+		if (type['default'].layers.shadow.size == 0) {
+			delete type['default'].shadows;
+		}
 
 		//return type with all attributes for each state
 		return type;

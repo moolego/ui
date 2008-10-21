@@ -63,8 +63,8 @@ UI.Slider = new Class({
 			type				: 'knob',
 			width				: 21,
 			height				: 21,
-			styles				:  this.skinProperties.components.knob.styles,
-			skinProperties		: {
+			styles				:  this.props.components.knob.styles,
+			props		: {
 				defaultRadius	: 4
 			}
 		}).inject(this.element);

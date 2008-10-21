@@ -39,11 +39,11 @@ UI.Control = new Class({
 	
 	setSize : function(width,height, state){
 		if (this.textLabel) {
-			var twidth = width || this.options.width || this.skinProperties.width || this.textLabel.getSize().x;
-			var theight = height || this.options.height || this.skinProperties.height || this.textLabel.getSize().y;
+			var twidth = width || this.options.width || this.props.width || this.textLabel.getSize().x;
+			var theight = height || this.options.height || this.props.height || this.textLabel.getSize().y;
 		}else if (this.input && this.input.getProperty('type') != 'hidden') {
-			var twidth = width || this.options.width || this.skinProperties.width || this.input.getSize().x;
-			var theight = height || this.options.height || this.skinProperties.height || this.input.getSize().y;
+			var twidth = width || this.options.width || this.props.width || this.input.getSize().x;
+			var theight = height || this.options.height || this.props.height || this.input.getSize().y;
 		}
 		
 		this.parent(twidth, theight, state);
@@ -79,7 +79,7 @@ UI.Control = new Class({
 				break;
 		}
 		if (type != 'hidden') {
-			this.input.setStyles(this.skinProperties.components.input.styles);
+			this.input.setStyles(this.props.components.input.styles);
 		}
 	},
 	
