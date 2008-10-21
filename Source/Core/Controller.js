@@ -53,7 +53,7 @@ UI.Controller = new Class({
 		
 		//set z-index
 		if (elementClass.element.getStyle('zIndex') == 'auto')
-			elementClass.element.setStyle('zIndex', this.zIndex++);
+			elementClass.element.setStyle('zIndex', elementClass.options.zIndex || this.zIndex++);
 	}
 });
 

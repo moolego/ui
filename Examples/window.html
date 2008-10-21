@@ -86,7 +86,14 @@
 								action : function() { new App.Settings() }
 							},
 							{ text		: 'separator' },{
-								text : 'Elements Récents'
+								text : 'Elements récents',
+								menu : [
+									{text : 'Finder'},
+									{text : 'Safari'},
+									{text : 'Mail'},
+									{text : 'Protoshop'},
+									{text : 'Nasty Explorer'}
+								]
 							},
 							{ text		: 'separator' },
 							{
@@ -101,14 +108,13 @@
 							{
 								text : 'Button',
 								action : function() { 
-									
-								
+									new UI.Button().inject(form, 'top');
 								}.bind(this)
 							},
 							{ 
 								text 		: 'Window',
 								action : function() { 
-								
+									new UI.Window();
 								}.bind(this)
 							}
 						]
@@ -140,6 +146,15 @@
 							{ text : 'Update...' },
 							{ text : 'separator' },
 							{ text : 'Settings...' }
+						]
+					},
+					{
+						text : 'History...',
+						action: function(){alert('menu with action')},
+						menu : [
+							{text: 'Page down'},
+							{text: 'Page up'},
+							{text: 'Microsoft'}
 						]
 					}
 				]						

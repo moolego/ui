@@ -38,6 +38,7 @@ UI.Canvas = new Class({
 	initialize: function(options){
 		this.setOptions(options);
 		this.props = this.options.props;
+		
 		this.canvas = new Canvas({
 			'class'	: this.options.className,
 			styles	: {
@@ -45,18 +46,15 @@ UI.Canvas = new Class({
 				zIndex		: 0
 			}
 		});
-		this.setSize();
 		this.ctx = this.canvas.getContext("2d");
+		
+		this.setSize();
+
 		this.shadowsLoaded = false;
 		this.shadowSet 	= false;
 
 		this.draw();
 		
-	},
-	
-	inject : function(target, position){
-		this.canvas.inject(target, position);
-		return this;
 	},
 	
 	setSize : function(width, height, props){
@@ -189,6 +187,11 @@ UI.Canvas = new Class({
 		this.draw();
 		this.fireEvent('complete');
 
+	},
+	
+	inject : function(target, position){
+		this.canvas.inject(target, position);
+		return this;
 	},
 	
 	trace : function(key) {

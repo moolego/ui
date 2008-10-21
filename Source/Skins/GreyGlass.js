@@ -944,10 +944,21 @@ UI.Skin.implement({
 		menu : {
 			'default' : {
 				'default' : {
+					/* sortcuts */
+					shortcuts			: {
+						itemStyles		: 'components.menuItem.styles'
+					},
+					
 					/* components properties */
 					components			: {
+						wrapper			: {
+							styles		: {
+								padding	: '6px 1px'
+							}
+						},
 						menuItem		: {
 							styles		: {
+								color		: '#000',
 								padding		: '3px 40px 3px 16px',
 								lineHeight	: '1em',
 								whiteSpace	: 'nowrap',
@@ -967,8 +978,6 @@ UI.Skin.implement({
 					},
 					
 					/* css properties */
-					padding				: '6px 1px',
-
 					styles				: {},
 
 					/* effects settings */
@@ -990,12 +999,17 @@ UI.Skin.implement({
 							opacity		: .27
 						},
 						main			: {}
-					},
-					
-					/* others */
-					selectFontColor		: '#ddd',
-					selectBorderSize	: 1,
-					selectBorderColor	: '#000'
+					}
+				},
+				over : {
+					/* components properties */
+					components			: {
+						menuItem		: {
+							styles		: {
+								color	: '#ddd'
+							}
+						}
+					}
 				}
 			},
 			context: {
@@ -1012,8 +1026,18 @@ UI.Skin.implement({
 		toolbar : {
 			'default' : {
 				'default' : {
+					/* sortcuts */
+					shortcuts			: {
+						itemStyles		: 'components.menuItem.styles'
+					},
+					
 					/* components properties */
 					components			: {
+						wrapper			: {
+							styles		: {
+								padding	: '0 0 0 10px'
+							}
+						},
 						menuItem		: {
 							styles		: {
 								padding		: '30px 10px 5px',
@@ -1028,11 +1052,8 @@ UI.Skin.implement({
 						}
 					},
 					
-					/* css properties */
-					padding				: '0 0 0 10px',
-
 					styles				: {
-						padding			: '2px 0 4px 0'
+						padding			: '2px 0 0 0'
 					},
 					
 					
@@ -1041,9 +1062,6 @@ UI.Skin.implement({
 					presentation		: 'both',
 					hideFxDuration		: 100,
 					showDelay			: 0,
-					iconSize			: 25,
-					iconPadding			: '5px 0 0 0',
-					iconPosition		: 'top',
 					selectFontColor		: '#ddd',
 					delay				: 500,
 					
@@ -1287,8 +1305,6 @@ UI.Skin.implement({
 					
 					/* layers properties */
 					layers				: ['background','main','reflect'],
-					
-					defaultRadius		: 10,
 					
 					backgroundOffset	: ['0px', '1px', '1px','1px'],
 					backgroundColor		: '#cccccc',
