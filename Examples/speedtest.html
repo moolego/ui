@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		
+		<script type="text/javascript" src="mootools/core.js"></script>
+		
+		<script type="text/javascript" src="../Utils/Singleton.js"></script>
+		<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+		
+		<script type="text/javascript" src="../Source/Core/UI.js"></script>
+		<script type="text/javascript" src="../Source/Core/Controller.js"></script>
+		<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
+		<script type="text/javascript" src="../Source/Core/Skin.js"></script>
+	
+		<script type="text/javascript" src="../Source/Element/Element.js"></script>
+		<script type="text/javascript" src="../Source/Element/Element.Native.js"></script>
+		<script type="text/javascript" src="../Source/Element/Element.Coordinates.js"></script>
+		<script type="text/javascript" src="../Source/Element/Element.Behavior.js"></script>
+	
+		<script type="text/javascript" src="../Source/View/View.js"></script>
+
+		<script type="text/javascript" src="../Source/Control/Control.js"></script>
+		<script type="text/javascript" src="../Source/Control/Label.js"></script>
+		<script type="text/javascript" src="../Source/Control/Button.js"></script>
+
+		<script type="text/javascript" src="../Source/Skins/GreyGlass.js"></script>
+		
+		<title>Speed Test</title>
+		
+		<script type="text/javascript">
+			window.addEvent('domready', function(){
+				
+				function RGBtoHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B)}
+				function toHex(n) {
+					if (n==null) return "00";
+					n=parseInt(n); if (n==0 || isNaN(n)) return "00";
+					n=Math.max(0,n); n=Math.min(n,255); n=Math.round(n);
+					return "0123456789ABCDEF".charAt((n-n%16)/16)
+					+ "0123456789ABCDEF".charAt(n%16);
+				};
+				
+				var box = new UI.Element({
+					overflow		: 'hidden',
+					styles			: {
+						padding		: '8px 16px',
+						width		: '700px',
+						height		: '700px'
+					}
+					
+				}).inject(document.body);
+				
+				time = $time();
+				var size = 6; 
+				for (i = 0; i < size; i++) {
+					for (j = 0; j < size; j++) {
+						
+						var one = size -i;
+						var two = size - j;
+
+						var color = RGBtoHex(Math.floor(255 - 42.5 * one),Math.floor(255 - 42.5 * two),0);
+						
+						new UI.Button({
+							label				: '<small>time</small><br/>'+(($time()-time)/1000)+'<br/><small style="font-size:5px: color:#ccc">color</small><br/>'+color,
+							labelStyles			: {
+								fontSize		: '11px',
+								fontWeight		: 'bold',
+								fontFamily		: 'Arial, Helvetica',
+								opacity			: '.7',
+								padding			: '10px 16px',
+								color			: '#000',
+								width			: '70px'
+							},
+							onClick: function(){
+								this.destroy();
+							}.bind(this),
+							props				: {
+								'default'				: {
+									layers				: {
+										
+										reorder			: ['emboss','front','reflect'],
+										
+										emboss			: {
+											offset		: '0px',
+											color		: '#000',
+											opacity		: .17,
+											radius		: 7
+										},
+										
+										front			: {
+											offset		: 2,
+											color		: '#'+color,
+										 	opacity		: 1,
+											radius		: 5
+										},
+										reflect			: {
+											offset		: ['2px', '2px', '35%'],
+											color		: ['#FFF', '#FFF'],
+											opacity		: [.9, .1],
+											radius		: [3, 3, 3, 3]
+										}
+									}
+								},
+								over					: {
+									components			: {
+										label			: {
+											styles		: {
+												opacity : .8
+											}
+										}
+									}
+								},
+								down					: {
+									components			: {
+										label			: {
+											styles		: {
+												color 	: '#fff'
+											}
+										}
+									},
+									layers : {
+										front			: {
+											color		: '#000'
+										}
+									}
+								}
+							},
+							styles		: {
+								margin	: 3
+							}
+						}).inject(box.element);
+					}
+				}
+			});
+		</script>
+	</head>
+	<body style="padding:24px; margin: 0 auto">
+	</body>
+</html>
