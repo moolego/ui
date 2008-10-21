@@ -85,9 +85,16 @@ UI.Skin.implement({
 						'default'		: {
 							radius		: 10
 						},
+						littleshadow	: {
+							offset		: ['0px', '0px', '0px','0px'],
+							color		: ['#000','#000'],
+							radius		: 11,
+							opacity		: .1,
+							radius		: 11
+						},
 						background		: {
 							offset		: ['0px', '1px', '1px','1px'],
-							color		: ['#494949','#666666'],
+							color		: ['#494949','#5f5f5f'],
 							opacity		: 1,
 							radius		: 11
 						},
@@ -104,7 +111,7 @@ UI.Skin.implement({
 							position	: 'absolute',
 							offset		: ['50%', '5px', '2px'],
 							color		: ['#FFF', '#FFF'],
-							opacity		: [0, .9],
+							opacity		: [0, 1],
 							radius		: [4, 4, 7, 7]
 						}
 					}
@@ -120,6 +127,9 @@ UI.Skin.implement({
 					layers				: {
 						main			: {
 							color		: ['#7b8997','#7b8997']
+						},
+						background		: {
+							color		: ['#494949','#5f5f5f']
 						}
 					}
 				}
