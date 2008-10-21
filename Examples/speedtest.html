@@ -25,6 +25,7 @@
 		<script type="text/javascript" src="../Source/Control/Button.js"></script>
 
 		<script type="text/javascript" src="../Source/Skins/GreyGlass.js"></script>
+		<script type="text/javascript" src="../Source/Skins/Demo.js"></script>
 		
 		<title>Speed Test</title>
 		
@@ -40,12 +41,13 @@
 					+ "0123456789ABCDEF".charAt(n%16);
 				};
 				
-				var box = new UI.Element({
-					overflow		: 'hidden',
+				var box = new Element('div',{
+					
 					styles			: {
 						padding		: '8px 16px',
 						width		: '700px',
-						height		: '700px'
+						height		: '700px',
+						overflow		: 'hidden'
 					}
 					
 				}).inject(document.body);
@@ -61,74 +63,20 @@
 						var color = RGBtoHex(Math.floor(255 - 42.5 * one),Math.floor(255 - 42.5 * two),0);
 						
 						new UI.Button({
-							label				: '<small>time</small><br/>'+(($time()-time)/1000)+'<br/><small style="font-size:5px: color:#ccc">color</small><br/>'+color,
-							labelStyles			: {
-								fontSize		: '11px',
-								fontWeight		: 'bold',
-								fontFamily		: 'Arial, Helvetica',
-								opacity			: '.7',
-								padding			: '10px 16px',
-								color			: '#000',
-								width			: '70px'
-							},
-							onClick: function(){
-								this.destroy();
-							}.bind(this),
-							props				: {
-								'default'				: {
-									layers				: {
-										
-										reorder			: ['emboss','front','reflect'],
-										
-										emboss			: {
-											offset		: '0px',
-											color		: '#000',
-											opacity		: .17,
-											radius		: 7
-										},
-										
-										front			: {
-											offset		: 2,
-											color		: '#'+color,
-										 	opacity		: 1,
-											radius		: 5
-										},
-										reflect			: {
-											offset		: ['2px', '2px', '35%'],
-											color		: ['#FFF', '#FFF'],
-											opacity		: [.9, .1],
-											radius		: [3, 3, 3, 3]
-										}
-									}
-								},
-								over					: {
-									components			: {
-										label			: {
-											styles		: {
-												opacity : .8
-											}
-										}
-									}
-								},
-								down					: {
-									components			: {
-										label			: {
-											styles		: {
-												color 	: '#fff'
-											}
-										}
-									},
-									layers : {
-										front			: {
-											color		: '#000'
+							label		: '<small>time</small><br/>'+(($time()-time)/1000)+'<br/><small style="font-size:5px: color:#ccc">color</small><br/>'+color,
+							skin		: 'Demo',
+							type		: 'ESL',
+							props: {
+								'default': {
+									layers: {
+									
+										front: {
+											color: '#' + color
 										}
 									}
 								}
-							},
-							styles		: {
-								margin	: 3
 							}
-						}).inject(box.element);
+						}).inject(box);
 					}
 				}
 			});

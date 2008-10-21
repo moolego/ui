@@ -88,6 +88,7 @@ UI.Skin = new Class({
 	 */
 	
 	get : function(className){
+		
 		//props is this
 		var props = {
 			skin				: className.options.skin,
@@ -138,7 +139,7 @@ UI.Skin = new Class({
 		//remove shadows if not used
 		if (type['default'].layers.shadow.size == 0) {
 			delete type['default'].shadows;
-		}
+		};
 
 		//return type with all attributes for each state
 		return type;
