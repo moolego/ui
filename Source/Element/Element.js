@@ -161,10 +161,11 @@ UI.Element = new Class({
 		
 			Set the button state
 	*/
-	setState : function(state){
+	setState : function(state, dontResize){
 		if (this.skin[state]) {
 			this.state = state;
-			this.setSize(false, false, state);
+			if (this.skin[state].styles) this.setStyles(this.skin[state].styles);
+			if (!$defined(dontResize)) this.setSize(false, false, state);
 		}
 	}
 });

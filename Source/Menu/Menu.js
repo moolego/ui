@@ -45,7 +45,7 @@ UI.Menu = new Class({
 	options: {
 		component			: 'menu',
 
-		zIndex				: 5000,
+		zIndex				: 3000,
 		contentTag			: 'div',
 		itemTag				: 'div',
 
@@ -82,12 +82,11 @@ UI.Menu = new Class({
 	
 	build: function(menu) {
 		this.parent();
-		
 		this.content = new Element(this.options.contentTag,{
 			styles : {
 				zIndex		: 2,
 				position	: 'relative',
-				padding		: this.props.padding,
+				padding		: this.props.components.wrapper.styles.padding,
 				margin		: 0,
 				listStyle	: 'none',
 				lineHeight	: '1em'
@@ -127,7 +126,7 @@ UI.Menu = new Class({
 				var menuItem = new UI.Label({
 					tag			: this.options.itemTag,
 					html		: content,
-					styles		: this.props.components.menuItem.styles
+					props		: UI.skin.getComponentProps(this.skin, 'menuItem')
 				}).set(item.options);
 				
 				if (item.action) menuItem.element.addEvent('action', item.action);
@@ -187,9 +186,8 @@ UI.Menu = new Class({
 					target			: menuItem,
 					underlay		: this.underlay,
 					menu			: item.menu,
-					props	: this.props,
 					position		: position,
-					zIndex			: this.options.zIndex + 1,
+					zIndex			: this.options.component == 'toolbar' ? --this.options.zIndex : ++this.options.zIndex,
 					events			: {
 						hide		: this.removeSubmenu
 					}
@@ -280,9 +278,8 @@ UI.Menu = new Class({
 		
 		if (this.activeItem) {
 			this.activeItem.element.fireEvent('defaultArrow');
-			this.activeItem.setStyles({
-				color : this.props.fontColor
-			});
+			
+			this.activeItem.setState('default', 'dontResize');
 		}
 		
 		this.rollover
@@ -292,7 +289,7 @@ UI.Menu = new Class({
 			top : coord.top,
 			left : coord.left
 		});
-		menuItem.setStyle('color', this.props.selectFontColor);
+		menuItem.setState('over', 'dontResize');
 
 		this.activeItem = menuItem;
 	},
@@ -309,9 +306,7 @@ UI.Menu = new Class({
 		}
 		if (this.activeItem) {
 			this.activeItem.fireEvent('defaultArrow');
-			this.activeItem.setStyles({
-				color : this.props.fontColor
-			});
+			this.activeItem.setState('default', 'dontResize');
 		}
 		
 		this.activeItem = false;
@@ -475,7 +470,7 @@ UI.Menu = new Class({
 						opacity: 0.000001,
 						top: 0,
 						left: 0,
-						zIndex: this.options.zIndex-1
+						zIndex: this.options.zIndex-50
 					},
 					events : {
 						'click' : function(){
@@ -529,12 +524,14 @@ UI.Menu = new Class({
 		this.element.inject(element, target);
 		
 		this.setSize();
-		this.setCanvas();
 		
 		if (this.options.position != 'over') {
 			this.options.target ? this.setPosition(this.options.target) : this.setPosition(element);
+			this.setCanvas();
 			this.setStyle('visibility', 'visible');
 			this.addUnderlay();
+		} else {
+			this.setCanvas();
 		}
 		
 		return this;

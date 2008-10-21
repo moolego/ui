@@ -27,9 +27,9 @@ UI.Bubble = new Class({
 		component		: 'tip',
 		
 		// default options
-		
 		label			: 'Bubble',
-		target			: 'element'
+		target			: 'element',
+		zIndex			: 1000
 
 	},
 	

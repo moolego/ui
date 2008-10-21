@@ -42,7 +42,7 @@ UI.Toolbar = new Class({
 	options				: {
 		// default options	
 		menus			: [],
-		zIndex			: 2500,
+		zIndex			: 4000,
 		
 		// styles
 		component		: 'toolbar'
@@ -108,19 +108,20 @@ UI.Toolbar = new Class({
 					if (this.activeItem != menuItem) {
 						this.time = $time();
 						this.addUnderlay();
-						if (item.menu && !item.action) {
+						if (!item.action) {
 							this.addSubmenu(item, menuItem, 'bottom');
 							this.moveRollover(menuItem);
 						} else {
 							// first push icon, then manage action with delay
 							this.menuWithAction = (function(){
+								this.moveRollover(menuItem);
 								this.addSubmenu(item, menuItem, 'bottom');
 								this.menuWithAction = false;
 							}).delay(this.props.delay, this);
 						}
 					}
 				}.bind(this),
-				'mouseup' : function(e){
+				'mouseup' : function(){
 					if ($time() - this.time > 300 && this.underlay) {
 						this.underlay.fireEvent('click');
 					}
@@ -162,7 +163,7 @@ UI.Toolbar = new Class({
 					delete this.menuWithAction;
 				}
 				if (menuItem.down && (!menuItem.submenu || (menuItem.submenu && menuItem.submenu.element.getStyle('visibility') == 'hidden'))) {
-					menuItem.fireEvent('action');
+					menuItem.element.fireEvent('action');
 				}
 				menuItem.down = false;
 			}.bind(this)
