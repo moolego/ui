@@ -61,6 +61,7 @@ UI.RadiosGroup = new Class({
 		
 		if (opt.label) {
 			var label = new UI.Label({
+				skin 		: this.options.skin,
 				'for'		: this.options.name,
 				html 		: opt.label,
 				styles 		: this.props.styles

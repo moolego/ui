@@ -33,13 +33,11 @@ UI.Skin = new Class({
 	initialize : function(name, options) {
 		this.setOptions(options);
 		this.defaultSkin = name;
-		this.processSkin(this.defaultSkin);
 	},
-	
 	
 	processSkin : function(skinName) {
 		//we merge syles for each states of each type of components
-		var properties = new Hash(this[skinName]);
+		var properties = new Hash(UI.props[skinName]);
 		properties.each(function(componentProps, componentKey){
 			if (componentKey != 'default') {
 				$H(componentProps).each(function(typeProps, typeKey){
@@ -73,7 +71,7 @@ UI.Skin = new Class({
 		});
 		//we clean properties
 		properties.preprocessed = true;
-		this[skinName] = properties.getClean();
+		UI.props[skinName] = properties.getClean();
 	},
 	
 
@@ -88,7 +86,6 @@ UI.Skin = new Class({
 	 */
 	
 	get : function(className){
-		
 		//props is this
 		var props = {
 			skin				: className.options.skin,
@@ -98,14 +95,13 @@ UI.Skin = new Class({
 			styles				: className.options.styles
 		}
 		
-		var properties = {};
 		var skin = (props.skin) ? props.skin : this.defaultSkin;
 		
 		//check if it was already preprocessed
-		if(!this[skin].preprocessed) this.processSkin(skin);
+		if(!UI.props[skin].preprocessed) this.processSkin(skin);
 
 		//get properties for provided type
-		var type = $unlink(this[skin][props.component][props.type]);
+		var type = $unlink(UI.props[skin][props.component][props.type]);
 		
 		$H(type).each(function(state, key){
 			//bind shortcuts
@@ -166,4 +162,3 @@ UI.Skin = new Class({
  });
  
 UI.Skin.toSingleton();
-
