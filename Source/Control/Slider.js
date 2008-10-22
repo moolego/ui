@@ -59,14 +59,12 @@ UI.Slider = new Class({
 		
 		this.handler = new UI.Element({
 			label				: false,
+			skin				: this.options.skin,
 			component			: 'slider',
 			type				: 'knob',
 			width				: 21,
 			height				: 21,
-			styles				:  this.props.components.knob.styles,
-			props		: {
-				defaultRadius	: 4
-			}
+			styles				:  this.props.components.knob.styles
 		}).inject(this.element);
 	},
 	
@@ -80,7 +78,6 @@ UI.Slider = new Class({
 			onChange: function(value){
 				//this.fireEvent('change');
 				// Everytime the value changes, we change the font of an element
-				
 			}
 		});
 	}

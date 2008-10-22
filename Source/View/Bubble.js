@@ -37,11 +37,8 @@ UI.Bubble = new Class({
 		this.parent(options);
 		this.inject(document.body);
 		
-		window.addEvent('load', function(){
-			console.log('loaded');
-			this.setLocation();
-			this.fade(1);
-		}.bind(this));
+		this.setLocation();
+		this.fade(1);
 	},
 
 	
@@ -161,7 +158,7 @@ UI.Bubble = new Class({
 	*/
 	
 	destroy : function(){
-		this.window.removeEvent('resize', this.reposition);
+		window.removeEvent('resize', this.reposition);
 		this.parent();
 	}
 });
