@@ -10,7 +10,7 @@ Arguments:
 
 */
 
-UI.props.Demo = {
+UI.props.demo = {
 	'default': {
 		/* css properties */
 		styles: {},
@@ -157,7 +157,12 @@ UI.props.Demo = {
 	
 	label: {
 		'default': {
-			'default': {}
+			'default': {
+				styles : {}
+			},
+			down: {
+				styles : {}
+			}
 		}
 	}
 }
