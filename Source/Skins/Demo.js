@@ -112,7 +112,7 @@ UI.props.Demo = {
 					}
 				}
 			},
-			'down': {
+			down: {
 				layers: {
 					main: {
 						color: ['#7b8997', '#7b8997']
@@ -139,14 +139,13 @@ UI.props.Demo = {
 					}
 				},
 				
-				styles : {
-					
+				styles : {					
 					margin	: '3px'
 				},
-				layers: {
 				
+				layers: {
 					reorder: ['emboss', 'front', 'reflect'],
-					
+
 					emboss: {
 						offset: '0px',
 						color: '#000',
@@ -171,7 +170,7 @@ UI.props.Demo = {
 				components: {
 					label: {
 						styles: {
-							opacity: .8
+							opacity: 1
 						}
 					}
 				}
@@ -180,13 +179,8 @@ UI.props.Demo = {
 				components: {
 					label: {
 						styles: {
-							color: '#fff'
+							color: '#000'
 						}
-					}
-				},
-				layers: {
-					front: {
-						color: '#000'
 					}
 				}
 			}
@@ -194,7 +188,6 @@ UI.props.Demo = {
 	},
 	
 	// needed for button
-	
 	label: {
 		'default': {
 			'default': {}
