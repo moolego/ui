@@ -43,6 +43,7 @@ UI.Button = new Class({
 		this.parent();
 		if(this.options.label) {
 			this.textLabel = new UI.Label({
+				skin : this.options.skin,
 				html : this.options.label,
 				styles : this.props.components.label.styles
 			}).inject(this.element);

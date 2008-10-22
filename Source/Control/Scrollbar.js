@@ -48,6 +48,7 @@ UI.Scrollbar = new Class({
 		this.inject(this.options.container,'before')
 		
 		this.thumb = new UI.Element({
+			skin 			: this.options.skin,
 			component		: this.options.component,
 			type			: 'thumb'
 		}).inject(this.element);

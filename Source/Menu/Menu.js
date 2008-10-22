@@ -116,6 +116,7 @@ UI.Menu = new Class({
 		list.each(function(item){
 			if (item.text == 'separator') {
 				var menuItem = new UI.Label({
+					skin		: this.options.skin,
 					tag			: this.options.itemTag,
 					html		: '',
 					styles		: this.props.components.separator.styles
@@ -124,6 +125,7 @@ UI.Menu = new Class({
 			} else {
 				var content = (this.lang.get(item.text)) ? this.lang.get(item.text) : item.text;
 				var menuItem = new UI.Label({
+					skin		: this.options.skin,
 					tag			: this.options.itemTag,
 					html		: content,
 					props		: UI.skin.getComponentProps(this.skin, 'menuItem')
@@ -183,6 +185,7 @@ UI.Menu = new Class({
 		this.menuActionDelay = (function(){
 			if (!menuItem.submenu) {
 				menuItem.submenu = new UI.Menu({
+					skin			: this.options.skin,
 					target			: menuItem,
 					underlay		: this.underlay,
 					menu			: item.menu,
@@ -208,14 +211,15 @@ UI.Menu = new Class({
 	addSubmenuArrow : function(menuItem){
 		//we add the arrow
 		menuItem.arrow = new UI.Element({
-			component : 'element',
-			type: 'menuRightArrow',
-			styles : {
-				'padding': 0,
-				'position': 'absolute',
+			skin		: this.options.skin,
+			component 	: 'element',
+			type		: 'menuRightArrow',
+			styles 		: {
+				'padding'	: 0,
+				'position'	: 'absolute',
 				right		: 8,
-				display: 'block',
-				margin: '4px 0 0 0'
+				display		: 'block',
+				margin	: '4px 0 0 0'
 			}
 		}).inject(menuItem.element, 'top');
 		menuItem.element.addEvents({
@@ -258,6 +262,7 @@ UI.Menu = new Class({
 	
 	setRollover : function(){
 		this.rollover = new UI.Element({
+			skin			: this.options.skin,
 			type			: 'menuRollover',
 			styles			: {
 				position 	: 'absolute',
@@ -430,6 +435,7 @@ UI.Menu = new Class({
 	
 	addScrolls : function() {
 		this.scrolls = new UI.MenuScroller({
+			skin			: this.options.skin,
 			element			: this.element,
 			content 		: this.content,
 			margin			: this.options.scrollMargin,

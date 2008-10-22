@@ -204,6 +204,7 @@ UI.MenuScroller = new Class({
 		this.arrowUp.canvas = new UI.Element({
 			width			: elementCoord.width,
 			height			: 25,
+			skin			: this.options.skin,
 			type			: 'menuArrow',
 			state			: 'up'
 		}).setStyles({
@@ -250,6 +251,7 @@ UI.MenuScroller = new Class({
 		this.arrowDown.canvas = new UI.Element({
 			width			: elementCoord.width,
 			height			: 25,
+			skin			: this.options.skin,
 			type			: 'menuArrow',
 			state			: 'down'
 		}).setStyles({

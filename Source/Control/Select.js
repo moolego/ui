@@ -84,6 +84,7 @@ UI.Select = new Class({
 		//we create a menu
 		this.menu = new UI.Menu({
 			width				: this.options.width,
+			skin				: this.options.skin,
 			position 			: 'over',
 			target				: this.element,
 			menu				: this.options.list,
@@ -98,6 +99,7 @@ UI.Select = new Class({
 		
 		this.textLabel = new UI.Label({
 			width	: width,
+			skin	: this.options.skin,
 			styles	: this.props.components.label.styles,
 			html	: this.options.list[0].text
 		}).inject(this.element);
