@@ -27,7 +27,7 @@
 		<script type="text/javascript" src="../Source/Skins/GreyGlass.js"></script>
 		<script type="text/javascript" src="../Source/Skins/Demo.js"></script>
 		
-		<title>Speed Test</title>
+		<title>mooLego Speed Test</title>
 		
 		<script type="text/javascript">
 			window.addEvent('domready', function(){
@@ -47,7 +47,7 @@
 						padding		: '8px 16px',
 						width		: '700px',
 						height		: '700px',
-						overflow		: 'hidden'
+						overflow	: 'hidden'
 					}
 					
 				}).inject(document.body);
@@ -64,12 +64,11 @@
 						
 						new UI.Button({
 							label		: '<small>time</small><br/>'+(($time()-time)/1000)+'<br/><small style="font-size:5px: color:#ccc">color</small><br/>'+color,
-							skin		: 'Demo',
-							type		: 'ESL',
+							skin		: 'demo',
+							type		: 'jgood',
 							props: {
 								'default': {
 									layers: {
-									
 										front: {
 											color: '#' + color
 										}

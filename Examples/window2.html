@@ -49,29 +49,17 @@
 	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
 	
 	<script type="text/javascript" src="../Source/Skins/GreyGlass.js"></script>
-	
-	<script type="text/javascript" src="../Calls/Calls.js"></script>
-	<script type="text/javascript" src="../Calls/..Apps.js"></script>
-	<script type="text/javascript" src="../App/App.js"></script>
-	<script type="text/javascript" src="../App/ControlTest.js"></script>
-	<script type="text/javascript" src="../App/Interface.js"></script>
-	<script type="text/javascript" src="../App/Finder.js"></script>
-	<script type="text/javascript" src="../App/FileManager.js"></script>
-	<script type="text/javascript" src="../App/Calc.js"></script>
+
 	
 	<script type="text/javascript">
 		window.addEvent('domready', function() {
 			var time = $time();
 			
 			/* Elements in page */
-			var form = new Element('form', {
-				id				: 'controltest',
-				method			: 'get',
-				action			: 'http://iframework.floor.ch/Client/Source/admin.html'
-			}).inject(document.body);
+			var form = new Element('form').inject(document.body);
 			
 			button = new UI.Button({
-				label : "Launch a new Control test",
+				label : "new window",
 				labelStyles : {
 					fontWeight : 'bold',
 					padding : '10px 20px'

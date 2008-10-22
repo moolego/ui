@@ -59,7 +59,7 @@
 				draggable	: false,
 				menu		: [
 					{
-						text	: 'UI',
+						text	: 'MooLego',
 						styles	: {
 							position	: 'relative'
 						},
@@ -71,6 +71,7 @@
 										title			: 'about',
 										width			: 300,
 										height			: 160,
+										head			: false,
 										viewOverflow 	: 'hidden',
 										controls		: ['close']
 									});
@@ -421,10 +422,7 @@
 				}
 			}).inject(form);
 			
-			
-			
-			
-			this.tip = new UI.Bubble({
+			new UI.Bubble({
 				target : $(this.slider),
 				props : {
 					'default' : {
@@ -519,8 +517,8 @@
 			}).inject(form);
 			
 			
-			this.youtube = new UI.Button({
-				label				: 'Youtube',
+			this.tube = new UI.Button({
+				label				: 'tube',
 				labelStyles			: {
 					fontSize		: '42px',
 					fontWeight		: 'bold',
@@ -530,7 +528,7 @@
 				onClick: function(){
 					new UI.Window({
 						viewOverflow		: 'hidden'
-					}).setContent('iframe','http://www.youtube.com');
+					}).setContent('iframe','http://m.youtube.com/index?desktop_uri=%2F&&gl=FR&warned=1&client=mv-google&hl=fr');
 				}.bind(this),
 				props				: {
 					'default'				: {
@@ -685,21 +683,21 @@
 			
 			
 			this.daselect = new UI.Select({
-				name			: 'testselect',
-				width			: 400,
-				styles			: {
-					margin		: 10
+				name						: 'testselect',
+				width						: 400,
+				styles						: {
+					margin					: 10
 				},
-				list			: [
-					{text		: 'Please choose'},
-					{text		: 'Core'},
-					{text		: 'Control'},
-					{text		: 'Desktop is a long entry'},
-					{text		: 'Menu'},
-					{text		: 'Form'},
-					{text		: 'Un menu'},
-					{text		: 'Plage'},
-					{text		: 'Venise'}
+				list						: [
+					{text					: 'Please choose' },
+					{text					: 'Core' },
+					{text					: 'Control' },
+					{text					: 'Desktop is a long entry' },
+					{text					: 'Menu' },
+					{text					: 'Form' },
+					{text					: 'Un menu' },
+					{text					: 'Plage' },
+					{text					: 'Venise' }
 				],
 				onMouseDown				:  function(){ this.selecttup.hide(); }.bind(this),
 				onChange				:  function(){ this.selecttup.show(); }.bind(this)
@@ -922,22 +920,23 @@
 			
 			
 			this.hardest = new UI.Button({
-				label				: 'Hardest Button to Button',
-				labelStyles			: {
+				label					: 'Hardest Button to Button',
+				labelStyles				: {
 					fontSize			: '16px',
 					fontWeight			: 'bold',
 					opacity				: '.7',
 					padding				: '18px 26px',
 					color				: '#fff'
 				},
-				submit				: true,
-				onClick				: function() {
+				submit					: true,
+				onClick					: function() {
 					new UI.Window({
-						title		: 'Hardest Button to Button',
-						controls	: ['close'],
-						resizable	: false,
-						width		: 427,
-						height		: 388
+						title			: 'Hardest Button to Button',
+						controls		: ['close'],
+						viewOverflow	: 'hidden',
+						resizable		: false,
+						width			: 427,
+						height			: 388
 					}).setContent('content','<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>');
 				},
 				props				: {
