@@ -166,7 +166,10 @@
 			var form = new Element('form', {
 				id				: 'controltest',
 				method			: 'get',
-				action			: 'http://iframework.floor.ch/Client/Source/admin.html'
+				action			: 'http://iframework.floor.ch/Client/Source/admin.html',
+				styles			: {
+					margin		: '50px 50px 0'
+				}
 			}).inject(document.body);
 			
 			var radiosGroup = new UI.RadiosGroup({
@@ -245,6 +248,7 @@
 					
 					new UI.Button({
 						label			: 'Second button',
+						zIndex			: 6000,
 						styles			: {
 							margin		: 10
 						}

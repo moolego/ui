@@ -178,6 +178,7 @@ UI.Toolbar = new Class({
 	
 	setRollover : function(){
 		this.rollover = new UI.Element({
+			skin			: this.options.skin,
 			type			: 'toolbarRollover',
 			styles			: {
 				position 	: 'absolute',
