@@ -26,7 +26,8 @@ Require:
 */
 
 UI.Controller.Window = new Class({
-	//Extends				: UI.Controller,
+	Singleton			: true,
+	//Extends			: UI.Controller,
 	Implements 			: [Events, Options],
 	
 	options: {
@@ -256,5 +257,3 @@ UI.Controller.Window = new Class({
 	}
 	
 });
-
-UI.Controller.Window.toSingleton();

@@ -158,7 +158,6 @@ UI.Element.implement({
 	
 	inject: function (container, position){
 		this.fireEvent('inject');
-		
 		this.element.inject(container, position);
 		this.element.setStyle('visibility', 'visible');
 		this.setSize();

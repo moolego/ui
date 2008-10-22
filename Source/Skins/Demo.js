@@ -190,8 +190,7 @@ UI.props.demo = {
 	// needed for button
 	label: {
 		'default': {
-			'default': {
-			}
+			'default': {}
 		}
 	}
 }
