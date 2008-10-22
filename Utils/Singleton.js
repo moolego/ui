@@ -1,20 +1,19 @@
 /*
 About:
-	Singleton.js v.1.0 for mootools v1.1
-	by nwhite (http://forum.mootools.net/viewtopic.php?pid=31909)
+	http://www.nwhite.net/2008/10/10/mootools-singleton-class-mutator/
 	
 Example:
 	Counter = new Class({
-		counter : 0,              initialize : function(){
-		console.debug('counter initialized');
-	},
-	count : function(){
-		this.counter++;
-		console.debug(this.counter);
+		Singleton : true,
+		counter : 0,
+		initialize : function(){
+			console.debug('counter initialized');
+		},
+		count : function(){
+			this.counter++;
+			console.debug(this.counter);
 		}
 	});
-	
-	Counter.toSingleton(); // Make class a singleton
 	
 	testA = new Counter(); //output = 'counter initialized'
 	testB = new Counter();
@@ -23,15 +22,15 @@ Example:
 	testB.count(); // output = 2
 */
 
-Class.prototype.toSingleton = function(){
-	var p = this.prototype;
-	var instance = undefined;
-	if($defined(p.initialize) && $type(p.initialize) == 'function') var init = p.initialize;
-	p.initialize = function(){
-		if(!$defined(instance)){
+Class.Mutators.Singleton = function(self,flag){
+	if(!flag) return;
+	self.constructor.__instance = undefined;
+	if($defined(self.initialize) && $type(self.initialize) == 'function') var init = self.initialize;
+	self.initialize = function(){
+		if(!$defined(this.constructor.__instance)){
 			if($defined(init) && $type(init) == 'function') init.apply(this,arguments);
-			instance = this;
+			this.constructor.__instance = this;
 		}
-	return instance;      
+		return this.constructor.__instance;
 	}
-};
+}

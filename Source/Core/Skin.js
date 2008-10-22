@@ -26,6 +26,7 @@ Example:
 */
 
 UI.Skin = new Class({
+	Singleton 	: true,
  	Implements	: [Events, Options],
 	
 	options : {},
@@ -89,13 +90,14 @@ UI.Skin = new Class({
 	
 	get : function(className){
 		var
-			skin		= (className.options.skin) ? className.options.skin : this.defaultSkin,
+			skin		= className.options.skin ? className.options.skin : this.defaultSkin,
 			cKey		= className.options.component,
 			tKey		= className.options.type,
 			props		= className.options.props,
 			styles		= className.options.styles;
 		
 		//check if it was already preprocessed
+		//console.log(this.defaultSkin);
 		if(!UI.props[skin].preprocessed) this.processSkin(skin);
 
 		//get properties for provided type
@@ -149,5 +151,3 @@ UI.Skin = new Class({
 	}
 	
  });
- 
-UI.Skin.toSingleton();

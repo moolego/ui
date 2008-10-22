@@ -52,7 +52,7 @@ UI.Controller = new Class({
 		}
 		
 		//set z-index
-		if (elementClass.element.getStyle('zIndex') == 'auto')
+		if (elementClass.element.getStyle('zIndex') == 'auto' || elementClass.element.getStyle('zIndex') == 0)
 			elementClass.element.setStyle('zIndex', elementClass.options.zIndex || this.zIndex++);
 	}
 });

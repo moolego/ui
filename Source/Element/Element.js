@@ -23,7 +23,7 @@ UI.Element = new Class({
 		onlyCanvas			: false,	
 
 		skin				: 'GreyGlass',
-		props		: false,
+		props				: false,
 		
 		styles				: {},
 		

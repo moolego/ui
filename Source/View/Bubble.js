@@ -36,7 +36,6 @@ UI.Bubble = new Class({
 	initialize: function(options) {
 		this.parent(options);
 		this.inject(document.body);
-		
 		this.setLocation();
 		this.fade(1);
 	},
@@ -87,9 +86,13 @@ UI.Bubble = new Class({
 		});
 		
 		if (this.options.resetPosition) {
+			this.posFx = new Fx.Morph(this.element, {
+				wait : false
+			});
+			
 			this.reposition = function(){
 				var dest = this.getLocation();
-				new Fx.Morph(this.element).start({
+				this.posFx.start({
 					'left': dest.left,
 					'top': dest.top
 				});

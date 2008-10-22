@@ -115,9 +115,11 @@ UI.Select = new Class({
 		this.parent();
 
 		//we add events on select
-		this.element.addEvent('mousedown', function(e){
-			this.menu.show(this.element);
-		}.bind(this));
+		this.element.addEvents({
+			mousedown : function(e){
+				this.menu.show(this.element);
+			}.bind(this)
+		});
 	},
 
 	addMenuActions : function(list) {
