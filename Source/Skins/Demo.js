@@ -124,7 +124,7 @@ UI.Skin.implement({
 					}
 				}
 			},
-			'ESL': {
+			'jgood': {
 				'default': {
 					components: {
 						label: {
@@ -186,7 +186,7 @@ UI.Skin.implement({
 						}
 					},
 					layers: {
-						front: {
+						main: {
 							color: '#000'
 						}
 					}
