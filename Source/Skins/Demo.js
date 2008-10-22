@@ -104,6 +104,23 @@ UI.props.demo = {
 						radius: [4, 4, 7, 7]
 					}
 				}
+			},
+			over: {
+				layers: {
+					main: {
+						color: ['#a1a1a1', '#d5d5d5']
+					}
+				}
+			},
+			down: {
+				layers: {
+					main: {
+						color: ['#7b8997', '#7b8997']
+					},
+					background: {
+						color: ['#494949', '#5f5f5f']
+					}
+				}
 			}
 		},
 		'jgood': {
@@ -122,14 +139,13 @@ UI.props.demo = {
 					}
 				},
 				
-				styles : {
-					
+				styles : {					
 					margin	: '3px'
 				},
-				layers: {
 				
+				layers: {
 					reorder: ['emboss', 'front', 'reflect'],
-					
+
 					emboss: {
 						offset: '0px',
 						color: '#000',
@@ -149,19 +165,32 @@ UI.props.demo = {
 						radius: [3, 3, 3, 3]
 					}
 				}
+			},
+			over: {
+				components: {
+					label: {
+						styles: {
+							opacity: 1
+						}
+					}
+				}
+			},
+			down: {
+				components: {
+					label: {
+						styles: {
+							color: '#FFF'
+						}
+					}
+				}
 			}
 		}
 	},
 	
 	// needed for button
-	
 	label: {
 		'default': {
 			'default': {
-				styles : {}
-			},
-			down: {
-				styles : {}
 			}
 		}
 	}
