@@ -21,6 +21,8 @@ UI.Controller = new Class({
 	initialize: function(options){
 		this.setOptions();
 		this.zIndex = this.options.zBase;
+		this.followers = [];
+		this.i = 0;
 	},
 
 /*
@@ -48,7 +50,12 @@ UI.Controller = new Class({
 		//store element in UI (element is not in our UI)
 		} else {
 			if (!UI.elements[elementClass.options.component]) UI.elements[elementClass.options.component] = new Array();
-			UI.elements[elementClass.options.component].push(elementClass);	
+			UI.elements[elementClass.options.component].push(elementClass);
+		}
+		
+		//replace tips
+		if (elementClass.options.component != 'tip') {
+			window.fireEvent('resize');
 		}
 		
 		//set z-index
