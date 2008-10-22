@@ -35,43 +35,45 @@ UI.Skin = new Class({
 		this.defaultSkin = name;
 	},
 	
+	merge : function() {
+		var mix = {};
+		for (var i = 0, l = arguments.length; i < l; i++){
+			var object = arguments[i];
+			for (var key in object){
+				var op = object[key], mp = mix[key];
+				mix[key] = ($type(op) == 'object' && $type(mp) == 'object') ? this.merge(mp, op) : op;
+			}
+		}
+		return mix;
+	},
+	
 	processSkin : function(skinName) {
 		//we merge syles for each states of each type of components
-		var properties = new Hash(UI.props[skinName]);
-		properties.each(function(componentProps, componentKey){
-			if (componentKey != 'default') {
-				$H(componentProps).each(function(typeProps, typeKey){
-					$H(typeProps).each(function(stateProps, stateKey){
-						if (stateKey != 'shortcuts') {
-							//set the default properties for the state provided
-							var object = properties['default'];
-	
-							if (componentProps['default']) {
-								//merge with componentKey.defaultType.defaultState
-								if (componentProps['default']['default'])
-									object = $merge(object, componentProps['default']['default']);
-								
-								//merge with componentKey.defaultType.stateKey
-								if (componentProps['default'][stateKey])
-									object = $merge(object, componentProps['default'][stateKey]);
+		for (var cKey in UI.props[skinName]) {
+			if (cKey != 'default') {
+				for(var tKey in UI.props[skinName][cKey]) {
+					for(var sKey in  UI.props[skinName][cKey][tKey]) {
+						if (sKey != 'shortcuts') {
+							var props = UI.props[skinName]['default'];
+							if (UI.props[skinName][cKey]['default']) {
+								props = this.merge(
+									props,
+									UI.props[skinName][cKey]['default']['default'],
+									UI.props[skinName][cKey]['default'][sKey]
+								);
 							}
-							
-							//merge with componentKey.typeKey.defaultState
-							if(typeProps['default'])
-								object = $merge(object, typeProps['default']);
-							
-							//merge with componentKey.typeKey.stateKey
-							object = $merge(object, stateProps);
-							
-							properties[componentKey][typeKey][stateKey] = object;
+							props = this.merge(
+								props,
+								UI.props[skinName][cKey][tKey]['default'],
+								UI.props[skinName][cKey][tKey][sKey]
+							);
+							UI.props[skinName][cKey][tKey][sKey] = props;
 						}
-					});
-				});
+					}
+				}
 			}
-		});
-		//we clean properties
-		properties.preprocessed = true;
-		UI.props[skinName] = properties.getClean();
+		}
+		UI.props[skinName].preprocessed = true;
 	},
 	
 
@@ -86,64 +88,51 @@ UI.Skin = new Class({
 	 */
 	
 	get : function(className){
-		//props is this
-		var props = {
-			skin				: className.options.skin,
-			component 			: className.options.component, 
-			type 				: className.options.type, 
-			props 				: className.options.props,
-			styles				: className.options.styles
-		}
-		
-		var skin = (props.skin) ? props.skin : this.defaultSkin;
+		var
+			skin		= (className.options.skin) ? className.options.skin : this.defaultSkin,
+			cKey		= className.options.component,
+			tKey		= className.options.type,
+			props		= className.options.props,
+			styles		= className.options.styles;
 		
 		//check if it was already preprocessed
 		if(!UI.props[skin].preprocessed) this.processSkin(skin);
 
 		//get properties for provided type
-		var type = $unlink(UI.props[skin][props.component][props.type]);
+		var type = $unlink(UI.props[skin][cKey][tKey]);
 		
-		$H(type).each(function(state, key){
+		for (var sKey in type) {
 			//bind shortcuts
-			if(type[key].shortcuts) {
-				new Hash(state.shortcuts).each(function(shortcut, name){
-					if (className.options[name]) {
-						eval('type[\'' + key + '\'].' + shortcut + ' = $merge(type[\'' + key + '\'].' + shortcut + ',className.options.' + name + ')');
-					}
-				});
-				delete type[key].shortcuts;
+			if(type[sKey].shortcuts) {
+				for (var scKey in type[sKey].shortcuts) {
+					if (className.options[scKey])
+						eval('type[\'' + sKey + '\'].' + type[sKey].shortcuts[scKey] + ' = this.merge(type[\'' + sKey + '\'].' + type[sKey].shortcuts[scKey] + ',className.options.' + scKey + ')');
+				}
 			}
 			
-			//merge custom default properties
-			if (props.props && props.props['default'])
-				type[key] = $merge(type[key], props.props['default']);
-				
-			//merge state default properties
-			if (props.props && props.props[key])
-				type[key] = $merge(type[key], props.props[key]);
+			//merge custom properties
+			if (props)
+				type[sKey] = this.merge(type[sKey], props['default'], props[sKey]);
 			
-			//merge custom options.styles
-			if (props.styles)
-				type[key].styles = $merge(type[key].styles, props.styles);
+			//merge custom styles
+			type[sKey].styles = this.merge(type[sKey].styles, styles);
 			
-			//add new custom states
-			$H(props.props).each(function(state, key){
-				if(!type[key]) type[key] = state;
-			});
-		});
+			for(var csKey in props) {
+				if(!type[csKey]) type[csKey] = props[csKey];
+			}
+		}
 		
 		//remove shadows if not used
 		if (type['default'].layers.shadow.size == 0) {
 			delete type['default'].shadows;
 		};
-
-		//return type with all attributes for each state
+		
 		return type;
 	},
 	
 	/*
 		Function: getComponentProps
-			get skin définition for specified component (inside an other element)
+			get skin definition for specified component (inside an other element)
 			
 		Properties: (hash)
 			component - (string) the name of the component
