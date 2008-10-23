@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" href="css/reset.css" />
 
-	<title>Floor Desktop</title>
+	<title>MooLego - Components Playground</title>
 	
 	<script type="text/javascript" src="mootools/core.js"></script>
 	<script type="text/javascript" src="mootools/more.js"></script>
@@ -202,7 +202,12 @@
 				},
 				onClick : function(){
 					var time2 = $time();
-					var window = new UI.Window();
+					var window = new UI.Window({
+						title	: 'some controls',
+						width	: 300,
+						height	: 300
+						
+					});
 			
 					new UI.Button({
 						width			: 270,
@@ -360,7 +365,6 @@
 					
 					new UI.Slider({
 						width			: 400,
-						height			: 22,
 						styles			: {
 							margin		: 10
 						}
@@ -392,11 +396,10 @@
 			
 			this.textarea = new UI.Textarea({
 				name : 'textarea-input-canvas',
-				value : 'Please write your comment here',
-				onFocus : function(){
+				value : '',
+				onBlur : function(){
 					this.input.value = ''
 					this.tipArea = new UI.Bubble({
-						type	: 'bottom',
 						target : this.element,
 						props : {
 							'default' : {
@@ -406,9 +409,11 @@
 						label : "Your comment here!"
 					});
 				},
-				onBlur : function(){
-					this.tipArea.destroy();
-					delete this.tipArea;
+				onFocus : function(){
+					if (this.tipArea) {
+						this.tipArea.destroy();
+						delete this.tipArea;
+					}
 				},
 				styles : {
 					margin	: 10

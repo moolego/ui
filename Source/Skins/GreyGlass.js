@@ -641,7 +641,9 @@ UI.props.GreyGlass = {
 							position		: 'relative',
 							marginTop		: '1px',
 							zIndex			: 1,
-							display			: 'block'
+							display			: 'block',
+							height			: 10,
+							width			: 100
 						}
 					}
 				},
@@ -649,27 +651,96 @@ UI.props.GreyGlass = {
 				/* element css properties */
 				styles				: {
 					position		: 'relative',
-					display			: 'inline-block'
+					display			: 'inline-block',
+					height			: '10px'
 				},
 				
 				/* layers properties */
+				/* layers properties */
 				layers				: {
-					background		: {
-						color		: '#000',
-						offset		: 0,
-						opacity		: .5,
-						radius		: 12
+					border			: {
+						offset		: ['0px', '0px', '0px','1px'],
+						color			: ['#093889','#5289d7'],
+						opacity		: 1,
+						radius		: 4
 					},
-					main			: {
+					front			: {
+						position	: 'absolute',
 						offset		: 1,
-						color		: ['#c5c5c5','#fafafa'],
-						radius		: 11
-					}
+						color		: ['#3672dc','#4085ec'],
+					 	opacity		: 1,
+						radius		: [4,4,4,4]
+					},
+					fakeShadow		: {
+						position	: 'absolute',
+						offset		: ['1px', '1px', '23px'],
+						color		: ['#000','#000'],
+					 	opacity		: [.2,0],
+						radius		: [5,5,0,0]
+					},
+					reflect			: {
+						position	: 'absolute',
+						offset		: ['50%', '1px', '1px'],
+						color		: ['#FFF', '#FFF'],
+						opacity		: [.05, .3],
+						radius		: [4,4,4,4]
+					},
 				}
 			}
 		},
 		'knob' : {
-			'default' : {}
+			'default' : {
+				'default': {
+					
+					styles		: {
+						position		: 'relative',
+						marginTop		: '1px',
+						zIndex			: 1,
+						display			: 'block'
+					},
+					
+					reorder			: ['sadow','shadow2','background','main','front'],
+							
+					layers: {
+						shadow: {
+							position: 'absolute',
+							offset: ['0px', '52px', '0px', '0px'],
+							color: ['#000', '#000'],
+							opacity: 0.1,
+							radius: [5, 5, 5, 5]
+						},
+						shadow2: {
+							position: 'absolute',
+							offset: ['0px', '53px', '0px', '0px'],
+							color: ['#000', '#000'],
+							opacity: 0.1,
+							radius: [5, 5, 5, 5]
+						},
+						background: {
+							position: 'absolute',
+							offset: ['0px', '54px', '0px', '0px'],
+							color: ['#919191', '#979797'],
+							opacity: 1,
+							radius: [5, 5, 5, 5]
+						},
+						main: {
+							position: 'absolute',
+							offset: ['1px', '54px', '1px', '1px'],
+							color: ['#FFF', '#FFF'],
+							opacity: 1,
+							radius: [4, 4, 4, 4]
+						},
+						front: {
+							position: 'absolute',
+							offset: ['2px', '54px', '1px', '1px'],
+							color: ['#000', '#000'],
+							opacity: [.18, .02],
+							radius: [4, 4, 4, 4]
+						}
+					}
+				}
+				
+			}
 		}
 	},	
 	
