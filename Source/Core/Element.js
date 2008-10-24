@@ -522,7 +522,8 @@ Credits:
 		this.element.destroy();
 
 		return;
-	},
+	}
+});
 
 /*
 Script: Extension.Element.js
@@ -531,6 +532,8 @@ Script: Extension.Element.js
 License: MIT
         
 */
+
+Element.implement({
 
 	disableSelect :function(){
 		if (typeof this.onselectstart!="undefined")	this.onselectstart = function(){ return false }
@@ -560,9 +563,11 @@ License: MIT
 	isVisible: function() {
 		return this.getStyle('display') != 'none';
 	},
+	
 	toggle: function() {
 		return this[this.isVisible() ? 'hide' : 'show']();
 	},
+	
 	hide: function() {
 		var d;
 		try {
@@ -573,11 +578,13 @@ License: MIT
 		this.setStyle('display','none');
 		return this;
 	},
+	
 	show: function(display) {
 		original = this.retrieve('originalDisplay')?this.retrieve('originalDisplay'):this.get('originalDisplay');
 		this.setStyle('display',(display || original || 'block'));
 		return this;
 	},
+	
 	swapClass: function(remove, add) {
 		return this.removeClass(remove).addClass(add);
 	},
