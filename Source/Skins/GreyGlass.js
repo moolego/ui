@@ -303,7 +303,8 @@ UI.props.GreyGlass = {
 							left			: 0,
 							background		: 'transparent',
 							resize			: 'none',
-							whiteSpace		:'nowrap'
+							whiteSpace		:'nowrap',
+							border			: 'none'
 						}
 					}
 				},
@@ -317,7 +318,7 @@ UI.props.GreyGlass = {
 				/* layers properties */
 				layers				: {
 					'default'		: {
-						radius		: 4
+						radius		: 0
 					},
 					emboss			: {
 						offset		: [0,1],
@@ -803,7 +804,7 @@ UI.props.GreyGlass = {
 						radius		: 4
 					},
 					shadow			: {
-						size		: 64,
+						size		: 42,
 						offsetY		: 10
 					},
 					background		: {
