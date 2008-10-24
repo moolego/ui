@@ -131,7 +131,7 @@ UI.props.demo = {
 							fontSize: '11px',
 							fontWeight: 'bold',
 							fontFamily: 'Arial, Helvetica',
-							opacity: '.7',
+							opacity: '.7', 
 							padding: '10px 16px',
 							color: '#000',
 							width: '70px'
