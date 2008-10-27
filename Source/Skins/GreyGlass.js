@@ -296,7 +296,7 @@ UI.props.GreyGlass = {
 				components			: {
 					input			: {
 						styles		: {
-							padding			: '4px 4px 3px',
+							padding			: '4px',
 							zIndex			: 1,
 							position		: 'absolute',
 							top				: 0,
@@ -331,14 +331,70 @@ UI.props.GreyGlass = {
 					},
 					main			: {
 						offset		: 1,
-						color		: ['#F4F4F4','#FFF']
+						color		: '#FFF'
 					}
 				}
 			},
 			focus : {
 				layers				: {
 					main			: {
-						color		: ['#F4F4F4','#FFF']
+						color		: '#FFF'
+					}
+				}
+			}
+		},
+		'round' : {
+			'default' : {
+				width				: 200,
+				components			: {
+					input			: {
+						styles		: {
+							padding			: '4px 10px',
+							zIndex			: 1,
+							position		: 'absolute',
+							top				: 0,
+							left			: 0,
+							background		: 'transparent',
+							resize			: 'none',
+							whiteSpace		:'nowrap',
+							border			: 'none'
+						}
+					}
+				},
+				
+				/* element css properties */
+				styles				: {
+					position		: 'relative',
+					display			: 'inline-block'
+				},
+                   
+				/* layers properties */
+				layers				: {
+					
+					
+					
+					'default'		: {
+						radius		: 12,
+						position	: 'abolute'
+					},
+					emboss			: {
+						position	: 'abolute',
+						offset		: [0,0,0,0],
+	                    color		: ['#000','#000'],
+	                    opacity		: [.6,0]
+					},
+					border			: {
+						radius		: 11,
+						position	: 'abolute',
+						offset		: [1,1,0,1],
+	                    color		: ['#cacaca','#dbdbdb'],
+						opacity		: 1
+					},
+					main			: {
+						radius		: 10,
+						position	: 'abolute',
+						offset		: [2,2,1,2],
+						color		: '#FFF'
 					}
 				}
 			}
@@ -372,10 +428,15 @@ UI.props.GreyGlass = {
 					display			: 'inline-block'
 				},
 				
+				
+				
 				/* layers properties */
+				
 				layers				: {
+					
+				
 					'default'		: {
-						radius		: 4
+						radius		: 0
 					},
 					emboss			: {
 						offset		: [0,1],
@@ -388,7 +449,7 @@ UI.props.GreyGlass = {
 					},
 					main			: {
 						offset		: 1,
-						color		: ['#F4F4F4','#FFF']
+						color		: '#FFF'
 					}
 				}
 			},
