@@ -133,7 +133,7 @@ UI.props.demo = {
 							fontFamily: 'Arial, Helvetica',
 							opacity: '.7', 
 							padding: '10px 16px',
-							color: '#000',
+							color: '#333',
 							width: '70px'
 						}
 					}
@@ -181,6 +181,140 @@ UI.props.demo = {
 						styles: {
 							color: '#FFF'
 						}
+					}
+				}
+			}
+		}
+	},
+	
+	input: {
+		'default' : {
+			'default' : {
+				width				: 200,
+				components			: {
+					input			: {
+						styles		: {
+							padding			: '4px',
+							zIndex			: 1,
+							position		: 'absolute',
+							top				: 0,
+							left			: 0,
+							background		: 'transparent',
+							resize			: 'none',
+							whiteSpace		:'nowrap',
+							border			: 'none'
+						}
+					}
+				},
+				
+				/* element css properties */
+				styles				: {
+					position		: 'relative',
+					display			: 'inline-block'
+				},
+                   
+				/* layers properties */
+				layers				: {
+					'default'		: {
+						radius		: 0
+					},
+					emboss			: {
+						offset		: [0,1],
+	                    color		: '#000',
+	                    opacity		: 0.5
+					},
+					border			: {
+						offset		: [1,0,0, 1],
+	                    color		: '#dbdbdb'
+					},
+					main			: {
+						offset		: 1,
+						color		: '#FFF'
+					}
+				}
+			},
+			focus : {
+				layers				: {
+					main			: {
+						color		: ['#F4F4F4','#FFF']
+					}
+				}
+			}
+		},
+		'moz' : {
+			'default' : {
+				width				: 200,
+				components			: {
+					input			: {
+						styles		: {
+							padding			: '4px 10px 4px 24px',
+							zIndex			: 1,
+							position		: 'absolute',
+							top				: 0,
+							left			: 0,
+							background		: 'transparent',
+							resize			: 'none',
+							whiteSpace		:'nowrap',
+							border			: 'none'
+						}
+					}
+				},
+				
+				/* element css properties */
+				styles				: {
+					position		: 'relative',
+					display			: 'inline-block'
+				},
+                   
+				/* layers properties */
+				layers				: {
+					
+					
+					
+					'default'		: {
+						radius		: 12,
+						position	: 'abolute'
+					},
+					emboss			: {
+						position	: 'abolute',
+						offset		: [0,0,0,0],
+	                    color		: ['#000','#000'],
+	                    opacity		: [.6,0]
+					},
+					border			: {
+						radius		: 11,
+						position	: 'abolute',
+						offset		: [1,1,0,1],
+	                    color		: ['#cacaca','#dbdbdb'],
+						opacity		: 1
+					},
+					main			: {
+						radius		: 10,
+						position	: 'abolute',
+						offset		: [2,2,1,2],
+						color		: '#FFF'
+					},
+					button			: {
+						shape		: 'circle',
+						radius		: [7,7,7,8],
+						position	: 'abolute',
+						offset		: 11,
+						color		: '#ff7c0a'
+					},
+					arrow			: {
+						shape		: 'triangle',
+						radius		: [8,8,8,8],
+						position	: 'abolute',
+						offset		: 13,
+						color		: '#fff'
+					}
+					
+				}
+			},
+			focus : {
+				layers				: {
+					main			: {
+						color		: ['#F4F4F4','#FFF']
 					}
 				}
 			}
