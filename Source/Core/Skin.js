@@ -36,17 +36,7 @@ UI.Skin = new Class({
 		this.defaultSkin = name;
 	},
 	
-	merge : function() {
-		var mix = {};
-		for (var i = 0, l = arguments.length; i < l; i++){
-			var object = arguments[i];
-			for (var key in object){
-				var op = object[key], mp = mix[key];
-				mix[key] = ($type(op) == 'object' && $type(mp) == 'object') ? this.merge(mp, op) : op;
-			}
-		}
-		return mix;
-	},
+
 	
 	processSkin : function(skinName) {
 		//we merge syles for each states of each type of components
@@ -148,6 +138,42 @@ UI.Skin = new Class({
 			}
 		});
 		return componentProps;
+	},
+		
+	/*
+		Function: merge
+			merge is a light version the core mootools merge function
+			Merges any number of objects recursively without referencing them or their sub-objects.
+			
+			
+		Arguments:
+			
+			(objects) Any number of objects.
+			Returns:
+			
+			(object) The object that is created as a result of merging all the objects passed in.
+		Examples:
+			
+			var obj1 = {a: 0, b: 1};
+			var obj2 = {c: 2, d: 3};
+			var obj3 = {a: 4, d: 5};
+			var merged = $merge(obj1, obj2, obj3); //returns {a: 4, b: 1, c: 2, d: 5}, (obj1, obj2, and obj3 are unaltered)
+			 
+			var nestedObj1 = {a: {b: 1, c: 1}};
+			var nestedObj2 = {a: {b: 2}};
+			var nested = this.merge(nestedObj1, nestedObj2); //returns: {a: {b: 2, c: 1}}
+	*/	
+	
+	merge : function() {
+		var mix = {};
+		for (var i = 0, l = arguments.length; i < l; i++){
+			var object = arguments[i];
+			for (var key in object){
+				var op = object[key], mp = mix[key];
+				mix[key] = ($type(op) == 'object' && $type(mp) == 'object') ? this.merge(mp, op) : op;
+			}
+		}
+		return mix;
 	}
 	
  });

@@ -133,9 +133,12 @@ UI.props.GreyGlass = {
 				}
 			}
 		},
-		round : {
+		window : {
 			'default' : {
 				layers				: {
+					
+					reorder			: ['emboss','background','main','reflect','light'],
+					
 					'default'		: {
 						position	: 'absolute',
 						shape		: 'circle',
@@ -246,6 +249,9 @@ UI.props.GreyGlass = {
 				
 				/* layers properties */
 				layers				: {
+					
+					reorder			: ['emboss','background','main','reflect','light'],
+					
 					'default'		: {
 						radius		: 6
 					},
@@ -268,7 +274,7 @@ UI.props.GreyGlass = {
 						offset		: ['0px', '3px', '65%'],
 						color		: ['#FFF', '#FFF'],
 						opacity		: [.8, .3],
-						radius		: [3, 3, 2, 2]
+						radius		: 2
 					},
 					light			: {
 						position	: 'absolute',
@@ -837,10 +843,10 @@ UI.props.GreyGlass = {
 				/* components */
 				components			: {
 					controls		: {
-						padding		: '3px 2px 0px 5px'
+						padding		: '3px 2px 0px 4px'
 					},
 					control			: {
-						type		: 'round',
+						type		: 'window',
 						width		: 15,
 						height		: 15,
 						styles		: {
@@ -1215,13 +1221,16 @@ UI.props.GreyGlass = {
 		},
 		window : {
 			'default' : {
-				height				: 32,
+				height				: 48,
 				layers				: {
 					reorder			: []
 				},
 				itemPadding			: 0,
 				presentation		: 'icon',
 				padding				: '5px 0 4px 8px'
+			},
+			layers 					: {
+				reorder				: []
 			}
 		}
 	},
