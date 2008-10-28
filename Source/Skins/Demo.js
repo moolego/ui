@@ -1,12 +1,11 @@
 /*
-Object: UI.Skin.GreyGlass
-	Define 
-	
-Implement:
-	UI.Skin
+Object: UI.Skin.Demo
+	Defines css styles, layers information drawn by the canvas and specific properties of each component, type and state.
+	Skin Sheet
 
-Arguments:
-		no
+Information:
+	Because UI.props.Demo define speciffically for the Examples directory of moolego project. 
+	It is not representative of a complete moolego skin sheet object
 
 */
 
