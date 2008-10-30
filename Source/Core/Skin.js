@@ -124,7 +124,6 @@ UI.Skin = new Class({
 		if (type['default'].layers.shadow.size == 0) {
 			delete type['default'].shadows;
 		};
-		console.log(type);
 		return type;
 	},
 	
