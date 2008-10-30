@@ -80,6 +80,7 @@ UI.Element = new Class({
 			styles	: this.props.styles,
 			events	: this.options.events,
 			id		: this.options.id,
+			name	: this.options.name,
 			html	: this.options.html,
 			'for'	: this.options['for']
 		});

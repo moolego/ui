@@ -109,11 +109,14 @@ UI.View = new Class({
 		if ( this.options.overflow != 'hidden') { 
 			this.content = new Element( this.options.contentTag,  this.options.content )
 			 .setStyles( {
-					overflow	:'hidden',
 					height		:'100%',
 					position	: 'relative'
 				} )
 			 .inject( this.element );
+			
+			if (this.options.overflow == 'hidden') {
+				this.content.setStyle('overflow','hidden');
+			}
 			
 			if (this.options.overflow == 'scrollbar') {
 				this.setScrollbar();
@@ -200,16 +203,10 @@ UI.View = new Class({
 				//return this;
 				break;
 			case 'iframe':
-				this.iframe = new Element("iframe", {
-					'class'	: this.options.className+'-iframe',
-					'src'	: source,
-					styles  : {
-						width	: '100%',
-						height	: '100%',
-						border	: '0',
-						margin	: '0'
-					}
-				 }).inject(this.element);
+				this.element.set('src',source)
+				 .addEvent('load',function(){ 
+				 	this.fireEvent('loadComplete');
+				});
 				break;
 			default:		
 		};
