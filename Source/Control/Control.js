@@ -79,7 +79,6 @@ UI.Control = new Class({
 				break;
 		}
 		if (type != 'hidden') {
-			console.log(this.props.components.input);
 			this.input.set(this.props.components.input);
 		}
 	},
