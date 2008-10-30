@@ -20,7 +20,8 @@ UI.Element = new Class({
 		resizable			: false,
 		draggable			: false,
 		selectable			: true,
-		onlyCanvas			: false,	
+		onlyCanvas			: false,
+		element				: false,
 
 		skin				: 'GreyGlass',
 		props				: false,
@@ -74,17 +75,35 @@ UI.Element = new Class({
 	
 	build : function(){
 		this.fireEvent('build');
-
-		this.element = new Element(this.options.tag, {
-			'class' : this.className,
-			styles	: this.props.styles,
-			events	: this.options.events,
-			id		: this.options.id,
-			html	: this.options.html,
-			'for'	: this.options['for']
-		});
-		this.element.setStyle('visibility', 'hidden');
-		if (!this.options.selectable) this.element.disableSelect();
+		if (this.options.element) {
+			this.element = this.options.element;
+			this.element.set({
+				styles	: {
+					position 	: 'relative',
+					border 		: 'none',
+					background 	: 'none'
+				},
+				events	: this.options.events
+			});
+			var coord = this.element.getSize();
+			this.setSize(
+				coord.x  - this.element.getStyle('paddingLeft').toInt() - this.element.getStyle('paddingRight').toInt(),
+				coord.y  - this.element.getStyle('paddingTop').toInt() - this.element.getStyle('paddingBottom').toInt()
+			);
+			this.setCanvas();
+			this.controller.register(this);
+		} else {
+			this.element = new Element(this.options.tag, {
+				'class' : this.className,
+				styles	: this.props.styles,
+				events	: this.options.events,
+				id		: this.options.id,
+				html	: this.options.html,
+				'for'	: this.options['for']
+			});
+			this.element.setStyle('visibility', 'hidden');
+		}
+		if (!this.options.selectable) this.element.disableSelect();	
 		this.element.ui = true;
 	},
 
@@ -129,21 +148,20 @@ UI.Element = new Class({
 	*/
 	
 	setCanvas : function(){
-		
 		if (this.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && this.props.layers.getLength() <= 2))
 			return false;
 
 		this.canvas = new UI.Canvas({
 			props 	: this.props,
-			width			: this.element.x,
-			height			: this.element.y
+			width			: this.element.x + this.paddingWidth,
+			height			: this.element.y + this.paddingHeight
 		}).inject(this.element);
 		this.addEvent('setCanvasSize', function(state){
 			if (!state)
 				var props = this.props;
 			else
 				var props = this.skin[state];
-			this.canvas.setSize(this.element.x,this.element.y, props);
+			this.canvas.setSize(this.element.x + this.paddingWidth,this.element.y + this.paddingHeight, props);
 		});
 	},
 	

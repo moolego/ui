@@ -51,12 +51,13 @@ UI.RadiosGroup = new Class({
 	
 	newRadio : function(opt) {
 		var radio = new Element('span', {
-			styles : opt.styles
-		}).setStyles({
-			position : 'relative',
-			display : 'inline-block',
-			width	: 100,
-			height	: 15
+			'class'	: 'ui-radio',
+			styles : $merge({
+				position : 'relative',
+				display : 'inline-block',
+				width	: 100,
+				height	: 15
+			}, opt.styles)
 		}).store('value', opt.value);
 		
 		if (opt.label) {

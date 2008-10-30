@@ -43,7 +43,7 @@ UI.Canvas = new Class({
 			'class'	: this.options.className,
 			styles	: {
 				position 	: 'absolute',
-				zIndex		: 0
+				zIndex		: -1
 			}
 		});
 		this.ctx = this.canvas.getContext("2d");

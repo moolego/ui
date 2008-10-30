@@ -99,7 +99,10 @@ UI.Bubble = new Class({
 			}.bind(this);
 			
 			//add event on windows resize
-			window.addEvent('resize', this.reposition);
+			window.addEvents({
+				resize			: this.reposition,
+				setTipsPosition : this.reposition
+			});
 		}
 	},
 	

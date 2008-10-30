@@ -29,11 +29,13 @@ UI.Skin = new Class({
 	Singleton 	: true,
  	Implements	: [Events, Options],
 	
-	options : {},
+	options : {
+		skin	: 'GreyGlass'
+	},
  	
-	initialize : function(name, options) {
+	initialize : function(options) {
 		this.setOptions(options);
-		this.defaultSkin = name;
+		this.defaultSkin = this.options.skin;
 	},
 	
 	merge : function() {
@@ -97,7 +99,6 @@ UI.Skin = new Class({
 			styles		= className.options.styles;
 		
 		//check if it was already preprocessed
-		//console.log(this.defaultSkin);
 		if(!UI.props[skin].preprocessed) this.processSkin(skin);
 
 		//get properties for provided type
@@ -119,6 +120,11 @@ UI.Skin = new Class({
 			//merge custom styles
 			type[sKey].styles = this.merge(type[sKey].styles, styles);
 			
+			//set size
+			if (className.options.width) type[sKey].width = className.options.width;
+			if (className.options.height) type[sKey].height = className.options.height;
+			
+			//add custom states
 			for(var csKey in props) {
 				if(!type[csKey]) type[csKey] = props[csKey];
 			}
@@ -128,7 +134,7 @@ UI.Skin = new Class({
 		if (type['default'].layers.shadow.size == 0) {
 			delete type['default'].shadows;
 		};
-		
+		console.log(type);
 		return type;
 	},
 	

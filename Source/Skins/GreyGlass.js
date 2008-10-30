@@ -293,10 +293,12 @@ UI.props.GreyGlass = {
 		'default' : {
 			'default' : {
 				width				: 200,
+				
 				components			: {
 					input			: {
 						styles		: {
 							padding			: '4px 4px 3px',
+							border			: 'none',
 							zIndex			: 1,
 							position		: 'absolute',
 							top				: 0,
@@ -307,6 +309,12 @@ UI.props.GreyGlass = {
 						}
 					}
 				},
+				
+				/* shortcuts */
+				shortcuts			: {
+					inputStyles		: 'components.input.styles'
+				},
+				
 				
 				/* element css properties */
 				styles				: {
@@ -405,6 +413,8 @@ UI.props.GreyGlass = {
 	checkbox : {
 		'default' : {
 			'default' : {
+				width			: 15,
+				height			: 15,
 				styles			: {
 					position	: 'relative',
 					display		: 'inline-block'
@@ -551,7 +561,7 @@ UI.props.GreyGlass = {
 							zIndex			: 1,
 							position		: 'absolute',
 							left			: 0,
-							padding			: '4px 25px 4px 16px',
+							padding			: '4px 39px 4px 16px',
 							whiteSpace		:'nowrap'
 						}
 					}
