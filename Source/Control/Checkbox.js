@@ -57,6 +57,8 @@ UI.Checkbox = new Class({
 				html 		: this.options.label,
 				styles 		: this.props.labelStyles
 			}).inject(this.element);
+			delete this.props.width;
+			delete this.props.height;
 		}
 		this.control.store('value', this.options.value);
 		if (this.options.checked) this.toggleValue();
@@ -88,7 +90,10 @@ UI.Checkbox = new Class({
 	setBehavior : function() {
 		this.parent();
 		this.element.addEvents({
-			click : this.toggleValue.bind(this)
+			click : function(e){
+				new Event(e).stop();
+				this.toggleValue()
+			}.bind(this)
 		});
 	}
 });

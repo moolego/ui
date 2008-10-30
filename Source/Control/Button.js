@@ -76,7 +76,7 @@ UI.Button = new Class({
 			mousedown	: this.setState.bind(this, 'down'),
 			mouseleave	: this.setState.bind(this, 'default'),	
 			mouseup		: function(){
-				if (this.options.submit == 'submit') this.submit();
+				if (this.options.submit) this.submit();
 				this.setState('over');
 			}.bind(this)
 		});

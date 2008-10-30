@@ -17,11 +17,14 @@ UI.Element.implement({
 	 */
 	
 	setSize : function(width, height, state){
-		this.element.x = width || this.options.width || this.props.width || this.element.getSize().x;
-		this.element.y = height || this.options.height || this.props.height || this.element.getSize().y;
+		this.paddingWidth = this.element.getStyle('paddingLeft').toInt() + this.element.getStyle('paddingRight').toInt();
+		this.paddingHeight = this.element.getStyle('paddingTop').toInt() + this.element.getStyle('paddingBottom').toInt();
+		
+		this.element.x = width || this.options.width || this.props.width || this.element.getSize().x - this.paddingWidth;
+		this.element.y = height || this.options.height || this.props.height || this.element.getSize().y - this.paddingHeight;
 
-		if (this.element.x) this.element.setStyle('width', this.element.x);
-		if (this.element.y) this.element.setStyle('height', this.element.y);
+		if (this.element.x > 0) this.element.setStyle('width', this.element.x);
+		if (this.element.y > 0) this.element.setStyle('height', this.element.y);
 
 		this.fireEvent('setCanvasSize', state);
 		return this;

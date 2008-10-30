@@ -55,7 +55,7 @@ UI.Controller = new Class({
 		
 		//replace tips
 		if (elementClass.options.component != 'tip') {
-			window.fireEvent('resize');
+			window.fireEvent('setTipsPosition');
 		}
 		
 		//set z-index
@@ -65,5 +65,3 @@ UI.Controller = new Class({
 });
 
 UI.controller = new UI.Controller();
-
-//UI.Controller.toSingleton();
