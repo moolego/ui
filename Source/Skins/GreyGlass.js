@@ -299,10 +299,13 @@ UI.props.GreyGlass = {
 		'default' : {
 			'default' : {
 				width				: 200,
+				
 				components			: {
 					input			: {
 						styles		: {
-							padding			: '4px',
+							padding			: '4px 4px 3px',
+							border			: 'none',
+
 							zIndex			: 1,
 							position		: 'absolute',
 							top				: 0,
@@ -314,6 +317,12 @@ UI.props.GreyGlass = {
 						}
 					}
 				},
+				
+				/* shortcuts */
+				shortcuts			: {
+					inputStyles		: 'components.input.styles'
+				},
+				
 				
 				/* element css properties */
 				styles				: {
@@ -351,7 +360,6 @@ UI.props.GreyGlass = {
 		},
 		'round' : {
 			'default' : {
-				width				: 200,
 				components			: {
 					input			: {
 						styles		: {
@@ -473,6 +481,8 @@ UI.props.GreyGlass = {
 	checkbox : {
 		'default' : {
 			'default' : {
+				width			: 15,
+				height			: 15,
 				styles			: {
 					position	: 'relative',
 					display		: 'inline-block'
@@ -619,7 +629,7 @@ UI.props.GreyGlass = {
 							zIndex			: 1,
 							position		: 'absolute',
 							left			: 0,
-							padding			: '4px 25px 4px 16px',
+							padding			: '4px 39px 4px 16px',
 							whiteSpace		:'nowrap'
 						}
 					}
@@ -702,33 +712,17 @@ UI.props.GreyGlass = {
 	slider : {
 		'default' : {
 			'default' : {
-				/* components properties */
-				components			: {
-					knob			: {
-						styles		: {
-							position		: 'relative',
-							marginTop		: '1px',
-							zIndex			: 1,
-							display			: 'block',
-							height			: 10,
-							width			: 100
-						}
-					}
-				},
-				
 				/* element css properties */
 				styles				: {
 					position		: 'relative',
 					display			: 'inline-block',
-					height			: '10px'
 				},
 				
-				/* layers properties */
 				/* layers properties */
 				layers				: {
 					border			: {
 						offset		: ['0px', '0px', '0px','1px'],
-						color			: ['#093889','#5289d7'],
+						color		: ['#093889','#5289d7'],
 						opacity		: 1,
 						radius		: 4
 					},
@@ -757,57 +751,41 @@ UI.props.GreyGlass = {
 			}
 		},
 		'knob' : {
-			'default' : {
-				'default': {
+			'default': {
+				width 		: 22,
+				height 		: 22,
+				
+				styles		: {
+					position		: 'relative',
+					zIndex			: 1,
+					display			: 'block'
+				},
+						
+				layers				: {
+					reorder			: ['checkBg','check','checkFront'],
 					
-					styles		: {
-						position		: 'relative',
-						marginTop		: '1px',
-						zIndex			: 1,
-						display			: 'block'
+					checkBg			: {
+						position	: 'absolute',
+						offset		: 0,
+						color		: ['#919191', '#979797'],
+						opacity		: 1,
+						radius		: 5
 					},
-					
-					reorder			: ['sadow','shadow2','background','main','front'],
-							
-					layers: {
-						shadow: {
-							position: 'absolute',
-							offset: ['0px', '52px', '0px', '0px'],
-							color: ['#000', '#000'],
-							opacity: 0.1,
-							radius: [5, 5, 5, 5]
-						},
-						shadow2: {
-							position: 'absolute',
-							offset: ['0px', '53px', '0px', '0px'],
-							color: ['#000', '#000'],
-							opacity: 0.1,
-							radius: [5, 5, 5, 5]
-						},
-						background: {
-							position: 'absolute',
-							offset: ['0px', '54px', '0px', '0px'],
-							color: ['#919191', '#979797'],
-							opacity: 1,
-							radius: [5, 5, 5, 5]
-						},
-						main: {
-							position: 'absolute',
-							offset: ['1px', '54px', '1px', '1px'],
-							color: ['#FFF', '#FFF'],
-							opacity: 1,
-							radius: [4, 4, 4, 4]
-						},
-						front: {
-							position: 'absolute',
-							offset: ['2px', '54px', '1px', '1px'],
-							color: ['#000', '#000'],
-							opacity: [.18, .02],
-							radius: [4, 4, 4, 4]
-						}
+					check			: {
+						position	: 'absolute',
+						offset		: 1,
+						color		: ['#FFF', '#FFF'],
+						opacity		: 1,
+						radius		: 4
+					},
+					checkFront		: {
+						position	: 'absolute',
+						offset		: [2, 2, 1, 1],
+						color		: ['#000', '#000'],
+						opacity		: [.18,.02],
+						radius		: 4
 					}
 				}
-				
 			}
 		}
 	},	

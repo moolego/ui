@@ -79,7 +79,7 @@ UI.Control = new Class({
 				break;
 		}
 		if (type != 'hidden') {
-			this.input.setStyles(this.props.components.input.styles);
+			this.input.set(this.props.components.input);
 		}
 	},
 	
