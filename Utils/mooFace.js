@@ -19,34 +19,34 @@ var mooFace = new Class({
 	
 	build : function(){
 		//get form elements and replace them
-		this.target.getElements('input, select, textarea').each(function(input){
-			switch (input.get('tag')) {
+		this.target.getElements('input, select, textarea').each(function(control){
+			switch (control.get('tag')) {
 				case 'input' :
-					switch (input.get('type')) {
+					switch (control.get('type')) {
 						case 'text' : 
-							this.mInput(input);
+							this.mInput(control);
 							break;
 						case 'password' : 
-							this.mInput(input);
+							this.mInput(control);
 							break;
 						case 'radio' :
-							this.mRadio(input);
+							this.mRadio(control);
 							break;
 						case 'button' :
-							this.mButton(input); 
+							this.mButton(control); 
 							break;
 						case 'submit' :
-							this.mButton(input); 
+							this.mButton(control); 
 							break;
 						case 'checkbox' : 
-							this.mCheckbox(input);
+							this.mCheckbox(control);
 					}
 					break;
 				case 'select' :
-					this.mSelect(input);
+					this.mSelect(control);
 					break;
 				case 'textarea' :
-					this.mTextarea(input);
+					this.mTextarea(control);
 					break;
 			}
 		}, this);

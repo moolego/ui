@@ -891,16 +891,23 @@ UI.props.GreyGlass = {
 						offset		: [1, 0],
 						radius		: [3,3,0,0]
 					},
+					footline		: {
+						position	: 'absolute',
+						size		: ['auto', 20],
+						color		: '#333',
+						offset		: ['auto', 1, 3],
+						radius		: 0
+					},
 					footback		: {
 						position	: 'absolute',
-						size		: ['auto', 21],
+						size		: ['auto', 20],
 						color		: ['#fff','#404040'],
 						offset		: ['auto', 1, 2],
 						radius		: [0,0,3,3]
 					},
 					foot			: {
 						position	: 'absolute',
-						size		: ['auto', 21],
+						size		: ['auto', 20],
 						color		: ['#C2C2C2','#989898'],
 						offset		: ['auto', 1, 1],
 						radius		: [0,0,3,3]
@@ -1097,8 +1104,7 @@ UI.props.GreyGlass = {
 					menuItem		: {
 						styles		: {
 							color		: '#000',
-							padding		: '3px 40px 3px 16px',
-							lineHeight	: '1em',
+							padding		: '4px 40px 5px 16px',
 							whiteSpace	: 'nowrap',
 							display		: 'block'
 						}
@@ -1208,7 +1214,7 @@ UI.props.GreyGlass = {
 					'default'		: {
 						position	: 'absolute',
 						color		: ['#C4C4C4','#989898'],
-						offset		: [1,0]
+						offset		: [0,0,1]
 					},
 					background		: {
 						position	: 'relative',
