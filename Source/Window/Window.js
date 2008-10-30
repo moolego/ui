@@ -196,7 +196,7 @@ UI.Window = new Class({
 			//onResizeDrag	: function() { this.view.fireEvent('onResize');  },
 			onMinimize 		: function() { this.view.hide(); },
 			onNormalize 	: function() { this.view.show(); },
-			onLoadComplete	: function() { this.view.updateSize(); }
+			onLoadComplete	: function() { this.view.setSize(); }
 		});
 	},
 
@@ -433,7 +433,6 @@ UI.Window = new Class({
 		actions.each(function(action){
 			new UI.Button({
 				type		: this.props.components.control.type,
-				className	: this.className + '-' + action,
 				label		: false,
 				width		: this.props.components.control.width,
 				height		: this.props.components.control.height,

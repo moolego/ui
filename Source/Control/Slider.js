@@ -58,13 +58,9 @@ UI.Slider = new Class({
 		this.parent();
 		
 		this.handler = new UI.Element({
-			label				: false,
 			skin				: this.options.skin,
 			component			: 'slider',
-			type				: 'knob',
-			width				: 21,
-			height				: 21,
-			styles				:  this.props.components.knob.styles
+			type				: 'knob'
 		}).inject(this.element);
 	},
 	
