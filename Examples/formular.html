@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		
+		
+		<link rel="stylesheet" type="text/css" href="css/ie.css" />
+		<link rel="stylesheet" type="text/css" href="css/screen.css" />
+				
+		<script type="text/javascript" src="mootools/core.js"></script>
+		<script type="text/javascript" src="mootools/more.js"></script>
+		
+		<script type="text/javascript" src="../Utils/Singleton.js"></script>
+		<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+		
+		<script type="text/javascript" src="../Source/Core/UI.js"></script>
+		<script type="text/javascript" src="../Source/Core/Controller.js"></script>
+		<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
+		<script type="text/javascript" src="../Source/Core/Skin.js"></script>
+		<script type="text/javascript" src="../Source/Core/Element.js"></script>
+	
+		<script type="text/javascript" src="../Source/Control/Control.js"></script>
+		<script type="text/javascript" src="../Source/Control/Label.js"></script>
+		<script type="text/javascript" src="../Source/Control/Button.js"></script>
+		<script type="text/javascript" src="../Source/Control/RadiosGroup.js"></script>
+		<script type="text/javascript" src="../Source/Control/Select.js"></script>
+		<script type="text/javascript" src="../Source/Control/Input.js"></script>
+		<script type="text/javascript" src="../Source/Control/Textarea.js"></script>
+		<script type="text/javascript" src="../Source/Control/Checkbox.js"></script>
+		
+		<script type="text/javascript" src="../Source/Menu/Menu.js"></script>
+		<script type="text/javascript" src="../Source/Menu/Toolbar.js"></script>
+		<script type="text/javascript" src="../Source/Menu/Context.js"></script>
+		<script type="text/javascript" src="../Source/Menu/Scroller.js"></script>
+
+		<script type="text/javascript" src="../Source/Skins/GreyGlass.js"></script>
+		
+		<script type="text/javascript" src="../Utils/mooFace.js"></script>
+		
+		<title>moolego - formular replacement demo</title>
+		
+		<link media="screen" type="text/css" href="css/form.css" rel="stylesheet" />
+		
+		<script type="text/javascript">
+			window.addEvent('domready', function(){
+				button = new UI.Button({
+					label	: 'face!',
+					onClick	: function(){
+						var time = $time();
+						new mooFace({
+							target : 'formular'
+						});
+						this.set('html', ($time() - time)/1000);
+					},
+					styles	: {
+						margin		: 10,
+						fontFamily	: 'arial, helvetica, sans-serif',
+						fontSize	: '13px',
+						position	: 'fixed',
+						top			: 10,
+						right		: 10
+					}
+				}).inject(document.body, 'top');
+			});
+		</script>
+	</head>
+	<body>
+		<form action="#" method="get" class="prepend-1 span-12 mooface" id="formular">
+			<fieldset>
+			    <legend>Log In</legend>
+				    <label for="username">Username</label>
+				    <input id="username" type="text" class="text title" value="larry" />
+			    <br />				
+				    <label for="password">Password</label>
+				    <input id="password" type="password" class="text" value="yoyoyoyo" />
+			
+			    <div class="buttons" style="text-align:right">
+					<br />
+			        <input type="button" value="submit" class="button"></input>
+			    </div>               
+			</fieldset>
+		</form>
+	</body>
+</html>

@@ -12,13 +12,7 @@
 		<script type="text/javascript" src="../Source/Core/Controller.js"></script>
 		<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
 		<script type="text/javascript" src="../Source/Core/Skin.js"></script>
-	
-		<script type="text/javascript" src="../Source/Element/Element.js"></script>
-		<script type="text/javascript" src="../Source/Element/Element.Native.js"></script>
-		<script type="text/javascript" src="../Source/Element/Element.Coordinates.js"></script>
-		<script type="text/javascript" src="../Source/Element/Element.Behavior.js"></script>
-	
-		<script type="text/javascript" src="../Source/View/View.js"></script>
+		<script type="text/javascript" src="../Source/Core/Element.js"></script>
 
 		<script type="text/javascript" src="../Source/Control/Control.js"></script>
 		<script type="text/javascript" src="../Source/Control/Label.js"></script>
@@ -45,7 +39,7 @@
 					
 					styles			: {
 						padding		: '8px 16px',
-						width		: '700px',
+						width		: '960px',
 						height		: '700px',
 						overflow	: 'hidden'
 					}
@@ -53,12 +47,12 @@
 				}).inject(document.body);
 				
 				time = $time();
-				var size = 6; 
+				var size = 8; 
 				for (i = 0; i < size; i++) {
 					for (j = 0; j < size; j++) {
 						
-						var one = size -i;
-						var two = size - j;
+						var one = size - i -2;
+						var two = size - j -2;
 
 						var color = RGBtoHex(Math.floor(255 - 42.5 * one),Math.floor(255 - 42.5 * two),0);
 						
@@ -77,7 +71,7 @@
 								down: {
 									layers: {
 										front: {
-											color: '#000'
+											color: '#333'
 										}
 									}
 								}
