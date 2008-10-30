@@ -57,7 +57,7 @@ UI.Input = new Class({
 	*/
 	setState : function(state){
 		this.parent(state);
-		this.input.setStyles(this.skin[state].components.input.styles);
+		this.input.set(this.skin[state].components.input.styles);
 	},
 	
 	setBehavior : function() {

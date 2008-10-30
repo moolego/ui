@@ -23,21 +23,17 @@ Example:
 */
 
 UI.Slider = new Class({
-	Extends				: UI.Control,
+	Extends				: UI.Element,
 	Implements			: [Events, Options],
 	
 	options				: {
 		
 		// default options
-		submit			: false,
-		
 		className		: 'slider',
 		
 		component		: 'slider',
 		type			: 'default',
 		state			: 'default',
-		
-		shadow			: false,
 		
 		// implemented events
 		onChange		: $empty
@@ -45,7 +41,6 @@ UI.Slider = new Class({
 	
 	initialize: function(options) {
 		this.parent(options);
-
 	},
 	
 	/* 
@@ -62,33 +57,12 @@ UI.Slider = new Class({
 			component			: 'slider',
 			type				: 'knob'
 		}).inject(this.element);
+
 	},
 	
-	setBehavior : function() {
-		//console.log(this.element);
-		//console.log(this.handler.element);
+	inject : function(target, position) {
+		this.parent(target, position);
 		
-		this.slider = new Slider(this.element, this.handler.element, {
-			steps: 35,	// There are 35 steps
-			range: [8],	// Minimum value is 8
-			onChange: function(value){
-				//this.fireEvent('change');
-				// Everytime the value changes, we change the font of an element
-			}
-		});
+		this.slider = new Slider(this.element, this.handler.element);
 	}
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-

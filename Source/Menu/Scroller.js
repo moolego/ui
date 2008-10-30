@@ -78,7 +78,10 @@ UI.MenuScroller = new Class({
 	*/
 	
 	resetSize : function(){
+		var windowScroll = Window.getScroll();
 		var elementCoordinates = this.element.getCoordinates();
+		elementCoordinates.top -= windowScroll.y;
+		elementCoordinates.bottom -= windowScroll.y;
 		var arrows = [0,0];
 		this.element.setStyle('display', 'none');
 		var windowHeight = Window.getHeight();
@@ -104,7 +107,7 @@ UI.MenuScroller = new Class({
 				'top' : elementCoordinates.top - this.margin
 			});
 			this.element.setStyles({
-				'top': this.margin,
+				'top': this.margin + windowScroll.y,
 				'height' : elementCoordinates.bottom - this.margin
 			});
 			arrows[0] = 1;
@@ -190,7 +193,11 @@ UI.MenuScroller = new Class({
 	*/
 	
 	addUpArrow : function(){
+		var windowScroll = Window.getScroll();
 		var elementCoord = this.element.getCoordinates();
+		elementCoord.top -= windowScroll.y;
+		elementCoord.bottom -= windowScroll.y;
+		
 		this.arrowUp = new Element('div', {'class' : 'ui-menu-arrow-up'}).setStyles({
 			position	: 'absolute',
 			width 		: elementCoord.width,
@@ -237,7 +244,11 @@ UI.MenuScroller = new Class({
 	*/
 	
 	addDownArrow : function(){
+		var windowScroll = Window.getScroll();
 		var elementCoord = this.element.getCoordinates();
+		elementCoord.top -= windowScroll.y;
+		elementCoord.bottom -= windowScroll.y;
+		
 		this.arrowDown = new Element('div', {'class' : 'ui-menu-arrow-down'}).setStyles({
 			position	: 'absolute',
 			width 		: elementCoord.width,
@@ -291,7 +302,7 @@ UI.MenuScroller = new Class({
 
 		if (contentCoordinates.bottom > wrapperCoordinates.bottom) {
 			// we can extend (up) the element to fit the window
-			if (elementCoordinates.top - this.options.speed > this.margin) {
+			if (elementCoordinates.top - Window.getScroll().y - this.options.speed > this.margin) {
 				this.element.setStyles({
 					top: this.element.getStyle('top').toInt() - this.options.speed,
 					height: elementCoordinates.height + this.options.speed
@@ -332,7 +343,7 @@ UI.MenuScroller = new Class({
 
 		if (contentCoordinates.top < wrapperCoordinates.top) {
 			// we can extend the element to fit the window
-			if (elementCoordinates.bottom + this.margin < Window.getHeight()) {
+			if (elementCoordinates.bottom + this.margin < Window.getHeight() + Window.getScroll().y) {
 				this.element.setStyle('height', elementCoordinates.height + this.options.speed);
 				this.wrapper.setStyle('height', wrapperCoordinates.height + this.options.speed);
 				this.content.setStyle('top', this.content.getStyle('top').toInt() + this.options.speed);

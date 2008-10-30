@@ -307,7 +307,9 @@ UI.Menu = new Class({
 	
 	removeRollover : function(){
 		if (this.rollover) {
-			this.rollover.hide();
+			//this.rollover.hide();
+			this.rollover.destroy();
+			delete this.rollover;
 		}
 		if (this.activeItem) {
 			this.activeItem.fireEvent('defaultArrow');
@@ -369,7 +371,11 @@ UI.Menu = new Class({
 				'top': top,
 				'left': elCoordinates.left
 			});
+			windowScroll = Window.getScroll();
 			menuCoordinates = this.element.getCoordinates();
+			menuCoordinates.top -= windowScroll.y;
+			menuCoordinates.bottom -= windowScroll.y;
+			
 			if(menuCoordinates.bottom + this.options.scrollMargin > (Window.getHeight()) || menuCoordinates.top < this.options.scrollMargin) {
 				this.addScrolls();
 			}
@@ -469,7 +475,7 @@ UI.Menu = new Class({
 				this.underlay = new Element('div', {
 					'class' : 'menu-underlay',
 					styles: {
-						position: 'absolute',
+						position: 'fixed',
 						width: '100%',
 						height: '100%',
 						background	: '#FFF',
@@ -493,11 +499,11 @@ UI.Menu = new Class({
 						}
 					}
 				}).inject(document.body);
-				this.removeUnderlayEvent = function(){
+				this.removeUnderlayEvent = function(e){
 					if (this.underlay) this.underlay.fireEvent('click');
 					window.removeEvent('resize', this.removeUnderlayEvent);
 				}.bind(this);
-				window.addEvent('resize', this.removeUnderlayEvent);
+				window.addEvent('resize', this.removeUnderlayEvent.bindWithEvent());
 			}
 		}
 	},
