@@ -32,11 +32,21 @@ UI.Slider = new Class({
 		className		: 'slider',
 		
 		component		: 'slider',
-		type			: 'default',
+		type			: 'horizontal',
 		state			: 'default',
 		
 		// implemented events
-		onChange		: $empty
+		onStart			: $empty,
+		onChange		: $empty,
+		onComplete		: $empty,
+		onTick			: $empty,
+		
+		// mootools slider default settings
+		snap			: false,
+		offset			: 0,
+		range			: false,
+		wheel			: false,
+		steps			: 100,
 	},
 	
 	initialize: function(options) {
@@ -62,7 +72,25 @@ UI.Slider = new Class({
 	
 	inject : function(target, position) {
 		this.parent(target, position);
-		
-		this.slider = new Slider(this.element, this.handler.element);
+		this.slider = new Slider(this.canvas.canvas, this.handler.element, {
+			snap 		: this.options.snap,
+			offset		: this.options.offset,
+			range		: this.options.range,
+			wheel		: this.options.wheel,
+			steps		: this.options.steps,
+			mode		: this.options.type,
+			onStart		: function(step){this.fireEvent('start', step)}.bind(this),
+			onTick: function(position){
+				if(this.options.snap) position = this.toPosition(this.step);
+				this.knob.setStyle(this.property, position);
+			},
+			onChange	: function(step){this.fireEvent('change', step)}.bind(this),
+			onComplete	: function(step){this.fireEvent('complete', step)}.bind(this)
+		});
+	},
+	
+	set : function(value){
+		this.slider.set(value);
+		return this;
 	}
 });
