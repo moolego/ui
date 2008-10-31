@@ -28,7 +28,6 @@ UI.Element = new Class({
 		styles				: {},
 		
 		// implemeted events
-		
 		onClick				: $empty,
 		onMouseDown			: $empty,
 		onBuild				: $empty,
@@ -50,7 +49,6 @@ UI.Element = new Class({
 	
 	initialize: function(options){
 		this.setOptions(options);
-		
 		if (!this.controller) this.controller = UI.controller;
 
 		this.setClassName();

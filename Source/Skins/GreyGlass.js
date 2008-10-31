@@ -712,6 +712,9 @@ UI.props.GreyGlass = {
 	slider : {
 		'default' : {
 			'default' : {
+				width				: 300,
+				height				: 22,
+				
 				/* element css properties */
 				styles				: {
 					position		: 'relative',
@@ -748,6 +751,15 @@ UI.props.GreyGlass = {
 						radius		: [4,4,4,4]
 					},
 				}
+			}
+		},
+		horizontal					: {
+			'default'				: {}
+		},
+		vertical					: {
+			'default'				: {
+				width				: 22,
+				height				: 300,
 			}
 		},
 		'knob' : {
