@@ -189,6 +189,13 @@
 				}
 			}).inject(form);
 			
+			this.slider = new UI.Slider({
+				range				: [0, 255],
+				styles				: {
+					margin			: '20px 10px'
+				},
+				wheel				: true
+			}).inject(form);
 			
 			button = new UI.Button({
 				label : "Launch a new Control test",
@@ -360,33 +367,13 @@
 					
 					
 					new UI.Slider({
-						width			: 400,
 						styles			: {
 							margin		: 10
-						}
+						},
 					}).inject(window.content);
-					//console.log('TEST', $time()-time2);
-				},
-				props : {
-					'default' : {
-						layers		: {
-							shadow	: {
-								size	: 16
-							}
-						}
-					}
 				},
 				styles		: {
 					margin	: 10
-				}
-			}).inject(form);
-			
-			
-			this.slider = new UI.Slider({
-				width				: 300,
-				height				: 22,
-				styles				: {
-					margin			: 20
 				}
 			}).inject(form);
 			
