@@ -14,14 +14,33 @@
 <script type="text/javascript" src="../Source/Control/Label.js"></script>
 <script type="text/javascript" src="../Source/Control/Button.js"></script>
 <script type="text/javascript" src="../Source/Skins/GreyGlass.js"></script>
-<title>Buttons Demo</title>
+<title>moolego UI.Button demo</title>
 <script type="text/javascript">
 			window.addEvent('domready', function(){
 				
 				button = new UI.Button({
-					label	: 'Hello world!',
-					onClick	: function(){ alert('Hello world!') },
+					label	: 'Button',
 					styles	: {
+						margin	: 10,
+						fontFamily	: 'arial, helvetica, sans-serif',
+						fontSize	: '13px'
+					}
+				}).inject(document.body);
+				
+				button = new UI.Button({
+					type			: 'recessed',
+					label			: 'Recessed Button',
+					styles			: {
+						margin	: 10,
+						fontFamily	: 'arial, helvetica, sans-serif',
+						fontSize	: '13px'
+					}
+				}).inject(document.body);
+				
+				button = new UI.Button({
+					type			: 'roundtextured',
+					label			: 'Round Textured',
+					styles			: {
 						margin	: 10,
 						fontFamily	: 'arial, helvetica, sans-serif',
 						fontSize	: '13px'
@@ -31,6 +50,6 @@
 			});
 		</script>
 </head>
-<body>
+<body bgcolor="#e8e8e8">
 </body>
 </html>
