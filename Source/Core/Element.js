@@ -1,6 +1,6 @@
 /*
 Class: UI.Element
-	UI.Element is the root class of most class of iFramework UI
+	UI.Element is the root class of most class of Moolego UI
 */
 
 

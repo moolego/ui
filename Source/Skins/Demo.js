@@ -319,6 +319,231 @@ UI.props.demo = {
 			}
 		}
 	},
+
+	slider : {
+		'default' : {
+			'default' : {
+				width				: 300,
+				height				: 40,
+				
+				/* element css properties */
+				styles				: {
+					position		: 'relative',
+					display			: 'inline-block',
+				},
+				
+				/* layers properties */
+				layers				: {
+					reorder			: ['border','front','fakeShadow','reflect'],
+					
+					border			: {
+						offset		: ['0px', '0px', '0px','0px'],
+						color		: ['#093889','#5289d7'],
+						opacity		: 1,
+						radius		: 5
+					},
+					front			: {
+						position	: 'absolute',
+						offset		: 1,
+						color		: ['#3672dc','#4085ec'],
+					 	opacity		: 1,
+						radius		: [4,4,4,4]
+					},
+					fakeShadow		: {
+						position	: 'absolute',
+						offset		: ['1px', '1px', '23px'],
+						color		: ['#000','#000'],
+					 	opacity		: [.2,0],
+						radius		: [5,5,0,0]
+					},
+					reflect			: {
+						position	: 'absolute',
+						offset		: ['50%', '1px', '1px'],
+						color		: ['#FFF', '#FFF'],
+						opacity		: [.05, .3],
+						radius		: [4,4,4,4]
+					},
+				}
+			}
+		},
+		horizontal					: {
+			'default'				: {}
+		},
+		vertical					: {
+			'default'				: {
+				width				: 10,
+				height				: 300,
+			}
+		},
+		'knob' : {
+			'default': {
+				width 		: 40,
+			//	height 		: 10,
+				
+				styles		: {
+					position		: 'relative',
+					zIndex			: 1,
+					display			: 'block'
+				},
+						
+				layers				: {
+					reorder			: ['checkBg','check','checkFront'],
+					
+					checkBg			: {
+						position	: 'absolute',
+						offset		: 0,
+						color		: '#000',
+						opacity		: 0.25,
+						radius		: 5
+					},
+					check			: {
+						position	: 'absolute',
+						offset		: 1,
+						color		: ['#FFF', '#FFF'],
+						opacity		: 1,
+						radius		: 4
+					},
+					checkFront		: {
+						position	: 'absolute',
+						offset		: [2, 2, 1, 1],
+						color		: ['#000', '#000'],
+						opacity		: [.18,.02],
+						radius		: 4
+					}
+				}
+			}
+		}
+	},
+	
+	checkbox : {
+		'default' : {
+			'default' : {
+					
+				width				: 94,
+				height				: 27,
+				
+				styles			: {
+					position	: 'relative',
+					display		: 'inline-block'
+				},
+				
+				layers				: {
+					reorder			: ['border','front','fakeShadow','on','on1','reflect','checkShadow','checkShadow2','checkBg','check','checkFront'],
+					
+					border			: {
+						offset		: ['0px', '0px', '0px','1px'],
+						color		: ['#093889','#5289d7'],
+						opacity		: 1,
+						radius		: 4
+					},
+					front			: {
+						position	: 'absolute',
+						offset		: 1,
+						color		: ['#3672dc','#4085ec'],
+					 	opacity		: 1,
+						radius		: [4,4,4,4]
+					},
+					fakeShadow		: {
+						position	: 'absolute',
+						offset		: ['1px', '1px', '23px'],
+						color		: ['#000','#000'],
+					 	opacity		: [.2,0],
+						radius		: [5,5,0,0]
+					},
+					on				: {
+						position	: 'absolute',
+						shape		: 'circle',
+						offset		: ['14px', 'auto', '1px','67px'],
+						color		: '#FFF',
+						opacity		: 1,
+						radius		: 9
+					},
+					on1				: {
+						position	: 'absolute',
+						shape		: 'circle',
+						offset		: ['14px', 'auto', '1px','67px'],
+						color		: '#407ee3',
+						opacity		: 1,
+						radius		: 6.5
+					},
+					reflect			: {
+						position	: 'absolute',
+						offset		: ['50%', '1px', '1px'],
+						color		: ['#FFF', '#FFF'],
+						opacity		: [.05, .3],
+						radius		: [4,4,4,4]
+					},
+					checkShadow		: {
+						position	: 'absolute',
+						offset		: ['0px', '52px', '0px','0px'],
+						color		: ['#000', '#000'],
+						opacity		: 0.1,
+						radius		: [5,5,5,5]
+					},
+					checkShadow2	: {
+						position	: 'absolute',
+						offset		: ['0px', '53px', '0px','0px'],
+						color		: ['#000', '#000'],
+						opacity		: 0.1,
+						radius		: [5,5,5,5]
+					},
+					checkBg			: {
+						position	: 'absolute',
+						offset		: ['0px', '54px', '0px','0px'],
+						color		: ['#919191', '#979797'],
+						opacity		: 1,
+						radius		: [5,5,5,5]
+					},
+					check			: {
+						position	: 'absolute',
+						offset		: ['1px', '54px', '1px','1px'],
+						color		: ['#FFF', '#FFF'],
+						opacity		: 1,
+						radius		: [4,4,4,4]
+					},
+					checkFront		: {
+						position	: 'absolute',
+						offset		: ['2px', '54px', '1px','1px'],
+						color		: ['#000', '#000'],
+						opacity		: [.18,.02],
+						radius		: [4,4,4,4]
+					}
+				}
+			},
+			'checked' : {
+				layers				: {
+					reorder			: ['border','front','fakeShadow','off','reflect','checkShadow','checkShadow2','checkBg','check','checkFront'],
+					
+					border			: {
+						offset		: ['0px', '1px', '0px','0px']
+					},
+					off				: {
+						position	: 'absolute',  
+						shape		: 'roundedRect',
+						offset		: ['5px', '65px', '5px','26px'],
+						color		: '#FFF',
+						opacity		: 1,
+						radius		: 2
+					},
+					checkShadow		: {
+						offset		: ['0px', '0px', '0px','52px']
+					},
+					checkShadow2	: {
+						offset		: ['0px', '0px', '0px','53px']
+					},
+					checkBg			: {
+						offset		: ['0px', '0px', '0px','54px']
+					},
+					check			: {
+						offset		: ['1px', '1px', '1px','54px']
+					},
+					checkFront		: {
+						offset		: ['2px', '1px', '1px','54px']
+					}
+				}
+			}
+		}
+	},
 	
 	// needed for button
 	label: {

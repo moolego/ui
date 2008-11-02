@@ -119,6 +119,7 @@ UI.View = new Class({
 			}
 			
 			if (this.options.overflow == 'scrollbar') {
+				this.content.setStyle('overflow','hidden');
 				this.setScrollbar();
 			}
 		} else { this.content = this.element }
