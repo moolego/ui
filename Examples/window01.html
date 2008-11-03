@@ -45,6 +45,7 @@
 	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
 	
 	<script type="text/javascript" src="../Source/Skins/GreyGlass.js"></script>
+	<script type="text/javascript" src="../Source/Skins/Demo.js"></script>
 	
 	<script type="text/javascript">
 		window.addEvent('load', function() {
@@ -55,7 +56,7 @@
 				draggable	: false,
 				menu		: [
 					{
-						text	: 'MooLego',
+						text	: 'moolego',
 						styles	: {
 							position	: 'relative'
 						},
@@ -206,9 +207,10 @@
 				onClick : function(){
 					var time2 = $time();
 					var window = new UI.Window({
-						title	: 'some controls',
-						width	: 300,
-						height	: 300
+						title		: 'some controls',
+						width		: 300,
+						height		: 300,
+						overflow	: 'hidden'
 						
 					});
 			
@@ -585,7 +587,6 @@
 					padding			: '10px 26px'
 				},
 				location			: 'center',
-				submit				: true,
 				draggable			: true,
 				onClick				: function() { 
 					
@@ -723,7 +724,6 @@
 					color			: '#fff',
 					padding			: '10px 26px'
 				},
-				submit				: true,
 				props				: {
 					'default'				: {
 						layers				: {
@@ -918,7 +918,6 @@
 					padding				: '18px 26px',
 					color				: '#fff'
 				},
-				submit					: true,
 				onClick					: function() {
 					new UI.Window({
 						title			: 'Hardest Button to Button',
@@ -942,7 +941,7 @@
 							},
 							front			: {
 								offset		: 3,
-								color		: ['#cc0033','#1d5591'],
+								color		: ['#cc0033','#000'],
 							 	opacity		: 1,
 								radius		: 7
 							},
@@ -950,7 +949,7 @@
 								offset		: ['2px', '2px', '65%'],
 								color		: ['#FFF', '#FFF'],
 								opacity		: [.8, .0],
-								radius		: [5, 5, 14, 14]
+								radius		: [5,5,6,6]
 							}
 						}
 					},
@@ -1000,7 +999,7 @@
 			
 			
 			submit = new UI.Button({
-				label				: 'Cancel NOW',
+				label				: 'Submit NOW',
 				labelStyles			: {
 					fontSize			: '2em',
 					fontWeight			: 'bold',
@@ -1079,132 +1078,10 @@
 			}).inject(form);
 			
 			this.checkbox = new UI.Checkbox({
-				type						: 'touch',
+				skin				: 'demo',
+				type				: 'default',
 				styles				: {
 					margin			: '20px'
-				},
-				props 				: {
-				
-					'default'				: {
-					
-						width				: 94,
-						height				: 27,
-						
-						layers				: {
-							reorder			: ['border','front','fakeShadow','on','on1','reflect','checkShadow','checkShadow2','checkBg','check','checkFront'],
-							
-							border			: {
-								offset		: ['0px', '0px', '0px','1px'],
-								color			: ['#093889','#5289d7'],
-								opacity		: 1,
-								radius		: 4
-							},
-							front			: {
-								position	: 'absolute',
-								offset		: 1,
-								color		: ['#3672dc','#4085ec'],
-							 	opacity		: 1,
-								radius		: [4,4,4,4]
-							},
-							fakeShadow		: {
-								position	: 'absolute',
-								offset		: ['1px', '1px', '23px'],
-								color		: ['#000','#000'],
-							 	opacity		: [.2,0],
-								radius		: [5,5,0,0]
-							},
-							on				: {
-								position	: 'absolute',
-								shape		: 'circle',
-								offset		: ['14px', 'auto', '1px','67px'],
-								color		: '#FFF',
-								opacity		: 1,
-								radius		: 9
-							},
-							on1				: {
-								position	: 'absolute',
-								shape		: 'circle',
-								offset		: ['14px', 'auto', '1px','67px'],
-								color		: '#407ee3',
-								opacity		: 1,
-								radius		: 6.5
-							},
-							reflect			: {
-								position	: 'absolute',
-								offset		: ['50%', '1px', '1px'],
-								color		: ['#FFF', '#FFF'],
-								opacity		: [.05, .3],
-								radius		: [4,4,4,4]
-							},
-							checkShadow		: {
-								position	: 'absolute',
-								offset		: ['0px', '52px', '0px','0px'],
-								color		: ['#000', '#000'],
-								opacity		: 0.1,
-								radius		: [5,5,5,5]
-							},
-							checkShadow2	: {
-								position	: 'absolute',
-								offset		: ['0px', '53px', '0px','0px'],
-								color		: ['#000', '#000'],
-								opacity		: 0.1,
-								radius		: [5,5,5,5]
-							},
-							checkBg			: {
-								position	: 'absolute',
-								offset		: ['0px', '54px', '0px','0px'],
-								color		: ['#919191', '#979797'],
-								opacity		: 1,
-								radius		: [5,5,5,5]
-							},
-							check			: {
-								position	: 'absolute',
-								offset		: ['1px', '54px', '1px','1px'],
-								color		: ['#FFF', '#FFF'],
-								opacity		: 1,
-								radius		: [4,4,4,4]
-							},
-							checkFront		: {
-								position	: 'absolute',
-								offset		: ['2px', '54px', '1px','1px'],
-								color		: ['#000', '#000'],
-								opacity		: [.18,.02],
-								radius		: [4,4,4,4]
-							}
-						}
-					},
-					'checked' : {
-						layers				: {
-							reorder			: ['border','front','fakeShadow','off','reflect','checkShadow','checkShadow2','checkBg','check','checkFront'],
-							
-							border			: {
-								offset		: ['0px', '1px', '0px','0px']
-							},
-							off				: {
-								position	: 'absolute',  
-								shape		: 'roundedRect',
-								offset		: ['5px', '65px', '5px','26px'],
-								color		: '#FFF',
-								opacity		: 1,
-								radius		: 2
-							},
-							checkShadow		: {
-								offset		: ['0px', '0px', '0px','52px']
-							},
-							checkShadow2	: {
-								offset		: ['0px', '0px', '0px','53px']
-							},
-							checkBg			: {
-								offset		: ['0px', '0px', '0px','54px']
-							},
-							check			: {
-								offset		: ['1px', '1px', '1px','54px']
-							},
-							checkFront		: {
-								offset		: ['2px', '1px', '1px','54px']
-							}
-						}
-					}
 				}
 			}).inject(form);
 			//console.log('window.html', $time()-time);
@@ -1213,6 +1090,6 @@
 	</script>
 </head>
 
-<body></body>
+<body style="overflow:hidden" bgcolor="#e8e8e8"></body>
 
 </html>
