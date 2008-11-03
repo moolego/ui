@@ -1,6 +1,6 @@
 /*
 Class: UI.Element
-	UI.Element is the root class of most class of iFramework UI
+	UI.Element is the root class of most class of Moolego UI
 */
 
 
@@ -78,6 +78,7 @@ UI.Element = new Class({
 			styles	: this.props.styles,
 			events	: this.options.events,
 			id		: this.options.id,
+			name	: this.options.name,
 			html	: this.options.html,
 			'for'	: this.options['for']
 		});

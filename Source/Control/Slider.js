@@ -80,7 +80,7 @@ UI.Slider = new Class({
 			steps		: this.options.steps,
 			mode		: this.options.type,
 			onStart		: function(step){this.fireEvent('start', step)}.bind(this),
-			onTick: function(position){
+			onTick		: function(position){
 				if(this.options.snap) position = this.toPosition(this.step);
 				this.knob.setStyle(this.property, position);
 			},

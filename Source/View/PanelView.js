@@ -5,7 +5,9 @@ Class: UI.PanelView
 */
 
 UI.PanelView = new Class({
-	Implements: [Events, Options],
+	Extends					: UI.View,
+	
+	Implements				: [Events, Options],
 	
 	options: {
 		className			: 'ui-panelview',
@@ -21,9 +23,12 @@ UI.PanelView = new Class({
     		duration		: 1600,
     		wait			: false
 		},
-		view				: {
-			width			: '300px',
-			height			: '100%'
+		panel				: {
+			className		: 'ui-panelview-panel',
+			styles 			: {
+				width			: '300px',
+				height			: '100%'
+			}
 		},
 		onLoad				: $empty,
 		onComlete			: $empty,
@@ -56,12 +61,15 @@ UI.PanelView = new Class({
 
  	build: function (){
 		this.element = new UI.View({
-			className			: this.options.className
-			//overflow			: 'hidden'
+			overflow			: 'hidden',
+			styles				: {
+				height: '100%',
+			    margin: '0',
+			    overflow: 'hidden',
+			    padding: '0',
+			    backgroundColor: '#FFF'
+			}
 		});
-		
-		this.element.element.setStyle('overflow','hidden');
-		
 	},
 
 	/*
@@ -156,7 +164,7 @@ UI.PanelView = new Class({
 			size = size + panel.element.getSize().x;				  
 		});
 
-		this.element.content.setStyle('width',size+'px');
+		//this.element.content.setStyle('width',size+'px');
 	},
 
 	/*

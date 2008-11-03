@@ -37,9 +37,7 @@ UI.Skin = new Class({
 		this.setOptions(options);
 		this.defaultSkin = this.options.skin;
 	},
-	
 
-	
 	processSkin : function(skinName) {
 		//we merge syles for each states of each type of components
 		for (var cKey in UI.props[skinName]) {
@@ -151,22 +149,8 @@ UI.Skin = new Class({
 			Merges any number of objects recursively without referencing them or their sub-objects.
 			
 			
-		Arguments:
+		See also: mootools merge function
 			
-			(objects) Any number of objects.
-			Returns:
-			
-			(object) The object that is created as a result of merging all the objects passed in.
-		Examples:
-			
-			var obj1 = {a: 0, b: 1};
-			var obj2 = {c: 2, d: 3};
-			var obj3 = {a: 4, d: 5};
-			var merged = $merge(obj1, obj2, obj3); //returns {a: 4, b: 1, c: 2, d: 5}, (obj1, obj2, and obj3 are unaltered)
-			 
-			var nestedObj1 = {a: {b: 1, c: 1}};
-			var nestedObj2 = {a: {b: 2}};
-			var nested = this.merge(nestedObj1, nestedObj2); //returns: {a: {b: 2, c: 1}}
 	*/	
 	
 	merge : function() {
@@ -180,5 +164,4 @@ UI.Skin = new Class({
 		}
 		return mix;
 	}
-	
- });
+});
