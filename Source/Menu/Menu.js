@@ -165,7 +165,7 @@ UI.Menu = new Class({
 			});
 		}
 		
-		menuItem.addEvents({
+		menuItem.element.addEvents({
 			'mouseleave': function(){
 				$clear(this.menuActionDelay);
 			}.bind(this),
@@ -312,7 +312,7 @@ UI.Menu = new Class({
 			delete this.rollover;
 		}
 		if (this.activeItem) {
-			this.activeItem.fireEvent('defaultArrow');
+			this.activeItem.element.fireEvent('defaultArrow');
 			this.activeItem.setState('default', 'dontResize');
 		}
 		
@@ -328,7 +328,7 @@ UI.Menu = new Class({
 	removeSubmenu : function(){
 		if(this.activeItem && this.activeItem.submenu) {
 			this.activeItem.element.fireEvent('defaultArrow');
-			this.activeItem.submenu.hide();
+			this.activeItem.submenu.hide(this.props.hideFxDuration);
 		}
 	},
 	
@@ -486,7 +486,7 @@ UI.Menu = new Class({
 					},
 					events : {
 						'click' : function(){
-							this.hide();
+							this.hide(300);
 							this.removeUnderlay();
 						}.bind(this),
 						'contextmenu' : function(e){

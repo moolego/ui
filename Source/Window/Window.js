@@ -106,16 +106,14 @@ UI.Window = new Class({
 		// handle window manager singleton class
 		this.controller = new UI.Controller.Window();
 		
-		// set specific styles for window element
-		this.location = this.getInitialLocation();
-		this.options.styles.top = this.location.top;
-		this.options.styles.left = this.location.left;
-		
 		// call parent constructor
 		this.parent(options);
 		
+		// set windnow position
+		this.element.setStyles(this.getInitialLocation());
+		
 		this.controller.focus(this);
-		this.fireEvent('onFocus');
+		this.fireEvent('focus');
 		this.isActive = true;
 		
 	},
@@ -241,15 +239,14 @@ UI.Window = new Class({
 						marginBottom: 0,
 						width: '24px',
 						height: '24px'
+					},
+					events: {
+						mousedown : function(e){
+							new Event(e).stop();
+						}
 					}
 				}).inject(this.foot);
 			}
-			
-			this.addEvents({
-				'onMinimize'	: function(){ this.foot.hide();	},
-				'onNormalize'	: function(){ this.foot.show(); }
-			});
-			
 			this.setStatus();
 		}
 	},
@@ -273,8 +270,8 @@ UI.Window = new Class({
 		this.addEvents({
 			onMinimize 			: function() { this.toolbar.content.hide() },
 			onNormalize 		: function() { this.toolbar.content.show() },
-			obBlur				: function() { 	this.toolbar.content.setStyle('opacity',.5) },
-			obFocus				: function() { 	this.toolbar.content.setStyle('opacity',1) }
+			obBlur				: function() { this.toolbar.content.setStyle('opacity',.5) },
+			obFocus				: function() { this.toolbar.content.setStyle('opacity',1) }
 		});
 		
 		new UI.Button({
@@ -329,8 +326,7 @@ UI.Window = new Class({
 					fontFamily: this.props.fontFamily,
 					fontSize: '0.75em',
 					padding: '3px 16px',
-					height: '16px',
-					width: '50%'
+					height: '16px'
 				}
 			}).inject(this.foot);
 		};
@@ -459,8 +455,8 @@ UI.Window = new Class({
 	    	Set window's frame size and updateSize
 	*/	
 
-	setSize: function(width,height) {
-		this.parent(width,height);
+	setSize: function(width,height, state) {
+		this.parent(width,height, state);
 		this.updateSize();
 	},
 	
@@ -502,6 +498,7 @@ UI.Window = new Class({
 			});
 		}
 		this.props.layers.underlay.size[1] = this.head.getSize().y;
+		this.skin['inactive'].layers.underlay.size[1] = this.head.getSize().y;
 		
 		if (this.options.tabView) {
 			this.tabView.tabs.setStyles({
@@ -533,14 +530,19 @@ UI.Window = new Class({
 	*/
 
 	minimize : function() {
-		this.fireEvent('onMinimize');
-		this.state = 'minimized';
-		this.coordinates = this.element.getCoordinates();
-		
-		var size = this.controller.setMinimizedCoordinates();
-
-		this.head.setStyle('width', size.width);
-		this.element.setStyles(size);
+		if(this.minimized) {
+			this.normalize();
+		} else {
+			if (!this.maximized) this.coordinates = this.element.getCoordinates();
+			
+			var size = this.controller.setMinimizedCoordinates();
+			this.head.setStyle('width', size.width);
+			this.element.setStyles(size);
+			
+			this.maximized = false;
+			this.minimized = true;
+			this.fireEvent('onMinimize');
+		}
 	},
 
 	/*
@@ -549,12 +551,19 @@ UI.Window = new Class({
 	*/
 
 	maximize : function() {
-
-		this.lastState = this.state;
-		this.state = 'maximized';
-				
-		this.setSize(window.getWidth(),window.getHeight());
-		this.fireEvent('onMaximize');
+		if(this.maximized) {
+			this.normalize();
+		} else {
+			if (!this.minimized) this.coordinates = this.element.getCoordinates();
+			this.setSize(window.getWidth(),window.getHeight()-this.options.dragLimitY[0]);
+			this.element.setStyles({
+				top : this.options.dragLimitY[0],
+				left : 0
+			})
+			this.minimized = false;
+			this.maximized = true;
+			this.fireEvent('onMaximize');
+		}
 	},
 
 	/*
@@ -563,12 +572,13 @@ UI.Window = new Class({
 	*/
 
 	normalize : function() {
-		this.state = 'default';
 		this.setStyles({
-			left	: this.coordinates.x,
-			top		: this.coordinates.y
+			left	: this.coordinates.left,
+			top		: this.coordinates.top
 		});
 		this.setSize(this.coordinates.width,this.coordinates.height);
+		this.maximized = false;
+		this.minimized = false;
 		this.fireEvent('onNormalize');
 	},		
 
@@ -581,13 +591,9 @@ UI.Window = new Class({
 	*/	
 
 	control : function(action) {
-		if (action == 'minimize') {
-			this.state == 'default' ?  this.minimize() : this.normalize();
-		} else if (action == 'maximize') {
-			this.state == 'default' ? this.maximize() : this.normalize();
-		} else if (action == 'close') {
-			this.close();
-		};
+		if (action == 'minimize') this.minimize();
+		else if (action == 'maximize') this.maximize();
+		else if (action == 'close') this.close();
 	},
 
 	/*
@@ -611,7 +617,7 @@ UI.Window = new Class({
 	      FireEvent onBlur and set isActiv to false
 	*/	
 	
-	blur: function() {		
+	blur: function() {
 		this.setState('inactive');
 		this.fireEvent('onBlur');
 		this.isActive = false;
@@ -631,10 +637,7 @@ UI.Window = new Class({
 	},
 	
 	close : function() {
-		this.hide();
-		
-		this.controller.destroy(this);
-		
+		this.controller.close(this);
 		this.fireEvent('onClose');
 	}
 });

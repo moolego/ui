@@ -482,6 +482,37 @@ UI.Canvas = new Class({
 	},
 	
 	/*
+	Function: setFillColor
+	
+		Set the fill color, handling direction, gradient and opacity
+		
+	Arguments: props
+	*/
+	
+	setFillColor : function(props) {
+		if ($type(props.color) == 'array' || $type(props.opacity) == 'array'){
+			if ($type(props.opacity) != 'array')
+				 props.opacity = [props.opacity,props.opacity];
+			if ($type(props.color) != 'array')
+				 props.color = [props.color,props.color];
+
+			if (props.direction == 'vertical')
+				var gradient = this.ctx.createLinearGradient(props.offset[0], 0, props.size[0]+props.offset[0], 0);
+			else
+				var gradient = this.ctx.createLinearGradient(0, props.offset[1], 0, props.size[1]+props.offset[1]);
+			
+			var top = props.color[0].hexToRgb(true);
+			var bottom = props.color[1].hexToRgb(true);
+			gradient.addColorStop(0, 'rgba(' + top.join(',') + ', ' + props.opacity[0] +')');
+			gradient.addColorStop(1, 'rgba(' + bottom.join(',') + ', ' + props.opacity[1] +')');
+			this.ctx.fillStyle = gradient;
+		} else {
+			var color = props.color.hexToRgb(true);
+			this.ctx.fillStyle = 'rgba(' + color.join(',') + ',' + props.opacity + ')';
+		};
+	},
+	
+	/*
 	Function: roundedRect
 	
 		Draw a rounded rectangle
@@ -501,35 +532,12 @@ UI.Canvas = new Class({
 	*/
 			
 	roundedRect: function(props) {
-		if ($type(props.color) == 'array'){
-			if ($type(props.opacity) != 'array')
-				 props.opacity = props.opacity ? [props.opacity,props.opacity] :  [1,1];
-
-			if (props.direction == 'vertical') {
-				var gradient = this.ctx.createLinearGradient(props.offset[0], 0, props.size[0]+props.offset[0], 0);
-			} else {
-				var gradient = this.ctx.createLinearGradient(0, props.offset[1], 0, props.size[1]+props.offset[1]);
-			}
-			
-			var top = props.color[0].hexToRgb(true);
-			var bottom = props.color[1].hexToRgb(true);
-			
-			gradient.addColorStop(0, 'rgba(' + top.join(',') + ', ' + props.opacity[0] +')');
-			gradient.addColorStop(1, 'rgba(' + bottom.join(',') + ', ' + props.opacity[1] +')');
-			this.ctx.fillStyle = gradient;
-		} else if (props.color) {
-			if ($type(props.opacity) != 'number') opacity = 1;
-			
-			var color = props.color.hexToRgb(true);
-			this.ctx.fillStyle = 'rgba(' + color.join(',') + ',' + props.opacity + ')';
-		};
+		//set fill color
+		this.setFillColor(props);
 
 		// fill rounded rectangle
-		
 		this.ctx.beginPath();
-
 		this.ctx.moveTo(props.offset[0] + props.radius[0], props.offset[1]);
-
 		this.ctx.lineTo(props.offset[0] + props.size[0] - props.radius[1], props.offset[1]);
 		this.ctx.quadraticCurveTo(props.offset[0] + props.size[0], props.offset[1], props.offset[0] + props.size[0], props.offset[1] + props.radius[1]);
 		this.ctx.lineTo(props.offset[0] + props.size[0], props.offset[1] + props.size[1] - props.radius[2]);
@@ -538,7 +546,6 @@ UI.Canvas = new Class({
 		this.ctx.quadraticCurveTo(props.offset[0], props.offset[1] + props.size[1], props.offset[0], props.offset[1] + props.size[1] - props.radius[3]);
 		this.ctx.lineTo(props.offset[0], props.offset[1] + props.radius[0]);
 		this.ctx.quadraticCurveTo(props.offset[0], props.offset[1], props.offset[0] + props.radius[0], props.offset[1]);
-		
 		this.ctx.fill();
 	},
 
@@ -562,26 +569,8 @@ UI.Canvas = new Class({
 	*/
 	
 	circle: function(props){
-		// define fillStyle props (basicly color or gradient and opacity)
-		
-		if ($type(props.color) == 'array'){
-			if ($type(props.opacity) != 'array')
-				props.opacity ? props.opacity = [props.opacity,props.opacity] : props.opacity = [1,1];
-			
-			var gradient = this.ctx.createLinearGradient(0, props.offset[1] - props.radius[0], 0, props.radius[0]+props.offset[1]);
-			var top = props.color[0].hexToRgb(true);
-			var bottom = props.color[1].hexToRgb(true);
-			
-			gradient.addColorStop(0, 'rgba(' + top.join(',') + ', ' + props.opacity[0] +')');
-			gradient.addColorStop(1, 'rgba(' + bottom.join(',') + ', ' + props.opacity[1] +')');
-			this.ctx.fillStyle = gradient;
-		} else if  (props.color) {
-			if ($type(props.opacity) != 'number')
-				props.opacity = 1;
-
-			var color = props.color.hexToRgb(true);
-			this.ctx.fillStyle = 'rgba(' + color.join(',') + ',' + props.opacity + ')';
-		};
+		//set fill color
+		this.setFillColor(props);
 		
 		// draw circle
 		this.ctx.beginPath();
@@ -646,9 +635,8 @@ UI.Canvas = new Class({
 	*/
 	
 	triangle : function(props) {
-		var color = (props.color) ? props.color.hexToRgb(true) : '#000'.hexToRgb(true);
-		var opacity = (props.opacity) ? props.opacity : 1;
-		this.ctx.fillStyle = 'rgba(' + color.join(',') + ',' + opacity + ')';
+		//set fill color
+		this.setFillColor(props);
 		
 		this.ctx.beginPath();
 		switch(props.direction) {

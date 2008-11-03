@@ -191,11 +191,14 @@
 			}).inject(form);
 			
 			this.slider = new UI.Slider({
-				range				: [0, 255],
+				range				: [0, 100],
 				styles				: {
 					margin			: '20px 10px'
 				},
-				wheel				: true
+				wheel				: true,
+				onChange			: function(step){
+					tip.fade(step/100);
+				}
 			}).inject(form);
 			
 			button = new UI.Button({
@@ -381,7 +384,7 @@
 				value : '',
 				onBlur : function(){
 					this.input.value = ''
-					this.tipArea = new UI.Bubble({
+					tipArea = new UI.Bubble({
 						target : this.element,
 						props : {
 							'default' : {
@@ -392,9 +395,9 @@
 					});
 				},
 				onFocus : function(){
-					if (this.tipArea) {
-						this.tipArea.destroy();
-						delete this.tipArea;
+					if (tipArea) {
+						tipArea.destroy();
+						delete tipArea;
 					}
 				},
 				styles : {
@@ -430,7 +433,7 @@
 
 			
 			
-			this.tip = new UI.Bubble({
+			var tip = new UI.Bubble({
 				target : $(button),
 				props : {
 					'default' : {
@@ -926,7 +929,7 @@
 						resizable		: false,
 						width			: 427,
 						height			: 388
-					}).setContent('content','<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>');
+					}).setContent('content','<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1"></param><param name="allowFullScreen" value="true"><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" wmode="transparent" height="344"></embed></object>');
 				},
 				props				: {
 					'default'				: {
@@ -1032,8 +1035,9 @@
 								radius		: [5, 5, 14, 14]
 							},
 							dark			: {
+								position	: 'absolute',
 								size		: ['auto','20px'],						
-								offset		: ['39px', '0px', '0px'],
+								offset		: ['auto', 4, 4],
 								color		: ['#fff', '#fff'],
 								opacity		: [0, .5],
 								radius		: [14, 14, 5, 5]

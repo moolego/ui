@@ -85,6 +85,7 @@ UI.Element = new Class({
 		this.element.setStyle('visibility', 'hidden');
 		if (!this.options.selectable) this.element.disableSelect();
 		this.element.ui = true;
+		this.state = this.options.state;
 	},
 
 	/* 
@@ -141,7 +142,7 @@ UI.Element = new Class({
 			if (!state)
 				var props = this.props;
 			else
-				var props = this.skin[state];
+				var props = this.skin[state] || this.props;
 			this.canvas.setSize(this.element.x,this.element.y, props);
 		});
 	},
@@ -164,8 +165,10 @@ UI.Element = new Class({
 		if (this.skin[state]) {
 			this.state = state;
 			if (this.skin[state].styles) this.setStyles(this.skin[state].styles);
+			
 			if (!$defined(dontResize)) this.setSize(false, false, state);
 		}
+		return this;
 	},
 	
 	/*
@@ -179,7 +182,6 @@ UI.Element = new Class({
 
 		if (this.element.x) this.element.setStyle('width', this.element.x);
 		if (this.element.y) this.element.setStyle('height', this.element.y);
-
 		this.fireEvent('setCanvasSize', state);
 		return this;
 	},
@@ -239,7 +241,7 @@ UI.Element = new Class({
 	*/
 	enableDrag :function() {
 		this.dragHandler = this.element.makeDraggable({
-			handle 		: this.head,
+			handle 		: [this.head, this.foot],
 			limit 		: { x: this.options.dragLimitX, y: this.options.dragLimitY },
 			
 			onStart 	: function() { this.fireEvent("onDragStart"); }.bind(this),

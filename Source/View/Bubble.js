@@ -58,7 +58,17 @@ UI.Bubble = new Class({
 			}).inject(this.element);
 		}
 		
-		this.fx = new Fx.Tween(this.element, {wait : false});
+		this.fx = new Fx.Tween(this.element, {
+			wait : false,
+			onStart : function(){
+				this.element.show();
+			},
+			onComplete : function(){
+				if(!this.element.getStyle('opacity')) {
+					this.element.hide();
+				}
+			}
+		});
 	},
 	
 	setBehavior : function(){

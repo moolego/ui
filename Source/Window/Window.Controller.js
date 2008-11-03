@@ -37,8 +37,8 @@ UI.Controller.Window = new Class({
 		zStep			: 10,
 		cascade			: {
 			start		: {
-				x		: 50,
-				y		: 100
+				x		: 51,
+				y		: 101
 			},
 			step: {
 				x		: 20,
@@ -78,7 +78,7 @@ UI.Controller.Window = new Class({
 	},
 	
 	/*
-	  Function: destroy
+	  Function: close
 	  
 	   Destroy the window class instance
 	   
@@ -86,7 +86,9 @@ UI.Controller.Window = new Class({
 	  
 	 */	
 	
-	destroy: function(elementClass) {
+	close: function(elementClass) {
+		elementClass.hide();
+		var previousWindow;
 		for (var i = UI.elements.window.length - 1; i >= 0; i--) {
 			if (UI.elements.window[i] == elementClass) {
 				elementClass.destroy();
@@ -94,6 +96,17 @@ UI.Controller.Window = new Class({
 				UI.elements.window = UI.elements.window.clean();
 			}
 		}
+		//make next highest window focus
+		var zIndex = 0;
+		var window;
+		for (var i = UI.elements.window.length - 1; i >= 0; i--) {
+			var windowZIndex = UI.elements.window[i].element.getStyle('zIndex');
+			if (windowZIndex >= zIndex) {
+				window = UI.elements.window[i];
+				zIndex = windowZIndex;
+			}
+		}
+		if (window) window.focus();
 	},
 	
 	/*
@@ -106,6 +119,7 @@ UI.Controller.Window = new Class({
 	 */	
 	
 	focus: function(win) {
+		
 		this.zIndex = this.zIndex + this.options.zStep;
 		win.element.style.zIndex = this.zIndex;
 
@@ -201,11 +215,10 @@ UI.Controller.Window = new Class({
 			left : this.options.cascade.start.x.toInt(),
 			top : this.options.cascade.start.y.toInt()
 		}
-		
 		UI.elements.window.each(function(w,i) {
-			if (w.state == 'normalized' && w.options.position == 'cascade') {
-				location.left = location.left + this.options.cascade.step.x;
-				location.top = location.top + this.options.cascade.step.y;
+			if (w.state != 'minimized' && w.options.location == 'cascade') {
+				location.left += this.options.cascade.step.x;
+				location.top += this.options.cascade.step.y;
 			}
 		},this);
 		
