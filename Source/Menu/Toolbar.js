@@ -114,6 +114,7 @@ UI.Toolbar = new Class({
 						} else {
 							// first push icon, then manage action with delay
 							this.menuWithAction = (function(){
+								if (this.activeItem.submenu) this.activeItem.submenu.hide(0);
 								this.moveRollover(menuItem);
 								this.addSubmenu(item, menuItem, 'bottom');
 								this.menuWithAction = false;

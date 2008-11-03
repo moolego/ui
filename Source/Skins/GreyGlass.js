@@ -1067,9 +1067,8 @@ UI.props.GreyGlass = {
 			inactive				: {
 				layers				: {
 					shadow			: {
-						size		: 8,
-						offsetX		: 0, 
-						offsetY		: 8
+						offsetY		: 8,
+						magnify		: -5
 					},
 					background		: {
 						opacity		: 0.17
@@ -1354,9 +1353,8 @@ UI.props.GreyGlass = {
 				/* others properties */
 				height				: 51,
 				presentation		: 'both',
-				hideFxDuration		: 100,
+				hideFxDuration		: 200,
 				showDelay			: 0,
-				selectFontColor		: '#ddd',
 				delay				: 500,
 				
 				/* layers properties */
