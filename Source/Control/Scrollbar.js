@@ -55,7 +55,7 @@ UI.Scrollbar = new Class({
 	},
 	
 	update: function(){
-		this.containerSize = this.options.container.getCoordinates().height.toInt();
+		this.containerSize = this.options.container.getSize().y;
 		this.setSize(this.options.width.toInt(),this.containerSize);
 		this.containerScrollSize = this.options.container.scrollHeight;
 		if(this.containerScrollSize == 0) return;
@@ -127,7 +127,7 @@ UI.Scrollbar = new Class({
 	},
 	
 	isVisible: function() {
-	
+
 		if (this.containerSize < this.containerScrollSize) {
 			return true;
 		} else {

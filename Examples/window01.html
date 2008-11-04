@@ -513,6 +513,8 @@
 			
 			
 			this.youtube = new UI.Button({
+				skin				: 'demo',
+				type				: 'tube',
 				label				: 'tube',
 				labelStyles			: {
 					fontSize		: '42px',
@@ -522,55 +524,10 @@
 				},
 				onClick: function(){
 					new UI.Window({
+						type 				: 'transparent',
 						viewOverflow		: 'hidden'
 					}).setContent('iframe','http://www.youtube.com');
 				}.bind(this),
-				props				: {
-					'default'				: {
-						layers				: {
-							reorder			: ['background','front','reflect'],
-							
-							background		: {
-								offset		: 0,
-								color		: ['#fe3333','#fe3333'],
-								opacity		: 1,
-								radius		: 10
-							},
-							front			: {
-								position	: 'absolute',
-								offset		: ['60%', '0px', '0px'],
-								color		: ['#fe3333','#c32222'],
-							 	opacity		: 1,
-								radius		: [0,0,8,8]
-							},
-							reflect			: {
-								position		: 'absolute',
-								offset		: ['2px', '2px', '65%'],
-								color		: ['#FFF', '#FFF'],
-								opacity		: [.7, .1],
-								radius		: [8,8,0,0]
-							}
-						}
-					},
-					over					: {
-						components			: {
-							label			: {
-								styles		: {
-									opacity : .8
-								}
-							}
-						}
-					},
-					down					: {
-						components			: {
-							label			: {
-								styles		: {
-									color 	: '#ccc'
-								}
-							}
-						}
-					}
-				},
 				styles		: {
 					margin	: 10
 				}
@@ -913,6 +870,8 @@
 			
 			
 			this.hardest = new UI.Button({
+				skin					: 'demo',
+				type					: 'hardest',
 				label					: 'Hardest Button to Button',
 				labelStyles				: {
 					fontSize			: '16px',
@@ -923,53 +882,33 @@
 				},
 				onClick					: function() {
 					new UI.Window({
+						type			: 'transparent',
 						title			: 'Hardest Button to Button',
 						controls		: ['close'],
 						viewOverflow	: 'hidden',
 						resizable		: false,
-						width			: 427,
-						height			: 388
-					}).setContent('content','<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1"></param><param name="allowFullScreen" value="true"><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" wmode="transparent" height="344"></embed></object>');
+						width			: 214,
+						height			: 230
+					}).setContent('content','<object width="212" height="184"><param name="movie" value="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1"></param><param name="allowFullScreen" value="true"><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="212" wmode="transparent" height="184"></embed></object>');
 				},
-				props				: {
-					'default'				: {
-						layers				: {
-							reorder			: ['emboss','front','reflect'],
-							
-							emboss			: {
-								offset		: 0,
-								color		: '#000',
-								opacity		: .17,
-								radius		: 9
-							},
-							front			: {
-								offset		: 3,
-								color		: ['#cc0033','#000'],
-							 	opacity		: 1,
-								radius		: 7
-							},
-							reflect			: {
-								offset		: ['2px', '2px', '65%'],
-								color		: ['#FFF', '#FFF'],
-								opacity		: [.8, .0],
-								radius		: [5,5,6,6]
-							}
-						}
-					},
-					over					: {
-						layers				: {
-							emboss			: {
-								color		: '#00CC00'
-							}
-						}
-					},
-					down					: {
-						components			: {
-							label			: {
-								styles		: { color : '#ccc' }
-							}
-						}
-					}
+				styles						: {
+					margin					: 5
+				}
+			}).inject(form);
+
+			
+			this.starGuitar = new UI.Button({
+				type						: 'roundtextured',
+				label						: 'Star Guitar',
+				onClick						: function() {
+					new UI.Window({
+						title				: 'Star Guitar',
+						controls			: ['close'],
+						viewOverflow		: 'hidden',
+						resizable			: false,
+						width				: 427,
+						height				: 388
+					}).setContent('content','<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>');
 				},
 				styles						: {
 					margin					: 5
@@ -979,24 +918,12 @@
 			
 			
 			new UI.Bubble({
+				skin						: 'demo',
+
 				target 						: $(this.hardest),
 				label 						: 'réalisation: Michel Gondry',
 				labelStyles					: {
 					padding					: '10px 10px 16px'
-				},
-				props 				: {
-					'default' 				: {
-						layers				: {
-							background		: {
-								offset		: [0,0,4],
-								color 		: ['#33cc33','#000']
-							},
-							arrow			: {
-								size		: [9,4],
-								offset		: ['auto', 9,0]
-							}
-						}
-					}
 				}
 			});
 			
