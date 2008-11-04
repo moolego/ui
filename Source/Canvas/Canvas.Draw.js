@@ -66,27 +66,24 @@ UI.Canvas.implement({
 	*/
 	
 	circle: function(props){
-		// define fillStyle props (basicly color or gradient and opacity)
-		if ($type(props.color) == 'array'){
-			if ($type(props.opacity) != 'array')
-				props.opacity ? props.opacity = [props.opacity,props.opacity] : props.opacity = [1,1];
-			var gradient = this.ctx.createLinearGradient(0, props.offset[1] - props.radius[0], 0, props.radius[0]+props.offset[1]);
-			var top = props.color[0].hexToRgb(true);
-			var bottom = props.color[1].hexToRgb(true);
-			gradient.addColorStop(0, 'rgba(' + top.join(',') + ', ' + props.opacity[0] +')');
-			gradient.addColorStop(1, 'rgba(' + bottom.join(',') + ', ' + props.opacity[1] +')');
-			this.ctx.fillStyle = gradient;
-		} else if (props.color) {
-			if ($type(props.opacity) != 'number')
-				props.opacity = 1;
-			var color = props.color.hexToRgb(true);
-			this.ctx.fillStyle = 'rgba(' + color.join(',') + ',' + props.opacity + ')';
-		};
+		//set transformers
+		this.ctx.translate(props.offset[0] + props.size[0]/2, props.offset[1] + props.size[1]/2);
+		this.ctx.scale(props.size[0]/props.size[1], 1);
+		
+		//set fill color
+		this.setFillColor(props);
+		
+		//get center location
+		var x = 0;
+		var y = 0;
+		var r = props.size[1]/2;
+		var a = Math.PI * 2;
+		
+		//console.log(x, y)
 		
 		// draw circle
 		this.ctx.beginPath();
-		this.ctx.moveTo(props.offset[0], props.offset[1]);
-		this.ctx.arc(props.offset[0], props.offset[1], props.radius[0], 0, Math.PI * 2, true);
+		this.ctx.arc(x, y, r, 0, a, true);
 		this.ctx.fill();
 	},
 	

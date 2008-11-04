@@ -195,6 +195,7 @@ UI.Canvas = new Class({
 	},
 	
 	trace : function(key) {
+		this.ctx.save();
 		var properties = this.getProperties(key);
 		switch(properties.shape) {
 			case 'circle' : 
@@ -228,6 +229,7 @@ UI.Canvas = new Class({
 				this.triangle(properties);
 				break;
 		}
+		this.ctx.restore();
 	},
 	
 	convert2Px : function(value, direction, absolute) {
@@ -478,6 +480,11 @@ UI.Canvas = new Class({
 			properties.radius = [radius, radius, radius, radius];
 		}
 		
+		//gradient
+		properties.gradient = ($defined(this.props.layers[key].gradient)) ?
+			this.props.layers[key].gradient :
+			false;
+		
 		return properties;
 	},
 	
@@ -490,25 +497,74 @@ UI.Canvas = new Class({
 	*/
 	
 	setFillColor : function(props) {
-		if ($type(props.color) == 'array' || $type(props.opacity) == 'array'){
-			if ($type(props.opacity) != 'array')
-				 props.opacity = [props.opacity,props.opacity];
-			if ($type(props.color) != 'array')
-				 props.color = [props.color,props.color];
-
-			if (props.direction == 'vertical')
-				var gradient = this.ctx.createLinearGradient(props.offset[0], 0, props.size[0]+props.offset[0], 0);
-			else
-				var gradient = this.ctx.createLinearGradient(0, props.offset[1], 0, props.size[1]+props.offset[1]);
+		//Type is a gradient
+		if ($type(props.color) == 'array' && !props.gradient) {
+			props.gradient = { color: props.color };
+			props.gradient.opacity = props.opacity || 1;
+		}
+		
+		if (props.gradient && $type(props.gradient.color) == 'array') {
+			var length = props.gradient.color.length;
 			
-			var top = props.color[0].hexToRgb(true);
-			var bottom = props.color[1].hexToRgb(true);
-			gradient.addColorStop(0, 'rgba(' + top.join(',') + ', ' + props.opacity[0] +')');
-			gradient.addColorStop(1, 'rgba(' + bottom.join(',') + ', ' + props.opacity[1] +')');
+			// convert angle from degree to gradient
+			if (!props.gradient.angle) 
+				props.gradient.angle = 90;
+			var a = props.gradient.angle * Math.PI / 180;
+			
+			//set start point
+			if (!props.gradient.start) 
+				props.gradient.start = [0, 0];
+			
+			//calculate end point
+			if (a >= 0 && a <= Math.PI / 4) {
+				var x = props.size[0];
+				var y = x * Math.tan(a);
+			}
+			else {
+				// calculate end point
+				var y = props.size[1];
+				var x = y * Math.tan(Math.PI / 2 - a);
+			}
+			
+			//make the gradient with start point and end point
+			if (props.shape == 'circle') {
+				//make the gradient with start point and end point
+				var gradient = this.ctx.createLinearGradient(-props.size[1] / 2, -props.size[1] / 2, props.gradient.start[0] + x - props.size[1] / 2, props.gradient.start[1] + y - props.size[1] / 2);
+			}
+			else {
+				var gradient = this.ctx.createLinearGradient(props.offset[0] + props.gradient.start[0], props.offset[1] + props.gradient.start[1], props.offset[0] + props.gradient.start[0] + x, props.offset[1] + props.gradient.start[1] + y);
+			}
+			
+			//check if opacity exist, else create it
+			if (!props.gradient.opacity || $type(props.gradient.opacity) != 'array') {
+				var opacity = props.gradient.opacity || 1;
+				props.gradient.opacity = [];
+				for (var i = 0; i < length; i++) {
+					props.gradient.opacity[i] = opacity;
+				}
+			}
+			
+			//check if stops exist, else create them
+			if (!props.gradient.stop) {
+				props.gradient.stop = [];
+				for (var i = 0; i < length; i++) {
+					props.gradient.stop[i] = i * (1 / (length - 1));
+				}
+			}
+			
+			//add color stop
+			for (var i = 0; i < length; i++) {
+				//we get the color
+				var color = 'rgba(' + props.gradient.color[i].hexToRgb(true).join(',') + ', ' + props.gradient.opacity[i] + ')'
+				gradient.addColorStop(props.gradient.stop[i], color);
+			}
 			this.ctx.fillStyle = gradient;
+			
+		//Normal color management
 		} else {
 			var color = props.color.hexToRgb(true);
 			this.ctx.fillStyle = 'rgba(' + color.join(',') + ',' + props.opacity + ')';
-		};
+		}
 	}
+	
 });
