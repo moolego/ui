@@ -123,11 +123,10 @@ UI.Menu = new Class({
 				}).inject(this.content);
 				menuItem.separator = true;
 			} else {
-				var content = (this.lang.get(item.text)) ? this.lang.get(item.text) : item.text;
 				var menuItem = new UI.Label({
 					skin		: this.options.skin,
 					tag			: this.options.itemTag,
-					html		: content,
+					html		: item.text,
 					props		: UI.skin.getComponentProps(this.skin, 'menuItem')
 				}).set(item.options);
 				
