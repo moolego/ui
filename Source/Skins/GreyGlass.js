@@ -288,7 +288,7 @@ UI.props.GreyGlass = {
 			'default' : {
 				layers				: {
 					
-					reorder			: ['emboss','background','main','reflect','light'],
+					reorder			: ['emboss','background','main','reflect','cache'],
 					
 					'default'		: {
 						position	: 'absolute',
@@ -319,7 +319,7 @@ UI.props.GreyGlass = {
 						color		: ['#fff','#fff'],
 						opacity		: [1, .5]
 					},
-					light			: {
+					cache			: {
 						shape		: 'roundedRect',
 						size		: [2,1],
 						radius		: 0,
