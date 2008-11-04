@@ -453,18 +453,18 @@ UI.props.demo = {
 					on				: {
 						position	: 'absolute',
 						shape		: 'circle',
-						offset		: ['14px', 'auto', '1px','67px'],
+						offset		: [5, 'auto', '1px',58],
 						color		: '#FFF',
 						opacity		: 1,
-						radius		: 9
+						size		: 18
 					},
 					on1				: {
 						position	: 'absolute',
 						shape		: 'circle',
-						offset		: ['14px', 'auto', '1px','67px'],
+						offset		: [7.5, 'auto', '1px',60.5],
 						color		: '#407ee3',
 						opacity		: 1,
-						radius		: 6.5
+						size		: 13
 					},
 					reflect			: {
 						position	: 'absolute',
