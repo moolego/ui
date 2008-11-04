@@ -164,7 +164,7 @@ UI.Window = new Class({
 		this.setControls();
 		
 		this.title = new UI.Label({	
-			type 	: 'windowTitle',
+			type 	: this.props.components.title.type,
 			html	: this.options.title
 		}).inject(this.head);
 		
@@ -341,10 +341,12 @@ UI.Window = new Class({
 	*/
 
 	setOverlay: function() {
+
+		
 		this.overlay = new Element('div',{ 
 			styles : {
 				backgroundColor: '#fff',
-				opacity:'.2',
+				opacity:'0',
 				top:0,
 				left:0,
 			    position: 'absolute',
@@ -374,6 +376,13 @@ UI.Window = new Class({
 
 		this.element.addEvents({
 			mousedown 	: function(){this.focus()}.bind(this)
+		});
+		
+		this.addEvents({
+			resizeComplete: function(){
+				this.options.width = this.element.getCoordinates().width;
+				this.options.height = this.element.getCoordinates().height;
+			}.bind(this)
 		});
 	},
 
@@ -619,6 +628,7 @@ UI.Window = new Class({
 	
 	blur: function() {
 		this.setState('inactive');
+		
 		this.fireEvent('onBlur');
 		this.isActive = false;
 	},

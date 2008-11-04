@@ -144,7 +144,6 @@ UI.props.GreyGlass = {
 						}
 					}
 				},
-				
 				/* shortcuts */
 				shortcuts			: {
 					labelStyles		: 'components.label.styles'
@@ -334,8 +333,56 @@ UI.props.GreyGlass = {
 						opacity		: 1
 					}
 				}
+			}
+		},
+		transparent : {
+			'default' : {
+				layers : {
+					reorder			: ['main','line','line2'],
+					
+					'default'		: {
+						position	: 'absolute',
+						shape		: 'circle',
+						radius		: 7,
+						opacity		: 1
+					},
+					main			: {
+						radius		: 6.5,
+						offset		: [6.5, 7.5],
+						color		: '#fff',
+						opacity		: .7
+					},
+					line			: {
+						position	: 'absolute',
+						shape		: 'line',
+						stroke		: 1.5,
+						color		: '#000',
+						offset		: [3.5,4.5],
+						opacity		: .8,
+						size		: [6,6]
+					},
+					line2			: {
+						position	: 'absolute',
+						shape		: 'lineUp',
+						stroke		: 1.5,
+						color		: '#000',
+						offset		: [3.5,4.5],
+						opacity		: .8,
+						size		: [6,6]
+					}
+				}
 			},
-			'small' : {					
+			over : {
+				layers : {
+					main			: {
+						opacity		: .8
+					}
+				}
+				
+			}
+		},
+		'small' : {	
+			'default': {				
 				width 				: 20,
 				height				: 11,
 
@@ -991,6 +1038,24 @@ UI.props.GreyGlass = {
 					height			: '20px'
 				}
 			}
+		},
+		transparentTitle : {
+			'default' : {
+				/* css properties */
+				styles			: {
+					overflow		: 'hidden',
+					cursor			: 'default',
+					color			: '#fff',
+					display			: 'block',
+					padding			: '0px 70px 0px 2px',
+					textAlign		: 'center',
+					textTransform	: 'capitalize',
+					fontWeight		: 'normal',
+					fontSize		: '12px',
+					lineHeight		: '20px',
+					height			: '20px'
+				}
+			}
 		}
 	},
 	
@@ -1010,6 +1075,9 @@ UI.props.GreyGlass = {
 							margin	: '0 2px 0 0'
 						}
 					},
+					title			: {
+						type		: 'windowTitle' 
+					},
 					view			: {
 						type		: 'defaultWindow'
 					}
@@ -1025,7 +1093,7 @@ UI.props.GreyGlass = {
 						offset		: 1,
 						color		: '#FFFFFF',
 						opacity		: 1,
-						radius		: 4
+						radius		: 5
 					},
 					shadow			: {
 						size		: 42,
@@ -1034,19 +1102,19 @@ UI.props.GreyGlass = {
 					background		: {
 						offset		: 0,
 						color		: '#000',
-						opacity		: .27,
-						radius		: 4
+						opacity		: .20,
+						radius		: 5
 					},
 					underlay		: {
 						color		: ['#dcdcdc','#404040'],
 						offset		: [1, 1, 'auto'],
 						size		: ['auto', 20],
-						radius		: [3,3,0,0]
+						radius		: [4,4,0,0]
 					},
 					head			: {
 						color		: ['#C4C4C4','#989898'], 
 						offset		: [1, 0],
-						radius		: [3,3,0,0]
+						radius		: [4,4,0,0]
 					},
 					footline		: {
 						position	: 'absolute',
@@ -1060,14 +1128,14 @@ UI.props.GreyGlass = {
 						size		: ['auto', 20],
 						color		: ['#fff','#404040'],
 						offset		: ['auto', 1, 2],
-						radius		: [0,0,3,3]
+						radius		: [0,0,4,4]
 					},
 					foot			: {
 						position	: 'absolute',
 						size		: ['auto', 20],
 						color		: ['#C2C2C2','#989898'],
 						offset		: ['auto', 1, 1],
-						radius		: [0,0,3,3]
+						radius		: [0,0,4,4]
 					}
 				}
 			},
@@ -1103,14 +1171,85 @@ UI.props.GreyGlass = {
 			}
 		},
 		transparent : {
-			'default' : {},
-			minimized : {
+			'default' : {
+				/* components */
+				components			: {
+					controls		: {
+						padding		: '2px 2px 1px 2px'
+					},
+					control			: {
+						type		: 'transparent',
+						width		: 15,
+						height		: 15,
+						styles		: {
+							margin	: '0 2px 0 0'
+						}
+					},
+					title			: {
+						type		: 'transparentTitle' 
+					},
+					view			: {
+						type		: 'transparent'
+					}
+				},
+				
+				borderSize			: 1,
+				
+				/* layers properties */
+				layers				: {
+					reorder			: ['shadow','background','head','reflect'],
+					'default'		: {
+						position	: 'relative',
+						shape		: 'roundedRect',
+						offset		: 1,
+						color		: '#FFFFFF',
+						opacity		: 1,
+						radius		: 5
+					},
+					shadow			: {
+						size		: 16,
+						offsetY		: 5
+					},
+					background		: {
+						offset		: 0,
+						color		: '#000',
+						opacity		: .50,
+						radius		: 7
+					},
+					head			: {
+						color		: '#fff', 
+						offset		: [1, 1, 'auto'],
+						opacity		: .1,
+						radius		: [5,5,0,0],
+						size		: ['auto', 18],
+					},
+					reflect		: {
+						color		: '#fff',
+						offset		: [0, 0, 'auto'],
+						size		: ['auto', 9],
+						opacity		: .05,
+						radius		: [5,5,0,0]
+					}
+				}
+			},
+			inactive				: {
+				layers				: {
+					reorder			: ['shadow','background'],
+					shadow			: {
+						offsetY		: 2,
+						size		: 20,
+						
+						magnify		: 0
+					}
+				}
+			},
+			minimized				: {
 				layers				: {
 					head			: {
-						color		: ['#CACACA','#989898']
+						color		: ['#CACACA','#CFCFCF']
 					},
 					foot			: {
-						color		: ['#C2C2C2','#989898']
+						color		: ['#CACACA','#CFCFCF']
 					}
 				}
 			}
@@ -1522,7 +1661,7 @@ UI.props.GreyGlass = {
 			}
 		}
 	},
-	tip : {
+	bubble : {
 		'default' : {
 			'default' : {
 				components			: {
