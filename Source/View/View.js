@@ -95,8 +95,11 @@ UI.View = new Class({
 		this.parent();
 		
 		this.addEvents({
-			'onResize'  : this.updateSize
+			'onResize'  		: this.updateSize,
+			'onLoadComplete' 	: this.updateSize
 		});
+		
+	
 	},
 
 	/*
@@ -122,6 +125,12 @@ UI.View = new Class({
 				this.content.setStyle('overflow','hidden');
 				this.setScrollbar();
 			}
+			this.content.addEvents({
+			'onInject': function(){
+				this.updateSize()
+			}.bind(this)
+		});
+			
 		} else { this.content = this.element }
 	},
 	
@@ -154,6 +163,7 @@ UI.View = new Class({
 
 	updateSize : function() {
 		if (this.options.overflow == 'scrollbar') {
+			console.log('update size');
 			this.scrollbar.update();
 		}
 	},
@@ -200,7 +210,6 @@ UI.View = new Class({
 			case 'content' || 'html':
 				this.content.set('html',source);
 				this.fireEvent('onLoadComplete');
-				this.updateSize();
 				//return this;
 				break;
 			case 'iframe':

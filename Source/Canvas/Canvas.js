@@ -564,7 +564,7 @@ UI.Canvas = new Class({
 		} else {
 			var color = props.color.hexToRgb(true);
 			this.ctx.fillStyle = 'rgba(' + color.join(',') + ',' + props.opacity + ')';
-		}
+		}	
 	}
 	
 });
