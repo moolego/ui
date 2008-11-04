@@ -24,7 +24,7 @@ UI.Bubble = new Class({
 	Implements			: [Events, Options],
 	
 	options				: {
-		component		: 'tip',
+		component		: 'bubble',
 		
 		// default options
 		label			: 'Bubble',
@@ -85,7 +85,7 @@ UI.Bubble = new Class({
 	/* 
 		Method: setPosition
 		
-			Set the position of the tip to the element
+			Set the position of the bubble to the element
 	*/
 	
 	setLocation : function(){
@@ -123,13 +123,13 @@ UI.Bubble = new Class({
 	*/
 	
 	getLocation : function(){
-		var tipCoord = this.element.getCoordinates();
+		var bubbleCoord = this.element.getCoordinates();
 		var coord = this.options.target.getCoordinates();
 		
 		// should implement left and right as location too
 		if (this.options.type == 'default') {
 			var left = coord.right - 40;
-			var top = coord.top - tipCoord.height - 10;
+			var top = coord.top - bubbleCoord.height - 10;
 		} else if (this.options.type == 'bottom') {
 			var left =  coord.right - 40;
 			var top = coord.top + coord.height + 10;
@@ -144,7 +144,7 @@ UI.Bubble = new Class({
 	/* 
 		Method: setSize
 		
-			Set the size of the tip
+			Set the size of the bubble
 	*/
 	
 	setSize : function(width,height){
@@ -159,7 +159,7 @@ UI.Bubble = new Class({
 	/* 
 		Method: setPosition
 		
-			Set the position of the tip to the element
+			Set the position of the bubble to the element
 	*/
 	
 	fade : function(way){

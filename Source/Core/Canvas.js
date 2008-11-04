@@ -599,7 +599,6 @@ UI.Canvas = new Class({
 		var opacity = (props.opacity) ? props.opacity : 1;
 		this.ctx.lineWidth = (props.stroke) ? props.stroke : 1;
 		this.ctx.strokeStyle = 'rgba(' + color.join(',') + ',' + opacity + ')';
-		
 		this.ctx.beginPath();
 		if (props.direction == 'up') {
 			this.ctx.moveTo(props.offset[0], props.offset[1] + props.size[1]);

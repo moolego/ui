@@ -490,6 +490,7 @@ Credits:
 	
 	inject: function (container, position){
 		this.fireEvent('inject');
+		container.fireEvent('onInject');
 		this.element.inject(container, position);
 		this.element.setStyle('visibility', 'visible');
 		this.setSize();
