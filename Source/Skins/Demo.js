@@ -743,7 +743,8 @@ UI.props.demo = {
 					circle : {
 						shape : 'circle',
 						color : '#000',
-						offset: 100,
+						offset: 150,
+						composite : 'lighter',
 						opacity: 0.5,
 						angle: [150, 30],
 						stroke : {

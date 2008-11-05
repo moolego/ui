@@ -466,10 +466,15 @@ UI.Canvas = new Class({
 			this.props.layers[key].rotation :
 			this.props.layers['default'].rotation;
 			
-		// +direction
-		properties.direction = ($defined(this.props.layers[key].direction)) ?
-			this.props.layers[key].direction :
-			this.props.layers['default'].direction;
+		// +scale
+		properties.scale = ($defined(this.props.layers[key].scale)) ?
+			this.props.layers[key].scale :
+			this.props.layers['default'].scale;
+			
+		// +composite
+		properties.composite = ($defined(this.props.layers[key].composite)) ?
+			this.props.layers[key].composite :
+			this.props.layers['default'].composite;
 		
 		// +radius
 		var radius = ($defined(this.props.layers[key].radius)) ?
@@ -575,6 +580,16 @@ UI.Canvas = new Class({
 		if (props.rotation) {
 			this.ctx.rotate(Math.PI * props.rotation / 180);
 		}
+		
+		//scale
+		if (props.scale) {
+			if ($type(props.scale) != 'array') props.scale = [props.scale, props.scale];
+			this.ctx.scale(props.scale[0], props.scale[1]);
+		}
+		
+		//composite
+		if (props.composite) this.ctx.globalCompositeOperation = props.composite;
+
 	},
 	
 	/*
