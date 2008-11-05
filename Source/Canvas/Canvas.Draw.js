@@ -29,10 +29,6 @@ UI.Canvas.implement({
 	*/
 			
 	roundedRect: function(props) {
-		//set fill color
-		this.setFillColor(props);
-
-		// fill rounded rectangle
 		this.ctx.beginPath();
 		this.ctx.moveTo(props.offset[0] + props.radius[0], props.offset[1]);
 		this.ctx.lineTo(props.offset[0] + props.size[0] - props.radius[1], props.offset[1]);
@@ -43,7 +39,9 @@ UI.Canvas.implement({
 		this.ctx.quadraticCurveTo(props.offset[0], props.offset[1] + props.size[1], props.offset[0], props.offset[1] + props.size[1] - props.radius[3]);
 		this.ctx.lineTo(props.offset[0], props.offset[1] + props.radius[0]);
 		this.ctx.quadraticCurveTo(props.offset[0], props.offset[1], props.offset[0] + props.radius[0], props.offset[1]);
-		this.ctx.fill();
+		this.ctx.closePath();
+		
+		this.drawShape(props);
 	},
 
 /*
@@ -70,9 +68,6 @@ UI.Canvas.implement({
 		this.ctx.translate(props.offset[0] + props.size[0]/2, props.offset[1] + props.size[1]/2);
 		this.ctx.scale(props.size[0]/props.size[1], 1);
 		
-		//set fill color
-		this.setFillColor(props);
-		
 		//get center location
 		var x = 0;
 		var y = 0;
@@ -84,7 +79,7 @@ UI.Canvas.implement({
 		// draw circle
 		this.ctx.beginPath();
 		this.ctx.arc(x, y, r, 0, a, true);
-		this.ctx.fill();
+		this.drawShape(props);
 	},
 	
 	/*
@@ -103,20 +98,22 @@ UI.Canvas.implement({
 	*/
 	
 	line : function(props) {
-		var color = (props.color) ? props.color.hexToRgb(true) : '#000'.hexToRgb(true);
-		var opacity = (props.opacity) ? props.opacity : 1;
-		this.ctx.lineWidth = (props.stroke) ? props.stroke : 1;
-		this.ctx.strokeStyle = 'rgba(' + color.join(',') + ',' + opacity + ')';
+		props.stroke = props.stroke || {
+			color : props.color,
+			width : props.width
+		}
+		delete props.color;
 		
 		this.ctx.beginPath();
 		if (props.direction == 'up') {
-			this.ctx.moveTo(props.offset[0], props.offset[1] + props.size[1]);
-			this.ctx.lineTo(props.offset[0] + props.size[0], props.offset[1]);
+			this.ctx.moveTo(props.offset[0] + 0.5, props.offset[1] + props.size[1] - 0.5);
+			this.ctx.lineTo(props.offset[0] + props.size[0] - 0.5, props.offset[1] + 0.5);
 		} else {
-			this.ctx.moveTo(props.offset[0], props.offset[1]);
-			this.ctx.lineTo(props.offset[0] + props.size[0], props.offset[1] + props.size[1]);
+			this.ctx.moveTo(props.offset[0] + 0.5, props.offset[1] + 0.5);
+			this.ctx.lineTo(props.offset[0] + props.size[0] - 0.5, props.offset[1] + props.size[1] - 0.5);
 		}
-		this.ctx.stroke();
+		
+		this.drawShape(props);
 	},
 	
 	/*
@@ -143,9 +140,6 @@ UI.Canvas.implement({
 	*/
 	
 	triangle : function(props) {
-		//set fill color
-		this.setFillColor(props);
-		
 		this.ctx.beginPath();
 		switch(props.direction) {
 			case 'top' : 
@@ -169,8 +163,8 @@ UI.Canvas.implement({
 				this.ctx.lineTo(props.offset[0] + (props.size[0]/2), props.offset[1]);
 				break;
 		}
-		
 		this.ctx.closePath();
-		this.ctx.fill();
+		
+		this.drawShape(props);
 	}	
 });
