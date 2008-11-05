@@ -454,6 +454,11 @@ UI.Canvas = new Class({
 		properties.stroke = (this.props.layers[key].stroke) ?
 			this.props.layers[key].stroke :
 			this.props.layers['default'].stroke;
+			
+		// +lineWidth
+		properties.width = (this.props.layers[key].width) ?
+			this.props.layers[key].width :
+			this.props.layers['default'].width;
 		
 		// +opacity
 		properties.opacity = ($defined(this.props.layers[key].opacity)) ?
@@ -496,23 +501,26 @@ UI.Canvas = new Class({
 	Arguments: props
 	*/
 	
-	setFillColor : function(props) {
-		//Type is a gradient
-		if ($type(props.color) == 'array' && !props.gradient) {
-			props.gradient = { color: props.color };
-			props.gradient.opacity = props.opacity || 1;
+	setColor : function(part, props) {
+		var p = (part == 'fill') ? 'gradient' : 'stroke';
+		
+		if (!props[p]) {
+			props[p] = {
+				color: props.color,
+				opacity : props.opacity || 1
+			};
 		}
 		
-		if (props.gradient && $type(props.gradient.color) == 'array') {
-			var length = props.gradient.color.length;
+		if (props[p] && $type(props[p].color) == 'array') {
+			var length = props[p].color.length;
 			
 			// convert angle from degree to gradient
-			if (!$defined(props.gradient.angle)) props.gradient.angle = 90;
-			var a = props.gradient.angle * Math.PI / 180;
+			if (!$defined(props[p].angle)) props[p].angle = 90;
+			var a = props[p].angle * Math.PI / 180;
 			
 			//set start point
-			if (!props.gradient.start) 
-				props.gradient.start = [0, 0];
+			if (!props[p].start) 
+				props[p].start = [0, 0];
 			
 			//calculate end point
 			if (a >= 0 && a <= Math.PI / 4) {
@@ -525,39 +533,62 @@ UI.Canvas = new Class({
 			
 			//make the gradient with start point and end point
 			if (props.shape == 'circle')
-				var gradient = this.ctx.createLinearGradient(-props.size[1] / 2, -props.size[1] / 2, props.gradient.start[0] + x - props.size[1] / 2, props.gradient.start[1] + y - props.size[1] / 2);
+				var color = this.ctx.createLinearGradient(-props.size[1] / 2, -props.size[1] / 2, props[p].start[0] + x - props.size[1] / 2, props[p].start[1] + y - props.size[1] / 2);
 			else
-				var gradient = this.ctx.createLinearGradient(props.offset[0] + props.gradient.start[0], props.offset[1] + props.gradient.start[1], props.offset[0] + props.gradient.start[0] + x, props.offset[1] + props.gradient.start[1] + y);
+				var color = this.ctx.createLinearGradient(props.offset[0] + props[p].start[0], props.offset[1] + props[p].start[1], props.offset[0] + props[p].start[0] + x, props.offset[1] + props[p].start[1] + y);
 			
 			//check if opacity exist, else create it
-			if (!props.gradient.opacity || $type(props.gradient.opacity) != 'array') {
-				var opacity = props.gradient.opacity || 1;
-				props.gradient.opacity = [];
+			if (!props[p].opacity || $type(props[p].opacity) != 'array') {
+				var opacity = props[p].opacity || 1;
+				props[p].opacity = [];
 				for (var i = 0; i < length; i++) {
-					props.gradient.opacity[i] = opacity;
+					props[p].opacity[i] = opacity;
 				}
 			}
 			
 			//check if stops exist, else create them
-			if (!props.gradient.stop) {
-				props.gradient.stop = [];
+			if (!props[p].stop) {
+				props[p].stop = [];
 				for (var i = 0; i < length; i++) {
-					props.gradient.stop[i] = i * (1 / (length - 1));
+					props[p].stop[i] = i * (1 / (length - 1));
 				}
 			}
-			
 			//add color stop
 			for (var i = 0; i < length; i++) {
 				//we get the color
-				var color = 'rgba(' + props.gradient.color[i].hexToRgb(true).join(',') + ', ' + props.gradient.opacity[i] + ')'
-				gradient.addColorStop(props.gradient.stop[i], color);
+				var gradient = 'rgba(' + props[p].color[i].hexToRgb(true).join(',') + ', ' + props[p].opacity[i] + ')'
+				color.addColorStop(props[p].stop[i], gradient);
 			}
-			this.ctx.fillStyle = gradient;
+			
 			
 		//Normal color management
 		} else {
-			var color = props.color.hexToRgb(true);
-			this.ctx.fillStyle = 'rgba(' + color.join(',') + ',' + props.opacity + ')';
-		}	
-	}
+			//check if opacity exist, else create it
+			props[p].opacity = props[p].opacity || 1
+
+			var color = 'rgba(' + props[p].color.hexToRgb(true).join(',') + ',' + props[p].opacity + ')';
+		}
+		this.ctx[part + 'Style'] = color;
+	},
+	
+	/*
+	Function: drawShape
+	
+		Draw the stroke and fill the shape
+		
+	Arguments: props
+	*/
+	
+	drawShape : function(props){
+		if (props.color || props.gradient) {
+			this.setColor('fill', props);
+			this.ctx.fill();
+		}
+		if (props.stroke) {
+			//determine lineWidth
+			this.ctx.lineWidth = (props.stroke.width) ? props.stroke.width : 1;
+			this.setColor('stroke', props);
+			this.ctx.stroke();
+		}
+	},
 });

@@ -714,5 +714,73 @@ UI.props.demo = {
 		'default': {
 			'default': {}
 		}
+	},
+	
+	element : {
+		line : {
+			'default' : {
+				styles : {
+					border : '1px solid black',
+					position : 'relative'
+				},
+				layers : {
+					'default' : {
+						position: 'absolute'
+					},
+					bg : {
+						shape : 'roundedRect',
+						color : '#F0F',
+						offset: [100, 'auto'],
+						radius: 20,
+						opacity: 1,
+						size : ['50%', '50%'],
+						stroke : {
+							color : '#000',
+							width : 6
+						}
+					},
+					circle : {
+						shape : 'circle',
+						color : '#000',
+						offset: 100,
+						opacity: 0.5,
+						stroke : {
+							color : '#111',
+							width : 20,
+							opacity : 1
+						}
+					},
+					line01 : {
+						shape : 'lineUp',
+						color : '#F00',
+						opacity : 1,
+						offset: [50, 'auto'],
+						size : ['100%', 1]
+					},
+					line02 : {
+						shape : 'lineUp',
+						color : ['#000', '#FFF', '#000'],
+						width: 9,
+						offset: ['auto', 50],
+						size : [1, '100%']
+					},
+					line03 : {
+						shape : 'line',
+						color : '#00F',
+						opacity : 1,
+						width : 2,
+						offset: ['auto', 'auto', 50],
+						size : ['100%', 1]
+					},
+					line04 : {
+						shape : 'line',
+						color : '#00F',
+						opacity : 1,
+						offset: [0, 50, 0, 'auto'],
+						size : [1, '100%']
+					}
+				}
+			}
+		}
 	}
 }
