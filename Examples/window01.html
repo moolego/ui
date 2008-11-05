@@ -511,7 +511,7 @@
 			this.youtube = new UI.Button({
 				skin				: 'demo',
 				type				: 'tube',
-				label				: 'tube',
+				label				: 'YouTube',
 				labelStyles			: {
 					fontSize		: '42px',
 					fontWeight		: 'bold',
@@ -749,7 +749,6 @@
 					'default'				: {
 						layers				: {
 							reorder			: ['emboss','front','reflect','reflect2'],
-							
 							'default'		: {
 								rotation	: 3
 							},
@@ -767,13 +766,13 @@
 								radius		: 7
 							},
 							reflect			: {
-								offset		: ['1px', '1px', '60%'],
+								offset		: [1, 0, '60%', 2],
 								color		: ['#FFF', '#FFF'],
 								opacity		: [.6, .1],
 								radius		: [5, 5, 9, 9]
 							},
 							reflect2		: {
-								offset		: ['1px', '1px', '2px'],
+								offset		: [1, 1, 2],
 								color		: ['#000', '#000'],
 								opacity		: [.1,0],
 								radius		: [7, 7, 9, 9]
@@ -922,7 +921,7 @@
 				target 						: $(this.hardest),
 				label 						: 'réalisation: Michel Gondry',
 				labelStyles					: {
-					padding					: '20px 10px 26px'
+					padding					: '10px 10px 18px'
 				}
 			});
 			

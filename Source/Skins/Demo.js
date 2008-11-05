@@ -251,10 +251,15 @@ UI.props.demo = {
 					},
 					reflect			: {
 						position		: 'absolute',
-						offset		: ['2px', '2px', '65%'],
-						color		: ['#FFF', '#FFF'],
-						opacity		: [.7, .1],
-						radius		: [8,8,0,0]
+						offset		: [2, 2, '40%', 'auto'],
+						size		: ['50%', 'auto'],
+						gradient	: {
+							color		: ['#FFF', '#FFF'],
+							opacity		: [.9, 0],
+							stop		: [0, .5],
+							angle		: 110
+						},
+						radius		: [0,8,0,0]
 					}
 				}
 			},
@@ -772,7 +777,7 @@ UI.props.demo = {
 						color : '#00F',
 						opacity : 1,
 						width : 2,
-						offset: ['auto', 'auto', 50],
+						offset: ['auto', 'auto', 50.5],
 						size : ['100%', 1]
 					},
 					line04 : {
