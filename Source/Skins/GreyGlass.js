@@ -759,7 +759,7 @@ UI.props.GreyGlass = {
 					tick1			: {
 						position	: 'absolute',
 						shape		: 'line',
-						stroke		: 2,
+						width		: 2,
 						color		: '#333',
 						offset		: [6.3,4],
 						size		: [4,6]
@@ -767,7 +767,7 @@ UI.props.GreyGlass = {
 					tick2			: {
 						position	: 'absolute',
 						shape		: 'lineUp',
-						stroke		: 2.2,
+						width		: 2.2,
 						color		: '#333',
 						offset		: [0,8],
 						size		: [7,11]
@@ -905,13 +905,14 @@ UI.props.GreyGlass = {
 						radius		: [5, 5, 4, 4]
 					},
 					arrowUp			: {
-						shape		: 'triangleUp',
+						shape		: 'triangle',
 						color		: '#000',
 						size		: [5, 4],
 						offset		: ['auto', 10, '65%', 'auto']
 					},
 					arrowDown		: {
-						shape		: 'triangleDown',
+						shape		: 'triangle',
+						rotation	: 180,
 						color		: '#000',
 						size		: [5, 4],
 						offset		: ['55%', 10, 'auto', 'auto']
@@ -1616,7 +1617,8 @@ UI.props.GreyGlass = {
 				/* layers properties */
 				layers				: {
 					main			: {
-						shape		: 'triangleRight',
+						shape		: 'triangle',
+						rotation	: 90,
 						color		: '#333'
 					}
 				}
@@ -1638,7 +1640,7 @@ UI.props.GreyGlass = {
 						radius		: [4,4,0,0]
 					},
 					arrow			: {
-						shape		: 'triangleUp',
+						shape		: 'triangle',
 						size		: [10, 9],
 						color		: '#333',
 						offset		: ['30%', '46%']
@@ -1655,7 +1657,8 @@ UI.props.GreyGlass = {
 						radius		: [0,0,4,4]
 					},
 					arrow			: {
-						shape		: 'triangleDown'
+						shape		: 'triangle',
+						rotation	: 180
 					}
 				}
 			}
@@ -1703,7 +1706,8 @@ UI.props.GreyGlass = {
 						radius		: 5
 					},
 					arrow			: {
-						shape		: 'triangleDown',
+						shape		: 'triangle',
+						rotation	: 180,
 						size		: [18,8],
 						offset		: ['auto', 20,0]
 					},
@@ -1731,7 +1735,8 @@ UI.props.GreyGlass = {
 						offset		: [8,0,0]
 					},
 					arrow			: {
-						shape		: 'triangleUp',
+						shape		: 'triangle',
+						rotation	: 0,
 						offset		: [0,0,'auto',20]
 					}
 				}

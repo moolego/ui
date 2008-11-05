@@ -436,11 +436,6 @@
 			
 			var tip = new UI.Bubble({
 				target : $(button),
-				props : {
-					'default' : {
-						backgroundColor : ['#A00','#000']
-					}
-				},
 				label : "<p>Babybel c'est de la balle</p><p>Mais que fait la police?</p>"
 			});
 			
@@ -666,7 +661,7 @@
 						layers	: {
 							reorder	: ['background','arrow'],
 							background	: {
-								color	: ['#000','#000']
+								color	: '#000'
 							}
 						}
 					}
@@ -920,11 +915,10 @@
 			
 			new UI.Bubble({
 				skin						: 'demo',
-
 				target 						: $(this.hardest),
 				label 						: 'réalisation: Michel Gondry',
 				labelStyles					: {
-					padding					: '10px 10px 16px'
+					padding					: '20px 10px 26px'
 				}
 			});
 			

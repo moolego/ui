@@ -30,18 +30,16 @@ UI.Canvas.implement({
 			
 	roundedRect: function(props) {
 		this.ctx.beginPath();
-		this.ctx.moveTo(props.offset[0] + props.radius[0], props.offset[1]);
-		this.ctx.lineTo(props.offset[0] + props.size[0] - props.radius[1], props.offset[1]);
-		this.ctx.quadraticCurveTo(props.offset[0] + props.size[0], props.offset[1], props.offset[0] + props.size[0], props.offset[1] + props.radius[1]);
-		this.ctx.lineTo(props.offset[0] + props.size[0], props.offset[1] + props.size[1] - props.radius[2]);
-		this.ctx.quadraticCurveTo(props.offset[0] + props.size[0], props.offset[1] + props.size[1], props.offset[0] + props.size[0] - props.radius[2], props.offset[1] + props.size[1]);
-		this.ctx.lineTo(props.offset[0] + props.radius[3], props.offset[1] + props.size[1]);
-		this.ctx.quadraticCurveTo(props.offset[0], props.offset[1] + props.size[1], props.offset[0], props.offset[1] + props.size[1] - props.radius[3]);
-		this.ctx.lineTo(props.offset[0], props.offset[1] + props.radius[0]);
-		this.ctx.quadraticCurveTo(props.offset[0], props.offset[1], props.offset[0] + props.radius[0], props.offset[1]);
+		this.ctx.moveTo(props.radius[0] - props.size[0] / 2, - props.size[1] / 2);
+		this.ctx.lineTo(props.size[0] - props.radius[1] - props.size[0] / 2, - props.size[1] / 2);
+		this.ctx.quadraticCurveTo(props.size[0] - props.size[0] / 2, - props.size[1] / 2, props.size[0] - props.size[0] / 2, props.radius[1] - props.size[1] / 2);
+		this.ctx.lineTo(props.size[0] - props.size[0] / 2, props.size[1] - props.radius[2] - props.size[1] / 2);
+		this.ctx.quadraticCurveTo(props.size[0] - props.size[0] / 2, props.size[1] - props.size[1] / 2, props.size[0] - props.radius[2] - props.size[0] / 2, props.size[1] - props.size[1] / 2);
+		this.ctx.lineTo(props.radius[3] - props.size[0] / 2, props.size[1] - props.size[1] / 2);
+		this.ctx.quadraticCurveTo( - props.size[0] / 2, props.size[1] - props.size[1] / 2,  - props.size[0] / 2, props.size[1] - props.radius[3] - props.size[1] / 2);
+		this.ctx.lineTo( - props.size[0] / 2, props.radius[0] - props.size[1] / 2);
+		this.ctx.quadraticCurveTo( - props.size[0] / 2, - props.size[1] / 2, props.radius[0] - props.size[0] / 2, - props.size[1] / 2);
 		this.ctx.closePath();
-		
-		this.drawShape(props);
 	},
 
 /*
@@ -64,8 +62,7 @@ UI.Canvas.implement({
 	*/
 	
 	circle: function(props){
-		//set transformers
-		this.ctx.translate(props.offset[0] + props.size[0]/2, props.offset[1] + props.size[1]/2);
+		//set custom transformers
 		this.ctx.scale(props.size[0]/props.size[1], 1);
 		
 		//get angle
@@ -82,7 +79,6 @@ UI.Canvas.implement({
 		this.ctx.beginPath();
 		this.ctx.arc(x, y, r, a, b, true);
 		this.ctx.closePath();
-		this.drawShape(props);
 	},
 	
 	/*
@@ -109,14 +105,12 @@ UI.Canvas.implement({
 		
 		this.ctx.beginPath();
 		if (props.direction == 'up') {
-			this.ctx.moveTo(props.offset[0] + 0.5, props.offset[1] + props.size[1] - 0.5);
-			this.ctx.lineTo(props.offset[0] + props.size[0] - 0.5, props.offset[1] + 0.5);
+			this.ctx.moveTo(-props.size[0]/2 + 0.5,  props.size[1]/2 - 0.5);
+			this.ctx.lineTo( props.size[0]/2 - 0.5, -props.size[1]/2 + 0.5);
 		} else {
-			this.ctx.moveTo(props.offset[0] + 0.5, props.offset[1] + 0.5);
-			this.ctx.lineTo(props.offset[0] + props.size[0] - 0.5, props.offset[1] + props.size[1] - 0.5);
+			this.ctx.moveTo(-props.size[0]/2 + 0.5, -props.size[1]/2 + 0.5);
+			this.ctx.lineTo( props.size[0]/2 - 0.5,  props.size[1]/2 - 0.5);
 		}
-		
-		this.drawShape(props);
 	},
 	
 	/*
@@ -135,39 +129,13 @@ UI.Canvas.implement({
 		opacity : (float) the opacity level in percentage. ie: 0.7
 		color : (string)
 		gradient : (array of strings) composed of two elements the top and the bottom color in hexadecimal
-		
-	Todo : 
-	
-		add angle properties to set direction 
-	
 	*/
 	
 	triangle : function(props) {
 		this.ctx.beginPath();
-		switch(props.direction) {
-			case 'top' : 
-				this.ctx.moveTo(props.offset[0], props.offset[1] + props.size[1]);
-				this.ctx.lineTo(props.offset[0] + props.size[0], props.offset[1] + props.size[1]);
-				this.ctx.lineTo(props.offset[0] + (props.size[0]/2), props.offset[1]);
-				break;
-			case 'bottom' :
-				this.ctx.moveTo(props.offset[0], props.offset[1]);
-				this.ctx.lineTo(props.offset[0] + props.size[0], props.offset[1]);
-				this.ctx.lineTo(props.offset[0] + (props.size[0]/2), props.offset[1] + props.size[1]);
-				break;
-			case 'right' :
-				this.ctx.moveTo(props.offset[0], props.offset[1]);
-				this.ctx.lineTo(props.offset[0] + props.size[0], (props.offset[1] + props.size[1])/2);
-				this.ctx.lineTo(props.offset[0], props.offset[1] + props.size[1]);
-				break;
-			default :
-				this.ctx.moveTo(props.offset[0], props.offset[1] + props.size[1]);
-				this.ctx.lineTo(props.offset[0] + props.size[0], props.offset[1] + props.size[1]);
-				this.ctx.lineTo(props.offset[0] + (props.size[0]/2), props.offset[1]);
-				break;
-		}
+		this.ctx.moveTo(-props.size[0]/2, props.size[1]/2);
+		this.ctx.lineTo( props.size[0]/2, props.size[1]/2);
+		this.ctx.lineTo( 0, -props.size[1]/2);
 		this.ctx.closePath();
-		
-		this.drawShape(props);
 	}	
 });

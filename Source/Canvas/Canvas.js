@@ -195,8 +195,9 @@ UI.Canvas = new Class({
 	},
 	
 	trace : function(key) {
-		this.ctx.save();
 		var properties = this.getProperties(key);
+		this.ctx.save();
+		this.setTransformation(properties);
 		switch(properties.shape) {
 			case 'circle' : 
 				this.circle(properties);
@@ -212,23 +213,13 @@ UI.Canvas = new Class({
 				properties.direction = 'up';
 				this.line(properties);
 				break;
-			case 'triangleUp' || 'triangleTop': 
-				properties.direction = 'top';
-				this.triangle(properties);
-				break;
-			case 'triangleDown' || 'triangleBottom' : 
-				properties.direction = 'bottom';
-				this.triangle(properties);
-				break;
-			case 'triangleLeft' : 
-				properties.direction = 'left';
-				this.triangle(properties);
-				break;
-			case 'triangleRight' : 
-				properties.direction = 'right';
+			case 'triangle': 
 				this.triangle(properties);
 				break;
 		}
+		
+		this.drawShape(properties);
+		
 		this.ctx.restore();
 	},
 	
@@ -470,6 +461,11 @@ UI.Canvas = new Class({
 			this.props.layers[key].angle :
 			this.props.layers['default'].angle;
 			
+		// +rotation
+		properties.rotation = ($defined(this.props.layers[key].rotation)) ?
+			this.props.layers[key].rotation :
+			this.props.layers['default'].rotation;
+			
 		// +direction
 		properties.direction = ($defined(this.props.layers[key].direction)) ?
 			this.props.layers[key].direction :
@@ -537,10 +533,7 @@ UI.Canvas = new Class({
 			}
 			
 			//make the gradient with start point and end point
-			if (props.shape == 'circle')
-				var color = this.ctx.createLinearGradient(-props.size[1] / 2, -props.size[1] / 2, props[p].start[0] + x - props.size[1] / 2, props[p].start[1] + y - props.size[1] / 2);
-			else
-				var color = this.ctx.createLinearGradient(props.offset[0] + props[p].start[0], props.offset[1] + props[p].start[1], props.offset[0] + props[p].start[0] + x, props.offset[1] + props[p].start[1] + y);
+			var color = this.ctx.createLinearGradient(-props.size[1] / 2, -props.size[1] / 2, props[p].start[0] + x - props.size[1] / 2, props[p].start[1] + y - props.size[1] / 2);
 			
 			//check if opacity exist, else create it
 			if (!props[p].opacity || $type(props[p].opacity) != 'array') {
@@ -574,6 +567,14 @@ UI.Canvas = new Class({
 			var color = 'rgba(' + props[p].color.hexToRgb(true).join(',') + ',' + props[p].opacity + ')';
 		}
 		this.ctx[part + 'Style'] = color;
+	},
+	
+	setTransformation : function(props) {
+		this.ctx.translate(props.size[0]/ 2 + props.offset[0], props.size[1] / 2 + props.offset[1]);
+		//rotation
+		if (props.rotation) {
+			this.ctx.rotate(Math.PI * props.rotation / 180);
+		}
 	},
 	
 	/*

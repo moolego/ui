@@ -321,7 +321,8 @@ UI.props.demo = {
 						radius		: 5
 					},
 					arrow			: {
-						shape		: 'triangleDown',
+						shape		: 'triangle',
+						rotation	: 180,
 						size		: [18,8],
 						offset		: ['auto', 20,0]
 					},
@@ -729,13 +730,13 @@ UI.props.demo = {
 					},
 					bg : {
 						shape : 'roundedRect',
-						color : '#F0F',
+						color : ['#F0F', '#0F0'],
 						offset: [100, 'auto'],
 						radius: 20,
 						opacity: 1,
 						size : ['50%', '50%'],
 						stroke : {
-							color : '#000',
+							color : ['#0F0', '#F0F'],
 							width : 6
 						}
 					},
