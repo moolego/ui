@@ -762,7 +762,7 @@ UI.props.GreyGlass = {
 						width		: 2,
 						color		: '#333',
 						offset		: [6.3,4],
-						size		: [4,6]
+						size		: [5,6]
 					},
 					tick2			: {
 						position	: 'absolute',
