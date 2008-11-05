@@ -198,12 +198,16 @@ UI.props.demo = {
 					front: {
 						offset: 2,
 						opacity: 1,
+						color : '#500',
 						radius: 5
 					},
 					reflect: {
 						offset: ['2px', '2px', '35%'],
-						color: ['#FFF', '#FFF'],
-						opacity: [.9, .1],
+						
+						gradient	: {
+							color: ['#FFF', '#FFF'],
+							opacity: [.9, .1]
+						},
 						radius: [3, 3, 3, 3]
 					}
 				}
