@@ -62,9 +62,6 @@ UI.Canvas.implement({
 	*/
 	
 	circle: function(props){
-		//set custom transformers
-		this.ctx.scale(props.size[0]/props.size[1], 1);
-		
 		//get angle
 		props.angle = props.angle || [0, 360];
 
