@@ -744,6 +744,7 @@ UI.props.demo = {
 						color : '#000',
 						offset: 100,
 						opacity: 0.5,
+						angle: [150, 30],
 						stroke : {
 							color : '#111',
 							width : 20,

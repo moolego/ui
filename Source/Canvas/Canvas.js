@@ -465,6 +465,11 @@ UI.Canvas = new Class({
 			this.props.layers[key].opacity :
 			this.props.layers['default'].opacity;
 			
+		// +angle
+		properties.angle = ($defined(this.props.layers[key].angle)) ?
+			this.props.layers[key].angle :
+			this.props.layers['default'].angle;
+			
 		// +direction
 		properties.direction = ($defined(this.props.layers[key].direction)) ?
 			this.props.layers[key].direction :
