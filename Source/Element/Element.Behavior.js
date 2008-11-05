@@ -35,6 +35,7 @@ UI.Element.implement({
 	
 
 	setBehavior : function() {
+		
 		if (this.options.draggable)  { this.enableDrag(); }
 		if (this.options.resizable) { this.enableResize(); }
 		
@@ -54,7 +55,7 @@ UI.Element.implement({
 	*/
 	enableDrag :function() {
 		this.dragHandler = this.element.makeDraggable({
-			handle 		: [this.head, this.foot],
+			handle 		: this.dragHandlers,
 			limit 		: { x: this.options.dragLimitX, y: this.options.dragLimitY },
 			
 			onStart 	: function() { this.fireEvent("onDragStart"); }.bind(this),
