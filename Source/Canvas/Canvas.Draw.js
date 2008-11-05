@@ -68,17 +68,20 @@ UI.Canvas.implement({
 		this.ctx.translate(props.offset[0] + props.size[0]/2, props.offset[1] + props.size[1]/2);
 		this.ctx.scale(props.size[0]/props.size[1], 1);
 		
+		//get angle
+		props.angle = props.angle || [0, 360];
+
 		//get center location
 		var x = 0;
 		var y = 0;
 		var r = props.size[1]/2;
-		var a = Math.PI * 2;
-		
-		//console.log(x, y)
+		var b = Math.PI * props.angle[0] / 180;
+		var a = Math.PI * props.angle[1] / 180;
 		
 		// draw circle
 		this.ctx.beginPath();
-		this.ctx.arc(x, y, r, 0, a, true);
+		this.ctx.arc(x, y, r, a, b, true);
+		this.ctx.closePath();
 		this.drawShape(props);
 	},
 	
