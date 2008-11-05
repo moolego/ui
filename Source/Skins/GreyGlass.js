@@ -1780,6 +1780,7 @@ UI.props.GreyGlass = {
 					zIndex                                  : '10000'
 				},
 				layers				: {
+					reorder			: ['back', 'main', 'side'],
 					'default'		: {
 						position	: 'absolute',
 					},
@@ -1791,14 +1792,14 @@ UI.props.GreyGlass = {
 						offset		: [0,'40%',0,0],
 						
 						gradient	: {
-							angle	: 90,
-							color	: ['#c5c5c5','#fcfcfc']
+							color	: ['#c5c5c5','#fcfcfc'],
+							angle	: 0,
 						}
 					},
 					side			: {
 						offset		: [0,0,0,'80%'],
 						gradient	: {
-							angle	: 90,
+							angle	: 0,
 							color	: ['#fcfcfc','#efefef'],
 						}
 					}
@@ -1822,19 +1823,28 @@ UI.props.GreyGlass = {
 						opacity		: .3
 					},
 					main			: {
-						color		: ['#091d38','#5c5c5c'],
+						gradient	: {
+							color	: ['#091d38','#5c5c5c'],
+							angle	: 0
+						},
 						radius		: 7
 					},
 					light			: {
-						color		: ['#fff','#fff'],
+						gradient	: {
+							color	: ['#fff','#fff'],
+							opacity	: [.1,.9],
+							angle	: 0
+						},
 						radius		: 6,
-						opacity		: [.1,.9]
 					},
 					reflect			: {
+						gradient	: {
+							color	: ['#fff','#fff'],
+							opacity	: [.8,.5],
+							angle	: 0
+						},
 						offset		: [4,'65%',3,0],
-						color		: ['#fff','#fff'],
 						radius		: [3,2,2,3],
-						opacity		: [.8,.5]
 					}
 				}
 			}

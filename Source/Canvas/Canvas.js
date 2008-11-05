@@ -507,8 +507,7 @@ UI.Canvas = new Class({
 			var length = props.gradient.color.length;
 			
 			// convert angle from degree to gradient
-			if (!props.gradient.angle) 
-				props.gradient.angle = 90;
+			if (!$defined(props.gradient.angle)) props.gradient.angle = 90;
 			var a = props.gradient.angle * Math.PI / 180;
 			
 			//set start point
@@ -519,21 +518,16 @@ UI.Canvas = new Class({
 			if (a >= 0 && a <= Math.PI / 4) {
 				var x = props.size[0];
 				var y = x * Math.tan(a);
-			}
-			else {
-				// calculate end point
+			} else {
 				var y = props.size[1];
 				var x = y * Math.tan(Math.PI / 2 - a);
 			}
 			
 			//make the gradient with start point and end point
-			if (props.shape == 'circle') {
-				//make the gradient with start point and end point
+			if (props.shape == 'circle')
 				var gradient = this.ctx.createLinearGradient(-props.size[1] / 2, -props.size[1] / 2, props.gradient.start[0] + x - props.size[1] / 2, props.gradient.start[1] + y - props.size[1] / 2);
-			}
-			else {
+			else
 				var gradient = this.ctx.createLinearGradient(props.offset[0] + props.gradient.start[0], props.offset[1] + props.gradient.start[1], props.offset[0] + props.gradient.start[0] + x, props.offset[1] + props.gradient.start[1] + y);
-			}
 			
 			//check if opacity exist, else create it
 			if (!props.gradient.opacity || $type(props.gradient.opacity) != 'array') {
@@ -566,5 +560,4 @@ UI.Canvas = new Class({
 			this.ctx.fillStyle = 'rgba(' + color.join(',') + ',' + props.opacity + ')';
 		}	
 	}
-	
 });

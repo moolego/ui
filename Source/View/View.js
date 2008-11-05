@@ -163,7 +163,7 @@ UI.View = new Class({
 
 	updateSize : function() {
 		if (this.options.overflow == 'scrollbar') {
-			console.log('update size');
+			//console.log('update size');
 			this.scrollbar.update();
 		}
 	},
