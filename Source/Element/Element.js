@@ -90,6 +90,7 @@ UI.Element = new Class({
 		if (!this.options.selectable) this.element.disableSelect();
 		this.element.ui = true;
 		this.state = this.options.state;
+		this.dragHandlers = [];
 	},
 
 	/* 

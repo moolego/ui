@@ -338,7 +338,7 @@ UI.props.GreyGlass = {
 		transparent : {
 			'default' : {
 				layers : {
-					reorder			: ['main','line','line2'],
+					reorder			: ['main'],
 					
 					'default'		: {
 						position	: 'absolute',
@@ -347,10 +347,10 @@ UI.props.GreyGlass = {
 						opacity		: 1
 					},
 					main			: {
-						radius		: 6.5,
-						offset		: [6.5, 7.5],
+						size		: [11, 11],
+						offset		: [2, 2.5],
 						color		: '#fff',
-						opacity		: .7
+						opacity		: .8
 					},
 					line			: {
 						position	: 'absolute',

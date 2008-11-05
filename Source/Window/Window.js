@@ -76,6 +76,7 @@ UI.Window = new Class({
 		draggable				: true,
 		dragLimitX				: [-1000, window.getWidth() + 1000],
 		dragLimitY				: [53, window.getHeight() + 1000],
+		dragHandlers			: ['head','foot'],
 		
 		// Resize options
 		resizable				: true,
@@ -167,6 +168,8 @@ UI.Window = new Class({
 			type 	: this.props.components.title.type,
 			html	: this.options.title
 		}).inject(this.head);
+		
+		this.dragHandlers.push(this.head);
 		
 	},
 	
