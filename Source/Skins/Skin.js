@@ -30,7 +30,7 @@ UI.Skin = new Class({
  	Implements	: [Events, Options],
 	
 	options : {
-		skin	: 'GreyGlass'
+		skin	: 'AquaGraphite'
 	},
  	
 	initialize : function(options) {
