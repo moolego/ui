@@ -43,6 +43,7 @@ UI.Toolbar = new Class({
 		// default options	
 		menus			: [],
 		zIndex			: 4000,
+		openOnRollover	: false,
 		
 		// styles
 		component		: 'toolbar'
@@ -82,6 +83,7 @@ UI.Toolbar = new Class({
 		window.addEvent('resize', function(){
 			this.setSize(this.element.getParent().getSize().x);
 		}.bind(this));
+		
 		return this;
 	},
 	
@@ -133,6 +135,8 @@ UI.Toolbar = new Class({
 						this.addUnderlay();
 						this.addSubmenu(item, menuItem, 'bottom');
 						this.moveRollover(menuItem);
+					} else if (this.options.openOnRollover) {
+						menuItem.fireEvent('mousedown');
 					}
 				}.bind(this),
 				'hideSubmenu' : function(){

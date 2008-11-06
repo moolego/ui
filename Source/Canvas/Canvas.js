@@ -32,7 +32,7 @@ UI.Canvas = new Class({
 	Options: 
 		className		- default : ui-canvas
 		target			- target element for the canvas
-		props	- props from UI.skin
+		props			- props from UI.skin
 	*/
 	
 	initialize: function(options){
@@ -58,7 +58,6 @@ UI.Canvas = new Class({
 	},
 	
 	setSize : function(width, height, props){
-		
 		if (props) this.props = props;
 		this.shadowSize = this.props.layers.shadow.size;
 		this.shadowMagnify = this.props.layers.shadow.magnify;
@@ -395,67 +394,21 @@ UI.Canvas = new Class({
 	*/
 	
 	getProperties : function(key) {
-		var properties = {};
-		
-		// +position
-		properties.position = (this.props.layers[key].position) ?
-			this.props.layers[key].position :
-			this.props.layers['default'].position;
+		var properties = {
+			position	: this.props.layers[key].position	|| this.props.layers['default'].position,
+			size		: this.props.layers[key].size 		|| this.props.layers['default'].size,
+			shape		: this.props.layers[key].shape		|| this.props.layers['default'].shape,
+			color		: this.props.layers[key].color		|| this.props.layers['default'].color,
+			gradient	: this.props.layers[key].gradient 	|| this.props.layers['default'].gradient,
+			stroke		: this.props.layers[key].stroke		|| this.props.layers['default'].stroke,
+			width		: this.props.layers[key].width		|| this.props.layers['default'].width,
+			opacity		: this.props.layers[key].opacity	|| this.props.layers['default'].opacity,
+			angle		: this.props.layers[key].angle		|| this.props.layers['default'].angle,
+			rotation	: this.props.layers[key].rotation	|| this.props.layers['default'].rotation,
+			scale		: this.props.layers[key].scale		|| this.props.layers['default'].scale,
+			composite	: this.props.layers[key].composite	|| this.props.layers['default'].composite
 			
-		// +size
-		properties.size = ($defined(this.props.layers[key].size)) ?
-			this.props.layers[key].size :
-			false;
-		
-		// +shape
-		properties.shape = (this.props.layers[key].shape) ?
-			this.props.layers[key].shape :
-			this.props.layers['default'].shape;
-		
-		// +color
-		properties.color = (this.props.layers[key].color) ?
-			this.props.layers[key].color :
-			this.props.layers['default'].color;
-			
-		//gradient
-		properties.gradient = ($defined(this.props.layers[key].gradient)) ?
-			this.props.layers[key].gradient :
-			false;
-			
-		// +stroke
-		properties.stroke = (this.props.layers[key].stroke) ?
-			this.props.layers[key].stroke :
-			this.props.layers['default'].stroke;
-			
-		// +lineWidth
-		properties.width = (this.props.layers[key].width) ?
-			this.props.layers[key].width :
-			this.props.layers['default'].width;
-		
-		// +opacity
-		properties.opacity = ($defined(this.props.layers[key].opacity)) ?
-			this.props.layers[key].opacity :
-			this.props.layers['default'].opacity;
-			
-		// +angle
-		properties.angle = ($defined(this.props.layers[key].angle)) ?
-			this.props.layers[key].angle :
-			this.props.layers['default'].angle;
-			
-		// +rotation
-		properties.rotation = ($defined(this.props.layers[key].rotation)) ?
-			this.props.layers[key].rotation :
-			this.props.layers['default'].rotation;
-			
-		// +scale
-		properties.scale = ($defined(this.props.layers[key].scale)) ?
-			this.props.layers[key].scale :
-			this.props.layers['default'].scale;
-			
-		// +composite
-		properties.composite = ($defined(this.props.layers[key].composite)) ?
-			this.props.layers[key].composite :
-			this.props.layers['default'].composite;
+		};
 			
 		// we test the position
 		var coordinates = ($defined(this.props.layers[key].offset)) ?
@@ -551,9 +504,7 @@ UI.Canvas = new Class({
 				ax += props[p].start[0];
 				ay += props[p].start[1];
 			}
-			//console.log(ax, ay, bx, by);
-			//console.log(0, Math.PI / 8, Math.PI / 4, 3 * Math.PI / 8,  Math.PI / 2, Math.PI);
-			//console.log(a);
+			
 			//make the gradient with start point and end point
 			var color = this.ctx.createLinearGradient(ax, ay, bx, by);
 			
@@ -588,6 +539,7 @@ UI.Canvas = new Class({
 
 			var color = 'rgba(' + props[p].color.hexToRgb(true).join(',') + ',' + props[p].opacity + ')';
 		}
+		
 		this.ctx[part + 'Style'] = color;
 	},
 	
@@ -628,5 +580,6 @@ UI.Canvas = new Class({
 			this.setColor('stroke', props);
 			this.ctx.stroke();
 		}
-	},
+		
+	}
 });

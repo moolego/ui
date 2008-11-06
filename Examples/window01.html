@@ -52,7 +52,7 @@
 		window.addEvent('load', function() {
 			var time = $time();
 			
-			this.toolbar = new UI['Toolbar']({
+			toolbar = new UI['Toolbar']({
 				displayMode : 'text',
 				draggable	: false,
 				menu		: [
@@ -372,7 +372,7 @@
 					new UI.Slider({
 						styles			: {
 							margin		: 10
-						},
+						}
 					}).inject(window.content);
 				},
 				styles		: {
