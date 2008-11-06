@@ -1,10 +1,3 @@
-var UI = UI || {
-	version		: '0.1b',
-	author		: 'Floor',
-	elements	: new Hash(),
-	props		: {}
-};
-
 /*
 Class: UI.Element
 	UI.Element is the root class of most class of Moolego UI

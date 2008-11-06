@@ -1,55 +1,58 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<script type="text/javascript" src="mootools/core.js"></script>
-<script type="text/javascript" src="../Utils/Singleton.js"></script>
-<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
-<script type="text/javascript" src="../Source/Element/Element.js"></script>
-<script type="text/javascript" src="../Source/Element/Element.Behavior.js"></script>
-<script type="text/javascript" src="../Source/Element/Controller.js"></script>
-<script type="text/javascript" src="../Source/Canvas/Canvas.js"></script>
-<script type="text/javascript" src="../Source/Canvas/Canvas.Draw.js"></script>
-<script type="text/javascript" src="../Source/Skins/Skin.js"></script>
-<script type="text/javascript" src="../Source/Control/Control.js"></script>
-<script type="text/javascript" src="../Source/Control/Label.js"></script>
-<script type="text/javascript" src="../Source/Control/Button.js"></script>
-<script type="text/javascript" src="../Source/Skins/AquaGraphite.js"></script>
-<title>moolego UI.Button demo</title>
-<script type="text/javascript">
-			window.addEvent('domready', function(){
-				
-				button = new UI.Button({
-					label	: 'Button',
-					styles	: {
-						margin	: 10,
-						fontFamily	: 'arial, helvetica, sans-serif',
-						fontSize	: '13px'
-					}
-				}).inject(document.body);
-				
-				button = new UI.Button({
-					type			: 'recessed',
-					label			: 'Recessed Button',
-					styles			: {
-						margin	: 10,
-						fontFamily	: 'arial, helvetica, sans-serif',
-						fontSize	: '13px'
-					}
-				}).inject(document.body);
-				
-				button = new UI.Button({
-					type			: 'roundtextured',
-					label			: 'Round Textured',
-					styles			: {
-						margin	: 10,
-						fontFamily	: 'arial, helvetica, sans-serif',
-						fontSize	: '13px'
-					}
-				}).inject(document.body);
-				
-			});
-		</script>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="../Utils/Singleton.js"></script>
+	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+	<script type="text/javascript" src="../Source/Core/UI.js"></script>
+	<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
+	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
+		
+	<script type="text/javascript" src="../Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Behavior.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
+	
+	<script type="text/javascript" src="../Source/Control/Control.js"></script>
+	<script type="text/javascript" src="../Source/Control/Label.js"></script>
+	<script type="text/javascript" src="../Source/Control/Button.js"></script>
+	
+	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	<title>moolego UI.Button demo</title>
+	<script type="text/javascript">
+		window.addEvent('domready', function(){
+			
+			button = new UI.Button({
+				label	: 'Button',
+				styles	: {
+					margin	: 10,
+					fontFamily	: 'arial, helvetica, sans-serif',
+					fontSize	: '13px'
+				}
+			}).inject(document.body);
+			
+			button = new UI.Button({
+				type			: 'recessed',
+				label			: 'Recessed Button',
+				styles			: {
+					margin	: 10,
+					fontFamily	: 'arial, helvetica, sans-serif',
+					fontSize	: '13px'
+				}
+			}).inject(document.body);
+			
+			button = new UI.Button({
+				type			: 'roundtextured',
+				label			: 'Round Textured',
+				styles			: {
+					margin	: 10,
+					fontFamily	: 'arial, helvetica, sans-serif',
+					fontSize	: '13px'
+				}
+			}).inject(document.body);
+			
+		});
+	</script>
 </head>
 <body bgcolor="#e8e8e8">
 </body>
