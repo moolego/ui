@@ -55,10 +55,15 @@ UI.RadiosGroup = new Class({
 			styles : $merge({
 				position : 'relative',
 				display : 'inline-block',
-				width	: 100,
 				height	: 15
 			}, opt.styles)
 		}).store('value', opt.value);
+		
+		this.radios.push(radio);
+		if(!this.radios[1]) {
+			this.control = radio;
+			this.setInput();	
+		}
 		
 		if (opt.label) {
 			var label = new UI.Label({
@@ -67,12 +72,11 @@ UI.RadiosGroup = new Class({
 				html 		: opt.label,
 				styles 		: this.props.styles
 			}).inject(radio);
-		}
-		
-		this.radios.push(radio);
-		if(!this.radios[1]) {
-			this.control = radio;
-			this.setInput();	
+			
+			//set width to element
+			radio.setStyle('width', 100);
+		} else {
+			radio.setStyle('width', this.props.width);
 		}
 		
 		this.setCanvas(radio);
@@ -109,7 +113,7 @@ UI.RadiosGroup = new Class({
 			return false;
 			
 		radio.canvas = new UI.Canvas({
-			props 	: this.props,
+			props 			: this.props,
 			width			: this.props.width,
 			height			: this.props.height
 		}).inject(radio);

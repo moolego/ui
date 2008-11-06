@@ -104,10 +104,6 @@ UI.Menu = new Class({
 		Method: setMenu
 		
 			Set the content of the menu
-			
-		Discussion:
-		
-			should use UI.Element or specified object as Item
 	 */
 	
 	setMenu: function(menu) {
@@ -188,6 +184,7 @@ UI.Menu = new Class({
 					target			: menuItem,
 					underlay		: this.underlay,
 					menu			: item.menu,
+					openOnRollover	: this.options.openOnRollover,
 					position		: position,
 					zIndex			: this.options.component == 'toolbar' ? --this.options.zIndex : ++this.options.zIndex,
 					events			: {
@@ -544,6 +541,11 @@ UI.Menu = new Class({
 		} else {
 			this.setCanvas();
 		}
+
+		if (this.options.openOnRollover)
+		this.canvas.canvas.addEvent('mouseleave', function(){
+			if (this.activeItem) this.underlay.fireEvent('click');
+		}.bind(this));
 		
 		return this;
 	},

@@ -139,7 +139,7 @@ UI.Element = new Class({
 			return false;
 
 		this.canvas = new UI.Canvas({
-			props 	: this.props,
+			props 			: this.props,
 			width			: this.element.x,
 			height			: this.element.y
 		}).inject(this.element);

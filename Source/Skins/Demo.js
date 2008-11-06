@@ -234,20 +234,15 @@ UI.props.demo = {
 		tube: {
 			'default'				: {
 				layers				: {
-					reorder			: ['background','front','reflect'],
+					reorder			: ['front','reflect'],
 					
-					background		: {
-						offset		: 0,
-						color		: ['#fe3333','#fe3333'],
-						opacity		: 1,
-						radius		: 10
-					},
+					
 					front			: {
 						position	: 'absolute',
-						offset		: ['60%', '0px', '0px'],
+						offset		: [0, '0px', '0px'],
 						color		: ['#fe3333','#c32222'],
 					 	opacity		: 1,
-						radius		: [0,0,8,8]
+						radius		: [8,8,8,8]
 					},
 					reflect			: {
 						position		: 'absolute',
@@ -256,8 +251,8 @@ UI.props.demo = {
 						gradient	: {
 							color		: ['#FFF', '#FFF'],
 							opacity		: [.9, 0],
-							stop		: [0, .5],
-							angle		: 110
+							stop		: [0, 1],
+							angle		: 90
 						},
 						radius		: [0,8,0,0]
 					}
@@ -499,7 +494,7 @@ UI.props.demo = {
 				/* element css properties */
 				styles				: {
 					position		: 'relative',
-					display			: 'inline-block',
+					display			: 'inline-block'
 				},
 				
 				/* layers properties */
@@ -532,7 +527,7 @@ UI.props.demo = {
 						color		: ['#FFF', '#FFF'],
 						opacity		: [.05, .3],
 						radius		: [4,4,4,4]
-					},
+					}
 				}
 			}
 		},
@@ -542,7 +537,7 @@ UI.props.demo = {
 		vertical					: {
 			'default'				: {
 				width				: 10,
-				height				: 300,
+				height				: 300
 			}
 		},
 		'knob' : {
@@ -735,15 +730,20 @@ UI.props.demo = {
 					},
 					bg : {
 						shape : 'roundedRect',
-						color : ['#F0F', '#0F0'],
+						gradient : {
+							color : ['#F0F', '#0F0', '#FF0'],
+							angle : 45,
+							opacity : [1,1,1],
+							stop : [0,.5,1]
+						},
+						stroke : {
+							color : '#F0F',
+							width : 6
+						},
 						offset: [100, 'auto'],
 						radius: 20,
 						opacity: 1,
-						size : ['50%', '50%'],
-						stroke : {
-							color : ['#0F0', '#F0F'],
-							width : 6
-						}
+						size : ['50%', '50%']
 					},
 					circle : {
 						shape : 'circle',
@@ -767,8 +767,10 @@ UI.props.demo = {
 					},
 					line02 : {
 						shape : 'lineUp',
-						color : ['#000', '#FFF', '#000'],
-						width: 9,
+						stroke : {
+							color : '#000',
+							width: 9
+						},
 						offset: ['auto', 50],
 						size : [1, '100%']
 					},
