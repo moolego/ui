@@ -338,7 +338,7 @@ UI.props.AquaGraphite = {
 		transparent : {
 			'default' : {
 				layers : {
-					reorder			: ['main'],
+					reorder			: ['main','line','line2'],
 					
 					'default'		: {
 						position	: 'absolute',

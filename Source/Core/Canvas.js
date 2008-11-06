@@ -59,8 +59,10 @@ UI.Canvas = new Class({
 	
 	setSize : function(width, height, props){
 		if (props) this.props = props;
+		
 		this.shadowSize = this.props.layers.shadow.size;
 		this.shadowMagnify = this.props.layers.shadow.magnify;
+		
 		this.shadowOffset = [
 			this.props.layers.shadow.offsetX,
 			this.props.layers.shadow.offsetY
