@@ -35,6 +35,9 @@ var mooFace = new Class({
 						case 'button' :
 							this.mButton(control); 
 							break;
+						case 'reset' :
+							this.mButton(control); 
+							break;
 						case 'submit' :
 							this.mButton(control); 
 							break;
@@ -53,7 +56,7 @@ var mooFace = new Class({
 		
 		// skin the fieldset
 		this.target.getElements('fieldset').each(function(fieldset){
-			/*
+			
 			
 			//skin the legend
 			var f = fieldset.getElement('legend')
@@ -77,7 +80,7 @@ var mooFace = new Class({
 				component 	: 'input'
 			}).inject(fieldset, 'before');
 			fs.element.adopt(fieldset.getChildren());
-			fieldset.destroy();*/
+			fieldset.destroy();
 		});
 		
 		// skin the form
@@ -101,7 +104,8 @@ var mooFace = new Class({
 		
 		this.radios[name].newRadio({
 			value : element.get('value'),
-			styles : element.getStyles('padding', 'margin', 'display', 'top', 'left')
+			label : false,
+			styles : element.getStyles('padding', 'margin', 'top', 'left')
 		}).inject(element, 'after');
 		element.destroy();
 	},
@@ -113,8 +117,21 @@ var mooFace = new Class({
 			height		: coord.y,
 			name		: element.get('name'),
 			value 		: element.get('value'),
+			inputStyles : element.getStyles('padding', 'fontSize'),
+			styles		: element.getStyles('margin', 'top', 'left')
+		}).inject(element, 'before');
+		element.destroy();
+	},
+	
+	mTextarea : function(element) {
+		var coord = element.getSize();
+		new UI.Textarea({
+			width		: coord.x,
+			height		: coord.y,
+			name		: element.get('name'),
+			value 		: element.get('value'),
 			inputStyles : element.getStyles('padding'),
-			styles		: element.getStyles('margin', 'display', 'top', 'left')
+			styles		: element.getStyles('margin', 'top', 'left')
 		}).inject(element, 'before');
 		element.destroy();
 	},
@@ -131,7 +148,7 @@ var mooFace = new Class({
 		new UI.Select({
 			name : element.get('name'),
 			list : menu,
-			styles : element.getStyles('padding', 'margin', 'display', 'top', 'left')
+			styles : element.getStyles('padding', 'margin', 'top', 'left')
 		}).inject(element, 'before');
 		element.destroy();
 	},
@@ -151,7 +168,7 @@ var mooFace = new Class({
 		if (element.get('type') == 'submit') params.submit = true;
 		params.label 		= element.get('value');
 		params.labelStyles 	= element.getStyles('padding');
-		params.styles 		= element.getStyles('margin', 'display', 'top', 'left', 'float');
+		params.styles 		= element.getStyles('margin', 'top', 'left', 'float');
 		new UI.Button(params).inject(element, 'before');
 		element.destroy();
 	}

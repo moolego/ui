@@ -92,6 +92,11 @@ UI.Skin = new Class({
 		//get properties for provided type
 		var type = $unlink(UI.props[skin][cKey][tKey]);
 		
+		//add custom states
+		for(var csKey in props) {
+			if(!type[csKey]) type[csKey] = props[csKey];
+		}
+		
 		for (var sKey in type) {
 			//bind shortcuts
 			if(type[sKey].shortcuts) {
@@ -100,7 +105,7 @@ UI.Skin = new Class({
 						eval('type[\'' + sKey + '\'].' + type[sKey].shortcuts[scKey] + ' = this.merge(type[\'' + sKey + '\'].' + type[sKey].shortcuts[scKey] + ',className.options.' + scKey + ')');
 				}
 			}
-			
+
 			//merge custom properties
 			if (props)
 				type[sKey] = this.merge(type[sKey], props['default'], props[sKey]);
@@ -111,17 +116,13 @@ UI.Skin = new Class({
 			//set size
 			if (className.options.width) type[sKey].width = className.options.width;
 			if (className.options.height) type[sKey].height = className.options.height;
-			
-			//add custom states
-			for(var csKey in props) {
-				if(!type[csKey]) type[csKey] = props[csKey];
-			}
 		}
 		
 		//remove shadows if not used
 		if (type['default'].layers.shadow.size == 0) {
 			delete type['default'].shadows;
 		};
+		
 		return type;
 	},
 	
@@ -145,9 +146,8 @@ UI.Skin = new Class({
 		
 	/*
 		Function: merge
-			merge is a light version the core mootools merge function
+			merge is a lighter version of the core mootools merge function
 			Merges any number of objects recursively without referencing them or their sub-objects.
-			
 			
 		See also: mootools merge function
 			

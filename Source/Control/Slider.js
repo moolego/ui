@@ -46,7 +46,7 @@ UI.Slider = new Class({
 		offset			: 0,
 		range			: false,
 		wheel			: false,
-		steps			: 100,
+		steps			: 100
 	},
 	
 	initialize: function(options) {

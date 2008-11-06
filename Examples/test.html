@@ -51,11 +51,12 @@
 	
 	<script type="text/javascript">
 		window.addEvent('domready', function() {
+			
 			var time = $time();
 			
 			/* Elements in page */
 			var form = new Element('form').inject(document.body);
-			
+			/*
 			new UI.Element({
 				label : "new window",
 				skin	: 'demo',
@@ -67,7 +68,7 @@
 				}
 			}).inject(form);
 			//console.log('window.html', $time()-time);
-			
+			*/
 			this.youtube = new UI.Button({
 				skin				: 'demo',
 				type				: 'tube',
@@ -82,7 +83,7 @@
 					margin	: 10
 				}
 			}).inject(form);
-			
+			/*
 			this.youtube = new UI.Button({
 				skin				: 'demo',
 				type				: 'tube',
@@ -97,6 +98,7 @@
 					margin	: 10
 				}
 			}).inject(form);
+			*/
 		});
 	</script>
 </head>

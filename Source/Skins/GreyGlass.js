@@ -244,7 +244,7 @@ UI.props.GreyGlass = {
 			},
 			over : {
 				layers				: {
-					reorder			: ['emboss','border','main'],
+					reorder			: ['emboss','border','main']
 				}
 			},
 			'down' : {
@@ -304,7 +304,7 @@ UI.props.GreyGlass = {
 					},
 					background		: {
 						gradient	: {
-							color		: ['#2e323d','#848995'],
+							color		: ['#2e323d','#848995']
 						},
 						size		: [14, 14]
 					},
@@ -355,7 +355,7 @@ UI.props.GreyGlass = {
 					line			: {
 						position	: 'absolute',
 						shape		: 'line',
-						stroke		: 1.5,
+						width		: 1.5,
 						color		: '#000',
 						offset		: [3.5,4.5],
 						opacity		: .8,
@@ -364,7 +364,7 @@ UI.props.GreyGlass = {
 					line2			: {
 						position	: 'absolute',
 						shape		: 'lineUp',
-						stroke		: 1.5,
+						width		: 1.5,
 						color		: '#000',
 						offset		: [3.5,4.5],
 						opacity		: .8,
@@ -629,6 +629,7 @@ UI.props.GreyGlass = {
 					input			: {
 						styles		: {
 							padding		: '4px 4px 3px',
+							border		: 0,
 							zIndex		: 1,
 							position	: 'absolute',
 							top			: 0,
@@ -703,8 +704,7 @@ UI.props.GreyGlass = {
 				layers: {
 					'default': {
 						radius		: 2,
-						position	: 'absolute',
-						
+						position	: 'absolute'
 					},
 					littleshadow	: {
 						size		: [16,15],
@@ -726,7 +726,7 @@ UI.props.GreyGlass = {
 						position	: 'absolute',
 						size		: [12,12],
 						color		: ['#d4d4d4', '#e5e5e5'],
-						offset		: [3,2],
+						offset		: [3,2]
 					},
 					reflect: {
 						position	: 'absolute',
@@ -776,8 +776,8 @@ UI.props.GreyGlass = {
 						color		: ['#7b8997','#7b8997']
 					},
 					border		: {
-						color		: ['#455a70', '#777777'],
-					},
+						color		: ['#455a70', '#777777']
+					}
 				}
 			}
 		}
@@ -931,7 +931,7 @@ UI.props.GreyGlass = {
 				/* element css properties */
 				styles				: {
 					position		: 'relative',
-					display			: 'inline-block',
+					display			: 'inline-block'
 				},
 				
 				/* layers properties */
@@ -964,7 +964,7 @@ UI.props.GreyGlass = {
 						color		: ['#FFF', '#FFF'],
 						opacity		: [.05, .3],
 						radius		: [4,4,4,4]
-					},
+					}
 				}
 			}
 		},
@@ -974,7 +974,7 @@ UI.props.GreyGlass = {
 		vertical					: {
 			'default'				: {
 				width				: 10,
-				height				: 300,
+				height				: 300
 			}
 		},
 		'knob' : {
@@ -1203,7 +1203,7 @@ UI.props.GreyGlass = {
 						position	: 'relative',
 						shape		: 'roundedRect',
 						offset		: 1,
-						color		: '#FFFFFF',
+						color		: '#FFF',
 						opacity		: 1,
 						radius		: 5
 					},
@@ -1222,7 +1222,7 @@ UI.props.GreyGlass = {
 						offset		: [1, 1, 'auto'],
 						opacity		: .1,
 						radius		: [5,5,0,0],
-						size		: ['auto', 18],
+						size		: ['auto', 18]
 					},
 					reflect		: {
 						color		: '#fff',
@@ -1787,7 +1787,7 @@ UI.props.GreyGlass = {
 				layers				: {
 					reorder			: ['back', 'main', 'side'],
 					'default'		: {
-						position	: 'absolute',
+						position	: 'absolute'
 					},
 					back			: {
 						offset		: [0,0,0,0],
@@ -1798,14 +1798,14 @@ UI.props.GreyGlass = {
 						
 						gradient	: {
 							color	: ['#c5c5c5','#fcfcfc'],
-							angle	: 0,
+							angle	: 0
 						}
 					},
 					side			: {
 						offset		: [0,0,0,'80%'],
 						gradient	: {
 							angle	: 0,
-							color	: ['#fcfcfc','#efefef'],
+							color	: ['#fcfcfc','#efefef']
 						}
 					}
 				}
@@ -1840,7 +1840,7 @@ UI.props.GreyGlass = {
 							opacity	: [.1,.9],
 							angle	: 0
 						},
-						radius		: 6,
+						radius		: 6
 					},
 					reflect			: {
 						gradient	: {
@@ -1849,7 +1849,7 @@ UI.props.GreyGlass = {
 							angle	: 0
 						},
 						offset		: [4,'65%',3,0],
-						radius		: [3,2,2,3],
+						radius		: [3,2,2,3]
 					}
 				}
 			}

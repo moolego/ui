@@ -20,7 +20,7 @@ License:
 */
 
 /*
-Class: Canvas
+Class: Utility.Canvas
 	Creates the element <canvas> and extends the element with getContext if not defined.
 
 Syntax:
@@ -47,10 +47,11 @@ if (Browser.Engine.trident){
 	};	
 	document.createStyleSheet().cssText = 
 		'canvas {text-align:left;display:inline-block;}' +
-		'canvas div, canvas div * {position:absolute;overflow:hidden}' +
+		'canvas div, canvas div * {position:absolute;overflow:hidden;}' +
 		'canvas div * {width:10px;height:10px;}' +
 		'v\\:*, o\\:*{behavior:url(#default#VML)}';
 }
+
 
 var Canvas = new Class({
 
@@ -118,13 +119,13 @@ var CanvasRenderingContext2D = new Class({
 		// from excanvas, subpixel rendering.
 		this.Z = 10;
 		this.Z2 = this.Z / 2;
+		this.arcScaleX = 1;
+		this.arcScaleY = 1;
+		this.currentX = 0;
+		this.currentY = 0;
 		this.miterLimit = this.Z * 1;
 	},
-    
-	arcScaleX: 1,
-	arcScaleY: 1,
-	currentX: 0,
-	currentY: 0,
+
 	lineWidth: 1,
 	strokeStyle: '#000',
 	fillStyle: '#fff',
@@ -138,13 +139,11 @@ var CanvasRenderingContext2D = new Class({
 	shadowOffsetY: 0,
 
 	getCoords: function(x,y){
-		var m = this.m, Z = this.Z, Z2 = this.Z2,
-		coord = {
-			x: Z * (x * m[0][0] + y * m[1][0] + m[2][0]) - Z2,
-			y: Z * (x * m[0][1] + y * m[1][1] + m[2][1]) - Z2
-		};
-		coord.toString = function(){ return this.x.round() + ',' + this.y.round() };
-		return coord;
+		var m = this.m, Z = this.Z, Z2 = this.Z2;
+		return [
+			Z * (x * m[0][0] + y * m[1][0] + m[2][0]) - Z2,
+			Z * (x * m[0][1] + y * m[1][1] + m[2][1]) - Z2
+		];
 	}
 
 });
@@ -196,7 +195,7 @@ CanvasRenderingContext2D.implement({
 	*/
 	moveTo: function(x, y){
 		this.path[this.l++] = 'm';
-		this.path[this.l++] = this.getCoords(x, y);
+		this.path[this.l++] = this.coord(x, y);
 		this.currentX = x;
 		this.currentY = y;
 	},
@@ -222,7 +221,7 @@ CanvasRenderingContext2D.implement({
 	*/
 	lineTo: function(x, y){
 		this.path[this.l++] = 'l';
-		this.path[this.l++] = this.getCoords(x,y);
+		this.path[this.l++] = this.coord(x,y);
 		this.currentX = x;
 		this.currentY = y;
 	},
@@ -257,9 +256,9 @@ CanvasRenderingContext2D.implement({
 	*/
 	bezierCurveTo: function(cp0x, cp0y, cp1x, cp1y, x, y){
 		this.path[this.l++] = ' c ' + [
-			this.getCoords(cp0x, cp0y),
-			this.getCoords(cp1x, cp1y),
-			this.getCoords(x,y)
+			this.coord(cp0x, cp0y),
+			this.coord(cp1x, cp1y),
+			this.coord(x,y)
 		].join(',');
 
 		this.currentX = x;
@@ -315,27 +314,34 @@ CanvasRenderingContext2D.implement({
 		raise an INDEX_SIZE_ERR exception.
 	*/
 	arc: function(x, y, rad, a0, a1, cw){
-		rad *= this.Z;
+		if (this.rot === 0) rad *= this.Z;
 
 		var x0 = a0.cos() * rad, y0 = a0.sin() * rad,
 			x1 = a1.cos() * rad, y1 = a1.sin() * rad;
 
+		if (this.rot !== 0){
+			var PI = Math.PI, da = PI / 24, n = (cw) ? -1 : 1;
+			if (n*a1 < a0) (cw) ? a0 += 2 * PI : a1 += 2 * PI;
+
+			this.lineTo(x0 + x, y0 + y);
+			while (n*a0 + da < a1) this.lineTo(x + (a0 += n*da).cos() * rad, y + a0.sin() * rad);
+			this.lineTo(x1 + x, y1 + y);
+			return;
+		}
+
 		if (x0 == x1 && !cw) x0 += 0.125;
-		
-        var Z2 = this.Z2,
-            c = this.getCoords(x, y),
+
+		var Z2 = this.Z2,
+			c = this.getCoords(x, y),
 			aSXr = this.arcScaleX * rad,
 			aSYr = this.arcScaleY * rad;
-			
-		x -= Z2;
-		y -= Z2;
 
 		this.path[this.l++] = [
 			cw ? 'at ' : 'wa ',
-			(c.x - aSXr).round() + ',' + (c.y - aSYr).round(), ' ',
-			(c.x + aSXr).round() + ',' + (c.y + aSYr).round(), ' ',
-			this.getCoords(x0 + x, y0 + y), ' ',
-			this.getCoords(x1 + x, y1 + y),
+			(c[0] - aSXr).round() + ',' + (c[1] - aSYr).round() +  ' ',
+			(c[0] + aSXr).round() + ',' + (c[1] + aSYr).round() +  ' ',
+			this.coord(x0 + x - Z2, y0 + y - Z2) + ' ',
+			this.coord(x1 + x - Z2, y1 + y - Z2),
 		].join('');
 	},
 
@@ -394,10 +400,10 @@ CanvasRenderingContext2D.implement({
 			rgb = String.type(fS),
 			color = this.processColor(fill && rgb ? fS : this.strokeStyle),
 			a = (fill) ?
-				['filled="true" stroked="',
-				['<v:fill', !rgb ? this.processColorObject(fS) : 'color="' + color.color + '" opacity="' + color.opacity, '"></v:fill>']]
+				['stroked=',
+				['<v:fill ', !rgb ? this.processColorObject(fS) : 'color=' + color.color + ' opacity="' + color.opacity, '"></v:fill>']]
 			:
-				['strokeweight=' + 0.8 * this.lineWidth * this.m[0][0] + ' filled="',
+				['strokeweight=' + 0.8 * this.lineWidth * this.m[0][0] + ' filled=',
 				['<v:stroke',
 					'endcap=', (this.lineCap == 'butt') ? 'flat' : this.lineCap,
 					'joinstyle=', this.lineJoin,
@@ -405,7 +411,7 @@ CanvasRenderingContext2D.implement({
 					'opacity="', color.opacity, '" />']];
 
 		this.element.insertAdjacentHTML('beforeEnd', [
-			'<v:shape path="', this.path.join(''), '" coordorigin="0 0" coordsize="' + size + ' ' + size + '" ', a[0], 'false">',
+			'<v:shape path="', this.path.join(''), 'e" coordsize="' + size + ',' + size + '" ', a[0], 'false">',
 				a[1].join(' '),
 			'</v:shape>'
 		].join(''));
@@ -477,10 +483,13 @@ CanvasRenderingContext2D.implement({
 		}
 
 		return (obj.img) ?  'type="tile" src="' + obj.img.src : ret;
-	}
-	
-});
+	},
 
+	coord: function(x, y){
+		var m = this.m, Z = this.Z, Z2 = this.Z2;
+		return (Z * (x * m[0][0] + y * m[1][0] + m[2][0]) - Z2).round() + ',' + (Z * (x * m[0][1] + y * m[1][1] + m[2][1]) - Z2).round();
+	}
+});
 /*
 Script: Rects.js
 
@@ -597,7 +606,7 @@ CanvasRenderingContext2D.implement({
 		this.rot += ang;
 		var c = ang.cos(),
 			s = ang.sin();
-			
+
 		this.matMult([
 			[ c, s, 0],
 			[-s, c, 0],
@@ -753,13 +762,13 @@ CanvasRenderingContext2D.implement({
 		var syh = sy / h, sxw = sx / w,
 			m = this.m,
 			Z = this.Z,
-			d = $H(this.getCoords(dx, dy)).map(function(val){ return (val / Z).round(); });
+			d = this.getCoords(dx, dy).map(function(val){ return (val / Z).round(); });
 		var props = (!m[0][1] && m[0][0] == 1) ?
-			'top:' + d.y + ';left:' + d.x : [
+			'top:' + d[1] + ';left:' + d[0] : [
 			'filter:progid:DXImageTransform.Microsoft.Matrix(',
 				'M11=', m[0][0], 'M12=', m[1][0],
 				'M21=', m[0][1], 'M22=', m[1][1],
-				'Dx=', d.x, 'Dy=', d.y, 
+				'Dx=', d[0], 'Dy=', d[1], 
 			')'
 		].join(' ');
 				
@@ -825,11 +834,6 @@ CanvasRenderingContext2D.implement({
 			The current values of the 'states'
 	*/
 	states: [
-	    'arcScaleX',
-	    'arcScaleY',
-	    'currentX',
-	    'currentY',
-	    
 		'strokeStyle',
 		'fillStyle',
 		'globalAlpha',
