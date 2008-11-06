@@ -344,8 +344,6 @@ UI.Window = new Class({
 	*/
 
 	setOverlay: function() {
-
-		
 		this.overlay = new Element('div',{ 
 			styles : {
 				backgroundColor: '#fff',

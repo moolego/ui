@@ -27,7 +27,7 @@ UI.Element = new Class({
 		selectable			: true,
 		onlyCanvas			: false,	
 
-		skin				: 'GreyGlass',
+		skin				: 'AquaGraphite',
 		props				: false,
 		
 		styles				: {},

@@ -10,7 +10,7 @@ Arguments:
 
 */
 
-UI.props.GreyGlass = {
+UI.props.AquaGraphite = {
 	'default' : {
 		/* css properties */
 		styles : {
@@ -343,14 +343,12 @@ UI.props.GreyGlass = {
 					'default'		: {
 						position	: 'absolute',
 						shape		: 'circle',
-						radius		: 7,
-						opacity		: 1
 					},
 					main			: {
-						size		: [11, 11],
-						offset		: [2, 2.5],
+						size		: [13, 13],
+						offset		: [0, 1],
 						color		: '#fff',
-						opacity		: .8
+						opacity		: .7
 					},
 					line			: {
 						position	: 'absolute',
