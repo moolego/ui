@@ -574,17 +574,26 @@ UI.Menu = new Class({
 	 */
 	
 	hide: function(duration){
+		
 		if (!$defined(duration)) duration = this.props.hideFxDuration;
+		
 		this.fireEvent('hide');
 		this.removeSubmenu();
-		new Fx.Tween(this.element, {
-			duration	: duration,
-			onComplete	: function(){
-				this.element.setStyle('display', 'none');
-				this.removeRollover();
-				this.fireEvent('removeScrolls');
-			}.bind(this)
-		}).start('opacity', 0);
+			
+		if (!duration) {
+			this.element.setStyle('opacity',0)
+		} else {
+			new Fx.Tween(this.element, {
+				duration: duration,
+				onComplete: function(){
+					this.element.setStyle('display', 'none');
+					this.removeRollover();
+					this.fireEvent('removeScrolls');
+				}.bind(this)
+			}).start('opacity', 0);
+		}
+		
+	
 		
 		return this;
 	},

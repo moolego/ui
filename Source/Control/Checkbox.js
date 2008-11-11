@@ -69,7 +69,8 @@ UI.Checkbox = new Class({
 		
 			Set the input value
 	*/
-	toggleValue : function(){
+	toggleValue : function(state){
+		
 		if (this.state == 'checked') {
 			this.setState('default');
 			this.state = 'default';
@@ -78,6 +79,26 @@ UI.Checkbox = new Class({
 			this.setState('checked');
 			this.state = 'checked';
 			this.input.value = this.control.retrieve('value');
+		}
+	},
+	
+	/* 
+		Method: checked
+		
+			Set the input value
+			
+			provisory
+	*/	
+	
+	checked : function(state){
+		if (state == true) {
+			this.setState('checked');
+			this.state = 'checked';
+			this.input.value = this.control.retrieve('value');
+		} else {
+			this.setState('default');
+			this.state = 'default';
+			this.input.value = '';
 		}
 	},
 
