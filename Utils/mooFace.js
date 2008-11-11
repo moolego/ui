@@ -167,7 +167,7 @@ var mooFace = new Class({
 		// is a submit type or not
 		if (element.get('type') == 'submit') params.submit = true;
 		params.label 		= element.get('value');
-		params.labelStyles 	= element.getStyles('padding');
+		//params.labelStyles 	= element.getStyles('padding');
 		params.styles 		= element.getStyles('margin', 'top', 'left', 'float');
 		new UI.Button(params).inject(element, 'before');
 		element.destroy();

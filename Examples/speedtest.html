@@ -13,7 +13,6 @@
 		<script type="text/javascript" src="../Source/Core/Skin.js"></script>
 			
 		<script type="text/javascript" src="../Source/Element/Element.js"></script>
-		<script type="text/javascript" src="../Source/Element/Element.Behavior.js"></script>
 		<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
 		
 
@@ -42,22 +41,22 @@
 					
 					styles			: {
 						padding		: '8px 16px',
-						width		: '960px',
-						height		: '700px',
+						width		: '820px',
+						height		: '580px',
 						overflow	: 'hidden'
 					}
 					
 				}).inject(document.body);
 				
 				time = $time();
-				var size = 8; 
+				var size = 7; 
 				for (i = 0; i < size; i++) {
 					for (j = 0; j < size; j++) {
 						
-						var one = size - i -2;
-						var two = size - j -2;
+						var one = size - i -1;
+						var two = size - j -1;
 
-						var color = RGBtoHex(Math.floor(255 - 42.5 * one),Math.floor(255 - 42.5 * two),0);
+						var color = RGBtoHex(Math.floor(255 - 42.5 * one),0,Math.floor(255 - 42.5 * two));
 						
 						new UI.Button({
 							label		: '<small>time</small><br/>'+(($time()-time)/1000)+'<br/><small style="font-size:5px: color:#ccc">color</small><br/>'+color,
