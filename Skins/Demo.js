@@ -231,6 +231,79 @@ UI.props.demo = {
 				}
 			}
 		},
+		'calc': {
+			'default': {
+				components: {
+					label: {
+						styles: {
+							fontSize: '20px',
+							fontWeight: 'bold',
+							fontFamily: 'Arial, Helvetica',
+							opacity: '.7', 
+							color: '#fff',
+						}
+					}
+				},
+				
+				styles : {					
+					margin	: '3px'
+				},
+				
+				layers: {
+					reorder: ['emboss', 'front', 'reflect'],
+
+					emboss: {
+						offset: '0px',
+						color: '#000',
+						opacity: .17,
+						radius: 7
+					},
+					
+					front: {
+						offset: 2,
+						opacity: 1,
+						color : '#000',
+						radius: 5
+					},
+					reflect: {
+						offset: ['2px', '2px', '35%'],
+						
+						gradient	: {
+							color: ['#FFF', '#FFF'],
+							opacity: [.9, .1]
+						},
+						radius: [3, 3, 3, 3]
+					}
+				}
+			},
+			over: {
+				components: {
+					label: {
+						styles: {
+							fontSize: '20px',
+							fontWeight: 'bold',
+							fontFamily: 'Arial, Helvetica',
+							opacity: '.7', 
+							color: '#fff',
+						}
+					}
+				}
+			},
+			down: {
+				components: {
+					label: {
+						styles: {
+							color: '#FFF'
+						}
+					}
+				},
+				layers			: {
+					front		: {
+						color : '#000'
+					}
+				}
+			}
+		},
 		tube: {
 			'default'				: {
 				layers				: {

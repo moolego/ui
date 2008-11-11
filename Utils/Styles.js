@@ -22,7 +22,6 @@
 
  */
 UI.Styles = new Class({
-	
 	Implements : Options,
 	
 	options:

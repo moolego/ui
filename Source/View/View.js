@@ -221,6 +221,8 @@ UI.View = new Class({
 			default:		
 		};
 		this.updateSize();
+		
+		return this;
 	}
 });
 

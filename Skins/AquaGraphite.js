@@ -62,7 +62,8 @@ UI.props.AquaGraphite = {
 							top			: 0,
 							left		: 0,
 							padding		: '3px 16px 4px',
-							whiteSpace	:'nowrap'
+							whiteSpace	:'nowrap',
+							lineHeight	: '1.2em'
 						}
 					}
 				},
@@ -1028,7 +1029,7 @@ UI.props.AquaGraphite = {
 					cursor			: 'default',
 					color			: '#000000',
 					display			: 'block',
-					padding			: '0px 70px 0px 2px',
+					padding			: '0px 2px 0px 2px',
 					textAlign		: 'center',
 					textTransform	: 'capitalize',
 					fontWeight		: 'normal',
@@ -1063,15 +1064,40 @@ UI.props.AquaGraphite = {
 			'default' : {
 				/* components */
 				components			: {
+					head			: {
+						styles 		: {
+							position: 'relative',
+							overflow: 'hidden',
+							width	: '100%',
+						 	zIndex	: 1
+						}
+					},
 					controls		: {
-						padding		: '3px 2px 0px 4px'
+						styles		: {
+							'float'	: 'left',
+							padding: '2px 4px',
+							margin:0,
+							height:18
+						}
 					},
 					control			: {
 						type		: 'window',
+						label		: false,
 						width		: 15,
 						height		: 15,
 						styles		: {
-							margin	: '0 2px 0 0'
+							margin	: '2px 3px'
+						}
+					},
+					toggle			:{
+						type		: 'toggleToolbar',
+						label		: false,
+						styles: {
+							position: 'absolute',
+							top: 5,
+							right: 10,
+							margin: 0,
+							padding: 0
 						}
 					},
 					title			: {
@@ -1079,6 +1105,42 @@ UI.props.AquaGraphite = {
 					},
 					view			: {
 						type		: 'defaultWindow'
+					},
+					foot			: {
+						styles : {
+							zIndex:10,
+							position		: 'relative',
+						    right			: '0',
+						   	width			: '100%'
+						}  
+					},
+					status			: {
+						styles: {
+							fontSize: '1em',
+							padding: '3px 16px',
+							height: '16px'
+						}
+					},
+					resize: {
+						styles: {
+							position: 'absolute',
+							right: 0,
+							marginBottom: 0,
+							width: '24px',
+							height: '24px'
+						}
+					},
+					overlay 		: { 
+						styles : {
+							backgroundColor: '#fff',
+							opacity:'.5',
+							top:0,
+							left:0,
+						    position: 'absolute',
+						    height: '100%',
+						    width: '100%',
+							zIndex	: '100000'
+						}
 					}
 				},
 				
@@ -1491,7 +1553,7 @@ UI.props.AquaGraphite = {
 				},
 				
 				styles				: {
-					padding			: '2px 0 0 0'
+					padding			: '0 0 0 0'
 				},
 				
 				
@@ -1500,7 +1562,7 @@ UI.props.AquaGraphite = {
 				presentation		: 'both',
 				hideFxDuration		: 200,
 				showDelay			: 0,
-				delay				: 500,
+				delay				: 0,
 				
 				/* layers properties */
 				layers				: {
