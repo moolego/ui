@@ -240,7 +240,7 @@ UI.props.demo = {
 							fontWeight: 'bold',
 							fontFamily: 'Arial, Helvetica',
 							opacity: '.7', 
-							color: '#fff',
+							color: '#fff'
 						}
 					}
 				},
@@ -284,7 +284,7 @@ UI.props.demo = {
 							fontWeight: 'bold',
 							fontFamily: 'Arial, Helvetica',
 							opacity: '.7', 
-							color: '#fff',
+							color: '#fff'
 						}
 					}
 				}
@@ -311,7 +311,7 @@ UI.props.demo = {
 					
 					front			: {
 						position	: 'absolute',
-						offset		: 0,
+						offset		: '0px',
 						color		: '#fe3333',
 						radius		: 8
 					},
@@ -322,7 +322,7 @@ UI.props.demo = {
 							color	: ['#FFF', '#fe3333', '#fe3333'],
 							angle	: 110
 						},
-						radius		: [0,8,0,0]
+						radius		: [8,8,0,0]
 					},
 					reflect			: {
 						position	: 'absolute',
