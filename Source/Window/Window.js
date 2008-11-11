@@ -13,7 +13,6 @@ Arguments:
 	Options
 	
 Options: 
-
 	title - (string) title displayed in the head titlebar.
 	type - (string) define the type of the window (default, transparent).
 	location - ('custom','center','cascade')  override top and left options if defined - default to custom.
@@ -84,6 +83,7 @@ UI.Window = new Class({
 		resizeLimitY			: [200, window.getHeight()],
 		
 		// Main View Options
+		
 		viewOverflow			: 'scrollbar',
 		viewBackgroundColor		: '#fff',
 		
@@ -116,10 +116,8 @@ UI.Window = new Class({
 		this.controller.focus(this);
 		this.fireEvent('focus');
 		this.isActive = true;
-		
 	},
 
-	
 	/*
 	    Function: build
 	
@@ -129,8 +127,7 @@ UI.Window = new Class({
 	build: function() {	
 		// call parent builder
 		this.parent()
-		
-		
+
 		this.setHead();
 		this.setView();
 		this.setFoot();
@@ -140,7 +137,6 @@ UI.Window = new Class({
 		
 		this.inject(this.options.container || document.body);
 	},
-	
 
 	/* 
 		Function: setHead
@@ -149,30 +145,32 @@ UI.Window = new Class({
 
 	setHead : function() {
 		var bs = this.props.borderSize;
-		this.head = new Element('div', { 
-			'class' 		: this.className +'-head',
-			styles 			: {
-				position 	: 'relative',
-				overflow 	: 'hidden',
-				width		: '100%',
-			 	left		: bs,
-			 	top			: bs,
-			 	zIndex		: 1
-			}
-		}).inject(this.element);
+		
+		this.head = new Element('div', this.props.components.head)
+		.setStyles({ left : bs, top : bs })
+		.inject(this.element);
+		
+		this.dragHandlers.push(this.head);
+				
 		this.head.disableSelect();
 		
 		this.setControls();
 		
-		this.title = new UI.Label({	
-			type 	: this.props.components.title.type,
-			html	: this.options.title
-		}).inject(this.head);
+		this.title = new UI.Label(this.props.components.title)
+		.inject(this.head);
 		
-		this.dragHandlers.push(this.head);
-		
+		this.setTitle(this.options.title);
 	},
 	
+	/* Function: setTitle
+	 * 		set title html 
+	 */
+	
+	setTitle : function(html) {
+		this.title.set('html',html);
+		return this;
+	},
+
 	/* 
 		Function: setView
 			Create a new view and attach related events window
@@ -201,14 +199,13 @@ UI.Window = new Class({
 		});
 	},
 
-
 	/* 
 		Function: setTabView
 			Create a new view and attach related events window
 	*/	
 
 	setTabView : function() {
-		if (this.options.tabView) {
+		if (this.options.tabView && !this.tabView) {
 			this.options.tabView.container = this.view.content;
 			this.tabView = new UI.TabView(this.options.tabView);
 		}
@@ -221,35 +218,20 @@ UI.Window = new Class({
 
 	setFoot: function() {
 		if (this.options.foot) {
-			this.foot = new Element('div', {
-				'class'				: this.className+'-foot',
-				styles : {
-					zIndex:10,
-					position		: 'relative',
-				    right			: '0',
-				   	width			: '100%',
-					height			: this.props.footHeight,
-					left 			: this.props.borderSize
-				}  
-			}).inject(this.element);
+			this.foot = new Element('div', this.props.components.foot)
+			.inject(this.element);
+			
 			this.foot.disableSelect();
 			
 			if (this.options.resizable) {
-				this.resize = new Element('div', {
-					styles: {
-						position: 'absolute',
-						right: 0,
-						marginBottom: 0,
-						width: '24px',
-						height: '24px'
-					},
-					events: {
-						mousedown : function(e){
-							new Event(e).stop();
-						}
-					}
-				}).inject(this.foot);
+				this.resize = new Element('div', this.props.components.resize)
+				.addEvent('mousedown',function(e){ new Event(e).stop();	})
+				.inject(this.foot);
 			}
+			
+			this.status = new Element('div',this.props.components.status)
+			.inject(this.foot);
+			
 			this.setStatus();
 		}
 	},
@@ -277,18 +259,9 @@ UI.Window = new Class({
 			obFocus				: function() { this.toolbar.content.setStyle('opacity',1) }
 		});
 		
-		new UI.Button({
-			type		: 'toggleToolbar',
-			label		: false,
-			styles		: {
-				position: 'absolute',
-				top		: 5,
-				right	: 10,
-				margin	: 0,
-				padding	: 0
-			},
-			onClick		: this.toggleToolbar.bind(this)
-		}).inject(this.head);	
+		new UI.Button(this.props.components.toggle)
+		.addEvent('onClick', this.toggleToolbar.bind(this))
+		.inject(this.head);	
 		
 		return this;
 	},
@@ -306,7 +279,7 @@ UI.Window = new Class({
 	/*
 	    Method: toggleToolbar
 			The action method for the "Hide Toolbar" menu item (which alternates with "Show Toolbar").
-			
+			  
 		Note: 	it should be passed as options when the application instanciates its window
 	*/
 	
@@ -314,27 +287,19 @@ UI.Window = new Class({
 		if (this.toolbar.element.getStyle('display') == 'block') {
 			this.props.layers.underlay.size[1] = this.head.getSize().y;
 			this.toolbar.element.hide();
-			this.updateSize();
 		} else {
 			this.toolbar.element.show();
 			this.props.layers.underlay.size[1] = this.head.getSize().y;
-			this.updateSize();
 		}
-	},
-	
-	setStatus : function() {
-		if (!this.status) {
-			this.status = new Element('div', {
-				styles: {
-					fontFamily: this.props.fontFamily,
-					fontSize: '0.75em',
-					padding: '3px 16px',
-					height: '16px'
-				}
-			}).inject(this.foot);
-		};
 		
-		this.status.set('html',status);
+		this.updateSize();
+		
+		this.fireEvent('setCanvasSize', this.state);
+		
+	},
+
+	setStatus : function(html) {
+		this.status.set('html',html);
 		return this;		
 	},
 
@@ -344,17 +309,7 @@ UI.Window = new Class({
 	*/
 
 	setOverlay: function() {
-		this.overlay = new Element('div',{ 
-			styles : {
-				backgroundColor: '#fff',
-				opacity:'0',
-				top:0,
-				left:0,
-			    position: 'absolute',
-			    height: '100%',
-			    width: '100%',
-				zIndex	: '100000'
-			}})
+		this.overlay = new Element('div',this.props.components.overlay)
 		 .inject(this.view.element);
 
 		this.addEvents({
@@ -375,9 +330,7 @@ UI.Window = new Class({
 	setBehavior: function(){
 		this.parent();
 
-		this.element.addEvents({
-			mousedown 	: function(){this.focus()}.bind(this)
-		});
+		this.element.addEvent('mousedown', this.focus.bind(this));
 		
 		this.addEvents({
 			resizeComplete: function(){
@@ -428,25 +381,13 @@ UI.Window = new Class({
 	setControls: function() {
 		var actions = this.options.controls;
 		
-		this.controls = new Element('div',{
-			 styles : {
-			 	'float'				: 'left',
-	    		padding				: this.props.controlsPadding,
-				height				: this.props.controlHeight
-			}
-		 }).inject(this.head);
+		this.controls = new Element('div',this.props.components.controls)
+		.inject(this.head);
 		
 		actions.each(function(action){
-			new UI.Button({
-				type		: this.props.components.control.type,
-				label		: false,
-				width		: this.props.components.control.width,
-				height		: this.props.components.control.height,
-				styles		: {
-					margin : this.props.components.controls.padding
-				},
-				onClick		: this.control.bind(this, action)
-			}).inject(this.controls);	
+			new UI.Button(this.props.components.control)
+			.addEvent('onClick', this.control.bind(this, action))
+			.inject(this.controls);	
 		},this);
 		
 		this.addEvents({
@@ -489,17 +430,17 @@ UI.Window = new Class({
 			offsetHeight = offsetHeight + this.head.getSize().y;
 			topView = this.head.getSize().y;
 		}
-		
+
 		if (this.options.foot) { 
 			offsetHeight = offsetHeight + this.foot.getSize().y;
 		}
-		
+
 		if (this.options.tabView) { 
 			var height = this.tabView.tabs.getSize().y;
 			offsetHeight = offsetHeight + height;
 			topView = topView + height;
 		}
-		
+
 		var viewHeight = element.y - offsetHeight;
 		
 		if (this.options.head) {
@@ -507,6 +448,7 @@ UI.Window = new Class({
 				width: element.x - borderOffset
 			});
 		}
+		
 		this.props.layers.underlay.size[1] = this.head.getSize().y;
 		this.skin['inactive'].layers.underlay.size[1] = this.head.getSize().y;
 		
@@ -551,6 +493,7 @@ UI.Window = new Class({
 			
 			this.maximized = false;
 			this.minimized = true;
+
 			this.fireEvent('onMinimize');
 		}
 	},
@@ -640,7 +583,8 @@ UI.Window = new Class({
 	*/	
 	
 	inject : function(container){
-		//this.updateSize();
+		this.updateSize();
+		
 		this.parent(container);
 		this.canvas.canvas.addEvent('click', function(e){
 			this.controller.propagateUnderShadow(e)}.bind(this)
