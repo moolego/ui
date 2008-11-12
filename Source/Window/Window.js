@@ -144,10 +144,7 @@ UI.Window = new Class({
 	*/	
 
 	setHead : function() {
-		var bs = this.props.borderSize;
-		
 		this.head = new Element('div', this.props.components.head)
-		.setStyles({ left : bs, top : bs })
 		.inject(this.element);
 		
 		this.dragHandlers.push(this.head);
@@ -161,6 +158,28 @@ UI.Window = new Class({
 		
 		this.setTitle(this.options.title);
 	},
+
+	/*
+	    Function: setControls
+	      Create window controls that allow window close, maximize and minimize
+	*/
+	
+	setControls: function() {
+		this.controls = new Element('div',this.props.components.controls)
+		.inject(this.head);
+		
+		this.options.controls.each(function(action){
+			new UI.Button(this.props.components.control)
+			.addEvent('onClick', this.control.bind(this, action))
+			.inject(this.controls);	
+		},this);
+		
+		this.addEvents({
+			'onMinimize': this.controls.hide,
+			'onNormalize': this.controls.show
+		});
+	},
+
 	
 	/* Function: setTitle
 	 * 		set title html 
@@ -183,8 +202,8 @@ UI.Window = new Class({
 			className			: this.className + '-view',
 			styles				: {
 				marginLeft: this.props.borderSize
-			}
-			//overflow			: (this.options.tabView) ? 'hidden' : 'scrollbar'
+			},
+			overflow			: (this.options.tabView) ? 'hidden' : this.options.viewOverflow
 		}).inject(this.element);
 		
 		this.content = this.view.content;
@@ -206,8 +225,8 @@ UI.Window = new Class({
 
 	setTabView : function() {
 		if (this.options.tabView && !this.tabView) {
-			this.options.tabView.container = this.view.content;
-			this.tabView = new UI.TabView(this.options.tabView);
+			this.tabView = new UI.TabView(this.options.tabView)
+			.inject(this.view.element);
 		}
 	},
 
@@ -373,32 +392,6 @@ UI.Window = new Class({
 		}
 	},
 
-	/*
-	    Function: setControls
-	      Create window controls that allow window close, maximize and minimize
-	*/
-	
-	setControls: function() {
-		var actions = this.options.controls;
-		
-		this.controls = new Element('div',this.props.components.controls)
-		.inject(this.head);
-		
-		actions.each(function(action){
-			new UI.Button(this.props.components.control)
-			.addEvent('onClick', this.control.bind(this, action))
-			.inject(this.controls);	
-		},this);
-		
-		this.addEvents({
-			'onMinimize': function(){
-				this.controls.hide();
-			},
-			'onNormalize': function(){
-				this.controls.show();
-			}
-		});
-	},
 
 
 	/*
@@ -436,7 +429,7 @@ UI.Window = new Class({
 		}
 
 		if (this.options.tabView) { 
-			var height = this.tabView.tabs.getSize().y;
+			var height = this.tabView.tabbar.getSize().y;
 			offsetHeight = offsetHeight + height;
 			topView = topView + height;
 		}
@@ -451,15 +444,7 @@ UI.Window = new Class({
 		
 		this.props.layers.underlay.size[1] = this.head.getSize().y;
 		this.skin['inactive'].layers.underlay.size[1] = this.head.getSize().y;
-		
-		if (this.options.tabView) {
-			this.tabView.tabs.setStyles({
-				left	: bs,
-				width	: element.x - borderOffset,
-				top		: this.head.getStyle('height').toInt() + bs
-			});
-		}
-		
+	
 		this.view.element.setStyles({ 
 			top		: bs,
 			width	: element.x - borderOffset,	
@@ -482,7 +467,7 @@ UI.Window = new Class({
 	*/
 
 	minimize : function() {
-		if(this.minimized) {
+		/*if(this.minimized) {
 			this.normalize();
 		} else {
 			if (!this.maximized) this.coordinates = this.element.getCoordinates();
@@ -495,7 +480,7 @@ UI.Window = new Class({
 			this.minimized = true;
 
 			this.fireEvent('onMinimize');
-		}
+		}*/
 	},
 
 	/*

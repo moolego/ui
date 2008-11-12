@@ -59,11 +59,11 @@ UI.View = new Class({
 		onLoadComplete		: $empty
 	},
 
-/*
-    Method: initialize
-    Constructor
-
-*/
+	/*
+	    Method: initialize
+	    Constructor
+	
+	*/
  	  
 	initialize: function(options){
 		this.parent(options);
