@@ -56,6 +56,8 @@ UI.Button = new Class({
 			Set the button state
 	*/
 	setState : function(state){
+		console.log(state);
+		
 		if (this.textLabel) {
 			this.textLabel.setStyles(this.skin[state].components.label.styles);
 		}
@@ -74,7 +76,9 @@ UI.Button = new Class({
 		this.element.addEvents({
 			mouseenter	: this.setState.bind(this, 'over'),
 			mousedown	: this.setState.bind(this, 'down'),
-			mouseleave	: this.setState.bind(this, 'default'),	
+			mouseleave: function(){
+				this.setState(this.options.state);
+			}.bind(this),	
 			mouseup		: function(){
 				if (this.options.submit) this.submit();
 				this.setState('over');

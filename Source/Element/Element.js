@@ -332,13 +332,16 @@ UI.Element = new Class({
 	
 	inject: function (container, position){
 		this.fireEvent('inject');
-		container.fireEvent('onInject');
+		//container.fireEvent('onInject');
 		this.element.inject(container, position);
 		this.element.setStyle('visibility', 'visible');
 		this.setSize();
 		this.setCanvas();
 		this.controller.register(this);
 		return this;
+		
+		
+		
 	},
 	
 		/*
