@@ -11,12 +11,6 @@ UI.TabView = new Class({
 	
 	options: {
 		component: 'tabview',
-		
-		overflow: 'hidden',
-		styles		: {
-			overflow : 'hidden'
-			
-		}
 	},
 	
 	/*
@@ -25,7 +19,6 @@ UI.TabView = new Class({
 	 
 	 */
 	initialize: function(options){
-	
 		this.parent(options);
 	},
 	
@@ -50,7 +43,7 @@ UI.TabView = new Class({
 	 */
 	setTabs: function(){
 		this.tabbar = new UI.Element(this.props.components.tabbar)
-		.inject(this.content);
+		.inject(this.options.container);
 		
 		this.options.tabs.each(function(tab){
 			this.add(tab);
@@ -65,31 +58,26 @@ UI.TabView = new Class({
 	 */
 	add: function(props){
 		var view = new UI.View({ 
-			type : 'tab',
-			styles : {
-				display	: 'none'	
-			} 
+			type : 'tab'
 		}).inject(this.content).hide();
 		
 		var tab = new UI.Button({
 			type: 'tab',
 			label: props.name,
 			onClick: function() { 
-			
 				if (tab == this.tab) return;
 			
 				if (props.url) view.setContent('ajax',props.url);
-	
-				view.setStyle('display','block');
 				
-				if (this.view) this.view.setStyle('display','none');
+				view.show();
+				
+				if (this.view) this.view.hide();
 				tab.options.state = 'active';
 				
 				if (this.tab) {
 					this.tab.options.state = 'default';
 					this.tab.setState('default');
 				}
-				console.log('setActive:',tab.options);
 								
 				this.tab = tab;
 				this.view = view; 

@@ -17,7 +17,10 @@
 	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
 		
 	<script type="text/javascript" src="../Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Drag.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Resize.js"></script>
 	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
+	
 	<script type="text/javascript" src="../Source/Control/Bubble.js"></script>
 
 	<script type="text/javascript" src="../Source/Control/Control.js"></script>
@@ -450,7 +453,7 @@
 					color			: '#fff'
 				},
 				onClick: function(){
-					this.tip.fade(0);
+					tip.fade(0);
 				}.bind(this),
 				props				: {
 					'default'				: {
@@ -546,32 +549,41 @@
 				draggable			: true,
 				onClick				: function() { 
 					
-					if (this.bubble) this.bubble.destroy();
-
-					this.bubble = new UI.Bubble({
-						target 						: $(this),
-						props 				: {
-							'default' 				: {
-								layers				: {
-									background		: {
-										offset		: [0,0,4],
-										color 		: ['#33cc33','#000'],
-										opacity		: 1
-									},
-									arrow			: {
-										size		: [9,4],
-										offset		: ['auto', 9,0]
+					if (this.bubble) {
+					
+						this.bubble.label.set('html', counter++);
+						this.bubble.setSize();
+					
+					} else {
+					
+						this.bubble = new UI.Bubble({
+							target: $(this),
+							label: counter++,
+							labelStyles: {
+								fontSize: '74px',
+								fontWeight: 'bold',
+								padding: '4px 10px'
+							},
+							props: {
+								'default': {
+									layers: {
+										background: {
+											offset: [0, 0, 9],
+											color: ['#33cc33', '#000'],
+											opacity: 1
+										},
+										arrow: {
+											size: [9, 4],
+											offset: ['auto', 9, 0],
+											opacity: 1,
+											color: '#000'
+										}
 									}
 								}
 							}
-						},
-						label 						: counter++,
-						labelStyles					: {
-							fontSize		: '74px',
-							fontWeight		: 'bold',
-							padding			: '4px 10px 10px'
-						}
-					});
+						
+						});
+					}
 				},
 				props				: {
 					'default'				: {

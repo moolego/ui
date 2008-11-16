@@ -56,8 +56,7 @@ UI.Button = new Class({
 			Set the button state
 	*/
 	setState : function(state){
-		console.log(state);
-		
+	
 		if (this.textLabel) {
 			this.textLabel.setStyles(this.skin[state].components.label.styles);
 		}

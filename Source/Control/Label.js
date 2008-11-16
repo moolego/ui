@@ -13,6 +13,8 @@ UI.Label = new Class({
 		tag					: 'span',
 		html				: 'Label',
 		
+		emboss				: false,
+		
 		selectable			: false
 	},
 
@@ -24,5 +26,11 @@ UI.Label = new Class({
 	
 	build: function(options){
 		this.parent(options);
+		
+		if(this.options.emboss) {
+			console.log('clone label'+this.element.get('html'));
+			this.emboss = this.element.clone().inject(this.element,'top');
+			this.emboss.setStyles(this.props.components.emboss.styles);
+		}
 	}
 });
