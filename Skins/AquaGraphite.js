@@ -13,7 +13,9 @@ Arguments:
 UI.props.AquaGraphite = {
 	'default' : {
 		/* css properties */
-		styles 	: { },
+		styles 	: { 
+			fontSize	: '12px'
+		},
 		fx		: {},
 		
 		/* layers properties */
@@ -286,7 +288,7 @@ UI.props.AquaGraphite = {
 		},
 		window : {
 			'default' : {
-				layers				: {
+				layers : {
 					
 					reorder			: ['emboss', 'background', 'main', 'reflect', 'cache'],
 					
@@ -334,7 +336,33 @@ UI.props.AquaGraphite = {
 						opacity		: 1
 					}
 				}
+			},
+			over : {
+				layers : {
+					reorder			: ['emboss', 'background', 'main', 'reflect', 'cache','line','line2'],
+					line			: {
+						position	: 'absolute',
+						shape		: 'line',
+						width		: 1.5,
+						color		: '#000',
+						offset		: [3.5,4.5],
+						opacity		: .8,
+						size		: [7,7],
+						rotation	: 45
+					},
+					line2			: {
+						position	: 'absolute',
+						shape		: 'lineUp',
+						width		: 1.5,
+						color		: '#000',
+						offset		: [3.5,4.5],
+						opacity		: .8,
+						size		: [7,7],
+						rotation	: 45
+					}
+				}
 			}
+			
 		},
 		transparent : {
 			'default' : {
@@ -1173,13 +1201,24 @@ UI.props.AquaGraphite = {
 							zIndex	: '-2'					
 						}
 					}
-					
 				}
 			}
 		},
 		
 		windowTitle : {
 			'default' : {
+				components			: {
+					emboss			: {
+						styles		: {
+							position: 'absolute',
+							margin	: '0',
+							color	: '#fff',
+							top		: '1px',
+							opacity	: '1',
+							zIndex	: '-2'					
+						}
+					}
+				},
 				/* css properties */
 				styles			: {
 					overflow		: 'hidden',

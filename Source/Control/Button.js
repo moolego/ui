@@ -74,7 +74,10 @@ UI.Button = new Class({
 		//we add mouse event
 		this.element.addEvents({
 			mouseenter	: this.setState.bind(this, 'over'),
-			mousedown	: this.setState.bind(this, 'down'),
+			mousedown	: function(e) {
+				this.setState('down');
+				new Event(e).stop();
+			}.bind(this),
 			mouseleave: function(){
 				this.setState(this.options.state);
 			}.bind(this),	

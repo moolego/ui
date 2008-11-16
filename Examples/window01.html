@@ -383,31 +383,7 @@
 				}
 			}).inject(form);
 			
-			this.textarea = new UI.Textarea({
-				name : 'textarea-input-canvas',
-				value : '',
-				onBlur : function(){
-					this.input.value = ''
-					tipArea = new UI.Bubble({
-						target : this.element,
-						props : {
-							'default' : {
-								backgroundColor : ['#A00','#000']
-							}
-						},
-						label : "Your comment here!"
-					});
-				},
-				onFocus : function(){
-					if (tipArea) {
-						tipArea.destroy();
-						delete tipArea;
-					}
-				},
-				styles : {
-					margin	: 10
-				}
-			}).inject(form);
+			
 			
 			
 			ip = new UI.Input({
@@ -661,26 +637,7 @@
 				onChange				:  function(){ this.selecttup.show(); }.bind(this)
 			}).inject(form);
 			
-			
-			this.selecttup = new UI.Bubble({
-				target 			: this.daselect,
-				targetEvent		: 'onMouseOver',
-				type			: 'bottom',
 				
-				props : {
-					'default' : {
-						layers	: {
-							reorder	: ['background','arrow'],
-							background	: {
-								color	: '#000'
-							}
-						}
-					}
-				},
-				label : "il faut préparer un package<br /> googlemap tips replacement!<br/>"
-			});
-			
-			
 			
 			this.cancel = new UI.Button({
 				label				: 'Cancel',
@@ -938,8 +895,8 @@
 			
 			
 			submit = new UI.Button({
-				label				: 'Submit NOW',
-				labelStyles			: {
+				label						: 'Submit NOW',
+				labelStyles					: {
 					fontSize			: '2em',
 					fontWeight			: 'bold',
 					opacity				: '8',
@@ -1010,21 +967,7 @@
 			}).inject(form);
 			
 			
-			this.checkbox = new UI.Checkbox({
-				label		: 'check or not?',
-				styles		: {
-					margin	: 10
-				}
-			}).inject(form);
-			
-			this.checkbox = new UI.Checkbox({
-				skin				: 'demo',
-				type				: 'default',
-				styles				: {
-					margin			: '20px'
-				}
-			}).inject(form);
-			//console.log('window.html', $time()-time);
+
 			
 		});
 	</script>

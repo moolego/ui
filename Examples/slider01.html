@@ -27,6 +27,7 @@
 
 	
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../Skins/BlueTouch.js"></script>
 	
 	<script type="text/javascript">
 		window.addEvent('load', function() {
@@ -42,40 +43,51 @@
 			
 			var color = [0, 0, 0];
 			var radius = 11;
+			var reflecto1 = .5;
+			var reflecto2 = .5;
 			
 			var updateButton = function(){
 				colorButton.props.layers.main.color = color.rgbToHex();
 				colorButton.props.layers['default'].radius = radius;
 
-				colorButton.props.layers.background.radius = [4, 4, radius-4, radius-4];
-				colorButton.props.layers.littleshadow.radius = radius;
-				colorButton.props.layers.background.radius = radius;
+				colorButton.props.layers.littleshadow.radius = radius+1;
+				colorButton.props.layers.background.radius = radius+1;
+				colorButton.props.layers.reflect.radius = [radius-4, radius-4, 4, 4,];
+				
+				colorButton.props.layers.reflect.opacity = [reflecto1, reflecto2];
+				colorButton.props.layers.reflect.radius = [radius-4, radius-4, 4, 4,];
+				
+				colorButton.props.layers.light.radius = [4, 4, radius-4, radius-4];
 				colorButton.set('html', color.rgbToHex());
 			};
 			
 			var colorButton = new UI.Button({
-				label				: 'Color',
+				label				: '#000000',
 				labelStyles			: {
 					fontSize		: '22px',
 					fontFamily		: 'Andale Mono,sans-serif',
 					fontWeight		: 'bold',
-					padding			: 50,
+					padding			: 30,
 					color			: '#fff'
 				},
 				styles		: {
 					'float'			: 'right',
 					margin			: '0 100px 0 0'
+				},
+				onClick		: function()	{
+					console.log(this.props)
 				}
 			}).inject(form);
 			
 			new UI.Label({
-				html				: 'blue'
+				html				: 'Color: blue magenta yellow'
 			}).inject(form);
 			
 			new UI.Slider({
+				skin				: 'BlueTouch',
 				range				: [0, 255],
 				styles				: {
-					margin			: '10px',
+					margin			: '10px 0',
 					display			: 'block',
 					height			: 10	
 				},
@@ -86,14 +98,11 @@
 				}
 			}).inject(form);
 			
-			new UI.Label({
-				html				: 'magenta'
-			}).inject(form);
-			
 			new UI.Slider({
+				skin				: 'BlueTouch',
 				range				: [0, 255],
 				styles				: {
-					margin			: '10px',
+					margin			: '10px 0',
 					display			: 'block'	
 				},
 				wheel				: true,
@@ -103,14 +112,12 @@
 				}
 			}).inject(form);
 			
-			new UI.Label({
-				html				: 'yello'
-			}).inject(form);
-			
+		
 			new UI.Slider({
+				skin				: 'BlueTouch',
 				range				: [0, 255],
 				styles				: {
-					margin			: '10px',
+					margin			: '10px 0',
 					display			: 'block'	
 				},
 				wheel				: true,
@@ -121,18 +128,51 @@
 			}).inject(form);
 			
 			new UI.Label({
-				html				: 'radius'
+				html				: 'Radius'
 			}).inject(form);
 			
 			new UI.Slider({
-				range				: [2, 30],
+				skin				: 'BlueTouch',
+				range				: [8, 32],
 				styles				: {
-					margin			: '10px',
+					margin			: '10px 0',
 					display			: 'block'	
 				},
 				wheel				: true,
 				onChange: function(step){
 					radius = step;
+					updateButton();
+				}
+			}).inject(form);
+			
+			new UI.Label({
+				html				: 'Reflect opacity'
+			}).inject(form);
+			
+			new UI.Slider({
+				skin				: 'BlueTouch',
+				range				: [0, 100],
+				styles				: {
+					margin			: '10px 0',
+					display			: 'block'	
+				},
+				wheel				: true,
+				onChange: function(step){
+					reflecto1 = step/100;
+					updateButton();
+				}
+			}).inject(form);
+			
+			new UI.Slider({
+				skin				: 'BlueTouch',
+				range				: [0, 100],
+				styles				: {
+					margin			: '10px 0',
+					display			: 'block'	
+				},
+				wheel				: true,
+				onChange: function(step){
+					reflecto2 = step/100;
 					updateButton();
 				}
 			}).inject(form);

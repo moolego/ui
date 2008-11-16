@@ -52,116 +52,7 @@
 	
 	<script type="text/javascript">
 		window.addEvent('load', function() {
-			var time = $time();
-			
-			toolbar = new UI['Toolbar']({
-				displayMode : 'text',
-				draggable	: false,
-				menu		: [
-					{
-						text	: 'moolego',
-						styles	: {
-							position	: 'relative'
-						},
-						menu : [
-							{
-								text : 'About',
-								action : function() { 
-									new UI.Window({
-										title			: 'about',
-										width			: 300,
-										height			: 160,
-										head			: false,
-										viewOverflow 	: 'hidden',
-										controls		: ['close']
-									});
-								}
-							},
-							{ 
-								text 		: 'Software version...',
-								action : function() { this.test('about'); alert('click')}.bind(this)
-							},
-							{ text		: 'separator' },
-							{ 
-								text 		: 'Préférences systemes...',
-								action : function() { new App.Settings() }
-							},
-							{ text		: 'separator' },{
-								text : 'Elements récents',
-								menu : [
-									{text : 'Finder'},
-									{text : 'Safari'},
-									{text : 'Mail'},
-									{text : 'Protoshop'},
-									{text : 'Nasty Explorer'}
-								]
-							},
-							{ text		: 'separator' },
-							{
-								text : 'Fermer la session'
-							}
-						]
-					},
-					{
-						text : 'New',
-						options : {'class' : 'ui-dd-new'},
-						menu		: [
-							{
-								text : 'Button',
-								action : function() { 
-									new UI.Button().inject(form, 'top');
-								}.bind(this)
-							},
-							{ 
-								text 		: 'Window',
-								action : function() { 
-									new UI.Window();
-								}.bind(this)
-							}
-						]
-					},
-					{
-						text : 'Window',
-						options : {'class' : 'ui-dd-new'},
-						menu		: [
-							{
-								text : 'About',
-								action : function() { this.test('about'); alert('click')}.bind(this)
-							},
-							{ text 		: 'Minimizer'},
-							{ text		: 'separator' },
-							{ text		: 'Cascade',
-							  action: function(){
-							  	this.windowManager.resetCascade()
-							  }.bind(this)
-							  
-							}
-						]
-					},
-					{
-						text : 'Help',
-						options : {'class' : 'ui-dd-help'},
-						menu : [
-							{ text : 'Welcome' },
-							{ text : 'separator' },
-							{ text : 'Update...' },
-							{ text : 'separator' },
-							{ text : 'Settings...' }
-						]
-					},
-					{
-						text : 'History...',
-						action: function(){alert('menu with action')},
-						menu : [
-							{text: 'Page down'},
-							{text: 'Page up'},
-							{text: 'Microsoft'}
-						]
-					}
-				]						
-			}).inject(document.body,'top');
-			
-			
+		
 			/* Elements in page */
 			var form = new Element('form', {
 				id				: 'controltest',
@@ -171,76 +62,27 @@
 				}
 			}).inject(document.body);
 			
-			var radiosGroup = new UI.RadiosGroup({
-				name			: 'radiotest'
-			});
 			
-			var radio = radiosGroup.newRadio({
-				label	: 'Test 1',
-				value 	: 'test_1',
-				selected: true,
-				styles				: {
-					margin			: 10
-				}
-			}).inject(form);
-			
-			
-			radiosGroup.newRadio({
-				label	: 'Test 2',
-				value : 'test_2',
-				styles				: {
-					margin			: 10
-				}
-			}).inject(form);
-			
-			this.slider = new UI.Slider({
-				range				: [0, 100],
-				styles				: {
-					margin			: '20px 10px'
+				
+			button = new UI.Button({
+				label : "Launch a new Control test",
+				labelStyles : {
+					fontWeight : 'bold',
+					padding : '10px 20px'
 				},
-				wheel				: true,
-				onChange			: function(step){
-					tip.fade(step/100);
-				}
-			}).inject(form);
-			
-			
-			
-			this.textarea = new UI.Textarea({
-				name : 'textarea-input-canvas',
-				value : '',
-				onBlur : function(){
-					this.input.value = ''
-					tipArea = new UI.Bubble({
-						target : this.element,
-						props : {
-							'default' : {
-								backgroundColor : ['#A00','#000']
-							}
-						},
-						label : "Your comment here!"
-					});
+				onClick : function(){
+		
+					
+
+					
+					
+				
 				},
-				onFocus : function(){
-					if (tipArea) {
-						tipArea.destroy();
-						delete tipArea;
-					}
-				},
-				styles : {
+				styles		: {
 					margin	: 10
 				}
 			}).inject(form);
 			
-			
-			ip = new UI.Input({
-				name : 'text-input-canvas',
-				value : 'A text input with canvas, a very long text',
-				id : 'test',
-				styles : {
-					margin	: 10
-				}
-			}).inject(form);
 			
 			/*
 			new UI.Bubble({
@@ -276,7 +118,7 @@
 					color			: '#fff'
 				},
 				onClick: function(){
-					this.tip.fade(0);
+					tip.fade(0);
 				}.bind(this),
 				props				: {
 					'default'				: {
@@ -372,32 +214,41 @@
 				draggable			: true,
 				onClick				: function() { 
 					
-					if (this.bubble) this.bubble.destroy();
-
-					this.bubble = new UI.Bubble({
-						target 						: $(this),
-						props 				: {
-							'default' 				: {
-								layers				: {
-									background		: {
-										offset		: [0,0,4],
-										color 		: ['#33cc33','#000'],
-										opacity		: 1
-									},
-									arrow			: {
-										size		: [9,4],
-										offset		: ['auto', 9,0]
+					if (this.bubble) {
+					
+						this.bubble.label.set('html', counter++);
+						this.bubble.setSize();
+					
+					} else {
+					
+						this.bubble = new UI.Bubble({
+							target: $(this),
+							label: counter++,
+							labelStyles: {
+								fontSize: '74px',
+								fontWeight: 'bold',
+								padding: '4px 10px'
+							},
+							props: {
+								'default': {
+									layers: {
+										background: {
+											offset: [0, 0, 9],
+											color: ['#33cc33', '#000'],
+											opacity: 1
+										},
+										arrow: {
+											size: [9, 4],
+											offset: ['auto', 9, 0],
+											opacity: 1,
+											color: '#000'
+										}
 									}
 								}
 							}
-						},
-						label 						: counter++,
-						labelStyles					: {
-							fontSize		: '74px',
-							fontWeight		: 'bold',
-							padding			: '4px 10px 10px'
-						}
-					});
+						
+						});
+					}
 				},
 				props				: {
 					'default'				: {
@@ -452,47 +303,6 @@
 					margin					: 5
 				}
 			}).inject(form);
-			
-			
-			
-			this.daselect = new UI.Select({
-				name						: 'testselect',
-				styles						: {
-					margin					: 10
-				},
-				list						: [
-					{text					: 'Please choose' },
-					{text					: 'Core' },
-					{text					: 'Control' },
-					{text					: 'Desktop is a long entry' },
-					{text					: 'Menu' },
-					{text					: 'Form' },
-					{text					: 'Un menu' },
-					{text					: 'Plage' },
-					{text					: 'Venise' }
-				],
-				onMouseDown				:  function(){ this.selecttup.hide(); }.bind(this),
-				onChange				:  function(){ this.selecttup.show(); }.bind(this)
-			}).inject(form);
-			
-			
-			this.selecttup = new UI.Bubble({
-				target 			: this.daselect,
-				targetEvent		: 'onMouseOver',
-				type			: 'bottom',
-				
-				props : {
-					'default' : {
-						layers	: {
-							reorder	: ['background','arrow'],
-							background	: {
-								color	: '#000'
-							}
-						}
-					}
-				},
-				label : "il faut préparer un package<br /> googlemap tips replacement!<br/>"
-			});
 			
 			
 			
@@ -744,101 +554,13 @@
 			new UI.Bubble({
 				skin						: 'demo',
 				target 						: $(this.hardest),
-				label 						: 'réalisation: Michel Gondry',
+				label 						: 'Michel Gondry',
 				labelStyles					: {
 					padding					: '10px 10px 18px'
 				}
 			});
 			
 			
-			submit = new UI.Button({
-				label				: 'Submit NOW',
-				labelStyles			: {
-					fontSize			: '2em',
-					fontWeight			: 'bold',
-					opacity				: '8',
-					padding				: '18px 26px',
-					color				: '#fff'
-				},
-				submit				: true,
-				props				: {
-					'default'				: {
-						layers				: {
-							reorder			: ['emboss','front','reflect', 'dark'],
-							
-							emboss			: {
-								offset		: 0,
-								color		: '#cc0033',
-								opacity		: .17,
-								radius		: 9
-							},
-							front			: {
-								offset		: 3,
-								color		: ['#cc0033','#cc0033'],
-							 	opacity		: 1,
-								radius		: 7
-							},
-							reflect			: {
-								offset		: ['1px', '1px', '65%'],
-								color		: ['#FFF', '#FFF'],
-								opacity		: [.8, .0],
-								radius		: [5, 5, 14, 14]
-							},
-							dark			: {
-								position	: 'absolute',
-								size		: ['auto','20px'],						
-								offset		: ['auto', 4, 4],
-								color		: ['#fff', '#fff'],
-								opacity		: [0, .5],
-								radius		: [14, 14, 5, 5]
-							}
-						}
-					},
-					over					: {
-						components			: {
-							label			: {
-								styles		: { opacity : .5 }
-							}
-						},
-						layers				: {
-							emboss			: { color : '#00AA00' }
-						}
-					},
-					down					: {
-						components			: {
-							label			: {
-								styles		: {
-									opacity : .5,
-									color	: '#000'
-								}
-							}
-						},
-						layers				: {
-							emboss			: { color : '#00AA00' }
-						}
-					}
-				},
-				styles						: {
-					margin					: 5
-				}
-			}).inject(form);
-			
-			
-			this.checkbox = new UI.Checkbox({
-				label		: 'check or not?',
-				styles		: {
-					margin	: 10
-				}
-			}).inject(form);
-			
-			this.checkbox = new UI.Checkbox({
-				skin				: 'demo',
-				type				: 'default',
-				styles				: {
-					margin			: '20px'
-				}
-			}).inject(form);
-			//console.log('window.html', $time()-time);
 			
 		});
 	</script>

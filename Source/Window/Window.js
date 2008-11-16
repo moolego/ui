@@ -154,10 +154,12 @@ UI.Window = new Class({
 		
 		var width = this.controls.getSize().x;
 		width = 70;
-		if (this.props.components.controls.styles['float'] == 'right') { this.title.element.setStyle('paddingLeft',width); }
-		 else {this.title.element.setStyle('paddingRight',width);};
 		
-
+		if (this.props.components.controls.styles['float'] == 'right') { 
+			this.title.element.setStyle('paddingLeft',width); 
+		} else { 
+			this.title.element.setStyle('paddingRight',width) 
+		}
 	},
 
 	/*
@@ -166,7 +168,6 @@ UI.Window = new Class({
 	*/
 	
 	buildControls: function() {
-		
 		this.controls = new Element('div',this.props.components.controls)
 		.inject(this.head);
 		
@@ -217,19 +218,20 @@ UI.Window = new Class({
 
 	buildView : function() {
 		if (this.options.tabView) {
-			
-			this.options.tabView.styles = {};
+			var options = this.options.tabView;
 			
 			this.options.tabView.container = this.element;
-			this.options.tabView.styles.top = this.props.borderSize;
-			this.options.tabView.styles.left = this.props.borderSize;
-			this.options.tabView.styles.position = 'absolute';
 			
 			this.view = new UI.TabView(this.options.tabView)
-			.inject(this.element);
+			.setStyles({
+				position	: 'absolute',
+				top 		: this.props.borderSize,
+				left 		: this.props.borderSize,
+			}).inject(this.element);
 			
-			this.view.tabbar.setStyle('width', this.options.width - this.props.borderSize);
-			
+			this.view.tabbar.setStyles({
+				width 	: this.options.width - this.props.borderSize
+			});
 			
 		} else {
 			// should be merge depending on certain conditions 
@@ -239,8 +241,6 @@ UI.Window = new Class({
 			 
 			if (this.options.viewOverflow) 
 			 this.options.view.overflow = this.options.viewOverflow;
-			 
-			 
 
 			var props = $merge(this.props.components.view,this.options.view);
 			
@@ -286,6 +286,8 @@ UI.Window = new Class({
 		if (this.options.foot) {
 			this.foot = new Element('div', this.props.components.foot)
 			.inject(this.element);
+			
+			this.dragHandlers.push(this.foot);
 			
 			this.foot.disableSelect();
 			
@@ -531,6 +533,7 @@ UI.Window = new Class({
 				width	: element.x - borderOffset
 			});
 		}
+		
 		this.view.updateSize();
 	},
 
@@ -540,16 +543,13 @@ UI.Window = new Class({
 	*/	
 	
 	inject : function(container){
-	//	this.updateSize();
+		// this.updateSize();
 		
 		this.parent(container);
 		this.canvas.canvas.addEvent('click', function(e){
 			this.controller.propagateUnderShadow(e)}.bind(this)
 		);
 	},
-	
-
-	// more public functions
 	
 	 /*
 		Function: setSize
