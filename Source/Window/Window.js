@@ -64,9 +64,11 @@ UI.Window = new Class({
 		
 		// Components Options
 		head					: true,
-		controls				: ['close','minimize','maximize'],
-
+		view					: true,
 		foot					: true,
+
+		// 		
+		controls				: ['close','minimize','maximize'],
 	
 		// Not Implemented should be able to enable/disable effects
 		useEffects				: false,
@@ -74,18 +76,13 @@ UI.Window = new Class({
 		// Drag options
 		draggable				: true,
 		dragLimitX				: [-1000, window.getWidth() + 1000],
-		dragLimitY				: [53, window.getHeight() + 1000],
+		dragLimitY				: [50, window.getHeight() + 1000],
 		dragHandlers			: ['head','foot'],
 		
 		// Resize options
 		resizable				: true,
 		resizeLimitX			: [200, window.getWidth()],
 		resizeLimitY			: [200, window.getHeight()],
-		
-		// Main View Options
-		
-		viewOverflow			: 'scrollbar',
-		viewBackgroundColor		: '#fff',
 		
 		// Implemented events
 		onResize			: $empty,
@@ -128,10 +125,10 @@ UI.Window = new Class({
 		// call parent builder
 		this.parent()
 
-		this.setHead();
-		this.setView();
-		this.setFoot();
-		this.setOverlay();
+		this.buildHead();
+		this.buildView();
+		this.buildFoot();
+		this.buildOverlay();
 		
 		this.coordinates = this.element.getCoordinates();
 		
@@ -143,20 +140,24 @@ UI.Window = new Class({
 			Create a new head element, set class and styles and inject
 	*/	
 
-	setHead : function() {
+	buildHead : function() {
 		this.head = new Element('div', this.props.components.head)
 		.inject(this.element);
-		
+	
 		this.dragHandlers.push(this.head);
-				
-		this.head.disableSelect();
-		
-		this.setControls();
-		
+		this.head.disableSelect();	
+		this.buildControls();
 		this.title = new UI.Label(this.props.components.title)
 		.inject(this.head);
 		
 		this.setTitle(this.options.title);
+		
+		var width = this.controls.getSize().x;
+		width = 70;
+		if (this.props.components.controls.styles['float'] == 'right') { this.title.element.setStyle('paddingLeft',width); }
+		 else {this.title.element.setStyle('paddingRight',width);};
+		
+
 	},
 
 	/*
@@ -164,12 +165,13 @@ UI.Window = new Class({
 	      Create window controls that allow window close, maximize and minimize
 	*/
 	
-	setControls: function() {
+	buildControls: function() {
+		
 		this.controls = new Element('div',this.props.components.controls)
 		.inject(this.head);
 		
 		this.options.controls.each(function(action){
-			new UI.Button(this.props.components.control)
+			var control = new UI.Button(this.props.components.control)
 			.addEvent('onClick', this.control.bind(this, action))
 			.inject(this.controls);	
 		},this);
@@ -179,83 +181,7 @@ UI.Window = new Class({
 			'onNormalize': this.controls.show
 		});
 	},
-
 	
-	/* Function: setTitle
-	 * 		set title html 
-	 */
-	
-	setTitle : function(html) {
-		this.title.set('html',html);
-		return this;
-	},
-
-	/* 
-		Function: setView
-			Create a new view and attach related events window
-	*/	
-
-	setView : function() {
-		this.view = new UI.View({
-			type				: this.props.components.view.type,
-			overflow			: this.options.viewOverflow,
-			className			: this.className + '-view',
-			styles				: {
-				marginLeft: this.props.borderSize
-			},
-			overflow			: (this.options.tabView) ? 'hidden' : this.options.viewOverflow
-		}).inject(this.element);
-		
-		this.content = this.view.content;
-		
-		this.setTabView();
-		
-		this.addEvents({
-			//onResizeDrag	: function() { this.view.fireEvent('onResize');  },
-			onMinimize 		: function() { this.view.hide(); },
-			onNormalize 	: function() { this.view.show(); },
-			onLoadComplete	: function() { this.view.setSize(); }
-		});
-	},
-
-	/* 
-		Function: setTabView
-			Create a new view and attach related events window
-	*/	
-
-	setTabView : function() {
-		if (this.options.tabView && !this.tabView) {
-			this.tabView = new UI.TabView(this.options.tabView)
-			.inject(this.view.element);
-		}
-	},
-
-	/* 
-		Function: setFoot
-			Create a new foot container and inject resize handler and statusbar in it
-	*/
-
-	setFoot: function() {
-		if (this.options.foot) {
-			this.foot = new Element('div', this.props.components.foot)
-			.inject(this.element);
-			
-			this.foot.disableSelect();
-			
-			if (this.options.resizable) {
-				this.resize = new Element('div', this.props.components.resize)
-				.addEvent('mousedown',function(e){ new Event(e).stop();	})
-				.inject(this.foot);
-			}
-			
-			this.status = new Element('div',this.props.components.status)
-			.inject(this.foot);
-			
-			this.setStatus();
-		}
-	},
-
-
 	/*
 	    Function: setToolbar
 			Sets the window's toolbar. and attach related events
@@ -263,12 +189,11 @@ UI.Window = new Class({
 		Note: 	it should be passed as options when the application instanciates its window
 	*/
 	
-	setToolbar: function(toolbar) {
+	buildToolbar: function(toolbar) {
 		this.toolbar = new UI.Toolbar(toolbar).inject(this.head);
 
-		// not really nice... 
+		// not really nice because related to a specific layer ... 
 		this.props.layers.underlay.size[1] = this.head.getSize().y;
-
 		this.updateSize();
 		
 		this.addEvents({
@@ -285,21 +210,115 @@ UI.Window = new Class({
 		return this;
 	},
 
-	/*
-	    Function: setContent
-	    	Set Content of the Window View
-	*/
-	
-	setContent: function(method,source,options){
-		this.view.setContent(method,source,options);
-		return this;
+	/* 
+		Function: setView
+			Create a new view of the define type and attach related window events
+	*/	
+
+	buildView : function() {
+		if (this.options.tabView) {
+			
+			this.options.tabView.styles = {};
+			
+			this.options.tabView.container = this.element;
+			this.options.tabView.styles.top = this.props.borderSize;
+			this.options.tabView.styles.left = this.props.borderSize;
+			this.options.tabView.styles.position = 'absolute';
+			
+			this.view = new UI.TabView(this.options.tabView)
+			.inject(this.element);
+			
+			this.view.tabbar.setStyle('width', this.options.width - this.props.borderSize);
+			
+			
+		} else {
+			// should be merge depending on certain conditions 
+			
+			if (!this.options.view.type) 
+			 this.options.view.type = this.props.components.view.type;
+			 
+			if (this.options.viewOverflow) 
+			 this.options.view.overflow = this.options.viewOverflow;
+			 
+			 
+
+			var props = $merge(this.props.components.view,this.options.view);
+			
+			this.view = new UI.View(props)
+			.inject(this.element);
+		}
+
+		this.content = this.view.content;
+
+		this.addEvents({
+			onMinimize 		: function() { this.view.hide(); },
+			onNormalize 	: function() { this.view.show(); }
+		});
 	},
-				
+
+	/* 
+		Function: setOverlay
+			create a new overlay object 
+	*/
+
+	buildOverlay: function() {
+		/*
+		this.overlay = new Element('div',this.props.components.overlay)
+		 .inject(this.view.element);
+
+		this.addEvents({
+			'onBlur' : function() { this.overlay.show(); },
+			'onFocus' : function() { this.overlay.hide(); },
+			'onResizeStart' : function() { this.overlay.show(); },
+			'onResizeComplete' : function() { this.overlay.hide(); },
+			'onDragStart' : function() { this.overlay.show(); },
+			'onDragComplete' : function() { this.overlay.hide(); }
+		});
+		*/
+	},
+
+	/* 
+		Function: setFoot
+			Create a new foot container and inject resize handler and statusbar in it
+	*/
+
+	buildFoot: function() {
+		if (this.options.foot) {
+			this.foot = new Element('div', this.props.components.foot)
+			.inject(this.element);
+			
+			this.foot.disableSelect();
+			
+			if (this.options.resizable) {
+				this.buildResizeHandler();	
+			}
+			
+			this.status = new Element('div',this.props.components.status)
+			.inject(this.foot);
+			
+			this.setStatus();
+		}
+	},
+
 	/*
-	    Method: toggleToolbar
+		Function: buildResizeHandler
+			Create a new element as resize handler
+		
+	 */
+	
+	buildResizeHandler : function() {
+		this.resize = new UI.Element({
+			component		: 'element',
+			type			: 'resizeHandler'
+		}).addEvent('mousedown',function(e){ new Event(e).stop();	})
+		.inject(this.foot);
+	},
+
+	/*
+		Method: toggleToolbar
 			The action method for the "Hide Toolbar" menu item (which alternates with "Show Toolbar").
-			  
-		Note: 	it should be passed as options when the application instanciates its window
+		
+		Note:   it should be passed as options when the application instanciates its window
 	*/
 	
 	toggleToolbar: function() {
@@ -312,34 +331,9 @@ UI.Window = new Class({
 		}
 		
 		this.updateSize();
-		
 		this.fireEvent('setCanvasSize', this.state);
-		
 	},
 
-	setStatus : function(html) {
-		this.status.set('html',html);
-		return this;		
-	},
-
-	/* 
-		Function: setOverlay
-			create a new overlay object 
-	*/
-
-	setOverlay: function() {
-		this.overlay = new Element('div',this.props.components.overlay)
-		 .inject(this.view.element);
-
-		this.addEvents({
-			'onBlur' : function() { this.overlay.show(); },
-			'onFocus' : function() { this.overlay.hide(); },
-			'onResizeStart' : function() { this.overlay.show(); },
-			'onResizeComplete' : function() { this.overlay.hide(); },
-			'onDragStart' : function() { this.overlay.show(); },
-			'onDragComplete' : function() { this.overlay.hide(); }
-		});
-	},
 
 	/*
 	    Function: setBeahaviours
@@ -376,163 +370,6 @@ UI.Window = new Class({
 		this.element.setStyle('position','absolute');
 	},	
 
-	/*
-		Function: getInitialLocation
-			Return the initial location depending on location options
-	*/
-
-	getInitialLocation: function() {
-		if (this.options.location == 'center') {
-			return this.getCenterLocation();
-		} else if (this.options.location == 'cascade') {
-			var c = this.controller.getCascadeLocation(this)
-			return { top : c.top, left : c.left };
-		} else {
-			return { top : this.options.top, left: this.options.left };
-		}
-	},
-
-
-
-	/*
-	    Function: setSize
-	    	Set window's frame size and updateSize
-	*/	
-
-	setSize: function(width,height, state) {
-		this.parent(width,height, state);
-		this.updateSize();
-	},
-	
-	
-	/*
-	    Function: updateSize
-	      Update size and position of the window inner components
-	*/
-
-	updateSize : function(opt) {
-		var element = this.element.getSize();
-		
-		var bs = this.props.borderSize;
-		var borderOffset = bs*2;
-		
-		var offsetHeight = 0;
-		var topView = 0;
-		
-		if (this.options.head) { 
-			offsetHeight = offsetHeight + this.head.getSize().y;
-			topView = this.head.getSize().y;
-		}
-
-		if (this.options.foot) { 
-			offsetHeight = offsetHeight + this.foot.getSize().y;
-		}
-
-		if (this.options.tabView) { 
-			var height = this.tabView.tabbar.getSize().y;
-			offsetHeight = offsetHeight + height;
-			topView = topView + height;
-		}
-
-		var viewHeight = element.y - offsetHeight;
-		
-		if (this.options.head) {
-			this.head.setStyles({
-				width: element.x - borderOffset
-			});
-		}
-		
-		this.props.layers.underlay.size[1] = this.head.getSize().y;
-		this.skin['inactive'].layers.underlay.size[1] = this.head.getSize().y;
-	
-		this.view.element.setStyles({ 
-			top		: bs,
-			width	: element.x - borderOffset,	
-			height	: viewHeight -  borderOffset
-		});
-		
-		if (this.options.foot) {
-			this.foot.setStyles({
-				bottom	: -bs,
-				width	: element.x - borderOffset
-			});
-		}
-		this.view.updateSize();
-	},
-
-	/*
-
-    Function: minimize
-		This action method removes the window from the screen list and displays the minimized window
-	*/
-
-	minimize : function() {
-		/*if(this.minimized) {
-			this.normalize();
-		} else {
-			if (!this.maximized) this.coordinates = this.element.getCoordinates();
-			
-			var size = this.controller.setMinimizedCoordinates();
-			this.head.setStyle('width', size.width);
-			this.element.setStyles(size);
-			
-			this.maximized = false;
-			this.minimized = true;
-
-			this.fireEvent('onMinimize');
-		}*/
-	},
-
-	/*
-    Function: maximize
-      This action method set the size to fit the window container
-	*/
-
-	maximize : function() {
-		if(this.maximized) {
-			this.normalize();
-		} else {
-			if (!this.minimized) this.coordinates = this.element.getCoordinates();
-			this.setSize(window.getWidth(),window.getHeight()-this.options.dragLimitY[0]);
-			this.element.setStyles({
-				top : this.options.dragLimitY[0],
-				left : 0
-			})
-			this.minimized = false;
-			this.maximized = true;
-			this.fireEvent('onMaximize');
-		}
-	},
-
-	/*
-		Function: normalize
-			Normalize the current window
-	*/
-
-	normalize : function() {
-		this.setStyles({
-			left	: this.coordinates.left,
-			top		: this.coordinates.top
-		});
-		this.setSize(this.coordinates.width,this.coordinates.height);
-		this.maximized = false;
-		this.minimized = false;
-		this.fireEvent('onNormalize');
-	},		
-
-	/*
-	    Function: control
-	      Toggle state 
-	      
-		Arguments:
-			actions - (minimize,maximize,close)
-	*/	
-
-	control : function(action) {
-		if (action == 'minimize') this.minimize();
-		else if (action == 'maximize') this.maximize();
-		else if (action == 'close') this.close();
-	},
 
 	/*
 	    Function: focus
@@ -563,18 +400,220 @@ UI.Window = new Class({
 	},
 
 	/*
+
+    Function: minimize
+		This action method displays the minimized window
+	*/
+
+	minimize : function() {
+		/*if(this.minimized) {
+			this.normalize();
+		} else {
+			if (!this.maximized) this.coordinates = this.element.getCoordinates();
+			
+			var size = this.controller.setMinimizedCoordinates();
+			this.head.setStyle('width', size.width);
+			this.element.setStyles(size);
+			
+			this.maximized = false;
+			this.minimized = true;
+
+			this.fireEvent('onMinimize');
+		}*/
+	},
+
+	/*
+	    Function: maximize
+	      This action method set the size to fit the window container
+	*/
+
+	maximize : function() {
+		if(this.maximized) {
+			this.normalize();
+		} else {
+			if (!this.minimized) this.coordinates = this.element.getCoordinates();
+			this.setSize(window.getWidth(),window.getHeight()-this.options.dragLimitY[0]);
+			this.element.setStyles({
+				top : this.options.dragLimitY[0],
+				left : 0
+			})
+			this.minimized = false;
+			this.maximized = true;
+			this.fireEvent('onMaximize');
+		}
+	},
+
+	/*
+		Function: normalize
+			Normalize the current window
+	*/
+
+	normalize : function() {
+		this.setStyles({
+			left	: this.coordinates.left,
+			top		: this.coordinates.top
+		});
+		this.setSize(this.coordinates.width,this.coordinates.height);
+		
+		this.maximized = false;
+		this.minimized = false;
+		
+		this.fireEvent('onNormalize');
+	},		
+
+	/*
+		Function: getInitialLocation
+			Return the initial location depending on location options
+	*/
+
+	getInitialLocation: function() {
+		if (this.options.location == 'center') {
+			return this.getCenterLocation();
+		} else if (this.options.location == 'cascade') {
+			var c = this.controller.getCascadeLocation(this)
+			return { top : c.top, left : c.left };
+		} else {
+			return { top : this.options.top, left: this.options.left };
+		}
+	},
+
+	
+	/*
+	    Function: updateSize
+	      Update size and position of the window inner components
+	*/
+
+	updateSize : function(opt) {
+		var element = this.element.getSize();
+		
+		var bs = this.props.borderSize;
+		var borderOffset = bs*2;
+		
+		var offsetHeight = 0;
+		var topView = 0;
+		
+		if (this.options.head) { 
+			offsetHeight = offsetHeight + this.head.getSize().y;
+			topView = this.head.getSize().y;
+		}
+
+		if (this.options.foot) { 
+			offsetHeight = offsetHeight + this.foot.getSize().y;
+		}
+
+		if (this.options.tabView) { 
+			var height = this.view.tabbar.getSize().y;
+			offsetHeight = offsetHeight + height;
+			topView = topView + height;
+			this.view.tabbar.setStyle('width', element.x - borderOffset);
+		}
+
+		var viewHeight = element.y - offsetHeight;
+		
+		if (this.options.head) {
+			this.head.setStyles({
+				width: element.x - borderOffset
+			});
+		}
+		
+		this.props.layers.underlay.size[1] = this.head.getSize().y;
+		this.skin['inactive'].layers.underlay.size[1] = this.head.getSize().y;
+	
+		this.view.element.setStyles({ 
+			top		: bs + topView,
+			width	: element.x - borderOffset,	
+			height	: viewHeight -  borderOffset
+		});
+		
+		if (this.options.foot) {
+			this.foot.setStyles({
+				bottom	: -bs,
+				width	: element.x - borderOffset
+			});
+		}
+		this.view.updateSize();
+	},
+
+	/*
 	    Function: close
 	      Close window and fireEvent 
 	*/	
 	
 	inject : function(container){
-		this.updateSize();
+	//	this.updateSize();
 		
 		this.parent(container);
 		this.canvas.canvas.addEvent('click', function(e){
 			this.controller.propagateUnderShadow(e)}.bind(this)
 		);
 	},
+	
+
+	// more public functions
+	
+	 /*
+		Function: setSize
+			Set window's frame size and updateSize
+			
+	*/  
+	 
+	setSize: function(width,height, state) {
+		this.parent(width,height, state);
+		this.updateSize();
+	},	
+	
+	/* 
+		Function: setTitle
+			set title html 
+			
+	 */
+	
+	setTitle : function(html) {
+		this.title.set('html',html);
+		return this;
+	},
+
+	/*
+	    Function: setContent
+	    	Set Content of the Window View
+	*/
+	
+	setContent: function(method,source,options){
+		this.view.setContent(method,source,options);
+		return this;
+	},
+
+	/*
+	    Function: setStatus
+	    	Set Status of the Window foot
+	*/
+
+	setStatus : function(html) {
+		this.status.set('html',html);
+		return this;		
+	},
+
+	/*
+	    Function: control
+	      Toggle state 
+	      
+		Arguments:
+			actions - (minimize,maximize,close)
+	*/	
+
+	control : function(action) {
+		if (action == 'minimize') this.minimize();
+		else if (action == 'maximize') this.maximize();
+		else if (action == 'close') this.close();
+	},
+
+	/*
+	    Function: close
+			Close window
+	      
+		Arguments:
+			actions - (minimize,maximize,close)
+	*/	
 	
 	close : function() {
 		this.controller.close(this);

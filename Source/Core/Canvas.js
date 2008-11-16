@@ -23,31 +23,23 @@ UI.Canvas = new Class({
 	},
 	
 	/*
-	Constructor: initialize
-	
-		Create a new canvas object
+		Constructor: initialize
 		
-	Arguments: this.ctx, options
-	
-	Options: 
-		className		- default : ui-canvas
-		target			- target element for the canvas
-		props			- props from UI.skin
+			Create a new canvas object
+			
+		Arguments: this.ctx, options
+		
+		Options: 
+			className		- default : ui-canvas
+			target			- target element for the canvas
+			props			- props from UI.skin
 	*/
 	
 	initialize: function(options){
 		this.setOptions(options);
 		this.props = this.options.props;
 		
-		this.canvas = new Canvas({
-			'class'	: this.options.className,
-			styles	: {
-				position 	: 'absolute',
-				zIndex		: -1
-			}
-		});
-		this.ctx = this.canvas.getContext("2d");
-		
+		this.build();
 		this.setSize();
 
 		this.shadowsLoaded = false;
@@ -56,7 +48,36 @@ UI.Canvas = new Class({
 		this.draw();
 		
 	},
-	
+
+	/* 
+		Function : setSize
+			set size of the canvas object "take into account" of the shadow, the draw		
+
+	 
+	 */
+
+	build : function() {
+		this.canvas = new Canvas({
+			'class'	: this.options.className,
+			styles	: {
+				position 	: 'absolute',
+				zIndex		: -1
+			}
+		});
+		
+		this.ctx = this.canvas.getContext("2d");
+	},
+
+	/* 
+		Function : setSize
+			set size of the canvas object handling the shadow, then draw it.
+			
+		Argument:
+			width : (integer) - Width of the canvas without shadow offsets
+			height : (integer) - Width of the canvas without shadow offsets
+			props : (object) - skin properties
+	*/
+
 	setSize : function(width, height, props){
 		if (props) this.props = props;
 		
@@ -79,6 +100,7 @@ UI.Canvas = new Class({
 			width : this.canvasSize[0],
 			height: this.canvasSize[1]
 		});
+		
 		this.canvas.setStyles({
 			top	  : - this.shadowThikness,
 			left  : - this.shadowThikness,
@@ -90,6 +112,7 @@ UI.Canvas = new Class({
 			this.canvasSize[0] - this.shadowThikness * 2 - Math.abs(this.shadowOffset[0]),
 			this.canvasSize[1] - this.shadowThikness * 2 - Math.abs(this.shadowOffset[1])
 		];
+		
 		this.relSize = this.absSize;
 		this.offset = [this.shadowThikness, this.shadowThikness];
 		
@@ -97,11 +120,11 @@ UI.Canvas = new Class({
 	},
 
 	/*
-	Function: draw
-	
-		Draw layers
+		Function: draw
 		
-	Arguments: props
+			Draw layers
+			
+		Arguments: props
 	*/
 	
 	draw : function(props)  {
@@ -132,6 +155,13 @@ UI.Canvas = new Class({
 		this.shadowSet 	= false;
 		this.fireEvent('complete');
 	},
+
+	/*
+		Function: drawShadows
+			Draw shadow
+		
+		Arguments: no
+	*/
 	
 	drawShadows : function(){
 		this.drawShadowsCalled = true;
@@ -155,6 +185,13 @@ UI.Canvas = new Class({
 			}.bind(this));
 		}
 	},
+
+	/*
+		Function: drawShadowLayers
+			Draw shadow layer
+		
+		Arguments: no
+	*/
 	
 	drawShadowLayers : function(){
 		var drawSize = [
@@ -173,6 +210,7 @@ UI.Canvas = new Class({
 		
 		this.ctx.fillStyle = 'rgba(' + color.join(',') + ',' + opacity + ')';
 		this.ctx.fillRect(size + ox,  size + oy,  drawSize[0] - 2 * size, drawSize[1] - 2 * size);
+		
 		this.ctx.drawImage(img[0], 0, 0, img[0].width, img[0].height, ox, oy, size, size);
 		this.ctx.drawImage(img[1], 0, 0, img[1].width, img[1].height, size + ox, oy, drawSize[0] - 2 * size, size);
 		this.ctx.drawImage(img[2], 0, 0, img[2].width, img[2].height, drawSize[0] - size + ox, oy, size, size);
@@ -189,12 +227,29 @@ UI.Canvas = new Class({
 		this.fireEvent('complete');
 
 	},
+
+	/*
+		Function: inject
+			inject canvas
+		
+		Arguments: 
+			target		: (string) - the target dom element
+			position	: (string - optional) the position were to inject
+	*/
 	
 	inject : function(target, position){
 		this.canvas.inject(target, position);
 		return this;
 	},
-	
+
+	/*
+		Function: trace
+			draw the shape depending on the skin component props definition
+		
+		Arguments: 
+			key		: (string) - key
+	*/
+
 	trace : function(key) {
 		var properties = this.getProperties(key);
 		this.ctx.save();
@@ -223,6 +278,18 @@ UI.Canvas = new Class({
 		
 		this.ctx.restore();
 	},
+
+	/*
+		Function: convert2Px
+			draw the shape depending on the skin component props definition
+		
+		Arguments: 
+			value 		: (string) - key
+			direction	: ()
+			absolute	: ()
+			
+		Return
+	*/
 	
 	convert2Px : function(value, direction, absolute) {
 		direction = (direction == 'x') ? 0 : 1;
@@ -243,7 +310,19 @@ UI.Canvas = new Class({
 			return value;
 		}
 	},
-	
+
+	/*
+		Function: setOffset
+			setOffset of the shape 
+		
+		Arguments: 
+			value 		: (string) - key
+			position	: ()
+			size		: ()
+			
+		Return
+	*/	
+
 	// values is array[top, right, bottom, left]
 	// position could be absolute, relative, topLeft, topRight, bottomLeft, bottomRight
 	setOffset : function(value,position, size) {
@@ -387,11 +466,11 @@ UI.Canvas = new Class({
 	},
 	
 	/*
-	Function: getProperties
-	
-		set all values to draw the canvas
+		Function: getProperties
 		
-	Arguments: options
+			Set all values to draw the canvas
+			
+		Arguments: key
 	
 	*/
 	
@@ -409,7 +488,6 @@ UI.Canvas = new Class({
 			rotation	: this.props.layers[key].rotation	|| this.props.layers['default'].rotation,
 			scale		: this.props.layers[key].scale		|| this.props.layers['default'].scale,
 			composite	: this.props.layers[key].composite	|| this.props.layers['default'].composite
-			
 		};
 			
 		// we test the position
@@ -453,11 +531,11 @@ UI.Canvas = new Class({
 	},
 	
 	/*
-	Function: setFillColor
-	
-		Set the fill color, handling direction, gradient and opacity
+		Function: setColor
 		
-	Arguments: props
+			Set the fill color, handling direction, gradient and opacity
+			
+		Arguments: props
 	*/
 	
 	setColor : function(part, props) {
@@ -544,7 +622,15 @@ UI.Canvas = new Class({
 		
 		this.ctx[part + 'Style'] = color;
 	},
-	
+
+	/*
+		Function: setTransformation
+		
+			set transformation 
+			
+		Arguments: props
+	*/
+
 	setTransformation : function(props) {
 		this.ctx.translate(props.size[0]/ 2 + props.offset[0], props.size[1] / 2 + props.offset[1]);
 		//rotation
@@ -564,11 +650,11 @@ UI.Canvas = new Class({
 	},
 	
 	/*
-	Function: drawShape
-	
-		Draw the stroke and fill the shape
+		Function: drawShape
 		
-	Arguments: props
+			Draw the stroke and fill the shape
+			
+		Arguments: props
 	*/
 	
 	drawShape : function(props){
@@ -585,23 +671,23 @@ UI.Canvas = new Class({
 		
 	},
 	
-		/*
-	Function: roundedRect
-	
-		Draw a rounded rectangle
+	/*
+		Function: roundedRect
 		
-	Arguments: this.ctx, options
-	
-	Options: 
-		width : (integer) 
-		height : (integer) 
-		top : (integer)
-		left :  (integer)
-		radius : (integer/array for shema)
-		color : (string/array) composed of two elements the top and the bottom color in hexadecimal
-		opacity : (float (or array of) the opacity level in percentage. ie: 0.7  or for top and bottom opacity [0.3,1]
-		pattern : not implemented  
-		stroke : not implemented		
+			Draw a rounded rectangle
+			
+		Arguments: this.ctx, options
+		
+		Options: 
+			width : (integer) 
+			height : (integer) 
+			top : (integer)
+			left :  (integer)
+			radius : (integer/array for shema)
+			color : (string/array) composed of two elements the top and the bottom color in hexadecimal
+			opacity : (float (or array of) the opacity level in percentage. ie: 0.7  or for top and bottom opacity [0.3,1]
+			pattern : not implemented  
+			stroke : not implemented		
 	*/
 			
 	roundedRect: function(props) {
@@ -618,23 +704,23 @@ UI.Canvas = new Class({
 		this.ctx.closePath();
 	},
 
-/*
-	Function: circle
-	
-		Draw a rounded circle
+	/*
+		Function: circle
 		
-	Arguments: props
-	
-	Properties: 
-		left :  (integer)
-		top : (integer)
-		width : (integer) 
-		height : (integer) 
-		radius : (integer/array for shema)
-		color : (string/array) composed of two elements the top and the bottom color in hexadecimal
-		opacity : (float (or array of) the opacity level in percentage. ie: 0.7  or for top and bottom opacity [0.3,1]
-		pattern : not implemented  
-		stroke : not implemented		
+			Draw a rounded circle
+			
+		Arguments: props
+		
+		Properties: 
+			left :  (integer)
+			top : (integer)
+			width : (integer) 
+			height : (integer) 
+			radius : (integer/array for shema)
+			color : (string/array) composed of two elements the top and the bottom color in hexadecimal
+			opacity : (float (or array of) the opacity level in percentage. ie: 0.7  or for top and bottom opacity [0.3,1]
+			pattern : not implemented  
+			stroke : not implemented		
 	*/
 	
 	circle: function(props){
@@ -655,18 +741,18 @@ UI.Canvas = new Class({
 	},
 	
 	/*
-	Function: line
-	
-		Draw a line
+		Function: line
 		
-	Arguments: this.ctx, options
-	
-	Options: 
-		from : (array)
-		to :  (array)
-		width : (integer) 
-		color : (string)
-		opacity : (float) the opacity level in percentage. ie: 0.7
+			Draw a line
+			
+		Arguments: this.ctx, options
+		
+		Options: 
+			from : (array)
+			to :  (array)
+			width : (integer) 
+			color : (string)
+			opacity : (float) the opacity level in percentage. ie: 0.7
 	*/
 	
 	line : function(props) {
@@ -674,6 +760,7 @@ UI.Canvas = new Class({
 			color : props.color,
 			width : props.width
 		}
+		
 		delete props.color;
 		
 		this.ctx.beginPath();
@@ -687,21 +774,21 @@ UI.Canvas = new Class({
 	},
 	
 	/*
-	Function: triangle
-	
-		Draw a triangle
+		Function: triangle
 		
-	Arguments: this.ctx, options
-	
-	Options: 
-		direction : (string) predefined must be top, right, bottom or left
-		width : (integer)
-		height :  (integer)
-		left : (integer)
-		top : (integer)
-		opacity : (float) the opacity level in percentage. ie: 0.7
-		color : (string)
-		gradient : (array of strings) composed of two elements the top and the bottom color in hexadecimal
+			Draw a triangle
+			
+		Arguments: this.ctx, options
+		
+		Options: 
+			direction : (string) predefined must be top, right, bottom or left
+			width : (integer)
+			height :  (integer)
+			left : (integer)
+			top : (integer)
+			opacity : (float) the opacity level in percentage. ie: 0.7
+			color : (string)
+			gradient : (array of strings) composed of two elements the top and the bottom color in hexadecimal
 	*/
 	
 	triangle : function(props) {

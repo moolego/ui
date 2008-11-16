@@ -116,9 +116,9 @@ UI.View = new Class({
 					position	: 'relative'
 				} )
 			 .inject( this.element );
-			
+
 			if (this.options.overflow == 'hidden') {
-				this.content.setStyle('overflow','hidden');
+				this.content.setStyle('overflow','hidden');	
 			}
 			
 			if (this.options.overflow == 'scrollbar') {
@@ -163,7 +163,6 @@ UI.View = new Class({
 
 	updateSize : function() {
 		if (this.options.overflow == 'scrollbar') {
-			//console.log('update size');
 			this.scrollbar.update();
 		}
 	},
