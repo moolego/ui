@@ -40,7 +40,6 @@ Discussion:
 
 UI.View = new Class({
 	Extends					: UI.Element,
-	Implements				: [Events, Options],
 		
 	options: {
 		component			: 'view',

@@ -50,7 +50,6 @@ Example:
 
 UI.Select = new Class({
 	Extends					: UI.Control,
-	Implements				: [Events, Options],
 	
 	options : {
 		component			: 'select',

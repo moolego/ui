@@ -21,7 +21,6 @@ Example:
 
 UI.Dialog = new Class({
 	Extends		:	UI.Window,
-	Implements: [Events, Options],
 	
 	options: {
 		center				: true

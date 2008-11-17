@@ -5,7 +5,6 @@ Class: UI.Label
 
 UI.Label = new Class({
 	Extends					: UI.Element,
-	Implements				: [Events, Options],
 		
 	options: {
 		component			: 'label',

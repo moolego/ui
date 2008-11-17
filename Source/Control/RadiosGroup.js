@@ -22,7 +22,6 @@ Example:
 
 UI.RadiosGroup = new Class({
 	Extends				: UI.Control,
-	Implements			: [Events, Options],
 	
 	options				: {
 		

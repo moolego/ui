@@ -19,7 +19,6 @@ Example:
 
 UI.Button = new Class({
 	Extends				: UI.Control,
-	Implements			: [Events, Options],
 	
 	options				: {
 		component		: 'button',

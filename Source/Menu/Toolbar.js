@@ -37,7 +37,6 @@ Example:
 
 UI.Toolbar = new Class({
 	Extends				: UI.Menu,
-	Implements			: [Options, Events],
 	
 	options				: {
 		// default options	

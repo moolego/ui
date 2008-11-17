@@ -21,7 +21,6 @@ Example:
 
 UI.Bubble = new Class({
 	Extends				: UI.Element,
-	Implements			: [Events, Options],
 	
 	options				: {
 		component		: 'bubble',

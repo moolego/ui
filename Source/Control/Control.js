@@ -9,7 +9,6 @@ Class: UI.Control
 
 UI.Control = new Class({
 	Extends					: UI.Element,
-	Implements				: [Events, Options],
 		
 	options: {
 		// implement events

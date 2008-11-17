@@ -38,9 +38,7 @@ Example:
 
 
 UI.Menu = new Class({
-	
 	Extends					: UI.Element,
-	Implements				: [Events, Options],
 	
 	options: {
 		component			: 'menu',
