@@ -85,18 +85,20 @@ UI.props.AquaGraphite = {
 				/* layers properties */
 				layers				: {
 					'default'		: {
-						radius		: 11
+						radius		: 10
 					},
 					littleshadow	: {
 						offset		: ['0px', '0px', '0px','0px'],
 						color		: ['#000','#000'],
 						radius		: 11,
 						opacity		: .1,
+						radius		: 12
 					},
 					background		: {
 						offset		: ['0px', '1px', '1px','1px'],
 						color		: ['#494949','#5f5f5f'],
 						opacity		: 1,
+						radius		: 11
 					},
 					main			: {
 						color		: ['#d4d4d4','#e5e5e5']
@@ -199,8 +201,8 @@ UI.props.AquaGraphite = {
 				components : {
 					label : {
 						styles : {
-							padding		: '3px 16px 3px',
-							lineHeight	: '19px',
+							padding		: '2px 16px 2px',
+							lineHeight	: '18px',
 							margin		: '0'
 						}
 					}
@@ -344,9 +346,9 @@ UI.props.AquaGraphite = {
 						position	: 'absolute',
 						shape		: 'line',
 						width		: 1.5,
-						color		: '#000',
+						color		: '#414755',
 						offset		: [3.5,4.5],
-						opacity		: .8,
+						opacity		: 1,
 						size		: [7,7],
 						rotation	: 45
 					},
@@ -354,9 +356,9 @@ UI.props.AquaGraphite = {
 						position	: 'absolute',
 						shape		: 'lineUp',
 						width		: 1.5,
-						color		: '#000',
+						color		: '#414755',
 						offset		: [3.5,4.5],
-						opacity		: .8,
+						opacity		: 1,
 						size		: [7,7],
 						rotation	: 45
 					}
@@ -1611,7 +1613,7 @@ UI.props.AquaGraphite = {
 					controls		: {
 						styles		: {
 							'float'	: 'left',
-							padding	: '1px 4px 1px',
+							padding	: '1px 3px 1px',
 							margin	: '1px 0px 0px 1px',
 							height	: 18
 						}
@@ -1642,7 +1644,7 @@ UI.props.AquaGraphite = {
 					},
 					view			: {
 						type		: 'defaultWindow',
-						overflow	: 'hidden',
+						overflow	: 'scrollbar',
 						styles		: {
 							position	: 'absolute',
 							top		: '1px',

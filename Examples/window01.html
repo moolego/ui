@@ -217,45 +217,37 @@
 						title		: 'some controls',
 						width		: 300,
 						height		: 300,
-						overflow	: 'hidden'
+						overflow	: 'scrollbar'
 						
 					});
 			
+					
 					new UI.Button({
-						width			: 270,
-						label			: 'Bow',
-						onClick			: function(){
-							new UI.Window({
-							});
-						},
-						labelStyles		: {
-							padding		: '20px 30px',
-							fontWeight : 'normal'
-						},
-						props	: {
-							over		: {
-								components : {
-									label	: {
-										styles : {
-											padding		: '20px',
-											fontWeight : 'bold'
-										}
-									}
-								}
-							},
-							down		: {
-								components : {
-									label	: {
-										styles : {
-											padding		: '20px',
-											fontWeight : 'bold'
-										}
-									}
-								}
-							}
-						},
+						label	: 'Button',
+						styles	: {
+							margin	: 10,
+							fontFamily	: 'arial, helvetica, sans-serif',
+							fontSize	: '13px'
+						}
+					}).inject(window.content);
+					
+					new UI.Button({
+						type			: 'recessed',
+						label			: 'Recessed Button',
 						styles			: {
-							margin		: 10
+							margin	: 10,
+							fontFamily	: 'arial, helvetica, sans-serif',
+							fontSize	: '13px'
+						}
+					}).inject(window.content);
+					
+					new UI.Button({
+						type			: 'roundtextured',
+						label			: 'Round Textured',
+						styles			: {
+							margin	: 10,
+							fontFamily	: 'arial, helvetica, sans-serif',
+							fontSize	: '13px'
 						}
 					}).inject(window.content);
 					

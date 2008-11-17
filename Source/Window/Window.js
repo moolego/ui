@@ -287,16 +287,18 @@ UI.Window = new Class({
 			this.foot = new Element('div', this.props.components.foot)
 			.inject(this.element);
 			
-			this.dragHandlers.push(this.foot);
+		
 			
 			this.foot.disableSelect();
 			
 			if (this.options.resizable) {
 				this.buildResizeHandler();	
 			}
-			
+				
 			this.status = new Element('div',this.props.components.status)
 			.inject(this.foot);
+			
+			this.dragHandlers.push(this.status);
 			
 			this.setStatus();
 		}
@@ -312,7 +314,9 @@ UI.Window = new Class({
 		this.resize = new UI.Element({
 			component		: 'element',
 			type			: 'resizeHandler'
-		}).addEvent('mousedown',function(e){ new Event(e).stop();	})
+		})
+		.addEvent('mousedown', function(e) { new Event(e).stop() })
+		
 		.inject(this.foot);
 	},
 
@@ -543,8 +547,6 @@ UI.Window = new Class({
 	*/	
 	
 	inject : function(container){
-		// this.updateSize();
-		
 		this.parent(container);
 		this.canvas.canvas.addEvent('click', function(e){
 			this.controller.propagateUnderShadow(e)}.bind(this)
