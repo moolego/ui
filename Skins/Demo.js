@@ -240,7 +240,7 @@ UI.props.demo = {
 							fontWeight: 'bold',
 							fontFamily: 'Arial, Helvetica',
 							opacity: '.7', 
-							color: '#fff',
+							color: '#fff'
 						}
 					}
 				},
@@ -284,7 +284,7 @@ UI.props.demo = {
 							fontWeight: 'bold',
 							fontFamily: 'Arial, Helvetica',
 							opacity: '.7', 
-							color: '#fff',
+							color: '#fff'
 						}
 					}
 				}
@@ -307,27 +307,31 @@ UI.props.demo = {
 		tube: {
 			'default'				: {
 				layers				: {
-					reorder			: ['front','reflect'],
-					
+					reorder			: ['front', 'light', 'reflect'],
 					
 					front			: {
 						position	: 'absolute',
-						offset		: [0, '0px', '0px'],
-						color		: ['#fe3333','#c32222'],
-					 	opacity		: 1,
-						radius		: [8,8,8,8]
+						offset		: '0px',
+						color		: '#fe3333',
+						radius		: 8
+					},
+					light			: {
+						position	: 'absolute',
+						offset		: [2, 2, '40%'],
+						gradient	: {
+							color	: ['#FFF', '#fe3333', '#fe3333'],
+							angle	: 110
+						},
+						radius		: [8,8,0,0]
 					},
 					reflect			: {
-						position		: 'absolute',
-						offset		: [2, 2, '40%', 'auto'],
-						size		: ['50%', 'auto'],
+						position	: 'absolute',
+						offset		: 0,
 						gradient	: {
-							color		: ['#FFF', '#FFF'],
-							opacity		: [.9, 0],
-							stop		: [0, 1],
-							angle		: 90
+							color	: ['#fe3333','#c32222'],
+							opacity	: [0, 1]
 						},
-						radius		: [0,8,0,0]
+						radius		: 8
 					}
 				}
 			},

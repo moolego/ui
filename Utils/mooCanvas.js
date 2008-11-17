@@ -403,9 +403,8 @@ CanvasRenderingContext2D.implement({
 					'joinstyle=', this.lineJoin,
 					'color=', color.color,
 					'opacity="', color.opacity, '" />']];
-
 		this.element.insertAdjacentHTML('beforeEnd', [
-			'<v:shape path="', this.path.join(''), '" coordorigin="0 0" coordsize="' + size + ' ' + size + '" ', a[0], 'false">',
+			'<v:shape path="', this.path.join(''), '" coordorigin="0 0" coordsize="' + 100 + ' ' + 100 + '" ', a[0], 'false">',
 				a[1].join(' '),
 			'</v:shape>'
 		].join(''));
@@ -459,19 +458,31 @@ CanvasRenderingContext2D.implement({
 		* in gradients stops are not implict. 0 0.5 (stop) 1, 1 will break if not set, normally you'd expect 0.5 to propagate to 1.
 	*/
 	processColorObject: function(obj){
+		var correction = Math.abs(obj.angle * Math.sin(obj.angle * 2) * Math.abs(1 - this.ratio));
+		
+		if (this.ratio > 1) correction *= -0.5;
+		if (this.angle >= Math.PI/2) correction *= -1;
+		
+		obj.angle = (3 * Math.PI / 2 - this.angle + correction);
+
 		var ret = '';
 		if(obj.addColorStop){
 			var oc0 = obj.col0, oc1 = obj.col1, stops = '';
-			if(obj.stops) for (var i = 0, j = obj.stops.length; i < j; i++) stops += (100 * obj.stops[i][0]).round() + '% ' + obj.stops[i][1];
+			if (obj.stops) {
+				for (var i = 0, j = obj.stops.length; i < j; i++) {
+					stops += (100 * obj.stops[i][0]).round() + '% ' + obj.stops[i][1] + ', ';
+				}
+				stops = stops.substr(0, stops.length - 2);
+			}
 			ret += ((obj.r0) ?
 				'type=gradientradial focusposition="0.2,0.2" focussize="0.2,0.2"'
 			:
-				'type=gradient method=linear focus=0 angle=' + 180 * (1 + obj.angle / Math.PI) + ' '
+				'type=gradient method=sigma angle=' + 180 * obj.angle / Math.PI + ' '
 			) + [
 				'color="' + oc0.color,
-				'opacity="' + oc0.opacity * 100 + '%',
+				'opacity="' + oc0.opacity,
 				'color2="' + oc1.color,
-				'o:opacity2="' + oc1.opacity * 100 + '%',
+				'o:opacity2="' + oc1.opacity,
 				'colors="' + stops
 			].join('" ');
 		}
@@ -953,7 +964,9 @@ Arguments:
 var CanvasGradient = new Class({
 
 	initialize: function(x0, y0, x1, y1, ctx){
-		this.angle = ((y1 - y0) / ((x1 - x0).pow(2) + (y1 - y0).pow(2)).sqrt()).acos();
+		//this.angle = ((y1 - y0) / ((x1 - x0).pow(2) + (y1 - y0).pow(2)).sqrt()).acos();
+		this.angle = ((y1-y0) / (x1-x0)).atan();
+		//alert(this.angle);
 		this.ctx = ctx;
 	},
 

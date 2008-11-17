@@ -373,7 +373,7 @@ UI.props.AquaGraphite = {
 					
 					'default'		: {
 						position	: 'absolute',
-						shape		: 'circle',
+						shape		: 'circle'
 					},
 					main			: {
 						size		: [13, 13],
