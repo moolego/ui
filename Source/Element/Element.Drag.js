@@ -4,6 +4,11 @@ UI.Element.implement({
 			Add draggable capabilities for the element.
 	*/
 	enableDrag :function() {
+		
+		if (this.dragHandlers.length == 0) {
+			this.dragHandlers = null;
+		}
+		
 		this.dragHandler = this.element.makeDraggable({
 			handle 		: this.dragHandlers,
 			limit 		: { x: this.options.dragLimitX, y: this.options.dragLimitY },
