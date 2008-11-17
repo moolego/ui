@@ -271,7 +271,7 @@ UI.Element = new Class({
 		
 		this.element.addEvents({
 			click 		: this.fireEvent.bind(this, 'click'),
-			mousedown 	: this.fireEvent.bind(this, 'mousedown'),
+			//mousedown 	: this.fireEvent.bind(this, 'mousedown'),
 			mouseover 	: this.fireEvent.bind(this, 'mouseover'),
 			mouseenter 	: this.fireEvent.bind(this, 'mouseenter'),
 			mouseOut 	: this.fireEvent.bind(this, 'mouseOut'),
