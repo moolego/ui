@@ -25,7 +25,7 @@ UI.Controller = new Class({
 		this.i = 0;
 	},
 
-/*
+	/*
 	  Function: register
 	  
 	   	Add passing element to the elements list
