@@ -142,8 +142,8 @@ UI.props.AquaGraphite = {
 				components : {
 					label : {
 						styles : {
-							padding				: '2px 16px 2px',
-							fontSize			: '12px'
+							padding			: '2px 16px 2px',
+							fontSize		: '12px'
 						}
 					}
 				},
@@ -324,8 +324,8 @@ UI.props.AquaGraphite = {
 						size				: 3,
 						offset				: [1.5, 6.5],
 						gradient			: {
-							color				: ['#fff','#fff'],
-							opacity				: [1, .5]
+							color			: ['#fff','#fff'],
+							opacity			: [1, .5]
 						}	
 					},
 					cache : {
@@ -680,17 +680,17 @@ UI.props.AquaGraphite = {
 				components : {
 					input : {
 						styles : {
-							padding					: '4px 4px 3px',
-							border					: 'none',
+							padding			: '4px 4px 3px',
+							border			: 'none',
 
-							zIndex					: 1,
-							position				: 'absolute',
-							top						: 0,
-							left					: 0,
-							background				: 'transparent',
-							resize					: 'none',
-							whiteSpace				:'nowrap',
-							border					: 'none'
+							zIndex			: 1,
+							position		: 'absolute',
+							top				: 0,
+							left			: 0,
+							background		: 'transparent',
+							resize			: 'none',
+							whiteSpace		:'nowrap',
+							border			: 'none'
 						}
 					}
 				},
@@ -740,15 +740,15 @@ UI.props.AquaGraphite = {
 				components : {
 					input : {
 						styles : {
-							padding					: '4px 10px',
-							zIndex					: 1,
-							position				: 'absolute',
-							top						: 0,
-							left					: 0,
-							background				: 'transparent',
-							resize					: 'none',
-							whiteSpace				:'nowrap',
-							border					: 'none'
+							padding			: '4px 10px',
+							zIndex			: 1,
+							position		: 'absolute',
+							top				: 0,
+							left			: 0,
+							background		: 'transparent',
+							resize			: 'none',
+							whiteSpace		:'nowrap',
+							border			: 'none'
 						}
 					}
 				},
@@ -1645,7 +1645,7 @@ UI.props.AquaGraphite = {
 							position		: 'absolute',
 							top				: '51px',
 							left			: '1px',
-							overflow		: 'hidden',
+							overflow		: 'hidden'
 						}
 					},
 					foot : {
@@ -2051,7 +2051,7 @@ UI.props.AquaGraphite = {
 					}
 				}
 			}
-		},
+		}
 	},
 	bubble : {
 		'default' : {
