@@ -13,7 +13,6 @@ Credits:
 
 UI.Scrollbar = new Class({
 	Extends				: UI.Element,
-	Implements			: [Events, Options],
 
 	options: {
 		component		: 'scrollbar',

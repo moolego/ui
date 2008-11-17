@@ -24,7 +24,6 @@ Example:
 
 UI.Slider = new Class({
 	Extends				: UI.Element,
-	Implements			: [Events, Options],
 	
 	options				: {
 		

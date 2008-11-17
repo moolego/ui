@@ -41,7 +41,6 @@ Example:
 
 UI.Window = new Class({
 	Extends						: UI.Element,
-	Implements					: [Events, Options],
 	options						: {
 		component				: 'window',
 		

@@ -271,7 +271,7 @@ UI.Element = new Class({
 		
 		this.element.addEvents({
 			click 		: this.fireEvent.bind(this, 'click'),
-			//mousedown 	: this.fireEvent.bind(this, 'mousedown'),
+			mousedown 	: this.fireEvent.bind(this, 'mousedown'),
 			mouseover 	: this.fireEvent.bind(this, 'mouseover'),
 			mouseenter 	: this.fireEvent.bind(this, 'mouseenter'),
 			mouseOut 	: this.fireEvent.bind(this, 'mouseOut'),
@@ -383,27 +383,6 @@ UI.Element.implement({
 	
 	addClass: function(className) {
 		this.element.addClass(className);
-		
-		return this;	
-	},
-	
-	/*
-	 * Function: addEvent
-	 * 	implement addEvent from de wrapper
-	 */
-	
-	addEvent: function(event, action) {
-		this.element.addEvent(event, action);
-		return this;	
-	},
-	
-	/*
-	 * Function: addEvents
-	 * 	implement addEvents from de wrapper
-	 */
-	
-	addEvents: function(events) {
-		this.element.addEvents(events);
 		
 		return this;	
 	},

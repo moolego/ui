@@ -23,7 +23,6 @@ Example:
 
 UI.Checkbox = new Class({
 	Extends				: UI.Control,
-	Implements			: [Events, Options],
 	
 	options				: {
 		// default options

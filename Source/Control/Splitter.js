@@ -10,7 +10,6 @@ Arguments:
 */
 
 UI.Splitter = new Class({
-	Implements				: [Events, Options],
 	
 	options : {
 		className			: 'ui-layout-splitter',

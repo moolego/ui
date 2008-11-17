@@ -52,7 +52,6 @@ Example:
 
 UI.Context = new Class({
 	Extends : UI.Menu,
-	Implements: [Events, Options],
 	
 	options: {
 		className		: 'ui-menu-context',
