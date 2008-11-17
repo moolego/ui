@@ -52,7 +52,7 @@ UI.Bubble = new Class({
 		this.control = this.element;
 		//we create a span for text
 		if(this.options.label) {
-			this.textLabel = new UI.Label({
+			this.label = new UI.Label({
 				html : this.options.label,
 				styles : this.props.components.label.styles
 			}).inject(this.element);
@@ -148,9 +148,9 @@ UI.Bubble = new Class({
 	*/
 	
 	setSize : function(width,height){
-		if (this.textLabel) {
-			this.options.width = width || this.options.width || this.props.width || this.textLabel.getSize().x;
-			this.options.height = height || this.options.height || this.props.height || this.textLabel.getSize().y;
+		if (this.label) {
+			this.options.width = width || this.options.width || this.props.width || this.label.getSize().x;
+			this.options.height = height || this.options.height || this.props.height || this.label.getSize().y;
 		};
 		
 		this.parent();

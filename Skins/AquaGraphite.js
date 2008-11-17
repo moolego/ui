@@ -13,9 +13,11 @@ Arguments:
 UI.props.AquaGraphite = {
 	'default' : {
 		/* css properties */
-		styles : {
+		styles 	: { 
+			fontSize	: '12px'
 		},
-
+		fx		: {},
+		
 		/* layers properties */
 		layers				: {
 			'default'		: {
@@ -90,7 +92,7 @@ UI.props.AquaGraphite = {
 						color		: ['#000','#000'],
 						radius		: 11,
 						opacity		: .1,
-						radius		: 11
+						radius		: 12
 					},
 					background		: {
 						offset		: ['0px', '1px', '1px','1px'],
@@ -199,7 +201,9 @@ UI.props.AquaGraphite = {
 				components : {
 					label : {
 						styles : {
-							padding		: '4px 16px 4px'
+							padding		: '2px 16px 2px',
+							lineHeight	: '18px',
+							margin		: '0'
 						}
 					}
 				},
@@ -286,7 +290,7 @@ UI.props.AquaGraphite = {
 		},
 		window : {
 			'default' : {
-				layers				: {
+				layers : {
 					
 					reorder			: ['emboss', 'background', 'main', 'reflect', 'cache'],
 					
@@ -334,7 +338,33 @@ UI.props.AquaGraphite = {
 						opacity		: 1
 					}
 				}
+			},
+			over : {
+				layers : {
+					reorder			: ['emboss', 'background', 'main', 'reflect', 'cache','line','line2'],
+					line			: {
+						position	: 'absolute',
+						shape		: 'line',
+						width		: 1.5,
+						color		: '#414755',
+						offset		: [3.5,4.5],
+						opacity		: 1,
+						size		: [7,7],
+						rotation	: 45
+					},
+					line2			: {
+						position	: 'absolute',
+						shape		: 'lineUp',
+						width		: 1.5,
+						color		: '#414755',
+						offset		: [3.5,4.5],
+						opacity		: 1,
+						size		: [7,7],
+						rotation	: 45
+					}
+				}
 			}
+			
 		},
 		transparent : {
 			'default' : {
@@ -495,6 +525,152 @@ UI.props.AquaGraphite = {
 					}
 				}
 			}
+		},
+		tab : {
+			'default' : {
+				
+				/* css properties */
+				
+				components : {
+					label : {
+						styles : {
+							padding				: '4px 8px 6px 8px',
+							position			: 'relative',
+							'float'				: 'left',
+							margin				: '0',
+							textTransform		: 'uppercase',
+							fontWeight			: 'bold',
+							fontSize			: '1em'
+						}
+					}
+				},
+				
+				/* shortcuts */
+				shortcuts			: {
+					labelStyles		: 'components.label.styles'
+				},
+				
+				labelStyles				: {
+					
+				},
+				
+				/* layers properties */
+				layers				: {
+					
+					reorder			: ['background','main'],
+					
+					'default'		: {
+						radius		: 0
+					},
+
+					background		: {
+						offset		: '0px',
+						color		: ['#6c6c6c','#6c6c6c'],
+						radius		: 0
+					},
+					main			: {
+						offset		: [0, 1, 0, 0],
+						radius		: 0,
+						color		: ['#9a9a9a','#828282']
+					}
+				}
+			},
+			'over' : {
+				layers				: {
+					main			: {
+						color		: ['#5b697e','#a9b5c2']
+					}
+				}
+			},
+			'down' : {
+				layers				: {
+					main			: {
+						color		: ['#eaeaea','#dedede']
+						
+					}
+				}
+			},
+			'active' : {
+				layers				: {
+					main			: {
+						color		: ['#eaeaea','#dedede']
+						
+					}
+				}
+			}
+		},
+		tabselected : {
+			'default' : {
+				
+				/* css properties */
+				
+				components : {
+					label : {
+						styles : {
+							padding				: '4px 8px 6px 8px',
+							position			: 'relative',
+							'float'				: 'left',
+							margin				: '0',
+							textTransform		: 'uppercase',
+							fontWeight			: 'bold',
+							fontSize			: '1em'
+						}
+					}
+				},
+				
+				/* shortcuts */
+				shortcuts			: {
+					labelStyles		: 'components.label.styles'
+				},
+				
+				labelStyles				: {
+					
+				},
+				
+				/* layers properties */
+				layers				: {
+					
+					reorder			: ['background','main'],
+					
+					'default'		: {
+						radius		: 0
+					},
+
+					background		: {
+						offset		: '0px',
+						color		: ['#6c6c6c','#6c6c6c'],
+						radius		: 0
+					},
+					main			: {
+						offset		: [0, 1, 0, 0],
+						radius		: 0,
+						color		: ['#eaeaea','#dedede']
+					}
+				}
+			},
+			'over' : {
+				layers				: {
+					main			: {
+						color		: ['#5b697e','#a9b5c2']
+					}
+				}
+			},
+			'down' : {
+				layers				: {
+					main			: {
+						color		: ['#eaeaea','#dedede']
+						
+					}
+				}
+			},
+			'selected' : {
+				layers				: {
+					main			: {
+						color		: ['#eaeaea','#dedede']
+						
+					}
+				}
+			}
 		}
 	},
 	
@@ -587,9 +763,6 @@ UI.props.AquaGraphite = {
                    
 				/* layers properties */
 				layers				: {
-					
-					
-					
 					'default'		: {
 						radius		: 12,
 						position	: 'abolute'
@@ -1018,18 +1191,44 @@ UI.props.AquaGraphite = {
 	
 	label 		: {
 		'default' : {
-			'default' : {}
+			'default' : {
+				components			: {
+					emboss			: {
+						styles		: {
+							position: 'absolute',
+							margin	: '0',
+							color	: '#fff',
+							top		: '1px',
+							opacity	: '1',
+							zIndex	: '-2'					
+						}
+					}
+				}
+			}
 		},
 		
 		windowTitle : {
 			'default' : {
+				components			: {
+					emboss			: {
+						styles		: {
+							position: 'absolute',
+							margin	: '0',
+							color	: '#fff',
+							top		: '1px',
+							opacity	: '1',
+							zIndex	: '-2'					
+						}
+					}
+				},
 				/* css properties */
 				styles			: {
 					overflow		: 'hidden',
 					cursor			: 'default',
 					color			: '#000000',
 					display			: 'block',
-					padding			: '0px 2px 0px 2px',
+					margin			: '1px 0 1px 0',
+					padding			: '0',
 					textAlign		: 'center',
 					textTransform	: 'capitalize',
 					fontWeight		: 'normal',
@@ -1039,6 +1238,7 @@ UI.props.AquaGraphite = {
 				}
 			}
 		},
+		
 		transparentTitle : {
 			'default' : {
 				/* css properties */
@@ -1058,14 +1258,352 @@ UI.props.AquaGraphite = {
 			}
 		}
 	},
+
+	
+	menu : {
+		'default' : {
+			'default' : {
+				/* sortcuts */
+				shortcuts			: {
+					itemStyles		: 'components.menuItem.styles'
+				},
+				
+				/* components properties */
+				components			: {
+					wrapper			: {
+						styles		: {
+							padding	: '6px 1px'
+						}
+					},
+					menuItem		: {
+						styles		: {
+							color		: '#000',
+							padding		: '4px 40px 5px 16px',
+							whiteSpace	: 'nowrap',
+							display		: 'block'
+						}
+					},
+					separator		: {
+						styles		: {
+							paddingBottom 	: '5px',
+							fontSize		: 1,
+							borderBottom 	: '1px solid #e4e4e4',
+							margin 			: '0 1px 5px',
+							display			: 'block',
+							height			: 0
+						}
+					}
+				},
+				
+				/* css properties */
+				styles				: {},
+
+				/* effects settings */
+				hideFxDuration		: 100,
+				showDelay			: 100,
+				
+				/* layers properties */
+				layers				: {
+					'default'		: {
+						radius		: 4
+					},
+					shadow			: {
+						size		: 32,
+						offsetY		: 10
+					},
+					background		: {
+						color		: '#000',
+						offset		: 0,
+						opacity		: .27
+					},
+					main			: {}
+				}
+			},
+			over : {
+				/* components properties */
+				components			: {
+					menuItem		: {
+						styles		: {
+							color	: '#ddd'
+						}
+					}
+				}
+			}
+		},
+		context: {
+			'default': {
+				layers				: {
+					'default'		: {
+						radius		: 4
+					}
+				}
+			}
+		}
+	},
+		
+	toolbar : {
+		'default' : {
+			'default' : {
+				/* sortcuts */
+				shortcuts			: {
+					itemStyles		: 'components.menuItem.styles'
+				},
+				
+				/* components properties */
+				components			: {
+					wrapper			: {
+						styles		: {
+							padding	: '0 0 0 10px'
+						}
+					},
+					menuItem		: {
+						styles		: {
+							padding		: '30px 10px 5px',
+							lineHeight	: '1em',
+							whiteSpace	: 'nowrap'
+						}
+					},
+					separator		: {
+						styles		: {
+							display: 'none'
+						}
+					}
+				},
+				
+				styles				: {
+					padding			: '0 0 0 0'
+				},
+				
+				
+				/* others properties */
+				height				: 51,
+				presentation		: 'both',
+				hideFxDuration		: 200,
+				showDelay			: 0,
+				delay				: 0,
+				
+				/* layers properties */
+				layers				: {
+					'default'		: {
+						position	: 'absolute',
+						color		: ['#C4C4C4','#989898'],
+						offset		: [0,0,1]
+					},
+					background		: {
+						position	: 'relative',
+						color		: ['#FFF', '#000'],
+						offset		: 0
+					},
+					main			: {}
+				}
+			}
+		},
+		window : {
+			'default' : {
+				height				: 48,
+				layers				: {
+					reorder			: []
+				},
+				itemPadding			: 0,
+				presentation		: 'icon',
+				padding				: '5px 0 4px 8px'
+			},
+			layers 					: {
+				reorder				: []
+			}
+		}
+	},
+
+
+	view : {
+		'default' : {
+			'default' : {}
+		},
+		transparent : {
+			'default' : {
+				styles				: {
+					color			: 'transparent'
+				}
+			}
+		},
+		login : {
+			'default' : {}
+		},
+		small : {
+			'default': {
+				styles				: {
+					color			: 'transparent'
+				},
+				iconSize: 32
+			}
+		},
+		defaultWindow	: {
+			'default' : {
+				styles			: {
+					position		: 'relative',
+					zIndex			: 1,
+					backgroundColor : '#fff'
+				}
+			}
+		},
+		tab : {
+			'default' : {
+				styles : {
+					position		: 'absolute'
+				}	
+				
+			}
+		}
+	},
+	
+	tabview : {
+		'default' : {
+			'default' : {
+				styles : {
+					position		: 'absolute',
+					overflow		: 'hidden',
+					left			: '1px',
+					top				: '1px'
+				},
+				
+				components 			: {
+					tabbar : { 
+						component 	: 'element',
+						type		: 'tabbar'
+					}
+				}
+			}
+		}
+	},
+
+	splitview: {
+		shared: {
+			shared: {
+								
+			}
+		},
+		'default': {
+			active: {}
+		},
+		'app': {
+			active: {
+				'float'				: 'left',
+				overflow			: 'hidden'
+			},
+			main: {
+				'float'				: 'left',
+				overflow			: 'hidden'
+			},
+			side: {
+				'float'				: 'left',
+				overflow			: 'hidden',
+				backgroundColor		: '#d6dde5',
+				borderRight			: '1px solid #8b8b8b'
+			},
+			splitter: {
+				width:'7px',
+				opacity:'.3'
+			}
+		}
+	},	
+
+	scrollbar						: {
+		track						: {
+			'default'					: {
+				styles                                          : {
+					'float'                                 : 'right',
+					height                                  : '100%',
+					position                                : 'relative',
+					zIndex                                  : '10000'
+				},
+				layers				: {
+					reorder			: ['back', 'main', 'side'],
+					'default'		: {
+						position	: 'absolute'
+					},
+					back			: {
+						offset		: [0,0,0,0],
+						color		: '#fff'
+					},
+					main			: {
+						offset		: [0,'40%',0,0],
+						
+						gradient	: {
+							color	: ['#c5c5c5','#fcfcfc'],
+							angle	: 0
+						}
+					},
+					side			: {
+						offset		: [0,0,0,'80%'],
+						gradient	: {
+							angle	: 0,
+							color	: ['#fcfcfc','#efefef']
+						}
+					}
+				}
+			}
+		},
+		thumb						: {
+			'default'				: {
+				styles 				: {
+					position		: 'relative',
+					margin			: '5px 0'
+				},
+				layers				: {
+					'default'		: {
+						direction	: 'vertical'
+					},
+					emboss			: {
+						offset		: [1,0,1,0],
+						color		: '#000',
+						radius		: 9,
+						opacity		: .3
+					},
+					main			: {
+						gradient	: {
+							color	: ['#091d38','#5c5c5c'],
+							angle	: 0
+						},
+						radius		: 7
+					},
+					light			: {
+						gradient	: {
+							color	: ['#fff','#fff'],
+							opacity	: [.1,.9],
+							angle	: 0
+						},
+						radius		: 6
+					},
+					reflect			: {
+						gradient	: {
+							color	: ['#fff','#fff'],
+							opacity	: [.8,.5],
+							angle	: 0
+						},
+						offset		: [4,'65%',3,0],
+						radius		: [3,2,2,3]
+					}
+				}
+			}
+		}
+	},
 	
 	window : {
 		'default' : {
 			'default' : {
+				fx : {
+						adaptLocation	: {
+						'duration'		: 1000,
+						'transition'	: Fx.Transitions.Elastic.easeOut,
+						'wait'			: true
+					}
+				},	
 				/* components */
 				components			: {
 					head			: {
 						styles 		: {
+							top		: '1px',
+							left	: '1px',
 							position: 'relative',
 							overflow: 'hidden',
 							width	: '100%',
@@ -1075,9 +1613,9 @@ UI.props.AquaGraphite = {
 					controls		: {
 						styles		: {
 							'float'	: 'left',
-							padding: '2px 4px',
-							margin:0,
-							height:18
+							padding	: '1px 3px 1px',
+							margin	: '1px 0px 0px 1px',
+							height	: 18
 						}
 					},
 					control			: {
@@ -1101,15 +1639,24 @@ UI.props.AquaGraphite = {
 						}
 					},
 					title			: {
-						type		: 'windowTitle' 
+						type		: 'windowTitle',
+						emboss		: true
 					},
 					view			: {
-						type		: 'defaultWindow'
+						type		: 'defaultWindow',
+						overflow	: 'scrollbar',
+						styles		: {
+							position	: 'absolute',
+							top		: '1px',
+							left	: '1px',
+							overflow	: 'hidden',
+						}
 					},
 					foot			: {
 						styles : {
+							
 							zIndex:10,
-							position		: 'relative',
+							position		: 'absolute',
 						    right			: '0',
 						   	width			: '100%'
 						}  
@@ -1134,8 +1681,6 @@ UI.props.AquaGraphite = {
 						styles : {
 							backgroundColor: '#fff',
 							opacity:'.5',
-							top:0,
-							left:0,
 						    position: 'absolute',
 						    height: '100%',
 						    width: '100%',
@@ -1143,7 +1688,8 @@ UI.props.AquaGraphite = {
 						}
 					}
 				},
-				
+
+		
 				borderSize			: 1,
 				
 				/* layers properties */
@@ -1317,318 +1863,69 @@ UI.props.AquaGraphite = {
 		}
 	},
 	
-	/*
-	panel : {
-		'default' : {
-			'default' : {
 
-				titleFontColor		: '#000000',
-				titleFontFamily		: 'arial, helvetica, verdana ,sans-serif',
-				titlePadding		: '0px 70px 0px 2px',
-				titleTextAlign		: 'center',
-				titleTextTransform	: 'capitalize',
-				titleFontWeight		: 'normal',
-				titleOpacity		: '1',
-				titleFontSize		: '10px',
-				titleLineHeight		: '15px',
-				titleHeight			: '12px',
-				
-				borderSize			: 1,
-				shadowSize			: 32,
-				shadowOffsetX		: 0, 
-				shadowOffsetY		: 10, 
-
-				
-
-				defaultPosition		: 'relative',
-				defaultShape		: 'roundedRect',
-				defaultOffset		: 1,
-				defaultColor		: '#FFFFFF',
-				defaultOpacity		: 1,
-				defaultRadius		: 0,
-				
-				layers				: ['background', 'underlay', 'head', 'footback', 'foot'],
-				
-				backgroundOffset	: 0,
-				backgroundColor		: '#000',
-				backgroundOpacity	: .27,
-				backgroundRadius	: 0,
-				
-				underlayColor		: ['#dcdcdc','#404040'],
-				underlayOffset		: [1, 1, 'auto'],
-				underlaySize		: ['auto', 20],
-				underlayRadius		: 0,
-				
-				headColor			: ['#C4C4C4','#989898'], 
-				headOffset			: [1, 0],
-				headRadius			: 0,
-			
-				footbackPosition	: 'absolute',
-				footbackSize		: ['auto', 21],
-				footbackColor		: ['#fff','#404040'],
-				footbackOffset		: ['auto', 1, 2],
-				footbackRadius		: 0,
-				
-				
-				footPosition		: 'absolute',
-				footSize			: ['auto', 21],
-				footColor			: ['#C2C2C2','#989898'],
-				footOffset			: ['auto', 1, 1],
-				footRadius			: 0,
-				
-				
-
-				controlType			: 'smallRound',
-				controlSize			: [10,10],
-				controlPadding		: '0px 2px 0px 5px'
-			},
-			inactive	: {
-				shadowSize			: 32,
-				shadowOffsetX		: 0, 
-				shadowOffsetY		: 8, 
-				
-				backgroundOpacity	: 0.17,
-				headColor			: ['#e8e8e8','#d0d0d0'],
-				footColor			: ['#e8e8e8','#d0d0d0'],
-				underlayColor		: ['#f1f1f1','#878787'],
-			},
-			minimized				: {
-				headColor			: ['#CACACA','#CFCFCF'],
-				footColor			: ['#CACACA','#CFCFCF']
-			}
-		},
-		transparent : {
-			'default' : {
-				
-			},
-			minimized : {
-				headColor			: ['#CACACA','#989898'],
-				footColor			: ['#C2C2C2','#989898']
-			},
-			active : { }
-		}
-	},
-	*/
-	
-	view : {
-		'default' : {
-			'default' : {}
-		},
-		transparent : {
-			'default' : {
-				styles				: {
-					color			: 'transparent'
-				}
-			}
-		},
-		login : {
-			'default' : {}
-		},
-		small : {
-			'default': {
-				styles				: {
-					color			: 'transparent'
-				},
-				iconSize: 32
-			}
-		},
-		defaultWindow	: {
-			'default' : {
-				styles			: {
-					position		: 'relative',
-					zIndex			: 1,
-					backgroundColor : '#fff'
-				}
-			}
-		}
-	},
-	menu : {
-		'default' : {
-			'default' : {
-				/* sortcuts */
-				shortcuts			: {
-					itemStyles		: 'components.menuItem.styles'
-				},
-				
-				/* components properties */
-				components			: {
-					wrapper			: {
-						styles		: {
-							padding	: '6px 1px'
-						}
-					},
-					menuItem		: {
-						styles		: {
-							color		: '#000',
-							padding		: '4px 40px 5px 16px',
-							whiteSpace	: 'nowrap',
-							display		: 'block'
-						}
-					},
-					separator		: {
-						styles		: {
-							paddingBottom 	: '5px',
-							fontSize		: 1,
-							borderBottom 	: '1px solid #e4e4e4',
-							margin 			: '0 1px 5px',
-							display			: 'block',
-							height			: 0
-						}
-					}
-				},
-				
-				/* css properties */
-				styles				: {},
-
-				/* effects settings */
-				hideFxDuration		: 100,
-				showDelay			: 100,
-				
-				/* layers properties */
-				layers				: {
-					'default'		: {
-						radius		: 4
-					},
-					shadow			: {
-						size		: 32,
-						offsetY		: 10
-					},
-					background		: {
-						color		: '#000',
-						offset		: 0,
-						opacity		: .27
-					},
-					main			: {}
-				}
-			},
-			over : {
-				/* components properties */
-				components			: {
-					menuItem		: {
-						styles		: {
-							color	: '#ddd'
-						}
-					}
-				}
-			}
-		},
-		context: {
-			'default': {
-				layers				: {
-					'default'		: {
-						radius		: 4
-					}
-				}
-			}
-		}
-	},
-		
-	toolbar : {
-		'default' : {
-			'default' : {
-				/* sortcuts */
-				shortcuts			: {
-					itemStyles		: 'components.menuItem.styles'
-				},
-				
-				/* components properties */
-				components			: {
-					wrapper			: {
-						styles		: {
-							padding	: '0 0 0 10px'
-						}
-					},
-					menuItem		: {
-						styles		: {
-							padding		: '30px 10px 5px',
-							lineHeight	: '1em',
-							whiteSpace	: 'nowrap'
-						}
-					},
-					separator		: {
-						styles		: {
-							display: 'none'
-						}
-					}
-				},
-				
-				styles				: {
-					padding			: '0 0 0 0'
-				},
-				
-				
-				/* others properties */
-				height				: 51,
-				presentation		: 'both',
-				hideFxDuration		: 200,
-				showDelay			: 0,
-				delay				: 0,
-				
-				/* layers properties */
-				layers				: {
-					'default'		: {
-						position	: 'absolute',
-						color		: ['#C4C4C4','#989898'],
-						offset		: [0,0,1]
-					},
-					background		: {
-						position	: 'relative',
-						color		: ['#FFF', '#000'],
-						offset		: 0
-					},
-					main			: {}
-				}
-			}
-		},
-		window : {
-			'default' : {
-				height				: 48,
-				layers				: {
-					reorder			: []
-				},
-				itemPadding			: 0,
-				presentation		: 'icon',
-				padding				: '5px 0 4px 8px'
-			},
-			layers 					: {
-				reorder				: []
-			}
-		}
-	},
-	splitview: {
-		shared: {
-			shared: {
-								
-			}
-		},
-		'default': {
-			active: {}
-		},
-		'app': {
-			active: {
-				'float'				: 'left',
-				overflow			: 'hidden'
-			},
-			main: {
-				'float'				: 'left',
-				overflow			: 'hidden'
-			},
-			side: {
-				'float'				: 'left',
-				overflow			: 'hidden',
-				backgroundColor		: '#d6dde5',
-				borderRight			: '1px solid #8b8b8b'
-			},
-			splitter: {
-				width:'7px',
-				opacity:'.3'
-			}
-		}
-	},
 	element : {
 		'default' : {
 			'default' : {}
 		},
+
+		resizeHandler : {
+			'default' : {
+				width				: 20,
+				height				: 20,
+				styles	: {
+					height			: '20px',
+					width			: '20px',
+					position		: 'absolute',
+					right			: 0,
+					marginBottom	: 0,
+					width			: '24px',
+					height			: '24px',
+					opacity			: '.5',
+				//	backgroundColor : '#eee',
+					marginRight		: '1px'
+				},
+				/* layers properties */
+				layers				: {
+					'default'			: {
+						position	: 'absolute',
+						shape		: 'lineUp',
+						opacity		: .05,
+						width		: 1,
+						color		: '#000'
+					},
+					
+					first			: {
+						offset		: [6,6],
+						size		: [11,11]
+					},
+					second			: {
+						color		: '#fff',
+						offset		: [7,7],
+						size		: [10,10]
+					},
+					third			: {
+						offset		: [10,10],
+						size		: [7,7]
+					},
+					four			: {
+						color		: '#fff',
+						offset		: [11,11],
+						size		: [6,6]
+					},					
+					five		: {
+						offset		: [14,14],
+						size		: [3,3]
+					},
+					six			: {
+						color		: '#fff',
+						offset		: [15,15],
+						size		: [2,2]
+					}
+				}
+			}
+		},
+		
 		menuRollover : {
 			'default' : {
 				/* layers properties */
@@ -1722,7 +2019,44 @@ UI.props.AquaGraphite = {
 					}
 				}
 			}
-		}
+		},
+		tabbar : {
+			'default' : {
+				
+				height				: 25,
+				width				: 1000,
+				
+				/* layers properties */
+				styles : {
+					position		: 'relative',
+					display			: 'block',
+					fontSize		: '.7em',
+					height			: '24px',
+					width			: '100%',
+					padding			: '0',
+					margin			: '0',
+					top				:'1px',
+					left			: '1px',
+					overflow		: 'hidden'
+				},
+				layers				: {
+					background		: {
+						color		: ['#606971','#E8E8E8'],
+						offset		: 0
+					},
+					main			: {
+						color		: '#000',
+						offset		: [0,0,4,0]
+					},
+					reflect			: {
+						color		: ['#fff','#fff'],
+						offset		: [0,0,'50%'],
+						opacity		: [.5,.1],
+						radius		: 0
+					}
+				}
+			}
+		},
 	},
 	bubble : {
 		'default' : {
@@ -1830,86 +2164,6 @@ UI.props.AquaGraphite = {
 						color: ['#F1F1F1', '#FFF'],
 						opacity: 1,
 						radius: [7, 7, 0, 0]
-					}
-				}
-			}
-		}
-	},
-	scrollbar						: {
-		track						: {
-			'default'					: {
-				styles                                          : {
-					'float'                                 : 'right',
-					height                                  : '100%',
-					position                                : 'relative',
-					zIndex                                  : '10000'
-				},
-				layers				: {
-					reorder			: ['back', 'main', 'side'],
-					'default'		: {
-						position	: 'absolute'
-					},
-					back			: {
-						offset		: [0,0,0,0],
-						color		: '#fff'
-					},
-					main			: {
-						offset		: [0,'40%',0,0],
-						
-						gradient	: {
-							color	: ['#c5c5c5','#fcfcfc'],
-							angle	: 0
-						}
-					},
-					side			: {
-						offset		: [0,0,0,'80%'],
-						gradient	: {
-							angle	: 0,
-							color	: ['#fcfcfc','#efefef']
-						}
-					}
-				}
-			}
-		},
-		thumb						: {
-			'default'				: {
-				styles 				: {
-					position		: 'relative',
-					margin			: '5px 0'
-				},
-				layers				: {
-					'default'		: {
-						direction	: 'vertical'
-					},
-					emboss			: {
-						offset		: [1,0,1,0],
-						color		: '#000',
-						radius		: 9,
-						opacity		: .3
-					},
-					main			: {
-						gradient	: {
-							color	: ['#091d38','#5c5c5c'],
-							angle	: 0
-						},
-						radius		: 7
-					},
-					light			: {
-						gradient	: {
-							color	: ['#fff','#fff'],
-							opacity	: [.1,.9],
-							angle	: 0
-						},
-						radius		: 6
-					},
-					reflect			: {
-						gradient	: {
-							color	: ['#fff','#fff'],
-							opacity	: [.8,.5],
-							angle	: 0
-						},
-						offset		: [4,'65%',3,0],
-						radius		: [3,2,2,3]
 					}
 				}
 			}

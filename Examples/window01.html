@@ -17,7 +17,10 @@
 	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
 		
 	<script type="text/javascript" src="../Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Drag.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Resize.js"></script>
 	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
+	
 	<script type="text/javascript" src="../Source/Control/Bubble.js"></script>
 
 	<script type="text/javascript" src="../Source/Control/Control.js"></script>
@@ -214,45 +217,37 @@
 						title		: 'some controls',
 						width		: 300,
 						height		: 300,
-						overflow	: 'hidden'
+						overflow	: 'scrollbar'
 						
 					});
 			
+					
 					new UI.Button({
-						width			: 270,
-						label			: 'Bow',
-						onClick			: function(){
-							new UI.Window({
-							});
-						},
-						labelStyles		: {
-							padding		: '20px 30px',
-							fontWeight : 'normal'
-						},
-						props	: {
-							over		: {
-								components : {
-									label	: {
-										styles : {
-											padding		: '20px',
-											fontWeight : 'bold'
-										}
-									}
-								}
-							},
-							down		: {
-								components : {
-									label	: {
-										styles : {
-											padding		: '20px',
-											fontWeight : 'bold'
-										}
-									}
-								}
-							}
-						},
+						label	: 'Button',
+						styles	: {
+							margin	: 10,
+							fontFamily	: 'arial, helvetica, sans-serif',
+							fontSize	: '13px'
+						}
+					}).inject(window.content);
+					
+					new UI.Button({
+						type			: 'recessed',
+						label			: 'Recessed Button',
 						styles			: {
-							margin		: 10
+							margin	: 10,
+							fontFamily	: 'arial, helvetica, sans-serif',
+							fontSize	: '13px'
+						}
+					}).inject(window.content);
+					
+					new UI.Button({
+						type			: 'roundtextured',
+						label			: 'Round Textured',
+						styles			: {
+							margin	: 10,
+							fontFamily	: 'arial, helvetica, sans-serif',
+							fontSize	: '13px'
 						}
 					}).inject(window.content);
 					
@@ -380,31 +375,7 @@
 				}
 			}).inject(form);
 			
-			this.textarea = new UI.Textarea({
-				name : 'textarea-input-canvas',
-				value : '',
-				onBlur : function(){
-					this.input.value = ''
-					tipArea = new UI.Bubble({
-						target : this.element,
-						props : {
-							'default' : {
-								backgroundColor : ['#A00','#000']
-							}
-						},
-						label : "Your comment here!"
-					});
-				},
-				onFocus : function(){
-					if (tipArea) {
-						tipArea.destroy();
-						delete tipArea;
-					}
-				},
-				styles : {
-					margin	: 10
-				}
-			}).inject(form);
+			
 			
 			
 			ip = new UI.Input({
@@ -450,7 +421,7 @@
 					color			: '#fff'
 				},
 				onClick: function(){
-					this.tip.fade(0);
+					tip.fade(0);
 				}.bind(this),
 				props				: {
 					'default'				: {
@@ -546,32 +517,41 @@
 				draggable			: true,
 				onClick				: function() { 
 					
-					if (this.bubble) this.bubble.destroy();
-
-					this.bubble = new UI.Bubble({
-						target 						: $(this),
-						props 				: {
-							'default' 				: {
-								layers				: {
-									background		: {
-										offset		: [0,0,4],
-										color 		: ['#33cc33','#000'],
-										opacity		: 1
-									},
-									arrow			: {
-										size		: [9,4],
-										offset		: ['auto', 9,0]
+					if (this.bubble) {
+					
+						this.bubble.label.set('html', counter++);
+						this.bubble.setSize();
+					
+					} else {
+					
+						this.bubble = new UI.Bubble({
+							target: $(this),
+							label: counter++,
+							labelStyles: {
+								fontSize: '74px',
+								fontWeight: 'bold',
+								padding: '4px 10px'
+							},
+							props: {
+								'default': {
+									layers: {
+										background: {
+											offset: [0, 0, 9],
+											color: ['#33cc33', '#000'],
+											opacity: 1
+										},
+										arrow: {
+											size: [9, 4],
+											offset: ['auto', 9, 0],
+											opacity: 1,
+											color: '#000'
+										}
 									}
 								}
 							}
-						},
-						label 						: counter++,
-						labelStyles					: {
-							fontSize		: '74px',
-							fontWeight		: 'bold',
-							padding			: '4px 10px 10px'
-						}
-					});
+						
+						});
+					}
 				},
 				props				: {
 					'default'				: {
@@ -649,26 +629,7 @@
 				onChange				:  function(){ this.selecttup.show(); }.bind(this)
 			}).inject(form);
 			
-			
-			this.selecttup = new UI.Bubble({
-				target 			: this.daselect,
-				targetEvent		: 'onMouseOver',
-				type			: 'bottom',
 				
-				props : {
-					'default' : {
-						layers	: {
-							reorder	: ['background','arrow'],
-							background	: {
-								color	: '#000'
-							}
-						}
-					}
-				},
-				label : "il faut préparer un package<br /> googlemap tips replacement!<br/>"
-			});
-			
-			
 			
 			this.cancel = new UI.Button({
 				label				: 'Cancel',
@@ -926,8 +887,8 @@
 			
 			
 			submit = new UI.Button({
-				label				: 'Submit NOW',
-				labelStyles			: {
+				label						: 'Submit NOW',
+				labelStyles					: {
 					fontSize			: '2em',
 					fontWeight			: 'bold',
 					opacity				: '8',
@@ -998,21 +959,7 @@
 			}).inject(form);
 			
 			
-			this.checkbox = new UI.Checkbox({
-				label		: 'check or not?',
-				styles		: {
-					margin	: 10
-				}
-			}).inject(form);
-			
-			this.checkbox = new UI.Checkbox({
-				skin				: 'demo',
-				type				: 'default',
-				styles				: {
-					margin			: '20px'
-				}
-			}).inject(form);
-			//console.log('window.html', $time()-time);
+
 			
 		});
 	</script>

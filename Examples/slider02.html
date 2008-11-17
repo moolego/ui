@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="UTF-8">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="css/reset.css" />
+
+	<title>MooLego - Components Playground</title>
+	
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="mootools/more.js"></script>
+
+	<script type="text/javascript" src="../Utils/Singleton.js"></script>
+	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+
+	<script type="text/javascript" src="../Source/Core/UI.js"></script>
+	<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
+	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
+		
+	<script type="text/javascript" src="../Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Extension.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
+	
+	<script type="text/javascript" src="../Source/Control/Control.js"></script>
+	<script type="text/javascript" src="../Source/Control/Label.js"></script>
+	<script type="text/javascript" src="../Source/Control/Button.js"></script>
+	<script type="text/javascript" src="../Source/Control/Slider.js"></script>
+
+	
+	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	
+	<script type="text/javascript">
+		window.addEvent('load', function() {
+			
+			var color = [0, 0, 0];
+			var updateColor = function(){
+				colorButton.props.layers.main.color = color.rgbToHex();
+				//colorButton.set('html', color.rgbToHex());
+			};
+			
+			var colorButton = new UI.Button({
+				label				: 'Color',
+				labelStyles			: {
+					fontSize		: '42px',
+					fontWeight		: 'bold',
+					padding			: 50,
+					color			: '#fff'
+				},
+				styles		: {
+					'float'			: 'right',
+					margin			: '0 100px 0 0'
+				}
+			}).inject(document.body);
+			
+
+			for (i = 0; i < 3; i++) {
+				new UI.Slider({
+					type		: 'vertical',
+					range		: [0, 255],
+					styles		: {
+						margin	: '2px 10px',
+						display	: 'block'
+					},
+					wheel		: true,
+					onChange	: function(step){
+						color[i] = step;
+						updateColor();
+					}
+				}).inject(document.body);
+			}
+		});
+	</script>
+</head>
+
+<body></body>
+
+</html>

@@ -1,17 +1,18 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="UTF-8">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link rel="stylesheet" type="text/css" href="css/reset.css" />
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-	<title>MooLego - Components Playground</title>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<link rel="stylesheet" type="text/css" href="css/screen.css" />
+	<!--[if IE]><link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+
 	
 	<script type="text/javascript" src="mootools/core.js"></script>
 	<script type="text/javascript" src="mootools/more.js"></script>
-
+	
 	<script type="text/javascript" src="../Utils/Singleton.js"></script>
 	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
-
+	
 	<script type="text/javascript" src="../Source/Core/UI.js"></script>
 	<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
 	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
@@ -20,73 +21,34 @@
 	<script type="text/javascript" src="../Source/Element/Element.Drag.js"></script>
 	<script type="text/javascript" src="../Source/Element/Element.Resize.js"></script>
 	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
-
+	
 	<script type="text/javascript" src="../Source/Control/Control.js"></script>
 	<script type="text/javascript" src="../Source/Control/Label.js"></script>
-	<script type="text/javascript" src="../Source/Control/Input.js"></script>
 	<script type="text/javascript" src="../Source/Control/Button.js"></script>
-	<script type="text/javascript" src="../Source/Control/Textarea.js"></script>
-	<script type="text/javascript" src="../Source/Control/Checkbox.js"></script>
 	<script type="text/javascript" src="../Source/Control/RadiosGroup.js"></script>
 	<script type="text/javascript" src="../Source/Control/Select.js"></script>
-	<script type="text/javascript" src="../Source/Control/Slider.js"></script>
-	<script type="text/javascript" src="../Source/Control/Scrollbar.js"></script>
-	<script type="text/javascript" src="../Source/Control/Bubble.js"></script>
-
+	<script type="text/javascript" src="../Source/Control/Input.js"></script>
+	<script type="text/javascript" src="../Source/Control/Textarea.js"></script>
+	<script type="text/javascript" src="../Source/Control/Checkbox.js"></script>
+	
 	<script type="text/javascript" src="../Source/Menu/Menu.js"></script>
 	<script type="text/javascript" src="../Source/Menu/Toolbar.js"></script>
 	<script type="text/javascript" src="../Source/Menu/Context.js"></script>
 	<script type="text/javascript" src="../Source/Menu/Scroller.js"></script>
-
-	<script type="text/javascript" src="../Source/View/View.js"></script>
-	<script type="text/javascript" src="../Source/View/PanelView.js"></script>
-	<script type="text/javascript" src="../Source/View/TabView.js"></script>
-	<script type="text/javascript" src="../Source/View/SplitView.js"></script>
-
-	<script type="text/javascript" src="../Source/Window/Window.js"></script>
-	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
-	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
 	
-	<script type="text/javascript" src="../Source/Skins/AquaGraphite.js"></script>
-	<script type="text/javascript" src="../Source/Skins/Demo.js"></script>
+	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+
+	<script type="text/javascript" src="../Utils/mooFace.js"></script>
 	
+	<title>moolego - formular replacement demo</title>
+	<link media="screen" type="text/css" href="css/form.css" rel="stylesheet" />
 	<script type="text/javascript">
-		window.addEvent('load', function() {
-			var time = $time();
-			
-			
-			
-			/* Elements in page */
-			var form = new Element('form', {
-				id				: 'controltest',
-				method			: 'get',
-				styles			: {
-					margin		: '50px 50px 0',
-					background	: '#e8e8e8'
-				}
-			}).inject(document.body);
-			
-		
-			var time2 = $time();
-			
-	new UI.Input({
-				// skin			: 'demo',
-				type			: 'round',
-				value			: 'Another input field',
-				styles			: {
-					margin		: 10
-				}
-			}).inject(form);
-			new UI.Button({
-				label			: 'Bow',
-				styles			: {
-					margin		: 10
-				}
-			}).inject(form);
-			
+		window.addEvent('domready', function(){
+			var form = new Element('form').inject(document.body);
+	
+	
 			var cbstyles = {
-				margin		: '0 10px 5px',
-				display		: 'block'
+			
 			};
 			
 			new UI.Checkbox({
@@ -104,7 +66,7 @@
 				styles			: cbstyles
 			}).inject(form);
 			
-			new Element('br').inject(form);
+			
 			
 			var radiosGroup = new UI.RadiosGroup({
 				name			: 'radios'
@@ -131,7 +93,6 @@
 				styles			: cbstyles
 			}).inject(form);
 			
-			new Element('br').inject(form);
 
 			
 			new UI.Select({
@@ -160,7 +121,9 @@
 					margin		: 10
 				}
 			}).inject(form);
-
+			
+			
+			
 			new UI.Input({
 				value			: 'An input field',
 				styles			: {
@@ -170,17 +133,32 @@
 			
 			
 			
-			new Element('br').inject(form);
-			
 			new UI.Textarea({
 				value			: 'A textarea to write long essay. More usefull for that than a UI.Input()',
 				styles			: {
 					margin		: 10
 				}
 			}).inject(form);
-
+			
+			
+			
 			new UI.Slider({
-				width			: 400,
+				styles			: {
+					margin		: 10
+				}
+			}).inject(form);
+			
+			
+			new UI.Button({
+				label			: 'Second button',
+				zIndex			: 6000,
+				styles			: {
+					margin		: 10
+				}
+			}).inject(form);
+			
+			new UI.Button({
+				label			: 'Third button',
 				styles			: {
 					margin		: 10
 				}
@@ -188,7 +166,19 @@
 		});
 	</script>
 </head>
-
-<body></body>
-
+<body>
+<select id="dummy4" name="dummy4">
+	<option>Favorite pet</option>
+	<optgroup label="mammals">
+	<option>dog</option>
+	<option>cat</option>
+	<option>rabbit</option>
+	<option>horse</option>
+	</optgroup>
+	<optgroup label="reptiles">
+	<option>iguana</option>
+	<option>snake</option>
+	</optgroup>
+</select>
+</body>
 </html>

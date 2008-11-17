@@ -20,6 +20,8 @@
 	<script type="text/javascript" src="../Source/Element/Element.Drag.js"></script>
 	<script type="text/javascript" src="../Source/Element/Element.Resize.js"></script>
 	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
+	
+	<script type="text/javascript" src="../Source/Control/Bubble.js"></script>
 
 	<script type="text/javascript" src="../Source/Control/Control.js"></script>
 	<script type="text/javascript" src="../Source/Control/Label.js"></script>
@@ -30,8 +32,6 @@
 	<script type="text/javascript" src="../Source/Control/RadiosGroup.js"></script>
 	<script type="text/javascript" src="../Source/Control/Select.js"></script>
 	<script type="text/javascript" src="../Source/Control/Slider.js"></script>
-	<script type="text/javascript" src="../Source/Control/Scrollbar.js"></script>
-	<script type="text/javascript" src="../Source/Control/Bubble.js"></script>
 
 	<script type="text/javascript" src="../Source/Menu/Menu.js"></script>
 	<script type="text/javascript" src="../Source/Menu/Toolbar.js"></script>
@@ -39,10 +39,11 @@
 	<script type="text/javascript" src="../Source/Menu/Scroller.js"></script>
 
 	<script type="text/javascript" src="../Source/View/View.js"></script>
-	<script type="text/javascript" src="../Source/View/PanelView.js"></script>
 	<script type="text/javascript" src="../Source/View/TabView.js"></script>
 	<script type="text/javascript" src="../Source/View/SplitView.js"></script>
-
+	<script type="text/javascript" src="../Source/View/PanelView.js"></script>
+	<script type="text/javascript" src="../Source/Control/Scrollbar.js"></script>
+	
 	<script type="text/javascript" src="../Source/Window/Window.js"></script>
 	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
 	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
@@ -52,7 +53,116 @@
 	
 	<script type="text/javascript">
 		window.addEvent('load', function() {
-		
+			var time = $time();
+			
+			toolbar = new UI['Toolbar']({
+				displayMode : 'text',
+				draggable	: false,
+				menu		: [
+					{
+						text	: 'moolego',
+						styles	: {
+							position	: 'relative'
+						},
+						menu : [
+							{
+								text : 'About',
+								action : function() { 
+									new UI.Window({
+										title			: 'about',
+										width			: 300,
+										height			: 160,
+										head			: false,
+										viewOverflow 	: 'hidden',
+										controls		: ['close']
+									});
+								}
+							},
+							{ 
+								text 		: 'Software version...',
+								action : function() { this.test('about'); alert('click')}.bind(this)
+							},
+							{ text		: 'separator' },
+							{ 
+								text 		: 'Préférences systemes...',
+								action : function() { new App.Settings() }
+							},
+							{ text		: 'separator' },{
+								text : 'Elements récents',
+								menu : [
+									{text : 'Finder'},
+									{text : 'Safari'},
+									{text : 'Mail'},
+									{text : 'Protoshop'},
+									{text : 'Nasty Explorer'}
+								]
+							},
+							{ text		: 'separator' },
+							{
+								text : 'Fermer la session'
+							}
+						]
+					},
+					{
+						text : 'New',
+						options : {'class' : 'ui-dd-new'},
+						menu		: [
+							{
+								text : 'Button',
+								action : function() { 
+									new UI.Button().inject(form, 'top');
+								}.bind(this)
+							},
+							{ 
+								text 		: 'Window',
+								action : function() { 
+									new UI.Window();
+								}.bind(this)
+							}
+						]
+					},
+					{
+						text : 'Window',
+						options : {'class' : 'ui-dd-new'},
+						menu		: [
+							{
+								text : 'About',
+								action : function() { this.test('about'); alert('click')}.bind(this)
+							},
+							{ text 		: 'Minimizer'},
+							{ text		: 'separator' },
+							{ text		: 'Cascade',
+							  action: function(){
+							  	this.windowManager.resetCascade()
+							  }.bind(this)
+							  
+							}
+						]
+					},
+					{
+						text : 'Help',
+						options : {'class' : 'ui-dd-help'},
+						menu : [
+							{ text : 'Welcome' },
+							{ text : 'separator' },
+							{ text : 'Update...' },
+							{ text : 'separator' },
+							{ text : 'Settings...' }
+						]
+					},
+					{
+						text : 'History...',
+						action: function(){alert('menu with action')},
+						menu : [
+							{text: 'Page down'},
+							{text: 'Page up'},
+							{text: 'Microsoft'}
+						]
+					}
+				]						
+			}).inject(document.body,'top');
+			
+			
 			/* Elements in page */
 			var form = new Element('form', {
 				id				: 'controltest',
@@ -62,8 +172,39 @@
 				}
 			}).inject(document.body);
 			
+			var radiosGroup = new UI.RadiosGroup({
+				name			: 'radiotest'
+			});
 			
-				
+			var radio = radiosGroup.newRadio({
+				label	: 'Test 1',
+				value 	: 'test_1',
+				selected: true,
+				styles				: {
+					margin			: 10
+				}
+			}).inject(form);
+			
+			
+			radiosGroup.newRadio({
+				label	: 'Test 2',
+				value : 'test_2',
+				styles				: {
+					margin			: 10
+				}
+			}).inject(form);
+			
+			this.slider = new UI.Slider({
+				range				: [0, 100],
+				styles				: {
+					margin			: '20px 10px'
+				},
+				wheel				: true,
+				onChange			: function(step){
+					tip.fade(step/100);
+				}
+			}).inject(form);
+			
 			button = new UI.Button({
 				label : "Launch a new Control test",
 				labelStyles : {
@@ -71,18 +212,188 @@
 					padding : '10px 20px'
 				},
 				onClick : function(){
+					var time2 = $time();
+					var window = new UI.Window({
+						title		: 'some controls',
+						width		: 300,
+						height		: 300,
+						overflow	: 'hidden'
+						
+					});
+			
+					new UI.Button({
+						width			: 270,
+						label			: 'Bow',
+						onClick			: function(){
+							new UI.Window({
+							});
+						},
+						labelStyles		: {
+							padding		: '20px 30px',
+							fontWeight : 'normal'
+						},
+						props	: {
+							over		: {
+								components : {
+									label	: {
+										styles : {
+											padding		: '20px',
+											fontWeight : 'bold'
+										}
+									}
+								}
+							},
+							down		: {
+								components : {
+									label	: {
+										styles : {
+											padding		: '20px',
+											fontWeight : 'bold'
+										}
+									}
+								}
+							}
+						},
+						styles			: {
+							margin		: 10
+						}
+					}).inject(window.content);
+					
+					new UI.Button({
+						label			: 'Second button',
+						zIndex			: 6000,
+						styles			: {
+							margin		: 10
+						}
+					}).inject(window.content);
+					
+					new UI.Button({
+						label			: 'Third button',
+						styles			: {
+							margin		: 10
+						}
+					}).inject(window.content);
+					
+					
+					
+					var cbstyles = {
+						margin		: '0 10px 5px',
+						display		: 'block'
+					};
+					
+					new UI.Checkbox({
+						label			: '1 checkbox',
+						styles			: cbstyles
+					}).inject(window.content);
+					
+					new UI.Checkbox({
+						label			: '2 checkbox',
+						styles			: cbstyles
+					}).inject(window.content);
+					
+					new UI.Checkbox({
+						label			: '3 checkbox',
+						styles			: cbstyles
+					}).inject(window.content);
+					
+					
+					
+					var radiosGroup = new UI.RadiosGroup({
+						name			: 'radios'
+					});
+					
+					var radio = radiosGroup.newRadio({
+						label			: 'Radio 1',
+						selected		: true,
+						styles			: cbstyles
+					}).inject(window.content);
+					
+					var radio = radiosGroup.newRadio({
+						label			: 'Radio 2',
+						styles			: cbstyles
+					}).inject(window.content);
+					
+					var radio = radiosGroup.newRadio({
+						label			: 'Radio 3',
+						styles			: cbstyles
+					}).inject(window.content);
+					
+					var radio = radiosGroup.newRadio({
+						label			: 'Radio 4',
+						styles			: cbstyles
+					}).inject(window.content);
+					
 		
 					
-
+					new UI.Select({
+						list			: [
+							{text		: 'Please choose'},
+							{text		: 'Core'},
+							{text		: 'Control'},
+							{text		: 'Desktop is a long entry'},
+							{text		: 'Menu'},
+							{text		: 'Form'},
+							{text		: 'Un menu'},
+							{text		: 'Plage'},
+							{text		: 'Venise'}
+						],
+						styles			: {
+							margin		: 10
+						}
+					}).inject(window.content);
+					
+					new UI.Select({
+						list			: [
+							{text		: 'Please choose'},
+							{text		: 'It is long because of this entry in the list'}
+						],
+						styles			: {
+							margin		: 10
+						}
+					}).inject(window.content);
 					
 					
-				
+					
+					new UI.Input({
+						value			: 'An input field',
+						styles			: {
+							margin		: 10
+						}
+					}).inject(window.content);
+					
+					
+					
+					new UI.Textarea({
+						value			: 'A textarea to write long essay. More usefull for that than a UI.Input()',
+						styles			: {
+							margin		: 10
+						}
+					}).inject(window.content);
+					
+					
+					
+					new UI.Slider({
+						styles			: {
+							margin		: 10
+						}
+					}).inject(window.content);
 				},
 				styles		: {
 					margin	: 10
 				}
 			}).inject(form);
 			
+			
+			
+			
+			ip = new UI.Input({
+				name : 'text-input-canvas',
+				value : 'A text input with canvas, a very long text',
+				id : 'test',
+				styles : {
+					margin	: 10
+				}
+			}).inject(form);
 			
 			/*
 			new UI.Bubble({
@@ -98,7 +409,7 @@
 				},
 				label : "Under Construction!"
 			});
-			
+			*/
 
 			
 			
@@ -106,7 +417,6 @@
 				target : $(button),
 				label : "<p>Babybel c'est de la balle</p><p>Mais que fait la police?</p>"
 			});
-			*/
 			
 			
 			this.googlemap = new UI.Button({
@@ -304,6 +614,47 @@
 					margin					: 5
 				}
 			}).inject(form);
+			
+			
+			
+			this.daselect = new UI.Select({
+				name						: 'testselect',
+				styles						: {
+					margin					: 10
+				},
+				list						: [
+					{text					: 'Please choose' },
+					{text					: 'Core' },
+					{text					: 'Control' },
+					{text					: 'Desktop is a long entry' },
+					{text					: 'Menu' },
+					{text					: 'Form' },
+					{text					: 'Un menu' },
+					{text					: 'Plage' },
+					{text					: 'Venise' }
+				],
+				onMouseDown				:  function(){ this.selecttup.hide(); }.bind(this),
+				onChange				:  function(){ this.selecttup.show(); }.bind(this)
+			}).inject(form);
+			
+			
+			this.selecttup = new UI.Bubble({
+				target 			: this.daselect,
+				targetEvent		: 'onMouseOver',
+				type			: 'bottom',
+				
+				props : {
+					'default' : {
+						layers	: {
+							reorder	: ['background','arrow'],
+							background	: {
+								color	: '#000'
+							}
+						}
+					}
+				},
+				label : "il faut préparer un package<br /> googlemap tips replacement!<br/>"
+			});
 			
 			
 			
@@ -555,13 +906,101 @@
 			new UI.Bubble({
 				skin						: 'demo',
 				target 						: $(this.hardest),
-				label 						: 'Michel Gondry',
+				label 						: 'réalisation: Michel Gondry',
 				labelStyles					: {
 					padding					: '10px 10px 18px'
 				}
 			});
 			
 			
+			submit = new UI.Button({
+				label				: 'Submit NOW',
+				labelStyles			: {
+					fontSize			: '2em',
+					fontWeight			: 'bold',
+					opacity				: '8',
+					padding				: '18px 26px',
+					color				: '#fff'
+				},
+				submit				: true,
+				props				: {
+					'default'				: {
+						layers				: {
+							reorder			: ['emboss','front','reflect', 'dark'],
+							
+							emboss			: {
+								offset		: 0,
+								color		: '#cc0033',
+								opacity		: .17,
+								radius		: 9
+							},
+							front			: {
+								offset		: 3,
+								color		: ['#cc0033','#cc0033'],
+							 	opacity		: 1,
+								radius		: 7
+							},
+							reflect			: {
+								offset		: ['1px', '1px', '65%'],
+								color		: ['#FFF', '#FFF'],
+								opacity		: [.8, .0],
+								radius		: [5, 5, 14, 14]
+							},
+							dark			: {
+								position	: 'absolute',
+								size		: ['auto','20px'],						
+								offset		: ['auto', 4, 4],
+								color		: ['#fff', '#fff'],
+								opacity		: [0, .5],
+								radius		: [14, 14, 5, 5]
+							}
+						}
+					},
+					over					: {
+						components			: {
+							label			: {
+								styles		: { opacity : .5 }
+							}
+						},
+						layers				: {
+							emboss			: { color : '#00AA00' }
+						}
+					},
+					down					: {
+						components			: {
+							label			: {
+								styles		: {
+									opacity : .5,
+									color	: '#000'
+								}
+							}
+						},
+						layers				: {
+							emboss			: { color : '#00AA00' }
+						}
+					}
+				},
+				styles						: {
+					margin					: 5
+				}
+			}).inject(form);
+			
+			
+			this.checkbox = new UI.Checkbox({
+				label		: 'check or not?',
+				styles		: {
+					margin	: 10
+				}
+			}).inject(form);
+			
+			this.checkbox = new UI.Checkbox({
+				skin				: 'demo',
+				type				: 'default',
+				styles				: {
+					margin			: '20px'
+				}
+			}).inject(form);
+			//console.log('window.html', $time()-time);
 			
 		});
 	</script>
