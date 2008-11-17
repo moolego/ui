@@ -491,9 +491,7 @@ UI.Canvas = new Class({
 		};
 			
 		// we test the position
-		var coordinates = ($defined(this.props.layers[key].offset)) ?
-			this.props.layers[key].offset :
-			this.props.layers['default'].offset
+		var coordinates = this.props.layers[key].offset || this.props.layers['default'].offset;
 		if ($type(coordinates) == 'array') {
 			//4 sides defined
 			if ($defined(coordinates[3])) {
@@ -502,7 +500,7 @@ UI.Canvas = new Class({
 			} else if ($defined(coordinates[2])) {
 				coordinates = this.setOffset([coordinates[0], coordinates[1], coordinates[2], coordinates[1]], properties.position, properties.size);
 			//2 sides defined
-			} else if ($defined(coordinates[1])) {
+			} else {
 				coordinates = this.setOffset([coordinates[0], coordinates[1], coordinates[0], coordinates[1]], properties.position, properties.size);
 			}
 		//1 side defined
@@ -549,46 +547,31 @@ UI.Canvas = new Class({
 		}
 		
 		if (props[p] && $type(props[p].color) == 'array') {
-			var length = props[p].color.length;
 			
 			// convert angle from degree to gradient
 			if (!$defined(props[p].angle)) props[p].angle = 90;
 			var a = props[p].angle * Math.PI / 180;
+			var aAbs = Math.abs(a);
 			
-			//set start and end point depending angle
-			if (a >= 0 && a <= Math.PI / 4) {
-				//between 0 and 45
-				var ax = - props.size[0]/2;
-				var ay = - Math.tan(a) * props.size[0] / 2;
-			} else if (a > Math.PI / 4 && a <= Math.PI / 2) {
-				//between 45 and 90
-				//console.log('45-90');
-				var ax = - Math.tan(Math.PI / 2 - a) * props.size[0] / 2;
-				var ay = - props.size[1]/2;
-			} else if (a > Math.PI / 2 && a <= 3 * Math.PI / 4) {
-				//between 90 and 135
-				//console.log('90-135');
-				var ax = Math.tan(a - Math.PI / 2) * props.size[1] / 2;
-				var ay = - props.size[1] / 2;
-			} else if (a > 3 * Math.PI / 4 && a <= Math.PI) {
-				//between 135 and 180
-				//console.log('135-180');
-				var ax = props.size[0] / 2;
-				var ay = - Math.tan(Math.PI - a) * props.size[0] / 2;
+			//set stuff for IE
+			this.ctx.ratio = props.size[1]/props.size[0];
+			this.ctx.angle = a;
+			
+			if (props[p].angle >= -90 && props[p].angle < 90) {
+				var ax = -((Math.cos(a - Math.atan(props.size[1] / props.size[0])) * Math.sqrt(Math.pow(props.size[0], 2) + Math.pow(props.size[1], 2)) * Math.cos(a)) / 2);
+				var ay = -((Math.cos(a - Math.atan(props.size[1] / props.size[0])) * Math.sqrt(Math.pow(props.size[0], 2) + Math.pow(props.size[1], 2)) * Math.sin(a)) / 2);
+			} else {
+				var ax =  ((Math.cos(Math.PI - a - Math.atan(props.size[1] / props.size[0])) * Math.sqrt((props.size[0]).pow(2) + (props.size[1]).pow(2)) * Math.cos(Math.PI - a)) / 2);
+				var ay =  - ((Math.cos(Math.PI - a - Math.atan(props.size[1] / props.size[0])) * Math.sqrt((props.size[0]).pow(2) + (props.size[1]).pow(2)) * Math.sin(Math.PI - a)) / 2);
 			}
 			var bx = -ax;
 			var by = -ay;
-			
-			//set start point
-			if (props[p].start) {
-				ax += props[p].start[0];
-				ay += props[p].start[1];
-			}
 			
 			//make the gradient with start point and end point
 			var color = this.ctx.createLinearGradient(ax, ay, bx, by);
 			
 			//check if opacity exist, else create it
+			var length = props[p].color.length;
 			if (!props[p].opacity || $type(props[p].opacity) != 'array') {
 				var opacity = props[p].opacity || 1;
 				props[p].opacity = [];
