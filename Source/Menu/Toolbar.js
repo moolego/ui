@@ -124,7 +124,7 @@ UI.Toolbar = new Class({
 					}
 				}.bind(this),
 				'mouseup' : function(){
-					if ($time() - this.time > 300 && this.underlay) {
+					if ($time() - this.time > 800 && this.underlay) {
 						this.underlay.fireEvent('click');
 					}
 				}.bind(this),
@@ -160,7 +160,6 @@ UI.Toolbar = new Class({
 			'mouseup' : function(){
 				if (this.menuWithAction || !item.menu) {
 					this.removeSubmenu();
-					this.removeRollover();
 				}
 				if (this.menuWithAction) {
 					$clear(this.menuWithAction);
@@ -203,7 +202,7 @@ UI.Toolbar = new Class({
 		this.underlay.addEvents({
 			'click' : function(){
 				this.removeSubmenu();
-				this.removeRollover();
+				(function(){this.removeRollover()}.bind(this)).delay(this.props.hideFxDuration)
 				this.removeUnderlay();
 			}.bind(this),
 			'contextmenu' : function(e){
