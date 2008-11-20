@@ -90,8 +90,15 @@ UI.Skin = new Class({
 		if(!UI.props[skin].preprocessed) this.processSkin(skin);
 
 		//get properties for provided type
-		var type = $unlink(UI.props[skin][cKey][tKey]);
-		
+		if (UI.props[skin][cKey][tKey]) {
+			var type = $unlink(UI.props[skin][cKey][tKey]);
+		} else if (UI.props[skin][cKey]['default']) {
+			var type = $unlink(UI.props[skin][cKey]['default']);
+		} else {
+			var type = {
+				'default': $unlink(UI.props[skin]['default'])
+			};
+		}
 		//add custom states
 		for(var csKey in props) {
 			if(!type[csKey]) type[csKey] = props[csKey];

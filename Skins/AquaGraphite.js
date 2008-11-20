@@ -1276,7 +1276,8 @@ UI.props.AquaGraphite = {
 							color			: '#000',
 							padding			: '4px 40px 5px 16px',
 							whiteSpace		: 'nowrap',
-							display			: 'block'
+							display			: 'block',
+							position		: 'relative'
 						}
 					},
 					separator : {
@@ -1963,8 +1964,8 @@ UI.props.AquaGraphite = {
 		},
 		menuRightArrow : {
 			'default' : {
-				width				: 9,
-				height				: 10,
+				width				: 10,
+				height				: 9,
 				
 				/* layers properties */
 				layers						: {

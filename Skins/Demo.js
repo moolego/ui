@@ -795,7 +795,7 @@ UI.props.demo = {
 	},
 	
 	element : {
-		line : {
+		shape01 : {
 			'default' : {
 				styles : {
 					border : '1px solid black',
@@ -865,6 +865,40 @@ UI.props.demo = {
 						opacity : 1,
 						offset: [0, 50, 0, 'auto'],
 						size : [1, '100%']
+					}
+				}
+			}
+		},
+		shape02 : {
+			'default' : {
+				styles : {
+					border : '1px solid black',
+					position : 'relative'
+				},
+				layers : {
+					big : {
+						position : 'absolute',
+						offset : 50,
+						rotation : 10,
+						image : {
+							url : 'http://www.google.com/images/nav_logo3.png'
+						}
+					}
+				}
+			}
+		},
+		shadows : {
+			'default' : {
+				styles : {
+					position : 'relative'
+				},
+				layers : {
+					shadowl : {
+						size : 64
+					},
+					element : {
+						color : '#FFF',
+						offset : 0
 					}
 				}
 			}

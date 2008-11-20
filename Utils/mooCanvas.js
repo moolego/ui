@@ -408,8 +408,10 @@ CanvasRenderingContext2D.implement({
 				a[1].join(' '),
 			'</v:shape>'
 		].join(''));
-
-		if(fill && fS.img) this.element.getLast().fill.alignshape = false; // not sure why this has to be called explicitly
+		if (fill && fS.img) {
+			this.element.getLast().fill = this.element.getLast().fill || {};
+			this.element.getLast().fill.alignshape = false; // not sure why this has to be called explicitly
+		}
 
 		this.beginPath();
 	},
