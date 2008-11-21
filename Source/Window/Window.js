@@ -251,7 +251,7 @@ UI.Window = new Class({
 			.setStyles({
 				position	: 'absolute',
 				top 		: this.props.borderSize,
-				left 		: this.props.borderSize,
+				left 		: this.props.borderSize
 			}).inject(this.element);
 			
 			this.view.tabbar.setStyles({

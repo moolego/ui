@@ -232,9 +232,96 @@ UI.props.AquaGraphite = {
 					}
 				}
 			},
-			over: {
-				layers: {
-					reorder: ['emboss', 'border', 'main']
+
+			over : {
+				layers						: {
+					reorder					: ['emboss','border','main']
+				}
+			},
+			'down' : {
+				layers : {
+					reorder : ['emboss','border','inner1','inner2','inner3','inner4','main'],
+					inner1 : {
+						position			: 'absolute',
+						color				: ['#393939','#686868'],
+						offset				: [1,1,2,1],
+						radius				: 3
+					},
+					inner2 : {
+						position			: 'absolute',
+						color				: ['#6e6e6e','#797979'],
+						offset				: [2,2,3,2],
+						radius				: 3
+					},
+					inner3 : {
+						position			: 'absolute',
+						color				: ['#8c8c8c','#848484'],
+						offset				: [3,3,4,3],
+						radius				: 3
+					},
+					inner4 : {
+						position			: 'absolute',
+						color				: ['#a1a1a1','#8a8a8a'],
+						offset				: [4,4,5,4],
+						radius				: 3
+					},
+					main : {
+						color				: ['#afafaf','#8e8e8e'],
+						offset				: [5,5,6,5],
+						radius				: 2
+						
+					}
+				}
+			}
+		},
+		window : {
+			'default' : {
+				layers : {
+					reorder					: ['emboss', 'background', 'main', 'reflect', 'cache'],
+					
+					'default' : {
+						position			: 'absolute',
+						shape				: 'circle',
+						size				: [14, 14],
+						opacity				: 1,
+						offset				: 0
+					},
+					emboss : {
+						offset				: ['auto', 1, 0],
+						size				: [14, 14],
+						color				: '#FFF',
+						opacity				: .4
+					},
+					background : {
+						gradient : {
+							color				: ['#2e323d','#848995']
+						},
+						size				: [14, 14]
+					},
+					main : {
+						size				: [11, 11],
+						offset				: [2, 2.5],
+						gradient			: {
+							color			: ['#fff','#fff'],
+							opacity			: [.2,.8]
+						}
+					},
+					reflect : {
+						size				: 3,
+						offset				: [1.5, 6.5],
+						gradient			: {
+							color			: ['#fff','#fff'],
+							opacity			: [1, .5]
+						}	
+					},
+					cache : {
+						shape				: 'roundedRect',
+						size				: [2,1],
+						radius				: 0,
+						offset				: [1, 7],
+						color				: '#545861',
+						opacity				: 1
+					}
 				}
 			},
 			'down': {
@@ -538,7 +625,6 @@ UI.props.AquaGraphite = {
 		'default': {
 			'default': {
 				width: 200,
-				
 				components: {
 					input: {
 						styles: {
@@ -597,6 +683,7 @@ UI.props.AquaGraphite = {
 				}
 			}
 		},
+
 		'round': {
 			'default': {
 				components: {
@@ -611,6 +698,7 @@ UI.props.AquaGraphite = {
 							resize: 'none',
 							whiteSpace: 'nowrap',
 							border: 'none'
+
 						}
 					}
 				},
@@ -2014,7 +2102,7 @@ UI.props.AquaGraphite = {
 							position		: 'absolute',
 							top				: '51px',
 							left			: '1px',
-							overflow		: 'hidden',
+							overflow		: 'hidden'
 						}
 					},
 					foot : {
@@ -2329,8 +2417,8 @@ UI.props.AquaGraphite = {
 		},
 		menuRightArrow : {
 			'default' : {
-				width				: 9,
-				height				: 10,
+				width				: 10,
+				height				: 9,
 				
 				/* layers properties */
 				layers						: {
@@ -2417,7 +2505,7 @@ UI.props.AquaGraphite = {
 					}
 				}
 			}
-		},
+		}
 	},
 	bubble : {
 		'default' : {

@@ -158,7 +158,7 @@ UI.Menu = new Class({
 			});
 		}
 		
-		menuItem.element.addEvents({
+		menuItem.addEvents({
 			'mouseleave': function(){
 				$clear(this.menuActionDelay);
 			}.bind(this),

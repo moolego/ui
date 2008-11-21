@@ -24,5 +24,5 @@ UI.Element.implement({
 		});
 		
 		return this;
-	},
+	}
 });

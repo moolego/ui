@@ -476,22 +476,23 @@ UI.Canvas = new Class({
 	
 	getProperties : function(key) {
 		var properties = {
-			position	: this.props.layers[key].position	|| this.props.layers['default'].position,
-			size		: this.props.layers[key].size 		|| this.props.layers['default'].size,
-			shape		: this.props.layers[key].shape		|| this.props.layers['default'].shape,
-			color		: this.props.layers[key].color		|| this.props.layers['default'].color,
-			gradient	: this.props.layers[key].gradient 	|| this.props.layers['default'].gradient,
-			stroke		: this.props.layers[key].stroke		|| this.props.layers['default'].stroke,
-			width		: this.props.layers[key].width		|| this.props.layers['default'].width,
-			opacity		: this.props.layers[key].opacity	|| this.props.layers['default'].opacity,
-			angle		: this.props.layers[key].angle		|| this.props.layers['default'].angle,
-			rotation	: this.props.layers[key].rotation	|| this.props.layers['default'].rotation,
-			scale		: this.props.layers[key].scale		|| this.props.layers['default'].scale,
-			composite	: this.props.layers[key].composite	|| this.props.layers['default'].composite
+			position	: $pick(this.props.layers[key].position,	this.props.layers['default'].position),
+			size		: $pick(this.props.layers[key].size, 		this.props.layers['default'].size),
+			shape		: $pick(this.props.layers[key].shape,		this.props.layers['default'].shape),
+			color		: $pick(this.props.layers[key].color,		this.props.layers['default'].color),
+			gradient	: $pick(this.props.layers[key].gradient,	this.props.layers['default'].gradient),
+			stroke		: $pick(this.props.layers[key].stroke,		this.props.layers['default'].stroke),
+			image		: $pick(this.props.layers[key].image,		this.props.layers['default'].image),
+			width		: $pick(this.props.layers[key].width,		this.props.layers['default'].width),
+			opacity		: $pick(this.props.layers[key].opacity,		this.props.layers['default'].opacity),
+			angle		: $pick(this.props.layers[key].angle,		this.props.layers['default'].angle),
+			rotation	: $pick(this.props.layers[key].rotation,	this.props.layers['default'].rotation),
+			scale		: $pick(this.props.layers[key].scale,		this.props.layers['default'].scale),
+			composite	: $pick(this.props.layers[key].composite,	this.props.layers['default'].composite)
 		};
 			
 		// we test the position
-		var coordinates = this.props.layers[key].offset || this.props.layers['default'].offset;
+		var coordinates = $pick(this.props.layers[key].offset, this.props.layers['default'].offset);
 		if ($type(coordinates) == 'array') {
 			//4 sides defined
 			if ($defined(coordinates[3])) {
@@ -511,16 +512,10 @@ UI.Canvas = new Class({
 		properties.size = [coordinates[2], coordinates[3]];
 		
 		// +radius
-		var radius = ($defined(this.props.layers[key].radius)) ?
-			this.props.layers[key].radius :
-			this.props.layers['default'].radius;
+		var radius = $pick(this.props.layers[key].radius, this.props.layers['default'].radius);
 		
 		if ($type(radius) == 'array') {
-			if($defined(radius[3])) {
-				properties.radius = radius;
-			} else {
-				properties.radius = [radius[0], radius[0], radius[1], radius[1]];
-			}
+			properties.radius = $defined(radius[3]) ? radius : [radius[0], radius[0], radius[1], radius[1]];
 		} else {
 			properties.radius = [radius, radius, radius, radius];
 		}
@@ -641,7 +636,9 @@ UI.Canvas = new Class({
 	*/
 	
 	drawShape : function(props){
-		if (props.color || props.gradient) {
+		if (props.image) {
+			this.setImage(props);
+		} else if (props.color || props.gradient) {
 			this.setColor('fill', props);
 			this.ctx.fill();
 		}
@@ -652,6 +649,33 @@ UI.Canvas = new Class({
 			this.ctx.stroke();
 		}
 		
+	},
+	
+	setImage : function(props) {
+		//set vars
+		props.image.pattern = props.image.pattern || 'repeat';
+		
+		// we load the image
+		var img = new Image();
+		img.onload = function(){
+			// create pattern
+			var ptrn = this.ctx.createPattern(img, props.image.pattern);
+			this.ctx.fillStyle = ptrn;
+			this.ctx.fill();
+		}.bind(this)
+		//we draw it as a pattern
+		img.src = props.image.url;
+		
+		/*
+		var img = new Image();
+		img.onload = function() {		
+			var p = this.ctx.createPattern(img, props.image.pattern);
+			this.ctx.fillStyle = p;
+			this.ctx.fill();
+		}.bind(this)
+		
+		img.src = props.image.url;
+		*/
 	},
 	
 	/*
