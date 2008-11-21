@@ -45,8 +45,8 @@ UI.Panel = new Class({
 		title					: 'Panel',
 
 		// Size options
-		width					: 300,
-		height					: 480,
+		width					: 200,
+		height					: 200,
 		
 		// see UI.VIew.setContent() for information about loading window's content.
 		url						: false,
@@ -61,26 +61,25 @@ UI.Panel = new Class({
 		
 		// Components Options
 		head					: true,
-		controls				: ['close'],
-
+		view					: true,
 		foot					: false,
+
+		// 		
+		controls				: ['close','minimize','maximize'],
 	
 		// Not Implemented should be able to enable/disable effects
 		useEffects				: false,
-		
+		viewOverflow			: 'hidden',
 		// Drag options
-		draggable				: true,
+		draggable				: false,
 		dragLimitX				: [-1000, window.getWidth() + 1000],
-		dragLimitY				: [53, window.getHeight() + 1000],
+		dragLimitY				: [50, window.getHeight() + 1000],
+		dragHandlers			: ['head','foot'],
 		
 		// Resize options
 		resizable				: false,
 		resizeLimitX			: [200, window.getWidth()],
 		resizeLimitY			: [200, window.getHeight()],
-		
-		// Main View Options
-		viewOverflow			: 'hide',
-		viewBackgroundColor		: '#fff',
 		
 		// Implemented events
 		onResize			: $empty,
@@ -92,7 +91,6 @@ UI.Panel = new Class({
 		onFocus				: $empty,
 		onClose				: $empty
 	},
-
 /*
     Function: initialize
    

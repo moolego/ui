@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" href="css/reset.css" />
 
-	<title>MooLego - Components Playground</title>
+	<title>MooLego SplitView - Component Playground</title>
 	
 	<script type="text/javascript" src="mootools/core.js"></script>
 	<script type="text/javascript" src="mootools/more.js"></script>
@@ -20,7 +20,7 @@
 	<script type="text/javascript" src="../Source/Element/Element.Drag.js"></script>
 	<script type="text/javascript" src="../Source/Element/Element.Resize.js"></script>
 	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
-
+	
 	<script type="text/javascript" src="../Source/Control/Control.js"></script>
 	<script type="text/javascript" src="../Source/Control/Label.js"></script>
 	<script type="text/javascript" src="../Source/Control/Input.js"></script>
@@ -47,6 +47,8 @@
 	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
 	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
 	
+	<script type="text/javascript" src="js/examples.js"></script>
+	
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
 	
@@ -54,130 +56,21 @@
 		window.addEvent('load', function() {
 			var time = $time();
 			
-			toolbar = new UI['Toolbar']({
-				displayMode : 'text',
-				menu		: [
-					{
-						text	: 'moolego',
-						styles	: {
-							position	: 'relative'
-						},
-						menu : [
-							{
-								text : 'About',
-								action : function() { 
-									new UI.Window({
-										title			: 'about',
-										width			: 300,
-										height			: 160,
-										head			: false,
-										viewOverflow 	: 'hidden',
-										controls		: ['close']
-									});
-								}
-							},
-							{ 
-								text 		: 'Software version...',
-								action : function() { this.test('about'); alert('click')}.bind(this)
-							},
-							{ text		: 'separator' },
-							{ 
-								text 		: 'Préférences systemes...',
-								action : function() { new App.Settings() }
-							},
-							{ text		: 'separator' },{
-								text : 'Elements récents',
-								menu : [
-									{text : 'Finder'},
-									{text : 'Safari'},
-									{text : 'Mail'},
-									{text : 'Protoshop'},
-									{text : 'Nasty Explorer'}
-								]
-							},
-							{ text		: 'separator' },
-							{
-								text : 'Fermer la session'
-							}
-						]
-					},
-					{
-						text : 'New',
-						options : {'class' : 'ui-dd-new'},
-						menu		: [
-							{
-								text : 'Button',
-								action : function() { 
-									new UI.Button().inject(form, 'top');
-								}.bind(this)
-							},
-							{ 
-								text 		: 'Window',
-								action : function() { 
-									new UI.Window();
-								}.bind(this)
-							}
-						]
-					},
-					{
-						text : 'Window',
-						options : {'class' : 'ui-dd-new'},
-						menu		: [
-							{
-								text : 'About',
-								action : function() { this.test('about'); alert('click')}.bind(this)
-							},
-							{ text 		: 'Minimizer'},
-							{ text		: 'separator' },
-							{ text		: 'Cascade',
-							  action: function(){
-							  	this.windowManager.resetCascade()
-							  }.bind(this)
-							  
-							}
-						]
-					},
-					{
-						text : 'Help',
-						options : {'class' : 'ui-dd-help'},
-						menu : [
-							{ text : 'Welcome' },
-							{ text : 'separator' },
-							{ text : 'Update...' },
-							{ text : 'separator' },
-							{ text : 'Settings...' }
-						]
-					}
-				]						
-			}).inject(document.body,'top');
-
-
-			this.workspace = new UI.SplitView().inject(document.body);
-			
-			
-			new UI.Panel({
-				view	: { overflow	: 'hidden'},
-				styles			: {
-					position	: 'relative',
-					
+			new UI.View({
+				width : 600,
+				height : 400,
+				styles: {
+					margin : '40px',
+					backgroundColor : '#fff',
+					border : '1px solid #ccc'
 				}
-				
-			}).inject(workspace.side.content);
-			
-			new UI.Panel({
-				view	: { overflow	: 'hidden'},
-				styles			: {
-					position	: 'relative',
-					
-				}
-				
-			}).inject(workspace.side.content);
-			
-			
+			})
+			.inject(document.body)
+			.setContent('ajax','assets/pulp.json');
 		});
 	</script>
 </head>
 
-<body style="overflow:hidden;height:100%" bgcolor="#e8e8e8"></body>
+<body style="overflow:hidden" bgcolor="#e8e8e8"></body>
 
 </html>
