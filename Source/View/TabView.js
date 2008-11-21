@@ -8,7 +8,7 @@ UI.TabView = new Class({
 	Extends: UI.View,
 	
 	options: {
-		component: 'tabview',
+		component: 'tabview'
 	},
 	
 	/*
