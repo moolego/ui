@@ -92,13 +92,6 @@ UI.View = new Class({
 
 	setBehavior: function() {
 		this.parent();
-		
-		this.addEvents({
-			'onResize'  		: this.updateSize,
-			'onLoadComplete' 	: this.updateSize
-		});
-		
-	
 	},
 
 	/*
@@ -111,10 +104,9 @@ UI.View = new Class({
 		if ( this.options.overflow != 'hidden') { 
 			this.content = new Element( this.options.contentTag,  this.options.content )
 			 .setStyles( {
-					height		:'100%',
-					position	: 'relative'
-				} )
-			 .inject( this.element );
+				height :'100%',
+				position : 'relative'
+			}).inject(this.element);
 
 			if (this.options.overflow == 'hidden') {
 				this.content.setStyle('overflow','hidden');	
@@ -146,24 +138,20 @@ UI.View = new Class({
 		});
 				 
 		this.addEvents({
-			'onContentSet'	: this.scrollbar.update(),
-			'onResize'		: this.scrollbar.update()
+			'ondLoadCompplete' : function() { this.scrollbar.update() },
+			'onResize' : function() { this.scrollbar.update() }
 		 });  
 	},
 	
+
 	/*
-    Method: updateSize
-
-      Creates a new scrollbar object
-      
-	Discussion:
-		need to find a better method name	
-	*/
-
-	updateSize : function() {
-		if (this.options.overflow == 'scrollbar') {
-			this.scrollbar.update();
-		}
+	 * 	Function: setSize
+	 * 		Set size of the element and its canvas
+	 */
+	
+	setSize : function(width, height, state){
+		this.parent();
+		this.fireEvent('onResize');
 	},
 
 	/*
@@ -175,50 +163,76 @@ UI.View = new Class({
 	setContent: function(method,source,options){
 		switch (method) {
 			case 'ajax' || 'xhr':
-				new Request.HTML({
-					url 		: source,
-					update		: this.content,
-					method		: 'get',
-					onComplete: function(response){
-						this.fireEvent('onLoadComplete');
-						this.updateSize();
-						//this.fireEvent('resize')
-					}.bind(this)
-				}).send();
+				this.setAjaxContent(method,source,options);
 				break;
 			case 'ajaxnu' :
-				new Request.HTML({
-					url 		: source,
-					method		: 'get',
-					onComplete: function(responseTree,responseElements,responseHTML,responseJS){
-						this.fireEvent('onLoadComplete',new Array(responseHTML,responseTree,responseElements,responseJS));
-						this.updateSize();
-					}.bind(this)
-				}).send();
+				this.setAjaxNuContent(method,source,options)
 				break;
 			case 'json':
-				new Request.JSON({
-					url 		: source,
-					onComplete: function(response){
-						this.fireEvent('onLoadComplete',new Array(response));
-						this.updateSize();
-					}.bind(this)
-				}).get();
+				this.setJsonContent(method,source,options);
 				break;
 			case 'content' || 'html':
-				this.content.set('html',source);
-				this.fireEvent('onLoadComplete');
-				//return this;
+				this.setHtmlContent(method,source,options);
 				break;
 			case 'iframe':
-				this.element.set('src',source)
-				 .addEvent('load',function(){ 
-				 	this.fireEvent('loadComplete');
-				});
+				this.setIFrameContent(method,source,options);
 				break;
 			default:		
 		};
-		this.updateSize();
+	},
+
+	setHtmlContent: function(method,source,options) {
+		this.content.set('html',source);
+		this.fireEvent('onLoadComplete');
+		this.fireEvent('onResize');
+		return this;
+	},
+	
+	setAjaxContent: function(method,source,options) {
+		new Request.HTML({
+			url 		: source,
+			update		: this.content,
+			method		: 'get',
+			onComplete: function(response){
+				this.fireEvent('onLoadComplete');
+				this.fireEvent('onResize');
+			}.bind(this)
+		}).send();
+		
+		return this;
+	},
+	
+	setAjaxNuContent: function(method,source,options) {
+		new Request.HTML({
+			url : source,
+			method : 'get',
+			onComplete : function(responseTree,responseElements,responseHTML,responseJS){
+				this.fireEvent('onLoadComplete',new Array(responseHTML,responseTree,responseElements,responseJS));
+				this.fireEvent('onResize');
+			}.bind(this)
+		}).send();
+		
+		return this;
+	},
+	
+	setJsonContent: function(method,source,options) {
+		new Request.JSON({
+			url : source,
+			onComplete : function(response){
+				this.fireEvent('onLoadComplete',new Array(response));
+				this.fireEvent('onResize');
+			}.bind(this)
+		}).get();
+		
+		return this;
+	},
+	
+	setIFrameContent : function(method,source,options) {
+		this.element.set('src',source)
+		 .addEvent('load',function(){ 
+		 	this.fireEvent('loadComplete');
+			this.fireEvent('onResize');
+		});
 		
 		return this;
 	}

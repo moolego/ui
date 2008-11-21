@@ -18,10 +18,10 @@ UI.Scrollbar = new Class({
 		component		: 'scrollbar',
 		type			: 'track',
 		
-		width			: 15,
+		width			: 20,
 		
 		maxThumbSize	: 30,
-		wheel			: 12	
+		wheel			: 30	
 	},
 
 	initialize: function(options){
@@ -61,7 +61,7 @@ UI.Scrollbar = new Class({
 
 		this.isVisible() ?	this.thumb.element.setStyle('visibility','visible') : this.thumb.element.setStyle('visibility','hidden');
 		
-		this.trackSize = this.element.offsetHeight.toInt() - 10;
+		this.trackSize = this.element.offsetHeight.toInt();
 		this.containerRatio = this.containerSize / this.containerScrollSize;
 		this.thumbSize = (this.trackSize * this.containerRatio).limit(this.options.maxThumbSize.toInt(), this.trackSize);
 		this.scrollRatio = this.containerScrollSize / this.trackSize;
@@ -83,6 +83,7 @@ UI.Scrollbar = new Class({
 
 	attach: function(){
 		this.thumb.element.addEvent('mousedown', this.bound.start);
+		//this.thumb.element.addEvent('whileclick', this.bound.start);
 		if (this.options.wheel) 
 			this.options.container.addEvent('mousewheel', this.bound.wheel);
 		this.element.addEvent('mouseup', this.bound.page);
