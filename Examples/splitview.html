@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="UTF-8">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="css/reset.css" />
+
+	<title>MooLego SplitView - Component Playground</title>
+	
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="mootools/more.js"></script>
+
+	<script type="text/javascript" src="../Utils/Singleton.js"></script>
+	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+
+	<script type="text/javascript" src="../Source/Core/UI.js"></script>
+	<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
+	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
+		
+	<script type="text/javascript" src="../Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Drag.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Resize.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
+	
+	<script type="text/javascript" src="../Source/Control/Control.js"></script>
+	<script type="text/javascript" src="../Source/Control/Label.js"></script>
+	<script type="text/javascript" src="../Source/Control/Input.js"></script>
+	<script type="text/javascript" src="../Source/Control/Button.js"></script>
+	<script type="text/javascript" src="../Source/Control/Textarea.js"></script>
+	<script type="text/javascript" src="../Source/Control/Checkbox.js"></script>
+	<script type="text/javascript" src="../Source/Control/RadiosGroup.js"></script>
+	<script type="text/javascript" src="../Source/Control/Select.js"></script>
+	<script type="text/javascript" src="../Source/Control/Slider.js"></script>
+	<script type="text/javascript" src="../Source/Control/Bubble.js"></script>
+	
+	<script type="text/javascript" src="../Source/Menu/Menu.js"></script>
+	<script type="text/javascript" src="../Source/Menu/Toolbar.js"></script>
+	<script type="text/javascript" src="../Source/Menu/Context.js"></script>
+	<script type="text/javascript" src="../Source/Menu/Scroller.js"></script>
+
+	<script type="text/javascript" src="../Source/View/View.js"></script>
+	<script type="text/javascript" src="../Source/View/TabView.js"></script>
+	<script type="text/javascript" src="../Source/View/SplitView.js"></script>
+	<script type="text/javascript" src="../Source/View/PanelView.js"></script>
+	<script type="text/javascript" src="../Source/Control/Scrollbar.js"></script>
+	
+	<script type="text/javascript" src="../Source/Window/Window.js"></script>
+	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
+	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
+	
+	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../Skins/Demo.js"></script>
+	
+	<script type="text/javascript">
+		window.addEvent('load', function() {
+			var time = $time();
+			
+			new UI.SplitView({
+				width : 300,
+				height : 300,
+				layers: {
+					reorder: ['emboss', 'front', 'reflect'],
+
+					emboss: {
+						offset: '0px',
+						color: '#000',
+						opacity: .17,
+						radius: 8
+					},
+					
+					front: {
+						offset: 2,
+						opacity: 1,
+						color : '#500',
+						radius: 6
+					},
+					reflect: {
+						offset: ['2px', '2px', '40%'],
+						
+						gradient	: {
+							color: ['#FFF', '#FFF'],
+							opacity: [.4, .03]
+						},
+						radius: [4,4, 4, 4]
+					}
+				}
+			}).inject(document.body);
+			
+			
+
+			
+		});
+	</script>
+</head>
+
+<body style="overflow:hidden" bgcolor="#e8e8e8"></body>
+
+</html>
