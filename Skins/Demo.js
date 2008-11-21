@@ -307,7 +307,15 @@ UI.props.demo = {
 		tube: {
 			'default'				: {
 				layers				: {
-					reorder			: ['front', 'light', 'reflect'],
+					reorder			: ['shadow', 'front', 'light', 'reflect'],
+					
+					shadow : {
+						color : '#000',
+						size : 8,
+						offsetX : 0,
+						offsetY : 3,
+						opacity : 1.5
+					},
 					
 					front			: {
 						position	: 'absolute',
@@ -895,11 +903,10 @@ UI.props.demo = {
 				layers : {
 					shadow : {
 						color : '#000',
-						size : 10,
-						magnify : 0,
-						offsetX : 3,
-						offsetY : 3,
-						opacity : 1
+						size : 16,
+						offsetX : 0,
+						offsetY : 5,
+						opacity : .5
 					},
 					shape : {
 						color : '#FFF',

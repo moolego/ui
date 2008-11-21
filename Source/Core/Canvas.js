@@ -217,6 +217,9 @@ UI.Canvas = new Class({
 			this.canvasSize[1] - this.shadowOffset[1]
 		];
 		
+		//set diffusion
+		var diffusion = 1;
+		
 		//set radius
 		if ($defined(this.props.layers.shadow.radius))
 			modelProps.radius = [
@@ -226,14 +229,14 @@ UI.Canvas = new Class({
 				this.props.layers.shadow.radius
 			];
 		var radius = [
-			this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[0],
-			this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[1],
-			this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[2],
-			this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[3]
+			diffusion * (this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[0]),
+			diffusion * (this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[1]),
+			diffusion * (this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[2]),
+			diffusion * (this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[3])
 		];
 		
 		//set opacity
-		var opacity = (this.props.layers.shadow.opacity || 1)/2;
+		var opacity = (this.props.layers.shadow.opacity || 1)/4;
 		
 		//set shape
 		var shape = modelProps.shape;
@@ -247,10 +250,13 @@ UI.Canvas = new Class({
 		}
 		
 		for (var i = this.shadowThikness * 2; i > 0; i--) {
+			
+			var oratio = opacity/(i+1);
+			//console.log(oratio);
 			this.ctx.save();
 				this.setTransformation(props);
 				this[shape](props);
-				this.ctx.fillStyle = "rgba("+color+", "+opacity/i+")";
+				this.ctx.fillStyle = "rgba("+color+", "+oratio+")";
 				this.ctx.fill();
 			this.ctx.restore();
 			
@@ -263,20 +269,22 @@ UI.Canvas = new Class({
 				++props.offset[1]
 			];
 			props.radius = [
-				props.radius[0] > 0 ? --props.radius[0] : 0,
-				props.radius[1] > 0 ? --props.radius[1] : 0,
-				props.radius[2] > 0 ? --props.radius[2] : 0,
-				props.radius[3] > 0 ? --props.radius[3] : 0,
+				props.radius[0] > 0 ? props.radius[0] - diffusion : 0,
+				props.radius[1] > 0 ? props.radius[1] - diffusion : 0,
+				props.radius[2] > 0 ? props.radius[2] - diffusion : 0,
+				props.radius[3] > 0 ? props.radius[3] - diffusion : 0,
 			];
 		}
 		
 		//we clear the model shape
+		
 		this.ctx.save();
 			this.setTransformation(modelProps);
 			this.ctx.globalCompositeOperation = 'destination-out';
 			this[shape](modelProps);
 			this.ctx.fill();
 		this.ctx.restore();
+		
 		
 		this.shadowSet = true;
 		this.draw();

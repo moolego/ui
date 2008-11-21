@@ -1305,7 +1305,7 @@ UI.props.AquaGraphite = {
 						radius				: 4
 					},
 					shadow : {
-						size				: 32,
+						size				: 16,
 						offsetY				: 10
 					},
 					background : {
@@ -1928,11 +1928,11 @@ UI.props.AquaGraphite = {
 				layers						: {
 					background				: {
 						color				: ['#606971','444f5a'],
-						offset				: 0
+						offset				: [1, 0]
 					},
 					main					: {
 						color				: ['#6b737b','#555e69'],
-						offset				: [1, 0]
+						offset				: [2, 0]
 					}
 				}
 			}
