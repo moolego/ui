@@ -89,7 +89,7 @@ UI.Canvas = new Class({
 			this.props.layers.shadow.offsetY
 		];
 		
-		this.shadowThikness = this.shadowSize/2 + this.shadowMagnify;
+		this.shadowThikness = this.shadowSize + this.shadowMagnify;
 
 		this.canvasSize = [
 			(width  || this.options.width) + this.shadowThikness * 2 + Math.abs(this.shadowOffset[0]),
@@ -184,6 +184,102 @@ UI.Canvas = new Class({
 				this.drawShadowLayers();
 			}.bind(this));
 		}
+	},
+	
+	/*
+		Function: drawShadows
+			Draw shadow with successive rounded rect
+		
+		Arguments: no
+	*/
+	
+	drawShadows : function(){
+		//get first layer parameters
+		var layerKey = null;
+		$H(this.props.layers).each(function(props, key){
+			if (key != 'shadow' && key != 'default') {
+				layerKey = layerKey || key;
+			}
+		});
+		var modelProps = this.getProperties(layerKey);
+		
+		//set color
+		//console.log(this.props.layers.shadow.color);
+		if(this.props.layers.shadow.color && this.props.layers.shadow.color.test(/#[0-9A-F]+/)){
+			var color = this.props.layers.shadow.color.hexToRgb(true);
+		}else{
+			var color = '0,0,0';
+		}
+
+		//set size
+		var size = [
+			this.canvasSize[0] - this.shadowOffset[0],
+			this.canvasSize[1] - this.shadowOffset[1]
+		];
+		
+		//set radius
+		if ($defined(this.props.layers.shadow.radius))
+			modelProps.radius = [
+				this.props.layers.shadow.radius,
+				this.props.layers.shadow.radius,
+				this.props.layers.shadow.radius,
+				this.props.layers.shadow.radius
+			];
+		var radius = [
+			this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[0],
+			this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[1],
+			this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[2],
+			this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[3]
+		];
+		
+		//set opacity
+		var opacity = (this.props.layers.shadow.opacity || 1)/2;
+		
+		//set shape
+		var shape = modelProps.shape;
+		
+		//draw
+		var props = {
+			radius		: radius,
+			color		: this.props.layers.shadow.color || '#000',
+			size		: size,
+			offset		: [this.shadowOffset[0], this.shadowOffset[1]]
+		}
+		
+		for (var i = this.shadowThikness * 2; i > 0; i--) {
+			this.ctx.save();
+				this.setTransformation(props);
+				this[shape](props);
+				this.ctx.fillStyle = "rgba("+color+", "+opacity/i+")";
+				this.ctx.fill();
+			this.ctx.restore();
+			
+			props.size = [
+				props.size[0] - 2,
+				props.size[1] - 2
+			];
+			props.offset = [
+				++props.offset[0],
+				++props.offset[1]
+			];
+			props.radius = [
+				props.radius[0] > 0 ? --props.radius[0] : 0,
+				props.radius[1] > 0 ? --props.radius[1] : 0,
+				props.radius[2] > 0 ? --props.radius[2] : 0,
+				props.radius[3] > 0 ? --props.radius[3] : 0,
+			];
+		}
+		
+		//we clear the model shape
+		this.ctx.save();
+			this.setTransformation(modelProps);
+			this.ctx.globalCompositeOperation = 'destination-out';
+			this[shape](modelProps);
+			this.ctx.fill();
+		this.ctx.restore();
+		
+		this.shadowSet = true;
+		this.draw();
 	},
 
 	/*
@@ -563,6 +659,7 @@ UI.Canvas = new Class({
 			var by = -ay;
 			
 			//make the gradient with start point and end point
+			//console.log(props.size[0], props.size[1]);
 			var color = this.ctx.createLinearGradient(ax, ay, bx, by);
 			
 			//check if opacity exist, else create it

@@ -893,12 +893,47 @@ UI.props.demo = {
 					position : 'relative'
 				},
 				layers : {
-					shadowl : {
-						size : 64
+					shadow : {
+						color : '#000',
+						size : 10,
+						magnify : 0,
+						offsetX : 3,
+						offsetY : 3,
+						opacity : 1
 					},
-					element : {
+					shape : {
 						color : '#FFF',
+						opacity : 1,
+						radius : 10,
 						offset : 0
+					}
+				}
+			},
+			letter : {
+				styles : {
+					position : 'relative'
+				},
+				layers : {
+					shadow : {
+						color : '#000',
+						size : 16,
+						magnify : 0,
+						offsetX : 0,
+						offsetY : 0,
+						opacity : 1
+					},
+					shape : {
+						color : '#600',
+						radius : 150,
+						offset : 0,
+						opacity : 1
+					},
+					hole : {
+						scale : [.7, .95],
+						color : '#FFF',
+						radius : 150,
+						offset : 0,
+						opacity : 1
 					}
 				}
 			}
