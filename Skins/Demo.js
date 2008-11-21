@@ -175,14 +175,14 @@ UI.props.demo = {
 							fontFamily: 'Arial, Helvetica',
 							opacity: '.7', 
 							padding: '10px 16px',
-							color: '#333',
+							color: '#fff',
 							width: '70px'
 						}
 					}
 				},
 				
 				styles : {					
-					margin	: '3px'
+					margin	: '1px 3px 0px'
 				},
 				
 				layers: {
@@ -192,23 +192,23 @@ UI.props.demo = {
 						offset: '0px',
 						color: '#000',
 						opacity: .17,
-						radius: 7
+						radius: 8
 					},
 					
 					front: {
 						offset: 2,
 						opacity: 1,
 						color : '#500',
-						radius: 5
+						radius: 6
 					},
 					reflect: {
-						offset: ['2px', '2px', '35%'],
+						offset: ['2px', '2px', '40%'],
 						
 						gradient	: {
 							color: ['#FFF', '#FFF'],
-							opacity: [.9, .1]
+							opacity: [.4, .03]
 						},
-						radius: [3, 3, 3, 3]
+						radius: [4,4, 4, 4]
 					}
 				}
 			},
@@ -218,6 +218,15 @@ UI.props.demo = {
 						styles: {
 							opacity: 1
 						}
+					}
+				},
+				layers: {
+					reflect : {
+						gradient	: {
+							color: ['#FFF', '#FFF'],
+							opacity: [.6, .04]
+						},
+						
 					}
 				}
 			},
@@ -313,7 +322,7 @@ UI.props.demo = {
 						position	: 'absolute',
 						offset		: '0px',
 						color		: '#fe3333',
-						radius		: 8
+						radius		: 10
 					},
 					light			: {
 						position	: 'absolute',

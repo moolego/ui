@@ -7,7 +7,6 @@ Class: UI.PanelView
 UI.PanelView = new Class({
 	Extends					: UI.View,
 	
-	
 	options: {
 		className			: 'ui-panelview',
 		buildType			: 'div',

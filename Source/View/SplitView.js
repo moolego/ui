@@ -10,65 +10,33 @@ Arguments:
 */
 
 UI.SplitView = new Class({
-	Implements				: [Events, Options],
+	Extends					: UI.View,	
 	
 	options : {
-		className			: 'ui-layout-app',
-		minSize				: '50'
+		component	: 'splitview',
+		overflow	: 'hidden',
+		minSize		: '160px'
 	},
 	
 	initialize: function(options){
-		this.setOptions(options);
+		this.parent(options);
 		this.build();
 		this.resize();
 	},
-	
+
 	build: function(){
-		this.size = this.options.container.getSize(); 
+		this.parent();
+		
+		this.size = this.element.getSize(); 
 		
 		var mainSize = this.size.x - 161;
 
-		this.side = new UI.View({ 
-			width				: 160,
-			height				: '100%',
-			styles				: { 
-				'float'			: 'left',
-				overflow		: 'hidden',
-				backgroundColor	: '#d6dde5',
-				borderRight		: '1px solid #8b8b8b'
-			},
-			overflow		: 'hidden'
-		}).inject(this.options.container);
-		
-		this.side.element.setStyles({
-			'float':'left',
-			backgroundColor: '#d6dde5'
-		});
+		this.side = new UI.View(this.props.components.side)
+		 .inject(this.element);
 
-		this.main = new UI.View({
-			width		: mainSize,
-			className	: this.options.className + '-main',
-			container	: this.options.container,
-			overflow	: 'hidden'
-		}).inject(this.options.container);;
-		
-		this.main.element.setStyles({
-			'float': 'left',
-			'overflow' : 'hidden'
-		});
-		
-		/*
-		this.handler = new UI.Splitter({
-			styles: {
-				height			: '100%',
-				cursor			: 'e-resize',
-				width			: '7px',
-				opacity			: '.3',
-				marginLeft		: this.side.element.getSize().x - 2
-			}
-		}).inject(this.options.container);
-		*/
-		
+		this.main = new UI.View(this.props.components.main)
+		 .setStyle('width', mainSize)
+		 .inject(this.element);
 		
 		var mainSize = this.size.x - this.side.element.getSize().x;
 		
@@ -77,14 +45,9 @@ UI.SplitView = new Class({
 			y	: [0, 0]
 		}
 		
-		this.handler = new Element('div',{	'class'	: 'ui-splitview-handler' })
-		 .setStyles({
-			height 			: '100%', 
-			cursor 			: 'e-resize', 
-			width			: '7px',
-			opacity			: '.3',
-			'margin-left'	: this.side.element.getSize().x - 2
-		}).inject(this.options.container);
+		this.handler = new Element('div',this.props.components.splitter)
+		 .setStyles({ 'margin-left'	: this.side.element.getSize().x - 2	})
+		 .inject(this.element);
 		
 		this.handler.makeDraggable({
 			limit				: this.draglimit,
@@ -95,7 +58,9 @@ UI.SplitView = new Class({
 	},
 
 	resize: function() {
-		this.side.element.setStyle('width', this.handler.getCoordinates().left - this.options.container.getCoordinates().left + 3);
-		this.main.element.setStyle('width', this.options.container.getSize().x - this.side.element.getSize().x);
+
+		this.side.element.setStyle('width', this.handler.getCoordinates().left - this.element.getCoordinates().left + 3);
+		this.main.element.setStyle('width', this.element.getSize().x - this.side.element.getSize().x);
+		this.fireEvent('onResize');
 	}
 });

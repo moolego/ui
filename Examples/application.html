@@ -152,16 +152,32 @@
 			}).inject(document.body,'top');
 
 
-			this.workspace = new UI.SplitView({
-				container	: this.content,
-				className	: 'ui-layout-app'
-			});
+			this.workspace = new UI.SplitView().inject(document.body);
+			
+			
+			new UI.Panel({
+				view	: { overflow	: 'hidden'},
+				styles			: {
+					position	: 'relative',
+					
+				}
+				
+			}).inject(workspace.side.content);
+			
+			new UI.Panel({
+				view	: { overflow	: 'hidden'},
+				styles			: {
+					position	: 'relative',
+					
+				}
+				
+			}).inject(workspace.side.content);
 			
 			
 		});
 	</script>
 </head>
 
-<body style="overflow:hidden" bgcolor="#e8e8e8"></body>
+<body style="overflow:hidden;height:100%" bgcolor="#e8e8e8"></body>
 
 </html>

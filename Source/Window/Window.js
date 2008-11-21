@@ -107,8 +107,9 @@ UI.Window = new Class({
 		this.parent(options);
 		
 		// set windnow position
-		this.element.setStyles(this.getInitialLocation());
-		
+		if (this.options.component == 'window') {
+			this.element.setStyles(this.getInitialLocation());
+		}
 		this.controller.focus(this);
 		this.fireEvent('focus');
 		this.isActive = true;
@@ -167,18 +168,43 @@ UI.Window = new Class({
 	*/
 	
 	buildControls: function() {
+		if (!this.options.controls) { return }
+		
+		var controllist = new Array();
+		
 		this.controls = new Element('div',this.props.components.controls)
+		.addEvents({
+			mouseenter	: function() {
+				controllist.each(function(button) {
+					button.setState('over');
+					button.set('html', '');
+					
+				})
+			},
+			mouseleave	: function() {
+				controllist.each(function(button) {
+					button.setState('over');
+					button.set('html', '');
+					
+				})
+			},
+			
+		})
 		.inject(this.head);
 		
 		this.options.controls.each(function(action){
-			var control = new UI.Button(this.props.components.control)
+			this.props.components.control.type = action;
+
+			var button = new UI.Button(this.props.components.control)
 			.addEvent('onClick', this.control.bind(this, action))
 			.inject(this.controls);	
+			
+			controllist.push(button);
 		},this);
 		
 		this.addEvents({
-			'onMinimize': this.controls.hide,
-			'onNormalize': this.controls.show
+			'onMinimize': function() { this.controls.hide() },
+			'onNormalize': function() { this.controls.show() }
 		});
 	},
 	
@@ -245,6 +271,11 @@ UI.Window = new Class({
 			
 			this.view = new UI.View(props)
 			.inject(this.element);
+			
+			this.addEvents('injected', function() {
+				console.log('injected');
+				this.view.fireEvent('onResize');
+			});
 		}
 
 		this.content = this.view.content;
@@ -282,25 +313,23 @@ UI.Window = new Class({
 	*/
 
 	buildFoot: function() {
-		if (this.options.foot) {
-			this.foot = new Element('div', this.props.components.foot)
-			.inject(this.element);
-			
+		if (!this.options.foot || this.foot) { return };
 		
-			
-			this.foot.disableSelect();
-			
-			if (this.options.resizable) {
-				this.buildResizeHandler();	
-			}
-				
-			this.status = new Element('div',this.props.components.status)
-			.inject(this.foot);
-			
-			this.dragHandlers.push(this.status);
-			
-			this.setStatus();
+		this.foot = new Element('div', this.props.components.foot)
+		.inject(this.element);
+
+		this.foot.disableSelect();
+		
+		if (this.options.resizable) {
+			this.buildResizeHandler();	
 		}
+			
+		this.status = new Element('div',this.props.components.status)
+		.inject(this.foot);
+		
+		this.dragHandlers.push(this.status);
+		
+		this.setStatus();
 	},
 
 	/*
@@ -314,7 +343,7 @@ UI.Window = new Class({
 			component		: 'element',
 			type			: 'resizeHandler'
 		})
-		.addEvent('mousedown', function(e) { new Event(e).stop() })
+	//	.addEvent('mousedown', function(e) { new Event(e).stop() })
 		
 		.inject(this.foot);
 	},
@@ -458,6 +487,7 @@ UI.Window = new Class({
 			left	: this.coordinates.left,
 			top		: this.coordinates.top
 		});
+		
 		this.setSize(this.coordinates.width,this.coordinates.height);
 		
 		this.maximized = false;
@@ -537,20 +567,9 @@ UI.Window = new Class({
 			});
 		}
 		
-		this.view.updateSize();
+		this.view.fireEvent('onResize');
 	},
 
-	/*
-	    Function: close
-	      Close window and fireEvent 
-	*/	
-	
-	inject : function(container){
-		this.parent(container);
-		this.canvas.canvas.addEvent('click', function(e){
-			this.controller.propagateUnderShadow(e)}.bind(this)
-		);
-	},
 	
 	 /*
 		Function: setSize

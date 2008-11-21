@@ -192,72 +192,7 @@ UI.Element = new Class({
 	},
 
 	
-	/*
-		Script: UI.Element.Native.js
-		  Contains methods to work with size, scroll, or positioning of Elements and the window object.
-		 
-		License:
-		  MIT-style license.
-		 
-		Credits:
-		  - Element positioning based on the [qooxdoo](http://qooxdoo.org/) code and smart browser fixes, [LGPL License](http://www.gnu.org/licenses/lgpl.html).
-		  - Viewport dimensions based on [YUI](http://developer.yahoo.com/yui/) code, [BSD License](http://developer.yahoo.com/yui/license.html).
-	*/
- 
-		
-	/*
-   		reImpelement some Native Mootools Element needed methods
-	*/
 	
-	
-	/*
-	    Function: show
-	    	Set display block to the view element
-	*/
-	
-	show: function() {
-		this.fireEvent('show');
-		this.element.setStyle('opacity', 1);
-		this.element.show();
-
-		return this;
-	},
-
-	/*
-    	Function: hide
-    		Set display none to the view element
-
-	*/
-	
-	hide: function() {
-		this.element.hide();
-		
-		return this;
-	},
-	
-		
-	/*
-    Function: inject
-    	Inject the element element into container
-    	
-    Argument: 
-    	View Container
-
-	*/
-	
-	inject: function (container, position){
-		this.fireEvent('inject');
-
-		this.element.inject(container, position);
-		this.element.setStyle('visibility', 'visible');
-
-		this.setSize();
-		this.setCanvas();
-		this.controller.register(this);
-		
-		return this;		
-	},
-
 	
 	/*
 	    Function: setBehavior
@@ -332,8 +267,76 @@ UI.Element = new Class({
 				
 			}
 		}
+	},
+		
+	/*
+   		reImpelement some Native Mootools Element needed methods
+	*/
+	
+	
+	/*
+	    Function: show
+	    	Set display block to the view element
+	*/
+	
+	show: function() {
+		this.fireEvent('show');
+		this.element.setStyle('opacity', 1);
+		this.element.show();
+
+		return this;
+	},
+
+	/*
+    	Function: hide
+    		Set display none to the view element
+
+	*/
+	
+	hide: function() {
+		this.element.hide();
+		
+		return this;
+	},
+	
+		
+	/*
+    Function: inject
+    	Inject the element element into container
+    	
+    Argument: 
+    	View Container
+
+	*/
+	
+	inject: function (container, position){
+		this.fireEvent('inject');
+
+		this.element.inject(container, position);
+		this.element.setStyle('visibility', 'visible');
+
+		this.setSize();
+		this.setCanvas();
+		this.controller.register(this);
+		this.fireEvent('injected');
+		return this;		
 	}
+
 });
+
+
+/*
+	Script: UI.Element.Native.js
+	  Contains methods to work with size, scroll, or positioning of Elements and the window object.
+	 
+	License:
+	  MIT-style license.
+	 
+	Credits:
+	  - Element positioning based on the [qooxdoo](http://qooxdoo.org/) code and smart browser fixes, [LGPL License](http://www.gnu.org/licenses/lgpl.html).
+	  - Viewport dimensions based on [YUI](http://developer.yahoo.com/yui/) code, [BSD License](http://developer.yahoo.com/yui/license.html).
+*/
+
 
 /*
 	Bindings to the native mootools element functions

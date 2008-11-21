@@ -48,6 +48,8 @@
 	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
 	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
 	
+	<script type="text/javascript" src="js/examples.js"></script>	
+	
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
 	
@@ -219,7 +221,7 @@
 						height		: 300,
 						overflow	: 'scrollbar'
 						
-					});
+					}).inject(document.body);
 			
 					
 					new UI.Button({
@@ -412,16 +414,20 @@
 			
 			
 			this.googlemap = new UI.Button({
-				label				: 'Window',
+				label				: 'Tickets',
 				labelStyles			: {
 					fontSize		: '26px',
 					fontWeight		: 'bold',
 					opacity			: '.7',
 					padding			: '18px 26px',
-					color			: '#fff'
+					color			: '#fff',
 				},
 				onClick: function(){
-					tip.fade(0);
+					var ticketswindow = new UI.Window({
+						
+						
+						
+					}).setContent('iframe','http://moolego.lighthouseapp.com/projects/19046-ui/tickets');
 				}.bind(this),
 				props				: {
 					'default'				: {
@@ -479,7 +485,7 @@
 			}).inject(form);
 			
 			
-			this.youtube = new UI.Button({
+			this.tube = new UI.Button({
 				skin				: 'demo',
 				type				: 'tube',
 				label				: 'Tube',
@@ -710,28 +716,32 @@
 						layers				: {
 							reorder			: ['emboss','front','reflect','reflect2'],
 							'default'		: {
-								rotation	: 3
+								
 							},
 							
 							emboss			: {
+								rotation	: 5,
 								offset		: 5,
 								color		: ['#000','#fff'],
 								opacity		: .3,
 								radius		: 9
 							},
 							front			: {
+								rotation	: 5,
 								offset		: 2,
 								color		: ['#b11a23','#000'],
 							 	opacity		: 1,
 								radius		: 7
 							},
 							reflect			: {
+								rotation 	: 0,
 								offset		: [1, 0, '60%', 2],
 								color		: ['#FFF', '#FFF'],
 								opacity		: [.6, .1],
 								radius		: [5, 5, 9, 9]
 							},
 							reflect2		: {
+								rotation	: 10,
 								offset		: [1, 1, 2],
 								color		: ['#000', '#000'],
 								opacity		: [.1,0],
@@ -844,11 +854,14 @@
 						type			: 'transparent',
 						title			: 'Hardest Button to Button',
 						controls		: ['close'],
-						viewOverflow	: 'hidden',
+						view: {
+							overflow: 'hidden'
+						},
 						resizable		: false,
-						width			: 214,
-						height			: 230
-					}).setContent('content','<object width="212" height="184"><param name="movie" value="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1"></param><param name="allowFullScreen" value="true"><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="212" wmode="transparent" height="184"></embed></object>');
+						width			: 216,
+						height			: 208,
+						foot			: false
+					}).setContent('content','<object width="212" height="184"><param name="movie" value="http://www.youtube.com/v/j7h7ViExB68&hl=fr&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/j7h7ViExB68&hl=fr&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="212" height="184"></embed></object>');
 				},
 				styles						: {
 					margin					: 5

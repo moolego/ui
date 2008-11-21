@@ -29,6 +29,23 @@
 		<script type="text/javascript">
 			window.addEvent('domready', function(){
 				
+				button = new UI.Button({
+						label	: 'redraw',
+						onClick	: function(){
+							
+						},
+						styles	: {
+							margin		: 10,
+							fontFamily	: 'arial, helvetica, sans-serif',
+							fontSize	: '13px',
+							position	: 'fixed',
+							top			: 10,
+							right		: 10
+						}
+					}).inject(document.body, 'top');
+				
+				
+				
 				function RGBtoHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B)}
 				function toHex(n) {
 					if (n==null) return "00";
