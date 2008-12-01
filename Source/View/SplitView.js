@@ -15,22 +15,22 @@ UI.SplitView = new Class({
 	options : {
 		component	: 'splitview',
 		overflow	: 'hidden',
-		minSize		: '160px'
+		minSize		: 160
 	},
 	
 	initialize: function(options){
 		this.parent(options);
 		this.build();
-		this.resize();
 	},
 
 	build: function(){
 		this.parent();
 		
-		this.size = this.element.getSize(); 
+		this.size = this.getSize().y; 
 		
+		console.log('size :'+this.size);
 		var mainSize = this.size.x - 161;
-
+		//console.log(this.props.components.side);
 		this.side = new UI.View(this.props.components.side)
 		 .inject(this.element);
 
@@ -41,13 +41,13 @@ UI.SplitView = new Class({
 		var mainSize = this.size.x - this.side.element.getSize().x;
 		
 		this.draglimit = {
-			x	: [-this.options.minSize,  this.side.element.getSize() - this.options.minSize],
+			x	: [-this.options.minSize,  this.props.components.side.width - this.options.minSize],
 			y	: [0, 0]
 		}
 		
 		this.handler = new Element('div',this.props.components.splitter)
 		 .setStyles({ 'margin-left'	: this.side.element.getSize().x - 2	})
-		 .inject(this.element);
+		 .inject(this.side.element);
 		
 		this.handler.makeDraggable({
 			limit				: this.draglimit,
@@ -62,5 +62,13 @@ UI.SplitView = new Class({
 		this.side.element.setStyle('width', this.handler.getCoordinates().left - this.element.getCoordinates().left + 3);
 		this.main.element.setStyle('width', this.element.getSize().x - this.side.element.getSize().x);
 		this.fireEvent('onResize');
+	},
+	
+	inject: function(container,position) {
+		this.parent(container,position);
+		
+		this.side.setStyles('width','160px');
+	//	this.resize();
+		
 	}
 });

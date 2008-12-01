@@ -1,34 +1,36 @@
 
-window.addEvent('domready', function() {
+window.addEvent('loadx', function() {
+	
+	
 	new UI.Select({
 		list : [
 			{
 				text : 'View',
-				onClick : function() { document.location = 'view.js' }
+				action : function() { location.href = 'button.html' }
 			},
 			{
 				text : 'Window',
-				onClick : function() { document.location = 'window.js' }
+				action : function() { location.href = 'slider01.html' }
 			},
 			{
 				text : 'Button',
-				onClick : function() { document.location = 'button01.js' }
+				action : function() { location.href = 'view.html' }
 			},
 			{
 				text : 'Window',
-				onClick : function() { document.location = 'controls.js' }
+				action : function() { location.href = 'splitview.html' }
 			},
 			{
 				text : 'Window',
-				onClick : function() { document.location = 'window.js' }
+				action : function() { location.href = 'window01.html' }
 			},
 			{
 				text : 'Window',
-				onClick : function() { document.location = 'window.js' }
+				action : function() { location.href = 'window.js' }
 			},
 			{
 				text : 'Slider',
-				onClick : function() { document.location = 'slider01.js' }
+				action : function() { location.href = 'meltingpot.js' }
 			}
 			
 		],

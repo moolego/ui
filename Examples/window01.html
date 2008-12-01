@@ -57,924 +57,182 @@
 		window.addEvent('load', function() {
 			var time = $time();
 			
-			toolbar = new UI['Toolbar']({
-				displayMode : 'text',
-				draggable	: false,
-				menu		: [
-					{
-						text	: 'moolego',
-						styles	: {
-							position	: 'relative'
-						},
-						menu : [
-							{
-								text : 'About',
-								action : function() { 
-									new UI.Window({
-										title			: 'about',
-										width			: 300,
-										height			: 160,
-										head			: false,
-										viewOverflow 	: 'hidden',
-										controls		: ['close']
-									});
-								}
-							},
-							{ 
-								text 		: 'Software version...',
-								action : function() { this.test('about'); alert('click')}.bind(this)
-							},
-							{ text		: 'separator' },
-							{ 
-								text 		: 'Préférences systemes...',
-								action : function() { new App.Settings() }
-							},
-							{ text		: 'separator' },{
-								text : 'Elements récents',
-								menu : [
-									{text : 'Finder'},
-									{text : 'Safari'},
-									{text : 'Mail'},
-									{text : 'Protoshop'},
-									{text : 'Nasty Explorer'}
-								]
-							},
-							{ text		: 'separator' },
-							{
-								text : 'Fermer la session'
-							}
-						]
-					},
-					{
-						text : 'New',
-						options : {'class' : 'ui-dd-new'},
-						menu		: [
-							{
-								text : 'Button',
-								action : function() { 
-									new UI.Button().inject(form, 'top');
-								}.bind(this)
-							},
-							{ 
-								text 		: 'Window',
-								action : function() { 
-									new UI.Window();
-								}.bind(this)
-							}
-						]
-					},
-					{
-						text : 'Window',
-						options : {'class' : 'ui-dd-new'},
-						menu		: [
-							{
-								text : 'About',
-								action : function() { this.test('about'); alert('click')}.bind(this)
-							},
-							{ text 		: 'Minimizer'},
-							{ text		: 'separator' },
-							{ text		: 'Cascade',
-							  action: function(){
-							  	this.windowManager.resetCascade()
-							  }.bind(this)
-							  
-							}
-						]
-					},
-					{
-						text : 'Help',
-						options : {'class' : 'ui-dd-help'},
-						menu : [
-							{ text : 'Welcome' },
-							{ text : 'separator' },
-							{ text : 'Update...' },
-							{ text : 'separator' },
-							{ text : 'Settings...' }
-						]
-					},
-					{
-						text : 'History...',
-						action: function(){alert('menu with action')},
-						menu : [
-							{text: 'Page down'},
-							{text: 'Page up'},
-							{text: 'Microsoft'}
-						]
-					}
-				]						
-			}).inject(document.body,'top');
+			var moolego = new UI.Window({
+				title		: 'MooLEgo',
+				width		: 640,
+				height		: 480,
+				overflow	: 'scrollbar',
+				location	: 'center',
+			})
+			.setContent('iframe','http://moolego.org')
+			.inject(document.body);
 			
-			
-			/* Elements in page */
-			var form = new Element('form', {
-				id				: 'controltest',
-				method			: 'get',
-				styles			: {
-					margin		: '50px 50px 0'
-				}
-			}).inject(document.body);
-			
-			var radiosGroup = new UI.RadiosGroup({
-				name			: 'radiotest'
-			});
-			
-			var radio = radiosGroup.newRadio({
-				label	: 'Test 1',
-				value 	: 'test_1',
-				selected: true,
-				styles				: {
-					margin			: 10
-				}
-			}).inject(form);
-			
-			
-			radiosGroup.newRadio({
-				label	: 'Test 2',
-				value : 'test_2',
-				styles				: {
-					margin			: 10
-				}
-			}).inject(form);
-			
-			this.slider = new UI.Slider({
-				range				: [0, 100],
-				styles				: {
-					margin			: '20px 10px'
-				},
-				wheel				: true,
-				onChange			: function(step){
-					tip.fade(step/100);
-				}
-			}).inject(form);
-			
-			button = new UI.Button({
-				label : "Launch a new Control test",
-				labelStyles : {
-					fontWeight : 'bold',
-					padding : '10px 20px'
-				},
-				onClick : function(){
-					var time2 = $time();
-					var window = new UI.Window({
-						title		: 'some controls',
-						width		: 300,
-						height		: 300,
-						overflow	: 'scrollbar'
-						
-					}).inject(document.body);
-			
-					
-					new UI.Button({
-						label	: 'Button',
-						styles	: {
-							margin	: 10,
-							fontFamily	: 'arial, helvetica, sans-serif',
-							fontSize	: '13px'
-						}
-					}).inject(window.content);
-					
-					new UI.Button({
-						type			: 'recessed',
-						label			: 'Recessed Button',
-						styles			: {
-							margin	: 10,
-							fontFamily	: 'arial, helvetica, sans-serif',
-							fontSize	: '13px'
-						}
-					}).inject(window.content);
-					
-					new UI.Button({
-						type			: 'roundtextured',
-						label			: 'Round Textured',
-						styles			: {
-							margin	: 10,
-							fontFamily	: 'arial, helvetica, sans-serif',
-							fontSize	: '13px'
-						}
-					}).inject(window.content);
-					
-					new UI.Button({
-						label			: 'Second button',
-						zIndex			: 6000,
-						styles			: {
-							margin		: 10
-						}
-					}).inject(window.content);
-					
-					new UI.Button({
-						label			: 'Third button',
-						styles			: {
-							margin		: 10
-						}
-					}).inject(window.content);
-					
-					
-					
-					var cbstyles = {
-						margin		: '0 10px 5px',
-						display		: 'block'
-					};
-					
-					new UI.Checkbox({
-						label			: '1 checkbox',
-						styles			: cbstyles
-					}).inject(window.content);
-					
-					new UI.Checkbox({
-						label			: '2 checkbox',
-						styles			: cbstyles
-					}).inject(window.content);
-					
-					new UI.Checkbox({
-						label			: '3 checkbox',
-						styles			: cbstyles
-					}).inject(window.content);
-					
-					
-					
-					var radiosGroup = new UI.RadiosGroup({
-						name			: 'radios'
-					});
-					
-					var radio = radiosGroup.newRadio({
-						label			: 'Radio 1',
-						selected		: true,
-						styles			: cbstyles
-					}).inject(window.content);
-					
-					var radio = radiosGroup.newRadio({
-						label			: 'Radio 2',
-						styles			: cbstyles
-					}).inject(window.content);
-					
-					var radio = radiosGroup.newRadio({
-						label			: 'Radio 3',
-						styles			: cbstyles
-					}).inject(window.content);
-					
-					var radio = radiosGroup.newRadio({
-						label			: 'Radio 4',
-						styles			: cbstyles
-					}).inject(window.content);
-					
+			var window = new UI.Window({
+				title		: 'some controls',
+				width		: 500,
+				height		: 300,
+				overflow	: 'scrollbar'
 		
-					
-					new UI.Select({
-						list			: [
-							{text		: 'Please choose'},
-							{text		: 'Core'},
-							{text		: 'Control'},
-							{text		: 'Desktop is a long entry'},
-							{text		: 'Menu'},
-							{text		: 'Form'},
-							{text		: 'Un menu'},
-							{text		: 'Plage'},
-							{text		: 'Venise'}
-						],
-						styles			: {
-							margin		: 10
-						}
-					}).inject(window.content);
-					
-					new UI.Select({
-						list			: [
-							{text		: 'Please choose'},
-							{text		: 'It is long because of this entry in the list'}
-						],
-						styles			: {
-							margin		: 10
-						}
-					}).inject(window.content);
-					
-					
-					
-					new UI.Input({
-						value			: 'An input field',
-						styles			: {
-							margin		: 10
-						}
-					}).inject(window.content);
-					
-					
-					
-					new UI.Textarea({
-						value			: 'A textarea to write long essay. More usefull for that than a UI.Input()',
-						styles			: {
-							margin		: 10
-						}
-					}).inject(window.content);
-					
-					
-					
-					new UI.Slider({
-						styles			: {
-							margin		: 10
-						}
-					}).inject(window.content);
-				},
-				styles		: {
-					margin	: 10
-				}
-			}).inject(form);
-			
-			
-			
-			
-			ip = new UI.Input({
-				name : 'text-input-canvas',
-				value : 'A text input with canvas, a very long text',
-				id : 'test',
-				styles : {
-					margin	: 10
-				}
-			}).inject(form);
-			
-			/*
-			new UI.Bubble({
-				target : $(this.slider),
-				props : {
-					'default' : {
-						layers			: {
-							background	: {
-								color	: ['#A00','#000']
-							}
-						}
-					}
-				},
-				label : "Under Construction!"
-			});
-			*/
-
-			
-			
-			var tip = new UI.Bubble({
-				target : $(button),
-				label : "<p>Babybel c'est de la balle</p><p>Mais que fait la police?</p>"
-			});
-			
-			
-			this.googlemap = new UI.Button({
-				label				: 'Tickets',
-				labelStyles			: {
-					fontSize		: '26px',
-					fontWeight		: 'bold',
-					opacity			: '.7',
-					padding			: '18px 26px',
-					color			: '#fff'
-				},
-				onClick: function(){
-					var ticketswindow = new UI.Window({
-						
-						
-						
-					}).setContent('iframe','http://moolego.lighthouseapp.com/projects/19046-ui/tickets');
-				}.bind(this),
-				props				: {
-					'default'				: {
-						layers				: {
-							reorder			: ['emboss','background','front','reflect'],
-							
-							emboss			: {
-								offset		: '0px',
-								color		: '#000',
-								opacity		: .17,
-								radius		: 7
-							},
-							background		: {
-								offset		: 3,
-								color		: ['#2a5179','#2a5179'],
-								opacity		: 1,
-								radius		: 5
-							},
-							front			: {
-								offset		: 1,
-								color		: ['#6094cf','#1d5591'],
-							 	opacity		: 1,
-								radius		: 4
-							},
-							reflect			: {
-								offset		: ['1px', '1px', '35%'],
-								color		: ['#FFF', '#FFF'],
-								opacity		: [.9, .1],
-								radius		: [3, 3, 3, 3]
-							}
-						}
-					},
-					over					: {
-						components			: {
-							label			: {
-								styles		: {
-									opacity : .8
-								}
-							}
-						}
-					},
-					down					: {
-						components			: {
-							label			: {
-								styles		: {
-									color 	: '#ccc'
-								}
-							}
-						}
-					}
-				},
-				styles		: {
-					margin	: 10
-				}
-			}).inject(form);
-			
-			
-			this.tube = new UI.Button({
-				skin				: 'demo',
-				type				: 'tube',
-				label				: 'Tube',
-				labelStyles			: {
-					fontSize		: '42px',
-					fontWeight		: 'bold',
-					padding			: '8px 8px 4px',
-					color			: '#fff'
-				},
-				onClick: function(){
-					new UI.Window({
-						type 				: 'transparent',
-						viewOverflow		: 'hidden'
-					}).setContent('iframe','http://www.youtube.com');
-				}.bind(this),
-				styles		: {
-					margin	: 10
-				}
-			}).inject(form);
-			
-			
-			
-			var counter = 1;
-			
-			this.counter = new UI.Button({
-				label				: 'Bubble counter',
-				labelStyles			: {
-					fontSize		: '20px',
-					fontWeight		: 'bold',
-					opacity			: '1',
-					color			: '#fff',
-					padding			: '10px 26px'
-				},
-				location			: 'center',
-				draggable			: true,
-				onClick				: function() { 
-					
-					if (this.bubble) {
-					
-						this.bubble.label.set('html', counter++);
-						this.bubble.setSize();
-					
-					} else {
-					
-						this.bubble = new UI.Bubble({
-							target: $(this),
-							label: counter++,
-							labelStyles: {
-								fontSize: '74px',
-								fontWeight: 'bold',
-								padding: '4px 10px'
-							},
-							props: {
-								'default': {
-									layers: {
-										background: {
-											offset: [0, 0, 9],
-											color: ['#33cc33', '#000'],
-											opacity: 1
-										},
-										arrow: {
-											size: [9, 4],
-											offset: ['auto', 9, 0],
-											opacity: 1,
-											color: '#000'
-										}
-									}
-								}
-							}
-						
-						});
-					}
-				},
-				props				: {
-					'default'				: {
-						layers				: {
-							reorder			: ['emboss','underlay','front','reflect'],
-							
-							emboss			: {
-								offset		: 0,
-								color		: '#4b5461',
-								opacity		: 1,
-								radius		: 12
-							},
-							underlay		: {
-								offset		: [3,3,2,3],
-								color		: ['#eeb7bf','#262c32']
-							},
-							front			: {
-								offset		: [1,0],
-								color		: ['#c4020e','#f81e0f'],
-							 	opacity		: 1,
-								radius		: [9,9,8,8]
-							},
-							reflect			: {
-								offset		: ['0px', '0px', '50%'],
-								color		: ['#FFF', '#FFF'],
-								opacity		: [.5, .2],
-								radius		: [8, 8, 0, 0]
-							}
-						}
-					},
-					over					: {
-						components			: {
-							label			: {
-								styles		: { opacity	: .8 }
-							}
-						},
-						layers				: {
-							emboss			: {
-								color		: '#00CC00'
-							}
-						}
-					},
-					down					: {
-						components			: {
-							label			: {
-								styles		: { color	: '#ccc' }
-							}
-						}
-					}
-				},
-				styles						: {
-					margin					: 5
-				}
-			}).inject(form);
-			
-			
-			
-			this.daselect = new UI.Select({
-				name						: 'testselect',
-				styles						: {
-					margin					: 10
-				},
-				list						: [
-					{text					: 'Please choose' },
-					{text					: 'Core' },
-					{text					: 'Control' },
-					{text					: 'Desktop is a long entry' },
-					{text					: 'Menu' },
-					{text					: 'Form' },
-					{text					: 'Un menu' },
-					{text					: 'Plage' },
-					{text					: 'Venise' }
-				],
-				onMouseDown				:  function(){ this.selecttup.hide(); }.bind(this),
-				onChange				:  function(){ this.selecttup.show(); }.bind(this)
-			}).inject(form);
-			
-				
-			
-			this.cancel = new UI.Button({
-				label				: 'Cancel',
-				labelStyles			: {
-					fontSize		: '20px',
-					fontWeight		: 'bold',
-					fontOpacity		: '1',
-					color			: '#fff',
-					padding			: '10px 26px'
-				},
-				props				: {
-					'default'				: {
-						layers				: {
-							reorder			: ['emboss','underlay','front','reflect'],
-							
-							emboss			: {
-								offset		: 0,
-								color		: '#4b5461',
-								opacity		: 1,
-								radius		: 12
-							},
-							underlay		: {
-								offset		: [3,3,2,3],
-								color		: ['#6b6e74','#262c32']
-							},
-							front			: {
-								offset		: [1,0],
-								color		: ['#0f1621','#282d37'],
-							 	opacity		: 1,
-								radius		: 8
-							},
-							reflect			: {
-								offset		: ['0px', '0px', '50%'],
-								color		: ['#FFF', '#FFF'],
-								opacity		: [.5, .3],
-								radius		: [8, 8, 0, 0]
-							}
-						}
-					},
-					over					: {
-						components			: {
-							label			: {
-								styles		: { opacity	: .8 }
-							}
-						},
-						layers				: {
-							emboss			: {
-								color		: '#00CC00'
-							}
-						}
-					},
-					down					: {
-						components			: {
-							label			: {
-								styles		: { color	: '#ccc' }
-							}
-						}
-					}
-				},
-				styles						: {
-					margin					: 5
-				}
-			}).inject(form);
-			
+			}).inject(document.body);
+	
 			
 			new UI.Button({
-				label						: '18:07',
-				labelStyles					: {
-					fontSize				: '32px',
-					fontWeight				: 'bold',
-					opacity					: '.7',
-					padding					: '24px 26px',
-					color					: '#fff'
-				},
-				draggable					: true,
-				props				: {
-					'default'				: {
-						layers				: {
-							reorder			: ['emboss','front','reflect','reflect2'],
-							'default'		: {
-								
-							},
-							
-							emboss			: {
-								rotation	: 5,
-								offset		: 5,
-								color		: ['#000','#fff'],
-								opacity		: .3,
-								radius		: 9
-							},
-							front			: {
-								rotation	: 5,
-								offset		: 2,
-								color		: ['#b11a23','#000'],
-							 	opacity		: 1,
-								radius		: 7
-							},
-							reflect			: {
-								rotation 	: 0,
-								offset		: [1, 0, '60%', 2],
-								color		: ['#FFF', '#FFF'],
-								opacity		: [.6, .1],
-								radius		: [5, 5, 9, 9]
-							},
-							reflect2		: {
-								rotation	: 10,
-								offset		: [1, 1, 2],
-								color		: ['#000', '#000'],
-								opacity		: [.1,0],
-								radius		: [7, 7, 9, 9]
-							}
-						}
-					},
-					over					: {
-						components			: {
-							label			: {
-								styles		: { opacity	: .8 }
-							}
-						},
-						layers				: {
-							emboss			: { color : '#00CC00' }
-						}
-					},
-					down					: {
-						components			: {
-							label			: {
-								styles		: { color : '#ccc' }
-							}
-						}
-					}
-				},
-				styles						: {
-					margin					: 5
+				label	: 'Button',
+				styles	: {
+					margin	: 10,
+					fontFamily	: 'arial, helvetica, sans-serif',
+					fontSize	: '13px'
 				}
-			}).inject(form);
+			}).inject(window.content);
 			
-			
-			this.digitalclock = new UI.Button({
-				label				: '18:07',
-				labelStyles					: {
-					fontSize			: '46px',
-					fontWeight			: 'bold',
-					opacity				: '.7',
-					padding				: '12px 26px',
-					color				: '#fff'
-				},
-				draggable				: true,
-				props				: {
-					'default'				: {
-						layers				: {
-							reorder			: ['emboss','front','reflect','reflect2'],
-							
-							emboss			: {
-								offset		: 0,
-								color		: ['#000','#fff'],
-								opacity		: .3,
-								radius		: 9
-							},
-							front			: {
-								offset		: 2,
-								color		: ['#1624a7','#000'],
-							 	opacity		: 1,
-								radius		: 6
-							},
-							reflect			: {
-								offset		: ['1px', '1px', '60%'],
-								color		: ['#FFF', '#FFF'],
-								opacity		: [.6, .2],
-								radius		: [5, 5, 9, 9]
-							},
-							reflect2		: {
-								offset		: ['1px', '1px', '2px'],
-								color		: ['#000', '#000'],
-								opacity		: [.1,0],
-								radius		: [7, 7, 9, 9]
-							}
-						}
-					},
-					over					: {
-						components			: {
-							label			: {
-								styles		: { opacity	: .8 }
-							}
-						},
-						layers				: {
-							emboss			: { color : '#00CC00' }
-						}
-					},
-					down					: {
-						components			: {
-							label			: {
-								styles		: { color : '#ccc' }
-							}
-						}
-					}
-				},
-				styles						: {
-					margin					: 5
+			new UI.Button({
+				type			: 'recessed',
+				label			: 'Recessed Button',
+				styles			: {
+					margin	: 10,
+					fontFamily	: 'arial, helvetica, sans-serif',
+					fontSize	: '13px'
 				}
-			}).inject(form);
+			}).inject(window.content);
 			
-			
-			this.hardest = new UI.Button({
-				skin					: 'demo',
-				type					: 'hardest',
-				label					: 'Hardest Button to Button',
-				labelStyles				: {
-					fontSize			: '16px',
-					fontWeight			: 'bold',
-					opacity				: '.7',
-					padding				: '18px 26px',
-					color				: '#fff'
-				},
-				onClick					: function() {
-					new UI.Window({
-						type			: 'transparent',
-						title			: 'Hardest Button to Button',
-						controls		: ['close'],
-						view: {
-							overflow: 'hidden'
-						},
-						resizable		: false,
-						width			: 216,
-						height			: 208,
-						foot			: false
-					}).setContent('content','<object width="212" height="184"><param name="movie" value="http://www.youtube.com/v/j7h7ViExB68&hl=fr&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/j7h7ViExB68&hl=fr&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="212" height="184"></embed></object>');
-				},
-				styles						: {
-					margin					: 5
+			new UI.Button({
+				type			: 'roundtextured',
+				label			: 'Round Textured',
+				styles			: {
+					margin	: 10,
+					fontFamily	: 'arial, helvetica, sans-serif',
+					fontSize	: '13px'
 				}
-			}).inject(form);
-
+			}).inject(window.content);
 			
-			this.starGuitar = new UI.Button({
-				type						: 'roundtextured',
-				label						: 'Star Guitar',
-				onClick						: function() {
-					new UI.Window({
+			new UI.Button({
+				label			: 'Second button',
+				zIndex			: 6000,
+				styles			: {
+					margin		: 10
+				}
+			}).inject(window.content);
+			
+			new UI.Button({
+				label			: 'Third button',
+				styles			: {
+					margin		: 10
+				}
+			}).inject(window.content);
+			
+			
+			
+			var cbstyles = {
+				margin		: '0 10px 5px',
+				display		: 'block'
+			};
+			
+			new UI.Checkbox({
+				label			: '1 checkbox',
+				styles			: cbstyles
+			}).inject(window.content);
+			
+			new UI.Checkbox({
+				label			: '2 checkbox',
+				styles			: cbstyles
+			}).inject(window.content);
+			
+			new UI.Checkbox({
+				label			: '3 checkbox',
+				styles			: cbstyles
+			}).inject(window.content);
+			
+			
+			
+			var radiosGroup = new UI.RadiosGroup({
+				name			: 'radios'
+			});
+			
+			radiosGroup.newRadio({
+				label			: 'Radio 1',
+				selected		: true,
+				styles			: cbstyles
+			}).inject(window.content);
+			
+			radiosGroup.newRadio({
+				label			: 'Radio 2',
+				styles			: cbstyles
+			}).inject(window.content);
+			
+			radiosGroup.newRadio({
+				label			: 'Radio 3',
+				styles			: cbstyles
+			}).inject(window.content);
+			
+			radiosGroup.newRadio({
+				label			: 'Radio 4',
+				styles			: cbstyles
+			}).inject(window.content);
+			
+			new UI.Select({
+				list			: [
+					{text		: 'Please choose'},
+					{text		: 'Core'},
+					{text		: 'Control'},
+					{text		: 'Desktop is a long entry'},
+					{text		: 'Menu'},
+					{text		: 'Form'},
+					{text		: 'Un menu'},
+					{text		: 'Plage'},
+					{text		: 'Venise'}
+				],
+				styles			: {
+					margin		: 10
+				}
+			}).inject(window.content);
+			
+			new UI.Select({
+				list			: [
+					{text		: 'Please choose'},
+					{text		: 'It is long because of this entry in the list'}
+				],
+				styles			: {
+					margin		: 10
+				}
+			}).inject(window.content);
+			
+			
+			
+			new UI.Input({
+				value			: 'An input field',
+				styles			: {
+					margin		: 10
+				}
+			}).inject(window.content);
+			
+			
+			
+			new UI.Textarea({
+				value			: 'A textarea to write long essay. More usefull for that than a UI.Input()',
+				styles			: {
+					margin		: 10
+				}
+			}).inject(window.content);
+			
+			
+			
+			new UI.Slider({
+				styles			: {
+					margin		: 10
+				}
+			}).inject(window.content);
+			
+			new UI.Window({
 						title				: 'Star Guitar',
+						type				: 'transparent',
 						controls			: ['close'],
 						viewOverflow		: 'hidden',
 						resizable			: false,
+						right				: '30px',
 						width				: 427,
 						height				: 388,
-						viewOverflow		: 'hidden'
-					}).setContent('content','<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>');
-				},
-				styles						: {
-					margin					: 5
-				}
-			}).inject(form);
-
-			
-			
-			new UI.Bubble({
-				skin						: 'demo',
-				target 						: $(this.hardest),
-				label 						: 'réalisation: Michel Gondry',
-				labelStyles					: {
-					padding					: '10px 10px 18px'
-				}
-			});
-			
-			
-			submit = new UI.Button({
-				label						: 'Submit NOW',
-				labelStyles					: {
-					fontSize			: '2em',
-					fontWeight			: 'bold',
-					opacity				: '8',
-					padding				: '18px 26px',
-					color				: '#fff'
-				},
-				submit				: true,
-				props				: {
-					'default'				: {
-						layers				: {
-							reorder			: ['emboss','front','reflect', 'dark'],
-							
-							emboss			: {
-								offset		: 0,
-								color		: '#cc0033',
-								opacity		: .17,
-								radius		: 9
-							},
-							front			: {
-								offset		: 3,
-								color		: ['#cc0033','#cc0033'],
-							 	opacity		: 1,
-								radius		: 7
-							},
-							reflect			: {
-								offset		: ['1px', '1px', '65%'],
-								color		: ['#FFF', '#FFF'],
-								opacity		: [.8, .0],
-								radius		: [5, 5, 14, 14]
-							},
-							dark			: {
-								position	: 'absolute',
-								size		: ['auto','20px'],						
-								offset		: ['auto', 4, 4],
-								color		: ['#fff', '#fff'],
-								opacity		: [0, .5],
-								radius		: [14, 14, 5, 5]
-							}
-						}
-					},
-					over					: {
-						components			: {
-							label			: {
-								styles		: { opacity : .5 }
-							}
-						},
-						layers				: {
-							emboss			: { color : '#00AA00' }
-						}
-					},
-					down					: {
-						components			: {
-							label			: {
-								styles		: {
-									opacity : .5,
-									color	: '#000'
-								}
-							}
-						},
-						layers				: {
-							emboss			: { color : '#00AA00' }
-						}
-					}
-				},
-				styles						: {
-					margin					: 5
-				}
-			}).inject(form);
-			
-			
-
-			
+						view				: { overflow:'hidden'}
+			}).setContent('content','<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>');
 		});
 	</script>
 </head>
