@@ -49,9 +49,6 @@ UI.Window = new Class({
 		// Size options
 		width					: 640,
 		height					: 480,
-		
-		// see UI.VIew.setContent() for information about loading window's content.
-		url						: false,
 
 		// location options
 		location				: 'cascade',
@@ -84,7 +81,7 @@ UI.Window = new Class({
 		resizeLimitY			: [200, window.getHeight()],
 		
 		// Implemented events
-		onResize			: $empty,
+		onResize				: $empty,
 		onMinimize			: $empty,
 		onMaximize			: $empty,
 		onRestore			: $empty,
@@ -171,7 +168,7 @@ UI.Window = new Class({
 		if (!this.options.controls) { return }
 		
 		var controllist = new Array();
-		
+
 		this.controls = new Element('div',this.props.components.controls)
 		.addEvents({
 			mouseenter	: function() {
@@ -205,6 +202,28 @@ UI.Window = new Class({
 			'onMinimize': function() { this.controls.hide() },
 			'onNormalize': function() { this.controls.show() }
 		});
+		
+		
+		this.controls.addEvents({
+			mouseenter	: function() {
+				controllist.each(function(button) {
+					button.setState('show');
+				})
+			},
+			mouseover	: function() {
+				controllist.each(function(button) {
+					button.setState('show');
+				})
+			},
+			mouseleave	: function() {
+				controllist.each(function(button) {
+					button.setState('default');					
+				})
+			},
+			
+		})
+		.inject(this.head);
+		
 	},
 	
 	/*
@@ -291,7 +310,8 @@ UI.Window = new Class({
 	*/
 
 	buildOverlay: function() {
-		/*
+		
+		//console.log('show overlay');
 		this.overlay = new Element('div',this.props.components.overlay)
 		 .inject(this.view.element);
 
@@ -303,7 +323,6 @@ UI.Window = new Class({
 			'onDragStart' : function() { this.overlay.show(); },
 			'onDragComplete' : function() { this.overlay.hide(); }
 		});
-		*/
 	},
 
 	/* 

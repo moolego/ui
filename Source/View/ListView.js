@@ -1,10 +1,12 @@
 /*
 Class: UI.ListView
-	The UI.ListView class defines objects that manage the views use by several object like windows, menus.
+	The UI.ListView class defines objects that manage the list.
 
 Require:
-	UI.Core Classes
-	UI.Element Classes
+	UI.Canvas
+	UI.Skin
+	UI.Element
+	UI.View
 	UI.ScrollBar
 	
 Arguments:
