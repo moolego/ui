@@ -259,7 +259,7 @@ UI.Element = new Class({
 		
 		if (needed) {
 			if (this.props.fx && this.props.fx.adaptLocation)  {
-				this.reposFx = new Fx.Morph(this.element, this.props.fx.adaptLocation);
+				if (!this.reposFx) this.reposFx = new Fx.Morph(this.element, this.props.fx.adaptLocation);
 				
 				this.reposFx.start(location) ;
 			} else {

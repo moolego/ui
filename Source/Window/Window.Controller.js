@@ -87,9 +87,8 @@ UI.Controller.Window = new Class({
 	 */	
 	
 	close: function(elementClass) {
-		
 		elementClass.hide();
-		var previousWindow;
+		elementClass.fireEvent('onClose');
 		for (var i = UI.elements.window.length - 1; i >= 0; i--) {
 			if (UI.elements.window[i] == elementClass) {
 				elementClass.destroy();
@@ -97,17 +96,7 @@ UI.Controller.Window = new Class({
 				UI.elements.window = UI.elements.window.clean();
 			}
 		}
-		//make next highest window focus
-		var zIndex = 0;
-		var window;
-		for (var i = UI.elements.window.length - 1; i >= 0; i--) {
-			var windowZIndex = UI.elements.window[i].element.getStyle('zIndex');
-			if (windowZIndex >= zIndex) {
-				window = UI.elements.window[i];
-				zIndex = windowZIndex;
-			}
-		}
-		if (window) window.focus();
+		this.focus();
 	},
 	
 	/*
@@ -120,46 +109,47 @@ UI.Controller.Window = new Class({
 	 */	
 	
 	focus: function(win) {
-		
-		this.zIndex = this.zIndex + this.options.zStep;
-		win.element.style.zIndex = this.zIndex;
-
-		if (this.active) this.active.blur();
-		
-		this.active = win;
+		if (!$defined(win)) {
+			//make next highest window focus
+			var zIndex = 0;
+			var window;
+			for (var i = UI.elements.window.length - 1; i >= 0; i--) {
+				var windowZIndex = UI.elements.window[i].element.getStyle('zIndex');
+				if (windowZIndex >= zIndex && !UI.elements.window[i].minimized) {
+					window = UI.elements.window[i];
+					zIndex = windowZIndex;
+				}
+			}
+			if (window) window.focus();
+		} else if (win && this.active != win) {
+			if (this.active && !this.active.minimized) this.blur(this.active);
+			
+			this.zIndex += this.options.zStep;
+			win.element.style.zIndex = this.zIndex;
+			
+			this.active = win;
+			win.fireEvent('focus');
+		}
 	},
-
 	
 	/*
-	  Function: setMinimizedCoordinates
+	  Function: blur
 	  
-	   	Return coordinates of the minimized window abstract in the stack
+	   	blur active window
+	   
+	  Arguments: window Object
 	  
 	 */	
 	
-	setMinimizedCoordinates: function() {
-		/*
-		var y = 60;
-		
-		UI.elements.window.each(function(w,i) {
-			if (w.state == 'minimized') {
-				y = y + w.element.getStyle('height').toInt() + this.options.stack.offsetHeight;
-				
-				//console.log(y);
-			}
-		},this);
-		
-		var coordinates = {
-			width	: 200, 
-			height	: 25,
-			left	: 10,
-			top		: y
-		};
-		
-		
-		return coordinates;
-		*/
+	blur: function(win) {
+		if ($defined(win) && !win.minimized) {
+			win.setState('inactive');
+			win.fireEvent('onBlur');
+		} else if (this.active) {
+			this.blur(this.active);
+		}
 	},
+
 	
 	/*
 	  Function: resizeMaximizedWindow

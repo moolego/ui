@@ -81,7 +81,6 @@ UI.Window = new Class({
 		resizeLimitY			: [200, window.getHeight()],
 		
 		// Implemented events
-		onResize				: $empty,
 		onMinimize			: $empty,
 		onMaximize			: $empty,
 		onRestore			: $empty,
@@ -110,8 +109,6 @@ UI.Window = new Class({
 		this.element.setStyles(location);
 
 		this.controller.focus(this);
-		this.fireEvent('focus');
-		this.isActive = true;
 	},
 
 	/*
@@ -130,8 +127,6 @@ UI.Window = new Class({
 		this.buildOverlay();
 		
 		this.inject(this.options.container || document.body);
-		
-		//this.coordinates = this.element.getCoordinates();
 	},
 
 	/* 
@@ -175,19 +170,19 @@ UI.Window = new Class({
 		.addEvents({
 			mouseenter	: function() {
 				controllist.each(function(button) {
-					button.setState('over');
-					button.set('html', '');
-					
+					button.setState('show');
+				})
+			},
+			mouseover	: function() {
+				controllist.each(function(button) {
+					button.setState('show');
 				})
 			},
 			mouseleave	: function() {
 				controllist.each(function(button) {
-					button.setState('over');
-					button.set('html', '');
-					
+					button.setState('default');					
 				})
-			},
-			
+			}
 		})
 		.inject(this.head);
 		
@@ -205,27 +200,6 @@ UI.Window = new Class({
 			'onMinimize': function() { this.controls.hide() },
 			'onNormalize': function() { this.controls.show() }
 		});
-		
-		
-		this.controls.addEvents({
-			mouseenter	: function() {
-				controllist.each(function(button) {
-					button.setState('show');
-				})
-			},
-			mouseover	: function() {
-				controllist.each(function(button) {
-					button.setState('show');
-				})
-			},
-			mouseleave	: function() {
-				controllist.each(function(button) {
-					button.setState('default');					
-				})
-			}
-		})
-		.inject(this.head);
-		
 	},
 	
 	/*
@@ -291,10 +265,7 @@ UI.Window = new Class({
 			.inject(this.element);
 			
 			this.addEvents({
-				'injected': function() {
-					console.log('injected');
-					this.view.fireEvent('onResize');
-				},
+				'injected'		: function() { this.view.fireEvent('onResize'); },
 				onMinimize 		: function() { this.view.hide(); },
 				onNormalize 	: function() { this.view.show(); }
 			});
@@ -364,10 +335,7 @@ UI.Window = new Class({
 		this.resize = new UI.Element({
 			component		: 'element',
 			type			: 'resizeHandler'
-		})
-	//	.addEvent('mousedown', function(e) { new Event(e).stop() })
-		
-		.inject(this.foot);
+		}).inject(this.foot);
 	},
 
 	/*
@@ -399,13 +367,13 @@ UI.Window = new Class({
 	setBehavior: function(){
 		this.parent();
 
-		this.element.addEvent('mousedown', this.focus.bind(this));
-		
 		this.addEvents({
+			mousedown : this.focus.bind(this),
 			resizeComplete: function(){
 				this.maximized = false;
-				this.options.width = this.element.getCoordinates().width;
-				this.options.height = this.element.getCoordinates().height;
+				var coord = this.element.getCoordinates();
+				this.options.width = coord.width;
+				this.options.height = coord.height;
 			}.bind(this)
 		});
 	},
@@ -417,16 +385,14 @@ UI.Window = new Class({
 
 	enableDrag :function() {
 		this.parent();
-		
 		this.addEvents({
 			onDragComplete 	: function() {
 				this.options.location = 'custom';
 				this.maximized = false;
-				this.options.left = this.element.getCoordinates().left;
-				this.options.top = this.element.getCoordinates().top;
-			},
-			onMinimize 		: function() { this.disableDrag(); },
-			onNormalize 	: function() { this.enableDrag(); }
+				var coord = this.element.getCoordinates();
+				this.options.top = coord.top;
+				this.options.left = coord.left;
+			}.bind(this)
 		});
 		
 		this.element.setStyle('position','absolute');
@@ -439,26 +405,15 @@ UI.Window = new Class({
 	*/
 	
 	focus: function() {
-		if (this.state == 'minimized') this.normalize();
-		if (this.isActive) { return; }
-
-		this.controller.focus(this);
-		this.fireEvent('onFocus');
-		this.setState('default');
-		this.isActive = true;
-		return;
-	},
-
-	/*
-	    Function: blur
-	      FireEvent onBlur and set isActiv to false
-	*/	
-	
-	blur: function() {
-		this.setState('inactive');
-		
-		this.fireEvent('onBlur');
-		this.isActive = false;
+		if (this.minimized) {
+			if (this.maximized)
+				this.maximize();
+			else
+				this.normalize();
+		} else {
+			this.setState('default');
+			this.controller.focus(this);
+		}
 	},
 
 	/*
@@ -472,11 +427,13 @@ UI.Window = new Class({
 			this.normalize();
 		} else {
 			this.fireEvent('onMinimize');
-			console.log(this.skin);
-			this.setSize(this.skin['minimized'].width, this.skin['minimized'].height);
-			this.setState('minimized', 'dontresize');
 			this.maximized = false;
 			this.minimized = true;
+			
+			this.setSize(this.skin['minimized'].width, this.skin['minimized'].height);
+			this.setState('minimized', 'dontresize');
+			this.setLocation();
+			this.controller.focus();
 		}
 	},
 
@@ -509,6 +466,7 @@ UI.Window = new Class({
 	*/
 
 	normalize : function() {
+		this.controller.focus(this);
 		this.setSize();
 		this.setLocation();
 		
@@ -644,9 +602,17 @@ UI.Window = new Class({
 	*/	
 
 	control : function(action) {
-		if (action == 'minimize') this.minimize();
-		else if (action == 'maximize') this.maximize();
-		else if (action == 'close') this.close();
+		switch (action) {
+			case 'minimize' :
+				this.minimize();
+				break;
+			case 'maximize' : 
+				this.maximize();
+				break;
+			case 'close' : 
+				this.close();
+				break;
+		}
 	},
 
 	/*
@@ -659,6 +625,5 @@ UI.Window = new Class({
 	
 	close : function() {
 		this.controller.close(this);
-		this.fireEvent('onClose');
 	}
 });

@@ -9,13 +9,13 @@ UI.Element.implement({
 			this.dragHandlers = null;
 		}
 		
-		this.dragHandler = this.element.makeDraggable({
+		this.dragHandler = new Drag(this.element, {
 			handle 		: this.dragHandlers,
 			limit 		: { x: this.options.dragLimitX, y: this.options.dragLimitY },
 			
-			onStart 	: function() { this.fireEvent("onDragStart"); }.bind(this),
-			onDrag 		: function() { this.fireEvent('onDrag'); }.bind(this),
-			onComplete 	: function() { this.fireEvent('onDragComplete'); }.bind(this)
+			onStart 	: this.fireEvent.bind(this, 'onDragStart'),
+			onDrag 		: this.fireEvent.bind(this, 'onDrag'),
+			onComplete 	: this.fireEvent.bind(this, 'onDragComplete')
 		});
 		
 		this.addEvents({
@@ -31,10 +31,7 @@ UI.Element.implement({
 	*/
 		
 	disableDrag	: function() {
-		if (this.options.draggable)  {
-			this.dragHandler.detach();
-		};
-		
+		if (this.dragHandler) this.dragHandler.stop();
 		return this;
 	}
 });	
