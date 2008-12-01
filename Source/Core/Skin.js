@@ -121,8 +121,8 @@ UI.Skin = new Class({
 			type[sKey].styles = this.merge(type[sKey].styles, styles);
 			
 			//set size
-			if (className.options.width) type[sKey].width = className.options.width;
-			if (className.options.height) type[sKey].height = className.options.height;
+			//if (className.options.width) type[sKey].width = className.options.width;
+			//if (className.options.height) type[sKey].height = className.options.height;
 		}
 		
 		//remove shadows if not used

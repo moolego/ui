@@ -87,6 +87,7 @@ UI.Controller.Window = new Class({
 	 */	
 	
 	close: function(elementClass) {
+		
 		elementClass.hide();
 		var previousWindow;
 		for (var i = UI.elements.window.length - 1; i >= 0; i--) {
@@ -137,13 +138,14 @@ UI.Controller.Window = new Class({
 	 */	
 	
 	setMinimizedCoordinates: function() {
+		/*
 		var y = 60;
 		
 		UI.elements.window.each(function(w,i) {
 			if (w.state == 'minimized') {
 				y = y + w.element.getStyle('height').toInt() + this.options.stack.offsetHeight;
 				
-				console.log(y);
+				//console.log(y);
 			}
 		},this);
 		
@@ -156,6 +158,7 @@ UI.Controller.Window = new Class({
 		
 		
 		return coordinates;
+		*/
 	},
 	
 	/*

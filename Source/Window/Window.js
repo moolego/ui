@@ -104,9 +104,11 @@ UI.Window = new Class({
 		this.parent(options);
 		
 		// set windnow position
-		if (this.options.component == 'window') {
-			this.element.setStyles(this.getInitialLocation());
-		}
+		var location = this.getInitialLocation();
+		this.options.top = location.top;
+		this.options.left = location.left;
+		this.element.setStyles(location);
+
 		this.controller.focus(this);
 		this.fireEvent('focus');
 		this.isActive = true;
@@ -127,9 +129,9 @@ UI.Window = new Class({
 		this.buildFoot();
 		this.buildOverlay();
 		
-		this.coordinates = this.element.getCoordinates();
-		
 		this.inject(this.options.container || document.body);
+		
+		//this.coordinates = this.element.getCoordinates();
 	},
 
 	/* 
@@ -184,7 +186,8 @@ UI.Window = new Class({
 					button.set('html', '');
 					
 				})
-			}
+			},
+			
 		})
 		.inject(this.head);
 		
@@ -219,8 +222,7 @@ UI.Window = new Class({
 				controllist.each(function(button) {
 					button.setState('default');					
 				})
-			},
-			
+			}
 		})
 		.inject(this.head);
 		
@@ -241,10 +243,8 @@ UI.Window = new Class({
 		this.updateSize();
 		
 		this.addEvents({
-			onMinimize 			: function() { this.toolbar.content.hide() },
-			onNormalize 		: function() { this.toolbar.content.show() },
-			obBlur				: function() { this.toolbar.content.setStyle('opacity',.5) },
-			obFocus				: function() { this.toolbar.content.setStyle('opacity',1) }
+			onMinimize 			: function() { this.toolbar.hide() },
+			onNormalize 		: function() { this.toolbar.show() }
 		});
 		
 		new UI.Button(this.props.components.toggle)
@@ -290,18 +290,17 @@ UI.Window = new Class({
 			this.view = new UI.View(props)
 			.inject(this.element);
 			
-			this.addEvents('injected', function() {
-				console.log('injected');
-				this.view.fireEvent('onResize');
+			this.addEvents({
+				'injected': function() {
+					console.log('injected');
+					this.view.fireEvent('onResize');
+				},
+				onMinimize 		: function() { this.view.hide(); },
+				onNormalize 	: function() { this.view.show(); }
 			});
 		}
 
 		this.content = this.view.content;
-
-		this.addEvents({
-			onMinimize 		: function() { this.view.hide(); },
-			onNormalize 	: function() { this.view.show(); }
-		});
 	},
 
 	/* 
@@ -348,6 +347,11 @@ UI.Window = new Class({
 		this.dragHandlers.push(this.status);
 		
 		this.setStatus();
+		
+		this.addEvents({
+			'onMinimize' : function() { this.foot.hide(); },
+			'onNormalize' : function() { this.foot.show(); }
+		});
 	},
 
 	/*
@@ -399,6 +403,7 @@ UI.Window = new Class({
 		
 		this.addEvents({
 			resizeComplete: function(){
+				this.maximized = false;
 				this.options.width = this.element.getCoordinates().width;
 				this.options.height = this.element.getCoordinates().height;
 			}.bind(this)
@@ -414,7 +419,12 @@ UI.Window = new Class({
 		this.parent();
 		
 		this.addEvents({
-			onDragComplete 	: function() { this.options.location = 'custom' },
+			onDragComplete 	: function() {
+				this.options.location = 'custom';
+				this.maximized = false;
+				this.options.left = this.element.getCoordinates().left;
+				this.options.top = this.element.getCoordinates().top;
+			},
 			onMinimize 		: function() { this.disableDrag(); },
 			onNormalize 	: function() { this.enableDrag(); }
 		});
@@ -458,20 +468,16 @@ UI.Window = new Class({
 	*/
 
 	minimize : function() {
-		/*if(this.minimized) {
+		if(this.minimized) {
 			this.normalize();
 		} else {
-			if (!this.maximized) this.coordinates = this.element.getCoordinates();
-			
-			var size = this.controller.setMinimizedCoordinates();
-			this.head.setStyle('width', size.width);
-			this.element.setStyles(size);
-			
+			this.fireEvent('onMinimize');
+			console.log(this.skin);
+			this.setSize(this.skin['minimized'].width, this.skin['minimized'].height);
+			this.setState('minimized', 'dontresize');
 			this.maximized = false;
 			this.minimized = true;
-
-			this.fireEvent('onMinimize');
-		}*/
+		}
 	},
 
 	/*
@@ -483,8 +489,10 @@ UI.Window = new Class({
 		if(this.maximized) {
 			this.normalize();
 		} else {
-			if (!this.minimized) this.coordinates = this.element.getCoordinates();
 			this.setSize(window.getWidth(),window.getHeight()-this.options.dragLimitY[0]);
+			var coord = this.getCoordinates();
+			this.options.top = coord.top;
+			this.options.left = coord.left;
 			this.element.setStyles({
 				top : this.options.dragLimitY[0],
 				left : 0
@@ -501,12 +509,8 @@ UI.Window = new Class({
 	*/
 
 	normalize : function() {
-		this.setStyles({
-			left	: this.coordinates.left,
-			top		: this.coordinates.top
-		});
-		
-		this.setSize(this.coordinates.width,this.coordinates.height);
+		this.setSize();
+		this.setLocation();
 		
 		this.maximized = false;
 		this.minimized = false;
