@@ -8,7 +8,8 @@ UI.TabView = new Class({
 	Extends: UI.View,
 	
 	options: {
-		component: 'tabview'
+		component: 'tabview',
+		overflow : 'hidden'
 	},
 	
 	/*
@@ -17,7 +18,11 @@ UI.TabView = new Class({
 	 
 	 */
 	initialize: function(options){
+		this.tabs = new Array();
+		
 		this.parent(options);
+		
+		
 	},
 	
 	/*
@@ -28,9 +33,7 @@ UI.TabView = new Class({
 	 */
 	build: function(){
 		this.parent();
-		this.setTabs();
-		
-		//return tabs;
+		this.buildTabs();
 	},
 	
 	/*
@@ -39,9 +42,20 @@ UI.TabView = new Class({
 	 Create tabbar and add tabs
 	 
 	 */
-	setTabs: function(){
+	buildTabs: function(){
+		if (this.options.container) {
+			var container = this.options.container
+		} else {
+			var container = this.element
+		}
+		
 		this.tabbar = new UI.Element(this.props.components.tabbar)
-		.inject(this.options.container);
+		.addEvents({
+			onClick : function() {
+				this.element.setStyle('height','21px')			
+			} 
+		})
+		.inject(container);
 		
 		this.options.tabs.each(function(tab){
 			this.add(tab);
@@ -55,9 +69,13 @@ UI.TabView = new Class({
 	 
 	 */
 	add: function(props){
+		
 		var view = new UI.View({ 
+			height : this.options.height - 21,
 			type : 'tab'
-		}).inject(this.content).hide();
+		})
+		.setStyle('height',this.options.height - 21)
+		.inject(this.content).hide();
 		
 		var tab = new UI.Button({
 			type: 'tab',
@@ -65,7 +83,8 @@ UI.TabView = new Class({
 			onClick: function() { 
 				if (tab == this.tab) return;
 			
-				if (props.url) view.setContent('ajax',props.url);
+				if (props.url) 
+				 view.setContent('ajax',props.url);
 				
 				view.show();
 				
@@ -82,6 +101,17 @@ UI.TabView = new Class({
 			}.bind(this)
 		}).inject(this.tabbar);
 		
+		this.tabs.push(tab);
 		//tab.addEvent();		
+	},
+	
+	/*
+    	Function: setContent
+    
+    		Set Content of the current view (tab)
+	*/		
+	
+	setContent: function(method,source,options) {
+		this.view.setContent(method,source,options);
 	}
 });

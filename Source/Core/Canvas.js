@@ -218,7 +218,7 @@ UI.Canvas = new Class({
 		];
 		
 		//set diffusion
-		var diffusion = 1;
+		var diffusion = 1.3;
 		
 		//set radius
 		if ($defined(this.props.layers.shadow.radius))
@@ -235,8 +235,9 @@ UI.Canvas = new Class({
 			diffusion * (this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[3])
 		];
 		
+		
 		//set opacity
-		var opacity = (this.props.layers.shadow.opacity || 1)/4;
+		var opacity = (this.props.layers.shadow.opacity || 1)/1;
 		
 		//set shape
 		var shape = modelProps.shape;
@@ -278,13 +279,21 @@ UI.Canvas = new Class({
 		
 		//we clear the model shape
 		
+		//console.log(modelProps);
+		
+		modelProps.offset[0]++;
+		modelProps.offset[1]++;
+		
+		modelProps.size[0] = modelProps.size[0]-2;
+		modelProps.size[1] = modelProps.size[1]-2;
+		
 		this.ctx.save();
 			this.setTransformation(modelProps);
 			this.ctx.globalCompositeOperation = 'destination-out';
 			this[shape](modelProps);
 			this.ctx.fill();
 		this.ctx.restore();
-		
+	
 		
 		this.shadowSet = true;
 		this.draw();
@@ -417,7 +426,7 @@ UI.Canvas = new Class({
 
 	/*
 		Function: setOffset
-			setOffset of the shape 
+			setOffset of the layer (shape) 
 		
 		Arguments: 
 			value 		: (string) - key
@@ -668,6 +677,8 @@ UI.Canvas = new Class({
 			
 			//make the gradient with start point and end point
 			//console.log(props.size[0], props.size[1]);
+			
+
 			var color = this.ctx.createLinearGradient(ax, ay, bx, by);
 			
 			//check if opacity exist, else create it
