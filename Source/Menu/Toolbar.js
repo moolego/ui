@@ -130,7 +130,9 @@ UI.Toolbar = new Class({
 				}.bind(this),
 				'mouseenter': function(){
 					if (this.activeItem && this.activeItem != menuItem && !item.action) {
-						if (this.activeItem.submenu) this.activeItem.submenu.hide(0);
+						if (this.activeItem.submenu) {
+							this.activeItem.submenu.hide(0);
+						}
 						this.addUnderlay();
 						this.addSubmenu(item, menuItem, 'bottom');
 						this.moveRollover(menuItem);

@@ -187,8 +187,7 @@ UI.Window = new Class({
 					button.set('html', '');
 					
 				})
-			},
-			
+			}
 		})
 		.inject(this.head);
 		

@@ -225,8 +225,7 @@ UI.props.demo = {
 						gradient	: {
 							color: ['#FFF', '#FFF'],
 							opacity: [.6, .04]
-						},
-						
+						}
 					}
 				}
 			},

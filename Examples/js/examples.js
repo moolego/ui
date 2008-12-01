@@ -38,5 +38,5 @@ window.addEvent('domready', function() {
 			top : '35px'
 		}
 	}).inject(document.body);
-	console.log('exxamples');
+	//console.log('exxamples');
 });

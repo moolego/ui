@@ -1244,7 +1244,8 @@ UI.props.AquaGraphite = {
 							color: '#000',
 							padding: '4px 40px 5px 16px',
 							whiteSpace: 'nowrap',
-							display: 'block'
+							display: 'block',
+							position : 'relative'
 						}
 					},
 					separator: {
@@ -1634,7 +1635,7 @@ UI.props.AquaGraphite = {
 							position: 'absolute',
 							top: '51px',
 							left: '1px',
-							overflow: 'hidden',
+							overflow: 'hidden'
 						}
 					},
 					foot: {
@@ -1790,7 +1791,7 @@ UI.props.AquaGraphite = {
 							position: 'absolute',
 							top: '51px',
 							left: '1px',
-							overflow: 'hidden',
+							overflow: 'hidden'
 						}
 					}
 				},
@@ -1931,7 +1932,7 @@ UI.props.AquaGraphite = {
 						color: '#414755',
 						offset: [3.5, 4.5],
 						opacity: 1,
-						size: [7, 7],
+						size: [7, 7]
 					},
 					line2: {
 						position: 'absolute',
@@ -1940,16 +1941,13 @@ UI.props.AquaGraphite = {
 						color: '#414755',
 						offset: [3.5, 4.5],
 						opacity: 1,
-						size: [7, 7],
+						size: [7, 7]
 					}
 				}
 			}
 		},
 		minimize : {
-			'default' : {
-				
-				
-			},
+			'default' : {},
 			over : {
 				layers : {
 					reorder: ['emboss', 'background', 'main', 'reflect', 'cache', 'line'],
@@ -2170,7 +2168,7 @@ UI.props.AquaGraphite = {
 					underlay				: {
 						color				: ['#dcdcdc','#404040'],
 						offset				: [1, 1, 'auto'],
-						size				: ['auto', 20],
+						size				: ['auto', 20]
 					},
 					head : {
 						color				: ['#C4C4C4','#989898'], 
@@ -2188,13 +2186,13 @@ UI.props.AquaGraphite = {
 						position			: 'absolute',
 						size				: ['auto', 20],
 						color				: ['#fff','#404040'],
-						offset				: ['auto', 1, 2],
+						offset				: ['auto', 1, 2]
 					},
 					foot : {
 						position			: 'absolute',
 						size				: ['auto', 20],
 						color				: ['#C2C2C2','#989898'],
-						offset				: ['auto', 1, 1],
+						offset				: ['auto', 1, 1]
 					}
 				}
 			},
