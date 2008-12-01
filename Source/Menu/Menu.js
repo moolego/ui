@@ -233,7 +233,7 @@ UI.Menu = new Class({
 	*/
 	
 	mouseUpAction : function(menuItem){
-		if ($time() - this.time > 300) {
+		if ($time() - this.time > 300 && this.rollover) {
 			// effect!!
 			new Fx.Tween(this.rollover.element, {
 				duration	: 100,
@@ -579,7 +579,8 @@ UI.Menu = new Class({
 		this.removeSubmenu();
 			
 		if (!duration) {
-			this.element.setStyle('opacity',0)
+			this.element.setStyle('opacity',0);
+			this.removeRollover();
 		} else {
 			new Fx.Tween(this.element, {
 				duration: duration,
