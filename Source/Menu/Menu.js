@@ -579,13 +579,14 @@ UI.Menu = new Class({
 		this.removeSubmenu();
 			
 		if (!duration) {
-			this.element.setStyle('opacity',0);
+			this.setStyle('display', 'none');
 			this.removeRollover();
+			this.fireEvent('removeScrolls');
 		} else {
 			new Fx.Tween(this.element, {
 				duration: duration,
 				onComplete: function(){
-					this.element.setStyle('display', 'none');
+					this.setStyle('display', 'none');
 					this.removeRollover();
 					this.fireEvent('removeScrolls');
 				}.bind(this)
