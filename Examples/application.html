@@ -46,6 +46,8 @@
 	<script type="text/javascript" src="../Source/Window/Window.js"></script>
 	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
 	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
+
+	<script type="text/javascript" src="js/examples.js"></script>
 	
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
@@ -155,22 +157,58 @@
 			this.workspace = new UI.SplitView().inject(document.body);
 			
 			
-			new UI.Panel({
-				view	: { overflow	: 'hidden'},
-				styles			: {
-					position	: 'relative',
-					
+			new UI.TabView({
+				tabs : [
+					{
+						name : 'Chapter 1',
+						url	: 'assets/pulp1.json'
+					},
+					{
+						name : 'Chapter 2',
+						url	: 'assets/pulp2.json'
+					},
+					{
+						name : 'Chapter 3',
+						url	: 'assets/pulp3.json'
+					},
+					{
+						name : 'Chapter 4',
+						url	: 'assets/pulp4.json'
+					}
+				],
+				height : 200,
+				styles: {
+					backgroundColor : '#fff',
+					borderBottom : '1px solid #000',
+					position : 'relative'
 				}
-				
 			}).inject(workspace.side.content);
 			
-			new UI.Panel({
-				view	: { overflow	: 'hidden'},
-				styles			: {
-					position	: 'relative',
-					
+			new UI.TabView({
+				tabs : [
+					{
+						name : 'Chapter 1',
+						url	: 'assets/pulp1.json'
+					},
+					{
+						name : 'Chapter 2',
+						url	: 'assets/pulp2.json'
+					},
+					{
+						name : 'Chapter 3',
+						url	: 'assets/pulp3.json'
+					},
+					{
+						name : 'Chapter 4',
+						url	: 'assets/pulp4.json'
+					}
+				],
+				height : 200,
+				styles: {
+					backgroundColor : '#fff',
+					borderBottom : '1px solid #000',
+					position : 'relative'
 				}
-				
 			}).inject(workspace.side.content);
 			
 			

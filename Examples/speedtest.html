@@ -4,6 +4,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		
 		<script type="text/javascript" src="mootools/core.js"></script>
+		<script type="text/javascript" src="mootools/more.js"></script>
 		
 		<script type="text/javascript" src="../Utils/Singleton.js"></script>
 		<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
@@ -20,33 +21,29 @@
 		<script type="text/javascript" src="../Source/Control/Control.js"></script>
 		<script type="text/javascript" src="../Source/Control/Label.js"></script>
 		<script type="text/javascript" src="../Source/Control/Button.js"></script>
+		<script type="text/javascript" src="../Source/Control/Slider.js"></script>
+
+
 
 		<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
 		<script type="text/javascript" src="../Skins/Demo.js"></script>
+		<script type="text/javascript" src="../Skins/BlueTouch.js"></script>
+		
+		<script type="text/javascript" src="js/examples.js"></script>
 		
 		<title>mooLego Speed Test</title>
 		
 		<script type="text/javascript">
 			window.addEvent('domready', function(){
 				
-				button = new UI.Button({
-						label	: 'redraw',
-						onClick	: function(){
-							
-						},
-						styles	: {
-							margin		: 10,
-							fontFamily	: 'arial, helvetica, sans-serif',
-							fontSize	: '13px',
-							position	: 'fixed',
-							top			: 10,
-							right		: 10
-						}
-					}).inject(document.body, 'top');
+				var offone = 4;
+				var offtwo = 4;
+				var ratioone = 42.5
+				var ratiotwo = 42.5
+				
+				buttons = new Array();
 				
 				
-				
-				function RGBtoHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B)}
 				function toHex(n) {
 					if (n==null) return "00";
 					n=parseInt(n); if (n==0 || isNaN(n)) return "00";
@@ -54,51 +51,154 @@
 					return "0123456789ABCDEF".charAt((n-n%16)/16)
 					+ "0123456789ABCDEF".charAt(n%16);
 				};
+
+				var slidator = new Element('div' , {
+					styles : {
+						width : '200px',
+						height : '100px',
+						position : 'absolute',
+						top : '100px',
+						right : '20px'
+					}
+				}).inject(document.body);
 				
-				var box = new Element('div',{
+				new UI.Label({
+					html : 'color offset'
+				}).inject(slidator);
+				
+				new UI.Slider({
+					skin : 'BlueTouch',
+					range : [-10, 10],
+					styles : {
+						margin			: '3px 0',
+						display			: 'block'
+					},
+					wheel				: true,
+					onChange: function(step){
+						offone = step 
+					}
+				}).inject(slidator);
+				
+				new UI.Slider({
+					//width: 50,
+					skin				: 'BlueTouch',
+					range				: [-10, 10],
+					styles				: {
+						margin			: '3px 0',
+						display			: 'block'
+					},
+					wheel				: true,
+					onChange: function(step){
+						offone = step 
+					}
+				}).inject(slidator);
+				new UI.Label({
+					html : 'color offset'
+				}).inject(slidator);
+				
+				new UI.Slider({
+					skin : 'BlueTouch',
+					range : [10, 42],
+					styles : {
+						margin			: '3px 0',
+						display			: 'block'
+					},
+					wheel				: true,
+					onChange: function(step){
+						ratioone = step 
+					}
+				}).inject(slidator);
+				
+				new UI.Slider({
+					//width: 50,
+					skin				: 'BlueTouch',
+					range				: [10, 42],
+					styles				: {
+						margin			: '3px 0',
+						display			: 'block'
+					},
+					wheel				: true,
+					onChange: function(step){
+						ratiotwo = step 
+					}
+				}).inject(slidator);
 					
+					
+				var button = new UI.Button({
+					label	: 'update',
+					onClick	: function(){
+						test();
+					},
+					styles	: {
+						margin		: 10,
+						fontFamily	: 'arial, helvetica, sans-serif',
+						fontSize	: '13px',
+					}
+				}).inject(slidator);	
+					
+					
+				function RGBtoHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B)}
+								
+				var box = new Element('div',{
 					styles			: {
 						padding		: '8px 16px',
 						width		: '820px',
 						height		: '580px',
 						overflow	: 'hidden'
 					}
-					
 				}).inject(document.body);
 				
-				time = $time();
-				var size = 7; 
-				for (i = 0; i < size; i++) {
-					for (j = 0; j < size; j++) {
+				
+				
+				
+				var size = 7;
+				
+				var test = function(){
+					time = $time();
+					var index = 0;
+					for (i = 0; i < size; i++) {
+						for (j = 0; j < size; j++) {
 						
-						var one = size - i -1;
-						var two = size - j -1;
-
-						var color = RGBtoHex(Math.floor(255 - 42.5 * one),0,Math.floor(255 - 42.5 * two));
-						
-						new UI.Button({
-							label		: '<small>time</small><br/>'+(($time()-time)/1000)+'<br/><small style="font-size:5px: color:#ccc">color</small><br/>'+color,
-							skin		: 'demo',
-							type		: 'jgood',
-							props: {
-								'default': {
-									layers: {
-										front: {
-											color: '#' + color
-										}
-									}
-								},
-								down: {
-									layers: {
-										front: {
-											color: '#333'
-										}
-									}
-								}
+							var one = size - i + offone;
+							var two = size - j + offtwo;
+							
+							var color = RGBtoHex(0,Math.floor(255 - ratioone * one),  Math.floor(255 - ratiotwo * two));
+							//console.log(index)
+							if (buttons[index]) {
+								buttons[index].props.layers.front.color = '#' + color;
+								buttons[index].set('html', '<small>time</small><br/>' + (($time() - time) / 1000) + '<br/><small style="font-size:5px: color:#ccc">color</small><br/>' + color);
+								//console.log(index)
 							}
-						}).inject(box);
+							else {
+								buttons.push(new UI.Button({
+									label: '<small>time</small><br/>' + (($time() - time) / 1000) + '<br/><small style="font-size:5px: color:#ccc">color</small><br/>' + color,
+									skin: 'demo',
+									type: 'jgood',
+									props: {
+										'default': {
+											layers: {
+												front: {
+													color: '#' + color
+												}
+											}
+										},
+										down: {
+											layers: {
+												front: {
+													color: '#333'
+												}
+											}
+										}
+									}
+								}).inject(box))
+							}
+							index++;
+						}
 					}
 				}
+				
+				
+				test();
 			});
 		</script>
 	</head>

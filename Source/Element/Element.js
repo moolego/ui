@@ -80,7 +80,7 @@ UI.Element = new Class({
 			'for'	: this.options['for']
 		});
 		
-		this.element.setStyle('visibility', 'hidden');
+		//this.element.setStyle('visibility', 'hidden');
 		if (!this.options.selectable) this.element.disableSelect();
 		this.element.ui = true;
 		this.state = this.options.state;
@@ -472,28 +472,33 @@ Element.implement({
 				return false
 			}
 		else 
-			if (typeof this.style.MozUserSelect != "undefined") 
-				this.style.MozUserSelect = "none"
+			if (typeof this.style.MozUserSelect != 'undefined') 
+				this.style.MozUserSelect = 'none'
 			else 
 				this.onmousedown = function(){
-					return true
+					return false
 				}
 				
-		this.style.cursor = "default"
+		this.style.cursor = 'default'
+		
+		return this;
 	},
 	
 	enableSelect: function(){
 	
 		if (this.onselectstart) 
-			this.onselectstart = "" // for the badboy
+			this.onselectstart = '' // for the badboy
 		else 
 			if ($type(this.style.MozUserSelect) == "none") 
-				this.style.MozUserSelect = "" // for Firefox 
+				this.style.MozUserSelect = '' // for Firefox 
 			else 
 				this.onmousedown = function(){
-					return false
+					return true
 				} //finaly the others (opera, not sure for safari)
-		this.style.cursor = "default"
+				
+		this.style.cursor = "default";
+		
+		return this;
 	},
 	
 	/*

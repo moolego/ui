@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" href="css/reset.css" />
 
-	<title>MooLego SplitView - Component Playground</title>
+	<title>MooLego TabView Component Playground</title>
 	
 	<script type="text/javascript" src="mootools/core.js"></script>
 	<script type="text/javascript" src="mootools/more.js"></script>
@@ -55,22 +55,40 @@
 	<script type="text/javascript">
 		window.addEvent('load', function() {
 			var time = $time();
-			
-			new UI.View({
+
+			new UI.TabView({
+				tabs : [
+					{
+						name : 'Chapter 1',
+						url	: 'assets/pulp1.json'
+					},
+					{
+						name : 'Chapter 2',
+						url	: 'assets/pulp2.json'
+					},
+					{
+						name : 'Chapter 3',
+						url	: 'assets/pulp3.json'
+					},
+					{
+						name : 'Chapter 4',
+						url	: 'assets/pulp4.json'
+					}
+				],
 				width : 600,
 				height : 400,
 				styles: {
 					margin : '40px',
-					backgroundColor : '#fff',
-					border : '1px solid #ccc'
+					backgroundColor : '#e8e8e8',
+					borderBottom : '1px solid #000',
+					borderTop: '1px solid #000',
 				}
 			})
-			.inject(document.body)
-			.setContent('ajax','assets/pulpfull.json');
+			.inject(document.body);
 		});
 	</script>
 </head>
 
-<body style="overflow:hidden" bgcolor="#e8e8e8"></body>
+<body style="overflow:hidden"></body>
 
 </html>

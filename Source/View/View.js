@@ -80,9 +80,32 @@ UI.View = new Class({
 
 	build: function() {
 		this.parent();
+		
 		this.setOverflow();
 		this.show();
 	},
+ 	
+	/* 
+		Function: setOverlay
+			create a new overlay object 
+	*/
+
+	buildOverlay: function() {
+		
+		console.log('show overlay');
+		this.overlay = new Element('div',this.props.components.overlay)
+		 .inject(this.view.element);
+
+		this.addEvents({
+			'onBlur' : function() { console.log('blur');this.overlay.show(); },
+			'onFocus' : function() { this.overlay.hide(); },
+			'onResizeStart' : function() { this.overlay.show(); },
+			'onResizeComplete' : function() { this.overlay.hide(); },
+			'onDragStart' : function() { this.overlay.show(); },
+			'onDragComplete' : function() { this.overlay.hide(); }
+		});
+	},
+
 
 	/* 
 	 * Method: setBehaviors
@@ -114,14 +137,14 @@ UI.View = new Class({
 			
 			if (this.options.overflow == 'scrollbar') {
 				this.content.setStyle('overflow','hidden');
-				this.setScrollbar();
+				this.buildScrollbar();
 			}
-			this.content.addEvents({
-			'onInject': function(){
-				this.updateSize()
-			}.bind(this)
-		});
 			
+			this.content.addEvents({
+				onInject : function(){
+					this.updateSize()
+				}.bind(this)
+			});
 		} else { this.content = this.element }
 	},
 	
@@ -132,7 +155,7 @@ UI.View = new Class({
 
 	*/
 	
-	setScrollbar : function() {
+	buildScrollbar : function() {
 		this.scrollbar = new UI.Scrollbar({
 			container	: this.content
 		});
@@ -228,7 +251,12 @@ UI.View = new Class({
 	},
 	
 	setIFrameContent : function(method,source,options) {
-		this.element.set('src',source)
+		if (!this.iframe) {
+			this.element.empty();
+			this.iframe = new Element('iframe',this.props.components.iframe).inject(this.element);
+		};
+		
+		this.iframe.set('src',source)
 		 .addEvent('load',function(){ 
 		 	this.fireEvent('loadComplete');
 			this.fireEvent('onResize');

@@ -55,8 +55,8 @@
 			var time = $time();
 			
 			new UI.SplitView({
-				width : 300,
-				height : 300,
+				width : 600,
+				height : 400,
 				layers: {
 					reorder: ['emboss', 'front', 'reflect'],
 
@@ -82,6 +82,11 @@
 						},
 						radius: [4,4, 4, 4]
 					}
+				},
+				styles: {
+					margin: '40px',
+					backgroundColor:'#fff'
+					
 				}
 			}).inject(document.body);
 			

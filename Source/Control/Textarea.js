@@ -44,6 +44,7 @@ UI.Textarea = new Class({
 		//create a new div as input element
 		this.parent();
 		
+				
 		//create input
 		this.setInput(false, 'textarea');
 		this.input.set({
@@ -53,6 +54,8 @@ UI.Textarea = new Class({
 				overflow	: 'hidden'
 			}
 		});
+		
+		// this.input.enableSelect();
 	},
 	
 	/* 

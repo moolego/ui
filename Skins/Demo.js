@@ -320,10 +320,10 @@ UI.props.demo = {
 					
 					shadow : {
 						color : '#000',
-						size : 8,
+						size : 10,
 						offsetX : 0,
 						offsetY : 3,
-						opacity : 1.5
+						opacity : 1
 					},
 					
 					front			: {
