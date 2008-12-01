@@ -186,8 +186,8 @@ UI.Element = new Class({
 		this.element.left = left || this.options.left || this.props.defaultLeft || this.element.getCoordinates().x - this.props.shadowMagnify * 2;
 		this.element.top = top || this.options.top || this.props.defaultTop || this.element.getCoordinates().y - this.props.shadowMagnify * 2;
 		this.element.setStyles({
-			top	: this.element.left,
-			left : this.element.top
+			top	: this.element.top,
+			left : this.element.left
 		});
 	},
 

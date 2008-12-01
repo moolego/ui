@@ -1409,7 +1409,7 @@ UI.props.AquaGraphite = {
 				styles: {
 					position: 'relative',
 					zIndex: 1,
-					backgroundColor: '#'
+					backgroundColor: 'transparent'
 				}
 			}
 		},
@@ -1783,11 +1783,11 @@ UI.props.AquaGraphite = {
 				}
 			},
 			minimized: {
+				width : 160,
+				height : 22,
 				layers: {
+					reorder : ['shadow', 'background', 'underlay', 'head'],
 					head: {
-						color: ['#CACACA', '#CFCFCF']
-					},
-					foot: {
 						color: ['#CACACA', '#CFCFCF']
 					}
 				}
@@ -2595,7 +2595,7 @@ UI.props.AquaGraphite = {
 							color :	['#9c9c9c','#888888']
 						},
 						offset				: [0,1,1,0]
-					},
+					}
 				}
 			}
 		}
