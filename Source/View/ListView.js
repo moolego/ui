@@ -62,83 +62,38 @@ UI.ListView = new Class({
 
 	build : function() {
 		this.parent();
-		
-		this.tmpl(this.options.template, this.options.url);
-		
+		this.tmpl(this.options.url);
 	},
 
-	tmpl : function (template, url, options) {
-	    var template = $(template);
-		console.log(url);
-		
-	    new Request.JSON({
+	tmpl : function ( url, options) {
+	   new Request.JSON({
 			url : url,
 	        onComplete:function(response) {
-				console.log('response',response);
-				//var responseJSON = eval(responseText);
-	            this.expandTemplate(template,response);
+				this.process(response);
 	        }.bind(this)
 	    }).get();
-		
-	
 	},
 
 
-	// expendTemplate
-
-	expandTemplate : function (template, data) {
-	    var template = $('template');
-		console.log('template',template);
-	    var target = $('target');
-	    target.empty();
-	    template.getChildren().each(function(item) {
-	        target.adopt(item.clone());
-	    });
-	    this.process(target, data);
-	},
-	
 	/*
 	Function: process
 		Used internally. Process the template and inject in view content. Should always be invoced on a copy.
 	
 	Arguments:
-		target - location of the template to be filled
 		data - data to be used during template interpolation
 	*/
 	
-	process : function (target, data) {
-		var target = $('target');
-		console.log('process:',data);
-		for(var key in data) {
-			console.log('test',key,data[key]);
+	process : function(data){
+		data.each(function(element){
+			var item = new UI.Element({
+				type: element.type || 'default',
+			}).inject(this.content);
 			
-			var tmpEls = target.getElements('.' + key);
-			console.log('tmpEls:',tmpEls);
-			
-			var obj = data[key];
-			
-			if ($type(obj) == 'object') {
-				// descend
-				this.process(tmpEls[0], obj);
-			} else
-				if ($type(obj) == 'array') {
-					// clone array of 'el'
-					for(var i=0;i<obj.length;i++) {
-						var tmpEl = tmpEls[i%tmpEls.length];
-						var a = tmpEl.clone(true);
-						tmpEl.getParent().adopt(a);
-						if (($type(obj[i]) == 'array') || ($type(obj[i]) == 'object')) {
-							this.process(a, obj[i]);
-						} else {
-							a.set('text',obj[i]);
-						}
-					}
-					tmpEls.each(function(el) {el.destroy(); });
-			} else {
-				// set text of el to obj
-				tmpEls[0].set('text',obj);
-			}
-		}
+			$H(element).erase('type').each(function(el){
+				new UI.Element({
+					html : el
+				}).inject(item.element);
+			}, this)
+		}, this);
 	}
 });
-

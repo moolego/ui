@@ -1,10 +1,12 @@
-{  
-    "columnName": ["Name", "Price", "Qty"],  
-  
-    "data": [  
-        {"item": ["1. Apple", 125, 0.5]},  
-        {"item": ["2. Banana", 210, 0.4]},  
-        {"item": ["3. Cat", 300, 0.2]},  
-        {"item": ["4. Dog", 200, 3]}  
-    ]  
-}
+[
+	{
+		"type"	: "itemList",
+		"title" : "UI",
+		"desc"	: "Core/UI.js"
+	},
+	{
+		"type"	: "button",
+		"title" : "UI",
+		"desc"	: "Core/UI.js"
+	}
+]

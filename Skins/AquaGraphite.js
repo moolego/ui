@@ -2625,6 +2625,55 @@ UI.props.AquaGraphite = {
 					}
 				}
 			}
+		},
+		itemList : {
+			'default' : {
+				
+				height						: 40,
+				
+				/* layers properties */
+				styles : {
+					position				: 'relative',
+					display					: 'block',
+					fontSize				: '.7em',
+					height					: '24px',
+					width					: '100%',
+					padding					: '0',
+					margin					: '0',
+					top						:'0px',
+					left					: '0px',
+					overflow				: 'hidden'
+				},
+				layers						: {
+					reorder					: ['base','background','emboss','main'],
+					
+					base				: {
+						gradient			: {
+							color :	['#d6d6d6','#e8e8e8']
+						},
+						offset				: 0
+					},
+					background				: {
+						gradient			: {
+							color :	['#d6d6d6','#d6d6d6']
+						},
+						offset				: 0
+					},
+					emboss					: {
+						gradient			: {
+							color :	['#5d5d5d','#5d5d5d']
+						},
+						offset				: [0,0,4,0]
+					},
+					main					: {
+						opacity:1,
+						gradient			: {
+							color :	['#9c9c9c','#888888']
+						},
+						offset				: [0,1,1,0]
+					}
+				}
+			}
 		}
 	},
 	bubble : {

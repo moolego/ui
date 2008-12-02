@@ -319,6 +319,21 @@ UI.Element = new Class({
 		this.controller.register(this);
 		this.fireEvent('injected');
 		return this;		
+	},
+	
+	/*
+    Function: addopt
+    	Inject the element element into container
+    	
+    Argument: 
+    	View Container
+
+	*/
+	
+	adopt: function (element){
+		this.element.adopt(element);
+		this.setSize();
+		return this;		
 	}
 
 });

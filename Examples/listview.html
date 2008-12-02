@@ -60,7 +60,7 @@
 				height : 400,
 				url	: 'assets/list.json',
 				template : 'template'
-			});
+			}).inject(document.body);
 			
 		});
 	</script>
@@ -68,24 +68,14 @@
 
 <body style="overflow:hidden">
 	
-	<div style="display:none" id="template">  
-	    <table border="1">  
-	        <tr class="header">  
-	            <th class="columnName" />  
-	        </tr>  
-	  
-	        <tr class="data">  
-	            <td class="item" />  
-	        </tr>  
-	  
-	        <tr class="data alt">  
-	            <td class="item" />  
-	        </tr>  
-	  
-	    </table>  
-	</div>  
-  
-	<div id="target"></div>
+	<div id="template">
+       <ul>  
+            <li class="data" style="padding:5px;">
+				<span class="item" style="display:block; width: 150px; font-weight:bold;"></span>
+				<span class="item"></span>
+			</li>
+       </ul>  
+   </div>  
 	
 </body>
 
