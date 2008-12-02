@@ -278,7 +278,7 @@ UI.Menu = new Class({
 		if (this.activeItem) {
 			this.activeItem.element.fireEvent('defaultArrow');
 			
-			this.activeItem.setState('default', 'dontResize');
+			this.activeItem.setState('default');
 		}
 		
 		this.rollover
@@ -288,7 +288,7 @@ UI.Menu = new Class({
 			top : coord.top,
 			left : coord.left
 		});
-		menuItem.setState('over', 'dontResize');
+		menuItem.setState('over');
 
 		this.activeItem = menuItem;
 	},
@@ -301,13 +301,11 @@ UI.Menu = new Class({
 	
 	removeRollover : function(){
 		if (this.rollover) {
-			//this.rollover.hide();
 			this.rollover.destroy();
 			delete this.rollover;
-		}
-		if (this.activeItem) {
+			
 			this.activeItem.element.fireEvent('defaultArrow');
-			this.activeItem.setState('default', 'dontResize');
+			this.activeItem.setState('default');
 		}
 		
 		this.activeItem = false;

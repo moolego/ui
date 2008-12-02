@@ -152,35 +152,52 @@ UI.Controller.Window = new Class({
 
 	
 	/*
-	  Function: resizeMaximizedWindow
+	  Function: getMinimizedLocation
 	  
-	   	Propagate click from shadow offset to the back window 
+	   	Return the position of next minimized window
 	  
 	 */	
 	 	
-	setMinimizedLocation: function() {
-		var x = 4;
+	getMinimizedLocation: function() {
+		var x = -150;
+		var y = window.getHeight()-35;
 		
 		UI.elements.window.each(function(w,i) {
 			if (w.state == 'minimized') {
-				x = x + w.element.getStyle('width').toInt() + 4;
+				x += w.getStyle('width').toInt() + 4;
 			}
 		});
 		
-		return x;
+		return [x, y];
+	},
+	
+	/*
+	  Function: resetMinimizedLocation
+	  
+		Replace minimized windows
+	  
+	 */	
+	
+	resetMinimizedLocation : function(){
+		var x = -150;
+		var y = window.getHeight()-35;
+		UI.elements.window.each(function(win) {
+			if (win.state == 'minimized') {
+				x += win.getStyle('width').toInt() + 4;
+				win.setLocation(x, y);
+			}
+		});
 	},
 
 	/*
 	  Function: resizeMaximizedWindow
 	  
 	   	Set new maximized size for all mamimized window 
-	
-	
 	  
 	 */	
 	
 	resizeMaximizedWindow: function() {
-		UI.elements.window.each(function(win,i) {
+		UI.elements.window.each(function(win) {
 			if (win.state == 'maximized') {
 				win.setSize({
 					height	: window.getHeight()-53,
@@ -227,7 +244,7 @@ UI.Controller.Window = new Class({
 	 */
 	
 	propagateUnderShadow : function(e) {
-		console.log('propagate');
+		//console.log('propagate');
 		
 		var x = e.client.x;
 		var y = e.client.y;

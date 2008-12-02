@@ -56,21 +56,20 @@
 	<script type="text/javascript">
 		window.addEvent('load', function() {
 			var time = $time();
-			/*
-			var moolego = new UI.Window({
+			
+			moolego = new UI.Window({
 				title		: 'MooLEgo',
 				width		: 640,
 				height		: 480,
 				overflow	: 'scrollbar',
 				location	: 'center'
 			})
-			.setContent('iframe','http://moolego.org')
-			.inject(document.body);
-			*/
-			var window = new UI.Window({
+			.setContent('iframe','http://moolego.org');
+			
+			windoo = new UI.Window({
 				title		: 'some controls',
 				overflow	: 'scrollbar'
-			}).inject(document.body);
+			});
 	
 			
 			new UI.Button({
@@ -80,7 +79,7 @@
 					fontFamily	: 'arial, helvetica, sans-serif',
 					fontSize	: '13px'
 				}
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			new UI.Button({
 				type			: 'recessed',
@@ -90,7 +89,7 @@
 					fontFamily	: 'arial, helvetica, sans-serif',
 					fontSize	: '13px'
 				}
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			new UI.Button({
 				type			: 'roundtextured',
@@ -100,7 +99,7 @@
 					fontFamily	: 'arial, helvetica, sans-serif',
 					fontSize	: '13px'
 				}
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			new UI.Button({
 				label			: 'Second button',
@@ -108,14 +107,14 @@
 				styles			: {
 					margin		: 10
 				}
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			new UI.Button({
 				label			: 'Third button',
 				styles			: {
 					margin		: 10
 				}
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			
 			
@@ -127,17 +126,17 @@
 			new UI.Checkbox({
 				label			: '1 checkbox',
 				styles			: cbstyles
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			new UI.Checkbox({
 				label			: '2 checkbox',
 				styles			: cbstyles
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			new UI.Checkbox({
 				label			: '3 checkbox',
 				styles			: cbstyles
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			
 			
@@ -149,22 +148,22 @@
 				label			: 'Radio 1',
 				selected		: true,
 				styles			: cbstyles
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			radiosGroup.newRadio({
 				label			: 'Radio 2',
 				styles			: cbstyles
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			radiosGroup.newRadio({
 				label			: 'Radio 3',
 				styles			: cbstyles
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			radiosGroup.newRadio({
 				label			: 'Radio 4',
 				styles			: cbstyles
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			new UI.Select({
 				list			: [
@@ -181,7 +180,7 @@
 				styles			: {
 					margin		: 10
 				}
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			new UI.Select({
 				list			: [
@@ -191,7 +190,7 @@
 				styles			: {
 					margin		: 10
 				}
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			
 			
@@ -200,7 +199,7 @@
 				styles			: {
 					margin		: 10
 				}
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			
 			
@@ -209,7 +208,7 @@
 				styles			: {
 					margin		: 10
 				}
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			
 			
@@ -217,7 +216,7 @@
 				styles			: {
 					margin		: 10
 				}
-			}).inject(window.content);
+			}).inject(windoo.content);
 			
 			new UI.Window({
 						title				: 'Star Guitar',
