@@ -227,6 +227,8 @@ UI.Controller.Window = new Class({
 	 */
 	
 	propagateUnderShadow : function(e) {
+		console.log('propagate');
+		
 		var x = e.client.x;
 		var y = e.client.y;
 		var z = 0;

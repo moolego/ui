@@ -40,8 +40,8 @@ Discussion:
 	
 */
 
-UI.View = new Class({
-	Extends					: UI.Element,
+UI.ListView = new Class({
+	Extends					: UI.View,
 		
 	options: {
 		component			: 'listview',
@@ -60,29 +60,74 @@ UI.View = new Class({
 		onLoadComplete		: $empty
 	},
 
+	build : function() {
+		this.parent();
+		
+		this.tmpl(this.options.template, this.options.url);
+		
+	},
+
+	tmpl : function (template, url, options) {
+	    var template = $(template);
+	    new Request.JSON({
+	        onComplete:function() {
+	            var res = Json.evaluate(this.response.text);
+	            this.expandTemplate(template,res);
+	        }.bind(this)
+	    }).get();
+	},
+
+
 	// expendTemplate
 
-	expandTemplate : function (template, target, data) {
+	expandTemplate : function (template, data) {
 	    var template = $(template);
 	    var target = $(target);
 	    target.empty();
 	    template.getChildren().each(function(item) {
 	        target.adopt(item.clone());
 	    });
-	    fillTemplate(target, data);
+	    this.process(target, data);
 	},
 	
-	tmpl : function (template, target, url, options) {
-	    var template = $(template);
-	    var target = $(target);
-	    var ajax = new Ajax(url, {
-	        onSuccess:function() {
-	            var res = Json.evaluate(this.response.text);
-	            expandTemplate(template, target, res);
-	        }
-	    });
-		ajax.setOptions(options);
-	    ajax.request();
+	/*
+	Function: process
+		Used internally. Process the template and inject in view content. Should always be invoced on a copy.
+	
+	Arguments:
+		target - location of the template to be filled
+		data - data to be used during template interpolation
+	*/
+	
+	process : function (target, data) {
+		var target = this.element;
+		
+		for(var key in data) {
+			var tmpEls = target.getElements('.' + key);
+			var obj = data[key];
+			
+			if ($type(obj) == 'object') {
+				// descend
+				this.process(tmpEls[0], obj);
+			} else
+				if ($type(obj) == 'array') {
+					// clone array of 'el'
+					for(var i=0;i<obj.length;i++) {
+						var tmpEl = tmpEls[i%tmpEls.length];
+						var a = tmpEl.clone(true);
+						tmpEl.getParent().adopt(a);
+						if (($type(obj[i]) == 'array') || ($type(obj[i]) == 'object')) {
+							this.process(a, obj[i]);
+						} else {
+							a.setText(obj[i]);
+						}
+					}
+					tmpEls.each(function(el) {el.remove(); });
+			} else {
+				// set text of el to obj
+				tmpEls[0].setText(obj);
+			}
+		}
 	}
 });
 
