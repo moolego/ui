@@ -430,8 +430,10 @@ UI.Window = new Class({
 			this.maximized = false;
 			this.minimized = true;
 			
-			this.setSize(this.skin['minimized'].width, this.skin['minimized'].height);
 			this.setState('minimized', 'dontresize');
+			this.setSize(this.skin['minimized'].width, this.skin['minimized'].height);
+			
+			
 			this.setLocation();
 			this.controller.focus();
 		}
