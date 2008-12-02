@@ -69,20 +69,27 @@ UI.ListView = new Class({
 
 	tmpl : function (template, url, options) {
 	    var template = $(template);
+		console.log(url);
+		
 	    new Request.JSON({
-	        onComplete:function() {
-	            var res = Json.evaluate(this.response.text);
-	            this.expandTemplate(template,res);
+			url : url,
+	        onComplete:function(response) {
+				console.log('response',response);
+				//var responseJSON = eval(responseText);
+	            this.expandTemplate(template,response);
 	        }.bind(this)
 	    }).get();
+		
+	
 	},
 
 
 	// expendTemplate
 
 	expandTemplate : function (template, data) {
-	    var template = $(template);
-	    var target = $(target);
+	    var template = $('template');
+		console.log('template',template);
+	    var target = $('target');
 	    target.empty();
 	    template.getChildren().each(function(item) {
 	        target.adopt(item.clone());
@@ -100,10 +107,14 @@ UI.ListView = new Class({
 	*/
 	
 	process : function (target, data) {
-		var target = this.element;
-		
+		var target = $('target');
+		console.log('process:',data);
 		for(var key in data) {
+			console.log('test',key,data[key]);
+			
 			var tmpEls = target.getElements('.' + key);
+			console.log('tmpEls:',tmpEls);
+			
 			var obj = data[key];
 			
 			if ($type(obj) == 'object') {
@@ -119,13 +130,13 @@ UI.ListView = new Class({
 						if (($type(obj[i]) == 'array') || ($type(obj[i]) == 'object')) {
 							this.process(a, obj[i]);
 						} else {
-							a.setText(obj[i]);
+							a.set('text',obj[i]);
 						}
 					}
-					tmpEls.each(function(el) {el.remove(); });
+					tmpEls.each(function(el) {el.destroy(); });
 			} else {
 				// set text of el to obj
-				tmpEls[0].setText(obj);
+				tmpEls[0].set('text',obj);
 			}
 		}
 	}
