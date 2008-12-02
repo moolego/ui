@@ -1519,6 +1519,25 @@ UI.props.AquaGraphite = {
 		}
 	},
 	
+	
+	listview: {
+		'default': {
+			'default': {
+				styles: {
+					'float': 'left',
+					overflow: 'hidden',
+					height: '600px'
+				},
+				
+				components: {
+					item: {
+						component : 'label'
+					}
+				}
+			}
+		}
+	},
+	
 	scrollbar: {
 		track: {
 			'default': {

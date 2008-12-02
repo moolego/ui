@@ -319,10 +319,11 @@ UI.props.demo = {
 					
 					shadow : {
 						color : '#000',
-						size : 10,
+						size : 4,
 						offsetX : 0,
-						offsetY : 3,
-						opacity : 1
+						offsetY : 0,
+						opacity : .4,
+						magnify: 1
 					},
 					
 					front			: {
@@ -338,7 +339,7 @@ UI.props.demo = {
 							color	: ['#FFF', '#fe3333', '#fe3333'],
 							angle	: 110
 						},
-						radius		: [8,8,0,0]
+						radius		: [8,8,8,8]
 					},
 					reflect			: {
 						position	: 'absolute',

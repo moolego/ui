@@ -432,11 +432,13 @@ UI.Window = new Class({
 			this.fireEvent('onMinimize');
 			this.maximized = false;
 			this.minimized = true;
+
 			var size = {
 				width : this.skin['minimized'].width,
 				height : this.skin['minimized'].height
 			};
 			this.setState('minimized', size);
+
 			this.setLocation();
 			this.controller.focus();
 		}

@@ -490,18 +490,139 @@
 			this.youtube = new UI.Button({
 				skin				: 'demo',
 				type				: 'tube',
-				label				: 'Tube',
+				label				: 'moolego',
 				labelStyles			: {
-					fontSize		: '42px',
+					fontSize		: '30px',
 					fontWeight		: 'bold',
-					padding			: '8px 8px 4px',
-					color			: '#fff'
+					padding			: '4px 16px',
+					color			: '#fff',
+					lineHeight		: '40px'
 				},
 				onClick: function(){
-					new UI.Window({
+					var moolego = new UI.Window({
 						type 				: 'transparent',
 						viewOverflow		: 'hidden'
-					}).setContent('iframe','http://www.youtube.com');
+					});
+					
+					new UI.Button({
+						label			: 'Second button',
+						zIndex			: 6000,
+						styles			: {
+							margin		: 10
+						}
+					}).inject(moolego.content);
+					
+					new UI.Button({
+						label			: 'Third button',
+						styles			: {
+							margin		: 10
+						}
+					}).inject(moolego.content);
+					
+					
+					
+					var cbstyles = {
+						margin		: '0 10px 5px',
+						display		: 'block'
+					};
+					
+					new UI.Checkbox({
+						label			: '1 checkbox',
+						styles			: cbstyles
+					}).inject(moolego.content);
+					
+					new UI.Checkbox({
+						label			: '2 checkbox',
+						styles			: cbstyles
+					}).inject(moolego.content);
+					
+					new UI.Checkbox({
+						label			: '3 checkbox',
+						styles			: cbstyles
+					}).inject(moolego.content);
+					
+					
+					
+					var radiosGroup = new UI.RadiosGroup({
+						name			: 'radios'
+					});
+					
+					var radio = radiosGroup.newRadio({
+						label			: 'Radio 1',
+						selected		: true,
+						styles			: cbstyles
+					}).inject(moolego.content);
+					
+					var radio = radiosGroup.newRadio({
+						label			: 'Radio 2',
+						styles			: cbstyles
+					}).inject(moolego.content);
+					
+					var radio = radiosGroup.newRadio({
+						label			: 'Radio 3',
+						styles			: cbstyles
+					}).inject(moolego.content);
+					
+					var radio = radiosGroup.newRadio({
+						label			: 'Radio 4',
+						styles			: cbstyles
+					}).inject(moolego.content);
+					
+		
+					
+					new UI.Select({
+						list			: [
+							{text		: 'Please choose'},
+							{text		: 'Core'},
+							{text		: 'Control'},
+							{text		: 'Desktop is a long entry'},
+							{text		: 'Menu'},
+							{text		: 'Form'},
+							{text		: 'Un menu'},
+							{text		: 'Plage'},
+							{text		: 'Venise'}
+						],
+						styles			: {
+							margin		: 10
+						}
+					}).inject(moolego.content);
+					
+					new UI.Select({
+						list			: [
+							{text		: 'Please choose'},
+							{text		: 'It is long because of this entry in the list'}
+						],
+						styles			: {
+							margin		: 10
+						}
+					}).inject(moolego.content);
+					
+					
+					
+					new UI.Input({
+						value			: 'An input field',
+						styles			: {
+							margin		: 10
+						}
+					}).inject(moolego.content);
+					
+					
+					
+					new UI.Textarea({
+						value			: 'A textarea to write long essay. More usefull for that than a UI.Input()',
+						styles			: {
+							margin		: 10
+						}
+					}).inject(moolego.content);
+					
+					
+					
+					new UI.Slider({
+						styles			: {
+							margin		: 10
+						}
+					}).inject(moolego.content);
+					
 				}.bind(this),
 				styles		: {
 					margin	: 10
