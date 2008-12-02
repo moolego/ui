@@ -1519,6 +1519,25 @@ UI.props.AquaGraphite = {
 		}
 	},
 	
+	
+	listview: {
+		'default': {
+			'default': {
+				styles: {
+					'float': 'left',
+					overflow: 'hidden',
+					height: '600px'
+				},
+				
+				components: {
+					item: {
+						component : 'label'
+					}
+				}
+			}
+		}
+	},
+	
 	scrollbar: {
 		track: {
 			'default': {
@@ -1784,11 +1803,16 @@ UI.props.AquaGraphite = {
 			},
 			minimized: {
 				width : 160,
-				height : 22,
+				height : 45,
 				layers: {
-					reorder : ['shadow', 'background', 'underlay', 'head'],
+					reorder : ['shadow', 'background'],
 					head: {
 						color: ['#CACACA', '#CFCFCF']
+					},
+					shadow: {
+						size : 5,
+						offsetY : 2,
+						opacity : 0.5
 					}
 				}
 			}
