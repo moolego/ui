@@ -1784,11 +1784,19 @@ UI.props.AquaGraphite = {
 			},
 			minimized: {
 				width : 160,
-				height : 22,
+				height : 25,
 				layers: {
 					reorder : ['shadow', 'background', 'underlay', 'head'],
+					shadow : {
+						size : 6,
+						offsetY: 3,
+						opacity : .20
+					},
 					head: {
-						color: ['#CACACA', '#CFCFCF']
+						position : 'absolute',
+						color: ['#CACACA', '#CFCFCF'],
+						offset : [2, 1, 1],
+						radius : 4
 					}
 				}
 			}

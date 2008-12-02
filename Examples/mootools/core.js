@@ -2003,12 +2003,13 @@ Element.implement({
 
 	setStyle: function(property, value){
 		/*
-		if (this.hasClass('ui-menu')) {
+		if (true || this.hasClass('ui-menu')) {
 			console.log(this);
 			console.log(property + " : " + value);
 		}//console.log("--------------------");
 		//alert(property + " : " + value);
 		*/
+		
 		switch (property){
 			case 'opacity': return this.set('opacity', parseFloat(value));
 			case 'float': property = (Browser.Engine.trident) ? 'styleFloat' : 'cssFloat';

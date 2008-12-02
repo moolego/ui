@@ -79,6 +79,7 @@ UI.Window = new Class({
 		resizable				: true,
 		resizeLimitX			: [200, window.getWidth()],
 		resizeLimitY			: [200, window.getHeight()],
+		resizeOnDragIfMaximized	: false,
 		
 		// Implemented events
 		onMinimize			: $empty,
@@ -267,7 +268,7 @@ UI.Window = new Class({
 			this.addEvents({
 				'injected'		: function() { this.view.fireEvent('onResize'); },
 				onMinimize 		: function() { this.view.hide(); },
-				onNormalize 	: function() { this.view.show(); }
+				onNormalize 	: function() { this.foot.show(); this.view.show(); this.setSize(); }
 			});
 		}
 
@@ -392,6 +393,8 @@ UI.Window = new Class({
 				var coord = this.element.getCoordinates();
 				this.options.top = coord.top;
 				this.options.left = coord.left;
+				this.options.width = coord.width;
+				this.options.height = coord.height;
 			}.bind(this)
 		});
 		
@@ -406,14 +409,14 @@ UI.Window = new Class({
 	
 	focus: function() {
 		if (this.minimized) {
-			if (this.maximized)
-				this.maximize();
-			else
-				this.normalize();
+			this.normalize();
+		} else if (this.maximized && this.options.resizeOnDragIfMaximized) {
+			this.normalize();
 		} else {
-			this.setState('default');
 			this.controller.focus(this);
 		}
+		
+		if (this.state != 'default') this.setState('default');
 	},
 
 	/*
@@ -429,9 +432,11 @@ UI.Window = new Class({
 			this.fireEvent('onMinimize');
 			this.maximized = false;
 			this.minimized = true;
-			
-			this.setSize(this.skin['minimized'].width, this.skin['minimized'].height);
-			this.setState('minimized', 'dontresize');
+			var size = {
+				width : this.skin['minimized'].width,
+				height : this.skin['minimized'].height
+			};
+			this.setState('minimized', size);
 			this.setLocation();
 			this.controller.focus();
 		}
@@ -467,6 +472,7 @@ UI.Window = new Class({
 
 	normalize : function() {
 		this.controller.focus(this);
+		this.setState('default');
 		this.setSize();
 		this.setLocation();
 		
@@ -498,7 +504,7 @@ UI.Window = new Class({
 	      Update size and position of the window inner components
 	*/
 
-	updateSize : function(opt) {
+	updateSize : function() {
 		var element = this.element.getSize();
 		
 		var bs = this.props.borderSize;

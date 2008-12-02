@@ -149,12 +149,12 @@ UI.Element = new Class({
 		Method: setState
 			Set the button state
 	*/
-	setState : function(state, dontResize){
+	setState : function(state, size){
 		if (this.skin[state]) {
 			this.state = state;
 			if (this.skin[state].styles) this.setStyles(this.skin[state].styles);
 			
-			if (!$defined(dontResize)) this.setSize(false, false, state);
+			if ($defined(size)) this.setSize(size.width, size.height, state);
 		}
 		
 		return this;
