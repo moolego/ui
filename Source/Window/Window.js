@@ -128,6 +128,8 @@ UI.Window = new Class({
 		this.buildOverlay();
 		
 		this.inject(this.options.container || document.body);
+		
+		this.canvas.canvas.addEvent('click', function(e){this.controller.propagateUnderShadow(e)}.bind(this));
 	},
 
 	/* 
@@ -410,6 +412,7 @@ UI.Window = new Class({
 	focus: function() {
 		if (this.minimized) {
 			this.normalize();
+			this.controller.resetMinimizedLocation();
 		} else if (this.maximized && this.options.resizeOnDragIfMaximized) {
 			this.normalize();
 		} else {
@@ -426,22 +429,18 @@ UI.Window = new Class({
 	*/
 
 	minimize : function() {
-		if(this.minimized) {
-			this.normalize();
-		} else {
-			this.fireEvent('onMinimize');
-			this.maximized = false;
-			this.minimized = true;
+		this.fireEvent('onMinimize');
+		this.maximized = false;
+		this.minimized = true;
 
-			var size = {
-				width : this.skin['minimized'].width,
-				height : this.skin['minimized'].height
-			};
-			this.setState('minimized', size);
-
-			this.setLocation();
-			this.controller.focus();
-		}
+		var size = {
+			width : this.skin['minimized'].width,
+			height : this.skin['minimized'].height
+		};
+		this.setState('minimized', size);
+		var coord = this.controller.getMinimizedLocation();
+		this.setLocation(coord[0], coord[1], 'morph');
+		this.controller.focus();
 	},
 
 	/*
