@@ -21,18 +21,18 @@
 	},
 	{
 
-		"title" : "UI",
-		"desc"	: "Core/UI.js"
+		"title" : "UI.Element.Drag",
+		"desc"	: "Element/Element.Drag.js"
 	},
 	{
 
-		"title" : "UI",
-		"desc"	: "Core/UI.js"
+		"title" : "UI.Element.Resize",
+		"desc"	: "Element/Element.Resize.js"
 	},
 	{
 
-		"title" : "UI",
-		"desc"	: "Core/UI.js"
+		"title" : "UI.Element.Controller",
+		"desc"	: "Element/Element.Controller.js"
 	},
 	{
 

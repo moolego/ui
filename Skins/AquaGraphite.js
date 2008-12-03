@@ -1624,14 +1624,14 @@ UI.props.AquaGraphite = {
 						gradient: {
 							color: ['#5d5d5d', '#5d5d5d']
 						},
-						offset: [0, 0, 6, 0]
+						offset: [0, 0, 1, 0]
 					},
 					main: {
 						opacity: 1,
 						gradient: {
 							color: ['#9c9c9c', '#888888']
 						},
-						offset: [0, 1, 1, 0]
+						offset: [0, 0, 1, 0]
 					}
 				}
 			}
