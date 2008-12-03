@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" href="css/reset.css" />
 
-	<title>MooLego TabView Component Playground</title>
+	<title>MooLego ListView Component Playground</title>
 	
 	<script type="text/javascript" src="mootools/core.js"></script>
 	<script type="text/javascript" src="mootools/more.js"></script>
@@ -54,29 +54,134 @@
 	
 	<script type="text/javascript">
 		window.addEvent('load', function() {
-			
 			new UI.ListView({
-				width : 600,
+				width : 200,
 				height : 400,
-				url	: 'assets/list.json',
-				template : 'template'
+				styles : {
+					margin : '40px',
+					backgroundColor : '#e8e8e8',
+					borderBottom : '1px solid #000',
+					borderTop: '1px solid #000'
+				},
+				url	: 'assets/list.json'
 			}).inject(document.body);
 			
+			new UI.ListView({
+				itemType : 'red',
+				width : 200,
+				height : 400,
+				styles : {
+					margin : '40px',
+					backgroundColor : '#e8e8e8',
+					borderBottom : '1px solid #000',
+					borderTop: '1px solid #000'
+				},
+				url	: 'assets/list.json'
+			}).inject(document.body);
+			
+			new UI.ListView({
+				itemType : 'red',
+				width : 200,
+				height : 400,
+				styles : {
+					margin : '40px',
+					backgroundColor : '#e8e8e8',
+					borderBottom : '1px solid #000',
+					borderTop: '1px solid #000'
+				},
+				data : [
+					{
+				
+						"title" : "UI",
+						"desc"	: "Core/UI.js"
+					},
+					{
+				
+						"title" : "UI.Skin",
+						"desc"	: "Core/Skin.js"
+					},
+					{
+				
+						"title" : "UI.Canvas",
+						"desc"	: "Core/Canvas.js"
+					},
+					{
+				
+						"title" : "UI.Element",
+						"desc"	: "Element/Element.js"
+					},
+					{
+				
+						"title" : "UI",
+						"desc"	: "Core/UI.js"
+					},
+					{
+				
+						"title" : "UI",
+						"desc"	: "Core/UI.js"
+					},
+					{
+				
+						"title" : "UI",
+						"desc"	: "Core/UI.js"
+					},
+					{
+				
+						"title" : "UI",
+						"desc"	: "Core/UI.js"
+					},
+					{
+				
+						"title" : "UI",
+						"desc"	: "Core/UI.js"
+					},
+					{
+				
+						"title" : "UI",
+						"desc"	: "Core/UI.js"
+					},
+					{
+				
+						"title" : "UI",
+						"desc"	: "Core/UI.js"
+					},
+					{
+				
+						"title" : "UI",
+						"desc"	: "Core/UI.js"
+					},
+					{
+				
+						"title" : "UI",
+						"desc"	: "Core/UI.js"
+					},
+					{
+				
+						"title" : "UI",
+						"desc"	: "Core/UI.js"
+					},
+					{
+				
+						"title" : "UI",
+						"desc"	: "Core/UI.js"
+					},
+					{
+				
+						"title" : "UI",
+						"desc"	: "Core/UI.js"
+					},
+					{
+				
+						"title" : "UI",
+						"desc"	: "Core/UI.js"
+					}
+				]
+			}).inject(document.body);
 		});
 	</script>
 </head>
 
 <body style="overflow:hidden">
-	
-	<div id="template">
-       <ul>  
-            <li class="data" style="padding:5px;">
-				<span class="item" style="display:block; width: 150px; font-weight:bold;"></span>
-				<span class="item"></span>
-			</li>
-       </ul>  
-   </div>  
-	
 </body>
 
 </html>

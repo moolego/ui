@@ -46,15 +46,13 @@ UI.ListView = new Class({
 	options: {
 		component			: 'listview',
 		
+		data				: [],
+		itemType			: 'itemList',
+		
 		width				: '100%',
 		height				: '100%',
 
 		overflow			: 'scrollbar',		// hide, scrollbar or scrollmenu
-
-		tag					: 'div',
-		contentTag			: 'div',			// 
-
-		content				: {},
 
 		// implemented events		
 		onLoadComplete		: $empty
@@ -62,18 +60,26 @@ UI.ListView = new Class({
 
 	build : function() {
 		this.parent();
-		this.tmpl(this.options.url);
+		
+		this.getData(this.options.url);
 	},
 
-	tmpl : function ( url, options) {
-	   new Request.JSON({
-			url : url,
-	        onComplete:function(response) {
-				this.process(response);
-	        }.bind(this)
-	    }).get();
+	getData : function ( url, options) {
+		if (this.options.url) {
+			 new Request.JSON({
+				url : url,
+		        onComplete:function(response) {
+					this.processList(response);
+		        }.bind(this)
+		    }).get();
+			
+		} else {
+			this.processList(this.options.data);
+			
+		}
+		
+	 
 	},
-
 
 	/*
 	Function: process
@@ -82,18 +88,21 @@ UI.ListView = new Class({
 	Arguments:
 		data - data to be used during template interpolation
 	*/
-	
-	process : function(data){
+
+	processList : function(data){
 		data.each(function(element){
 			var item = new UI.Element({
-				type: element.type || 'default',
+				component : 'itemList',
+				type: element.type || this.options.itemType,
 			}).inject(this.content);
 			
 			$H(element).erase('type').each(function(el){
 				new UI.Element({
 					html : el
 				}).inject(item.element);
+				this.fireEvent('onResize');
 			}, this)
 		}, this);
 	}
 });
+
