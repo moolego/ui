@@ -62,7 +62,7 @@ UI.Controller = new Class({
 			elementClass.element.setStyle('zIndex', elementClass.options.zIndex || this.zIndex++);
 			
 		//add element to the group if needed
-		this.group(elementClass);
+		//this.group(elementClass);
 	},
 	
 	/*
