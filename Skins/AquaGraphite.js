@@ -1538,6 +1538,185 @@ UI.props.AquaGraphite = {
 		}
 	},
 	
+	itemList : {
+		'default': {
+			'default': {
+				
+				height: 40,
+				
+				components: {
+					label: {
+						styles: {
+							zIndex: 1,
+							fontWeight: 'normal',
+							cursor: 'pointer',
+							padding: '3px 16px 4px',
+							display:'block',
+							whiteSpace: 'nowrap',
+							lineHeight: '1.2em'
+						}
+					}
+				},
+				
+				/* shortcuts */
+				shortcuts: {
+					labelStyles: 'components.label.styles'
+				},
+				
+				/* layers properties */
+				styles: {
+					position: 'relative',
+					display: 'block',
+					fontSize: '.7em',
+					width: '100%',
+					padding: '0',
+					margin: '0',
+					top: '0px',
+					left: '0px',
+					overflow: 'hidden'
+				},
+				layers: {
+					base: {
+						gradient: {
+							color: ['#d6d6d6', '#e8e8e8']
+						},
+						offset: 0
+					},
+					background: {
+						gradient: {
+							color: ['#d6d6d6', '#d6d6d6']
+						},
+						offset: 0
+					},
+					emboss: {
+						gradient: {
+							color: ['#5d5d5d', '#5d5d5d']
+						},
+						offset: [0, 0, 1, 0]
+					},
+					main: {
+						opacity: 1,
+						gradient: {
+							color: ['#9c9c9c', '#888888']
+						},
+						offset: [0, 0, 1, 0]
+					}
+				}
+			},
+			over: {
+			
+				layers: {
+					reorder: ['base', 'background', 'emboss'],
+					
+					base: {
+						gradient: {
+							color: ['#d6d6d6', '#e8e8e8']
+						},
+						offset: 0
+					},
+					background: {
+						gradient: {
+							color: ['#d6d6d6', '#d6d6d6']
+						},
+						offset: 0
+					},
+					emboss: {
+						gradient: {
+							color: ['#5d5d5d', '#5d5d5d']
+						},
+						offset: [0, 0, 6, 0]
+					},
+					main: {
+						opacity: 1,
+						gradient: {
+							color: ['#9c9c9c', '#888888']
+						},
+						offset: [0, 1, 1, 0]
+					}
+				}
+			}
+		},
+		red : {
+			'default': {
+				
+				height: 40,
+				
+				components: {
+					label: {
+						styles: {
+							zIndex: 1,
+							fontWeight: 'normal',
+							cursor: 'pointer',
+							padding: '3px 16px 4px',
+							display:'block',
+							whiteSpace: 'nowrap',
+							lineHeight: '1.2em'
+						}
+					}
+				},
+				
+				/* shortcuts */
+				shortcuts: {
+					labelStyles: 'components.label.styles'
+				},
+				
+				/* layers properties */
+				styles: {
+					position: 'relative',
+					display: 'block',
+					fontSize: '.7em',
+					width: '100%',
+					padding: '0',
+					margin: '0',
+					top: '0px',
+					left: '0px',
+					overflow: 'hidden'
+				},
+				layers: {
+					reorder			: ['shadow', 'front', 'light', 'reflect'],
+					
+					shadow : {
+						color : '#000',
+						size : 4,
+						offsetX : 0,
+						offsetY : 0,
+						opacity : .4,
+						magnify: 1
+					},
+					
+					front			: {
+						position	: 'absolute',
+						offset		: '0px',
+						color		: '#fe3333',
+						radius		: 0
+					},
+					light			: {
+						position	: 'absolute',
+						offset		: [2, 2, '40%'],
+						gradient	: {
+							color	: ['#FFF', '#fe3333', '#fe3333'],
+							angle	: 110
+						},
+						radius		: 0
+					},
+					reflect			: {
+						position	: 'absolute',
+						offset		: 0,
+						gradient	: {
+							color	: ['#fe3333','#c32222'],
+							opacity	: [0, 1]
+						},
+						radius		: 0
+					}
+				}
+			},
+			over: {
+			
+				
+			}
+		}
+	},
+	
 	scrollbar: {
 		track: {
 			'default': {
@@ -2581,55 +2760,6 @@ UI.props.AquaGraphite = {
 				
 				height						: 21,
 				width						: 1000,
-				
-				/* layers properties */
-				styles : {
-					position				: 'relative',
-					display					: 'block',
-					fontSize				: '.7em',
-					height					: '24px',
-					width					: '100%',
-					padding					: '0',
-					margin					: '0',
-					top						:'0px',
-					left					: '0px',
-					overflow				: 'hidden'
-				},
-				layers						: {
-					reorder					: ['base','background','emboss','main'],
-					
-					base				: {
-						gradient			: {
-							color :	['#d6d6d6','#e8e8e8']
-						},
-						offset				: 0
-					},
-					background				: {
-						gradient			: {
-							color :	['#d6d6d6','#d6d6d6']
-						},
-						offset				: 0
-					},
-					emboss					: {
-						gradient			: {
-							color :	['#5d5d5d','#5d5d5d']
-						},
-						offset				: [0,0,4,0]
-					},
-					main					: {
-						opacity:1,
-						gradient			: {
-							color :	['#9c9c9c','#888888']
-						},
-						offset				: [0,1,1,0]
-					}
-				}
-			}
-		},
-		itemList : {
-			'default' : {
-				
-				height						: 40,
 				
 				/* layers properties */
 				styles : {
