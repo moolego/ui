@@ -54,7 +54,8 @@ UI.RadiosGroup = new Class({
 			styles : $merge({
 				position : 'relative',
 				display : 'inline-block',
-				height	: 15
+				height	: 15,
+				zIndex 	: this.radios.length+1
 			}, opt.styles)
 		}).store('value', opt.value);
 		

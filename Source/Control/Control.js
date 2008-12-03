@@ -101,11 +101,12 @@ UI.Control = new Class({
 	
 	setBehavior : function(){
 		this.parent();
-		if (!this.input) return;
-		this.input.addEvents({
-			blur	: this.fireEvent.bind(this, 'blur'),
-			focus	: this.fireEvent.bind(this, 'focus')
-		});
+		if (this.input) {
+			this.input.addEvents({
+				blur	: this.fireEvent.bind(this, 'blur'),
+				focus	: this.fireEvent.bind(this, 'focus')
+			});
+		}
 	},
 
 	set : function(property, value){

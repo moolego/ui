@@ -55,7 +55,6 @@ UI.Button = new Class({
 			Set the button state
 	*/
 	setState : function(state){
-	
 		if (this.textLabel) {
 			this.textLabel.setStyles(this.skin[state].components.label.styles);
 		}
@@ -69,7 +68,6 @@ UI.Button = new Class({
 	*/
 	setBehavior : function() {
 		this.parent();
-		
 		//we add mouse event
 		this.element.addEvents({
 			mouseenter	: this.setState.bind(this, 'over'),

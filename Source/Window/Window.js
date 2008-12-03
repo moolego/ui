@@ -473,9 +473,13 @@ UI.Window = new Class({
 
 	normalize : function() {
 		this.controller.focus(this);
-		this.setState('default');
-		this.setSize();
-		this.setLocation();
+		
+		var size = {
+			width : false,
+			height : false
+		};
+		this.setState('default', size);
+		this.setLocation(false, false, 'morph');
 		
 		this.maximized = false;
 		this.minimized = false;
