@@ -25,6 +25,9 @@ UI.Element = new Class({
 		
 		styles				: {},
 		
+		//group id
+		group				: false,
+		
 		// implemeted events
 		onClick				: $empty,
 		onMouseDown			: $empty,
@@ -140,7 +143,6 @@ UI.Element = new Class({
 		this.addEvent('setCanvasSize', function(state){
 			if (!state)	var props = this.props;
 			else var props = this.skin[state] || this.props;
-			
 			this.canvas.setSize(this.element.x,this.element.y, props);
 		});
 	},
@@ -154,9 +156,11 @@ UI.Element = new Class({
 			this.state = state;
 			if (this.skin[state].styles) this.setStyles(this.skin[state].styles);
 			
-			if ($defined(size)) this.setSize(size.width, size.height, state);
+			if ($defined(size))
+				this.setSize(size.width, size.height, state);
+			else
+				this.fireEvent('setCanvasSize', state);
 		}
-		
 		return this;
 	},
 	

@@ -158,7 +158,7 @@ UI.Menu = new Class({
 			});
 		}
 		
-		menuItem.addEvents({
+		menuItem.element.addEvents({
 			'mouseleave': function(){
 				$clear(this.menuActionDelay);
 			}.bind(this),
@@ -183,6 +183,7 @@ UI.Menu = new Class({
 					underlay		: this.underlay,
 					menu			: item.menu,
 					openOnRollover	: this.options.openOnRollover,
+					closeOnRollout	: this.options.closeOnRollout,
 					position		: position,
 					zIndex			: this.options.component == 'toolbar' ? --this.options.zIndex : ++this.options.zIndex,
 					events			: {
@@ -538,7 +539,7 @@ UI.Menu = new Class({
 			this.setCanvas();
 		}
 
-		if (this.options.openOnRollover)
+		if (this.options.closeOnRollout)
 		this.canvas.canvas.addEvent('mouseleave', function(){
 			if (this.activeItem) this.underlay.fireEvent('click');
 		}.bind(this));

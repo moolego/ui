@@ -43,6 +43,7 @@ UI.Toolbar = new Class({
 		menus			: [],
 		zIndex			: 4000,
 		openOnRollover	: false,
+		closeOnRollout	: false,
 		
 		// styles
 		component		: 'toolbar'

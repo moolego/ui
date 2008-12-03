@@ -21,8 +21,7 @@ UI.Controller = new Class({
 	initialize: function(options){
 		this.setOptions();
 		this.zIndex = this.options.zBase;
-		this.followers = [];
-		this.i = 0;
+		this.groups = {};
 	},
 
 	/*
@@ -32,7 +31,7 @@ UI.Controller = new Class({
 	   
 	  Arguments: window Object
 	  
-	 */	
+	 */
 	
 	register: function(elementClass) {
 		//get first element parent made with UI
@@ -61,6 +60,41 @@ UI.Controller = new Class({
 		//set z-index
 		if (elementClass.element.getStyle('zIndex') == 'auto' || elementClass.element.getStyle('zIndex') == 0)
 			elementClass.element.setStyle('zIndex', elementClass.options.zIndex || this.zIndex++);
+			
+		//add element to the group if needed
+		this.group(elementClass);
+	},
+	
+	/*
+	  Function: group
+	  
+	   Group elements in a group
+	   
+	  Arguments: element class instance
+	  
+	 */
+	
+	group : function(elementClass) {
+		if (elementClass.options.group) {
+			//we check if the group exist, else we create it
+			this.groups[elementClass.options.group] = this.groups[elementClass.options.group] || [];
+			this.groups[elementClass.options.group].push(elementClass);
+		}
+	},
+	
+	/*
+	  Function: serialize
+	  
+	   Serialize values of elements' group provided and return them 
+	   
+	  Arguments: group id
+	  
+	 */
+	
+	serialize : function(groupID) {
+		if (!this.groups[groupID]) return false;
+		
+		//we get all elements
 	}
 });
 
