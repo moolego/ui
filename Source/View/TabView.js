@@ -84,7 +84,7 @@ UI.TabView = new Class({
 				if (tab == this.tab) return;
 			
 				if (props.url) 
-				 view.setContent('ajax',props.url);
+					view.setContent('ajax',props.url);
 				
 				view.show();
 				
@@ -99,7 +99,7 @@ UI.TabView = new Class({
 				this.tab = tab;
 				this.view = view; 
 			}.bind(this)
-		}).inject(this.tabbar);
+		});
 		
 		this.tabs.push(tab);
 		//tab.addEvent();		
@@ -113,5 +113,13 @@ UI.TabView = new Class({
 	
 	setContent: function(method,source,options) {
 		this.view.setContent(method,source,options);
-	}
+	},
+	
+	inject: function (container, position){
+		this.parent(container, position);
+		
+		this.tabs.each(function(tab){
+			tab.inject(this.tabbar);
+		}.bind(this));
+	},
 });

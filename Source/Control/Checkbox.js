@@ -74,10 +74,12 @@ UI.Checkbox = new Class({
 			this.setState('default');
 			this.state = 'default';
 			this.input.value = '';
+			this.value = undefined;
 		} else {
 			this.setState('checked');
 			this.state = 'checked';
 			this.input.value = this.control.retrieve('value');
+			this.value = this.control.retrieve('value');
 		}
 	},
 	

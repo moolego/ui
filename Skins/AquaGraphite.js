@@ -504,56 +504,40 @@ UI.props.AquaGraphite = {
 					labelStyles: 'components.label.styles'
 				},
 				
-				labelStyles: {},
-				
 				/* layers properties */
 				layers: {
 					reorder: ['background', 'main'],
 					
-					'default': {
-						radius: 0
-					},
-					
 					background: {
 						offset: 0,
-						gradient : {
-							color: ['#6c6c6c', '#6c6c6c']
-						},
+						color: ['#6c6c6c', '#6c6c6c'],
 						radius: 0
 					},
 					main: {
 						offset: [0, 1, 1, 0],
 						radius: 0,
-						gradient: {
-							color: ['#9a9a9a', '#828282']
-						}
+						color: ['#9a9a9a', '#828282']
 					}
 				}
 			},
 			'over': {
 				layers: {
 					main: {
-						gradient: {
-							color: ['#aeaeae', '#9a9a9a']
-						}
+						color: ['#aeaeae', '#9a9a9a']
 					}
 				}
 			},
 			'down': {
 				layers: {
 					main: {
-						gradient: {
-							color: ['#bfbfbf', '#d1d1d1']
-						}
+						color: ['#bfbfbf', '#d1d1d1']
 					}
 				}
 			},
 			'active': {
 				layers: {
 					main: {
-						gradient: {
-							color: ['#eaeaea', '#dedede']
-						},
+						color: ['#eaeaea', '#dedede'],
 						offset: [0, 1, 0, 0]
 					}
 				}

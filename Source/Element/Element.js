@@ -172,7 +172,6 @@ UI.Element = new Class({
 	setSize : function(width, height, state){
 		this.element.x = width || this.options.width || this.props.width || this.element.getSize().x;
 		this.element.y = height || this.options.height || this.props.height || this.element.getSize().y;
-
 		if (this.element.x) this.element.setStyle('width', this.element.x);
 		if (this.element.y) this.element.setStyle('height', this.element.y);
 		this.fireEvent('setCanvasSize', state);
@@ -317,7 +316,6 @@ UI.Element = new Class({
 
 		this.element.inject(container, position);
 		this.element.setStyle('visibility', 'visible');
-
 		this.setSize();
 		this.setCanvas();
 		this.controller.register(this);

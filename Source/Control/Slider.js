@@ -29,6 +29,7 @@ UI.Slider = new Class({
 		
 		// default options
 		className		: 'slider',
+		name			: 'ui-slider',
 		
 		component		: 'slider',
 		type			: 'horizontal',
@@ -85,6 +86,13 @@ UI.Slider = new Class({
 			},
 			onChange	: function(step){this.fireEvent('change', step)}.bind(this),
 			onComplete	: function(step){this.fireEvent('complete', step)}.bind(this)
+		});
+	},
+	
+	setBehavior : function(){
+		this.parent();
+		this.addEvent('complete', function(step){
+			this.value = step;
 		});
 	},
 	
