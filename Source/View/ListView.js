@@ -75,10 +75,7 @@ UI.ListView = new Class({
 			
 		} else {
 			this.processList(this.options.data);
-			
 		}
-		
-	 
 	},
 
 	/*
@@ -91,14 +88,18 @@ UI.ListView = new Class({
 
 	processList : function(data){
 		data.each(function(element){
-			var item = new UI.Element({
+			var item = new UI.Button({
 				component : 'itemList',
+				label : false, 
 				type: element.type || this.options.itemType,
 			}).inject(this.content);
 			
 			$H(element).erase('type').each(function(el){
 				new UI.Element({
-					html : el
+					html : el,
+					styles : {
+						padding:'3px'
+					}
 				}).inject(item.element);
 				this.fireEvent('onResize');
 			}, this)
