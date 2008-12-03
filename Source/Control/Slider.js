@@ -87,6 +87,7 @@ UI.Slider = new Class({
 			onChange	: function(step){this.fireEvent('change', step)}.bind(this),
 			onComplete	: function(step){this.fireEvent('complete', step)}.bind(this)
 		});
+		return this;
 	},
 	
 	setBehavior : function(){

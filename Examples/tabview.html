@@ -56,7 +56,7 @@
 		window.addEvent('load', function() {
 			var time = $time();
 
-			new UI.TabView({
+			myTab = new UI.TabView({
 				tabs : [
 					{
 						name : 'Chapter 1',
@@ -64,7 +64,8 @@
 					},
 					{
 						name : 'Chapter 2',
-						url	: 'assets/pulp2.json'
+						url	: 'assets/pulp2.json',
+						selected : true
 					},
 					{
 						name : 'Chapter 3',
