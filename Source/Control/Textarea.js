@@ -1,21 +1,20 @@
 /*
-Class: UI.Input
-	Creates button and let you attach events action
+Class: UI.Textarea
+	Create a skinnable textarea element
 
 Arguments:
 	options
 
 Options: 
-	className - (string) css classname for the given button
-	buttonType - ()
+	name - (string) name of hidden input
+	value - (string) value to set on initialize
 
 Example:
 	(start code)
-		var button = new UI.Button({
-			onClick		: {},
-			onMouseOver	: {},
-			onDblClick	: {}
-		});
+		var textarea = new UI.Textarea({
+			name : 'myTextarea',
+			value : 'Hello world!'
+		}).inject(document.body);
 	(end)
 */
 
@@ -30,14 +29,26 @@ UI.Textarea = new Class({
 		value			: ''
 	},
 	
+	/* 
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	*/
+	
 	initialize: function(options) {
 		this.parent(options);
 	},
 	
 	/* 
-		Method: build
+	Function: build
+		private function
 		
-			Create a div and a hidden input to receive the selected value
+		Call UI.Element build and make a textarea element
+		
+	Return:
+		(void)
 	*/
 	
 	build : function(){
@@ -54,19 +65,34 @@ UI.Textarea = new Class({
 				overflow	: 'hidden'
 			}
 		});
-		
-		// this.input.enableSelect();
 	},
 	
 	/* 
 		Method: setState
 		
 			Set the button state
+		
+		Arguments:
+			state - (string)
+			
+		Return:
+			(void)
 	*/
+	
 	setState : function(state){
 		this.parent(state);
-		//this.input.setStyles(this.skin[state].components.input.styles);
+		return this;
 	},
+	
+	/* 
+		Method: setBehavior
+			private function
+		
+			Set behavior
+		
+		Return:
+			(void)
+	*/
 	
 	setBehavior : function() {
 		this.parent();

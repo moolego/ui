@@ -1,21 +1,21 @@
 /*
 Class: UI.Input
-	Creates button and let you attach events action
+	Create a skinnable input element
 
 Arguments:
 	options
 
 Options: 
-	className - (string) css classname for the given button
-	buttonType - ()
+	name - (string) name for the input element
+	value - (string) value
+	component - (string) component name
 
 Example:
 	(start code)
-		var button = new UI.Button({
-			onClick		: {},
-			onMouseOver	: {},
-			onDblClick	: {}
-		});
+	var button = new UI.Button({
+		name: 'myInput',
+		value: 'Hello world'
+	}).inject(document.body);
 	(end)
 */
 
@@ -30,14 +30,26 @@ UI.Input = new Class({
 		value			: ''
 	},
 	
+	/* 
+	Constructor: initialize
+		Constructor
+	
+	Arguments:
+		options - (object)
+	*/
+	
 	initialize: function(options) {
 		this.parent(options);
 	},
 	
 	/* 
-		Method: build
+	Function: build
+		private function
 		
-			Create a div and a hidden input to receive the selected value
+		Create a div and a hidden input to receive the selected value
+	
+	Return:
+		(void)
 	*/
 	
 	build : function(){
@@ -50,14 +62,30 @@ UI.Input = new Class({
 	},
 	
 	/* 
-		Method: setState
+	Function: setState
+		Set element state
+	
+	Arguments:
+		state - (string) State name
 		
-			Set the button state
+	Return:
+		(void)
 	*/
+	
 	setState : function(state){
 		this.parent(state);
 		if (this.skin[state]) this.input.set(this.skin[state].components.input.styles);
 	},
+	
+	/* 
+	Function: setBehavior
+		private function
+		
+		Set control relative behavior (blur and focus)
+	
+	Return:
+		(void)
+	*/
 	
 	setBehavior : function() {
 		this.parent();

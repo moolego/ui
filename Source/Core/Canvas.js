@@ -98,6 +98,9 @@ UI.Canvas = new Class({
 		width - (integer) Width of the canvas without shadow offsets
 		height - (integer) Width of the canvas without shadow offsets
 		props - (object) Skin properties. If not set, will get props passed on initialize
+	
+	Return:
+		(void)
 	*/
 
 	setSize : function(width, height, props){
