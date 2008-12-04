@@ -1,8 +1,18 @@
 /*
-Class: UI.Control
-	UI.Control is the root class of most control elements of iFramework UI
-
-
+	Class: UI.Control
+		UI.Control is the root class of most control elements of moolego UI. It can't be used alone.
+		
+	Extend:
+		UI.Element
+		
+	Arguments:
+		options
+	
+	Returns:
+		Canvas object.
+	
+	Discussion:
+	
 */
 
 
@@ -10,31 +20,41 @@ Class: UI.Control
 UI.Control = new Class({
 	Extends					: UI.Element,
 		
-	options: {
-		// implement events
-		tag					: 'span',
-		onChange			: $empty
-	},
+	options: {},
 
 	/* 
-		Method: initialize
-		
-			Construtor
-	 */
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	*/
 	
 	initialize: function(options){
 		this.parent(options);
 	},
+	
+	/* 
+	Function: build
+		private function
+		
+		Call UI.Element build and set the control element
+	*/
 	
 	build: function() {
 		this.parent();
 		this.control = this.element;
 	},
 	
-	/*
-	 * 	Function: setSize
-	 * 		setSize of Element
-	 */
+	/* 
+	Function: setSize
+		Set the size of an element, defined by the label size in most case and relay it to parent method.
+	
+	Arguments:
+		width - (integer) New element width
+		height - (integer) New element height
+		state - (string) (optional) Can be specified to draw a new state too
+	*/
 	
 	setSize : function(width,height, state){
 		if (this.textLabel) {
@@ -49,10 +69,21 @@ UI.Control = new Class({
 	},
 	
 	/* 
-		Method: createInput
+	Function: setInput
+		private function
 		
-			create an input and inject it in the control element
-	 */
+		Set an input in the control element
+	
+	Arguments:
+		type - (string) The input type. Could be hidden, text, ...
+		tag - (string) The input tag. Could be input or textarea
+		
+	Return:
+		(void)
+	
+	Discussion:
+		As we want to remove input from control, this method should no longer exist.
+	*/
 	
 	setInput : function(type, tag){
 		if (!$defined(tag)) tag	= 'input';
@@ -83,10 +114,16 @@ UI.Control = new Class({
 	},
 	
 	/* 
-		Method: getForm
+	Function: getForm
+		Get the form element containing this element
 		
-			Get the parent form element or return false
-	 */
+	Return:
+		(element) the form element
+	
+	Discussion:
+		As we want to remove input from control, this method shoul no longer exist.
+		We will use instead the group and serialize method of the UI.Controller
+	*/
 	
 	getForm : function(){
 		if (this.control) {
@@ -99,6 +136,16 @@ UI.Control = new Class({
 		return false;
 	},
 	
+	/* 
+	Function: setBehavior
+		private function
+		
+		Set control relative behavior (blur and focus)
+	
+	Return:
+		(void)
+	*/
+	
 	setBehavior : function(){
 		this.parent();
 		if (this.input) {
@@ -108,6 +155,14 @@ UI.Control = new Class({
 			});
 		}
 	},
+	
+	/* 
+	Function: set
+		Intercept set method to pass the html to textLabel instead of element
+	
+	Return:
+		(void)
+	*/
 
 	set : function(property, value){
 		if (property == 'html') {

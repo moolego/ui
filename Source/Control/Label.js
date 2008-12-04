@@ -1,6 +1,28 @@
 /*
-Class: UI.Label
-	UI.Text is used to make text element with css skin
+	Class: UI.Label
+		UI.Label is used to make text element with css skin
+	
+	Arguments:
+		options
+		
+	Options:
+		tag - (string) element tag, by default 'span'
+		html - (string) label text, by default Label
+		emboss - (boolean) duplicate the text to create an emboss effect
+		selectable - (boolean) Define if the text is selectable or not
+	
+	Returns:
+		Label element
+		
+	Example:
+		(start code)
+		var label = new UI.Label({
+			html	: 'Hello world!',
+		}).inject(this.element);
+		(end)
+	
+	Discussion:
+	
 */
 
 UI.Label = new Class({
@@ -12,31 +34,29 @@ UI.Label = new Class({
 		tag					: 'span',
 		html				: 'Label',
 		
-		emboss				: true,
+		emboss				: false,
 		
 		selectable			: false
 	},
 
 	/* 
-		Method: initialize
+	Function: build
+		private function
 		
-			Construtor
-	 */
+		Call UI.Element build
+	*/
 	
 	build: function(options){
 		this.parent(options);
-		
-		/*if (this.options.emboss) {
+		/*
+		if (this.options.emboss) {
 			this.addEvent('injected', function(){
 				this.emboss = this.element.clone().inject(this.element, 'top');
 				if (this.props.components && this.props.components.emboss.styles) {
 					this.emboss.setStyles(this.props.components.emboss.styles);
 				}
-				
-				
 			});
-		}*/
-		
-		
+		}
+		*/
 	}
 });

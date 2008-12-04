@@ -1,27 +1,17 @@
 /*
 
 Class: UI.Skin
-	The UI.Skin class defines singleton object that manage skins.
-
-Require:
-
+	The UI.Skin class defines a singleton object that handle skins.
 
 Arguments:
 	Options
 	
 Options: 
-	skin - (string) skin name defined in skins. ie: GreyGlass
-	component - (string) 
-	path - (optional)
+	skin - (string) skin name defined in skins. ie: AquaGraphite
 
 Example:
 	(start code)
-	this.skin = UI.skin.get({
-			skin : this.options.skin,
-			component : this.options.name, 
-			type : this.options.type, 
-			props : this.options.props
-		});
+	UI.skin = new UI.Skin('AquaGraphite');
 	(end)
 */
 
@@ -32,11 +22,34 @@ UI.Skin = new Class({
 	options : {
 		skin	: 'AquaGraphite'
 	},
+	
+	/*
+	Constructor: initialize
+		Constructor
+
+		Set the default skin
+		
+	Arguments:
+		options - (object) options
+	*/
  	
 	initialize : function(options) {
 		this.setOptions(options);
 		this.defaultSkin = this.options.skin;
 	},
+	
+	/* 
+	Function : processSkin
+		private function
+	
+		Merge what can be merged on the skin sheet the first time it's called so it will be faster for next calls.
+		
+	Arguments:
+		skinName - (string) the name of the skin who should be preprocessed.
+	
+	Return:
+		(void)
+	*/
 
 	processSkin : function(skinName) {
 		//we merge syles for each states of each type of components
@@ -69,13 +82,23 @@ UI.Skin = new Class({
 	
 
 	/*
-		Function: get
-			get part of the skin définition according component
-			
-		Properties: (hash)
-			skin - (string) the skin object (if not define the skin define when instanciate will be used)
-			component - (string) the name of the component
-			type - (string) type of the previously define component (default/transparent for window or default/round for button)
+	Function: get
+		get properties for provided class. This methos will check in the options of the instance needed parameters.
+		
+	Properties:
+		className - (object) A UI.Element (or a child class) instance.
+		
+	className: (object)
+		the get method will use in the provided instance following options :
+			options.skin
+			options.component
+			option.type
+			options.props
+			options.style
+		It will also check for other options, as defined in skin sheet as shortkeys
+		
+	Return:
+		(object) An object containing skin properties for current type, merged with optional provided custom properties.
 	 */
 	
 	get : function(className){
@@ -139,6 +162,9 @@ UI.Skin = new Class({
 			
 		Properties: (hash)
 			component - (string) the name of the component
+			
+		Return:
+			(object) Object containing component properties
 	*/
 	
 	getComponentProps : function(skin, component){
@@ -153,6 +179,8 @@ UI.Skin = new Class({
 		
 	/*
 		Function: merge
+			private function
+			
 			merge is a lighter version of the core mootools merge function
 			Merges any number of objects recursively without referencing them or their sub-objects.
 			

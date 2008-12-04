@@ -1,22 +1,24 @@
 /*
-Class: UI.Bubble
-	Creates Bubble and let you attach events action
-
-Arguments:
-	options
-
-Options: 
-	className - (string) css classname for the given button
-	buttonType - ()
-
-Example:
-	(start code)
-		var Bubble = new UI.Bubble({
-			onClick		: {},
-			onMouseOver	: {},
-			onDblClick	: {}
-		});
-	(end)
+	Class: UI.Bubble
+		Creates Bubble and let you attach events action
+	
+	Extend:
+		UI.Element
+	
+	Arguments:
+		options
+	
+	Options: 
+		label - (string) bubble content
+		target - (string / element) Can be either an element id either a UI.Element instance
+	
+	Example:
+		(start code)
+			var Bubble = new UI.Bubble({
+				target : 'myElement',
+				label : 'This bubble says Hello world!'
+			});
+		(end)
 */
 
 UI.Bubble = new Class({
@@ -32,6 +34,14 @@ UI.Bubble = new Class({
 		zIndex			: 1000
 	},
 	
+	/* 
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	*/
+	
 	initialize: function(options) {
 		this.parent(options);
 		this.inject(document.body);
@@ -39,11 +49,14 @@ UI.Bubble = new Class({
 		this.fade(1);
 	},
 
-	
 	/* 
-		Method: build
+	Function: build
+		private function
 		
-			Create a div and a hidden input to receive the selected value
+		Make a  Label and set the fade Fx
+	
+	Return:
+		(void)
 	*/
 	
 	build : function(){
@@ -70,6 +83,13 @@ UI.Bubble = new Class({
 		});
 	},
 	
+	/* 
+	Function: setBehavior
+		private function
+		
+		Add a click event to close the bubble
+	*/
+	
 	setBehavior : function(){
 		this.parent();
 		
@@ -82,9 +102,16 @@ UI.Bubble = new Class({
 
 		
 	/* 
-		Method: setPosition
+	Function: setLocation
+		private function
 		
-			Set the position of the bubble to the element
+		Set the bubble location. It is attached to the provided element either at top or bottom deppending the element type (default or bottom)
+	
+	Return:
+		(void)
+	
+	Discussion:
+		We should also implement left and right position
 	*/
 	
 	setLocation : function(){
@@ -116,16 +143,17 @@ UI.Bubble = new Class({
 	},
 	
 	/* 
-		Method: getLocation
-		
-			Get the location for the bubble
+	Function: getLocation
+		Set an input in the control element
+	
+	Return:
+		(object) Object containing top and left values
 	*/
 	
 	getLocation : function(){
 		var bubbleCoord = this.element.getCoordinates();
 		var coord = this.options.target.getCoordinates();
 		
-		// should implement left and right as location too
 		if (this.options.type == 'default') {
 			var left = coord.right - 40;
 			var top = coord.top - bubbleCoord.height - 10;
@@ -143,7 +171,7 @@ UI.Bubble = new Class({
 	/* 
 		Method: setSize
 		
-			Set the size of the bubble
+			Set the size of the bubble from the label
 	*/
 	
 	setSize : function(width,height){
@@ -156,9 +184,14 @@ UI.Bubble = new Class({
 	},
 		
 	/* 
-		Method: setPosition
+	Function: fade
+		Fade the tip to provided opacity
+	
+	Arguments:
+		way - (float) The destination opacity
 		
-			Set the position of the bubble to the element
+	Return:
+		this
 	*/
 	
 	fade : function(way){
@@ -170,6 +203,9 @@ UI.Bubble = new Class({
 		Method: destroy
 		
 			Destroy the element, and remove the event on window
+		
+		Return:
+			(void)
 	*/
 	
 	destroy : function(){
