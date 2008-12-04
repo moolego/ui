@@ -1,50 +1,41 @@
 /*
-Class: UI.Select
-	Create <select> like element
-	
-Require:
-	UI/Control/Control.js
-	UI/Menu/Menu.js
-	UI/Shadow/Shadow.js
-	UI/Scrolling/Scrolling.js
-	UI/Scrolling/Scrolling.Menu.js
-
-Arguments:
-		options
+	Class: UI.Select
+		Create <select> like element
 		
-Options: 
-	options: {
-		className	: 'ui-form',
-		name		: 'select',
-		list		: {}
-	}
-
-Return:
-	a div who act as a select item
+	Require:
+		UI/Control/Control.js
+		UI/Menu/Menu.js
+		UI/Menu/Scroller.js
 	
-Example:
-	(start code)
-	new UI.Control.Select({
-		name			: 'testselect',
-		list			: [{
-			text		: 'Montagne',
-			value		: 'mntgn'
-		},{ 
-			text		: 'Plage',
-			value		: 'plg'
-		},{ 
-			text		: 'Sport',
-			value		: 'sprt'
-		},{ 
-			text		: 'Nuit',
-			value		: 'nt'
-		},{ 
-			text		: 'Glace',
-			value		: 'glc'
-		}]
-	}).inject(this.content);
-	(end)
-
+	Arguments:
+			options
+			
+	Options: 
+		scrollToSelected - (boolean) Set to true if you want the menu position remember last position when you reopen it
+		list - (object) the menu list
+	
+	Example:
+		(start code)
+		new UI.Control.Select({
+			name			: 'testselect',
+			list			: [{
+				text		: 'Montagne',
+				value		: 'mntgn'
+			},{ 
+				text		: 'Plage',
+				value		: 'plg'
+			},{ 
+				text		: 'Sport',
+				value		: 'sprt'
+			},{ 
+				text		: 'Nuit',
+				value		: 'nt'
+			},{ 
+				text		: 'Glace',
+				value		: 'glc'
+			}]
+		}).inject(this.content);
+		(end)
 */
 
 
@@ -59,9 +50,11 @@ UI.Select = new Class({
 	},
 	
 	/* 
-		Method: initialize
-		
-			Construtor
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
 	*/
 	
 	initialize: function(options){
@@ -69,9 +62,10 @@ UI.Select = new Class({
 	},
 	
 	/* 
-		Method: build
+	Function: build
+		private function
 		
-			Create a div and a hidden input to receive the selected value
+		Call UI.Element build, then create a hidden input , a textLabel and create a menu
 	*/
 	
 	build : function(){
@@ -106,8 +100,12 @@ UI.Select = new Class({
 
 	/*
 		Method: setBehavior
+			private function
+			
+			Add events on element
 		
-			Set the action for each menu element
+		Return:
+			(void)
 	*/
 
 	setBehavior : function() {
@@ -120,6 +118,17 @@ UI.Select = new Class({
 			}.bind(this)
 		});
 	},
+	
+	/* 
+	Function: addMenuActions
+		private function
+		
+		Add a setValue action to menu list's entries
+	
+	Return:
+		(void)
+	*/
+	
 
 	addMenuActions : function(list) {
 		list.each(function(el){

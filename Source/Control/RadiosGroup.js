@@ -1,52 +1,76 @@
 /*
-Class: UI.RadioGroup
-	Creates button and let you attach events action
-
-Arguments:
+	Class: UI.RadiosGroup
+		Create a radios group able to make radio
+	
+	Arguments:
+		options
 		
+	Options (RadiosGroup):
+		name - (string) name of the radiosgroup input
+	
+	Options (RadiosGroup.newRadio):
+		label - (string) radio label
+		value - (string) radio value
+		selected - (boolean) define if the radio must be selected at creation or not
 
-Options: 
-	className - (string) css classname for the given button
-
-Example:
-	(start code)
-		var radios = new UI.Control.RadioGroup({
-			name		: 'radioname'
-		}).inject(myForm);
-		radios.newRadio({
-			label		: 'FooBar',
-			value		: 'foobar'
-		});
-	(end)
+	Example:
+		(start code)
+			var radios = new UI.Control.RadioGroup({
+				name		: 'radioname'
+			});
+			radios.newRadio({
+				label		: 'FooBar',
+				value		: 'foobar'
+			}).inject(document.body);
+			radios.newRadio({
+				label		: 'FooBar 2',
+				value		: 'foobar_2',
+				selected	: true
+			}).inject(document.body);
+		(end)
+		
+	Discussion:
+		Should use UI.Controller group instead of a radiogroup, then create a UI.Radio class
 */
 
 UI.RadiosGroup = new Class({
 	Extends				: UI.Control,
 	
 	options				: {
-		
 		// default options
-		className		: 'ui-radio',
-		value			: '',
+		name			: 'radiosgroup',
 		component		: 'radio',
-		type			: 'default',
-		state			: 'default',
-		skin			: false,
-		props	: false,
-
-		// implemented events
-		onClick			: $empty,
-		onMouseOver		: $empty
 	},
+	
+	/*
+	Constructor: initialize
+		Constructor
+		
+	Arguments:
+		options - (object) options
+	*/
 	
 	initialize: function(options) {
 		this.parent(options);
-		//this.setSkin();
 		
 		this.radios = [];
 		this.selectedRadio = false;
 		
 	},
+	
+	/* 
+	Function: newRadio
+		Create a new radio element and return it
+	
+	Arguments:
+		opt - (object) options, see above
+		
+	Return:
+		(element) radio element
+	
+	Discussion:
+		this method shoul no longer exist.
+	*/
 	
 	newRadio : function(opt) {
 		var radio = new Element('span', {
@@ -91,6 +115,19 @@ UI.RadiosGroup = new Class({
 		return radio;
 	},
 	
+	/* 
+	Function: newRadio
+		private function
+	
+		Add event to radio
+	
+	Arguments:
+		radio - (element) the radio element where event will be attached
+		
+	Return:
+		(void)
+	*/
+	
 	addRadioAction : function(radio) {
 		radio.addEvents({
 			'click': function(){
@@ -103,9 +140,16 @@ UI.RadiosGroup = new Class({
 	},
 	
 	/* 
-		Method: setCanvas
+	Function: setCanvas
+		private function
+	
+		Create a canvas for the provided radio element
+	
+	Arguments:
+		radio - (element) the radio element
 		
-			Draw the canvas
+	Return:
+		(void)
 	*/
 	
 	setCanvas : function(radio){
@@ -122,6 +166,20 @@ UI.RadiosGroup = new Class({
 			this.canvas.setSize(this.element.x,this.element.y, this.props);
 		});
 	},
+	
+	/* 
+	Function: setState
+		private function
+	
+		set the state for the radio
+	
+	Arguments:
+		radio - (element) the radio element
+		state - (string) state
+		
+	Return:
+		(void)
+	*/
 	
 	setState : function(radio, state) {
 		radio.canvas.draw(this.skin[state]);
