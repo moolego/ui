@@ -62,7 +62,7 @@ UI.Controller = new Class({
 			elementClass.element.setStyle('zIndex', elementClass.options.zIndex || this.zIndex++);
 			
 		//add element to the group if needed
-		this.group(elementClass);
+		//this.group(elementClass);
 	},
 	
 	/*
@@ -93,8 +93,12 @@ UI.Controller = new Class({
 	
 	serialize : function(groupID) {
 		if (!this.groups[groupID]) return false;
-		
 		//we get all elements
+		var string = [];
+		this.groups[groupID].each(function(eC){
+			if (eC.value) string.push(eC.options.name + '=' + eC.value);
+		});
+		console.log(string.join('&'));
 	}
 });
 

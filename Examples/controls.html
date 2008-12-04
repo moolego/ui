@@ -57,12 +57,9 @@
 		window.addEvent('load', function() {
 			var time = $time();
 			
-			
-			
 			/* Elements in page */
 			var form = new Element('form', {
 				id				: 'controltest',
-				method			: 'get',
 				styles			: {
 					margin		: '50px 50px 0',
 					background	: '#e8e8e8'
@@ -74,6 +71,7 @@
 			
 			new UI.Input({
 				type			: 'round',
+				group			: 'test',
 				value			: 'Another input field',
 				styles			: {
 					margin		: 10
@@ -94,16 +92,19 @@
 			
 			new UI.Checkbox({
 				label			: '1 checkbox',
+				group			: 'test',
 				styles			: cbstyles
 			}).inject(form);
 			
 			new UI.Checkbox({
 				label			: '2 checkbox',
+				group			: 'test',
 				styles			: cbstyles
 			}).inject(form);
 			
 			new UI.Checkbox({
 				label			: '3 checkbox',
+				group			: 'test',
 				styles			: cbstyles
 			}).inject(form);
 			
@@ -184,6 +185,7 @@
 
 			new UI.Slider({
 				width			: 400,
+				group			: 'test',
 				styles			: {
 					margin		: 10
 				}

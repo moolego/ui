@@ -69,7 +69,6 @@ UI.TabView = new Class({
 	 
 	 */
 	add: function(props){
-		
 		var view = new UI.View({ 
 			height : this.options.height - 21,
 			type : 'tab'
@@ -84,7 +83,7 @@ UI.TabView = new Class({
 				if (tab == this.tab) return;
 			
 				if (props.url) 
-				 view.setContent('ajax',props.url);
+					view.setContent('ajax',props.url);
 				
 				view.show();
 				
@@ -99,10 +98,11 @@ UI.TabView = new Class({
 				this.tab = tab;
 				this.view = view; 
 			}.bind(this)
-		}).inject(this.tabbar);
+		});
 		
-		this.tabs.push(tab);
-		//tab.addEvent();		
+		if (props.selected) this.selected = tab;
+		
+		this.tabs.push(tab);		
 	},
 	
 	/*
@@ -113,5 +113,34 @@ UI.TabView = new Class({
 	
 	setContent: function(method,source,options) {
 		this.view.setContent(method,source,options);
+	},
+	
+	setBehavior : function() {
+		this.parent();
+		
+		this.addEvent('injected', function(){
+			var item = this.selected || this.tabs[0];
+			item.options.state = 'active';
+			this.tabs.each(function(tab){
+				tab.inject(this.tabbar);
+			}.bind(this));
+			item.setState('active');
+			item.fireEvent('click');
+		});
+	},
+	
+	/*
+    	Function: setActiveTab
+    
+    		Set wich tab should be activated
+	*/
+	
+	setActiveTab: function(num) {
+		if (num > 0 && num <= this.tabs.length) {
+			this.tabs[--num].setState('active');
+			this.tabs[num].fireEvent('click');
+		}
 	}
+	
+	
 });
