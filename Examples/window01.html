@@ -48,6 +48,8 @@
 	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
 	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
 	
+	<script type="text/javascript" src="../Utils/IframeShim.js"></script>
+	
 	<script type="text/javascript" src="js/examples.js"></script>	
 	
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
@@ -64,13 +66,12 @@
 				overflow	: 'scrollbar',
 				location	: 'center'
 			})
-			.setContent('iframe','http://moolego.org');
+			.setContent('iframe','http://ui.floor.local/Examples/formular02.html');
 			
 			windoo = new UI.Window({
 				title		: 'some controls',
 				overflow	: 'scrollbar'
 			});
-	
 			
 			new UI.Button({
 				label	: 'Button',
@@ -228,7 +229,10 @@
 						width				: 427,
 						height				: 388,
 						view				: { overflow:'hidden'}
-			}).setContent('content','<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>');
+			}).setContent('content',
+				'<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1"></param><param name="allowFullScreen" value="true"><param name="WMODE" value="transparent"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" WMODE="transparent" allowfullscreen="true" width="425" height="344"></embed></object>'
+			);
+		
 		});
 	</script>
 </head>
