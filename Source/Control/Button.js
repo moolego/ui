@@ -6,14 +6,15 @@ Arguments:
 	options
 
 Options: 
-	label - (string) css classname for the given button
+	label - (string) Text to show in button
+	submit - (boolean) Set to true if you want your button act as a submit button
 
 Example:
 	(start code)
 		var button = new UI.Button({
 			label		: 'i am a new UI.Button',
 			onClick		: { alert('click') }
-		});
+		}).inject(document.body);
 	(end)
 */
 
@@ -28,14 +29,23 @@ UI.Button = new Class({
 		submit			: false
 	},
 	
+	/* 
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	*/
+	
 	initialize: function(options) {
 		this.parent(options);
 	},
 	
 	/* 
-		Method: build
+	Function: build
+		private function
 		
-			Create a div and a hidden input to receive the selected value
+		Create a textLabel and call parent method
 	*/
 	
 	build : function(){
@@ -50,10 +60,16 @@ UI.Button = new Class({
 	},
 	
 	/* 
-		Method: setState
+	Function: setState
+		Set the button state
+	
+	Arguments:
+		state - (string) State name
 		
-			Set the button state
+	Return:
+		(void)
 	*/
+	
 	setState : function(state){
 		if (this.textLabel) {
 			this.textLabel.setStyles(this.skin[state].components.label.styles);
@@ -62,10 +78,15 @@ UI.Button = new Class({
 	},
 	
 	/* 
-		Method: addActions
+	Function: setBehavior
+		private function
 		
-			Set actions
+		Set behavior relative to button (mouseenter, mousedown, mouseup, mouseleave)
+	
+	Return:
+		(void)
 	*/
+	
 	setBehavior : function() {
 		this.parent();
 		//we add mouse event
@@ -84,6 +105,17 @@ UI.Button = new Class({
 			}.bind(this)
 		});
 	},
+	
+	/* 
+	Function: submit
+		Submit the form containing this button
+	
+	Return:
+		(void)
+		
+	Discussion:
+		As we want to remove hidden input, we must instead serialize the group of this button than submitting an unecessary form
+	*/
 	
 	submit : function() {
 		this.getForm().submit();
