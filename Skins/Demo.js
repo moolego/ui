@@ -904,6 +904,28 @@ UI.props.demo = {
 				}
 			}
 		},
+		shape03 : {
+			'default' : {
+				styles : {
+					position : 'relative',
+				},
+				layers : {
+					shadow : {
+						color : '#0F0',
+						size : 16,
+						offsetX : 0,
+						offsetY : 0,
+						opacity : .5
+					},
+					big : {
+						color : '#222',
+						opacity : 1,
+						radius : 20,
+						offset : 0
+					}
+				}
+			}
+		},
 		shadows : {
 			'default' : {
 				styles : {
