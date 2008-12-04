@@ -228,7 +228,7 @@ UI.Canvas = new Class({
 		];
 		
 		//set diffusion
-		var diffusion = 1.3;
+		var diffusion = 1.5;
 		
 		//set radius
 		if ($defined(this.props.layers.shadow.radius))
@@ -260,9 +260,8 @@ UI.Canvas = new Class({
 			offset		: [this.shadowOffset[0], this.shadowOffset[1]]
 		}
 		
-		for (var i = this.shadowThikness * 2; i > 0; i--) {
-			
-			var oratio = opacity/(i+1);
+		for (var i = this.shadowThikness * 1.5; i > 0; i--) {
+			var oratio = opacity/(i* 2 / 1.5 + 10);
 			//console.log(oratio);
 			this.ctx.save();
 				this.setTransformation(props);
