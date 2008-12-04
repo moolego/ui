@@ -98,7 +98,7 @@ UI.ListView = new Class({
 				new UI.Element({
 					html : el,
 					styles : {
-						padding:'3px'
+						padding:'3px 0 0 4px'
 					}
 				}).inject(item.element);
 				this.fireEvent('onResize');
