@@ -74,7 +74,10 @@ UI.ListView = new Class({
 		    }).get();
 			
 		} else {
-			this.processList(this.options.data);
+
+			this.addEvent('injected', function(){
+				this.processList(this.options.data);
+			}.bind(this));
 		}
 	},
 

@@ -62,7 +62,9 @@ UI.Input = new Class({
 	setBehavior : function() {
 		this.parent();
 		this.input.addEvents({
-			blur	: this.setState.bind(this, 'default'),
+			blur	: function(){
+				this.setState('default');
+			},
 			focus	: this.setState.bind(this, 'focus')
 		})
 	}
