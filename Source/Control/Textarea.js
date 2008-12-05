@@ -96,9 +96,9 @@ UI.Textarea = new Class({
 	
 	setBehavior : function() {
 		this.parent();
-		this.input.addEvents({
+		this.addEvents({
 			blur	: this.setState.bind(this, 'default'),
 			focus	: this.setState.bind(this, 'focus')
-		})
+		});
 	}
 });

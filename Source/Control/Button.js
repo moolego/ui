@@ -1,15 +1,18 @@
 /*
-Class: UI.Button
-	Creates button and let you attach events action
-
-Arguments:
-	options
-
-Options: 
-	label - (string) Text to show in button
-	submit - (boolean) Set to true if you want your button act as a submit button
-
-Example:
+	Class: UI.Button
+		Creates button and let you attach events action
+		
+	Extend:
+		UI.Control
+	
+	Arguments:
+		options
+	
+	Options: 
+		label - (string) Text to show in button
+		submit - (boolean) Set to true if you want your button act as a submit button
+	
+	Example:
 	(start code)
 		var button = new UI.Button({
 			label		: 'i am a new UI.Button',
