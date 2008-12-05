@@ -228,7 +228,7 @@ UI.Canvas = new Class({
 		];
 		
 		//set diffusion
-		var diffusion = 1.5;
+		var diffusion = 1.3;
 		
 		//set radius
 		if ($defined(this.props.layers.shadow.radius))

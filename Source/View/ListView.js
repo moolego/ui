@@ -82,8 +82,8 @@ UI.ListView = new Class({
 	},
 
 	/*
-	Function: process
-		Used internally. Process the template and inject in view content. Should always be invoced on a copy.
+	Function: processList
+		Used internally. Parse data and inject in view content.
 	
 	Arguments:
 		data - data to be used during template interpolation
