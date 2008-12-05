@@ -1,5 +1,4 @@
 /*
-
 Class: UI.Skin
 	The UI.Skin class defines a singleton object that handle skins.
 
@@ -142,10 +141,6 @@ UI.Skin = new Class({
 			
 			//merge custom styles
 			type[sKey].styles = this.merge(type[sKey].styles, styles);
-			
-			//set size
-			//if (className.options.width) type[sKey].width = className.options.width;
-			//if (className.options.height) type[sKey].height = className.options.height;
 		}
 		
 		//remove shadows if not used
@@ -157,14 +152,14 @@ UI.Skin = new Class({
 	},
 	
 	/*
-		Function: getComponentProps
-			get skin definition for specified component (inside an other element)
-			
-		Properties: (hash)
-			component - (string) the name of the component
-			
-		Return:
-			(object) Object containing component properties
+	Function: getComponentProps
+		get skin definition for specified component (inside an other element)
+		
+	Properties: (hash)
+		component - (string) the name of the component
+		
+	Return:
+		(object) Object containing component properties
 	*/
 	
 	getComponentProps : function(skin, component){
@@ -178,14 +173,14 @@ UI.Skin = new Class({
 	},
 		
 	/*
-		Function: merge
-			private function
-			
-			merge is a lighter version of the core mootools merge function
-			Merges any number of objects recursively without referencing them or their sub-objects.
-			
-		See also: mootools merge function
-			
+	Function: merge
+		private function
+		
+		merge is a lighter version of the core mootools merge function
+		Merges any number of objects recursively without referencing them or their sub-objects.
+		
+	See also:
+		mootools merge function	
 	*/	
 	
 	merge : function() {

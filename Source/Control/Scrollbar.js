@@ -3,7 +3,7 @@
 		Manage scrolls for views.
 		
 	Extend:
-		UI.Element
+		<UI.Element>
 		
 	Arguments:
 		options
