@@ -358,7 +358,7 @@ UI.Window = new Class({
 		}
 		
 		this.updateSize();
-		this.fireEvent('setCanvasSize', this.state);
+		this.fireEvent('canvasDraw', this.state);
 	},
 
 
