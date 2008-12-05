@@ -1,3 +1,9 @@
+/*
+Class: UI.Element.Drag
+	Add draggable capabilities for the element.
+*/
+
+
 UI.Element.implement({
 	/*
 		Function: enableDrag

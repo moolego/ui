@@ -1,8 +1,13 @@
+/*
+Class: UI.Element.Resize
+	Add resizable capabilities for the element.
+*/
+
 UI.Element.implement({
 	
 	/*
-	    Function: enableResize
-	    	Add resizable capabilities for the element.
+    Function: enableResize
+    	Add resizable capabilities for the element.
 	*/
 	
 	enableResize : function() {

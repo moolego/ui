@@ -1,6 +1,5 @@
 /*
-
-	Class: UI.Skin
+	Class: UI.Element
 		UI.Element is the root class of most class of Moolego UI. It is used by :
 			- UI.View
 			- ui.Window
@@ -39,9 +38,6 @@
 		onDrag - (function) A function who will be fired on element drag
 		onDragComplete - (function) A function who will be fired on element drag complete
 		
-		
-		
-	
 	Example:
 		(start code)
 		var element = new UI.Element({
