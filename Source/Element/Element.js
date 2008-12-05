@@ -1,7 +1,54 @@
 /*
-Class: UI.Element
-	UI.Element is the root class of most class of Moolego UI
-*/
+
+	Class: UI.Skin
+		UI.Element is the root class of most class of Moolego UI. It is used by :
+			- UI.View
+			- ui.Window
+			- UI.Menu (also UI.Context)
+			- most Controls elements (buttons, ...)
+	
+	Arguments:
+		Options
+		
+	Options: 
+		lib - (string) The prefix used for element class
+		component - (string) Component name, used for skinning
+		type - (string) Type name, used for skinning
+		state - (string) Default state applied on initialize
+		
+		className - (string) If this is defined, UI.Element will use this as element class name instead of generating one with options.lib, component and type
+		tag - (string) The element tag. By default it is 'div'
+		
+		resizable - (boolean) Define if the element will be resizable. By default set to false
+		draggable - (boolean) Define if the element will be draggable. By default set to false
+		selectable - (boolean) Define if element content is selectable
+		
+		skin - (string) The skin name to use by default for components
+		props - (object) Skin properties that will overwrite properties defined in skin sheet
+		
+		style - (object) Element styles properties that will overwrite styles defined in skin sheet
+		
+		onClick - (function) A function who will be fired on element click
+		onMouseDown - (function) A function who will be fired on element mousedown
+		onBuild - (function) A function who will be fired on element build start
+		onBuildComplete - (function) A function who will be fired on element build complete
+		onResizeStart - (function) A function who will be fired on element resize start
+		onResize - (function) A function who will be fired on element resize
+		onResizeComplete - (function) A function who will be fired on element complete
+		onDragStart - (function) A function who will be fired on element drag start
+		onDrag - (function) A function who will be fired on element drag
+		onDragComplete - (function) A function who will be fired on element drag complete
+		
+		
+		
+	
+	Example:
+		(start code)
+		var element = new UI.Element({
+			html : 'Hello World'
+		}).inject(document.body);
+		(end)
+	*/
 
 UI.Element = new Class({
 	Implements				: [Events, Options],
@@ -13,12 +60,12 @@ UI.Element = new Class({
 		type				: 'default',
 		state				: 'default',	
 		
+		className			: false,
 		tag					: 'div',
 		
 		resizable			: false,
 		draggable			: false,
 		selectable			: true,
-		onlyCanvas			: false,	
 
 		skin				: 'AquaGraphite',
 		props				: false,
@@ -38,15 +85,19 @@ UI.Element = new Class({
 		onResizeComplete	: $empty,
 		onDragStart			: $empty,
 		onDrag				: $empty,
-		onDragComplete		: $empty
+		onDragComplete		: $empty,
 		
+		onShow				: $empty,
+		onHide				: $empty
 	},
 
 	/* 
-		Method: initialize
-		
-			Construtor
-	 */
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	*/
 	
 	initialize: function(options){
 		this.setOptions(options);
@@ -60,14 +111,40 @@ UI.Element = new Class({
 		this.setBehavior();
 	},
 	
+	/* 
+	Function: toElement
+		This method allows to get the DOM element built with UI.Element in this way : 
+		(start code)
+		var myElement = new UI.Element({
+			html : 'Hello World'
+		}).inject(document.body);
+		var coord = $(myElement).getCoordinates();
+		(end)
+		It will actually return myElement.element.
+		
+		But as most used mootools function are directly reimplemented in UI.Element, you can most of time simply do :
+		(start code)
+		var myElement = new UI.Element({
+			html : 'Hello World'
+		}).inject(document.body);
+		var coord = myElement.getCoordinates();
+	
+	Return:
+		this.element (element) The DOM element
+	*/
+	
 	toElement : function(){
 		return this.element;
 	},
 
 	/* 
-		Method: build
+	Function: build
+		private function
 		
-			Instanciate an element Native Mootols
+		Create a native element
+	
+	Return:
+		(void)
 	*/
 	
 	build : function(){
@@ -90,10 +167,14 @@ UI.Element = new Class({
 		this.dragHandlers = [];
 	},
 
-	/* 
-		Method: setSkin
+	/*
+	Function: setClassName
+		private function
 		
-			Define the className according the component name, type and state
+		define class name from this.options.lib, component and type or with className if defined
+		
+	Return:
+		(void)
 	 */
 	
 	setClassName : function() {
@@ -111,8 +192,12 @@ UI.Element = new Class({
 	
 	/* 
 		Method: setSkin
-		
-			Get the skin for the current component
+		private function
+	
+		Get the skin for the current component and set this props with default properties
+	
+	Return:
+		(void)
 	 */
 	
 	setSkin: function(){
@@ -121,17 +206,17 @@ UI.Element = new Class({
 		this.skin = UI.skin.get(this);
 		
 		this.props = this.skin[this.options.state];
-		this.props.layers = new Hash(this.props.layers);
 	},
 	
 	/* 
-		Method: setCanvas
-		
-			Draw the canvas
+	Method: setCanvas
+		private function
+	
+		Create a canvas element inject it and add a redraw event
 	*/
 	
 	setCanvas : function(){
-		if (this.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && this.props.layers.getLength() <= 2))
+		if (this.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && $H(this.props.layers).getLength() <= 2))
 			return false;
 
 		this.canvas = new UI.Canvas({
@@ -140,7 +225,7 @@ UI.Element = new Class({
 			height			: this.element.y
 		}).inject(this.element);
 		
-		this.addEvent('setCanvasSize', function(state){
+		this.addEvent('canvasDraw', function(state){
 			if (!state)	var props = this.props;
 			else var props = this.skin[state] || this.props;
 			this.canvas.setSize(this.element.x,this.element.y, props);
@@ -148,9 +233,17 @@ UI.Element = new Class({
 	},
 
 	/* 
-		Method: setState
-			Set the button state
+	Method: setState
+		Set the element state
+	
+	Arguments:
+		state - (string) the name of new state to set and draw
+		size - (object) Optional - An object containing width and height to set a new size while changing state
+	
+	Return:
+		this	
 	*/
+	
 	setState : function(state, size){
 		if (this.skin[state]) {
 			this.state = state;
@@ -159,30 +252,53 @@ UI.Element = new Class({
 			if ($defined(size))
 				this.setSize(size.width, size.height, state);
 			else
-				this.fireEvent('setCanvasSize', state);
+				this.fireEvent('canvasDraw', state);
 		}
 		return this;
 	},
 	
-	/*
-	 * 	Function: setSize
-	 * 		Set size of the element and its canvas
-	 */
+	/* 
+	Method: setSize
+		Set the element size and optionaly a new state
+	
+	Arguments:
+		width - (integer) new element width
+		height - (integer) new element height
+		state - (string) (optional) state to draw
+	
+	Return:
+		this	
+	*/
 	
 	setSize : function(width, height, state){
 		this.element.x = width || this.options.width || this.props.width || this.element.getSize().x;
 		this.element.y = height || this.options.height || this.props.height || this.element.getSize().y;
 		if (this.element.x) this.element.setStyle('width', this.element.x);
 		if (this.element.y) this.element.setStyle('height', this.element.y);
-		this.fireEvent('setCanvasSize', state);
+		this.fireEvent('canvasDraw', state);
 
 		return this;
 	},
 
 
-	/*
-	    Function: setLocation
-			Set element location 
+	/* 
+	Method: setLocation
+		Set the element location
+	
+	Arguments:
+		left - (integer) new element left position
+		top - (integer) new element top position
+		moprh - (string) (optional) If specified, a morph transition will be done to new location
+	
+	Return:
+		this
+		
+	Example:
+		(start code)
+		var myWindow = new UI.Window();
+		var coord = myWindow.getCenterLocation();
+		myWindow.setLocation(coord.left, coord.top, 'morph');
+		(end)
 	*/
 	
 	setLocation	: function(left,top,morph) {
@@ -193,12 +309,19 @@ UI.Element = new Class({
 			top	: this.element.top,
 			left : this.element.left
 		});
+		
+		return this;
 	},
 
 	
 	/*
-	    Function: setBehavior
-			Set element behavior
+    Function: setBehavior
+    	private function
+    	
+		Set default element behavior, addind general events (mouse events)
+	
+	Return:
+		(void)
 	*/
 
 	setBehavior : function() {
@@ -217,9 +340,12 @@ UI.Element = new Class({
 	},
 
 	
-	/*
-	    Function: setLocation
-			Set element location 
+	/* 
+	Method: getCenterLocation
+		Get the coordinates to place the element at center's window
+	
+	Return:
+		location - (object) An object containing top and left properties.	
 	*/
 	
 	getCenterLocation: function() {
@@ -233,8 +359,11 @@ UI.Element = new Class({
 
 
 	/*
-	    Function: adaptLocation
-	      Adapt location if window is dragged out of its boundaries
+	Function: adaptLocation
+		Adapt element location if it is dragged out of its boundaries
+	
+	Return:
+		(void)
 	*/
 	
 	adaptLocation : function() {
@@ -242,8 +371,6 @@ UI.Element = new Class({
 		var needed = false;
 		var coordinates = this.element.getCoordinates();
 		
-		
-
 		if (coordinates.top.toInt() > window.getHeight()-53) {
 			location.top = window.getHeight()-$random(25,75)
 			needed = true;
@@ -262,23 +389,17 @@ UI.Element = new Class({
 		if (needed) {
 			if (this.props.fx && this.props.fx.adaptLocation)  {
 				if (!this.reposFx) this.reposFx = new Fx.Morph(this.element, this.props.fx.adaptLocation);
-				
 				this.reposFx.start(location) ;
-			} else {
-				
-				
 			}
 		}
-	},
-		
-	/*
-   		reImpelement some Native Mootools Element needed methods
-	*/
-	
+	},	
 	
 	/*
-	    Function: show
-	    	Set display block to the view element
+    Function: show
+    	Fire the onShow event, and set display block and full opacity to element
+    
+    Return:
+    	this
 	*/
 	
 	show: function() {
@@ -290,25 +411,86 @@ UI.Element = new Class({
 	},
 
 	/*
-    	Function: hide
-    		Set display none to the view element
-
+    Function: hide
+    	Fire the onHide Event, and set display none to element
+    
+    Return:
+    	this
 	*/
 	
 	hide: function() {
+		this.fireEvent('hide');
 		this.element.hide();
 		
 		return this;
 	},
+});
+
+
+/*
+	Native Mootools Element:
+		Bind some native mootools element methods to element, so we can chain methods as in mootools
 	
+	Example:
+		(start code)
+		var element = new UI.Element({
+			html : 'Hello World'
+		}).inject(document.body).setStyle('border', '1px solid black).addClass('customElement');
+		(end)
+*/
+
+UI.Element.implement({
+
+	/*
+    Function: setStyle
+    	See mootools setStyle documentation
+    
+    Return:
+    	this
+	*/
+	
+	setStyle: function(style, value) {
+		this.element.setStyle(style, value);
 		
+		return this;	
+	},
+
+	/*
+    Function: setStyles
+    	See mootools setStyles documentation
+    
+    Return:
+    	this
+	*/
+	
+	setStyles: function(styles) {
+		this.element.setStyles(styles);
+		
+		return this;	
+	},
+	
+	/*
+    Function: getStyle
+    	See mootools getStyle documentation
+    
+    Return:
+    	this.element style
+	*/
+	
+	getStyle: function(style) {
+		return this.element.getStyle(style);	
+	},
+	
 	/*
     Function: inject
-    	Inject the element element into container
+    	Inject the element element into container, fire an inject event at beginning and an injected event at the end
     	
     Argument: 
-    	View Container
-
+    	container - see mootools inject documentation
+    	position - see mootools inject documentation
+    
+    Return:
+    	this
 	*/
 	
 	inject: function (container, position){
@@ -324,81 +506,26 @@ UI.Element = new Class({
 	},
 	
 	/*
-    Function: addopt
-    	Inject the element element into container
-    	
-    Argument: 
-    	View Container
-
+    Function: adopt
+    	See mootools adopt documentation
+    
+    Return:
+    	this
 	*/
 	
 	adopt: function (element){
 		this.element.adopt(element);
 		this.setSize();
 		return this;		
-	}
-
-});
-
-
-/*
-	Script: UI.Element.Native.js
-	  Contains methods to work with size, scroll, or positioning of Elements and the window object.
-	 
-	License:
-	  MIT-style license.
-	 
-	Credits:
-	  - Element positioning based on the [qooxdoo](http://qooxdoo.org/) code and smart browser fixes, [LGPL License](http://www.gnu.org/licenses/lgpl.html).
-	  - Viewport dimensions based on [YUI](http://developer.yahoo.com/yui/) code, [BSD License](http://developer.yahoo.com/yui/license.html).
-*/
-
-
-/*
-	Bindings to the native mootools element functions
-
-	Discussion: 
-		should be implemented automaticaly
- */
-
-
-UI.Element.implement({
-
-	/*
-	 * Function: setStyle
-	 * 	implement setStyle from de wrappwr
-	 */
-	
-	setStyle: function(style, value) {
-		this.element.setStyle(style, value);
-		
-		return this;	
-	},
-
-	/*
-	 * Function: setStyles
-	 * 	implement setStyles from element
-	 */
-	
-	setStyles: function(styles) {
-		this.element.setStyles(styles);
-		
-		return this;	
 	},
 	
 	/*
-	 * Function: setStyles
-	 * 	implement setStyles from element
-	 */
-	
-	getStyle: function(style) {
-		return this.element.getStyle(style);;	
-	},
-	
-	/*
-	 * Function: addClass
-	 * 	implement addClass from de wrapper
-	 */
+    Function: addClass
+    	See mootools addClas documentation
+    
+    Return:
+    	this
+	*/
 	
 	addClass: function(className) {
 		this.element.addClass(className);
@@ -407,9 +534,12 @@ UI.Element.implement({
 	},
 	
 	/*
-	 * Function: addClass
-	 * 	implement element set method
-	 */
+    Function: set
+    	See mootools set documentation
+    
+    Return:
+    	this
+	*/
 	
 	set: function(property, value) {
 		this.element.set(property, value);
@@ -417,27 +547,36 @@ UI.Element.implement({
 	},
 	
 	/*
-	 * Function: get
-	 * 	implement element get method
-	 */
+    Function: get
+    	See mootools get documentation
+    
+    Return:
+    	this.element properties
+	*/
 	
 	get: function(property) {
 		return this.element.get(property);	
 	},
 	
 	/*
-	 * Function: getSize
-	 * 	implement element getSize method
-	 */
+    Function: getSize
+    	See mootools getSize documentation
+    
+    Return:
+    	this.element size
+	*/
 	
 	getSize: function() {
 		return this.element.getSize();	
 	},
 	
 	/*
-	 * Function: getCoordinates
-	 * 	implement element getCoordinates method
-	 */
+    Function: set
+    	See mootools getCoordinates documentation
+    
+    Return:
+    	this.element coordinates
+	*/
 	
 	getCoordinates: function(ref) {
 		return this.element.getCoordinates(ref);
@@ -446,9 +585,10 @@ UI.Element.implement({
 	
 	/*
     Function: destroy
+    	See mootools getCoordinates documentation
     
-    	Destroy the view element
-
+    Return:
+    	(void)
 	*/
 
 	destroy: function() {
@@ -472,16 +612,23 @@ UI.Element.implement({
 	}
 });
 
-
 /*
-Script: Extension.Element.js
-        Extends the Element class with some needed methods.
-
-License: MIT
-        
+	Some usefull method from clientcide.con
+	
+	License:
+		http://clientside.cnet.com/wiki/cnet-libraries#license
 */
 
 Element.implement({
+	
+	/*
+    Function: disableSelect
+    	Disable the ability to select element content text
+    
+    Return:
+    	this
+	*/
+	
 	disableSelect: function(){
 		if (typeof this.onselectstart != "undefined") 
 			this.onselectstart = function(){
@@ -499,6 +646,14 @@ Element.implement({
 		
 		return this;
 	},
+	
+	/*
+    Function: enableSelect
+    	Enable the ability to select element content text
+    
+    Return:
+    	this
+	*/
 	
 	enableSelect: function(){
 	
@@ -518,20 +673,36 @@ Element.implement({
 	},
 	
 	/*
-	 Script: Element.Shortcuts.js
-	 Extends the Element native object to include some shortcut methods.
-	 
-	 License:
-	 http://clientside.cnet.com/wiki/cnet-libraries#license
-	 */
+    Function: isVisible
+    	See documentation at http://www.clientcide.com/wiki/cnet-libraries
+    
+    Return:
+    	this.element display style
+	*/
 	
 	isVisible: function(){
 		return this.getStyle('display') != 'none';
 	},
 	
+	/*
+    Function: toggle
+    	See documentation at http://www.clientcide.com/wiki/cnet-libraries
+    
+    Return:
+    	this.element new display style
+	*/
+	
 	toggle: function(){
 		return this[this.isVisible() ? 'hide' : 'show']();
 	},
+	
+	/*
+    Function: hide
+    	See documentation at http://www.clientcide.com/wiki/cnet-libraries
+    
+    Return:
+    	this
+	*/
 	
 	hide: function(){
 		var d;
@@ -546,21 +717,29 @@ Element.implement({
 		return this;
 	},
 	
+	/*
+    Function: show
+    	See documentation at http://www.clientcide.com/wiki/cnet-libraries
+    
+    Return:
+    	this
+	*/
+	
 	show: function(display){
 		original = this.retrieve('originalDisplay') ? this.retrieve('originalDisplay') : this.get('originalDisplay');
 		this.setStyle('display', (display || original || 'block'));
 		return this;
 	},
 	
+	/*
+    Function: swapClass
+    	See documentation at http://www.clientcide.com/wiki/cnet-libraries
+    
+    Return:
+    	this
+	*/
+	
 	swapClass: function(remove, add){
 		return this.removeClass(remove).addClass(add);
-	},
-	
-	log: function(text, args){
-		if (window.console) 
-			console.log(text.substitute(args ||
-			{}));
 	}
 });
-
-

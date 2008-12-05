@@ -162,7 +162,7 @@ UI.RadiosGroup = new Class({
 			height			: this.props.height
 		}).inject(radio);
 		
-		radio.addEvent('setCanvasSize', function(){
+		radio.addEvent('drawCanvas', function(){
 			this.canvas.setSize(this.element.x,this.element.y, this.props);
 		});
 	},
