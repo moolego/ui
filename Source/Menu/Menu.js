@@ -1,39 +1,39 @@
  /*
-Class: UI.Menu
-	Creates a new menu, manages submenus and positionning.
-	
-Require:
-	UI/Scrolling/Scrolling.Menu.js
-	UI/View/View.js
-
-Arguments:
-		options
+	Class: UI.Menu
+		Creates a new menu, manages submenus and positionning as well as scrolling thru <UI.Scroller.Menu>
 		
-Options: 
-		className			: 'ui-menu',
-		menu				: [],
-		useUnderlay			: true,
-		scrollToSelected	: false,
-		zIndex				: 10500,
-		position			: 'relative',	// can be 'relative', 'bottom', 'over'
-		contentTag			: 'div',
-		itemTag				: 'div',
-		onHide				: $empty,
-		ondisplay			: $empty
-
-
-Returns:
-	void
+	Requires:
+		<UI.Scroller.Menu>
+		<UI.View>
+		
+	Extends:
+		<UI.Element>
 	
-Example:
-	(start code)
-	var submenu = new UI.Menu({
-		container : this.view.element,
-		underlay : this.options.underlay,
-		zIndex : 1
-	});
-	(end)
-
+	Arguments:
+			options
+			
+	Options: 
+			zIndex - (integer) Base z-index for menu element (submenu's z-index will be incremented)
+			contentTag - (string) Tag name for menu elements wrapper
+			itemTag - (string) Tag name for menu elements
+			
+			position - (string) Specify where the new menu must be positionned.
+				It could be normal (element will be positionned on parent's side),
+				over (element will be positionned over the parent element, used for <UI.Select>),
+				bottom (element will be positionned on bottom of parent element, used for <UI.Toolbar>)
+			
+			scrollToSelected - (boolean) Determine if a menu (specifically a <UI.Select>) should remember last item selected
+			scrollMargin - (integer) Determine remaining margin on top and bottom when a menu is too large to feet in window
+			menu - (array) Array containing menu definition
+		
+	Example:
+		(start code)
+		var submenu = new UI.Menu({
+			container : this.view.element,
+			underlay : this.options.underlay,
+			zIndex : 1
+		});
+		(end)
 */
 
 
@@ -51,32 +51,27 @@ UI.Menu = new Class({
 		scrollToSelected	: false,
 		scrollMargin		: 20,
 		menu				: [],
-		underlay			: false,
-		
-		styles			: {
-			position	: 'absolute'
-		}
+		underlay			: false
 	},
 
 	/* 
-		Method: initialize
-		
-			Construtor
-	 */
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	*/
 
 	initialize: function(options) {
 		this.parent(options);
 	},
 
-	/* 
-		Method: build
+	/*
+	Function: build
+		private function
 		
-			Construtor
-			
-		Discussion:
-		
-			the zIndex should be set by the ui.element
-	 */
+		Call UI.Element build, then create a menu wrapper
+	*/
 	
 	build: function(menu) {
 		this.parent();
@@ -99,9 +94,14 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: setMenu
-		
-			Set the content of the menu
+	Method: setMenu
+		Set the content of the menu or change menu content
+	
+	Arguments:
+		menu - (array) Array containing menu definition
+	
+	Return:
+		this
 	 */
 	
 	setMenu: function(menu) {
@@ -125,7 +125,6 @@ UI.Menu = new Class({
 				}).set(item.options);
 				
 				if (item.action) menuItem.element.addEvent('action', item.action);
-				
 				menuItem.inject(this.content);
 			}
 			this.addSubmenuEvents(item, menuItem);
@@ -134,9 +133,17 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: addSubmenuEvents
-		
-			Attach actions and / or submenu to menu elements
+	Method: addSubmenuEvents
+		private function
+	
+		Attach actions and / or submenu to menu elements
+	
+	Arguments:
+		item - (object) Object containing element properties
+		menuItem - (element) Menu item where events will be attached
+	
+	Return:
+		(void)
 	 */
 	
 	addSubmenuEvents : function(item, menuItem){
@@ -171,6 +178,20 @@ UI.Menu = new Class({
 		});
 	},
 	
+	/* 
+	Method: addSubmenu
+		private function
+		
+		Attach a submenu to a menu item if needed
+	
+	Arguments:
+		item - (object) Object containing element properties
+		menuItem - (element) Menu item where submenu will be attached
+	
+	Return:
+		(void)
+	 */
+	
 	addSubmenu : function(item, menuItem, position) {
 		this.menuWithAction = false;
 		$clear(this.menuActionDelay);
@@ -198,10 +219,18 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: addSubmenuArrow
+	Method: addSubmenuArrow
+		private function
 		
-			Add an arrow on the right side of the element
-	*/
+		Add an arrow on the right side of the element
+	
+	Arguments:
+		menuItem - (element) Menu item where arrow will be attached
+	
+	Return:
+		(void)
+	 */
+	
 	
 	addSubmenuArrow : function(menuItem){
 		//we add the arrow

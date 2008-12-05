@@ -1253,7 +1253,9 @@ UI.props.AquaGraphite = {
 				},
 				
 				/* css properties */
-				styles: {},
+				styles: {
+					position	: 'absolute'
+				},
 				
 				/* effects settings */
 				hideFxDuration: 100,
