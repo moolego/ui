@@ -160,7 +160,7 @@ UI.Skin = new Class({
 	Function: getComponentProps
 		get skin definition for specified component (inside an other element)
 		
-	Properties: (hash)
+	Properties:
 		component - (string) the name of the component
 		
 	Return:
