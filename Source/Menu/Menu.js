@@ -2,10 +2,6 @@
 	Class: UI.Menu
 		Creates a new menu, manages submenus and positionning as well as scrolling thru <UI.Scroller.Menu>
 		
-	Requires:
-		<UI.Scroller.Menu>
-		<UI.View>
-		
 	Extends:
 		<UI.Element>
 	
@@ -42,6 +38,7 @@ UI.Menu = new Class({
 	
 	options: {
 		component			: 'menu',
+		rolloverType		: 'menuRollover',
 
 		zIndex				: 3000,
 		contentTag			: 'div',
@@ -60,6 +57,9 @@ UI.Menu = new Class({
 	
 	Arguments:
 		options - (object) options
+	
+	See also:
+		<UI.Element::initialize>
 	*/
 
 	initialize: function(options) {
@@ -71,6 +71,12 @@ UI.Menu = new Class({
 		private function
 		
 		Call UI.Element build, then create a menu wrapper
+	
+	Return:
+		(void)
+	
+	See also:
+		<UI.Element::build>
 	*/
 	
 	build: function(menu) {
@@ -257,10 +263,17 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: mouseUpAction
+	Method: mouseUpAction
+		private function
 		
-			Do the element action and close the menu
-	*/
+		Execute the menu item action and close the menu (as well as submenu if needed)
+	
+	Arguments:
+		menuItem - (element) Menu item with attached action to fire
+	
+	Return:
+		(void)
+	 */
 	
 	mouseUpAction : function(menuItem){
 		if ($time() - this.time > 300 && this.rollover) {
@@ -279,15 +292,20 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: setRollover
+	Method: setRollover
+		private function
 		
-			set a canvas to draw menu elements
+		Create a new rollover element in menu if it doesn't exist
+	
+	Return:
+		(void)
 	 */
 	
 	setRollover : function(){
+		if (this.rollover) return;
 		this.rollover = new UI.Element({
 			skin			: this.options.skin,
-			type			: 'menuRollover',
+			type			: this.options.rolloverType,
 			styles			: {
 				position 	: 'absolute',
 				zIndex 		: 1
@@ -296,18 +314,24 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: moveRollover
+	Method: moveRollover
+		private function
 		
-			set the rollover to a new element
+		Move the rollover to a new location (menu item)
+	
+	Arguments:
+		menuItem - (element) Rollover will be moved to this menu item position
+	
+	Return:
+		(void)
 	 */
 	
 	moveRollover : function(menuItem){
 		var coord = menuItem.getCoordinates(this.element);
-		if (!this.rollover) this.setRollover();
+		 this.setRollover();
 		
 		if (this.activeItem) {
 			this.activeItem.element.fireEvent('defaultArrow');
-			
 			this.activeItem.setState('default');
 		}
 		
@@ -324,9 +348,13 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: removeRollover
-		
-			Remove the rollover
+	Method: removeRollover
+		private function
+	
+		Remove the rollover from menu and destroy it
+	
+	Return:
+		(void)
 	 */
 	
 	removeRollover : function(){
@@ -342,9 +370,13 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: removeSubmenu
-		
-			Remove the current submenu if needed
+	Method: removeSubmenu
+		private function
+	
+		Remove the current submenu as well as submenus if needed
+	
+	Return:
+		(void)
 	 */
 	
 	removeSubmenu : function(){
@@ -355,9 +387,16 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: setPosition
+	Method: setPosition
+		private function
 		
-			Set the position of the menu
+		Set the menu position relatively to parent element. Parent could be a menu element or any dom element
+	
+	Arguments:
+		el - (element) Parent element who will define menu position
+	
+	Return:
+		(void)
 	 */
 	
 	setPosition: function(el) {
@@ -443,12 +482,15 @@ UI.Menu = new Class({
 
 	/*
     Method: setCorners
+    	private function
 
-      Set corners radius for canvas draw
+		Set corners radius for canvas draw
+	
+	Return:
+		(void)
 	  
 	Discussion:
-	
-		is really needed anymore? 
+		is really needed anymore?
 	*/
 	
 	setCorners: function(corners) {
@@ -456,9 +498,13 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: addScrolls
-		
-			Add scrolls to menu
+	Method: addScrolls
+		private function
+	
+		Add scrolls to menu
+	
+	Return:
+		(void)
 	*/
 	
 	addScrolls : function() {
@@ -484,9 +530,16 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: addUnderlay
-		
-			Add an underlay to the page, to prevent clicks and scroll on page
+	Method: addUnderlay
+		private function
+	
+		Add an underlay to the page, to prevent clicks and scroll on page, and to keep a track of opened menu element
+	
+	Arguments:
+		underlay - (element) a previously declared underlay to use instead of creating a new one
+	
+	Return:
+		(void)
 	 */
 	
 	addUnderlay: function(underlay){
@@ -531,9 +584,13 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: removeUnderlay
-		
-			Remove the underlay
+	Method: removeUnderlay
+		private function
+	
+		Remove the underlay and destroy it
+	
+	Return:
+		this
 	 */
 	
 	removeUnderlay: function(){
@@ -546,9 +603,15 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: inject
-		
-			inject the menu and draw the canvas. Overwrite the inject method of UI.Element
+	Method: inject
+		inject the menu and draw the canvas. Overwrite the inject method of <UI.Element>
+	
+	Arguments:
+		element - (element) Injection target
+		target - (string) Determine where to inject.
+	
+	Return:
+		this
 	 */
 	
 	inject : function(element, target){
@@ -577,9 +640,19 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: show
-		
-			Show the menu
+	Method: show
+		Show the menu
+	
+	Arguments:
+		parent - (element) Menu location will be determine relatively to this element
+		x - (integer) (optional) new menu width
+		y - (integer) (optional) new menu height
+	
+	Return:
+		this
+	
+	See also:
+		<UI.Element::show>
 	 */
 	
 	show : function(parent, x, y) {
@@ -594,9 +667,14 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: hide
-		
-			Remove the submenu and clean the dom
+	Method: hide
+		Hide the submenu, and clean it (remove rollover, remove scrolls, ...)
+	
+	Arguments:
+		duration - (integer) Fade out duration, in milliseconds
+	
+	Return:
+		this		
 	 */
 	
 	hide: function(duration){
@@ -621,18 +699,19 @@ UI.Menu = new Class({
 			}).start('opacity', 0);
 		}
 		
-	
-		
 		return this;
 	},
 	
 	/* 
-		Method: empty
-		
-			Empty the menu content
+	Method: empty
+		Clear menu content
+	
+	Return:
+		this
 	 */
 	
 	empty: function(){
 		this.content.empty();
+		return this;
 	}
 });
