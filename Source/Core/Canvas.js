@@ -76,6 +76,9 @@ UI.Canvas = new Class({
 		private function
 
 		Create a new canvas object and get the 2D context
+	
+	Returns:
+		(void)
 	 */
 
 	build : function() {
@@ -311,6 +314,9 @@ UI.Canvas = new Class({
 	Arguments: 
 		target		: (element) - the target dom element
 		position	: (string - optional) the position were to inject
+	
+	Returns:
+		this
 	*/
 	
 	inject : function(target, position){
@@ -372,7 +378,7 @@ UI.Canvas = new Class({
 		absolute - (boolean) Determine if the position is relative to previous element or absolute (relative to canvas)
 		
 	Return
-		(float) The value converted in pixel
+		value - (float) The value converted in pixel
 	*/
 	
 	convert2Px : function(value, direction, absolute) {
@@ -407,7 +413,7 @@ UI.Canvas = new Class({
 		size - (array) Array containing layer's width and height. Could be either a number or 'auto' to determine it from offset
 		
 	Return:
-		(array) An array with x and y start point coordinates, as well as width and height
+		offset - (array) An array with x and y start point coordinates, as well as width and height
 	*/	
 
 	setOffset : function(value,position, size) {
@@ -560,7 +566,7 @@ UI.Canvas = new Class({
 		key - (string) Layer name
 		
 	Return:
-		(object) an object to be drawn
+		properties - (object) an object to be drawn
 	*/
 	
 	getProperties : function(key) {

@@ -56,21 +56,6 @@ UI.View = new Class({
 		onLoadComplete		: $empty
 	},
 
-	/* 
-	Constructor: initialize
-		Construtor
-	
-	Arguments:
-		options - (object) options
-	
-	See also:
-		<UI.Element::initialize>
-	*/
- 	  
-	initialize: function(options){
-		this.parent(options);
-	},
-
 	/*
 	Method: build
 		private function
@@ -318,7 +303,7 @@ UI.View = new Class({
 		 	this.fireEvent('loadComplete');
 			this.fireEvent('onResize');
 		});
-		
+
 		return this;
 	}
 });

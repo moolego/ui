@@ -6,14 +6,14 @@
 		<UI.Menu>		
 	
 	Arguments:
-			options
-			
+		options
+
 	Options: 
 		contexts - (array) An array containing contexts definition. A context definition is an object composed of following keys :
 			a name key, who is the context name,
 			a selector key, who define on wich elements the context menu will be attached. It could be a CSS3 selector as well.
 			a menu key, who is a menu list as defined in <UI.Menu>.
-	
+
 	Discussion:
 		We must still add methods to set dynamically new contexts, ...
 	

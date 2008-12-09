@@ -1,6 +1,9 @@
 /*
 	Class: UI.Select
 		Create <select> like element
+	
+	Extends:
+		<UI.Control>
 		
 	Require:
 		<UI.Control>
@@ -16,7 +19,7 @@
 	
 	Example:
 		(start code)
-		new UI.Control.Select({
+		new UI.Select({
 			name			: 'testselect',
 			list			: [{
 				text		: 'Montagne',
@@ -50,26 +53,17 @@ UI.Select = new Class({
 	},
 	
 	/* 
-	Constructor: initialize
-		Construtor
-	
-	Arguments:
-		options - (object) options
-	
-	See also:
-		<UI.Control::initialize>
-		<UI.Element::initialize>
-	*/
-	
-	initialize: function(options){
-		this.parent(options);
-	},
-	
-	/* 
 	Function: build
 		private function
 		
 		Call UI.Element build, then create a hidden input , a textLabel and create a menu
+	
+	Returns:
+		(void)
+	
+	See also:
+		<UI.Control::build>
+		<UI.Element::build>
 	*/
 	
 	build : function(){
@@ -110,6 +104,10 @@ UI.Select = new Class({
 		
 		Return:
 			(void)
+		
+		See also:
+			<UI.Control::setBehavior>
+			<UI.Element::setBehavior>
 	*/
 
 	setBehavior : function() {
@@ -147,4 +145,3 @@ UI.Select = new Class({
 		}, this)
 	}
 });
-

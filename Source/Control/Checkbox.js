@@ -1,24 +1,27 @@
 /*
-Class: UI.Checkbox
-	Creates checkbox control
-
-Arguments:
-	options	
-
-Options: 
-	label - (string) checkbox label
-	name - (string) input element name
-	value - (string) checkbox's value
-	checked - (boolean) set to true to check on initialize
-
-Example:
-	(start code)
-		var checkbox = new UI.Checkbox({
-			name		: 'myCheckbox'
-			value		: 'check',
-			label		: 'Hello world!'			
-		}).inject(document.body);
-	(end)
+	Class: UI.Checkbox
+		Creates checkbox control
+	
+	Extends:
+		<UI.Control>
+	
+	Arguments:
+		options	
+	
+	Options: 
+		label - (string) checkbox label
+		name - (string) input element name
+		value - (string) checkbox's value
+		checked - (boolean) set to true to check on initialize
+	
+	Example:
+		(start code)
+			var checkbox = new UI.Checkbox({
+				name		: 'myCheckbox'
+				value		: 'check',
+				label		: 'Hello world!'			
+			}).inject(document.body);
+		(end)
 */
 
 UI.Checkbox = new Class({
@@ -35,23 +38,18 @@ UI.Checkbox = new Class({
 		component		: 'checkbox'
 	},
 	
-	/* 
-	Constructor: initialize
-		Construtor
-	
-	Arguments:
-		options - (object) options
-	*/
-	
-	initialize: function(options) {
-		this.parent(options);
-	},
-	
 	/*
 	Function: build
 		private function
 		
 		Call UI.Element build, set an input and a textLabel
+	
+	Returns:
+		(void)
+	
+	See also:
+		<UI.Control::build>
+		<UI.Element::build>
 	*/
 	
 	build : function() {
@@ -105,6 +103,10 @@ UI.Checkbox = new Class({
 	
 	Return:
 		(void)
+	
+	See also:
+		<UI.Control::setBehavior>
+		<UI.Element::setBehavior>
 	*/
 	
 	setBehavior : function() {

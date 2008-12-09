@@ -3,11 +3,6 @@
 Class: UI.Panel
 	Build UI.Window component.
 
-Require:
-	UI/Container/Vertical.js
-	UI/Canvas/Canvas.js
-	UI/Canvas/CanvasWindow.js
-
 Arguments:
 	className - (string) css class apply to the wrapper - default 'ui-win'.
 	title - (string) title dissplayed in the header titlebar.
@@ -90,27 +85,6 @@ UI.Panel = new Class({
 		onBlur				: $empty,
 		onFocus				: $empty,
 		onClose				: $empty
-	},
-/*
-    Function: initialize
-   
-    	Constructor
-
-*/
-	
-	initialize: function(options) {
-		this.parent(options);
-	},
-
-/*
-    Function: build
-
-      Creates html structure and inject it to the dom. The panel is based on the UI.Container Class.
-
-*/
-	
-	build: function() {
-		this.parent();
 	},
 
 

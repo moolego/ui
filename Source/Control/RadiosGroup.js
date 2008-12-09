@@ -2,6 +2,9 @@
 	Class: UI.RadiosGroup
 		Create a radios group able to make radio
 	
+	Extends:
+		<UI.Control>
+	
 	Arguments:
 		options
 		
@@ -48,6 +51,12 @@ UI.RadiosGroup = new Class({
 		
 	Arguments:
 		options - (object) options
+	
+	Returns:
+		this
+	
+	See also:
+		<UI.Element::initialize>
 	*/
 	
 	initialize: function(options) {
@@ -56,6 +65,7 @@ UI.RadiosGroup = new Class({
 		this.radios = [];
 		this.selectedRadio = false;
 		
+		return this;
 	},
 	
 	/* 

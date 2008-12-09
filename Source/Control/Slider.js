@@ -4,7 +4,7 @@
 		Additionnaly to UI.Element and UI.Control methods and events, it handle all the properties of the mootools slider.
 		
 	Extend:
-		UI.Control
+		<UI.Element>
 	
 	Requires:
 		Mootools Slider plugin

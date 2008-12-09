@@ -3,14 +3,14 @@
 		Creates Bubble and let you attach events action
 	
 	Extend:
-		UI.Element
+		<UI.Element>
 	
 	Arguments:
 		options
 	
 	Options: 
 		label - (string) bubble content
-		target - (string / element) Can be either an element id either a UI.Element instance
+		target - (string / element) Can be either an element id either a <UI.Element> instance
 	
 	Example:
 		(start code)
@@ -40,6 +40,9 @@ UI.Bubble = new Class({
 	
 	Arguments:
 		options - (object) options
+	
+	See also:
+		<UI.Element::initialize>
 	*/
 	
 	initialize: function(options) {
@@ -57,6 +60,9 @@ UI.Bubble = new Class({
 	
 	Return:
 		(void)
+	
+	See also:
+		<UI.Element::build>
 	*/
 	
 	build : function(){
@@ -88,6 +94,12 @@ UI.Bubble = new Class({
 		private function
 		
 		Add a click event to close the bubble
+	
+	Returns:
+		(void)
+	
+	See also:
+		<UI.Element::setBehavior>
 	*/
 	
 	setBehavior : function(){
@@ -147,7 +159,7 @@ UI.Bubble = new Class({
 		Set an input in the control element
 	
 	Return:
-		(object) Object containing top and left values
+		location - (object) Object containing top and left values
 	*/
 	
 	getLocation : function(){
@@ -169,9 +181,14 @@ UI.Bubble = new Class({
 	},
 
 	/* 
-		Method: setSize
-		
-			Set the size of the bubble from the label
+	Method: setSize
+		Set the size of the bubble from the label
+	
+	Returns:
+		(void)
+	
+	See also:
+		<UI.Element::setSize>
 	*/
 	
 	setSize : function(width,height){
@@ -200,12 +217,14 @@ UI.Bubble = new Class({
 	},
 	
 	/* 
-		Method: destroy
-		
-			Destroy the element, and remove the event on window
-		
-		Return:
-			(void)
+	Method: destroy
+		Destroy the element, and remove the event on window
+	
+	Return:
+		(void)
+	
+	See also:
+		<UI.Element::destroy>
 	*/
 	
 	destroy : function(){

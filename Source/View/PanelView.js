@@ -65,7 +65,7 @@ UI.PanelView = new Class({
 		options - (object) options
 	
 	See also:
-		<UI.View::initialize>
+		<UI.Element::initialize>
 	*/
 	
 	initialize: function(options){

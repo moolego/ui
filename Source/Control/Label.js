@@ -2,6 +2,9 @@
 	Class: UI.Label
 		UI.Label is used to make text element with css skin
 	
+	Extends:
+		<UI.Element>
+	
 	Arguments:
 		options
 		
@@ -44,6 +47,9 @@ UI.Label = new Class({
 		private function
 		
 		Call UI.Element build
+	
+	See also:
+		<UI.Element::build>
 	*/
 	
 	build: function(options){
