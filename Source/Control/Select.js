@@ -55,6 +55,10 @@ UI.Select = new Class({
 	
 	Arguments:
 		options - (object) options
+	
+	See also:
+		<UI.Control::initialize>
+		<UI.Element::initialize>
 	*/
 	
 	initialize: function(options){

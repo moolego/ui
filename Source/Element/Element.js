@@ -272,6 +272,7 @@ UI.Element = new Class({
 		if (this.element.x) this.element.setStyle('width', this.element.x);
 		if (this.element.y) this.element.setStyle('height', this.element.y);
 		this.fireEvent('canvasDraw', state);
+		this.fireEvent('onResize');
 
 		return this;
 	},
