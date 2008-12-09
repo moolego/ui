@@ -1,43 +1,37 @@
 /*
-Class: UI.ListView
-	The UI.ListView class defines objects that manage the list.
-
-Require:
-	UI.Canvas
-	UI.Skin
-	UI.Element
-	UI.View
-	UI.ScrollBar
+	Class: UI.ListView
+		The UI.ListView class defines objects that manage the list.
 	
-Arguments:
-	options
+	Extends:
+		<UI.View>
 	
-Options:
-	className - (String) css class apply to the wrapper
-	width - (number) Width of the view wrapper in px
-	height - (number) Height  of the view wrapper in px
-	overflow - (collection) hidden, scrollbar or menu
-	contentTag - (string) define the tag to use for the content view
-	wrapperTag - (string) define the tag to use for the content view
-	wrapper - (object) wrapper element properties
-	content - (object) content element properties (in case of) 
-	addClass - (string) additionnal class
-	useCanvas - (boolean) false
-
-Returns:
-	View object.
+	Require:
+		<UI.Canvas>
+		<UI.Skin>
+		<UI.Element>
+		<UI.View>
+		<UI.Scrollbar>
+		
+	Arguments:
+		options
+		
+	Options:
+		itemType - (string)
+		scroll - (boolean) react on scrollwheel if set to true
+		data - (array)
 	
-Example:
-	(start code)
-	var listview = new UI.ListView({
-		width			: 260,
-		height			: 400,
-		scroll			: true 
-	}).setContent('content','content view');
-	(end)
-
-Discussion:
-	
+	Returns:
+		Listview object.
+		
+	Example:
+		(start code)
+		var listview = new UI.ListView({
+			url				: 'data.php?id=42',
+			width			: 260,
+			height			: 400,
+			scroll			: true 
+		}).inject(this.content);
+		(end)	
 */
 
 UI.ListView = new Class({
@@ -48,21 +42,40 @@ UI.ListView = new Class({
 		
 		data				: [],
 		itemType			: 'itemList',
-		
-		width				: '100%',
-		height				: '100%',
-
-		overflow			: 'scrollbar',		// hide, scrollbar or scrollmenu
-
-		// implemented events		
-		onLoadComplete		: $empty
 	},
+	
+	/*
+	Method: build
+		private function
+	
+		call <UI.View::build> then get listview's data
+
+	Returns:
+		(void)
+
+	See also:
+		<UI.View::build>
+	*/
 
 	build : function() {
 		this.parent();
 		
 		this.getData(this.options.url);
 	},
+	
+	/*
+	Method: getData
+		private function
+	
+		get data by doing an ajax request if url is defined, or using data set in options
+	
+	Arguments:
+		url - (string) Url where to get data
+		options - (object) class options
+
+	Returns:
+		(void)
+	*/
 
 	getData : function ( url, options) {
 		if (this.options.url) {
@@ -74,7 +87,6 @@ UI.ListView = new Class({
 		    }).get();
 			
 		} else {
-
 			this.addEvent('injected', function(){
 				this.processList(this.options.data);
 			}.bind(this));
@@ -83,10 +95,15 @@ UI.ListView = new Class({
 
 	/*
 	Function: processList
-		Used internally. Parse data and inject in view content.
+		private function
+		
+		Parse datas and inject them in view content.
 	
 	Arguments:
-		data - data to be used during template interpolation
+		data - (object) data to be used during template interpolation
+	
+	Return:
+		this
 	*/
 
 	processList : function(data){
@@ -109,4 +126,3 @@ UI.ListView = new Class({
 		}, this);
 	}
 });
-

@@ -1,7 +1,31 @@
 /*
-Class: UI.PanelView
-	Creates a panelView Object that let you browse inner views(panels) 
-
+/*
+	Class: UI.PanelView
+		Creates a panelView Object that let you browse inner views(panels)
+	
+	Extends:
+		<UI.View>
+		
+	Arguments:
+		options
+		
+	Options:
+		
+	
+	Returns:
+		Panelview object.
+		
+	Example:
+		(start code)
+		new UI.PanelView({
+			url				: 'data.php?id=42',
+			width			: 260,
+			height			: 400,
+		}).inject(this.content);
+		(end)
+	
+	Discussion:
+		Need to make some more cleaning in this class
 */
 
 UI.PanelView = new Class({
@@ -9,7 +33,6 @@ UI.PanelView = new Class({
 	
 	options: {
 		className			: 'ui-panelview',
-		buildType			: 'div',
 		properties			: {},
 		styles				: {
 			width			:'100%',
@@ -34,12 +57,16 @@ UI.PanelView = new Class({
 		onResize			: $empty
 	},
 
-/*
-    Function: initialize
-   
-    	Constructor
-
-*/
+	/* 
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	
+	See also:
+		<UI.View::initialize>
+	*/
 	
 	initialize: function(options){
 		this.setOptions(options);
@@ -50,12 +77,15 @@ UI.PanelView = new Class({
 		this.transitionFx = new Fx.Scroll(this.element.element, this.options.transitionFx);
 	},
 
-/*
-    Function: build
-   
-    	Create mainview
+	/*
+	Method: build
+		private function
+		
+		Overwrite <UI.View::build>. Create mainview
 
-*/
+	Returns:
+		(void)
+	*/
 
  	build: function (){
 		this.element = new UI.View({

@@ -1,42 +1,49 @@
 /*
-
-Class: UI.Window
-	The UI.Window class defines objects that manage and coordinate the windows an application displays on the screen.
-
-Require:
-	UI.Element, UI.Canvas, UI.Skin, UI.Button, UI.View.
-
-Inherits from:
-	UI.Element - As window container.
-
-Arguments:
-	Options
+	Class: UI.Window
+		The UI.Window class defines objects that manage and coordinate the windows an application displays on the screen.
 	
-Options: 
-	title - (string) title displayed in the head titlebar.
-	type - (string) define the type of the window (default, transparent).
-	location - ('custom','center','cascade')  override top and left options if defined - default to custom.
-	width - (number) Width of the container wrapper in px.
-	height - (number) Height  of the container wrapper in px.
-	top	- (number) Height  of the container wrapper in px.
-	left - (number) Height  of the container wrapper in px.
-	state - ('normalized','maximized','normalized') Define the initial state - default to normalized.
-	useEffects - (boolean) Define if effects should be implemented.
-	resizable - (boolean) Define if the window is resizable.
-	draggable - (boolean) Define if the window is draggable.
-	scrollbar - (boolean) Define if the container should use scrollbar.
-	register - (bollean) Define if the window should be handle by the window manager.
-	status - (bollean) Define if the window should use a statusbar.
-	url	- (string) Define the url from the window content.
-
-Example:
-	(start code)
-	var win = new UI.Window({
-		width 	: 260,
-		height	: 400,
-		title	: 'bonjour',
-	}).setContent('iframe','http://www.iframework.org');
-	(end)
+	Require:
+		<UI.Element>
+		<UI.Canvas>
+		<UI.Skin>
+		<UI.Button>
+		<UI.Control>
+		<UI.View>
+	
+	Extends:
+		<UI.Element>
+	
+	Arguments:
+		Options
+		
+	Options: 
+		title - (string) title displayed in the head titlebar.
+		type - (string) define the type of the window (default, transparent).
+		location - (string)  Could be either 'custom','center' or 'cascade'. Override top and left options if defined - default to custom.
+		width - (number) Width of the container wrapper in px.
+		height - (number) Height  of the container wrapper in px.
+		top	- (number) Height  of the container wrapper in px.
+		left - (number) Height  of the container wrapper in px.
+		state - ('normalized','maximized','normalized') Define the initial state - default to normalized.
+		useEffects - (boolean) Define if effects should be implemented.
+		resizable - (boolean) Define if the window is resizable.
+		draggable - (boolean) Define if the window is draggable.
+		scrollbar - (boolean) Define if the container should use scrollbar.
+		register - (bollean) Define if the window should be handle by the window manager.
+		status - (bollean) Define if the window should use a statusbar.
+		url	- (string) Define the url from the window content.
+	
+	Example:
+		(start code)
+		var win = new UI.Window({
+			width 	: 260,
+			height	: 400,
+			title	: 'bonjour',
+		}).setContent('iframe','http://www.iframework.org');
+		(end)
+	
+	Discussion:
+		Effects still need to be implemented as option
 */
 
 UI.Window = new Class({
@@ -91,9 +98,15 @@ UI.Window = new Class({
 		onClose				: $empty
 	},
 
-	/*
-	    Function: initialize
-	    	Constructor
+	/* 
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	
+	See also:
+		<UI.Element::initialize>
 	*/
 	
 	initialize: function(options) {
@@ -111,13 +124,20 @@ UI.Window = new Class({
 
 		this.controller.focus(this);
 	},
-
-	/*
-	    Function: build
 	
-	      Creates html structure and inject it to the dom.
+	/* 
+	Function: build
+		private function
+		
+		Creates html structure and inject it in the dom.
+	
+	Return:
+		(void)
+	
+	See also:
+		<UI.Element::build>
 	*/
-	
+
 	build: function() {	
 		// call parent builder
 		this.parent()
@@ -133,8 +153,13 @@ UI.Window = new Class({
 	},
 
 	/* 
-		Function: setHead
-			Create a new head element, set class and styles and inject
+	Function: buildHead
+		private function
+		
+		Create a new head element, set class and styles and inject
+	
+	Returns:
+		(void)
 	*/	
 
 	buildHead : function() {
@@ -160,8 +185,13 @@ UI.Window = new Class({
 	},
 
 	/*
-	    Function: setControls
-	      Create window controls that allow window close, maximize and minimize
+	Function: setControls
+		private function
+		
+		Create window controls that allow window close, maximize and minimize
+	
+	Returns:
+		(void)
 	*/
 	
 	buildControls: function() {
@@ -206,10 +236,17 @@ UI.Window = new Class({
 	},
 	
 	/*
-	    Function: setToolbar
-			Sets the window's toolbar. and attach related events
-			
-		Note: 	it should be passed as options when the application instanciates its window
+    Function: setToolbar
+    	Sets the window's toolbar. and attach related events
+    
+    Arguments:
+    	toolbar - (object) Toolbar's options object. See <UI.Toolbar>
+    
+    Returns:
+    	this
+		
+	Discussion:
+		it should be passed as options when the application instanciates its window
 	*/
 	
 	buildToolbar: function(toolbar) {
@@ -232,8 +269,13 @@ UI.Window = new Class({
 	},
 
 	/* 
-		Function: setView
-			Create a new view of the define type and attach related window events
+	Function: buildView
+		private function
+		
+		Create a new view of the define type and attach related window events
+	
+	Returns:
+		(void)
 	*/	
 
 	buildView : function() {
@@ -278,8 +320,14 @@ UI.Window = new Class({
 	},
 
 	/* 
-		Function: setOverlay
-			create a new overlay object 
+	Function: buildOverlay
+		create a new overlay object
+	
+	Returns:
+		(void)
+	
+	Discussion:
+		Maybe use this as a class implementation (also used in <UI.View>)
 	*/
 
 	buildOverlay: function() {
@@ -299,8 +347,13 @@ UI.Window = new Class({
 	},
 
 	/* 
-		Function: setFoot
-			Create a new foot container and inject resize handler and statusbar in it
+	Function: buildFoot
+		private function
+		
+		Create a new foot container and inject resize handler and statusbar in it
+	
+	Returns:
+		(void)
 	*/
 
 	buildFoot: function() {
@@ -329,9 +382,13 @@ UI.Window = new Class({
 	},
 
 	/*
-		Function: buildResizeHandler
-			Create a new element as resize handler
+	Function: buildResizeHandler
+		private function
 		
+		Create a new element as resize handler
+	
+	Returns:
+		(void)
 	 */
 	
 	buildResizeHandler : function() {
@@ -342,10 +399,11 @@ UI.Window = new Class({
 	},
 
 	/*
-		Method: toggleToolbar
-			The action method for the "Hide Toolbar" menu item (which alternates with "Show Toolbar").
-		
-		Note:   it should be passed as options when the application instanciates its window
+	Method: toggleToolbar
+		The action method for the "Hide Toolbar" menu item (which alternates with "Show Toolbar").
+	
+	Returns:
+		this
 	*/
 	
 	toggleToolbar: function() {
@@ -359,12 +417,22 @@ UI.Window = new Class({
 		
 		this.updateSize();
 		this.fireEvent('canvasDraw', this.state);
+		
+		return this;
 	},
 
 
 	/*
-	    Function: setBeahaviours
-	    	Define the spcific window behaviours
+	    Function: setBehavior
+	    	private function
+	    	
+	    	Define the specific window behavior
+	    
+	    Returns:
+	    	(void)
+	    
+	    See also:
+	    	<UI.Element::setBehavior>
 	*/
 	
 	setBehavior: function(){
@@ -382,8 +450,16 @@ UI.Window = new Class({
 	},
 
 	/*
-		Function: enableDrag
-				Add draggable capabilities for the window.
+	Function: enableDrag
+		private function
+		
+		Add draggable capabilities for the window.
+	
+	Returns:
+		(void)
+	
+	See also:
+		<UI.Element::enableDrag>
 	*/
 
 	enableDrag :function() {
@@ -405,8 +481,11 @@ UI.Window = new Class({
 
 
 	/*
-	    Function: focus
-	      If minimize normalize and fireEvent OnFocus
+	Function: focus
+		If minimize normalize and fireEvent OnFocus
+	
+	Returns:
+		(void)
 	*/
 	
 	focus: function() {
@@ -426,6 +505,9 @@ UI.Window = new Class({
 
     Function: minimize
 		This action method displays the minimized window
+	
+	Returns:
+		(void)
 	*/
 
 	minimize : function() {
@@ -444,8 +526,13 @@ UI.Window = new Class({
 	},
 
 	/*
-	    Function: maximize
-	      This action method set the size to fit the window container
+	Function: maximize
+		private function
+		
+		This action method set the size to fit the window container
+	
+	Returns:
+		(void)
 	*/
 
 	maximize : function() {
@@ -467,8 +554,11 @@ UI.Window = new Class({
 	},
 
 	/*
-		Function: normalize
-			Normalize the current window
+	Function: normalize
+		Normalize window
+	
+	Returns:
+		(void)
 	*/
 
 	normalize : function() {
@@ -488,8 +578,13 @@ UI.Window = new Class({
 	},		
 
 	/*
-		Function: getInitialLocation
-			Return the initial location depending on location options
+	Function: getInitialLocation
+		private function
+		
+		Return the initial location depending on location options and window's size
+	
+	Returns:
+		coordinates - (object) Object containing top and left properties
 	*/
 
 	getInitialLocation: function() {
@@ -505,8 +600,11 @@ UI.Window = new Class({
 
 	
 	/*
-	    Function: updateSize
-	      Update size and position of the window inner components
+	Function: updateSize
+		Update size and position of the window inner components
+	
+	Returns:
+		(void)
 	*/
 
 	updateSize : function() {
@@ -562,22 +660,34 @@ UI.Window = new Class({
 	},
 
 	
-	 /*
-		Function: setSize
-			Set window's frame size and updateSize
-			
+	/*
+	Function: setSize
+		Set window's frame size and updateSize
+	
+	Returns:
+		this
+	
+	See also:
+		<UI.Element::setSize>			
 	*/  
 	 
 	setSize: function(width,height, state) {
 		this.parent(width,height, state);
 		this.updateSize();
+		
+		return this;
 	},	
 	
 	/* 
-		Function: setTitle
-			set title html 
-			
-	 */
+	Function: setTitle
+		set title html
+	
+	Arguments:
+		html - (string) html formatted title
+	
+	Returns:
+		this
+	*/
 	
 	setTitle : function(html) {
 		this.title.set('html',html);
@@ -585,8 +695,16 @@ UI.Window = new Class({
 	},
 
 	/*
-	    Function: setContent
-	    	Set Content of the Window View
+    Function: setContent
+    	Set Content of the Window View. See <UI.View::setContent> for arguments details
+    
+    Arguments:
+    	method - (string)
+    	source - (string)
+    	options - (object)
+    
+    Returns:
+    	this
 	*/
 	
 	setContent: function(method,source,options){
@@ -595,8 +713,14 @@ UI.Window = new Class({
 	},
 
 	/*
-	    Function: setStatus
-	    	Set Status of the Window foot
+    Function: setStatus
+    	Set Status of the Window foot
+    
+    Arguments:
+    	html - (string) html formatted new status
+    
+    Returns:
+    	this
 	*/
 
 	setStatus : function(html) {
@@ -605,11 +729,14 @@ UI.Window = new Class({
 	},
 
 	/*
-	    Function: control
-	      Toggle state 
-	      
-		Arguments:
-			actions - (minimize,maximize,close)
+	Function: control
+		handle window controls' actions
+      
+	Arguments:
+		actions - (string) minimize,maximize,close
+	
+	Returns:
+		this
 	*/	
 
 	control : function(action) {
@@ -624,14 +751,16 @@ UI.Window = new Class({
 				this.close();
 				break;
 		}
+		
+		return this;
 	},
 
 	/*
-	    Function: close
-			Close window
-	      
-		Arguments:
-			actions - (minimize,maximize,close)
+    Function: close
+		Close window
+      
+	Returns:
+		(void)
 	*/	
 	
 	close : function() {
