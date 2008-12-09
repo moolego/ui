@@ -3,7 +3,7 @@
 		Creates button and let you attach events action
 		
 	Extend:
-		UI.Control
+		<UI.Control>
 	
 	Arguments:
 		options
@@ -33,22 +33,17 @@ UI.Button = new Class({
 	},
 	
 	/* 
-	Constructor: initialize
-		Construtor
-	
-	Arguments:
-		options - (object) options
-	*/
-	
-	initialize: function(options) {
-		this.parent(options);
-	},
-	
-	/* 
 	Function: build
 		private function
 		
 		Create a textLabel and call parent method
+	
+	Returns:
+		(void)
+		
+	See also:
+		<UI.Control::build>
+		<UI.Element::build>
 	*/
 	
 	build : function(){
@@ -69,8 +64,11 @@ UI.Button = new Class({
 	Arguments:
 		state - (string) State name
 		
-	Return:
+	Returns:
 		(void)
+	
+	See also:
+		<UI.Element::setState>
 	*/
 	
 	setState : function(state){
@@ -86,8 +84,12 @@ UI.Button = new Class({
 		
 		Set behavior relative to button (mouseenter, mousedown, mouseup, mouseleave)
 	
-	Return:
+	Returns:
 		(void)
+	
+	See also:
+		<UI.Control::setBehavior>
+		<UI.Element::setBehavior>
 	*/
 	
 	setBehavior : function() {

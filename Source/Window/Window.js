@@ -331,8 +331,6 @@ UI.Window = new Class({
 	*/
 
 	buildOverlay: function() {
-		
-		//console.log('show overlay');
 		this.overlay = new Element('div',this.props.components.overlay)
 		 .inject(this.view.element);
 

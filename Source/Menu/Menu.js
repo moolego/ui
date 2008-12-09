@@ -6,21 +6,21 @@
 		<UI.Element>
 	
 	Arguments:
-			options
+		options
 			
 	Options: 
-			zIndex - (integer) Base z-index for menu element (submenu's z-index will be incremented)
-			contentTag - (string) Tag name for menu elements wrapper
-			itemTag - (string) Tag name for menu elements
-			
-			position - (string) Specify where the new menu must be positionned.
-				It could be normal (element will be positionned on parent's side),
-				over (element will be positionned over the parent element, used for <UI.Select>),
-				bottom (element will be positionned on bottom of parent element, used for <UI.Toolbar>)
-			
-			scrollToSelected - (boolean) Determine if a menu (specifically a <UI.Select>) should remember last item selected
-			scrollMargin - (integer) Determine remaining margin on top and bottom when a menu is too large to feet in window
-			menu - (array) Array containing menu definition
+		zIndex - (integer) Base z-index for menu element (submenu's z-index will be incremented)
+		contentTag - (string) Tag name for menu elements wrapper
+		itemTag - (string) Tag name for menu elements
+		
+		position - (string) Specify where the new menu must be positionned.
+			It could be normal (element will be positionned on parent's side),
+			over (element will be positionned over the parent element, used for <UI.Select>),
+			bottom (element will be positionned on bottom of parent element, used for <UI.Toolbar>)
+		
+		scrollToSelected - (boolean) Determine if a menu (specifically a <UI.Select>) should remember last item selected
+		scrollMargin - (integer) Determine remaining margin on top and bottom when a menu is too large to feet in window
+		menu - (array) Array containing menu definition
 		
 	Example:
 		(start code)
@@ -49,21 +49,6 @@ UI.Menu = new Class({
 		scrollMargin		: 20,
 		menu				: [],
 		underlay			: false
-	},
-
-	/* 
-	Constructor: initialize
-		Construtor
-	
-	Arguments:
-		options - (object) options
-	
-	See also:
-		<UI.Element::initialize>
-	*/
-
-	initialize: function(options) {
-		this.parent(options);
 	},
 
 	/*

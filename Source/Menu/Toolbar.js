@@ -47,22 +47,6 @@ UI.Toolbar = new Class({
 		component		: 'toolbar'
 	},
 	
-	/* 
-	Constructor: initialize
-		Construtor
-	
-	Arguments:
-		options - (object) options
-	
-	See also:
-		<UI.Menu::initialize>
-		<UI.Element::initialize>
-	*/
-
-	initialize: function(options) {
-		this.parent(options);
-	},
-	
 	/*
 	Function: build
 		private function

@@ -1,17 +1,17 @@
 /*
-Class: UI.Skin
-	The UI.Skin class defines a singleton object that handle skins.
-
-Arguments:
-	Options
+	Class: UI.Skin
+		The UI.Skin class defines a singleton object that handle skins.
 	
-Options: 
-	skin - (string) skin name defined in skins. ie: AquaGraphite
-
-Example:
-	(start code)
-	UI.skin = new UI.Skin('AquaGraphite');
-	(end)
+	Arguments:
+		Options
+		
+	Options: 
+		skin - (string) skin name defined in skins. ie: AquaGraphite
+	
+	Example:
+		(start code)
+		UI.skin = new UI.Skin('AquaGraphite');
+		(end)
 */
 
 UI.Skin = new Class({
@@ -30,11 +30,16 @@ UI.Skin = new Class({
 		
 	Arguments:
 		options - (object) options
+	
+	Returns:
+		this
 	*/
  	
 	initialize : function(options) {
 		this.setOptions(options);
 		this.defaultSkin = this.options.skin;
+		
+		return this;
 	},
 	
 	/* 
@@ -97,7 +102,7 @@ UI.Skin = new Class({
 		It will also check for other options, as defined in skin sheet as shortkeys
 		
 	Return:
-		(object) An object containing skin properties for current type, merged with optional provided custom properties.
+		properties - (object) An object containing skin properties for current type, merged with optional provided custom properties.
 	 */
 	
 	get : function(className){
@@ -159,7 +164,7 @@ UI.Skin = new Class({
 		component - (string) the name of the component
 		
 	Return:
-		(object) Object containing component properties
+		properties - (object) Object containing component properties
 	*/
 	
 	getComponentProps : function(skin, component){

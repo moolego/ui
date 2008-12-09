@@ -1,22 +1,25 @@
 /*
-Class: UI.Input
-	Create a skinnable input element
-
-Arguments:
-	options
-
-Options: 
-	name - (string) name for the input element
-	value - (string) value
-	component - (string) component name
-
-Example:
-	(start code)
-	var button = new UI.Button({
-		name: 'myInput',
-		value: 'Hello world'
-	}).inject(document.body);
-	(end)
+	Class: UI.Input
+		Create a skinnable input element
+	
+	Extends:
+		<UI.Control>
+	
+	Arguments:
+		options
+	
+	Options: 
+		name - (string) name for the input element
+		value - (string) value
+		component - (string) component name
+	
+	Example:
+		(start code)
+		var button = new UI.Button({
+			name: 'myInput',
+			value: 'Hello world'
+		}).inject(document.body);
+		(end)
 */
 
 UI.Input = new Class({
@@ -31,18 +34,6 @@ UI.Input = new Class({
 	},
 	
 	/* 
-	Constructor: initialize
-		Constructor
-	
-	Arguments:
-		options - (object)
-	*/
-	
-	initialize: function(options) {
-		this.parent(options);
-	},
-	
-	/* 
 	Function: build
 		private function
 		
@@ -50,6 +41,10 @@ UI.Input = new Class({
 	
 	Return:
 		(void)
+	
+	See also:
+		<UI.Control::build>
+		<UI.Element::build>
 	*/
 	
 	build : function(){
@@ -70,6 +65,9 @@ UI.Input = new Class({
 		
 	Return:
 		(void)
+	
+	See also:
+		<UI.Element::setState>
 	*/
 	
 	setState : function(state){
@@ -85,6 +83,10 @@ UI.Input = new Class({
 	
 	Return:
 		(void)
+	
+	See also:
+		<UI.Control::setBehavior>
+		<UI.Element::setBehavior>
 	*/
 	
 	setBehavior : function() {

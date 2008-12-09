@@ -2,8 +2,8 @@
 	Class: UI.Control
 		UI.Control is the root class of most control elements of moolego UI. It can't be used alone.
 		
-	Extend:
-		UI.Element
+	Extends:
+		<UI.Element>
 		
 	Arguments:
 		options
@@ -23,22 +23,13 @@ UI.Control = new Class({
 	options: {},
 
 	/* 
-	Constructor: initialize
-		Construtor
-	
-	Arguments:
-		options - (object) options
-	*/
-	
-	initialize: function(options){
-		this.parent(options);
-	},
-	
-	/* 
 	Function: build
 		private function
 		
 		Call UI.Element build and set the control element
+	
+	See also:
+		<UI.Element::build>
 	*/
 	
 	build: function() {
@@ -54,6 +45,9 @@ UI.Control = new Class({
 		width - (integer) New element width
 		height - (integer) New element height
 		state - (string) (optional) Can be specified to draw a new state too
+	
+	See also:
+		<UI.Element::setSize>
 	*/
 	
 	setSize : function(width,height, state){
@@ -144,6 +138,9 @@ UI.Control = new Class({
 	
 	Return:
 		(void)
+	
+	See also:
+		<UI.Element::setBehavior>
 	*/
 	
 	setBehavior : function(){
