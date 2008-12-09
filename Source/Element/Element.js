@@ -1,10 +1,10 @@
 /*
 	Class: UI.Element
 		UI.Element is the root class of most class of Moolego UI. It is used by :
-			- UI.View
-			- ui.Window
-			- UI.Menu (also UI.Context)
-			- most Controls elements (buttons, ...)
+			- <UI.View>
+			- <UI.Window>
+			- <UI.Menu> (also <UI.Context>)
+			- Most Controls elements (<UI.Button>, ...)
 	
 	Arguments:
 		Options

@@ -1,5 +1,4 @@
 /*
-/*
 	Class: UI.PanelView
 		Creates a panelView Object that let you browse inner views(panels)
 	

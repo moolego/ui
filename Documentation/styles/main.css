@@ -1,0 +1,856 @@
+/*
+   This file is part of Natural Docs, which is Copyright (C) 2003-2008 Greg Valure
+   Natural Docs is licensed under the GPL
+   
+   Wishlist
+   - Separate css for frames and no frames
+   - Use Comments to mark sections rather than adding extra tabs to rules
+   - Add semi-colons to last rule
+   - Use tabs rather than spaces. Smaller file size.
+   - Closing bracet should be flush to left.
+   - Write hex values in lower case letters, e.g. #f0f0f0, or #eee.
+   - Add more linebreaks in the outputted HTML so it is easier to read the source.
+*/
+
+:focus { outline: none; }
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 18px;
+	color: #141414;
+	margin: 0;
+	padding: 0;
+	background: #EAEAEA;
+}
+
+
+#header { 
+height:80px;
+margin: 0;
+background:url(/img/head/bg.png) repeat-x;
+}
+
+#header .inner {
+width:950px;
+margin:auto;
+}
+
+#header img{ 
+margin-left:30px;
+}
+
+#header em {
+display:none;
+}
+
+#header a.moofloor {
+float:left;
+display:block;
+width:264px;
+height:70px;
+background:url(/img/moolego.png) center no-repeat;
+}
+
+
+/* menus */
+
+#header ul.mainmenu{
+float:right;
+font-size:16px;
+margin:48px 0pt 0pt;
+text-decoration:none;
+list-style:none;
+}
+
+#header  ul.mainmenu li {
+float:left;
+line-height:1;
+margin:0pt;
+padding:0pt;
+border-left:1px solid #90abdc;
+}
+
+#header  ul.mainmenu li a{
+-moz-outline:none;
+text-transform:lowercase;
+font-size:17px;
+padding:2px 20px 2px 10px;
+color:#000;
+text-decoration:none;
+opacity:.3
+}
+
+
+#header  ul.mainmenu li a.s,
+.mainmenu li a.hs,
+.mainmenu li a:hover{
+opacity:1
+}
+
+#header .mainmenu li a:hover{
+opacity:1
+}
+
+#header .mainmenu li a:active{
+opacity:1
+}
+
+
+#MainWrapper {
+	margin: 0 auto;
+	padding: 48px 0 0;
+	position: relative;
+	width: 950px;
+	border-top: 8px solid #FFCC00;
+	background: url('/img/contentbg.png') repeat-x #FFF;
+}
+
+#Menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+	padding: 43px 0  0 25px;
+	width: 150px;
+    overflow: hidden;
+	font-size: 12px;
+	color:#333;
+}
+
+.Summary {
+	position: absolute;
+	top: 48px;
+	right: 20px;
+	width: 130px;
+	padding: 0 0 0 20px;	
+}	
+
+#Content, #Index {
+	margin: 0 auto 0;
+	width: 950px;	
+    margin-left: 195px;
+	padding: 0px 20px;	
+	width: 550px;
+	min-height: 900px;
+	background: #fff;
+	border-left: 1px solid #eee;	
+	border-right: 1px solid #eee;	
+}
+
+a { 
+	color: #666;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+	padding: 0 0 9px 0;
+}
+
+p {
+	margin: 0;
+	padding: 0 0 9px 0;
+}
+
+td {
+    vertical-align: top;
+}
+
+img { border: 0;  }
+
+
+/*  Can't use something like display: none or it won't break.  */
+.HB {
+    font-size: 1px;
+    visibility: hidden;
+    }
+
+/*  Blockquotes are used as containers for things that may need to scroll.  */
+blockquote {
+    padding: 0;
+    margin: 0;
+}
+
+/* Menu */
+
+.MTitle {
+	margin: 0;
+	padding: 0 0 15px 0;
+	font-size: 18px;
+	color: #c17878;	
+}
+
+.MSubTitle {
+	font-size: 12px;
+	color: #999;	
+	font-weight: normal;
+	padding-top: 5px;	
+}
+
+.MGroup {
+	font-size: 1.2em;
+	text-align:left;
+	margin: 10px 0 10px 0;
+}
+
+.MEntry a, .SGroup .SEntry a {
+	display: block;
+	text-decoration: none;
+	padding: 0 0 5px 0;
+	border-bottom: 1px solid #ddd;		
+}
+
+.MEntry a:hover, .SGroup .SEntry a:hover {
+	text-decoration: none;
+}
+
+.MGroup .MEntry a {
+	display: inline;
+	color: #666;
+	padding: 0;		
+	border-bottom: 0 solid #ddd;
+}
+
+.MGroup .MEntry a:hover {
+color:#000;
+}
+
+.Mindex {
+}
+
+.MGroupContent {
+	font-size: 11px;
+	margin-top: 4px;
+	text-align:right;
+	font-variant: normal;
+	font-weight: normal;
+}
+
+.MFile,
+.MText,
+.MLink,
+.MIndex,
+.SEntry {
+	padding: 0;
+	margin: 0;
+}
+
+.MText {
+	font-size: 11x;
+	font-style: italic
+}
+
+.MLink a {
+	display: inline;
+	color: #479AED;
+	padding: 0;		
+	border-bottom: 0 solid #ddd;
+}
+
+.MLink a:hover {
+	text-decoration: underline;
+}
+
+#MSelected {
+}
+
+/*  Close off the left side when its in a group.  */
+.MGroup #MSelected {
+}
+
+#MSearchPanel {
+	display:none;
+	padding: 0px 6px;
+	margin: .25em 0;
+}
+
+
+#MSearchField {
+	color: #606060;
+	background-color: #E8E8E8;
+	border: none;
+	padding: 2px 4px;
+	width: 100%;
+}
+
+/* Only Opera gets it right. */
+.Firefox #MSearchField,
+.IE #MSearchField,
+.Safari #MSearchField {
+	width: 94%;
+}
+
+.Opera9 #MSearchField,
+.Konqueror #MSearchField {
+	width: 97%;
+}
+
+/* Firefox doesn't do this right in frames without #MSearchPanel added on.
+It's presence doesn't hurt anything other browsers. */
+#MSearchPanel.MSearchPanelInactive:hover #MSearchField {
+	background-color: #FFFFFF;
+	border: 1px solid #C0C0C0;
+	padding: 1px 3px;
+	}
+.MSearchPanelActive #MSearchField {
+	background-color: #FFFFFF;
+	border: 1px solid #C0C0C0;
+	font-style: normal;
+	padding: 1px 3px;
+}
+
+#MSearchType {
+	visibility: hidden;
+	width: 98%;
+	padding: 0;
+	border: 1px solid #C0C0C0;
+}
+
+.MSearchPanelActive #MSearchType,
+    /*  As mentioned above, Firefox doesn't do this right in frames without #MSearchPanel added on. */
+#MSearchPanel.MSearchPanelInactive:hover #MSearchType,
+#MSearchType:focus {
+	visibility: visible;
+	color: #606060;
+}
+
+#MSearchType option#MSearchEverything {
+	font-weight: bold;
+}
+
+.Opera8 .MSearchPanelInactive:hover,
+.Opera8 .MSearchPanelActive {
+	margin-left: -1px;
+}
+
+#MSearchResultsWindow {
+	display: none;
+	position: absolute;
+	left: 0; top: 0;
+	border: 1px solid #000000;
+	background-color: #E8E8E8;
+}
+
+#MSearchResultsWindowClose {
+	font-weight: bold;
+	font-size: 11px;
+	display: block;
+	padding: 2px 5px;
+}
+
+#MSearchResultsWindowClose:link,
+#MSearchResultsWindowClose:visited {
+	color: #000000;
+	text-decoration: none;
+}
+
+#MSearchResultsWindowClose:active,
+#MSearchResultsWindowClose:hover {
+	color: #800000;
+	text-decoration: none;
+	background-color: #F4F4F4;
+}
+
+.CTopic {
+	font-size: 12px;
+	margin-bottom: 30px;
+}
+
+.CTitle {
+	font-size:15px;
+	margin: 0 0 8px 0
+}
+
+.CGroup .CTitle {
+	font-size: 20px;	
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-left: 0;
+	margin-right: 0;
+ }
+
+.CClass .CTitle,
+.CInterface .CTitle,
+.CDatabase .CTitle,
+.CDatabaseTable .CTitle,
+.CSection .CTitle {
+	font-size: 20px;
+	padding: 10px 0 10px 0;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+#MainTopic .CTitle, .IPageTitle {
+	font-size: 28px;
+	font-weight: normal;	
+	color: #3399CC;
+	padding: 0 0 10px 0;
+	border-bottom:1px solid #DDDDDD;
+	margin: 0 0 10px 0;
+	font-weight:normal;
+}
+	
+
+
+.CToolTip {
+	display: none;
+	position: absolute;
+	visibility: hidden;
+	left: 0;
+	top: 0;
+	background-color: #FFFFE0;
+	padding: 5px;
+	border-width: 1px 2px 2px 1px;
+	border-style: solid;
+	border-color: #000000;
+}
+
+.Opera .CToolTip {
+	display: none;
+	max-width: 98%;
+}
+
+/*  Scrollbars would be useless.  */
+.CToolTip blockquote {
+	overflow: hidden;
+}
+
+.IE6 .CToolTip blockquote {
+	overflow: visible;
+}
+
+.CHeading {
+	font-weight: bold;
+	margin: 1.5em 0 .5em 0;
+}
+
+.CBody ul {
+/*  I don't know why CBody's margin doesn't apply, but it's consistent across browsers so whatever.
+Reapply it here as padding.  */
+	padding-left: 15px; padding-right: 15px;
+	margin: 0 5ex 1.5em 5ex;
+	list-style:square;
+}
+
+.CDescriptionList {
+	width: 100%;
+	margin-bottom:30px;
+}
+
+.CDescriptionList td {
+	background: #fafafa;
+	padding: 3px 5px;
+	border-bottom: 3px solid #fff;
+}
+
+.CDLEntry {
+    font-size: 12px; 	
+}
+
+.CDLDescription {
+    font-size: 12px; 
+	padding-left: 10px;
+	text-align: left;
+	color: #808080;	
+}
+
+.Prototype {
+	display: none;
+    font: 10pt "Courier New", Courier, monospace;
+    padding: 5px 3ex;
+    border-width: 1px; border-style: solid;
+    margin: 0 5ex 1.5em 5ex;
+}
+
+.Prototype td {
+}
+
+.PDefaultValue,
+.PDefaultValuePrefix,
+.PTypePrefix {
+	color: #8F8F8F;
+}
+
+.PTypePrefix {
+	text-align: right;
+}
+
+.PAfterParameters {
+	vertical-align: bottom;
+}
+
+.IE .Prototype table {
+	padding: 0;
+}
+
+.CFunction .Prototype {
+	background-color: #F4F4F4;
+	border-color: #D0D0D0;
+}
+
+.CProperty .Prototype {
+	background-color: #F4F4FF;
+	border-color: #C0C0E8;
+ }
+
+.CVariable .Prototype {
+	background-color: #FFFFF0;
+	border-color: #E0E0A0;
+}
+
+.CClass .Prototype {
+	border-width: 1px 2px 2px 1px;
+	border-style: solid;
+	border-color: #A0A0A0;
+	background-color: #F4F4F4;
+}
+
+.CInterface .Prototype {
+	border-width: 1px 2px 2px 1px;
+	border-style: solid;
+	border-color: #A0A0D0;
+	background-color: #F4F4FF;
+}
+
+.CDatabaseIndex .Prototype,
+.CConstant .Prototype {
+	background-color: #D0D0D0; border-color: #000000 }
+.CType .Prototype,
+.CEnumeration .Prototype {
+	background-color: #FAF0F0; border-color: #E0B0B0;
+}
+.CDatabaseTrigger .Prototype,
+.CEvent .Prototype,
+.CDelegate .Prototype {
+	background-color: #F0FCF0; border-color: #B8E4B8 }
+
+.CToolTip .Prototype {
+	margin: 0 0 .5em 0;
+	white-space: nowrap;
+}
+
+
+/* Summary */
+	
+.STitle {
+	display: none;
+}	
+
+.SDescription {
+	display: none;
+}
+
+.SMarked {
+	background-color: transparent;
+}
+
+.SFunction td {
+	border-bottom : 1px solid #EEE;
+}
+
+.SFunction a {
+	text-decoration: none;
+}
+
+.SBorder {
+	padding: 0;
+	border: none;
+}
+
+
+.STable {
+	font-size: 12px;
+	width: 100%
+}
+
+.SDescription {
+	display: none;
+}
+
+.SDescription { padding-left: 2ex }
+.SIndent1 .SEntry { padding-left: 0 }   .SIndent1 .SDescription { padding-left: 3.5ex }
+.SIndent2 .SEntry {  }   .SIndent2 .SDescription { padding-left: 5.0ex }
+.SIndent3 .SEntry { padding-left: 4.5ex }   .SIndent3 .SDescription { padding-left: 6.5ex }
+.SIndent4 .SEntry { padding-left: 6.0ex }   .SIndent4 .SDescription { padding-left: 8.0ex }
+.SIndent5 .SEntry { padding-left: 7.5ex }   .SIndent5 .SDescription { padding-left: 9.5ex }
+
+
+
+.SGroup td {
+	padding-top: .5em; padding-bottom: .25em;
+}
+
+.SGroup .SEntry {
+	font-weight: bold;
+}
+
+.SGroup .SEntry a {
+	color:#000;
+font-size:1.3em;
+font-weight:normal;
+	
+}
+
+.SMain td,
+.SClass td,
+.SDatabase td,
+.SDatabaseTable td,
+.SSection td {
+	padding-bottom: .25em;
+}
+
+.SClass td,
+.SDatabase td,
+.SDatabaseTable td,
+.SSection td {
+	padding-top: 1em;
+}
+
+.SMain .SEntry,
+.SDatabase .SEntry,
+.SDatabaseTable .SEntry,
+.SSection .SEntry {
+	font-weight: bold;
+}
+
+.SMain .SEntry {
+	display: none;
+}
+
+.SMain .SGroup .SEntry {
+	display: block;
+}
+
+.ClassHierarchy {
+    margin: 0 15px 1em 15px;
+}
+
+.CHEntry {
+	border-width: 1px 2px 2px 1px; border-style: solid; border-color: #A0A0A0;
+	margin-bottom: 3px;
+	padding: 2px 2ex;
+	background-color: #F4F4F4;
+	color: #606060;
+}
+
+.CHCurrent .CHEntry {
+	font-weight: bold;
+	border-color: #000000;
+	color: #000000;
+}
+
+.CHChildNote .CHEntry {
+	font-style: italic;
+	font-size: 11px;
+}
+
+.CHIndent {
+	margin-left: 3ex;
+}
+
+.CHEntry a:link,
+.CHEntry a:visited,
+.CHEntry a:hover {
+	color: #606060;
+}
+
+.CHEntry a:active {
+	color: #800000;
+}
+
+
+/*  As opposed to .PopupSearchResultsPage #Index  */
+
+.INavigationBar {
+	font-size: 11px;
+	text-align: center;
+	background-color: #f8f8f8;
+	padding: 5px;
+	border-bottom: solid 1px black;
+	margin: 0 0 15px 0;
+}
+
+.INavigationBar a {
+	font-weight: bold;
+}
+
+.IHeading {
+	font-size: 16px;
+	font-weight: bold;
+	padding: 2.5em 0 .5em 0;
+	text-align: center;
+}
+
+#IFirstHeading {
+	padding-top: 0;
+}
+
+.IEntry {
+	font-size: 11px;
+	padding-left: 1ex;
+}
+
+.PopupSearchResultsPage .IEntry {
+	font-size: 11px;
+	padding: 1px 5px;
+}
+
+.PopupSearchResultsPage .Opera9 .IEntry	{
+	text-align: left;
+}
+
+.ISubIndex {
+	padding-left: 3ex;
+	padding-bottom: .5em;
+}
+
+.PopupSearchResultsPage .ISubIndex {
+	display: none;
+}
+
+    /*  While it may cause some entries to look like links when they aren't, I found it's much easier to read the
+	 index if everything's the same color.  */
+.ISymbol {
+	font-weight: bold;
+	color: #900000;
+}
+
+.IndexPage .ISymbolPrefix {
+	font-size: 10px;
+	text-align: right;
+	color: #C47C7C;
+	padding: 0 1px 0 2px;
+}
+
+.PopupSearchResultsPage .ISymbolPrefix{
+	color: #900000;
+}
+
+.PopupSearchResultsPage .ISymbolPrefix {
+	font-size: 8px;
+}
+
+.IndexPage #IFirstSymbolPrefix{
+
+}
+
+.IndexPage #ILastSymbolPrefix {
+
+}
+
+.IndexPage #IOnlySymbolPrefix {
+
+}
+
+a.IParent,
+a.IFile {
+	display: block;
+}
+
+.PopupSearchResultsPage .SRStatus {
+	padding: 2px 5px;
+	font-size: 11px;
+	font-style: italic;
+}
+
+.SRResult {
+	display: none;
+}
+
+#Footer {
+	position: relative;
+	clear: both;
+	margin: 0 auto 0;
+	width: 960px;
+	height: 50px;
+	padding: 15px 0 0 0;
+	text-align: center;
+}
+
+#Footer p {
+    text-indent: 0;
+    margin-bottom: .5em;
+}
+
+#Footer a:link,
+#Footer a:hover,
+#Footer a:visited { color: #989898 }
+#Footer a:active { color: #a00000 }
+
+
+/*content, paragraphs, code, headings*/
+
+.CClass .CTitle, .CSection .CTitle {
+	font-weight:normal;
+	border-bottom:1px solid #DDDDDD;
+	padding: 4px 0;
+	background-repeat: no-repeat;
+	background-position: center left;
+	color: #78BA91;
+}
+
+.CSection .CTitle {
+	background-color: #ddd;
+	color: #666;
+}
+
+.CGroup .CTitle, .INavigationBar {
+	background: none;
+	font-size: 1em;
+	margin: 0 0 20px;
+	padding: 0 0 10px;
+	border-bottom: 1px solid #ddd;
+}
+
+.CGroup h3.CTitle {
+	font-size: 2em;
+}
+
+.CProperty .CTitle, .CFunction .CTitle {
+	font-size: 18px;
+	font-weight: normal;
+	padding: 4px 0;
+	color: #000;	
+	border-bottom: 1px solid #ddd;
+}
+
+pre {
+	background-color: #f6f6f6;
+	color: #007700;
+	display: block;
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 12px;
+	max-height: 250px;
+	overflow: auto;
+	margin: 10px 0 20px 0;
+	padding: 8px;
+}
+
+h4.CHeading, .STitle {
+	padding: 0 0 4px;
+	border-bottom: 1px solid #EEE;
+	font-size:16px;
+	font-weight: normal;
+	background: #fdfdfd;
+	color: #333;
+	margin:4px 0 8px;
+}
+
+#MainTopic .CBody h4.CHeading, .STitle {
+	font-weight: bold;
+}
+
+/*  Turn off scrolling when printing.  */
+@media print {
+
+	blockquote {
+	overflow: visible;
+	}
+	
+	.IE blockquote {
+	width: auto;
+	}
+}
