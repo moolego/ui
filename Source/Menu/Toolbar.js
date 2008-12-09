@@ -1,38 +1,35 @@
 /*
-Class: UI.Toolbar
-	Create a dropdown menubar
-	
-Require:
-	UI/Menu/Menu.js
-
-Arguments:
-		options
+	Class: UI.Toolbar
+		Create a dropdown menubar to create menu bar or window's toolbar
 		
-Options: 
-	options				: {
-		zIndex			: 10000,
-		presentation	: 'textIcons',  // text, button, icons, textIcons, textButton
-		menus			: []
-	}
-
-Example:
-	(start code)
-	this.toolbar = new UI.Menu.Toolbar({
-			className	: 'ui-menu-dropdown',
-			container	: this.main.content,
-			menu		: [
-			{
-				text : 'Floor App',
-				options	: {	'class' : 'ui-dd-floor'	},
-				menu : [{
-					text : 'About',
-					action : function() { this.test('about'); alert('click')}.bind(this)
-				}]
-			}
-		]						
-	});
-	(end)
-
+	Extends:
+		<UI.Menu>
+	
+	Arguments:
+			options
+			
+	Options:
+		menu - (array) Menu definition, same as in <UI.Menu>
+		openOnRollover - (boolean) When set to true, toolbar's elements will react on mouse over
+		closeOnRollout - (boolean) When set to true, toolbars's submenu will react on mouse leave to close themself
+	
+	Example:
+		(start code)
+		var toolbar = new UI.Menu.Toolbar({
+				className	: 'ui-menu-dropdown',
+				container	: this.main.content,
+				menu		: [
+				{
+					text : 'Floor App',
+					options	: {	'class' : 'ui-dd-floor'	},
+					menu : [{
+						text : 'About',
+						action : function() { this.test('about'); alert('click')}.bind(this)
+					}]
+				}
+			]						
+		});
+		(end)
 */
 
 UI.Toolbar = new Class({
@@ -46,23 +43,38 @@ UI.Toolbar = new Class({
 		closeOnRollout	: false,
 		
 		// styles
+		rolloverType	: 'toolbarRollover',
 		component		: 'toolbar'
 	},
 	
 	/* 
-		Method: initialize
-		
-			Construtor
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	
+	See also:
+		<UI.Menu::initialize>
+		<UI.Element::initialize>
 	*/
 
 	initialize: function(options) {
 		this.parent(options);
 	},
 	
-	/* 
-		Method: build
+	/*
+	Function: build
+		private function
 		
-			Overwrite the build method of UI.Menu
+		Overwrite <UI.Menu::build> to set custom toolbar's style
+	
+	Return:
+		(void)
+	
+	See also:
+		<UI.Menu::build>
+		<UI.Element::build>
 	*/
 	
 	build: function() {
@@ -74,6 +86,18 @@ UI.Toolbar = new Class({
 			width		: '100%'
 		});
 	},
+	
+	/* 
+	Method: inject
+		inject the toolbar and draw the canvas. Overwrite the inject method of <UI.Menu>
+	
+	Arguments:
+		element - (element) Injection target
+		target - (string) Determine where to inject.
+	
+	Return:
+		this
+	 */
 	
 	inject : function(element, target){
 		this.element.inject(element, target);
@@ -98,9 +122,20 @@ UI.Toolbar = new Class({
 	},
 	
 	/* 
-		Method: addSubmenuEvents
+	Method: addSubmenuEvents
+		private function
+	
+		Overwrite the addSubmenuEvents method of UI.Menu to manage mousedown events, ...
+	
+	Arguments:
+		item - (object) Object containing element properties
+		menuItem - (element) Menu item where events will be attached
+	
+	Return:
+		(void)
 		
-			Overwrite the addSubmenuEvents method of UI.Menu to manage mousedown events, ...
+	See also:
+		<UI.Menu::addSubmenuEvents>
 	*/
 	
 	addSubmenuEvents : function(item, menuItem){
@@ -177,26 +212,16 @@ UI.Toolbar = new Class({
 	},
 	
 	/* 
-		Method: setRollover
-		
-			set a canvas to draw menu elements
-	 */
-	
-	setRollover : function(){
-		this.rollover = new UI.Element({
-			skin			: this.options.skin,
-			type			: 'toolbarRollover',
-			styles			: {
-				position 	: 'absolute',
-				zIndex 		: 1
-			}
-		}).inject(this.element);
-	},
-	
-	/* 
 		Method: addUnderlay
+			private function
 		
-			Overwrite the addUnderlay method of UI.Menu to keep the toolbar
+			Overwrite <UI.Menu::addUnderlay> to keep the toolbar
+		
+		Return:
+			(void)
+		
+		See also:
+			<UI.Menu::addUnderlay>
 	*/
 	
 	addUnderlay : function(){

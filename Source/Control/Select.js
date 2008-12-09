@@ -3,9 +3,9 @@
 		Create <select> like element
 		
 	Require:
-		UI/Control/Control.js
-		UI/Menu/Menu.js
-		UI/Menu/Scroller.js
+		<UI.Control>
+		<UI.Menu>
+		<UI.Scroller.Menu>
 	
 	Arguments:
 			options

@@ -1,52 +1,55 @@
 /*
-Class: UI.Context
-	Create a context menu
-	
-Require:
-	UI/Menu/Menu.js
-
-Arguments:
-		options
+	Class: UI.Context
+		Create a context menu
 		
-Options: 
-	options				: {
-		contexts		: []
-	}
-
-Example:
-	(start code)
-	this.context = new UI.Menu.Context({
-		contexts : [
-			{
-				name : 'workspace',
-				selector	: '.app-workspace',
-				menu		: [
-					{ text		: 'Workspace menu'},
-					{ text		: 'separator' },
-					{
-						text 	: 'editCategory',
-						action	: function(){ this.test('dorpdown') }.bind(this)
-					}
-					{ text		: 'viewSource'},
-					{ text		: 'separator' },
-					{ text		: 'deleteCategory'}
-				]
-			},
-			{
-				name : 'pageinfo',
-				selector	: '[id^=pageinfo]',
-				menu		: [
-					{
-						text 	: 'editCategory',
-						action	: function(){ this.test('dorpdown') }.bind(this)
-					},
-					{ text 		: 'editCategoryApparence'}
-				]
-			}
-		]
-	});
-	(end)
-
+	Extends:
+		<UI.Menu>		
+	
+	Arguments:
+			options
+			
+	Options: 
+		contexts - (array) An array containing contexts definition. A context definition is an object composed of following keys :
+			a name key, who is the context name,
+			a selector key, who define on wich elements the context menu will be attached. It could be a CSS3 selector as well.
+			a menu key, who is a menu list as defined in <UI.Menu>.
+	
+	Discussion:
+		We must still add methods to set dynamically new contexts, ...
+	
+	Example:
+		(start code)
+		var context = new UI.Menu.Context({
+			contexts : [
+				{
+					name : 'workspace',
+					selector	: '.app-workspace',
+					menu		: [
+						{ text		: 'Workspace menu'},
+						{ text		: 'separator' },
+						{
+							text 	: 'Hello world...',
+							action	: function(){ alert('Hello world!') }
+						}
+						{ text		: 'viewSource'},
+						{ text		: 'separator' },
+						{ text		: 'deleteCategory'}
+					]
+				},
+				{
+					name : 'pageinfo',
+					selector	: '[id^=pageinfo]',
+					menu		: [
+						{
+							text 	: 'editCategory',
+							action	: function(){ this.test('dorpdown') }.bind(this)
+						},
+						{ text 		: 'editCategoryApparence'}
+					]
+				}
+			]
+		});
+		(end)
 */
 
 
@@ -60,9 +63,15 @@ UI.Context = new Class({
 	},
 	
 	/* 
-		Method: initialize
-		
-			Construtor
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	
+	See also:
+		<UI.Menu::initialize>
+		<UI.Element::initialize>
 	*/
 
 	initialize: function(options) {
@@ -73,9 +82,14 @@ UI.Context = new Class({
 	},
 	
 	/* 
-		Method: addContexts
-		
-			Attach context to elements (provided by options.contexts.selector)
+	Method: addContexts
+		Attach context to elements (provided by contexts.selector)
+	
+	Arguments:
+		contexts - (array) an array containing contexts definition. See above in class' options for more details
+	
+	Return:
+		this
 	*/
 	
 	addContexts : function(contexts) {
@@ -91,24 +105,44 @@ UI.Context = new Class({
 				});
 			},this);
 		},this);
+		
+		return this;
 	},
 	
 	/* 
-		Method: removeContexts
-		
-			Remove context to elements (provided by selector)
+	Method: removeContexts
+		Remove context to elements (defined by selector)
+	
+	Arguments:
+		selector - (string) Selector defining elements where context will be detached
+	
+	Return:
+		this
 	*/
 	
 	removeContexts : function(selector) {
 		document.body.getElements(selector).each(function(el){
 			el.removeEvents('contextmenu');
 		},this);
+		
+		return this;
 	},	
 	
 	/* 
-		Method: setPosition
+	Method: setPosition
+		private function
 		
-			Overwrite the setPosition method of UI.Menu to use mouse coordinates
+		Overwrite the setPosition method of UI.Menu to use mouse coordinates to set menu location
+	
+	Arguments:
+		x - (integer) X mouse's coordinates
+		y - (integer) Y mouse's coordinates
+	
+	Return:
+		(void)
+	
+	See also:
+		<UI.Menu::setPosition>
 	*/
 	
 	setPosition: function(x,y) {
@@ -129,8 +163,19 @@ UI.Context = new Class({
 	
 	/* 
 		Method: show
-		
+			private function
+			
 			Overwrite the show method of UI.Menu to use mouse coordinates
+		
+		Arguments:
+			e - (event) Event who provide cursor's position
+		
+		Return:
+			this
+		
+		See also:
+			<UI.Menu::show>
+			<UI.Element::show>
 	*/
 	
 	show: function(e) {
