@@ -109,7 +109,7 @@ UI.Element = new Class({
 	
 	/* 
 	Function: toElement
-		This method allows to get the DOM element built with UI.Element in this way : 
+		This method allows to get the DOM element built with <UI.Element> in this way : 
 		(start code)
 		var myElement = new UI.Element({
 			html : 'Hello World'
@@ -118,15 +118,16 @@ UI.Element = new Class({
 		(end)
 		It will actually return myElement.element.
 		
-		But as most used mootools function are directly reimplemented in UI.Element, you can most of time simply do :
+		But as most used mootools functions are directly reimplemented in <UI.Element>, you can most of time simply do :
 		(start code)
 		var myElement = new UI.Element({
 			html : 'Hello World'
 		}).inject(document.body);
 		var coord = myElement.getCoordinates();
+		(end)
 	
 	Return:
-		this.element (element) The DOM element
+		this.element - (element) The DOM element
 	*/
 	
 	toElement : function(){

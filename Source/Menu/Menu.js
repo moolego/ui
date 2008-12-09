@@ -1,6 +1,6 @@
  /*
 	Class: UI.Menu
-		Creates a new menu, manages submenus and positionning as well as scrolling thru <UI.Scroller.Menu>
+		Creates a new menu, manages submenus and positionning as well as scrolling thru <UI.Menu.Scroller>
 		
 	Extends:
 		<UI.Element>
