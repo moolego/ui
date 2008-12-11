@@ -88,7 +88,7 @@ UI.Select = new Class({
 		width -=  this.menu.content.getFirst().getStyle('paddingLeft').toInt();
 		this.menu.setStyle('display', 'none');
 		
-		this.textLabel = new UI.Label({
+		this.label = new UI.Label({
 			width	: width,
 			skin	: this.options.skin,
 			styles	: this.props.components.label.styles,
@@ -137,7 +137,7 @@ UI.Select = new Class({
 			if (!el.menu && el.text != 'separator') {
 				el.action = function(){
 					this.input.value = (el.value) ? el.value : el.text;
-					this.textLabel.set('html', el.text);
+					this.label.set('html', el.text);
 				}.bind(this);
 			} else if (el.menu) {
 				this.addMenuActions(el.menu);

@@ -51,9 +51,9 @@ UI.Control = new Class({
 	*/
 	
 	setSize : function(width,height, state){
-		if (this.textLabel) {
-			var twidth = width || this.options.width || this.props.width || this.textLabel.getSize().x;
-			var theight = height || this.options.height || this.props.height || this.textLabel.getSize().y;
+		if (this.label) {
+			var twidth = width || this.options.width || this.props.width || this.label.getSize().x;
+			var theight = height || this.options.height || this.props.height || this.label.getSize().y;
 		}else if (this.input && this.input.getProperty('type') != 'hidden') {
 			var twidth = width || this.options.width || this.props.width || this.input.getSize().x;
 			var theight = height || this.options.height || this.props.height || this.input.getSize().y;
@@ -163,7 +163,7 @@ UI.Control = new Class({
 
 	set : function(property, value){
 		if (property == 'html') {
-			if (this.textLabel) this.textLabel.set(property, value);
+			if (this.label) this.label.set(property, value);
 			this.setSize();
 		} else {
 			this.element.set(property, value);

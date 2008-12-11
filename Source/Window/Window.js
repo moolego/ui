@@ -200,15 +200,16 @@ UI.Window = new Class({
 		var controllist = new Array();
 
 		this.controls = new Element('div',this.props.components.controls)
+		
 		.addEvents({
 			mouseenter	: function() {
 				controllist.each(function(button) {
-					button.setState('show');
+					button.setState('over');
 				})
 			},
 			mouseover	: function() {
 				controllist.each(function(button) {
-					button.setState('show');
+					button.setState('over');
 				})
 			},
 			mouseleave	: function() {
@@ -218,7 +219,6 @@ UI.Window = new Class({
 			}
 		})
 		.inject(this.head);
-		
 		this.options.controls.each(function(action){
 			this.props.components.control.type = action;
 
@@ -567,7 +567,7 @@ UI.Window = new Class({
 			height : false
 		};
 		this.setState('default', size);
-		this.setLocation(false, false, 'morph');
+		this.setLocation(false, false);
 		
 		this.maximized = false;
 		this.minimized = false;

@@ -42,7 +42,7 @@ UI.RadiosGroup = new Class({
 	options				: {
 		// default options
 		name			: 'radiosgroup',
-		component		: 'radio',
+		component		: 'radio'
 	},
 	
 	/*
