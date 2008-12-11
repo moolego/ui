@@ -15,8 +15,8 @@ Options:
 	width - (number) Width of the view wrapper in px
 	height - (number) Height  of the view wrapper in px
 	overflow - (collection) hidden, scrollbar or menu
+	tag - (string) define the tag to use for the content view
 	contentTag - (string) define the tag to use for the content view
-	wrapperTag - (string) define the tag to use for the content view
 	wrapper - (object) wrapper element properties
 	content - (object) content element properties (in case of) 
 	addClass - (string) additionnal class
@@ -30,7 +30,7 @@ Example:
 	var view = new UI.View({
 		width			: 260,
 		height			: 400,
-		scroll			: true 
+		overflow		: 'scrollbar' 
 	}).setContent('content','content view');
 	(end)
 
