@@ -10,7 +10,7 @@
 	
 	Options: 
 		label - (string) bubble content
-		target - (string / element) Can be either an element id either a UI.Element instance
+		target - (string / element) Can be either an element id either a UI.Element instance (a native element also?)
 	
 	Example:
 		(start code)
@@ -69,6 +69,10 @@ UI.Bubble = new Class({
 				styles : this.props.components.label.styles
 			}).inject(this.element);
 		}
+		
+		
+		// fx should be defined in skin sheet or not
+		// and an option can should be add to use effect on build on not
 		
 		this.fx = new Fx.Tween(this.element, {
 			wait : false,

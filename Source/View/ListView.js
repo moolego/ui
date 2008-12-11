@@ -47,7 +47,14 @@ UI.ListView = new Class({
 		component			: 'listview',
 		
 		data				: [],
-		itemType			: 'itemList',
+		
+		
+		component			: 'Button',
+		
+		item				: {
+			component		: 'itemList',
+			type			: 'default'
+		},
 		
 		width				: '100%',
 		height				: '100%',
@@ -63,6 +70,14 @@ UI.ListView = new Class({
 		
 		this.getData(this.options.url);
 	},
+
+	/*
+	Function: getData
+		if the url options is give 
+	
+	Arguments:
+		data - data to be used during template interpolation
+	*/
 
 	getData : function ( url, options) {
 		if (this.options.url) {
@@ -91,17 +106,19 @@ UI.ListView = new Class({
 
 	processList : function(data){
 		data.each(function(element){
-			var item = new UI.Button({
-				component : 'itemList',
-				label : false, 
-				type: element.type || this.options.itemType,
-			}).inject(this.content);
+			
+			console.log(this.options.item);
+			
+			var item = new UI[this.options.component].(this.options.item)
+			.inject(this.content);
 			
 			$H(element).erase('type').each(function(el){
 				new UI.Element({
 					html : el,
 					styles : {
-						padding:'3px 0 0 4px'
+						padding:'15px 0 0 5px',
+						height:'14px',
+						color:'#fff'
 					}
 				}).inject(item.element);
 				this.fireEvent('onResize');

@@ -26,7 +26,8 @@ Example:
 UI.Interface = new Class({
 	Implements : [Options, Events],
 	options : {
-		target	: 'document.body'
+		target	: 'document.body',
+		replaceTag : 'input, select, textarea'
 	},
 	
 	initialize : function(options){
@@ -42,37 +43,40 @@ UI.Interface = new Class({
 	
 	build : function(){
 		//get form elements and replace them
-		this.target.getElements('input, select, textarea').each(function(control){
+		this.target.getElements(this.options.replaceTag).each(function(control){
 			switch (control.get('tag')) {
 				case 'input' :
 					switch (control.get('type')) {
 						case 'text' : 
-							this.mInput(control);
+							this.processInput(control);
 							break;
 						case 'password' : 
-							this.mInput(control);
+							this.processInput(control);
 							break;
 						case 'radio' :
-							this.mRadio(control);
+							this.processRadio(control);
 							break;
 						case 'button' :
-							this.mButton(control); 
+							this.processButton(control); 
 							break;
 						case 'reset' :
-							this.mButton(control); 
+							this.processButton(control); 
 							break;
 						case 'submit' :
-							this.mButton(control); 
+							this.processButton(control); 
 							break;
 						case 'checkbox' : 
-							this.mCheckbox(control);
+							this.processCheckbox(control);
 					}
 					break;
 				case 'select' :
-					this.mSelect(control);
+					this.processSelect(control);
 					break;
 				case 'textarea' :
-					this.mTextarea(control);
+					this.processTextarea(control);
+					break;
+				case 'fieldset' :
+					this.processFieldset(control);
 					break;
 			}
 		}, this);
@@ -90,17 +94,18 @@ UI.Interface = new Class({
 				width		: coord.x,
 				height		: coord.y,
 				html		: f.get('html'),
-				styles		: f.getStyles('padding', 'margin', 'display', 'top', 'left')
+				styles		: f.getStyles('width','padding', 'margin', 'display', 'top', 'left')
 			}).inject(fieldset, 'before');
 			f.destroy();
 			
 			
 			var size = fieldset.getSize();
 			var fs = new UI.Element({
+				component : 'fieldset',
 				width		: size.x - fieldset.getStyle('paddingLeft').toInt() - fieldset.getStyle('paddingRight').toInt(),
 				height		: size.y - fieldset.getStyle('paddingTop').toInt() - fieldset.getStyle('paddingBottom').toInt(),
 				styles 		: fieldset.getStyles('padding', 'margin', 'display', 'top', 'left'),
-				component 	: 'input'
+				
 			}).inject(fieldset, 'before');
 			fs.element.adopt(fieldset.getChildren());
 			fieldset.destroy();
@@ -115,7 +120,7 @@ UI.Interface = new Class({
 
 	},
 	
-	mRadio : function (element) {
+	processRadio : function (element) {
 		var name = element.get('name');
 		
 		//create a new controller
@@ -133,7 +138,7 @@ UI.Interface = new Class({
 		element.destroy();
 	},
 	
-	mInput : function(element) {
+	processInput : function(element) {
 		var coord = element.getSize();
 		new UI.Input({
 			width		: coord.x,
@@ -146,7 +151,7 @@ UI.Interface = new Class({
 		element.destroy();
 	},
 	
-	mTextarea : function(element) {
+	processTextarea : function(element) {
 		var coord = element.getSize();
 		new UI.Textarea({
 			width		: coord.x,
@@ -159,7 +164,7 @@ UI.Interface = new Class({
 		element.destroy();
 	},
 	
-	mSelect : function(element) {
+	processSelect : function(element) {
 		//create the menu list
 		var menu = new Array();
 		element.getChildren().each(function(option){
@@ -176,7 +181,7 @@ UI.Interface = new Class({
 		element.destroy();
 	},
 	
-	mCheckbox : function(element) {
+	processCheckbox : function(element) {
 		new UI.Checkbox({
 			label : false,
 			name : element.get('name'),
@@ -185,7 +190,7 @@ UI.Interface = new Class({
 		element.destroy();
 	},
 	
-	mButton : function(element){
+	processButton : function(element){
 		var params = {};
 		// is a submit type or not
 		if (element.get('type') == 'submit') params.submit = true;
