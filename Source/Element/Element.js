@@ -57,7 +57,7 @@ UI.Element = new Class({
 		state				: 'default',	
 		
 		className			: false,
-		tag					: 'div',
+		tag					: 'span',
 		
 		resizable			: false,
 		draggable			: false,
@@ -320,6 +320,9 @@ UI.Element = new Class({
 	
 	Return:
 		(void)
+	
+	Discussion:
+		onClick event is fired on mouse up because of Explorer. Sometimes it doesn't fire onClick event (f.e. if a button has no label).
 	*/
 
 	setBehavior : function() {
@@ -328,12 +331,21 @@ UI.Element = new Class({
 		if (this.options.resizable) { this.enableResize(); }
 		
 		this.element.addEvents({
-			click 		: this.fireEvent.bind(this, 'click'),
 			mousedown 	: this.fireEvent.bind(this, 'mousedown'),
-			mouseover 	: this.fireEvent.bind(this, 'mouseover'),
+			click		: function(){
+				if (!Browser.Engine.trident)
+					this.fireEvent('click');
+			}.bind(this),
+			mouseup		: function(){
+				if (Browser.Engine.trident)
+					this.fireEvent('click');
+				this.fireEvent('mouseup');
+			}.bind(this),
+			
 			mouseenter 	: this.fireEvent.bind(this, 'mouseenter'),
-			mouseOut 	: this.fireEvent.bind(this, 'mouseOut'),
-			mouseup 	: this.fireEvent.bind(this, 'mouseup')
+			mouseleave 	: this.fireEvent.bind(this, 'mouseleave'),
+			mouseover 	: this.fireEvent.bind(this, 'mouseover'),
+			mouseOut 	: this.fireEvent.bind(this, 'mouseOut')
 		});
 	},
 
@@ -421,7 +433,7 @@ UI.Element = new Class({
 		this.element.hide();
 		
 		return this;
-	},
+	}
 });
 
 
@@ -540,7 +552,12 @@ UI.Element.implement({
 	*/
 	
 	set: function(property, value) {
-		this.element.set(property, value);
+		if (property == 'html' && this.label) {
+			this.label.set(property, value);
+			this.setSize();
+		} else {
+			this.element.set(property, value);
+		}
 		return this;	
 	},
 	

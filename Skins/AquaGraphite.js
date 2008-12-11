@@ -1183,7 +1183,7 @@ UI.props.AquaGraphite = {
 					cursor: 'default',
 					color: '#000000',
 					display: 'block',
-					margin: '1px 0 1px 0',
+					margin: '1px 0 1px 10px',
 					padding: '0',
 					textAlign: 'center',
 					textTransform: 'capitalize',
@@ -1377,14 +1377,13 @@ UI.props.AquaGraphite = {
 	
 	
 	// View
-	
-	
 	view: {
 		'default': {
 			'default': {
-				backgroundColor: '#d6d6d6'
-				
-				
+				backgroundColor: '#d6d6d6',
+				styles : {
+					position: 'relative'
+				}
 			}
 		},
 		transparent: {
@@ -2081,10 +2080,9 @@ UI.props.AquaGraphite = {
 			'default' : {
 				styles: {
 					position: 'relative',
-					display: 'inline-block',
+					'float': 'left',
 					cursor: 'pointer'
 				},
-				
 				
 				layers: {
 					reorder: ['emboss', 'background', 'main', 'reflect', 'cache'],
@@ -2139,7 +2137,7 @@ UI.props.AquaGraphite = {
 				
 				
 			},
-			show : {
+			over : {
 				layers: {
 					reorder: ['emboss', 'background', 'main', 'reflect', 'cache', 'line', 'line2'],
 					line: {
@@ -2165,7 +2163,7 @@ UI.props.AquaGraphite = {
 		},
 		minimize : {
 			'default' : {},
-			show : {
+			over : {
 				layers : {
 					reorder: ['emboss', 'background', 'main', 'reflect', 'cache', 'line'],
 					line: {
@@ -2186,7 +2184,7 @@ UI.props.AquaGraphite = {
 				
 				
 			},
-			show : {
+			over : {
 				layers: {
 					reorder: ['emboss', 'background', 'main', 'reflect', 'cache', 'line', 'line2'],
 					line: {

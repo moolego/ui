@@ -57,7 +57,7 @@ UI.Checkbox = new Class({
 		this.setInput();
 
 		if (this.options.label) {
-			this.textLabel = new UI.Label({
+			this.label = new UI.Label({
 				'for'		: this.options.name,
 				skin 		: this.options.skin,
 				html 		: this.options.label,

@@ -2025,7 +2025,6 @@ Element.implement({
 			value = Math.round(value);
 		}
 		//alert(property + " : " + value);
-		//console.log(property + " : " + value);
 		this.style[property] = value;
 		
 		return this;

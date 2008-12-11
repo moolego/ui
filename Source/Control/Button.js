@@ -49,7 +49,7 @@ UI.Button = new Class({
 	build : function(){
 		this.parent();
 		if(this.options.label) {
-			this.textLabel = new UI.Label({
+			this.label = new UI.Label({
 				skin : this.options.skin,
 				html : this.options.label,
 				styles : this.props.components.label.styles
@@ -72,8 +72,8 @@ UI.Button = new Class({
 	*/
 	
 	setState : function(state){
-		if (this.textLabel) {
-			this.textLabel.setStyles(this.skin[state].components.label.styles);
+		if (this.label) {
+			this.label.setStyles(this.skin[state].components.label.styles);
 		}
 		this.parent(state);
 	},

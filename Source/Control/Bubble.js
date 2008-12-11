@@ -193,11 +193,10 @@ UI.Bubble = new Class({
 	
 	setSize : function(width,height){
 		if (this.label) {
-			this.options.width = width || this.options.width || this.props.width || this.label.getSize().x;
-			this.options.height = height || this.options.height || this.props.height || this.label.getSize().y;
+			width = width || this.options.width || this.props.width || this.label.getSize().x;
+			height = height || this.options.height || this.props.height || this.label.getSize().y;
 		};
-		
-		this.parent();
+		this.parent(width, height);
 	},
 		
 	/* 
