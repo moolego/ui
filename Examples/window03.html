@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="UTF-8">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="css/reset.css" />
+
+	<title>MooLego - Components Playground</title>
+	
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="mootools/more.js"></script>
+
+	<script type="text/javascript" src="../Utils/Singleton.js"></script>
+	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+
+	<script type="text/javascript" src="../Build/moolego-yc.js"></script>
+	
+	<script type="text/javascript" src="js/examples.js"></script>	
+	
+	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../Skins/Demo.js"></script>
+	
+	<script type="text/javascript">
+		window.addEvent('load', function() {
+			var time = $time();
+			
+			moolego = new UI.Window({
+				title		: 'MooLEgo',
+				width		: 640,
+				height		: 480,
+				overflow	: 'scrollbar',
+				location	: 'center'
+			})
+			.setContent('iframe','http://ui.floor.local/Examples/formular02.html');
+			
+			windoo = new UI.Window({
+				title		: 'some controls',
+				overflow	: 'scrollbar'
+			});
+			
+			new UI.Button({
+				label	: 'Button',
+				styles	: {
+					margin	: 10,
+					fontFamily	: 'arial, helvetica, sans-serif',
+					fontSize	: '13px'
+				}
+			}).inject(windoo.content);
+			
+			new UI.Button({
+				type			: 'recessed',
+				label			: 'Recessed Button',
+				styles			: {
+					margin	: 10,
+					fontFamily	: 'arial, helvetica, sans-serif',
+					fontSize	: '13px'
+				}
+			}).inject(windoo.content);
+			
+			new UI.Button({
+				type			: 'roundtextured',
+				label			: 'Round Textured',
+				styles			: {
+					margin	: 10,
+					fontFamily	: 'arial, helvetica, sans-serif',
+					fontSize	: '13px'
+				}
+			}).inject(windoo.content);
+			
+			new UI.Button({
+				label			: 'Second button',
+				zIndex			: 6000,
+				styles			: {
+					margin		: 10
+				}
+			}).inject(windoo.content);
+			
+			new UI.Button({
+				label			: 'Third button',
+				styles			: {
+					margin		: 10
+				}
+			}).inject(windoo.content);
+			
+			
+			
+			var cbstyles = {
+				margin		: '0 10px 5px',
+				display		: 'block'
+			};
+			
+			new UI.Checkbox({
+				label			: '1 checkbox',
+				styles			: cbstyles
+			}).inject(windoo.content);
+			
+			new UI.Checkbox({
+				label			: '2 checkbox',
+				styles			: cbstyles
+			}).inject(windoo.content);
+			
+			new UI.Checkbox({
+				label			: '3 checkbox',
+				styles			: cbstyles
+			}).inject(windoo.content);
+			
+			
+			
+			var radiosGroup = new UI.RadiosGroup({
+				name			: 'radios'
+			});
+			
+			radiosGroup.newRadio({
+				label			: 'Radio 1',
+				selected		: true,
+				styles			: cbstyles
+			}).inject(windoo.content);
+			
+			radiosGroup.newRadio({
+				label			: 'Radio 2',
+				styles			: cbstyles
+			}).inject(windoo.content);
+			
+			radiosGroup.newRadio({
+				label			: 'Radio 3',
+				styles			: cbstyles
+			}).inject(windoo.content);
+			
+			radiosGroup.newRadio({
+				label			: 'Radio 4',
+				styles			: cbstyles
+			}).inject(windoo.content);
+			
+			new UI.Select({
+				list			: [
+					{text		: 'Please choose'},
+					{text		: 'Core'},
+					{text		: 'Control'},
+					{text		: 'Desktop is a long entry'},
+					{text		: 'Menu'},
+					{text		: 'Form'},
+					{text		: 'Un menu'},
+					{text		: 'Plage'},
+					{text		: 'Venise'}
+				],
+				styles			: {
+					margin		: 10
+				}
+			}).inject(windoo.content);
+			
+			new UI.Select({
+				list			: [
+					{text		: 'Please choose'},
+					{text		: 'It is long because of this entry in the list'}
+				],
+				styles			: {
+					margin		: 10
+				}
+			}).inject(windoo.content);
+			
+			
+			
+			new UI.Input({
+				value			: 'An input field',
+				styles			: {
+					margin		: 10
+				}
+			}).inject(windoo.content);
+			
+			
+			
+			new UI.Textarea({
+				value			: 'A textarea to write long essay. More usefull for that than a UI.Input()',
+				styles			: {
+					margin		: 10
+				}
+			}).inject(windoo.content);
+			
+			
+			
+			new UI.Slider({
+				styles			: {
+					margin		: 10
+				}
+			}).inject(windoo.content);
+			
+			new UI.Window({
+						title				: 'Star Guitar',
+						type				: 'transparent',
+						controls			: ['close'],
+						viewOverflow		: 'hidden',
+						resizable			: false,
+						right				: '30px',
+						width				: 427,
+						height				: 388,
+						view				: { overflow:'hidden'}
+			}).setContent('content',
+				'<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1"></param><param name="allowFullScreen" value="true"><param name="WMODE" value="transparent"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" WMODE="transparent" allowfullscreen="true" width="425" height="344"></embed></object>'
+			);
+		
+		});
+	</script>
+</head>
+
+<body style="overflow:hidden" bgcolor="#e8e8e8"></body>
+
+</html>
