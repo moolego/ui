@@ -14,6 +14,7 @@ UI.props.AquaGraphite = {
 	'default' : {
 		/* css properties */
 		styles : {
+			fontFamily : 'Helvetica, Arial, sans-serif',
 			fontSize : '12px'
 		},
 		fx : {},

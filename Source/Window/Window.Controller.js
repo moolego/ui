@@ -299,3 +299,5 @@ UI.Controller.Window = new Class({
 		});
 	}
 });
+
+UI.windowController = UI.windowController || new UI.Controller.Window();

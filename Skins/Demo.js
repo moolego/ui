@@ -12,7 +12,9 @@ Information:
 UI.props.demo = {
 	'default': {
 		/* css properties */
-		styles: {},
+		styles: {
+			fontFamily : 'Helvetica, Arial, sans-serif'
+		},
 		
 		/* layers properties */
 		layers: {

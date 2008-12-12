@@ -110,4 +110,4 @@ UI.Controller = new Class({
 	}
 });
 
-UI.controller = new UI.Controller();
+UI.controller = UI.controller || new UI.Controller();

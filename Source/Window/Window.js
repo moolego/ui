@@ -45,7 +45,6 @@
 	
 	Discussion:
 		Effects still need to be implemented as option
->>>>>>> 5629724d6a89763380dedfad84755c12ad98fb38:Source/Window/Window.js
 */
 
 UI.Window = new Class({
@@ -113,7 +112,7 @@ UI.Window = new Class({
 	
 	initialize: function(options) {
 		// handle window manager singleton class
-		this.controller = new UI.Controller.Window();
+		this.controller = UI.windowController;
 		
 		// call parent constructor
 		this.parent(options);
