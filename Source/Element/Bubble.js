@@ -76,6 +76,10 @@ UI.Bubble = new Class({
 			}).inject(this.element);
 		}
 		
+		
+		// fx should be defined in skin sheet or not
+		// and an option can should be add to use effect on build on not
+		
 		this.fx = new Fx.Tween(this.element, {
 			wait : false,
 			onStart : function(){

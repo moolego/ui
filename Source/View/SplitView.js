@@ -10,7 +10,7 @@ Arguments:
 */
 
 UI.SplitView = new Class({
-	Extends					: UI.View,	
+	Extends					: UI.View,
 	
 	options : {
 		component	: 'splitview',
@@ -21,34 +21,55 @@ UI.SplitView = new Class({
 	build: function(){
 		this.parent();
 		
-		this.size = this.getSize().y; 
+		this.addEvent('injected', function(){
+			this.size = this.getSize(); 
+						
+			this.buildViews();
+			this.buildHandler();
 		
-		console.log('size :'+this.size);
-		var mainSize = this.size.x - 161;
-		//console.log(this.props.components.side);
-		this.side = new UI.View(this.props.components.side)
-		 .inject(this.element);
+		}.bind(this));
+	},
+	
+	/*
+		buildViews
+		
+		
+		
+	 */
+	
+	buildViews: function() {
+		this.views = [];
+		
+		console.log(this.props);
+		console.log(this.props.views);
+		
+		this.props.views.each( function(view){
+			this.views.push(new UI.View(view)
+			 .inject(this.element))
+		});
 
-		this.main = new UI.View(this.props.components.main)
-		 .setStyle('width', mainSize)
-		 .inject(this.element);
-		
 		var mainSize = this.size.x - this.side.element.getSize().x;
-		
+	},
+	
+	buildSplitter : function() {
 		this.draglimit = {
-			x	: [-this.options.minSize,  this.props.components.side.width - this.options.minSize],
+			x	: [-this.options.minSize,  this.width - this.options.minSize],
 			y	: [0, 0]
 		}
 		
 		this.handler = new Element('div',this.props.components.splitter)
-		 .setStyles({ 'margin-left'	: this.side.element.getSize().x - 2	})
-		 .inject(this.side.element);
-		
+		 .setStyles({  
+		 	marginLeft	: this.side.element.getSize().x - 2,
+			height	: this.side.element.getSize().y,
+			backgroundColor : '#000',
+			position: 'abolute'
+		}).inject(this.views[1].element);
+		 
 		this.handler.makeDraggable({
 			limit				: this.draglimit,
-			onStart				: function() { this.fireEvent('onResizeStart') }.bind(this),
+			//onStart				: function() { this.fireEvent('onResizeStart') }.bind(this),
 			onDrag				: function() { this.resize() }.bind(this),
-			onComplete			: function() { this.fireEvent('onResizeEnd') }.bind(this)
+			//onComplete			: function() { this.fireEvent('onResizeEnd') }.bind(this)
 		});
 	},
 
@@ -62,8 +83,8 @@ UI.SplitView = new Class({
 	inject: function(container,position) {
 		this.parent(container,position);
 		
-		this.side.setStyles('width','160px');
-	//	this.resize();
+		//this.side.setStyles('width','160px');
+		//this.resize();
 		
 	}
 });
