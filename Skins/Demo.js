@@ -1031,8 +1031,61 @@ UI.props.demo = {
 				}
 			}
 		},
-		radial : {
-			'default' : {
+		gradient : {
+			'default' : {},
+			'linear' : {
+				styles : {
+					position : 'relative'
+				},
+				layers : {
+					border : {
+						color : '#000',
+						offset : 0,
+						radius : 20
+					},
+					big : {
+						color : '#EFEFEF',
+						opacity : 1,
+						radius : 18,
+						offset : 2
+					},
+					radial : {
+						gradient : {
+							color : ['#F0F', '#0F0', '#FF0'],
+							startPoint : []
+						},
+						offset : 20,
+						radius : 0
+					}
+				}
+			},
+			'linear2' : {
+				styles : {
+					position : 'relative'
+				},
+				layers : {
+					border : {
+						color : '#000',
+						offset : 0,
+						radius : 20
+					},
+					big : {
+						color : '#EFEFEF',
+						opacity : 1,
+						radius : 18,
+						offset : 2
+					},
+					radial : {
+						gradient : {
+							color : ['#F0F', '#0F0', '#FF0'],
+							startPoint : []
+						},
+						offset : 20,
+						radius : 0
+					}
+				}
+			},
+			'radial' : {
 				styles : {
 					position : 'relative'
 				},
