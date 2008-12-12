@@ -812,6 +812,13 @@ UI.props.demo = {
 	},
 	
 	element : {
+		'default' : {
+			'default' : {
+				styles : {
+					display : 'inline-block'
+				}
+			}
+		},
 		shape01 : {
 			'default' : {
 				styles : {
@@ -922,6 +929,34 @@ UI.props.demo = {
 						opacity : 1,
 						radius : 20,
 						offset : 0
+					}
+				}
+			}
+		},
+		radial : {
+			'default' : {
+				styles : {
+					position : 'relative'
+				},
+				layers : {
+					border : {
+						color : '#000',
+						offset : 0,
+						radius : 20
+					},
+					big : {
+						color : '#EFEFEF',
+						opacity : 1,
+						radius : 18,
+						offset : 2
+					},
+					radial : {
+						gradient : {
+							color : ['#F0F', '#0F0', '#FF0'],
+							startPoint : []
+						},
+						offset : 20,
+						radius : 0
 					}
 				}
 			}
