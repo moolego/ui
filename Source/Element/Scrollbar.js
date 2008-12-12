@@ -35,8 +35,8 @@ UI.Scrollbar = new Class({
 		
 		width			: 15,
 		
-		maxThumbSize	: 30,
-		wheel			: 30	
+		maxThumbSize	: 32,
+		wheel			: 32	
 	},
 
 	initialize: function(options){

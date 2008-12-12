@@ -12,40 +12,7 @@
 	<script type="text/javascript" src="../Utils/Singleton.js"></script>
 	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
 
-	<script type="text/javascript" src="../Source/Core/UI.js"></script>
-	<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
-	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
-		
-	<script type="text/javascript" src="../Source/Element/Element.js"></script>
-	<script type="text/javascript" src="../Source/Element/Element.Drag.js"></script>
-	<script type="text/javascript" src="../Source/Element/Element.Resize.js"></script>
-	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
-	
-	<script type="text/javascript" src="../Source/Control/Control.js"></script>
-	<script type="text/javascript" src="../Source/Control/Label.js"></script>
-	<script type="text/javascript" src="../Source/Control/Input.js"></script>
-	<script type="text/javascript" src="../Source/Control/Button.js"></script>
-	<script type="text/javascript" src="../Source/Control/Textarea.js"></script>
-	<script type="text/javascript" src="../Source/Control/Checkbox.js"></script>
-	<script type="text/javascript" src="../Source/Control/RadiosGroup.js"></script>
-	<script type="text/javascript" src="../Source/Control/Select.js"></script>
-	<script type="text/javascript" src="../Source/Control/Slider.js"></script>
-	<script type="text/javascript" src="../Source/Control/Bubble.js"></script>
-	
-	<script type="text/javascript" src="../Source/Menu/Menu.js"></script>
-	<script type="text/javascript" src="../Source/Menu/Toolbar.js"></script>
-	<script type="text/javascript" src="../Source/Menu/Context.js"></script>
-	<script type="text/javascript" src="../Source/Menu/Scroller.js"></script>
-
-	<script type="text/javascript" src="../Source/View/View.js"></script>
-	<script type="text/javascript" src="../Source/View/TabView.js"></script>
-	<script type="text/javascript" src="../Source/View/SplitView.js"></script>
-	<script type="text/javascript" src="../Source/View/ListView.js"></script>
-	<script type="text/javascript" src="../Source/Control/Scrollbar.js"></script>
-	
-	<script type="text/javascript" src="../Source/Window/Window.js"></script>
-	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
-	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
+	<script type="text/javascript" src="../Build/moolego-yc.js"></script>	
 	
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
@@ -55,10 +22,10 @@
 	<script type="text/javascript">
 		window.addEvent('load', function() {
 			new UI.ListView({
-				width : 200,
+				width : 190,
 				height : 400,
 				styles : {
-					margin : '40px',
+					margin : '40px 10px 0 40px',
 					backgroundColor : '#e8e8e8',
 					borderBottom : '1px solid #000',
 					borderTop: '1px solid #000'
@@ -67,24 +34,26 @@
 			}).inject(document.body);
 			
 			new UI.ListView({
-				itemType : 'red',
-				width : 200,
+				itemType : 'white',
+				width : 190,
 				height : 400,
 				styles : {
-					margin : '40px',
+					margin : '40px 10px 0 0',
 					backgroundColor : '#e8e8e8',
-					borderBottom : '1px solid #000',
-					borderTop: '1px solid #000'
+					border : '1px solid #000'
 				},
 				url	: 'assets/list.json'
 			}).inject(document.body);
 			
 			new UI.ListView({
-				itemType : 'red',
-				width : 200,
+				item : { 
+					skin:'demo',
+					type:'red'
+				},
+				width : 190,
 				height : 400,
 				styles : {
-					margin : '40px',
+					margin : '40px 10px 0 0',
 					backgroundColor : '#e8e8e8',
 					borderBottom : '1px solid #000',
 					borderTop: '1px solid #000'
@@ -107,66 +76,116 @@
 						"desc"	: "Element/Element.js"
 					},
 					{
-						"title" : "UI",
-						"desc"	: "Core/UI.js"
+						"title" : "UI.Element.Drag",
+						"desc"	: "Element/Element.Drag.js"
 					},
 					{
-						"title" : "UI",
-						"desc"	: "Core/UI.js"
+						"title" : "UI.Element.Resize",
+						"desc"	: "Element/Element.Resize.js"
 					},
 					{
-						"title" : "UI",
-						"desc"	: "Core/UI.js"
-					},
-					{
-				
-						"title" : "UI",
-						"desc"	: "Core/UI.js"
+						"title" : "UI.Element.Controller",
+						"desc"	: "Element/Element.Controller.js"
 					},
 					{
 				
-						"title" : "UI",
-						"desc"	: "Core/UI.js"
+						"title" : "UI.Control",
+						"desc"	: "Control/Control.js"
 					},
 					{
 				
-						"title" : "UI",
-						"desc"	: "Core/UI.js"
+						"title" : "UI.Button",
+						"desc"	: "Control/Button.js"
 					},
 					{
 				
-						"title" : "UI",
-						"desc"	: "Core/UI.js"
+						"title" : "UI.Checkbox",
+						"desc"	: "Control/Checkbox.js"
 					},
 					{
 				
-						"title" : "UI",
-						"desc"	: "Core/UI.js"
+						"title" : "UI.Input",
+						"desc"	: "Control/Input.js"
 					},
 					{
 				
-						"title" : "UI",
-						"desc"	: "Core/UI.js"
+						"title" : "UI.Label",
+						"desc"	: "Control/Label.js"
 					},
 					{
 				
-						"title" : "UI",
-						"desc"	: "Core/UI.js"
+						"title" : "UI.RadioGroup",
+						"desc"	: "Control/RadioGroup.js"
 					},
 					{
 				
-						"title" : "UI",
-						"desc"	: "Core/UI.js"
+						"title" : "UI.Select",
+						"desc"	: "Control/Select.js"
 					},
 					{
 				
-						"title" : "UI",
-						"desc"	: "Core/UI.js"
+						"title" : "UI.Slider",
+						"desc"	: "Control/Slider.js"
 					},
 					{
 				
-						"title" : "UI",
-						"desc"	: "Core/UI.js"
+						"title" : "UI.Textarea",
+						"desc"	: "Control/Textarea.js"
+					},
+					{
+				
+						"title" : "UI.Menu",
+						"desc"	: "Menu/Menu.js"
+					},
+					{
+				
+						"title" : "UI.Context",
+						"desc"	: "Menu/Context.js"
+					},
+					{
+				
+						"title" : "UI.Toolbar",
+						"desc"	: "menu/Select.js"
+					},
+					{
+				
+						"title" : "UI.Scroller",
+						"desc"	: "Menu/Scroller.js"
+					},
+					{
+				
+						"title" : "UI.View",
+						"desc"	: "View/View.js"
+					},
+					{
+				
+						"title" : "UI.ListView",
+						"desc"	: "view/ListView.js"
+					},
+					{
+				
+						"title" : "UI.PanelView",
+						"desc"	: "View/PanelView.js"
+					},
+					{
+				
+						"title" : "UI.SplitView",
+						"desc"	: "View/SplitView.js"
+					},
+					{
+				
+						"title" : "UI.TabView",
+						"desc"	: "View/TabView.js"
+					},
+					{
+				
+						"title" : "UI.Window",
+						"desc"	: "Window/Window.js"
+					},
+					{
+				
+						"title" : "UI.WindowController",
+						"desc"	: "View/Window.Controller.js"
 					}
 				]
 			}).inject(document.body);

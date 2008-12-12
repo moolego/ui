@@ -1,4 +1,5 @@
 /*
+
 	Class: UI.Window
 		The UI.Window class defines objects that manage and coordinate the windows an application displays on the screen.
 	
@@ -44,6 +45,7 @@
 	
 	Discussion:
 		Effects still need to be implemented as option
+>>>>>>> 5629724d6a89763380dedfad84755c12ad98fb38:Source/Window/Window.js
 */
 
 UI.Window = new Class({

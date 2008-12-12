@@ -2,6 +2,7 @@
 	Class: UI.View
 		The UI.View class defines objects that manage the views use by several object like windows, menus.
 	
+
 	Extends:
 		<UI.Element>
 	
