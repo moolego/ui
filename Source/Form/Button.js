@@ -1,15 +1,18 @@
 /*
-Class: UI.Button
-	Creates button and let you attach events action
-
-Arguments:
-	options
-
-Options: 
-	label - (string) Text to show in button
-	submit - (boolean) Set to true if you want your button act as a submit button
-
-Example:
+	Class: UI.Button
+		Creates button and let you attach events action
+		
+	Extend:
+		<UI.Control>
+	
+	Arguments:
+		options
+	
+	Options: 
+		label - (string) Text to show in button
+		submit - (boolean) Set to true if you want your button act as a submit button
+	
+	Example:
 	(start code)
 		var button = new UI.Button({
 			label		: 'i am a new UI.Button',
@@ -30,28 +33,23 @@ UI.Button = new Class({
 	},
 	
 	/* 
-	Constructor: initialize
-		Construtor
-	
-	Arguments:
-		options - (object) options
-	*/
-	
-	initialize: function(options) {
-		this.parent(options);
-	},
-	
-	/* 
 	Function: build
 		private function
 		
 		Create a textLabel and call parent method
+	
+	Returns:
+		(void)
+		
+	See also:
+		<UI.Control::build>
+		<UI.Element::build>
 	*/
 	
 	build : function(){
 		this.parent();
 		if(this.options.label) {
-			this.textLabel = new UI.Label({
+			this.label = new UI.Label({
 				skin : this.options.skin,
 				html : this.options.label,
 				styles : this.props.components.label.styles
@@ -66,13 +64,16 @@ UI.Button = new Class({
 	Arguments:
 		state - (string) State name
 		
-	Return:
+	Returns:
 		(void)
+	
+	See also:
+		<UI.Element::setState>
 	*/
 	
 	setState : function(state){
-		if (this.textLabel) {
-			this.textLabel.setStyles(this.skin[state].components.label.styles);
+		if (this.label) {
+			this.label.setStyles(this.skin[state].components.label.styles);
 		}
 		this.parent(state);
 	},
@@ -83,8 +84,12 @@ UI.Button = new Class({
 		
 		Set behavior relative to button (mouseenter, mousedown, mouseup, mouseleave)
 	
-	Return:
+	Returns:
 		(void)
+	
+	See also:
+		<UI.Control::setBehavior>
+		<UI.Element::setBehavior>
 	*/
 	
 	setBehavior : function() {

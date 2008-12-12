@@ -1,21 +1,24 @@
 /*
 Class: UI.Textarea
-	Create a skinnable textarea element
-
-Arguments:
-	options
-
-Options: 
-	name - (string) name of hidden input
-	value - (string) value to set on initialize
-
-Example:
-	(start code)
-		var textarea = new UI.Textarea({
-			name : 'myTextarea',
-			value : 'Hello world!'
-		}).inject(document.body);
-	(end)
+		Create a skinnable textarea element
+	
+	Extends:
+		<UI.Control>
+	
+	Arguments:
+		options
+	
+	Options: 
+		name - (string) name of hidden input
+		value - (string) value to set on initialize
+	
+	Example:
+		(start code)
+			var textarea = new UI.Textarea({
+				name : 'myTextarea',
+				value : 'Hello world!'
+			}).inject(document.body);
+		(end)
 */
 
 UI.Textarea = new Class({
@@ -30,31 +33,22 @@ UI.Textarea = new Class({
 	},
 	
 	/* 
-	Constructor: initialize
-		Construtor
-	
-	Arguments:
-		options - (object) options
-	*/
-	
-	initialize: function(options) {
-		this.parent(options);
-	},
-	
-	/* 
 	Function: build
 		private function
 		
-		Call UI.Element build and make a textarea element
+		Call <UI.Control::build> and make a textarea element
 		
 	Return:
 		(void)
+	
+	See also:
+		<UI.Control::build>
+		<UI.Element::build>
 	*/
 	
 	build : function(){
 		//create a new div as input element
 		this.parent();
-		
 				
 		//create input
 		this.setInput(false, 'textarea');
@@ -69,7 +63,6 @@ UI.Textarea = new Class({
 	
 	/* 
 		Method: setState
-		
 			Set the button state
 		
 		Arguments:
@@ -77,6 +70,9 @@ UI.Textarea = new Class({
 			
 		Return:
 			(void)
+		
+		See als0:
+			<UI.Element::setState>
 	*/
 	
 	setState : function(state){
@@ -92,13 +88,17 @@ UI.Textarea = new Class({
 		
 		Return:
 			(void)
+		
+		See also:
+			<UI.Control::setBehavior>
+			<UI.Element::setBehavior>
 	*/
 	
 	setBehavior : function() {
 		this.parent();
-		this.input.addEvents({
+		this.addEvents({
 			blur	: this.setState.bind(this, 'default'),
 			focus	: this.setState.bind(this, 'focus')
-		})
+		});
 	}
 });

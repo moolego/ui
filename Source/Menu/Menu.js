@@ -1,39 +1,35 @@
  /*
-Class: UI.Menu
-	Creates a new menu, manages submenus and positionning.
-	
-Require:
-	UI/Scrolling/Scrolling.Menu.js
-	UI/View/View.js
-
-Arguments:
-		options
+	Class: UI.Menu
+		Creates a new menu, manages submenus and positionning as well as scrolling thru <UI.Menu.Scroller>
 		
-Options: 
-		className			: 'ui-menu',
-		menu				: [],
-		useUnderlay			: true,
-		scrollToSelected	: false,
-		zIndex				: 10500,
-		position			: 'relative',	// can be 'relative', 'bottom', 'over'
-		contentTag			: 'div',
-		itemTag				: 'div',
-		onHide				: $empty,
-		ondisplay			: $empty
-
-
-Returns:
-	void
+	Extends:
+		<UI.Element>
 	
-Example:
-	(start code)
-	var submenu = new UI.Menu({
-		container : this.view.element,
-		underlay : this.options.underlay,
-		zIndex : 1
-	});
-	(end)
-
+	Arguments:
+		options
+			
+	Options: 
+		zIndex - (integer) Base z-index for menu element (submenu's z-index will be incremented)
+		contentTag - (string) Tag name for menu elements wrapper
+		itemTag - (string) Tag name for menu elements
+		
+		position - (string) Specify where the new menu must be positionned.
+			It could be normal (element will be positionned on parent's side),
+			over (element will be positionned over the parent element, used for <UI.Select>),
+			bottom (element will be positionned on bottom of parent element, used for <UI.Toolbar>)
+		
+		scrollToSelected - (boolean) Determine if a menu (specifically a <UI.Select>) should remember last item selected
+		scrollMargin - (integer) Determine remaining margin on top and bottom when a menu is too large to feet in window
+		menu - (array) Array containing menu definition
+		
+	Example:
+		(start code)
+		var submenu = new UI.Menu({
+			container : this.view.element,
+			underlay : this.options.underlay,
+			zIndex : 1
+		});
+		(end)
 */
 
 
@@ -42,6 +38,7 @@ UI.Menu = new Class({
 	
 	options: {
 		component			: 'menu',
+		rolloverType		: 'menuRollover',
 
 		zIndex				: 3000,
 		contentTag			: 'div',
@@ -51,32 +48,21 @@ UI.Menu = new Class({
 		scrollToSelected	: false,
 		scrollMargin		: 20,
 		menu				: [],
-		underlay			: false,
-		
-		styles			: {
-			position	: 'absolute'
-		}
+		underlay			: false
 	},
 
-	/* 
-		Method: initialize
+	/*
+	Function: build
+		private function
 		
-			Construtor
-	 */
-
-	initialize: function(options) {
-		this.parent(options);
-	},
-
-	/* 
-		Method: build
-		
-			Construtor
-			
-		Discussion:
-		
-			the zIndex should be set by the ui.element
-	 */
+		Call UI.Element build, then create a menu wrapper
+	
+	Return:
+		(void)
+	
+	See also:
+		<UI.Element::build>
+	*/
 	
 	build: function(menu) {
 		this.parent();
@@ -99,9 +85,14 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: setMenu
-		
-			Set the content of the menu
+	Method: setMenu
+		Set the content of the menu or change menu content
+	
+	Arguments:
+		menu - (array) Array containing menu definition
+	
+	Return:
+		this
 	 */
 	
 	setMenu: function(menu) {
@@ -125,7 +116,6 @@ UI.Menu = new Class({
 				}).set(item.options);
 				
 				if (item.action) menuItem.element.addEvent('action', item.action);
-				
 				menuItem.inject(this.content);
 			}
 			this.addSubmenuEvents(item, menuItem);
@@ -134,9 +124,17 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: addSubmenuEvents
-		
-			Attach actions and / or submenu to menu elements
+	Method: addSubmenuEvents
+		private function
+	
+		Attach actions and / or submenu to menu elements
+	
+	Arguments:
+		item - (object) Object containing element properties
+		menuItem - (element) Menu item where events will be attached
+	
+	Return:
+		(void)
 	 */
 	
 	addSubmenuEvents : function(item, menuItem){
@@ -171,6 +169,20 @@ UI.Menu = new Class({
 		});
 	},
 	
+	/* 
+	Method: addSubmenu
+		private function
+		
+		Attach a submenu to a menu item if needed
+	
+	Arguments:
+		item - (object) Object containing element properties
+		menuItem - (element) Menu item where submenu will be attached
+	
+	Return:
+		(void)
+	 */
+	
 	addSubmenu : function(item, menuItem, position) {
 		this.menuWithAction = false;
 		$clear(this.menuActionDelay);
@@ -198,10 +210,18 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: addSubmenuArrow
+	Method: addSubmenuArrow
+		private function
 		
-			Add an arrow on the right side of the element
-	*/
+		Add an arrow on the right side of the element
+	
+	Arguments:
+		menuItem - (element) Menu item where arrow will be attached
+	
+	Return:
+		(void)
+	 */
+	
 	
 	addSubmenuArrow : function(menuItem){
 		//we add the arrow
@@ -228,10 +248,17 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: mouseUpAction
+	Method: mouseUpAction
+		private function
 		
-			Do the element action and close the menu
-	*/
+		Execute the menu item action and close the menu (as well as submenu if needed)
+	
+	Arguments:
+		menuItem - (element) Menu item with attached action to fire
+	
+	Return:
+		(void)
+	 */
 	
 	mouseUpAction : function(menuItem){
 		if ($time() - this.time > 300 && this.rollover) {
@@ -250,15 +277,20 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: setRollover
+	Method: setRollover
+		private function
 		
-			set a canvas to draw menu elements
+		Create a new rollover element in menu if it doesn't exist
+	
+	Return:
+		(void)
 	 */
 	
 	setRollover : function(){
+		if (this.rollover) return;
 		this.rollover = new UI.Element({
 			skin			: this.options.skin,
-			type			: 'menuRollover',
+			type			: this.options.rolloverType,
 			styles			: {
 				position 	: 'absolute',
 				zIndex 		: 1
@@ -267,18 +299,24 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: moveRollover
+	Method: moveRollover
+		private function
 		
-			set the rollover to a new element
+		Move the rollover to a new location (menu item)
+	
+	Arguments:
+		menuItem - (element) Rollover will be moved to this menu item position
+	
+	Return:
+		(void)
 	 */
 	
 	moveRollover : function(menuItem){
 		var coord = menuItem.getCoordinates(this.element);
-		if (!this.rollover) this.setRollover();
+		 this.setRollover();
 		
 		if (this.activeItem) {
 			this.activeItem.element.fireEvent('defaultArrow');
-			
 			this.activeItem.setState('default');
 		}
 		
@@ -295,9 +333,13 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: removeRollover
-		
-			Remove the rollover
+	Method: removeRollover
+		private function
+	
+		Remove the rollover from menu and destroy it
+	
+	Return:
+		(void)
 	 */
 	
 	removeRollover : function(){
@@ -313,9 +355,13 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: removeSubmenu
-		
-			Remove the current submenu if needed
+	Method: removeSubmenu
+		private function
+	
+		Remove the current submenu as well as submenus if needed
+	
+	Return:
+		(void)
 	 */
 	
 	removeSubmenu : function(){
@@ -326,9 +372,16 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: setPosition
+	Method: setPosition
+		private function
 		
-			Set the position of the menu
+		Set the menu position relatively to parent element. Parent could be a menu element or any dom element
+	
+	Arguments:
+		el - (element) Parent element who will define menu position
+	
+	Return:
+		(void)
 	 */
 	
 	setPosition: function(el) {
@@ -414,12 +467,15 @@ UI.Menu = new Class({
 
 	/*
     Method: setCorners
+    	private function
 
-      Set corners radius for canvas draw
+		Set corners radius for canvas draw
+	
+	Return:
+		(void)
 	  
 	Discussion:
-	
-		is really needed anymore? 
+		is really needed anymore?
 	*/
 	
 	setCorners: function(corners) {
@@ -427,9 +483,13 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: addScrolls
-		
-			Add scrolls to menu
+	Method: addScrolls
+		private function
+	
+		Add scrolls to menu
+	
+	Return:
+		(void)
 	*/
 	
 	addScrolls : function() {
@@ -455,9 +515,16 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: addUnderlay
-		
-			Add an underlay to the page, to prevent clicks and scroll on page
+	Method: addUnderlay
+		private function
+	
+		Add an underlay to the page, to prevent clicks and scroll on page, and to keep a track of opened menu element
+	
+	Arguments:
+		underlay - (element) a previously declared underlay to use instead of creating a new one
+	
+	Return:
+		(void)
 	 */
 	
 	addUnderlay: function(underlay){
@@ -502,9 +569,13 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: removeUnderlay
-		
-			Remove the underlay
+	Method: removeUnderlay
+		private function
+	
+		Remove the underlay and destroy it
+	
+	Return:
+		this
 	 */
 	
 	removeUnderlay: function(){
@@ -517,9 +588,15 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: inject
-		
-			inject the menu and draw the canvas. Overwrite the inject method of UI.Element
+	Method: inject
+		inject the menu and draw the canvas. Overwrite the inject method of <UI.Element>
+	
+	Arguments:
+		element - (element) Injection target
+		target - (string) Determine where to inject.
+	
+	Return:
+		this
 	 */
 	
 	inject : function(element, target){
@@ -548,9 +625,19 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: show
-		
-			Show the menu
+	Method: show
+		Show the menu
+	
+	Arguments:
+		parent - (element) Menu location will be determine relatively to this element
+		x - (integer) (optional) new menu width
+		y - (integer) (optional) new menu height
+	
+	Return:
+		this
+	
+	See also:
+		<UI.Element::show>
 	 */
 	
 	show : function(parent, x, y) {
@@ -565,9 +652,14 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: hide
-		
-			Remove the submenu and clean the dom
+	Method: hide
+		Hide the submenu, and clean it (remove rollover, remove scrolls, ...)
+	
+	Arguments:
+		duration - (integer) Fade out duration, in milliseconds
+	
+	Return:
+		this		
 	 */
 	
 	hide: function(duration){
@@ -592,18 +684,19 @@ UI.Menu = new Class({
 			}).start('opacity', 0);
 		}
 		
-	
-		
 		return this;
 	},
 	
 	/* 
-		Method: empty
-		
-			Empty the menu content
+	Method: empty
+		Clear menu content
+	
+	Return:
+		this
 	 */
 	
 	empty: function(){
 		this.content.empty();
+		return this;
 	}
 });

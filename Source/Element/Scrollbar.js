@@ -1,12 +1,27 @@
 /*
-Class: UI.Scrollbar
-	Manage scrolls for menus.
-	
-Require:
-	UI/Scrolling/Scrolling.js
+	Class: UI.Scrollbar
+		Manage scrolls for views.
+		
+	Extend:
+		<UI.Element>
+		
+	Arguments:
+		options
+		
+	Options:
+		width - (integer) The scollbar track width
+		maxThumbSize - (integer)
+		wheel - (integer) The scroll increment
+		
+	Example:
+		(start code)
+		var scrollbar = new UI.Scrollbar({
+			container	: this.content
+		});
+		(end)
 
-Credits: 
-	based on Valerio's Mootools scrollbar plugin.
+	Credits: 
+		based on Valerio's Mootools scrollbar plugin.
 
 */
 

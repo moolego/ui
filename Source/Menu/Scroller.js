@@ -1,40 +1,34 @@
 /*
-Class: UI.Scroller.Menu
-	Manage scrolls for menus.
+	Class: UI.Menu.Scroller
+		Manage scrolls for menus. Calls to this class are transparently handled by <UI.Menu>
 	
-Require:
-	UI/Scrolling/Scrolling.js
-
-Arguments:
-		parent - the menu to attach scrolls
-		options - a hash
+	Arguments:
+			options
+			
+	Options: 
+		wheel - (integer) Scroll increment when wheel is used
+		speed - (integer) A speed increase factor, by default set to 12
+		margin - (integer) Determine remaining margin on top and bottom when a menu is too large to feet in window
+		target - (element) Menu element where scrolls will be attached
+		onScroll - (function) function to fire on menu scrolling
+		onResize - (function) function to fire on menu resizing
+	
+	Returns:
+		void
 		
-Options: 
-	options: {
-		className		: 'ui-menu',
-		wheel			: 8,
-		speed			: 12,yx
-		margin			: 5,
-		onScroll		: $empty(),
-		onResize		: $empty()
-	},
-
-Returns:
-	void
-	
-Example:
-	(start code)
-	this.scrolls = new UI.Scrolling.Menu(this.view, {
-		onScroll : function(){
-			this.removeSubmenu();
-		}.bind(this),
-		onResize : function(){
-			this.view.canvas.draw();
-			if (this.shadow) this.shadow.show(this.container);
-		}.bind(this)
-	});
-	(end)
-
+	Example:
+		(start code)
+		this.scrolls = new UI.Scrolling.Menu({
+			target : this.view,
+			onScroll : function(){
+				this.removeSubmenu();
+			}.bind(this),
+			onResize : function(){
+				this.view.canvas.draw();
+				if (this.shadow) this.shadow.show(this.container);
+			}.bind(this)
+		});
+		(end)
 */
 
 UI.MenuScroller = new Class({
@@ -46,22 +40,21 @@ UI.MenuScroller = new Class({
 		speed			: 12,
 		margin			: 20,
 		target			: 'element',
-		wrapper			: false,
-		props	: {},
 		onScroll		: $empty,
 		onResize		: $empty
 	},
 	
 	/* 
-		Method: initialize
-		
-			Construtor
-	 */
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	*/
 
 	initialize: function(options){
 		this.setOptions(options);
 		
-		this.props = this.options.props;
 		this.element = this.options.element,
 		this.content = this.options.content;
 		this.margin  = this.options.margin;
@@ -72,9 +65,13 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-		Method: setNewSize
-		
-			Determine the menu position, his size and scrolls direction
+	Method: setNewSize
+		private function
+	
+		Determine the menu position, it size and scrolls direction
+	
+	Return:
+		(void)
 	*/
 	
 	resetSize : function(){
@@ -118,9 +115,13 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-		Method: addWrapper
-		
-			Add a element to the menu content to allow overflow
+	Method: addWrapper
+		private function
+	
+		Add a wrapper to the menu content to allow overflow
+	
+	Return:
+		(void)
 	*/
 	
 	setWrapper : function(){
@@ -147,9 +148,13 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-		Method: setBehavior
-		
-			Add event on the mousewheel
+	Method: setBehavior
+		private function
+	
+		Add mousewheel event
+	
+	Return:
+		(void)
 	*/
 	
 	setBehavior : function(){
@@ -164,9 +169,13 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-		Method: removeScrolls
-		
-			Remove scrolls
+	Method: removeScrolls
+		private function
+	
+		Remove scrolls and scrolls events
+	
+	Return:
+		(void)
 	*/
 	
 	removeScrolls : function(){
@@ -187,9 +196,13 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-		Method: addUpArrow
-		
-			Add the up arrow
+	Method: addUpArrow
+		private function
+	
+		Add the up arrow element and events to manage it
+	
+	Return:
+		(void)
 	*/
 	
 	addUpArrow : function(){
@@ -238,9 +251,13 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-		Method: addDownArrow
-		
-			Add the down arrow
+	Method: addDownArrow
+		private function
+	
+		Add the down arrow element and events to manage it
+	
+	Return:
+		(void)
 	*/
 	
 	addDownArrow : function(){
@@ -289,9 +306,16 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-		Method: scrollDown
-		
-			scroll the menu down
+	Method: scrollDown
+		private function
+	
+		Scroll the menu down
+	
+	Arguments:
+		e - (event) Event handling mousewheel
+	
+	Return:
+		(void)
 	*/
 	
 	scrollDown : function(e){
@@ -330,9 +354,16 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-		Method: scrollUp
-		
-			scroll the menu up
+	Method: scrollUp
+		private function
+	
+		Scroll the menu up
+	
+	Arguments:
+		e - (event) Event handling mousewheel
+	
+	Return:
+		(void)
 	*/
 	
 	scrollUp : function(e){
