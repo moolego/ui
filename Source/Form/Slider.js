@@ -109,7 +109,14 @@ UI.Slider = new Class({
 	*/
 	
 	inject : function(target, position) {
-		this.parent(target, position);
+		this.fireEvent('inject');
+
+		this.element.inject(target, position);
+		this.element.setStyle('visibility', 'visible');
+		this.setSize();
+		this.setCanvas();
+		this.controller.register(this);
+
 		this.slider = new Slider(this.canvas.canvas, this.handler.element, {
 			snap 		: this.options.snap,
 			offset		: this.options.offset,
@@ -125,6 +132,8 @@ UI.Slider = new Class({
 			onChange	: function(step){this.fireEvent('change', step)}.bind(this),
 			onComplete	: function(step){this.fireEvent('complete', step)}.bind(this)
 		});
+		this.fireEvent('injected');
+		
 		return this;
 	},
 	

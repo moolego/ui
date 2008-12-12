@@ -53,23 +53,21 @@
 		<title>mooLego Speed Test</title>
 		
 		<script type="text/javascript">
-		<!--/*--><![CDATA[//><!--
+		//<!--/*--><![CDATA[//><!--
 			window.addEvent('domready', function(){
 				
-				var offone = 4;
-				var offtwo = 4;
-				var ratioone = 42.5
-				var ratiotwo = 42.5
+				//(?) settings
+				var offone = 0;
+				var offtwo = 0;
+				var ratioone = 40;
+				var ratiotwo = 40;
+				
+				//shape setting
+				var radius = 8;
+				var offset = 2;
+				var height = 46;
 				
 				buttons = new Array();
-				
-				function toHex(n) {
-					if (n==null) return "00";
-					n=parseInt(n); if (n==0 || isNaN(n)) return "00";
-					n=Math.max(0,n); n=Math.min(n,255); n=Math.round(n);
-					return "0123456789ABCDEF".charAt((n-n%16)/16)
-					+ "0123456789ABCDEF".charAt(n%16);
-				};
 
 				var slidator = new Element('div' , {
 					styles : {
@@ -81,82 +79,92 @@
 					}
 				}).inject(document.body);
 				
+				var baseParams = {
+					skin 				: 'BlueTouch',
+					range 				: [-10, 10],
+					snap 				: true,
+					steps 				: 20,
+					styles 				: {
+						margin			: '3px 0',
+						display			: 'block'
+					},
+					wheel				: true
+				}
+				
 				new UI.Label({
 					html : 'color offset'
 				}).inject(slidator);
 				
-				new UI.Slider({
-					skin : 'BlueTouch',
-					range : [-10, 10],
-					styles : {
-						margin			: '3px 0',
-						display			: 'block'
+				new UI.Slider($merge(baseParams, {
+					onInjected : function(){
+						this.set(offone);
 					},
-					wheel				: true,
 					onChange: function(step){
-						offone = step 
+						offone = step;
 					}
-				}).inject(slidator);
+				})).inject(slidator);
 				
-				new UI.Slider({
-					//width: 50,
-					skin				: 'BlueTouch',
-					range				: [-10, 10],
-					styles				: {
-						margin			: '3px 0',
-						display			: 'block'
+				new UI.Slider($merge(baseParams, {
+					onInjected : function(){
+						this.set(offtwo);
 					},
-					wheel				: true,
 					onChange: function(step){
-						offone = step 
+						offtwo = step;
 					}
-				}).inject(slidator);
+				})).inject(slidator);
+				
 				new UI.Label({
-					html : 'color offset'
+					html : 'color propagation'
 				}).inject(slidator);
 				
-				new UI.Slider({
-					skin : 'BlueTouch',
+				new UI.Slider($merge(baseParams, {
 					range : [10, 42],
-					styles : {
-						margin			: '3px 0',
-						display			: 'block'
+					steps : 32,
+					onInjected : function(){
+						this.set(ratioone);
 					},
-					wheel				: true,
 					onChange: function(step){
-						ratioone = step 
+						ratioone = step;
 					}
+				})).inject(slidator);
+				
+				new UI.Slider($merge(baseParams, {
+					range : [10, 42],
+					steps : 32,
+					onInjected : function(){
+						this.set(ratiotwo);
+					},
+					onChange: function(step){
+						ratiotwo = step;
+					}
+				})).inject(slidator);
+					
+				new UI.Label({
+					html : 'Radius'
 				}).inject(slidator);
 				
-				new UI.Slider({
-					//width: 50,
-					skin				: 'BlueTouch',
-					range				: [10, 42],
-					styles				: {
-						margin			: '3px 0',
-						display			: 'block'
+				new UI.Slider($merge(baseParams, {
+					range : [4, 30],
+					steps : 27,
+					onInjected : function(){
+						this.set(radius);
 					},
-					wheel				: true,
 					onChange: function(step){
-						ratiotwo = step 
+						radius = step;
 					}
-				}).inject(slidator);
-					
-					
+				})).inject(slidator);
+				
 				var button = new UI.Button({
-					label	: 'update',
+					label	: 'Update buttons',
 					onClick	: function(){
-						test();
+						fillButtons();
 					},
 					styles	: {
-						margin		: 10,
+						marginTop		: 10,
 						fontFamily	: 'arial, helvetica, sans-serif',
 						fontSize	: '13px'
 					}
-				}).inject(slidator);	
-					
-					
-				function RGBtoHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B)}
+				}).inject(slidator);				
 								
 				var box = new Element('div',{
 					styles			: {
@@ -169,10 +177,10 @@
 				
 				
 				
-				
-				var size = 7;
-				
-				var test = function(){
+				function fillButtons() {
+					box.empty();
+					buttons.empty();
+					var size = 7;
 					time = $time();
 					var index = 0;
 					for (i = 0; i < size; i++) {
@@ -183,7 +191,7 @@
 							
 							var color = RGBtoHex(0,Math.floor(255 - ratioone * one),  Math.floor(255 - ratiotwo * two));
 							//console.log(index)
-							if (buttons[index]) {
+							if (false || buttons[index]) {
 								buttons[index].props.layers.front.color = '#' + color;
 								buttons[index].set('html', '<small>time</small><br/>' + (($time() - time) / 1000) + '<br/><small style="font-size:5px: color:#ccc">color</small><br/>' + color);
 								//console.log(index)
@@ -196,8 +204,27 @@
 									props: {
 										'default': {
 											layers: {
+												emboss: {
+													offset: '0px',
+													color: '#000',
+													opacity: .17,
+													radius: radius
+												},
+												
 												front: {
-													color: '#' + color
+													offset: 2,
+													opacity: 1,
+													color: '#' + color,
+													radius: radius -2
+												},
+												reflect: {
+													offset: ['2px', '2px', '40%'],
+													
+													gradient	: {
+														color: ['#FFF', '#FFF'],
+														opacity: [.4, .03]
+													},
+													radius: radius - 4
 												}
 											}
 										},
@@ -214,8 +241,19 @@
 							index++;
 						}
 					}
-				}
-				test();
+				};
+				
+				function toHex(n) {
+					if (n==null) return "00";
+					n=parseInt(n); if (n==0 || isNaN(n)) return "00";
+					n=Math.max(0,n); n=Math.min(n,255); n=Math.round(n);
+					return "0123456789ABCDEF".charAt((n-n%16)/16)
+					+ "0123456789ABCDEF".charAt(n%16);
+				};
+				
+				function RGBtoHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B)}
+				
+				fillButtons();
 			});
 		//--><!]]>
 		</script>
