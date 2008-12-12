@@ -1,25 +1,44 @@
 /*
-Class: UI.Slider
-	Creates slider and let you attach events action
-
-Requires:
-	Mootools Slider Plugins
-
-Arguments:
-	options
-
-Options: 
-	className - (string) css classname for the given button
-	buttonType - ()
-
-Example:
-	(start code)
-		var button = new UI.Button({
-			onClick		: {},
-			onMouseOver	: {},
-			onDblClick	: {}
-		});
-	(end)
+	Class: UI.Slider
+		Creates slider and let you attach events action.
+		Additionnaly to UI.Element and UI.Control methods and events, it handle all the properties of the mootools slider.
+		
+	Extend:
+		<UI.Element>
+	
+	Requires:
+		Mootools Slider plugin
+	
+	Arguments:
+		options
+	
+	Options:
+		type - (string) 'horizontal' or 'vertical'
+		
+		onStart - (function) see mootools slider plugin doc
+		onChange - (function) see mootools slider plugin doc
+		onComplete - (function) see mootools slider plugin doc
+		onTick - (function) see mootools slider plugin doc
+		
+		snap - (boolean) see mootools slider plugin doc
+		offset - (boolean) see mootools slider plugin doc
+		range - (boolean) see mootools slider plugin doc
+		wheel - (boolean) see mootools slider plugin doc
+		steps - (boolean) see mootools slider plugin doc
+		
+		
+	
+	Example:
+		(start code)
+		var step;
+		new UI.Slider({
+			range				: [0, 255],
+			wheel				: true,
+			onChange: function(step){
+				step = step;
+			}
+		}).inject(form);
+		(end)
 */
 
 UI.Slider = new Class({
@@ -28,12 +47,8 @@ UI.Slider = new Class({
 	options				: {
 		
 		// default options
-		className		: 'slider',
-		name			: 'ui-slider',
-		
 		component		: 'slider',
 		type			: 'horizontal',
-		state			: 'default',
 		
 		// implemented events
 		onStart			: $empty,
@@ -49,14 +64,26 @@ UI.Slider = new Class({
 		steps			: 100
 	},
 	
+	/* 
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	*/
+	
 	initialize: function(options) {
 		this.parent(options);
 	},
 	
 	/* 
-		Method: build
+	Function: build
+		private function
 		
-			Create a div and a hidden input to receive the selected value
+		Call parent method and create a skinned knob element
+	
+	Return:
+		(void)
 	*/
 	
 	build : function(){
@@ -67,8 +94,19 @@ UI.Slider = new Class({
 			component			: 'slider',
 			type				: 'knob'
 		}).inject(this.element);
-
 	},
+	
+	/* 
+	Function: inject
+		Create the slider and inject it
+	
+	Arguments:
+		target - (mix) See mootools doc
+		position - (string) See mootools doc
+		
+	Return:
+		this
+	*/
 	
 	inject : function(target, position) {
 		this.parent(target, position);
@@ -90,12 +128,33 @@ UI.Slider = new Class({
 		return this;
 	},
 	
+	/* 
+	Function: setBehavior
+		private function
+		
+		Set behavior relative to slider (complete)
+	
+	Return:
+		(void)
+	*/
+	
 	setBehavior : function(){
 		this.parent();
 		this.addEvent('complete', function(step){
 			this.value = step;
 		});
 	},
+	
+	/* 
+	Function: set
+		Set the slider value
+		
+	Arguments:
+		value - (integer) The value to set
+	
+	Return:
+		this
+	*/
 	
 	set : function(value){
 		this.slider.set(value);

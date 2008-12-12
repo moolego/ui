@@ -1,41 +1,40 @@
 /*
-Class: UI.View
-	The UI.View class defines objects that manage the views use by several object like windows, menus.
+	Class: UI.View
+		The UI.View class defines objects that manage the views use by several object like windows, menus.
+	
 
-Require:
-	UI.Core Classes
-	UI.Element Classes
-	UI.ScrollBar
+	Extends:
+		<UI.Element>
 	
-Arguments:
-	options
+	Require:
+		<UI>
+		<UI.Element>
+		<UI.Scrollbar>
+		
+	Arguments:
+		options
+		
+	Options:
+		width - (integer/string) Width of the view wrapper in px or percent
+		height - (integer/string) Height  of the view wrapper in px or percent
+		overflow - (string) hidden, scrollbar or menu
+		tag - (string) Element's tag
+		contentTag - (string) Content's tag
+		
+		content - (object) Object containing content element's options
+		onLoadComplete - (function) Function to fire on list load complete
 	
-Options:
-	className - (String) css class apply to the wrapper
-	width - (number) Width of the view wrapper in px
-	height - (number) Height  of the view wrapper in px
-	overflow - (collection) hidden, scrollbar or menu
-	tag - (string) define the tag to use for the content view
-	contentTag - (string) define the tag to use for the content view
-	wrapper - (object) wrapper element properties
-	content - (object) content element properties (in case of) 
-	addClass - (string) additionnal class
-	useCanvas - (boolean) false
-
-Returns:
-	View object.
-	
-Example:
-	(start code)
-	var view = new UI.View({
-		width			: 260,
-		height			: 400,
-		overflow		: 'scrollbar' 
-	}).setContent('content','content view');
-	(end)
-
-Discussion:
-	
+	Returns:
+		View object.
+		
+	Example:
+		(start code)
+		var view = new UI.View({
+			width			: 260,
+			height			: 400,
+			scroll			: true 
+		}).setContent('content','content view');
+		(end)
 */
 
 UI.View = new Class({
@@ -59,23 +58,17 @@ UI.View = new Class({
 	},
 
 	/*
-	    Method: initialize
-	    Constructor
+	Method: build
+		private function
+		
+		Creates html structure and inject it to the dom. The view is build with two elements: the wrapper and the content. 
+		If the option overflow is set to true, it will also add the scrollbar object
+
+	Returns:
+		(void)
 	
-	*/
- 	  
-	initialize: function(options){
-		this.parent(options);
-	},
-
-	/*
-    Method: build
-
-      Creates html structure and inject it to the dom. The view is build with two elements: the wrapper and the content. 
-      If the option overflow is set to true, it will also add the scrollbar object
-
-    Returns:
-      this
+	See also:
+		<UI.Element::build>
 	*/
 
 	build: function() {
@@ -85,14 +78,17 @@ UI.View = new Class({
 		this.show();
 	},
  	
-	/* 
-		Function: setOverlay
-			create a new overlay object 
-	*/
+	/*
+	Method: buildOverlay
+		private function
+		
+		create an overlay displayed when view is resized or moved
+	
+	Returns:
+		(void)
+	 */
 
 	buildOverlay: function() {
-		
-		//console.log('show overlay');
 		this.overlay = new Element('div',this.props.components.overlay)
 		 .inject(this.view.element);
 
@@ -106,21 +102,14 @@ UI.View = new Class({
 		});
 	},
 
-
-	/* 
-	 * Method: setBehaviors
-	 * 
-	 * 
-	 */
-
-	setBehavior: function() {
-		this.parent();
-	},
-
 	/*
     Method: setOverflow
+    	private function
 
 		Manage overflow and set scrololbar if needed or requested
+	
+	Returns:
+		(void)
 	*/
 
 	setOverflow: function() {
@@ -149,10 +138,13 @@ UI.View = new Class({
 	},
 	
 	/*
-    Method: setScrollbar
-
-      Creates a new scrollbar object
-
+	Method: buildScrollbar
+		private function
+		
+		Creates a new scrollbar object attached to the view
+	
+	Returns:
+		(void)
 	*/
 	
 	buildScrollbar : function() {
@@ -165,58 +157,74 @@ UI.View = new Class({
 			'onResize' : function() { this.scrollbar.update() }
 		 });  
 	},
-	
 
 	/*
-	 * 	Function: setSize
-	 * 		Set size of the element and its canvas
-	 */
+	Function: setContent
+		Set Content of the Container
 	
-	setSize : function(width, height, state){
-		this.parent();
-		this.fireEvent('onResize');
-	},
-
-	/*
-    	Function: setContent
-    
-    		Set Content of the Container
+	Arguments:
+		method - (string) ajax, ajaxnu, json, content, html or iframe
+		source - (string) source's url
+	
+	Returns:
+		(void)
 	*/
 	
-	setContent: function(method,source,options){
+	setContent: function(method,source){
 		switch (method) {
 			case 'ajax' || 'xhr':
-				this.setAjaxContent(method,source,options);
+				this.setAjaxContent(source);
 				break;
 			case 'ajaxnu' :
-				this.setAjaxNuContent(method,source,options)
+				this.setAjaxNuContent(source)
 				break;
 			case 'json':
-				this.setJsonContent(method,source,options);
+				this.setJsonContent(source);
 				break;
 			case 'content' || 'html':
-				this.setHtmlContent(method,source,options);
+				this.setHtmlContent(source);
 				break;
 			case 'iframe':
-				this.setIFrameContent(method,source,options);
-				break;
-			default:		
+				this.setIFrameContent(source);
+				break;	
 		};
 	},
+	
+	/*
+	Function: setHtmlContent
+		Set html Content
+	
+	Arguments:
+		source - (string) source's html
+	
+	Returns:
+		this
+	*/
 
-	setHtmlContent: function(method,source,options) {
+	setHtmlContent: function(source) {
 		this.content.set('html',source);
 		this.fireEvent('onLoadComplete');
 		this.fireEvent('onResize');
 		return this;
 	},
 	
-	setAjaxContent: function(method,source,options) {
+	/*
+	Function: setAjaxContent
+		Set ajax Content
+	
+	Arguments:
+		source - (string) source's url
+	
+	Returns:
+		this
+	*/
+	
+	setAjaxContent: function(source) {
 		new Request.HTML({
 			url 		: source,
 			update		: this.content,
 			method		: 'get',
-			onComplete: function(response){
+			onComplete: function(){
 				this.fireEvent('onLoadComplete');
 				this.fireEvent('onResize');
 			}.bind(this)
@@ -225,12 +233,25 @@ UI.View = new Class({
 		return this;
 	},
 	
-	setAjaxNuContent: function(method,source,options) {
+	/*
+	Function: setAjaxNuContent
+		Set ajax content
+	
+	Arguments:
+		source - (string) source's url
+	
+	Returns:
+		this
+	*/
+	
+	setAjaxNuContent: function(source) {
 		new Request.HTML({
 			url : source,
 			method : 'get',
 			onComplete : function(responseTree,responseElements,responseHTML,responseJS){
-				this.fireEvent('onLoadComplete',new Array(responseHTML,responseTree,responseElements,responseJS));
+				this.fireEvent('onLoadComplete',
+					new Array(responseHTML,responseTree,responseElements,responseJS)
+				);
 				this.fireEvent('onResize');
 			}.bind(this)
 		}).send();
@@ -238,7 +259,18 @@ UI.View = new Class({
 		return this;
 	},
 	
-	setJsonContent: function(method,source,options) {
+	/*
+	Function: setJsonContent
+		Set JSON content
+	
+	Arguments:
+		source - (string) source's url
+	
+	Returns:
+		this
+	*/
+	
+	setJsonContent: function(source) {
 		new Request.JSON({
 			url : source,
 			onComplete : function(response){
@@ -250,7 +282,18 @@ UI.View = new Class({
 		return this;
 	},
 	
-	setIFrameContent : function(method,source,options) {
+	/*
+	Function: setIFrameContent
+		Set ajax content
+	
+	Arguments:
+		source - (string) iFrame's url
+	
+	Returns:
+		this
+	*/
+	
+	setIFrameContent : function(source) {
 		if (!this.iframe) {
 			this.element.empty();
 			this.iframe = new Element('iframe',this.props.components.iframe).inject(this.element);
@@ -261,7 +304,7 @@ UI.View = new Class({
 		 	this.fireEvent('loadComplete');
 			this.fireEvent('onResize');
 		});
-		
+
 		return this;
 	}
 });

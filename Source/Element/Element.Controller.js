@@ -1,13 +1,7 @@
 /*
 Class: UI.Controller
-	base class for controllers.
-
-License:
-	MIT-style license.
-
-Require:
-	UI/Windows.js
-
+	Default element controller.
+	It handle element's z-index as well as group managing and group serialization (usefull for controls values
 */
 
 
@@ -18,6 +12,14 @@ UI.Controller = new Class({
 		zBase			: 1
 	},
 	
+	/*
+	Constructor: initialize
+		Constructor
+		
+	Arguments:
+		options - (object) options
+	*/
+	
 	initialize: function(options){
 		this.setOptions();
 		this.zIndex = this.options.zBase;
@@ -25,11 +27,13 @@ UI.Controller = new Class({
 	},
 
 	/*
-	  Function: register
-	  
-	   	Add passing element to the elements list
+	Function: register
+		private function
+		
+		Add passing element to the elements list
 	   
-	  Arguments: window Object
+	Arguments:
+		elementClass - (object) an element class' instance
 	  
 	 */
 	
@@ -66,11 +70,13 @@ UI.Controller = new Class({
 	},
 	
 	/*
-	  Function: group
-	  
-	   Group elements in a group
+	Function: group
+		private function
+		
+		Add passing element to provided group
 	   
-	  Arguments: element class instance
+	Arguments:
+		elementClass - (object) an element class' instance
 	  
 	 */
 	
@@ -83,11 +89,13 @@ UI.Controller = new Class({
 	},
 	
 	/*
-	  Function: serialize
-	  
-	   Serialize values of elements' group provided and return them 
+	Function: serialize
+		private function
+		
+		Add passing element to the elements list
 	   
-	  Arguments: group id
+	Arguments:
+		groupID - (string) name of the group you want to serialize element's value.
 	  
 	 */
 	

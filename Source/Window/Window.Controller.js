@@ -1,29 +1,24 @@
 /*
-Class: UI.Controller
-	base class for controllers.
-
-License:
-	MIT-style license.
-
-Require:
-	UI/Windows.js
-
+	Class: UI.Window.Controller
+		Window controller. It handles windows cascading position, minimize position, focusing, ...
+	
+	Arguments:
+		options - (object)
+	
+	Options:
+		zBase - (integer)
+		zStep - (integer)
+		cascade - (object)
+		stack - (object)
+	
+	Requires:
+		<UI.Window>
+	
+	Discussion:
+		Stacks should be better implemented
 */
 
-UI.Controller = {};
-
-/*
-Class: UI.Window.Controller
-	The window controller class of the <http://app.floor.ch> floor apps framework
-	Creates a new window controller
-
-License:
-	MIT-style license.
-
-Require:
-	UI/Windows.js
-
-*/
+UI.Controller = UI.Controller || {};
 
 UI.Controller.Window = new Class({
 	Singleton			: true,
@@ -51,6 +46,17 @@ UI.Controller.Window = new Class({
 		}
 	},
 	
+	/* 
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	
+	Returns:
+		(void)
+	*/
+	
 	initialize: function(options){
 		this.setOptions();
 		
@@ -63,13 +69,15 @@ UI.Controller.Window = new Class({
 
 
 	/*
-	  Function: register
-	  
-	   	Add passing window to the manage list
-	   
-	  Arguments: window Object
-	  
-	 */	
+	Function: register
+		Add passing window to the manage list
+
+	Arguments:
+		win - (object) the window class instance to register
+	
+	Returns:
+		(void)
+	*/
 	
 	register: function(win) {
 		UI.elements.window.push(win);
@@ -78,13 +86,15 @@ UI.Controller.Window = new Class({
 	},
 	
 	/*
-	  Function: close
-	  
-	   Destroy the window class instance
-	   
-	  Arguments: window Object
-	  
-	 */	
+	Function: close
+		Destroy the provided window and focus to next one
+
+	Arguments:
+		win - (object) the window class instance to close and destroy
+	
+	Returns:
+		(void)
+	*/
 	
 	close: function(elementClass) {
 		elementClass.hide();
@@ -100,13 +110,15 @@ UI.Controller.Window = new Class({
 	},
 	
 	/*
-	  Function: focus
-	  
-	   	Increment max z-index and blur active window
-	   
-	  Arguments: window Object
-	  
-	 */	
+	Function: focus
+		Increment max z-index and focus provided window
+
+	Arguments:
+		win - (object) the window class instance to focus
+	
+	Returns:
+		(void)
+	*/
 	
 	focus: function(win) {
 		if (!$defined(win)) {
@@ -133,13 +145,15 @@ UI.Controller.Window = new Class({
 	},
 	
 	/*
-	  Function: blur
-	  
-	   	blur active window
-	   
-	  Arguments: window Object
-	  
-	 */	
+	Function: blur
+		Blur active window
+
+	Arguments:
+		win - (object) the window class instance to blur
+	
+	Returns:
+		(void)
+	*/
 	
 	blur: function(win) {
 		if ($defined(win) && !win.minimized) {
@@ -149,13 +163,13 @@ UI.Controller.Window = new Class({
 			this.blur(this.active);
 		}
 	},
-
 	
 	/*
-	  Function: getMinimizedLocation
-	  
-	   	Return the position of next minimized window
-	  
+	Function: getMinimizedLocation
+		Return the position of next minimized window
+	
+	Returns:
+		location - (array) Array containing left and top position	  
 	 */	
 	 	
 	getMinimizedLocation: function() {
@@ -172,11 +186,12 @@ UI.Controller.Window = new Class({
 	},
 	
 	/*
-	  Function: resetMinimizedLocation
-	  
+	Function: resetMinimizedLocation
 		Replace minimized windows
-	  
-	 */	
+	
+	Returns:
+		(void)
+	*/
 	
 	resetMinimizedLocation : function(){
 		var x = -150;
@@ -190,11 +205,12 @@ UI.Controller.Window = new Class({
 	},
 
 	/*
-	  Function: resizeMaximizedWindow
-	  
-	   	Set new maximized size for all mamimized window 
-	  
-	 */	
+	Function: resizeMaximizedWindow
+		Set new maximized size for all mamimized window 
+	
+	Returns:
+		(void)
+	*/	
 	
 	resizeMaximizedWindow: function() {
 		UI.elements.window.each(function(win) {
@@ -208,18 +224,16 @@ UI.Controller.Window = new Class({
 	},
 
 	/*
-	  Function: getCascadeLocation
-	  
-	   	Calculate the location of the window in the cascade
-	  
-	  Arguments : window Object
-	  
-	  Return
-	  		Hash of location coordinates { left : 100, top : 100 }
-	  
+	Function: getCascadeLocation
+		Calculate the location of the window in the cascade
+
+	Arguments:
+		win - (object) the window class instance to get location
+
+	Returns:
+		location - (object) location coordinates { left : 100, top : 100 }
 	*/
 
-	
 	getCascadeLocation: function(win) {
 		var location = {
 			left : this.options.cascade.start.x.toInt(),
@@ -235,17 +249,21 @@ UI.Controller.Window = new Class({
 		return location;
 	},
 	
-	
 	/*
-	  Function: propagateUnderShadow
-	  
-	   	Propagate click from shadow offset to the back window 
-	  
-	 */
+	Function: propagateUnderShadow
+		private function
+		
+		Propagate click from shadow offset to the back window
+	
+	Arguments:
+		e - (event) Event handling click
+	
+	Returns:
+		(void)
+	
+	*/
 	
 	propagateUnderShadow : function(e) {
-		//console.log('propagate');
-		
 		var x = e.client.x;
 		var y = e.client.y;
 		var z = 0;
@@ -262,12 +280,12 @@ UI.Controller.Window = new Class({
 		});
 	},
 
-
 	/*
-	  Function: resetCascade
-	  
-	   	Reset all window location and set a cascade
-	  
+	Function: resetCascade
+		Reset all window location and set a cascade
+	
+	Returns:
+		(void)
 	 */
 	
 	resetCascade: function() {
@@ -280,5 +298,4 @@ UI.Controller.Window = new Class({
 			}
 		});
 	}
-	
 });

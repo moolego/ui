@@ -2,6 +2,9 @@
 	Class: UI.Label
 		UI.Label is used to make text element with css skin
 	
+	Extends:
+		<UI.Element>
+	
 	Arguments:
 		options
 		
@@ -37,26 +40,5 @@ UI.Label = new Class({
 		emboss				: false,
 		
 		selectable			: false
-	},
-
-	/* 
-	Function: build
-		private function
-		
-		Call UI.Element build
-	*/
-	
-	build: function(options){
-		this.parent(options);
-		/*
-		if (this.options.emboss) {
-			this.addEvent('injected', function(){
-				this.emboss = this.element.clone().inject(this.element, 'top');
-				if (this.props.components && this.props.components.emboss.styles) {
-					this.emboss.setStyles(this.props.components.emboss.styles);
-				}
-			});
-		}
-		*/
 	}
 });

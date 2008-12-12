@@ -37,11 +37,6 @@
 				},
 				onClick : function(){
 		
-					
-
-					
-					
-				
 				},
 				styles		: {
 					margin	: 10
@@ -76,6 +71,7 @@
 			
 			this.googlemap = new UI.Button({
 				label				: 'Window',
+				draggable			: true,
 				labelStyles			: {
 					fontSize		: '26px',
 					fontWeight		: 'bold',
@@ -83,9 +79,17 @@
 					padding			: '18px 26px',
 					color			: '#fff'
 				},
+				onInjected : function(){
+					this.element.set('tween', {
+						duration: 'long',
+						transition: Fx.Transitions.Bounce.easeOut
+					});
+					this.initialButtonPosition = this.element.getCoordinates(document.body).top + 10;
+				},
 				onClick: function(){
-					tip.fade(0);
-				}.bind(this),
+					var coord = this.element.getCoordinates(document.body);
+					this.element.tween('top', Window.getHeight() - this.initialButtonPosition - coord.height);
+				},
 				props				: {
 					'default'				: {
 						layers				: {
@@ -181,12 +185,8 @@
 				onClick				: function() { 
 					
 					if (this.bubble) {
-					
-						this.bubble.label.set('html', counter++);
-						this.bubble.setSize();
-					
+						this.bubble.set('html', counter++);					
 					} else {
-					
 						this.bubble = new UI.Bubble({
 							target: $(this),
 							label: counter++,
@@ -204,7 +204,7 @@
 											opacity: 1
 										},
 										arrow: {
-											size: [9, 4],
+											size: [16, 9],
 											offset: ['auto', 9, 0],
 											opacity: 1,
 											color: '#000'

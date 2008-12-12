@@ -1005,7 +1005,7 @@ UI.props.demo = {
 		shape03 : {
 			'default' : {
 				styles : {
-					position : 'relative',
+					position : 'relative'
 				},
 				layers : {
 					shadow : {

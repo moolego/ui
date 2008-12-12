@@ -1,6 +1,9 @@
 /*
-Class: UI.TabView
-	Creates a panels container that let you manage inner panels.
+	Class: UI.TabView
+		Creates a panels container that let you manage inner panels.
+	
+	Extends:
+		<UI.View>
 
 */
 
@@ -13,24 +16,28 @@ UI.TabView = new Class({
 	},
 	
 	/*
-	 Method: initialize
-	 Constructor
+	Constructor: initialize
+		Constructor
+	
+	See also:
+		<UI.Element::initialize>
 	 
 	 */
 	initialize: function(options){
 		this.tabs = new Array();
-		
 		this.parent(options);
-		
-		
 	},
 	
 	/*
-	 Function: build
-	 
-	 Creates html structure and inject it to the dom.
-	 
-	 */
+	Function: build
+		private function
+		
+		Creates html structure and inject it to the dom.
+	
+	See also:
+		<UI.View::build>
+		<UI.Element::build>
+	*/
 	build: function(){
 		this.parent();
 		this.buildTabs();

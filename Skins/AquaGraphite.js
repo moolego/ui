@@ -1180,6 +1180,7 @@ UI.props.AquaGraphite = {
 					}
 				},
 				/* css properties */
+<<<<<<< HEAD:Skins/AquaGraphite.js
 				styles : {
 					overflow : 'hidden',
 					cursor : 'default',
@@ -1193,6 +1194,21 @@ UI.props.AquaGraphite = {
 					fontSize : '13px',
 					lineHeight : '20px',
 					height : '20px'
+=======
+				styles: {
+					overflow: 'hidden',
+					cursor: 'default',
+					color: '#000000',
+					display: 'block',
+					margin: '1px 0 1px 10px',
+					padding: '0',
+					textAlign: 'center',
+					textTransform: 'capitalize',
+					fontWeight: 'normal',
+					fontSize: '13px',
+					lineHeight: '20px',
+					height: '20px'
+>>>>>>> 5629724d6a89763380dedfad84755c12ad98fb38:Skins/AquaGraphite.js
 				}
 			}
 		},
@@ -1255,7 +1271,13 @@ UI.props.AquaGraphite = {
 				},
 				
 				/* css properties */
+<<<<<<< HEAD:Skins/AquaGraphite.js
 				styles : {},
+=======
+				styles: {
+					position	: 'absolute'
+				},
+>>>>>>> 5629724d6a89763380dedfad84755c12ad98fb38:Skins/AquaGraphite.js
 				
 				/* effects settings */
 				hideFxDuration : 100,
@@ -1377,6 +1399,7 @@ UI.props.AquaGraphite = {
 	
 	
 	// View
+<<<<<<< HEAD:Skins/AquaGraphite.js
 	
 	
 	view : {
@@ -1385,6 +1408,15 @@ UI.props.AquaGraphite = {
 				backgroundColor : '#d6d6d6'
 				
 				
+=======
+	view: {
+		'default': {
+			'default': {
+				backgroundColor: '#d6d6d6',
+				styles : {
+					position: 'relative'
+				}
+>>>>>>> 5629724d6a89763380dedfad84755c12ad98fb38:Skins/AquaGraphite.js
 			}
 		},
 		transparent : {
@@ -2019,6 +2051,7 @@ UI.props.AquaGraphite = {
 	windowButton : {
 		'default' : {
 			'default' : {
+<<<<<<< HEAD:Skins/AquaGraphite.js
 				styles : {
 					position : 'relative',
 					display : 'inline-block',
@@ -2028,6 +2061,16 @@ UI.props.AquaGraphite = {
 				
 				layers : {
 					reorder : ['emboss', 'background', 'main', 'reflect', 'cache'],
+=======
+				styles: {
+					position: 'relative',
+					'float': 'left',
+					cursor: 'pointer'
+				},
+				
+				layers: {
+					reorder: ['emboss', 'background', 'main', 'reflect', 'cache'],
+>>>>>>> 5629724d6a89763380dedfad84755c12ad98fb38:Skins/AquaGraphite.js
 					
 					'default' : {
 						position : 'absolute',
@@ -2079,6 +2122,7 @@ UI.props.AquaGraphite = {
 				
 				
 			},
+<<<<<<< HEAD:Skins/AquaGraphite.js
 			show : {
 				layers : {
 					reorder : ['emboss', 'background', 'main', 'reflect', 'cache', 'line', 'line2'],
@@ -2099,13 +2143,35 @@ UI.props.AquaGraphite = {
 						offset : [3.5, 4.5],
 						opacity : 1,
 						size : [7, 7]
+=======
+			over : {
+				layers: {
+					reorder: ['emboss', 'background', 'main', 'reflect', 'cache', 'line', 'line2'],
+					line: {
+						position: 'absolute',
+						shape: 'line',
+						width: 1.5,
+						color: '#414755',
+						offset: [3.5, 4.5],
+						opacity: 1,
+						size: [7, 7]
+					},
+					line2: {
+						position: 'absolute',
+						shape: 'lineUp',
+						width: 1.5,
+						color: '#414755',
+						offset: [3.5, 4.5],
+						opacity: 1,
+						size: [7, 7]
+>>>>>>> 5629724d6a89763380dedfad84755c12ad98fb38:Skins/AquaGraphite.js
 					}
 				}
 			}
 		},
 		minimize : {
 			'default' : {},
-			show : {
+			over : {
 				layers : {
 					reorder : ['emboss', 'background', 'main', 'reflect', 'cache', 'line'],
 					line : {
@@ -2126,6 +2192,7 @@ UI.props.AquaGraphite = {
 				
 				
 			},
+<<<<<<< HEAD:Skins/AquaGraphite.js
 			show : {
 				layers : {
 					reorder : ['emboss', 'background', 'main', 'reflect', 'cache', 'line', 'line2'],
@@ -2148,6 +2215,30 @@ UI.props.AquaGraphite = {
 						opacity : 1,
 						size : [7, 7],
 						rotation : 45
+=======
+			over : {
+				layers: {
+					reorder: ['emboss', 'background', 'main', 'reflect', 'cache', 'line', 'line2'],
+					line: {
+						position: 'absolute',
+						shape: 'lineUp',
+						width: 1.5,
+						color: '#414755',
+						offset: [3.5, 4.5],
+						opacity: 1,
+						size: [7, 7],
+						rotation: 45
+					},
+					line2: {
+						position: 'absolute',
+						shape: 'line',
+						width: 1.5,
+						color: '#414755',
+						offset: [3.5, 4.5],
+						opacity: 1,
+						size: [7, 7],
+						rotation: 45
+>>>>>>> 5629724d6a89763380dedfad84755c12ad98fb38:Skins/AquaGraphite.js
 					}
 				}
 			}

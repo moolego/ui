@@ -1,6 +1,6 @@
 
 /*
-Class: UI.Dialog Class Reference
+Class: UI.Dialog
 	The UI.Dialog class defines objects that manage and coordinate the dialog an application displays on the screen.
 
 Arguments
@@ -17,6 +17,9 @@ Example:
 		height': 		'400',
 	});
 	(end)
+
+Discussion:
+	Still we need this class?
 */
 
 UI.Dialog = new Class({
@@ -25,13 +28,4 @@ UI.Dialog = new Class({
 	options: {
 		center				: true
 	},
-	  
-	initialize: function(options){
-		this.parent(options);
-	},
-	
-	build : function() {
-		
-		
-	}
 });

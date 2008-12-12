@@ -18,10 +18,6 @@ UI.SplitView = new Class({
 		minSize		: 160
 	},
 	
-	initialize: function(options){
-		this.parent(options);
-	},
-
 	build: function(){
 		this.parent();
 		
