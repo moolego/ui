@@ -2084,7 +2084,7 @@ UI.props.AquaGraphite = {
 				
 			},
 
-			show : {
+			over : {
 				layers : {
 					reorder : ['emboss', 'background', 'main', 'reflect', 'cache', 'line', 'line2'],
 					line : {
@@ -2132,7 +2132,7 @@ UI.props.AquaGraphite = {
 				
 			},
 
-			show : {
+			over : {
 				layers : {
 					reorder : ['emboss', 'background', 'main', 'reflect', 'cache', 'line', 'line2'],
 					line : {
