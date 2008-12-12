@@ -214,8 +214,8 @@
 				}).inject(slidator);
 				
 				new UI.Slider($merge(baseParams, {
-					range : [4, 20],
-					steps : 16,
+					range : [8, 20],
+					steps : 12,
 					onInjected : function(){
 						this.set(fontSize);
 					},
@@ -278,18 +278,19 @@
 							var color = RGBtoHex(0,Math.floor(255 - ratioone * one),  Math.floor(255 - ratiotwo * two));
 							//console.log(index)
 							if (buttons[index]) {
-								buttons[index].props.layers.front.color = '#' + color;
-								
-								buttons[index].props.layers.emboss.radius = radius;
-								buttons[index].props.layers.front.radius = radius -2;
-								buttons[index].props.layers.front.offset = offset;
-								buttons[index].props.layers.reflect.radius = radius -4;
-								buttons[index].props.styles.margin = margin;
-								buttons[index].props.components.label.styles.fontSize = fontSize;
-								buttons[index].setState('default');
-								buttons[index].set('html', '<small>time</small><br/>' + (($time() - time) / 1000) + '<br/><small style="font-size:5px: color:#ccc">color</small><br/>' + color);
-								
-								//console.log(index)
+								var states = ['default', 'over', 'down'];
+								states.each(function(state){
+									buttons[index].skin[state].layers.emboss.radius = radius;
+									buttons[index].skin[state].layers.front.color = '#' + color;
+									buttons[index].skin[state].layers.front.radius = radius -2;
+									buttons[index].skin[state].layers.front.offset = offset;
+									buttons[index].skin[state].layers.reflect.radius = radius -4;
+									buttons[index].skin[state].styles.margin = margin;
+									buttons[index].skin[state].styles.fontSize = fontSize;
+									
+									buttons[index].set('html', '<small>time</small><br/>' + (($time() - time) / 1000) + '<br/><small style="font-size:5px: color:#ccc">color</small><br/>' + color);
+									//console.log(index)
+								})
 							}
 							else {
 								buttons.push(new UI.Button({
