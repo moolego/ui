@@ -146,7 +146,6 @@ UI.Window = new Class({
 		this.buildHead();
 		this.buildView();
 		this.buildFoot();
-		this.buildOverlay();
 		
 		this.inject(this.options.container || document.body);
 		
@@ -321,31 +320,6 @@ UI.Window = new Class({
 	},
 
 	/* 
-	Function: buildOverlay
-		create a new overlay object
-	
-	Returns:
-		(void)
-	
-	Discussion:
-		Maybe use this as a class implementation (also used in <UI.View>)
-	*/
-
-	buildOverlay: function() {
-		this.overlay = new Element('div',this.props.components.overlay)
-		 .inject(this.view.element);
-
-		this.addEvents({
-			'onBlur' : function() { this.overlay.show(); },
-			'onFocus' : function() { this.overlay.hide(); },
-			'onResizeStart' : function() { this.overlay.show(); },
-			'onResizeComplete' : function() { this.overlay.hide(); },
-			'onDragStart' : function() { this.overlay.show(); },
-			'onDragComplete' : function() { this.overlay.hide(); }
-		});
-	},
-
-	/* 
 	Function: buildFoot
 		private function
 		
@@ -445,6 +419,15 @@ UI.Window = new Class({
 				this.options.width = coord.width;
 				this.options.height = coord.height;
 			}.bind(this)
+		});
+		
+		this.addEvents({
+			'onBlur' : function() { this.view.overlay.show(); },
+			'onFocus' : function() { this.view.overlay.hide(); },
+			'onResizeStart' : function() { this.view.overlay.show(); },
+			'onResizeComplete' : function() { this.view.overlay.hide(); },
+			'onDragStart' : function() { this.view.overlay.show(); },
+			'onDragComplete' : function() { this.view.overlay.hide(); }
 		});
 	},
 
