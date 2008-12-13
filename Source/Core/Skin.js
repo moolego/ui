@@ -15,7 +15,6 @@
 */
 
 UI.Skin = new Class({
-	Singleton 	: true,
  	Implements	: [Events, Options],
 	
 	options : {

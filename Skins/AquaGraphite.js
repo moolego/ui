@@ -1386,6 +1386,20 @@ UI.props.AquaGraphite = {
 		'default': {
 			'default': {
 				backgroundColor: '#d6d6d6',
+				components: {
+					overlay : {
+						styles : {
+							backgroundColor : '#fff',
+							opacity : .05,
+							position : 'absolute',
+							height : '100%',
+							width : '100%',
+							top :0,
+							left :0,
+							zIndex : '100000'
+						}
+					}
+				},
 				styles : {
 					position: 'relative'
 				}
@@ -1812,18 +1826,6 @@ UI.props.AquaGraphite = {
 							marginBottom : 0,
 							width : '24px',
 							height : '24px'
-						}
-					},
-					overlay : {
-						styles : {
-							backgroundColor : '#fff',
-							opacity : 0,
-							position : 'absolute',
-							height : '100%',
-							width : '100%',
-							top :0,
-							left :0,
-							zIndex : '100000'
 						}
 					}
 				},
