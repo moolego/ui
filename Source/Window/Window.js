@@ -183,6 +183,8 @@ UI.Window = new Class({
 		} else { 
 			this.title.element.setStyle('paddingRight',width) 
 		}
+		
+		if (this.options.toolbar) this.buildToolbar(this.options.toolbar);
 	},
 
 	/*
@@ -255,11 +257,11 @@ UI.Window = new Class({
 
 		// not really nice because related to a specific layer ... 
 		this.props.layers.underlay.size[1] = this.head.getSize().y;
-		this.updateSize();
+		//this.updateSize();
 		
 		this.addEvents({
-			onMinimize 			: function() { this.toolbar.hide() },
-			onNormalize 		: function() { this.toolbar.show() }
+			onMinimize 			: function() { console.log('bye bye'); this.toolbar.hide() },
+			onNormalize 		: function() { console.log('hello'); this.toolbar.show() }
 		});
 		
 		new UI.Button(this.props.components.toggle)
@@ -553,14 +555,17 @@ UI.Window = new Class({
 	*/
 
 	normalize : function() {
-		this.controller.focus(this);
+		
 		
 		var size = {
 			width : false,
 			height : false
 		};
 		this.setState('default', size);
-		this.setLocation(false, false);
+		
+		this.setLocation();
+		
+		this.controller.focus(this);
 		
 		this.maximized = false;
 		this.minimized = false;

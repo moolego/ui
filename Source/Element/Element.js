@@ -69,7 +69,7 @@ UI.Element = new Class({
 		styles				: {},
 		
 		//devel
-		debug				: true,
+		debug				: false,
 		
 		//group id
 		group				: false,
@@ -100,7 +100,7 @@ UI.Element = new Class({
 	
 	initialize: function(options){
 		this.setOptions(options);
-		if (!this.controller) this.controller = UI.controller;
+		if (!this.controller) this.controller = ui.controller;
 
 		this.setClassName();
 		this.setSkin();

@@ -11,6 +11,6 @@
 var UI = UI || {
 	version		: '0.1b',
 	author		: 'Code Floor',
-	elements	: new Hash(),
+	elements	: new Array(),
 	props		: {}
 };
