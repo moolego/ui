@@ -10,7 +10,7 @@
 
 var UI = UI || {
 	version		: '0.1b',
-	author		: 'Floor',
+	author		: 'Code Floor',
 	elements	: new Hash(),
 	props		: {}
 };

@@ -22,6 +22,7 @@
 
 	Credits: 
 		based on Valerio's Mootools scrollbar plugin.
+		found in upload folder of mootools website
 
 */
 
@@ -32,8 +33,7 @@ UI.Scrollbar = new Class({
 	options: {
 		component		: 'scrollbar',
 		type			: 'track',
-		
-		width			: 15,
+
 		
 		maxThumbSize	: 32,
 		wheel			: 32	
@@ -57,6 +57,10 @@ UI.Scrollbar = new Class({
 	},
 	
 	build: function() {
+		
+		if (!this.options.width)
+			this.options.width = this.props.width;
+		
 		this.parent();
 		
 		this.inject(this.options.container,'before')
@@ -69,6 +73,7 @@ UI.Scrollbar = new Class({
 	},
 	
 	update: function(){
+	
 		this.containerSize = this.options.container.getSize().y;
 		this.setSize(this.options.width.toInt(),this.containerSize);
 		this.containerScrollSize = this.options.container.scrollHeight;
