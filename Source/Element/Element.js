@@ -333,12 +333,12 @@ UI.Element = new Class({
 		this.element.addEvents({
 			mousedown 	: this.fireEvent.bind(this, 'mousedown'),
 			click		: function(){
-				if (!Browser.Engine.trident)
-					this.fireEvent('click');
+				if (!Browser.Engine.trident) 
+				 this.fireEvent('click');
 			}.bind(this),
 			mouseup		: function(){
-				if (Browser.Engine.trident)
-					this.fireEvent('click');
+				if (Browser.Engine.trident)	
+				 this.fireEvent('click');
 				this.fireEvent('mouseup');
 			}.bind(this),
 			

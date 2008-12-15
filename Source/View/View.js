@@ -50,8 +50,10 @@ UI.View = new Class({
 
 		tag					: 'div',
 		contentTag			: 'div',			// 
-
+		
 		content				: {},
+
+		scrollbar			: {},
 
 		// implemented events		
 		onLoadComplete		: $empty
@@ -91,7 +93,8 @@ UI.View = new Class({
 
 	buildOverlay: function() {
 		this.overlay = new Element('div',this.props.components.overlay)
-		 .inject(this.element);
+		 .inject(this.element)
+		 
 	},
 
 	/*
@@ -140,9 +143,15 @@ UI.View = new Class({
 	*/
 	
 	buildScrollbar : function() {
-		this.scrollbar = new UI.Scrollbar({
-			container	: this.content
-		});
+		
+		console.log(':'+this.options.skin);
+		
+		if (this.options.skin) 
+		 this.options.scrollbar.skin = this.options.skin;
+		 
+		this.options.scrollbar.container = this.content;
+		
+		this.scrollbar = new UI.Scrollbar(this.options.scrollbar);
 				 
 		this.addEvents({
 			'ondLoadCompplete' : function() { this.scrollbar.update() },
@@ -212,6 +221,9 @@ UI.View = new Class({
 	*/
 	
 	setAjaxContent: function(source) {
+		if (this.iframe) 
+		 this.iframe.destroy();
+		
 		new Request.HTML({
 			url 		: source,
 			update		: this.content,

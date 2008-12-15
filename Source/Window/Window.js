@@ -169,13 +169,14 @@ UI.Window = new Class({
 		this.dragHandlers.push(this.head);
 		this.head.disableSelect();	
 		this.buildControls();
+		
 		this.title = new UI.Label(this.props.components.title)
-		.inject(this.head);
+		 .inject(this.head);
 		
 		this.setTitle(this.options.title);
 		
 		var width = this.controls.getSize().x;
-		width = 70;
+		width = 0;
 		
 		if (this.props.components.controls.styles['float'] == 'right') { 
 			this.title.element.setStyle('paddingLeft',width); 
@@ -276,6 +277,9 @@ UI.Window = new Class({
 	
 	Returns:
 		(void)
+		
+	Discussion:
+		We should setup a better switch to build view according its type
 	*/	
 
 	buildView : function() {
@@ -297,6 +301,11 @@ UI.Window = new Class({
 			
 		} else {
 			// should be merge depending on certain conditions 
+			
+			console.log(this.options.skin);
+			
+			if (this.options.skin) 
+			 this.options.view.skin = this.options.skin;
 			
 			if (!this.options.view.type) 
 			 this.options.view.type = this.props.components.view.type;
