@@ -72,7 +72,7 @@ UI.Button = new Class({
 	*/
 	
 	setState : function(state){
-		if (this.label) {
+		if (this.label && this.skin[state]) {
 			this.label.setStyles(this.skin[state].components.label.styles);
 		}
 		this.parent(state);
