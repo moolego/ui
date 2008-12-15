@@ -34,7 +34,6 @@ UI.Scrollbar = new Class({
 		component		: 'scrollbar',
 		type			: 'track',
 
-		
 		maxThumbSize	: 32,
 		wheel			: 32	
 	},
