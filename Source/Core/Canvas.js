@@ -44,6 +44,7 @@ UI.Canvas = new Class({
 		className		: 'ui-canvas',
 		
 		disableShadowOnExplorer : true,
+		debug			: false,
 		
 		onComplete		: $empty
 	},
@@ -339,6 +340,26 @@ UI.Canvas = new Class({
 
 	trace : function(key) {
 		var properties = this.getProperties(key);
+		if (this.options.debug) {
+			for (var id in properties) {
+				if (properties[id] == 'NaN') {
+					console.log(properties[id]);
+					return;
+				}
+				if ($type(properties[id]) == 'array' || $type(properties[id]) == 'object') {
+					for (var val in properties[id]) {
+						if (properties[id][val] == 'NaN') {
+							console.log(properties[id][val]);
+							return;
+						}
+					}
+				}
+			}
+			if (properties.size && !properties.size[0] && !properties.size[1]) {
+				console.log(this.options.element, key, ' : size is null');
+				return;
+			}
+		}
 		this.ctx.save();
 		this.setTransformation(properties);
 		switch(properties.shape) {
@@ -664,7 +685,6 @@ UI.Canvas = new Class({
 			
 			//make the gradient with start point and end point
 			//console.log(props.size[0], props.size[1]);
-			
 
 			var color = this.ctx.createLinearGradient(ax, ay, bx, by);
 			

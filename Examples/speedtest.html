@@ -54,6 +54,7 @@
 		
 		<script type="text/javascript">
 		//<!--/*--><![CDATA[//><!--
+		
 			window.addEvent('domready', function(){
 				
 				//(?) settings
@@ -63,11 +64,11 @@
 				var ratiotwo = 40;
 				
 				//shape setting
-				var radius = 8;
+				radius = 8;
 				var offset = 2;
-				var height = 46;
+				var height = 64;
 				var margin = 3;
-				var fontSize = 12;
+				var fontSize = 11;
 				
 				buttons = new Array();
 				
@@ -160,8 +161,8 @@
 				}).inject(slidator);
 				
 				new UI.Slider($merge(baseParams, {
-					range : [4, 30],
-					steps : 27,
+					range : [0, 30],
+					steps : 31,
 					onInjected : function(){
 						this.set(radius);
 					},
@@ -196,8 +197,8 @@
 				}).inject(slidator);
 				
 				new UI.Slider($merge(baseParams, {
-					range : [40, 80],
-					steps : 40,
+					range : [50, 150],
+					steps : 100,
 					onInjected : function(){
 						this.set(height);
 					},
@@ -263,8 +264,6 @@
 					}
 				}).inject(document.body);
 				
-				
-				
 				function fillButtons() {
 					var size = 7;
 					time = $time();
@@ -278,60 +277,55 @@
 							var color = RGBtoHex(0,Math.floor(255 - ratioone * one),  Math.floor(255 - ratiotwo * two));
 							//console.log(index)
 							if (buttons[index]) {
+								
+								buttons[index].props.height = height;
 								buttons[index].props.layers.front.color = '#' + color;
 								
 								buttons[index].props.layers.emboss.radius = radius;
 								buttons[index].props.layers.front.radius = radius -2;
 								buttons[index].props.layers.front.offset = offset;
 								buttons[index].props.layers.reflect.radius = radius -4;
+								buttons[index].props.layers.reflect.offset = offset;
 								buttons[index].props.styles.margin = margin;
 								buttons[index].props.components.label.styles.fontSize = fontSize;
-								buttons[index].setState('default');
+								
 								buttons[index].set('html', '<small>time</small><br/>' + (($time() - time) / 1000) + '<br/><small style="font-size:5px: color:#ccc">color</small><br/>' + color);
 								
+								buttons[index].setState('default');
 								//console.log(index)
 							}
 							else {
 								buttons.push(new UI.Button({
 									label: '<small>time</small><br/>' + (($time() - time) / 1000) + '<br/><small style="font-size:5px: color:#ccc">color</small><br/>' + color,
 									skin: 'demo',
-									type: 'jgood',
+									type: 'speedtest',
 									props: {
 										'default': {
-											size : ['auto', height],
+											height : height,
+											components : {
+												label : {
+													styles : {
+														fontSize : fontSize
+													}
+												}
+											},
 											styles : {
-												fontSize : fontSize,
 												margin : margin
 											},
 											layers: {
 												emboss: {
-													offset: '0px',
-													color: '#000',
-													opacity: .17,
 													radius: radius
 												},
 												
 												front: {
 													offset: offset,
-													opacity: 1,
 													color: '#' + color,
 													radius: radius -2
 												},
 												reflect: {
-													offset: [2, 2, '40%'],
+													offset: [offset, offset, '40%'],
 													
-													gradient	: {
-														color: ['#FFF', '#FFF'],
-														opacity: [.4, .03]
-													},
 													radius: radius - 4
-												}
-											}
-										},
-										down: {
-											layers: {
-												front: {
-													color: '#333'
 												}
 											}
 										}
@@ -352,7 +346,11 @@
 				};
 				
 				function RGBtoHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B)}
-				
+				/*
+				UI.Button.implement({
+					setBehavior : $empty
+				});
+				*/
 				fillButtons();
 			});
 		//--><!]]>
