@@ -1386,6 +1386,20 @@ UI.props.AquaGraphite = {
 		'default': {
 			'default': {
 				backgroundColor: '#d6d6d6',
+				components: {
+					overlay : {
+						styles : {
+							backgroundColor : '#fff',
+							opacity : .05,
+							position : 'absolute',
+							height : '100%',
+							width : '100%',
+							top :0,
+							left :0,
+							zIndex : '100000'
+						}
+					}
+				},
 				styles : {
 					position: 'relative'
 				}
@@ -1520,6 +1534,23 @@ UI.props.AquaGraphite = {
 				components : {
 					item : {
 						component : 'label'
+					},
+					title : {
+						styles : {
+							display:'block',
+							padding:'8px 0 0 15px',
+							height:'8px',
+							fontWeight : 'bold'
+						}
+					},
+					desc : {
+						styles : {
+							display:'block',
+							padding:'0 0 0 15px',
+							height:'10px',
+							fontSize : '11px',
+							color:'#333'
+						}
 					}
 				}
 			}
@@ -1530,7 +1561,7 @@ UI.props.AquaGraphite = {
 		'default' : {
 			'default' : {
 				
-				height : 40,
+				height : 42,
 				
 				components : {
 					label : {
@@ -1561,14 +1592,13 @@ UI.props.AquaGraphite = {
 					margin : '0',
 					top : '0px',
 					left : '0px',
-					overflow : 'hidden'
+					overflow : 'hidden',
+					color:'#000'
 				},
 				layers : {
-					base : {
-						gradient : {
-							color : ['#d6d6d6', '#e8e8e8']
-						},
-						offset : 0
+					'default' : {
+						position: 'absolute'
+						
 					},
 					background : {
 						gradient : {
@@ -1580,14 +1610,14 @@ UI.props.AquaGraphite = {
 						gradient : {
 							color : ['#5d5d5d', '#5d5d5d']
 						},
-						offset : [0, 0, 1, 0]
+						offset : [1, 0, 0, 0]
 					},
 					main : {
 						opacity : 1,
 						gradient : {
 							color : ['#9c9c9c', '#888888']
 						},
-						offset : [0, 0, 1, 0]
+						offset : [1, 0, 1, 0]
 					},
 					line : {
 						position : 'absolute',
@@ -1647,6 +1677,7 @@ UI.props.AquaGraphite = {
 	scrollbar : {
 		track : {
 			'default' : {
+				width : 15,
 				styles : {
 					'float' : 'right',
 					height : '100%',
@@ -1812,18 +1843,6 @@ UI.props.AquaGraphite = {
 							marginBottom : 0,
 							width : '24px',
 							height : '24px'
-						}
-					},
-					overlay : {
-						styles : {
-							backgroundColor : '#fff',
-							opacity : 0,
-							position : 'absolute',
-							height : '100%',
-							width : '100%',
-							top :0,
-							left :0,
-							zIndex : '100000'
 						}
 					}
 				},
@@ -2825,7 +2844,8 @@ UI.props.AquaGraphite = {
 				/* css properties */
 				styles : {
 					position : 'relative',
-					display : 'inline-block'
+					display : 'inline-block',
+					paddingBottom : '100' 
 				},
 				
 				/* layers properties */
@@ -2840,15 +2860,26 @@ UI.props.AquaGraphite = {
 						radius : 8
 					},
 					background : {
-						offset : 0,
+						offset : [0,0,50,0],
 						gradient : {
-							color : ['#ff0000','#ff6666'],
-							angle :  110,
+							color : ['#000','#333'],
+							angle : 110,
 							opacity : .8,
 						},
 						
 						radius : 8
 					},
+					reflection : {
+						position : 'bottom',
+						height: 50,
+						offset : [0,0,0,0],
+						gradient : {
+							color : ['#000','#fff'],
+							angle : 10,
+							opacity : .8,
+						},
+						radius : [8,8,8,8]
+					}
 				}
 			}
 		}

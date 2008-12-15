@@ -1,76 +1,88 @@
 [
 	{
+		"group" : "Core",
 		"title" : "UI",
 		"desc"	: "Core/UI.js"
+	},
+	{
+		"group" : "Core",
+		"title" : "UI.Canvas",
+		"desc"	: "Core/Canvas.js"
+	},
+	{
+		"title" : "UI.Interface",
+		"desc"	: "Core/Interface.js"
 	},
 	{
 		"title" : "UI.Skin",
 		"desc"	: "Core/Skin.js"
 	},
 	{
-		"title" : "UI.Canvas",
-		"desc"	: "Core/Canvas.js"
+		"title" : "UI.Styles",
+		"desc"	: "Core/Styles.js"
 	},
 	{
 		"title" : "UI.Element",
 		"desc"	: "Element/Element.js"
 	},
 	{
-		"title" : "UI.Element.Drag",
-		"desc"	: "Element/Element.Drag.js"
+
+		"title" : "UI.Bubble",
+		"desc"	: "Element/Bubble.js"
 	},
 	{
-		"title" : "UI.Element.Resize",
-		"desc"	: "Element/Element.Resize.js"
+
+		"title" : "UI.Label",
+		"desc"	: "Element/Label.js"
 	},
 	{
-		"title" : "UI.Element.Controller",
+
+		"title" : "UI.Scrollbar",
+		"desc"	: "Element/Scrollbar.js"
+	},
+	{
+		"title" : "UI.ElementController",
 		"desc"	: "Element/Element.Controller.js"
 	},
 	{
 
 		"title" : "UI.Control",
-		"desc"	: "Control/Control.js"
+		"desc"	: "Form/Control.js"
 	},
 	{
 
 		"title" : "UI.Button",
-		"desc"	: "Control/Button.js"
+		"desc"	: "Form/Button.js"
 	},
 	{
 
 		"title" : "UI.Checkbox",
-		"desc"	: "Control/Checkbox.js"
+		"desc"	: "Form/Checkbox.js"
 	},
 	{
 
 		"title" : "UI.Input",
-		"desc"	: "Control/Input.js"
-	},
-	{
-
-		"title" : "UI.Label",
-		"desc"	: "Control/Label.js"
+		"desc"	: "Form/Input.js"
 	},
 	{
 
 		"title" : "UI.RadioGroup",
-		"desc"	: "Control/RadioGroup.js"
+		"desc"	: "Form/RadioGroup.js"
 	},
 	{
 
 		"title" : "UI.Select",
-		"desc"	: "Control/Select.js"
+		"desc"	: "Form/Select.js"
 	},
 	{
 
 		"title" : "UI.Slider",
-		"desc"	: "Control/Slider.js"
+		"desc"	: "Form/Slider.js"
 	},
 	{
 
 		"title" : "UI.Textarea",
-		"desc"	: "Control/Textarea.js"
+		"desc"	: "Form/Textarea.js"
 	},
 	{
 

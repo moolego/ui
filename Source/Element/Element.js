@@ -69,7 +69,7 @@ UI.Element = new Class({
 		styles				: {},
 		
 		//devel
-		debug				: false,
+		debug				: true,
 		
 		//group id
 		group				: false,
@@ -224,7 +224,11 @@ UI.Element = new Class({
 			width			: this.element.x,
 			height			: this.element.y,
 			debug			: this.options.debug,
-			element			: this.element
+			element			: this.element,
+			skin			: this.options.skin,
+			component		: this.options.component,
+			type			: this.options.type,
+			state			: this.options.state,
 		}).inject(this.element);
 		
 		this.addEvent('canvasDraw', function(state){
@@ -338,12 +342,12 @@ UI.Element = new Class({
 		this.element.addEvents({
 			mousedown 	: this.fireEvent.bind(this, 'mousedown'),
 			click		: function(){
-				if (!Browser.Engine.trident)
-					this.fireEvent('click');
+				if (!Browser.Engine.trident) 
+				 this.fireEvent('click');
 			}.bind(this),
 			mouseup		: function(){
-				if (Browser.Engine.trident)
-					this.fireEvent('click');
+				if (Browser.Engine.trident)	
+				 this.fireEvent('click');
 				this.fireEvent('mouseup');
 			}.bind(this),
 			

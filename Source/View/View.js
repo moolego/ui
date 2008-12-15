@@ -50,8 +50,10 @@ UI.View = new Class({
 
 		tag					: 'div',
 		contentTag			: 'div',			// 
-
+		
 		content				: {},
+
+		scrollbar			: {},
 
 		// implemented events		
 		onLoadComplete		: $empty
@@ -74,6 +76,7 @@ UI.View = new Class({
 	build: function() {
 		this.parent();
 		
+		this.buildOverlay();
 		this.setOverflow();
 		this.show();
 	},
@@ -90,16 +93,8 @@ UI.View = new Class({
 
 	buildOverlay: function() {
 		this.overlay = new Element('div',this.props.components.overlay)
-		 .inject(this.view.element);
-
-		this.addEvents({
-			'onBlur' : function() { console.log('blur');this.overlay.show(); },
-			'onFocus' : function() { this.overlay.hide(); },
-			'onResizeStart' : function() { this.overlay.show(); },
-			'onResizeComplete' : function() { this.overlay.hide(); },
-			'onDragStart' : function() { this.overlay.show(); },
-			'onDragComplete' : function() { this.overlay.hide(); }
-		});
+		 .inject(this.element)
+		 
 	},
 
 	/*
@@ -148,9 +143,15 @@ UI.View = new Class({
 	*/
 	
 	buildScrollbar : function() {
-		this.scrollbar = new UI.Scrollbar({
-			container	: this.content
-		});
+		
+		console.log(':'+this.options.skin);
+		
+		if (this.options.skin) 
+		 this.options.scrollbar.skin = this.options.skin;
+		 
+		this.options.scrollbar.container = this.content;
+		
+		this.scrollbar = new UI.Scrollbar(this.options.scrollbar);
 				 
 		this.addEvents({
 			'ondLoadCompplete' : function() { this.scrollbar.update() },
@@ -220,6 +221,9 @@ UI.View = new Class({
 	*/
 	
 	setAjaxContent: function(source) {
+		if (this.iframe) 
+		 this.iframe.destroy();
+		
 		new Request.HTML({
 			url 		: source,
 			update		: this.content,
@@ -295,7 +299,8 @@ UI.View = new Class({
 	
 	setIFrameContent : function(source) {
 		if (!this.iframe) {
-			this.element.empty();
+			if (this.content) this.content.destroy();
+			if (this.scrollbar) this.scrollbar.destroy();
 			this.iframe = new Element('iframe',this.props.components.iframe).inject(this.element);
 		};
 		

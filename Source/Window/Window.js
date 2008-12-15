@@ -146,7 +146,6 @@ UI.Window = new Class({
 		this.buildHead();
 		this.buildView();
 		this.buildFoot();
-		this.buildOverlay();
 		
 		this.inject(this.options.container || document.body);
 		
@@ -170,13 +169,14 @@ UI.Window = new Class({
 		this.dragHandlers.push(this.head);
 		this.head.disableSelect();	
 		this.buildControls();
+		
 		this.title = new UI.Label(this.props.components.title)
-		.inject(this.head);
+		 .inject(this.head);
 		
 		this.setTitle(this.options.title);
 		
 		var width = this.controls.getSize().x;
-		width = 70;
+		width = 0;
 		
 		if (this.props.components.controls.styles['float'] == 'right') { 
 			this.title.element.setStyle('paddingLeft',width); 
@@ -277,6 +277,9 @@ UI.Window = new Class({
 	
 	Returns:
 		(void)
+		
+	Discussion:
+		We should setup a better switch to build view according its type
 	*/	
 
 	buildView : function() {
@@ -299,6 +302,11 @@ UI.Window = new Class({
 		} else {
 			// should be merge depending on certain conditions 
 			
+			console.log(this.options.skin);
+			
+			if (this.options.skin) 
+			 this.options.view.skin = this.options.skin;
+			
 			if (!this.options.view.type) 
 			 this.options.view.type = this.props.components.view.type;
 			 
@@ -318,31 +326,6 @@ UI.Window = new Class({
 		}
 
 		this.content = this.view.content;
-	},
-
-	/* 
-	Function: buildOverlay
-		create a new overlay object
-	
-	Returns:
-		(void)
-	
-	Discussion:
-		Maybe use this as a class implementation (also used in <UI.View>)
-	*/
-
-	buildOverlay: function() {
-		this.overlay = new Element('div',this.props.components.overlay)
-		 .inject(this.view.element);
-
-		this.addEvents({
-			'onBlur' : function() { this.overlay.show(); },
-			'onFocus' : function() { this.overlay.hide(); },
-			'onResizeStart' : function() { this.overlay.show(); },
-			'onResizeComplete' : function() { this.overlay.hide(); },
-			'onDragStart' : function() { this.overlay.show(); },
-			'onDragComplete' : function() { this.overlay.hide(); }
-		});
 	},
 
 	/* 
@@ -445,6 +428,15 @@ UI.Window = new Class({
 				this.options.width = coord.width;
 				this.options.height = coord.height;
 			}.bind(this)
+		});
+		
+		this.addEvents({
+			'onBlur' : function() { this.view.overlay.show(); },
+			'onFocus' : function() { this.view.overlay.hide(); },
+			'onResizeStart' : function() { this.view.overlay.show(); },
+			'onResizeComplete' : function() { this.view.overlay.hide(); },
+			'onDragStart' : function() { this.view.overlay.show(); },
+			'onDragComplete' : function() { this.view.overlay.hide(); }
 		});
 	},
 

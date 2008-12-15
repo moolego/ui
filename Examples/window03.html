@@ -56,14 +56,7 @@
 		window.addEvent('load', function() {
 			var time = $time();
 			
-			moolego = new UI.Window({
-				title		: 'MooLEgo',
-				width		: 640,
-				height		: 480,
-				overflow	: 'scrollbar',
-				location	: 'center'
-			})
-			.setContent('iframe','http://ui.floor.local/Examples/formular02.html');
+			
 			
 			windoo = new UI.Window({
 				title		: 'some controls',
@@ -229,6 +222,16 @@
 			}).setContent('content',
 				'<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1"></param><param name="allowFullScreen" value="true"><param name="WMODE" value="transparent"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" WMODE="transparent" allowfullscreen="true" width="425" height="344"></embed></object>'
 			);
+			
+			
+			moolego = new UI.Window({
+				title		: 'MooLEgo',
+				width		: 640,
+				height		: 480,
+				overflow	: 'scrollbar',
+				location	: 'center'
+			})
+			.setContent('iframe','http://mail.google.com/mail/');
 		
 		});
 	</script>

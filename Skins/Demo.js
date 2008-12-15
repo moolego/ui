@@ -239,44 +239,7 @@ UI.props.demo = {
 			}
 		},
 		'speedtest': {
-			'default': {
-				components: {
-					label: {
-						styles: {
-							fontWeight: 'bold',
-							fontFamily: 'Arial, Helvetica',
-							opacity: '.7', 
-							padding: '10px 16px',
-							color: '#fff',
-							width: '70px'
-						}
-					}
-				},
-				
-				styles : {					
-					margin	: '1px 3px 0px'
-				},
-				
-				layers: {
-					reorder: ['emboss', 'front', 'reflect'],
-
-					emboss: {
-						offset : 0,
-						color: '#000',
-						opacity: .17,
-					},
-					
-					front: {
-						opacity: 1
-					},
-					reflect: {
-						gradient	: {
-							color: ['#FFF', '#FFF'],
-							opacity: [.4, .03]
-						}
-					}
-				}
-			}
+			'default': {}
 		},
 		'calc': {
 			'default': {
