@@ -36,7 +36,8 @@ UI.Toolbar = new Class({
 	Extends				: UI.Menu,
 	
 	options				: {
-		// default options	
+		// default options
+		tag				: 'div',
 		menus			: [],
 		zIndex			: 4000,
 		openOnRollover	: false,
@@ -84,10 +85,14 @@ UI.Toolbar = new Class({
 	 */
 	
 	inject : function(element, target){
-		this.element.inject(element, target);
-		this.setSize();
-		this.setCanvas();
+		this.fireEvent('inject');
 		this.setStyle('visibility', 'visible');
+		this.element.inject(element, target);
+		this.setSize($(element).getWidth(), false);
+		this.setCanvas();
+		this.controller.register(this);
+		this.fireEvent('injected');
+		
 		window.addEvent('resize', function(){
 			this.setSize(this.element.getParent().getSize().x);
 		}.bind(this));
@@ -124,7 +129,7 @@ UI.Toolbar = new Class({
 	
 	addSubmenuEvents : function(item, menuItem){
 		if(item.menu) {
-			menuItem.addEvents({
+			menuItem.element.addEvents({
 				'mousedown' : function(e){
 					if (this.activeItem != menuItem) {
 						this.time = $time();
@@ -135,13 +140,14 @@ UI.Toolbar = new Class({
 						} else {
 							// first push icon, then manage action with delay
 							this.menuWithAction = (function(){
-								if (this.activeItem.submenu) this.activeItem.submenu.hide(0);
+								if (this.activeItem && this.activeItem.submenu) this.activeItem.submenu.hide(0);
 								this.moveRollover(menuItem);
 								this.addSubmenu(item, menuItem, 'bottom');
 								this.menuWithAction = false;
-							}).delay(this.props.delay, this);
+							}).delay(this.props.actionDelay, this);
 						}
 					}
+					new Event(e).stop();
 				}.bind(this),
 				'mouseup' : function(){
 					if ($time() - this.time > 800 && this.underlay) {
@@ -173,10 +179,12 @@ UI.Toolbar = new Class({
 				}.bind(this)
 			})
 		}
-		menuItem.addEvents({
-			'mousedown' : function(){
+		menuItem.element.addEvents({
+			'mousedown' : function(e){
+				console.log('stoppp');
 				if (!item.menu && this.activeItem) this.activeItem.fireEvent('hideSubmenu');
 				menuItem.down = true;
+				new Event(e).stop();
 			}.bind(this),
 			'mouseleave' : function(){menuItem.down = false},
 			'mouseup' : function(){

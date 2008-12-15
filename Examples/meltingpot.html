@@ -196,6 +196,7 @@
 			}).inject(form);
 			
 			this.slider = new UI.Slider({
+				group		: 'test',
 				range				: [0, 100],
 				styles				: {
 					margin			: '20px 10px'
@@ -207,6 +208,7 @@
 			}).inject(form);
 			
 			button = new UI.Button({
+				group		: 'test',
 				label : "Launch a new Control test",
 				labelStyles : {
 					fontWeight : 'bold',
@@ -1129,6 +1131,6 @@
 	</script>
 </head>
 
-<body style="overflow:hidden" bgcolor="#e8e8e8"></body>
+<body style="overflow:hidden" bgcolor="#e8e8e8" topmargin=0 leftmargin=0 marginwidth=0 marginheight=0></body>
 
 </html>

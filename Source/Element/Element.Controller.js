@@ -3,7 +3,7 @@ Class: UI.Controller
 	Default element controller.
 	It handle element's z-index as well as group managing and group serialization (usefull for controls values
 */
-
+var ui = ui || {};
 
 UI.Controller = new Class({
 	Implements 			: [Events, Options],
@@ -24,6 +24,7 @@ UI.Controller = new Class({
 		this.setOptions();
 		this.zIndex = this.options.zBase;
 		this.groups = {};
+		this.elements = [];
 	},
 
 	/*
@@ -33,13 +34,15 @@ UI.Controller = new Class({
 		Add passing element to the elements list
 	   
 	Arguments:
-		elementClass - (object) an element class' instance
+		object - (object) an element class' instance
 	  
 	 */
 	
-	register: function(elementClass) {
+	register: function(object) {
+		var oid = UI.elements.push(object) - 1;
+		/*
 		//get first element parent made with UI
-		var element = elementClass.element.getParent();
+		var element = object.element.getParent();
 		while (element && !element.ui) {
 			element = element.getParent();
 		}
@@ -47,26 +50,27 @@ UI.Controller = new Class({
 		//store element in first element parent made with UI
 		if (element) {
 			if (!element.elements) element.elements = new Hash();
-			if (!element.elements[elementClass.options.component]) element.elements[elementClass.options.component] = new Array();
-			element.elements[elementClass.options.component].push(elementClass);	
+			if (!element.elements[object.options.component]) element.elements[object.options.component] = new Array();
+			element.elements[object.options.component].push(object);	
 		
 		//store element in UI (element is not in our UI)
 		} else {
-			if (!UI.elements[elementClass.options.component]) UI.elements[elementClass.options.component] = new Array();
-			UI.elements[elementClass.options.component].push(elementClass);
+			if (!UI.elements[object.options.component]) UI.elements[object.options.component] = new Array();
+			UI.elements[object.options.component].push(object);
 		}
 		
 		//replace tips
-		if (elementClass.options.component != 'tip') {
+		if (object.options.component != 'tip') {
 			window.fireEvent('setTipsPosition');
 		}
+		*/
 		
 		//set z-index
-		if (elementClass.element.getStyle('zIndex') == 'auto' || elementClass.element.getStyle('zIndex') == 0)
-			elementClass.element.setStyle('zIndex', elementClass.options.zIndex || this.zIndex++);
+		if (object.element.getStyle('zIndex') == 'auto' || object.element.getStyle('zIndex') == 0)
+			object.element.setStyle('zIndex', object.options.zIndex || this.zIndex++);
 			
 		//add element to the group if needed
-		//this.group(elementClass);
+		if (object.options.group) this.group(oid);
 	},
 	
 	/*
@@ -76,16 +80,14 @@ UI.Controller = new Class({
 		Add passing element to provided group
 	   
 	Arguments:
-		elementClass - (object) an element class' instance
+		object - (object) an element class' instance
 	  
 	 */
 	
-	group : function(elementClass) {
-		if (elementClass.options.group) {
-			//we check if the group exist, else we create it
-			this.groups[elementClass.options.group] = this.groups[elementClass.options.group] || [];
-			this.groups[elementClass.options.group].push(elementClass);
-		}
+	group : function(oid) {
+		//we check if the group exist, else we create it
+		this.groups[UI.elements[oid].options.group] = this.groups[UI.elements[oid].options.group] || new Array();
+		this.groups[UI.elements[oid].options.group].push(oid);
 	},
 	
 	/*
@@ -110,4 +112,4 @@ UI.Controller = new Class({
 	}
 });
 
-UI.controller = UI.controller || new UI.Controller();
+ui.controller = ui.controller || new UI.Controller();
