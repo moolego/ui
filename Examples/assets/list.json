@@ -1,11 +1,11 @@
 [
 	{
-		"group" : "Core",
+		"type" : "Core",
 		"title" : "UI",
 		"desc"	: "Core/UI.js"
 	},
 	{
-		"group" : "Core",
+		"type" : "Core",
 		"title" : "UI.Canvas",
 		"desc"	: "Core/Canvas.js"
 	},
