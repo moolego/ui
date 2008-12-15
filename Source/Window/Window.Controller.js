@@ -133,6 +133,7 @@ UI.Controller.Window = new Class({
 				}
 			}
 			if (window) window.focus();
+			return;
 		} else if (win && this.active != win) {
 			if (this.active && !this.active.minimized) this.blur(this.active);
 			
@@ -141,7 +142,9 @@ UI.Controller.Window = new Class({
 			
 			this.active = win;
 			win.fireEvent('focus');
+			return;
 		}
+		this.active = false;
 	},
 	
 	/*
