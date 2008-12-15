@@ -238,6 +238,9 @@ UI.props.demo = {
 				}
 			}
 		},
+		'speedtest': {
+			'default': {}
+		},
 		'calc': {
 			'default': {
 				components: {

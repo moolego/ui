@@ -1344,7 +1344,7 @@ UI.props.AquaGraphite = {
 				presentation : 'both',
 				hideFxDuration : 100,
 				showDelay : 0,
-				delay : 0,
+				actionDelay : 300,
 				
 				/* layers properties */
 				layers : {
@@ -1676,7 +1676,7 @@ UI.props.AquaGraphite = {
 	scrollbar : {
 		track : {
 			'default' : {
-				width:15,
+				width : 15,
 				styles : {
 					'float' : 'right',
 					height : '100%',

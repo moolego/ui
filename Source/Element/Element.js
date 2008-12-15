@@ -68,6 +68,9 @@ UI.Element = new Class({
 		
 		styles				: {},
 		
+		//devel
+		debug				: false,
+		
 		//group id
 		group				: false,
 		
@@ -97,7 +100,7 @@ UI.Element = new Class({
 	
 	initialize: function(options){
 		this.setOptions(options);
-		if (!this.controller) this.controller = UI.controller;
+		if (!this.controller) this.controller = ui.controller;
 
 		this.setClassName();
 		this.setSkin();
@@ -219,7 +222,13 @@ UI.Element = new Class({
 		this.canvas = new UI.Canvas({
 			props 			: this.props,
 			width			: this.element.x,
-			height			: this.element.y
+			height			: this.element.y,
+			debug			: this.options.debug,
+			element			: this.element,
+			skin			: this.options.skin,
+			component		: this.options.component,
+			type			: this.options.type,
+			state			: this.options.state,
 		}).inject(this.element);
 		
 		this.addEvent('canvasDraw', function(state){
@@ -268,12 +277,12 @@ UI.Element = new Class({
 	*/
 	
 	setSize : function(width, height, state){
+		this.fireEvent('onResize');
 		this.element.x = width || this.options.width || this.props.width || this.element.getSize().x;
 		this.element.y = height || this.options.height || this.props.height || this.element.getSize().y;
 		if (this.element.x) this.element.setStyle('width', this.element.x);
 		if (this.element.y) this.element.setStyle('height', this.element.y);
 		this.fireEvent('canvasDraw', state);
-		this.fireEvent('onResize');
 
 		return this;
 	},
@@ -345,7 +354,8 @@ UI.Element = new Class({
 			mouseenter 	: this.fireEvent.bind(this, 'mouseenter'),
 			mouseleave 	: this.fireEvent.bind(this, 'mouseleave'),
 			mouseover 	: this.fireEvent.bind(this, 'mouseover'),
-			mouseOut 	: this.fireEvent.bind(this, 'mouseOut')
+			mouseOut 	: this.fireEvent.bind(this, 'mouseOut'),
+			
 		});
 	},
 
@@ -618,7 +628,7 @@ UI.Element.implement({
 	set: function(property, value) {
 		if (property == 'html' && this.label) {
 			this.label.set(property, value);
-			this.setSize();
+			//this.setSize();
 		} else {
 			this.element.set(property, value);
 		}
