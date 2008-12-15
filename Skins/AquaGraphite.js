@@ -1520,8 +1520,7 @@ UI.props.AquaGraphite = {
 			}
 		}
 	},
-	
-	
+
 	listview : {
 		'default' : {
 			'default' : {
@@ -1677,6 +1676,7 @@ UI.props.AquaGraphite = {
 	scrollbar : {
 		track : {
 			'default' : {
+				width:15,
 				styles : {
 					'float' : 'right',
 					height : '100%',
