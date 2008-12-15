@@ -1,12 +1,36 @@
-// JavaScript Document
-
 /*
-Class: UI.Layout.App
-	The Layout.App class of the <http://iframework.org> iframework.
-	Creates a new Layout.App
-
-Arguments:
+	Class: UI.SplitView
+		The UI.SplitView class splits views.
+	
+	Extends:
+		<UI.View>
+	
+	Require:
+		<UI.Canvas>
+		<UI.Skin>
+		<UI.Element>
+		<UI.View>
+		<UI.Scrollbar>
 		
+	Arguments:
+		options
+		
+	Options:
+	
+	Returns:
+		Listview object.
+		
+	Example:
+		(start code)
+		var splitview = new UI.SplitView({
+			width			: 260,
+			height			: 400,
+		}).inject(document.body);
+		
+		splitview.views[0].setContent('ajax','side.php');
+		splitview.views[1].setContent('ajax','content.php');
+		
+		(end)	
 */
 
 UI.SplitView = new Class({
