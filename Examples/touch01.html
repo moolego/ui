@@ -54,161 +54,177 @@
 	
 	<script type="text/javascript">
 		window.addEvent('load', function() {
-			new UI.ListView({
-				width : 260,
-				height : 400,
-				styles : {
-					margin : '40px 20px 0 40px',
-					backgroundColor : '#e8e8e8'
-				},
-				url	: 'assets/list.json'
+			var panel = new UI.Window({
+				skin : 'BlueTouch',
+				width : 320,
+				height : 460,
+				controls : [],
+				resizable : false,
+				view : { overflow: 'hidden'}
 			}).inject(document.body);
 			
 			
+			
 			new UI.ListView({
-				skin : 'Demo',
-				width : 260,
-				height : 400,
+				skin : 'BlueTouch',
+				width : '100%',
+				height : '100%',
 				styles : {
-					margin : '40px 10px 0 0',
 					backgroundColor : '#e8e8e8'
 				},
 				data : [
 					{
+						"type" : "core",
 						"title" : "UI",
 						"desc"	: "Core/UI.js"
 					},
 					{
-						"title" : "UI.Skin",
-						"desc"	: "Core/Skin.js"
-					},
-					{
+						"type" : "core",
 						"title" : "UI.Canvas",
 						"desc"	: "Core/Canvas.js"
 					},
 					{
+						"type" : "core",
+						"title" : "UI.Interface",
+						"desc"	: "Core/Interface.js"
+					},
+					{
+						"type" : "core",
+						"title" : "UI.Skin",
+						"desc"	: "Core/Skin.js"
+					},
+					{
+						"type" : "core",
+						"title" : "UI.Styles",
+						"desc"	: "Core/Styles.js"
+					},
+					{
+						"type" : "element",
 						"title" : "UI.Element",
 						"desc"	: "Element/Element.js"
 					},
 					{
-						"title" : "UI.Element.Drag",
-						"desc"	: "Element/Element.Drag.js"
+						"type" : "element",
+						"title" : "UI.Bubble",
+						"desc"	: "Element/Bubble.js"
 					},
 					{
-						"title" : "UI.Element.Resize",
-						"desc"	: "Element/Element.Resize.js"
+						"type" : "element",
+						"title" : "UI.Label",
+						"desc"	: "Element/Label.js"
 					},
 					{
-						"title" : "UI.Element.Controller",
+						"type" : "element",
+						"title" : "UI.Scrollbar",
+						"desc"	: "Element/Scrollbar.js"
+					},
+					{
+						"type" : "element",
+						"title" : "UI.ElementController",
 						"desc"	: "Element/Element.Controller.js"
 					},
 					{
-				
+						"type" : "form",
 						"title" : "UI.Control",
-						"desc"	: "Control/Control.js"
+						"desc"	: "Form/Control.js"
 					},
 					{
-				
+						"type" : "form",
 						"title" : "UI.Button",
-						"desc"	: "Control/Button.js"
+						"desc"	: "Form/Button.js"
 					},
 					{
-				
+						"type" : "form",
 						"title" : "UI.Checkbox",
-						"desc"	: "Control/Checkbox.js"
+						"desc"	: "Form/Checkbox.js"
 					},
 					{
-				
+						"type" : "form",
 						"title" : "UI.Input",
-						"desc"	: "Control/Input.js"
+						"desc"	: "Form/Input.js"
 					},
 					{
-				
-						"title" : "UI.Label",
-						"desc"	: "Control/Label.js"
-					},
-					{
-				
+						"type" : "form",
 						"title" : "UI.RadioGroup",
-						"desc"	: "Control/RadioGroup.js"
+						"desc"	: "Form/RadioGroup.js"
 					},
 					{
-				
+						"type" : "form",
 						"title" : "UI.Select",
-						"desc"	: "Control/Select.js"
+						"desc"	: "Form/Select.js"
 					},
 					{
-				
+						"type" : "form",
 						"title" : "UI.Slider",
-						"desc"	: "Control/Slider.js"
+						"desc"	: "Form/Slider.js"
 					},
 					{
-				
+						"type" : "form",
 						"title" : "UI.Textarea",
-						"desc"	: "Control/Textarea.js"
+						"desc"	: "Form/Textarea.js"
 					},
 					{
-				
+						"type" : "menu",
 						"title" : "UI.Menu",
 						"desc"	: "Menu/Menu.js"
 					},
 					{
-				
+						"type" : "menu",
 						"title" : "UI.Context",
 						"desc"	: "Menu/Context.js"
 					},
 					{
-				
+						"type" : "menu",
 						"title" : "UI.Toolbar",
 						"desc"	: "menu/Select.js"
 					},
 					{
-				
+						"type" : "menu",
 						"title" : "UI.Scroller",
 						"desc"	: "Menu/Scroller.js"
 					},
 					{
-				
+						"type" : "view",
 						"title" : "UI.View",
 						"desc"	: "View/View.js"
 					},
 					{
-				
+						"type" : "view",
 						"title" : "UI.ListView",
 						"desc"	: "view/ListView.js"
 					},
 					{
-				
+						"type" : "view",
 						"title" : "UI.PanelView",
 						"desc"	: "View/PanelView.js"
 					},
 					{
-				
+						"type" : "view",
 						"title" : "UI.SplitView",
 						"desc"	: "View/SplitView.js"
 					},
 					{
-				
+						"type" : "view",
 						"title" : "UI.TabView",
 						"desc"	: "View/TabView.js"
 					},
 					{
-				
+						"type" : "window",
 						"title" : "UI.Window",
 						"desc"	: "Window/Window.js"
 					},
 					{
-				
+						"type" : "window",
 						"title" : "UI.WindowController",
 						"desc"	: "View/Window.Controller.js"
 					}
 				]
-			}).inject(document.body);
+			}).inject(panel.content);
 		});
 	</script>
 </head>
 
-<body style="overflow:hidden; background-color:#000">
+<body style="overflow:hidden; background-color:#ccc">
 </body>
 
 </html>

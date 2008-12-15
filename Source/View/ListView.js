@@ -41,13 +41,13 @@ UI.ListView = new Class({
 		component			: 'listview',
 		
 		data				: [],
-	
 		
-		component			: 'Button',
+		itemObject	 		: 'Button',
 		
 		item				: {
-			component		: 'itemList',
-			type			: 'default'
+			component	: 'itemList',
+			type			: 'default',
+			label : false
 		},
 		
 		width				: '100%',
@@ -126,21 +126,19 @@ UI.ListView = new Class({
 	*/
 
 	processList : function(data){
+		
+		if (this.options.skin)
+			this.options.item.skin = this.options.skin;
+			
 		data.each(function(element){
-			
-			console.log(this.options.item);
-			
-			var item = new UI[this.options.component].(this.options.item)
+			var item = new UI[this.options.itemObject](this.options.item)
 			.inject(this.content);
 			
-			$H(element).erase('type').each(function(el){
+			$H(element).erase('type').each(function(value,key){
+				
 				new UI.Element({
-					html : el,
-					styles : {
-						padding:'15px 0 0 5px',
-						height:'14px',
-						color:'#fff'
-					}
+					html : value,
+					styles : this.props.components[key].styles,
 				}).inject(item.element);
 				this.fireEvent('onResize');
 			}, this)
