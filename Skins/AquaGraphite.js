@@ -1520,8 +1520,7 @@ UI.props.AquaGraphite = {
 			}
 		}
 	},
-	
-	
+
 	listview : {
 		'default' : {
 			'default' : {
