@@ -144,7 +144,6 @@ UI.Controller.Window = new Class({
 			win.fireEvent('focus');
 			return;
 		}
-		this.active = false;
 	},
 	
 	/*
