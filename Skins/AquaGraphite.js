@@ -1390,8 +1390,8 @@ UI.props.AquaGraphite = {
 				components: {
 					overlay : {
 						styles : {
-							backgroundColor : '#fff',
-							opacity : .05,
+							backgroundColor : '#000',
+							opacity : 0,
 							position : 'absolute',
 							height : '100%',
 							width : '100%',
