@@ -18,7 +18,7 @@
 		Stacks should be better implemented
 */
 
-UI.Controller = UI.Controller || {};
+var ui = ui || {};
 
 UI.Controller.Window = new Class({
 	Singleton			: true,
@@ -64,7 +64,7 @@ UI.Controller.Window = new Class({
 
 		this.zIndex = this.options.zBase;
 		
-		window.addEvent('resize', function(){ 	this.resizeMaximizedWindow(); }.bind(this));
+		window.addEvent('resize', function(){ this.resizeMaximizedWindow(); }.bind(this));
 	},
 
 
@@ -121,6 +121,7 @@ UI.Controller.Window = new Class({
 	*/
 	
 	focus: function(win) {
+		
 		if (!$defined(win)) {
 			//make next highest window focus
 			var zIndex = 0;
@@ -144,7 +145,6 @@ UI.Controller.Window = new Class({
 			win.fireEvent('focus');
 			return;
 		}
-		this.active = false;
 	},
 	
 	/*
@@ -303,4 +303,4 @@ UI.Controller.Window = new Class({
 	}
 });
 
-UI.windowController = UI.windowController || new UI.Controller.Window();
+ui.windowController = UI.windowController || new UI.Controller.Window();
