@@ -248,7 +248,6 @@ UI.Controller.Window = new Class({
 				location.top += this.options.cascade.step.y;
 			}
 		},this);
-		
 		return location;
 	},
 	
