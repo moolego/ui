@@ -10,8 +10,8 @@
 
 var UI = UI || {
 	version		: '0.1b',
-	author		: 'Floor',
-	elements	: new Hash(),
+	author		: 'Code Floor',
+	elements	: new Array(),
 	props		: {}
 };/*
 	Class: UI.Canvas
@@ -59,6 +59,7 @@ UI.Canvas = new Class({
 		className		: 'ui-canvas',
 		
 		disableShadowOnExplorer : true,
+		debug			: false,
 		
 		onComplete		: $empty
 	},
@@ -91,6 +92,9 @@ UI.Canvas = new Class({
 		private function
 
 		Create a new canvas object and get the 2D context
+	
+	Returns:
+		(void)
 	 */
 
 	build : function() {
@@ -326,6 +330,9 @@ UI.Canvas = new Class({
 	Arguments: 
 		target		: (element) - the target dom element
 		position	: (string - optional) the position were to inject
+	
+	Returns:
+		this
 	*/
 	
 	inject : function(target, position){
@@ -348,6 +355,34 @@ UI.Canvas = new Class({
 
 	trace : function(key) {
 		var properties = this.getProperties(key);
+		if (this.options.debug) {
+			for (var id in properties) {
+				if (properties[id] == 'NaN') {
+					console.log(properties[id]);
+					return;
+				}
+				if ($type(properties[id]) == 'array' || $type(properties[id]) == 'object') {
+					for (var val in properties[id]) {
+						if (properties[id][val] == 'NaN') {
+							console.log(
+								//this.options.element,  ": ",
+								val + ' , Nan',
+								"(" + this.options.skin + "=>" + this.options.component + "=>" + this.options.type + "=>" + this.options.state + ")" 
+							);
+							return;
+						}
+					}
+				}
+			}
+			if (properties.size && !properties.size[0] && !properties.size[1]) {
+				console.log(
+					//this.options.element,  ": ",
+					key + ' , size is null',
+					"(" + this.options.skin + "=>" + this.options.component + "=>" + this.options.type + "=>" + this.options.state + ")" 
+				);
+				return;
+			}
+		}
 		this.ctx.save();
 		this.setTransformation(properties);
 		switch(properties.shape) {
@@ -387,7 +422,7 @@ UI.Canvas = new Class({
 		absolute - (boolean) Determine if the position is relative to previous element or absolute (relative to canvas)
 		
 	Return
-		(float) The value converted in pixel
+		value - (float) The value converted in pixel
 	*/
 	
 	convert2Px : function(value, direction, absolute) {
@@ -422,7 +457,7 @@ UI.Canvas = new Class({
 		size - (array) Array containing layer's width and height. Could be either a number or 'auto' to determine it from offset
 		
 	Return:
-		(array) An array with x and y start point coordinates, as well as width and height
+		offset - (array) An array with x and y start point coordinates, as well as width and height
 	*/	
 
 	setOffset : function(value,position, size) {
@@ -575,7 +610,7 @@ UI.Canvas = new Class({
 		key - (string) Layer name
 		
 	Return:
-		(object) an object to be drawn
+		properties - (object) an object to be drawn
 	*/
 	
 	getProperties : function(key) {
@@ -673,7 +708,6 @@ UI.Canvas = new Class({
 			
 			//make the gradient with start point and end point
 			//console.log(props.size[0], props.size[1]);
-			
 
 			var color = this.ctx.createLinearGradient(ax, ay, bx, by);
 			
@@ -912,24 +946,22 @@ UI.Canvas = new Class({
 	}	
 });
 /*
-
-Class: UI.Skin
-	The UI.Skin class defines a singleton object that handle skins.
-
-Arguments:
-	Options
+	Class: UI.Skin
+		The UI.Skin class defines a singleton object that handle skins.
 	
-Options: 
-	skin - (string) skin name defined in skins. ie: AquaGraphite
-
-Example:
-	(start code)
-	UI.skin = new UI.Skin('AquaGraphite');
-	(end)
+	Arguments:
+		Options
+		
+	Options: 
+		skin - (string) skin name defined in skins. ie: AquaGraphite
+	
+	Example:
+		(start code)
+		UI.skin = new UI.Skin('AquaGraphite');
+		(end)
 */
 
 UI.Skin = new Class({
-	Singleton 	: true,
  	Implements	: [Events, Options],
 	
 	options : {
@@ -944,11 +976,16 @@ UI.Skin = new Class({
 		
 	Arguments:
 		options - (object) options
+	
+	Returns:
+		this
 	*/
  	
 	initialize : function(options) {
 		this.setOptions(options);
 		this.defaultSkin = this.options.skin;
+		
+		return this;
 	},
 	
 	/* 
@@ -1011,7 +1048,7 @@ UI.Skin = new Class({
 		It will also check for other options, as defined in skin sheet as shortkeys
 		
 	Return:
-		(object) An object containing skin properties for current type, merged with optional provided custom properties.
+		properties - (object) An object containing skin properties for current type, merged with optional provided custom properties.
 	 */
 	
 	get : function(className){
@@ -1055,10 +1092,6 @@ UI.Skin = new Class({
 			
 			//merge custom styles
 			type[sKey].styles = this.merge(type[sKey].styles, styles);
-			
-			//set size
-			//if (className.options.width) type[sKey].width = className.options.width;
-			//if (className.options.height) type[sKey].height = className.options.height;
 		}
 		
 		//remove shadows if not used
@@ -1070,14 +1103,14 @@ UI.Skin = new Class({
 	},
 	
 	/*
-		Function: getComponentProps
-			get skin definition for specified component (inside an other element)
-			
-		Properties: (hash)
-			component - (string) the name of the component
-			
-		Return:
-			(object) Object containing component properties
+	Function: getComponentProps
+		get skin definition for specified component (inside an other element)
+		
+	Properties:
+		component - (string) the name of the component
+		
+	Return:
+		properties - (object) Object containing component properties
 	*/
 	
 	getComponentProps : function(skin, component){
@@ -1091,14 +1124,14 @@ UI.Skin = new Class({
 	},
 		
 	/*
-		Function: merge
-			private function
-			
-			merge is a lighter version of the core mootools merge function
-			Merges any number of objects recursively without referencing them or their sub-objects.
-			
-		See also: mootools merge function
-			
+	Function: merge
+		private function
+		
+		merge is a lighter version of the core mootools merge function
+		Merges any number of objects recursively without referencing them or their sub-objects.
+		
+	See also:
+		mootools merge function	
 	*/	
 	
 	merge : function() {
@@ -1114,9 +1147,52 @@ UI.Skin = new Class({
 	}
 });
 /*
-Class: UI.Element
-	UI.Element is the root class of most class of Moolego UI
-*/
+	Class: UI.Element
+		UI.Element is the root class of most class of Moolego UI. It is used by :
+			- <UI.View>
+			- <UI.Window>
+			- <UI.Menu> (also <UI.Context>)
+			- Most Controls elements (<UI.Button>, ...)
+	
+	Arguments:
+		Options
+		
+	Options: 
+		lib - (string) The prefix used for element class
+		component - (string) Component name, used for skinning
+		type - (string) Type name, used for skinning
+		state - (string) Default state applied on initialize
+		
+		className - (string) If this is defined, UI.Element will use this as element class name instead of generating one with options.lib, component and type
+		tag - (string) The element tag. By default it is 'div'
+		
+		resizable - (boolean) Define if the element will be resizable. By default set to false
+		draggable - (boolean) Define if the element will be draggable. By default set to false
+		selectable - (boolean) Define if element content is selectable
+		
+		skin - (string) The skin name to use by default for components
+		props - (object) Skin properties that will overwrite properties defined in skin sheet
+		
+		style - (object) Element styles properties that will overwrite styles defined in skin sheet
+		
+		onClick - (function) A function who will be fired on element click
+		onMouseDown - (function) A function who will be fired on element mousedown
+		onBuild - (function) A function who will be fired on element build start
+		onBuildComplete - (function) A function who will be fired on element build complete
+		onResizeStart - (function) A function who will be fired on element resize start
+		onResize - (function) A function who will be fired on element resize
+		onResizeComplete - (function) A function who will be fired on element complete
+		onDragStart - (function) A function who will be fired on element drag start
+		onDrag - (function) A function who will be fired on element drag
+		onDragComplete - (function) A function who will be fired on element drag complete
+		
+	Example:
+		(start code)
+		var element = new UI.Element({
+			html : 'Hello World'
+		}).inject(document.body);
+		(end)
+	*/
 
 UI.Element = new Class({
 	Implements				: [Events, Options],
@@ -1128,17 +1204,20 @@ UI.Element = new Class({
 		type				: 'default',
 		state				: 'default',	
 		
-		tag					: 'div',
+		className			: false,
+		tag					: 'span',
 		
 		resizable			: false,
 		draggable			: false,
 		selectable			: true,
-		onlyCanvas			: false,	
 
 		skin				: 'AquaGraphite',
 		props				: false,
 		
 		styles				: {},
+		
+		//devel
+		debug				: false,
 		
 		//group id
 		group				: false,
@@ -1153,19 +1232,23 @@ UI.Element = new Class({
 		onResizeComplete	: $empty,
 		onDragStart			: $empty,
 		onDrag				: $empty,
-		onDragComplete		: $empty
+		onDragComplete		: $empty,
 		
+		onShow				: $empty,
+		onHide				: $empty
 	},
 
 	/* 
-		Method: initialize
-		
-			Construtor
-	 */
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	*/
 	
 	initialize: function(options){
 		this.setOptions(options);
-		if (!this.controller) this.controller = UI.controller;
+		if (!this.controller) this.controller = ui.controller;
 
 		this.setClassName();
 		this.setSkin();
@@ -1175,14 +1258,41 @@ UI.Element = new Class({
 		this.setBehavior();
 	},
 	
+	/* 
+	Function: toElement
+		This method allows to get the DOM element built with <UI.Element> in this way : 
+		(start code)
+		var myElement = new UI.Element({
+			html : 'Hello World'
+		}).inject(document.body);
+		var coord = $(myElement).getCoordinates();
+		(end)
+		It will actually return myElement.element.
+		
+		But as most used mootools functions are directly reimplemented in <UI.Element>, you can most of time simply do :
+		(start code)
+		var myElement = new UI.Element({
+			html : 'Hello World'
+		}).inject(document.body);
+		var coord = myElement.getCoordinates();
+		(end)
+	
+	Return:
+		this.element - (element) The DOM element
+	*/
+	
 	toElement : function(){
 		return this.element;
 	},
 
 	/* 
-		Method: build
+	Function: build
+		private function
 		
-			Instanciate an element Native Mootols
+		Create a native element
+	
+	Return:
+		(void)
 	*/
 	
 	build : function(){
@@ -1205,10 +1315,14 @@ UI.Element = new Class({
 		this.dragHandlers = [];
 	},
 
-	/* 
-		Method: setSkin
+	/*
+	Function: setClassName
+		private function
 		
-			Define the className according the component name, type and state
+		define class name from this.options.lib, component and type or with className if defined
+		
+	Return:
+		(void)
 	 */
 	
 	setClassName : function() {
@@ -1226,8 +1340,12 @@ UI.Element = new Class({
 	
 	/* 
 		Method: setSkin
-		
-			Get the skin for the current component
+		private function
+	
+		Get the skin for the current component and set this props with default properties
+	
+	Return:
+		(void)
 	 */
 	
 	setSkin: function(){
@@ -1236,26 +1354,32 @@ UI.Element = new Class({
 		this.skin = UI.skin.get(this);
 		
 		this.props = this.skin[this.options.state];
-		this.props.layers = new Hash(this.props.layers);
 	},
 	
 	/* 
-		Method: setCanvas
-		
-			Draw the canvas
+	Method: setCanvas
+		private function
+	
+		Create a canvas element inject it and add a redraw event
 	*/
 	
 	setCanvas : function(){
-		if (this.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && this.props.layers.getLength() <= 2))
+		if (this.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && $H(this.props.layers).getLength() <= 2))
 			return false;
 
 		this.canvas = new UI.Canvas({
 			props 			: this.props,
 			width			: this.element.x,
-			height			: this.element.y
+			height			: this.element.y,
+			debug			: this.options.debug,
+			element			: this.element,
+			skin			: this.options.skin,
+			component		: this.options.component,
+			type			: this.options.type,
+			state			: this.options.state,
 		}).inject(this.element);
 		
-		this.addEvent('setCanvasSize', function(state){
+		this.addEvent('canvasDraw', function(state){
 			if (!state)	var props = this.props;
 			else var props = this.skin[state] || this.props;
 			this.canvas.setSize(this.element.x,this.element.y, props);
@@ -1263,9 +1387,17 @@ UI.Element = new Class({
 	},
 
 	/* 
-		Method: setState
-			Set the button state
+	Method: setState
+		Set the element state
+	
+	Arguments:
+		state - (string) the name of new state to set and draw
+		size - (object) Optional - An object containing width and height to set a new size while changing state
+	
+	Return:
+		this	
 	*/
+	
 	setState : function(state, size){
 		if (this.skin[state]) {
 			this.state = state;
@@ -1274,30 +1406,58 @@ UI.Element = new Class({
 			if ($defined(size))
 				this.setSize(size.width, size.height, state);
 			else
-				this.fireEvent('setCanvasSize', state);
+				this.fireEvent('canvasDraw', state);
 		}
 		return this;
 	},
 	
-	/*
-	 * 	Function: setSize
-	 * 		Set size of the element and its canvas
-	 */
+	/* 
+	Method: setSize
+		Set the element size and optionaly a new state
+	
+	Arguments:
+		width - (integer) new element width
+		height - (integer) new element height
+		state - (string) (optional) state to draw
+	
+	Return:
+		this	
+	*/
 	
 	setSize : function(width, height, state){
+		this.fireEvent('onResize');
 		this.element.x = width || this.options.width || this.props.width || this.element.getSize().x;
 		this.element.y = height || this.options.height || this.props.height || this.element.getSize().y;
 		if (this.element.x) this.element.setStyle('width', this.element.x);
 		if (this.element.y) this.element.setStyle('height', this.element.y);
-		this.fireEvent('setCanvasSize', state);
+		this.fireEvent('canvasDraw', state);
 
 		return this;
 	},
 
 
-	/*
-	    Function: setLocation
-			Set element location 
+	/* 
+	Method: setLocation
+		Set the element location
+	
+	Arguments:
+		left - (integer) new element left position
+		top - (integer) new element top position
+		moprh - (string) (optional) If specified, a morph transition will be done to new location
+	
+	Return:
+		this
+		
+	Example:
+		(start code)
+		var myWindow = new UI.Window();
+		var coord = myWindow.getCenterLocation();
+		myWindow.setLocation(coord.left, coord.top, 'morph');
+		(end)
+		
+	Discussion:
+		
+	
 	*/
 	
 	setLocation	: function(left,top,morph) {
@@ -1308,12 +1468,22 @@ UI.Element = new Class({
 			top	: this.element.top,
 			left : this.element.left
 		});
+		
+		return this;
 	},
 
 	
 	/*
-	    Function: setBehavior
-			Set element behavior
+    Function: setBehavior
+    	private function
+    	
+		Set default element behavior, addind general events (mouse events)
+	
+	Return:
+		(void)
+	
+	Discussion:
+		onClick event is fired on mouse up because of Explorer. Sometimes it doesn't fire onClick event (f.e. if a button has no label).
 	*/
 
 	setBehavior : function() {
@@ -1322,12 +1492,22 @@ UI.Element = new Class({
 		if (this.options.resizable) { this.enableResize(); }
 		
 		this.element.addEvents({
-			click 		: this.fireEvent.bind(this, 'click'),
 			mousedown 	: this.fireEvent.bind(this, 'mousedown'),
-			mouseover 	: this.fireEvent.bind(this, 'mouseover'),
+			click		: function(){
+				if (!Browser.Engine.trident) 
+				 this.fireEvent('click');
+			}.bind(this),
+			mouseup		: function(){
+				if (Browser.Engine.trident)	
+				 this.fireEvent('click');
+				this.fireEvent('mouseup');
+			}.bind(this),
+			
 			mouseenter 	: this.fireEvent.bind(this, 'mouseenter'),
+			mouseleave 	: this.fireEvent.bind(this, 'mouseleave'),
+			mouseover 	: this.fireEvent.bind(this, 'mouseover'),
 			mouseOut 	: this.fireEvent.bind(this, 'mouseOut'),
-			mouseup 	: this.fireEvent.bind(this, 'mouseup')
+			
 		});
 	},
 
@@ -1396,9 +1576,12 @@ UI.Element = new Class({
 		return this;
 	},
 	
-	/*
-	    Function: setLocation
-			Set element location 
+	/* 
+	Method: getCenterLocation
+		Get the coordinates to place the element at center's window
+	
+	Return:
+		location - (object) An object containing top and left properties.	
 	*/
 	
 	getCenterLocation: function() {
@@ -1412,8 +1595,11 @@ UI.Element = new Class({
 
 
 	/*
-	    Function: adaptLocation
-	      Adapt location if window is dragged out of its boundaries
+	Function: adaptLocation
+		Adapt element location if it is dragged out of its boundaries
+	
+	Return:
+		(void)
 	*/
 	
 	adaptLocation : function() {
@@ -1421,8 +1607,6 @@ UI.Element = new Class({
 		var needed = false;
 		var coordinates = this.element.getCoordinates();
 		
-		
-
 		if (coordinates.top.toInt() > window.getHeight()-53) {
 			location.top = window.getHeight()-$random(25,75)
 			needed = true;
@@ -1441,23 +1625,17 @@ UI.Element = new Class({
 		if (needed) {
 			if (this.props.fx && this.props.fx.adaptLocation)  {
 				if (!this.reposFx) this.reposFx = new Fx.Morph(this.element, this.props.fx.adaptLocation);
-				
 				this.reposFx.start(location) ;
-			} else {
-				
-				
 			}
 		}
-	},
-		
-	/*
-   		reImpelement some Native Mootools Element needed methods
-	*/
-	
+	},	
 	
 	/*
-	    Function: show
-	    	Set display block to the view element
+    Function: show
+    	Fire the onShow event, and set display block and full opacity to element
+    
+    Return:
+    	this
 	*/
 	
 	show: function() {
@@ -1469,25 +1647,86 @@ UI.Element = new Class({
 	},
 
 	/*
-    	Function: hide
-    		Set display none to the view element
-
+    Function: hide
+    	Fire the onHide Event, and set display none to element
+    
+    Return:
+    	this
 	*/
 	
 	hide: function() {
+		this.fireEvent('hide');
 		this.element.hide();
 		
 		return this;
+	}
+});
+
+
+/*
+	Native Mootools Element:
+		Bind some native mootools element methods to element, so we can chain methods as in mootools
+	
+	Example:
+		(start code)
+		var element = new UI.Element({
+			html : 'Hello World'
+		}).inject(document.body).setStyle('border', '1px solid black).addClass('customElement');
+		(end)
+*/
+
+UI.Element.implement({
+
+	/*
+    Function: setStyle
+    	See mootools setStyle documentation
+    
+    Return:
+    	this
+	*/
+	
+	setStyle: function(style, value) {
+		this.element.setStyle(style, value);
+		
+		return this;	
+	},
+
+	/*
+    Function: setStyles
+    	See mootools setStyles documentation
+    
+    Return:
+    	this
+	*/
+	
+	setStyles: function(styles) {
+		this.element.setStyles(styles);
+		
+		return this;	
 	},
 	
-		
+	/*
+    Function: getStyle
+    	See mootools getStyle documentation
+    
+    Return:
+    	this.element style
+	*/
+	
+	getStyle: function(style) {
+		return this.element.getStyle(style);	
+	},
+	
 	/*
     Function: inject
-    	Inject the element element into container
+    	Inject the element element into container, fire an inject event at beginning and an injected event at the end
     	
     Argument: 
-    	View Container
-
+    	container - see mootools inject documentation
+    	position - see mootools inject documentation
+    
+    Return:
+    	this
 	*/
 	
 	inject: function (container, position){
@@ -1503,81 +1742,26 @@ UI.Element = new Class({
 	},
 	
 	/*
-    Function: addopt
-    	Inject the element element into container
-    	
-    Argument: 
-    	View Container
-
+    Function: adopt
+    	See mootools adopt documentation
+    
+    Return:
+    	this
 	*/
 	
 	adopt: function (element){
 		this.element.adopt(element);
 		this.setSize();
 		return this;		
-	}
-
-});
-
-
-/*
-	Script: UI.Element.Native.js
-	  Contains methods to work with size, scroll, or positioning of Elements and the window object.
-	 
-	License:
-	  MIT-style license.
-	 
-	Credits:
-	  - Element positioning based on the [qooxdoo](http://qooxdoo.org/) code and smart browser fixes, [LGPL License](http://www.gnu.org/licenses/lgpl.html).
-	  - Viewport dimensions based on [YUI](http://developer.yahoo.com/yui/) code, [BSD License](http://developer.yahoo.com/yui/license.html).
-*/
-
-
-/*
-	Bindings to the native mootools element functions
-
-	Discussion: 
-		should be implemented automaticaly
- */
-
-
-UI.Element.implement({
-
-	/*
-	 * Function: setStyle
-	 * 	implement setStyle from de wrappwr
-	 */
-	
-	setStyle: function(style, value) {
-		this.element.setStyle(style, value);
-		
-		return this;	
-	},
-
-	/*
-	 * Function: setStyles
-	 * 	implement setStyles from element
-	 */
-	
-	setStyles: function(styles) {
-		this.element.setStyles(styles);
-		
-		return this;	
 	},
 	
 	/*
-	 * Function: setStyles
-	 * 	implement setStyles from element
-	 */
-	
-	getStyle: function(style) {
-		return this.element.getStyle(style);;	
-	},
-	
-	/*
-	 * Function: addClass
-	 * 	implement addClass from de wrapper
-	 */
+    Function: addClass
+    	See mootools addClas documentation
+    
+    Return:
+    	this
+	*/
 	
 	addClass: function(className) {
 		this.element.addClass(className);
@@ -1586,37 +1770,54 @@ UI.Element.implement({
 	},
 	
 	/*
-	 * Function: addClass
-	 * 	implement element set method
-	 */
+    Function: set
+    	See mootools set documentation
+    
+    Return:
+    	this
+	*/
 	
 	set: function(property, value) {
-		this.element.set(property, value);
+		if (property == 'html' && this.label) {
+			this.label.set(property, value);
+			//this.setSize();
+		} else {
+			this.element.set(property, value);
+		}
 		return this;	
 	},
 	
 	/*
-	 * Function: get
-	 * 	implement element get method
-	 */
+    Function: get
+    	See mootools get documentation
+    
+    Return:
+    	this.element properties
+	*/
 	
 	get: function(property) {
 		return this.element.get(property);	
 	},
 	
 	/*
-	 * Function: getSize
-	 * 	implement element getSize method
-	 */
+    Function: getSize
+    	See mootools getSize documentation
+    
+    Return:
+    	this.element size
+	*/
 	
 	getSize: function() {
 		return this.element.getSize();	
 	},
 	
 	/*
-	 * Function: getCoordinates
-	 * 	implement element getCoordinates method
-	 */
+    Function: set
+    	See mootools getCoordinates documentation
+    
+    Return:
+    	this.element coordinates
+	*/
 	
 	getCoordinates: function(ref) {
 		return this.element.getCoordinates(ref);
@@ -1625,9 +1826,10 @@ UI.Element.implement({
 	
 	/*
     Function: destroy
+    	See mootools getCoordinates documentation
     
-    	Destroy the view element
-
+    Return:
+    	(void)
 	*/
 
 	destroy: function() {
@@ -1651,16 +1853,23 @@ UI.Element.implement({
 	}
 });
 
-
 /*
-Script: Extension.Element.js
-        Extends the Element class with some needed methods.
-
-License: MIT
-        
+	Some usefull method from clientcide.con
+	
+	License:
+		http://clientside.cnet.com/wiki/cnet-libraries#license
 */
 
 Element.implement({
+	
+	/*
+    Function: disableSelect
+    	Disable the ability to select element content text
+    
+    Return:
+    	this
+	*/
+	
 	disableSelect: function(){
 		if (typeof this.onselectstart != "undefined") 
 			this.onselectstart = function(){
@@ -1678,6 +1887,14 @@ Element.implement({
 		
 		return this;
 	},
+	
+	/*
+    Function: enableSelect
+    	Enable the ability to select element content text
+    
+    Return:
+    	this
+	*/
 	
 	enableSelect: function(){
 	
@@ -1697,20 +1914,36 @@ Element.implement({
 	},
 	
 	/*
-	 Script: Element.Shortcuts.js
-	 Extends the Element native object to include some shortcut methods.
-	 
-	 License:
-	 http://clientside.cnet.com/wiki/cnet-libraries#license
-	 */
+    Function: isVisible
+    	See documentation at http://www.clientcide.com/wiki/cnet-libraries
+    
+    Return:
+    	this.element display style
+	*/
 	
 	isVisible: function(){
 		return this.getStyle('display') != 'none';
 	},
 	
+	/*
+    Function: toggle
+    	See documentation at http://www.clientcide.com/wiki/cnet-libraries
+    
+    Return:
+    	this.element new display style
+	*/
+	
 	toggle: function(){
 		return this[this.isVisible() ? 'hide' : 'show']();
 	},
+	
+	/*
+    Function: hide
+    	See documentation at http://www.clientcide.com/wiki/cnet-libraries
+    
+    Return:
+    	this
+	*/
 	
 	hide: function(){
 		var d;
@@ -1725,25 +1958,32 @@ Element.implement({
 		return this;
 	},
 	
+	/*
+    Function: show
+    	See documentation at http://www.clientcide.com/wiki/cnet-libraries
+    
+    Return:
+    	this
+	*/
+	
 	show: function(display){
 		original = this.retrieve('originalDisplay') ? this.retrieve('originalDisplay') : this.get('originalDisplay');
 		this.setStyle('display', (display || original || 'block'));
 		return this;
 	},
 	
+	/*
+    Function: swapClass
+    	See documentation at http://www.clientcide.com/wiki/cnet-libraries
+    
+    Return:
+    	this
+	*/
+	
 	swapClass: function(remove, add){
 		return this.removeClass(remove).addClass(add);
-	},
-	
-	log: function(text, args){
-		if (window.console) 
-			console.log(text.substitute(args ||
-			{}));
 	}
-});
-
-
-/*
+});/*
 	Class: UI.Box
 		UI.Box is used to make a skinnable container
 	
@@ -1797,14 +2037,14 @@ UI.Box = new Class({
 		Creates Bubble and let you attach events action
 	
 	Extend:
-		UI.Element
+		<UI.Element>
 	
 	Arguments:
 		options
 	
 	Options: 
 		label - (string) bubble content
-		target - (string / element) Can be either an element id either a UI.Element instance (a native element also?)
+		target - (string / element) Can be either an element id either a <UI.Element> instance
 	
 	Example:
 		(start code)
@@ -1834,6 +2074,9 @@ UI.Bubble = new Class({
 	
 	Arguments:
 		options - (object) options
+	
+	See also:
+		<UI.Element::initialize>
 	*/
 	
 	initialize: function(options) {
@@ -1851,6 +2094,9 @@ UI.Bubble = new Class({
 	
 	Return:
 		(void)
+	
+	See also:
+		<UI.Element::build>
 	*/
 	
 	build : function(){
@@ -1886,6 +2132,12 @@ UI.Bubble = new Class({
 		private function
 		
 		Add a click event to close the bubble
+	
+	Returns:
+		(void)
+	
+	See also:
+		<UI.Element::setBehavior>
 	*/
 	
 	setBehavior : function(){
@@ -1945,7 +2197,7 @@ UI.Bubble = new Class({
 		Set an input in the control element
 	
 	Return:
-		(object) Object containing top and left values
+		location - (object) Object containing top and left values
 	*/
 	
 	getLocation : function(){
@@ -1967,18 +2219,22 @@ UI.Bubble = new Class({
 	},
 
 	/* 
-		Method: setSize
-		
-			Set the size of the bubble from the label
+	Method: setSize
+		Set the size of the bubble from the label
+	
+	Returns:
+		(void)
+	
+	See also:
+		<UI.Element::setSize>
 	*/
 	
 	setSize : function(width,height){
 		if (this.label) {
-			this.options.width = width || this.options.width || this.props.width || this.label.getSize().x;
-			this.options.height = height || this.options.height || this.props.height || this.label.getSize().y;
+			width = width || this.options.width || this.props.width || this.label.getSize().x;
+			height = height || this.options.height || this.props.height || this.label.getSize().y;
 		};
-		
-		this.parent();
+		this.parent(width, height);
 	},
 		
 	/* 
@@ -1998,12 +2254,14 @@ UI.Bubble = new Class({
 	},
 	
 	/* 
-		Method: destroy
-		
-			Destroy the element, and remove the event on window
-		
-		Return:
-			(void)
+	Method: destroy
+		Destroy the element, and remove the event on window
+	
+	Return:
+		(void)
+	
+	See also:
+		<UI.Element::destroy>
 	*/
 	
 	destroy : function(){
@@ -2013,6 +2271,9 @@ UI.Bubble = new Class({
 });/*
 	Class: UI.Label
 		UI.Label is used to make text element with css skin
+	
+	Extends:
+		<UI.Element>
 	
 	Arguments:
 		options
@@ -2049,37 +2310,32 @@ UI.Label = new Class({
 		emboss				: false,
 		
 		selectable			: false
-	},
-
-	/* 
-	Function: build
-		private function
-		
-		Call UI.Element build
-	*/
-	
-	build: function(options){
-		this.parent(options);
-		/*
-		if (this.options.emboss) {
-			this.addEvent('injected', function(){
-				this.emboss = this.element.clone().inject(this.element, 'top');
-				if (this.props.components && this.props.components.emboss.styles) {
-					this.emboss.setStyles(this.props.components.emboss.styles);
-				}
-			});
-		}
-		*/
 	}
 });/*
-Class: UI.Scrollbar
-	Manage scrolls for menus.
-	
-Require:
-	UI/Scrolling/Scrolling.js
+	Class: UI.Scrollbar
+		Manage scrolls for views.
+		
+	Extend:
+		<UI.Element>
+		
+	Arguments:
+		options
+		
+	Options:
+		width - (integer) The scollbar track width
+		maxThumbSize - (integer)
+		wheel - (integer) The scroll increment
+		
+	Example:
+		(start code)
+		var scrollbar = new UI.Scrollbar({
+			container	: this.content
+		});
+		(end)
 
-Credits: 
-	based on Valerio's Mootools scrollbar plugin.
+	Credits: 
+		based on Valerio's Mootools scrollbar plugin.
+		found in upload folder of mootools website
 
 */
 
@@ -2090,9 +2346,7 @@ UI.Scrollbar = new Class({
 	options: {
 		component		: 'scrollbar',
 		type			: 'track',
-		
-		width			: 15,
-		
+
 		maxThumbSize	: 32,
 		wheel			: 32	
 	},
@@ -2115,6 +2369,10 @@ UI.Scrollbar = new Class({
 	},
 	
 	build: function() {
+		
+		if (!this.options.width)
+			this.options.width = this.props.width;
+		
 		this.parent();
 		
 		this.inject(this.options.container,'before')
@@ -2127,6 +2385,7 @@ UI.Scrollbar = new Class({
 	},
 	
 	update: function(){
+	
 		this.containerSize = this.options.container.getSize().y;
 		this.setSize(this.options.width.toInt(),this.containerSize);
 		this.containerScrollSize = this.options.container.scrollHeight;
@@ -2210,16 +2469,10 @@ UI.Scrollbar = new Class({
 
 });/*
 Class: UI.Controller
-	base class for controllers.
-
-License:
-	MIT-style license.
-
-Require:
-	UI/Windows.js
-
+	Default element controller.
+	It handle element's z-index as well as group managing and group serialization (usefull for controls values
 */
-
+var ui = ui || {};
 
 UI.Controller = new Class({
 	Implements 			: [Events, Options],
@@ -2228,24 +2481,37 @@ UI.Controller = new Class({
 		zBase			: 1
 	},
 	
+	/*
+	Constructor: initialize
+		Constructor
+		
+	Arguments:
+		options - (object) options
+	*/
+	
 	initialize: function(options){
 		this.setOptions();
 		this.zIndex = this.options.zBase;
 		this.groups = {};
+		this.elements = [];
 	},
 
 	/*
-	  Function: register
-	  
-	   	Add passing element to the elements list
+	Function: register
+		private function
+		
+		Add passing element to the elements list
 	   
-	  Arguments: window Object
+	Arguments:
+		object - (object) an element class' instance
 	  
 	 */
 	
-	register: function(elementClass) {
+	register: function(object) {
+		var oid = UI.elements.push(object) - 1;
+		/*
 		//get first element parent made with UI
-		var element = elementClass.element.getParent();
+		var element = object.element.getParent();
 		while (element && !element.ui) {
 			element = element.getParent();
 		}
@@ -2253,51 +2519,54 @@ UI.Controller = new Class({
 		//store element in first element parent made with UI
 		if (element) {
 			if (!element.elements) element.elements = new Hash();
-			if (!element.elements[elementClass.options.component]) element.elements[elementClass.options.component] = new Array();
-			element.elements[elementClass.options.component].push(elementClass);	
+			if (!element.elements[object.options.component]) element.elements[object.options.component] = new Array();
+			element.elements[object.options.component].push(object);	
 		
 		//store element in UI (element is not in our UI)
 		} else {
-			if (!UI.elements[elementClass.options.component]) UI.elements[elementClass.options.component] = new Array();
-			UI.elements[elementClass.options.component].push(elementClass);
+			if (!UI.elements[object.options.component]) UI.elements[object.options.component] = new Array();
+			UI.elements[object.options.component].push(object);
 		}
 		
 		//replace tips
-		if (elementClass.options.component != 'tip') {
+		if (object.options.component != 'tip') {
 			window.fireEvent('setTipsPosition');
 		}
+		*/
 		
 		//set z-index
-		if (elementClass.element.getStyle('zIndex') == 'auto' || elementClass.element.getStyle('zIndex') == 0)
-			elementClass.element.setStyle('zIndex', elementClass.options.zIndex || this.zIndex++);
+		if (object.element.getStyle('zIndex') == 'auto' || object.element.getStyle('zIndex') == 0)
+			object.element.setStyle('zIndex', object.options.zIndex || this.zIndex++);
 			
 		//add element to the group if needed
-		//this.group(elementClass);
+		if (object.options.group) this.group(oid);
 	},
 	
 	/*
-	  Function: group
-	  
-	   Group elements in a group
+	Function: group
+		private function
+		
+		Add passing element to provided group
 	   
-	  Arguments: element class instance
+	Arguments:
+		object - (object) an element class' instance
 	  
 	 */
 	
-	group : function(elementClass) {
-		if (elementClass.options.group) {
-			//we check if the group exist, else we create it
-			this.groups[elementClass.options.group] = this.groups[elementClass.options.group] || [];
-			this.groups[elementClass.options.group].push(elementClass);
-		}
+	group : function(oid) {
+		//we check if the group exist, else we create it
+		this.groups[UI.elements[oid].options.group] = this.groups[UI.elements[oid].options.group] || new Array();
+		this.groups[UI.elements[oid].options.group].push(oid);
 	},
 	
 	/*
-	  Function: serialize
-	  
-	   Serialize values of elements' group provided and return them 
+	Function: serialize
+		private function
+		
+		Add passing element to the elements list
 	   
-	  Arguments: group id
+	Arguments:
+		groupID - (string) name of the group you want to serialize element's value.
 	  
 	 */
 	
@@ -2312,13 +2581,13 @@ UI.Controller = new Class({
 	}
 });
 
-UI.controller = new UI.Controller();
+ui.controller = ui.controller || new UI.Controller();
 /*
 	Class: UI.Control
 		UI.Control is the root class of most control elements of moolego UI. It can't be used alone.
 		
-	Extend:
-		UI.Element
+	Extends:
+		<UI.Element>
 		
 	Arguments:
 		options
@@ -2338,22 +2607,13 @@ UI.Control = new Class({
 	options: {},
 
 	/* 
-	Constructor: initialize
-		Construtor
-	
-	Arguments:
-		options - (object) options
-	*/
-	
-	initialize: function(options){
-		this.parent(options);
-	},
-	
-	/* 
 	Function: build
 		private function
 		
 		Call UI.Element build and set the control element
+	
+	See also:
+		<UI.Element::build>
 	*/
 	
 	build: function() {
@@ -2369,12 +2629,15 @@ UI.Control = new Class({
 		width - (integer) New element width
 		height - (integer) New element height
 		state - (string) (optional) Can be specified to draw a new state too
+	
+	See also:
+		<UI.Element::setSize>
 	*/
 	
 	setSize : function(width,height, state){
-		if (this.textLabel) {
-			var twidth = width || this.options.width || this.props.width || this.textLabel.getSize().x;
-			var theight = height || this.options.height || this.props.height || this.textLabel.getSize().y;
+		if (this.label) {
+			var twidth = width || this.options.width || this.props.width || this.label.getSize().x;
+			var theight = height || this.options.height || this.props.height || this.label.getSize().y;
 		}else if (this.input && this.input.getProperty('type') != 'hidden') {
 			var twidth = width || this.options.width || this.props.width || this.input.getSize().x;
 			var theight = height || this.options.height || this.props.height || this.input.getSize().y;
@@ -2459,6 +2722,9 @@ UI.Control = new Class({
 	
 	Return:
 		(void)
+	
+	See also:
+		<UI.Element::setBehavior>
 	*/
 	
 	setBehavior : function(){
@@ -2481,31 +2747,34 @@ UI.Control = new Class({
 
 	set : function(property, value){
 		if (property == 'html') {
-			if (this.textLabel) this.textLabel.set(property, value);
+			if (this.label) this.label.set(property, value);
 			this.setSize();
 		} else {
 			this.element.set(property, value);
 		}
 	}
 });/*
-Class: UI.Input
-	Create a skinnable input element
-
-Arguments:
-	options
-
-Options: 
-	name - (string) name for the input element
-	value - (string) value
-	component - (string) component name
-
-Example:
-	(start code)
-	var button = new UI.Button({
-		name: 'myInput',
-		value: 'Hello world'
-	}).inject(document.body);
-	(end)
+	Class: UI.Input
+		Create a skinnable input element
+	
+	Extends:
+		<UI.Control>
+	
+	Arguments:
+		options
+	
+	Options: 
+		name - (string) name for the input element
+		value - (string) value
+		component - (string) component name
+	
+	Example:
+		(start code)
+		var button = new UI.Button({
+			name: 'myInput',
+			value: 'Hello world'
+		}).inject(document.body);
+		(end)
 */
 
 UI.Input = new Class({
@@ -2520,18 +2789,6 @@ UI.Input = new Class({
 	},
 	
 	/* 
-	Constructor: initialize
-		Constructor
-	
-	Arguments:
-		options - (object)
-	*/
-	
-	initialize: function(options) {
-		this.parent(options);
-	},
-	
-	/* 
 	Function: build
 		private function
 		
@@ -2539,6 +2796,10 @@ UI.Input = new Class({
 	
 	Return:
 		(void)
+	
+	See also:
+		<UI.Control::build>
+		<UI.Element::build>
 	*/
 	
 	build : function(){
@@ -2559,6 +2820,9 @@ UI.Input = new Class({
 		
 	Return:
 		(void)
+	
+	See also:
+		<UI.Element::setState>
 	*/
 	
 	setState : function(state){
@@ -2574,30 +2838,35 @@ UI.Input = new Class({
 	
 	Return:
 		(void)
+	
+	See also:
+		<UI.Control::setBehavior>
+		<UI.Element::setBehavior>
 	*/
 	
 	setBehavior : function() {
 		this.parent();
-		this.input.addEvents({
-			blur	: function(){
-				this.setState('default');
-			},
+		this.addEvents({
+			blur	: this.setState.bind(this, 'default'),
 			focus	: this.setState.bind(this, 'focus')
 		})
 	}
 });
 /*
-Class: UI.Button
-	Creates button and let you attach events action
-
-Arguments:
-	options
-
-Options: 
-	label - (string) Text to show in button
-	submit - (boolean) Set to true if you want your button act as a submit button
-
-Example:
+	Class: UI.Button
+		Creates button and let you attach events action
+		
+	Extend:
+		<UI.Control>
+	
+	Arguments:
+		options
+	
+	Options: 
+		label - (string) Text to show in button
+		submit - (boolean) Set to true if you want your button act as a submit button
+	
+	Example:
 	(start code)
 		var button = new UI.Button({
 			label		: 'i am a new UI.Button',
@@ -2618,28 +2887,23 @@ UI.Button = new Class({
 	},
 	
 	/* 
-	Constructor: initialize
-		Construtor
-	
-	Arguments:
-		options - (object) options
-	*/
-	
-	initialize: function(options) {
-		this.parent(options);
-	},
-	
-	/* 
 	Function: build
 		private function
 		
 		Create a textLabel and call parent method
+	
+	Returns:
+		(void)
+		
+	See also:
+		<UI.Control::build>
+		<UI.Element::build>
 	*/
 	
 	build : function(){
 		this.parent();
 		if(this.options.label) {
-			this.textLabel = new UI.Label({
+			this.label = new UI.Label({
 				skin : this.options.skin,
 				html : this.options.label,
 				styles : this.props.components.label.styles
@@ -2654,13 +2918,16 @@ UI.Button = new Class({
 	Arguments:
 		state - (string) State name
 		
-	Return:
+	Returns:
 		(void)
+	
+	See also:
+		<UI.Element::setState>
 	*/
 	
 	setState : function(state){
-		if (this.textLabel) {
-			this.textLabel.setStyles(this.skin[state].components.label.styles);
+		if (this.label && this.skin[state]) {
+			this.label.setStyles(this.skin[state].components.label.styles);
 		}
 		this.parent(state);
 	},
@@ -2671,8 +2938,12 @@ UI.Button = new Class({
 		
 		Set behavior relative to button (mouseenter, mousedown, mouseup, mouseleave)
 	
-	Return:
+	Returns:
 		(void)
+	
+	See also:
+		<UI.Control::setBehavior>
+		<UI.Element::setBehavior>
 	*/
 	
 	setBehavior : function() {
@@ -2710,22 +2981,25 @@ UI.Button = new Class({
 	}
 });/*
 Class: UI.Textarea
-	Create a skinnable textarea element
-
-Arguments:
-	options
-
-Options: 
-	name - (string) name of hidden input
-	value - (string) value to set on initialize
-
-Example:
-	(start code)
-		var textarea = new UI.Textarea({
-			name : 'myTextarea',
-			value : 'Hello world!'
-		}).inject(document.body);
-	(end)
+		Create a skinnable textarea element
+	
+	Extends:
+		<UI.Control>
+	
+	Arguments:
+		options
+	
+	Options: 
+		name - (string) name of hidden input
+		value - (string) value to set on initialize
+	
+	Example:
+		(start code)
+			var textarea = new UI.Textarea({
+				name : 'myTextarea',
+				value : 'Hello world!'
+			}).inject(document.body);
+		(end)
 */
 
 UI.Textarea = new Class({
@@ -2740,31 +3014,22 @@ UI.Textarea = new Class({
 	},
 	
 	/* 
-	Constructor: initialize
-		Construtor
-	
-	Arguments:
-		options - (object) options
-	*/
-	
-	initialize: function(options) {
-		this.parent(options);
-	},
-	
-	/* 
 	Function: build
 		private function
 		
-		Call UI.Element build and make a textarea element
+		Call <UI.Control::build> and make a textarea element
 		
 	Return:
 		(void)
+	
+	See also:
+		<UI.Control::build>
+		<UI.Element::build>
 	*/
 	
 	build : function(){
 		//create a new div as input element
 		this.parent();
-		
 				
 		//create input
 		this.setInput(false, 'textarea');
@@ -2779,7 +3044,6 @@ UI.Textarea = new Class({
 	
 	/* 
 		Method: setState
-		
 			Set the button state
 		
 		Arguments:
@@ -2787,6 +3051,9 @@ UI.Textarea = new Class({
 			
 		Return:
 			(void)
+		
+		See als0:
+			<UI.Element::setState>
 	*/
 	
 	setState : function(state){
@@ -2802,36 +3069,43 @@ UI.Textarea = new Class({
 		
 		Return:
 			(void)
+		
+		See also:
+			<UI.Control::setBehavior>
+			<UI.Element::setBehavior>
 	*/
 	
 	setBehavior : function() {
 		this.parent();
-		this.input.addEvents({
+		this.addEvents({
 			blur	: this.setState.bind(this, 'default'),
 			focus	: this.setState.bind(this, 'focus')
-		})
+		});
 	}
 });/*
-Class: UI.Checkbox
-	Creates checkbox control
-
-Arguments:
-	options	
-
-Options: 
-	label - (string) checkbox label
-	name - (string) input element name
-	value - (string) checkbox's value
-	checked - (boolean) set to true to check on initialize
-
-Example:
-	(start code)
-		var checkbox = new UI.Checkbox({
-			name		: 'myCheckbox'
-			value		: 'check',
-			label		: 'Hello world!'			
-		}).inject(document.body);
-	(end)
+	Class: UI.Checkbox
+		Creates checkbox control
+	
+	Extends:
+		<UI.Control>
+	
+	Arguments:
+		options	
+	
+	Options: 
+		label - (string) checkbox label
+		name - (string) input element name
+		value - (string) checkbox's value
+		checked - (boolean) set to true to check on initialize
+	
+	Example:
+		(start code)
+			var checkbox = new UI.Checkbox({
+				name		: 'myCheckbox'
+				value		: 'check',
+				label		: 'Hello world!'			
+			}).inject(document.body);
+		(end)
 */
 
 UI.Checkbox = new Class({
@@ -2848,23 +3122,18 @@ UI.Checkbox = new Class({
 		component		: 'checkbox'
 	},
 	
-	/* 
-	Constructor: initialize
-		Construtor
-	
-	Arguments:
-		options - (object) options
-	*/
-	
-	initialize: function(options) {
-		this.parent(options);
-	},
-	
 	/*
 	Function: build
 		private function
 		
 		Call UI.Element build, set an input and a textLabel
+	
+	Returns:
+		(void)
+	
+	See also:
+		<UI.Control::build>
+		<UI.Element::build>
 	*/
 	
 	build : function() {
@@ -2872,7 +3141,7 @@ UI.Checkbox = new Class({
 		this.setInput();
 
 		if (this.options.label) {
-			this.textLabel = new UI.Label({
+			this.label = new UI.Label({
 				'for'		: this.options.name,
 				skin 		: this.options.skin,
 				html 		: this.options.label,
@@ -2918,6 +3187,10 @@ UI.Checkbox = new Class({
 	
 	Return:
 		(void)
+	
+	See also:
+		<UI.Control::setBehavior>
+		<UI.Element::setBehavior>
 	*/
 	
 	setBehavior : function() {
@@ -2932,6 +3205,9 @@ UI.Checkbox = new Class({
 });/*
 	Class: UI.RadiosGroup
 		Create a radios group able to make radio
+	
+	Extends:
+		<UI.Control>
 	
 	Arguments:
 		options
@@ -2970,7 +3246,7 @@ UI.RadiosGroup = new Class({
 	options				: {
 		// default options
 		name			: 'radiosgroup',
-		component		: 'radio',
+		component		: 'radio'
 	},
 	
 	/*
@@ -2979,6 +3255,12 @@ UI.RadiosGroup = new Class({
 		
 	Arguments:
 		options - (object) options
+	
+	Returns:
+		this
+	
+	See also:
+		<UI.Element::initialize>
 	*/
 	
 	initialize: function(options) {
@@ -2987,6 +3269,7 @@ UI.RadiosGroup = new Class({
 		this.radios = [];
 		this.selectedRadio = false;
 		
+		return this;
 	},
 	
 	/* 
@@ -3093,7 +3376,7 @@ UI.RadiosGroup = new Class({
 			height			: this.props.height
 		}).inject(radio);
 		
-		radio.addEvent('setCanvasSize', function(){
+		radio.addEvent('drawCanvas', function(){
 			this.canvas.setSize(this.element.x,this.element.y, this.props);
 		});
 	},
@@ -3118,11 +3401,14 @@ UI.RadiosGroup = new Class({
 });/*
 	Class: UI.Select
 		Create <select> like element
+	
+	Extends:
+		<UI.Control>
 		
 	Require:
-		UI/Control/Control.js
-		UI/Menu/Menu.js
-		UI/Menu/Scroller.js
+		<UI.Control>
+		<UI.Menu>
+		<UI.Scroller.Menu>
 	
 	Arguments:
 			options
@@ -3133,7 +3419,7 @@ UI.RadiosGroup = new Class({
 	
 	Example:
 		(start code)
-		new UI.Control.Select({
+		new UI.Select({
 			name			: 'testselect',
 			list			: [{
 				text		: 'Montagne',
@@ -3167,22 +3453,17 @@ UI.Select = new Class({
 	},
 	
 	/* 
-	Constructor: initialize
-		Construtor
-	
-	Arguments:
-		options - (object) options
-	*/
-	
-	initialize: function(options){
-		this.parent(options);
-	},
-	
-	/* 
 	Function: build
 		private function
 		
 		Call UI.Element build, then create a hidden input , a textLabel and create a menu
+	
+	Returns:
+		(void)
+	
+	See also:
+		<UI.Control::build>
+		<UI.Element::build>
 	*/
 	
 	build : function(){
@@ -3207,7 +3488,7 @@ UI.Select = new Class({
 		width -=  this.menu.content.getFirst().getStyle('paddingLeft').toInt();
 		this.menu.setStyle('display', 'none');
 		
-		this.textLabel = new UI.Label({
+		this.label = new UI.Label({
 			width	: width,
 			skin	: this.options.skin,
 			styles	: this.props.components.label.styles,
@@ -3223,6 +3504,10 @@ UI.Select = new Class({
 		
 		Return:
 			(void)
+		
+		See also:
+			<UI.Control::setBehavior>
+			<UI.Element::setBehavior>
 	*/
 
 	setBehavior : function() {
@@ -3252,37 +3537,54 @@ UI.Select = new Class({
 			if (!el.menu && el.text != 'separator') {
 				el.action = function(){
 					this.input.value = (el.value) ? el.value : el.text;
-					this.textLabel.set('html', el.text);
+					this.label.set('html', el.text);
 				}.bind(this);
 			} else if (el.menu) {
 				this.addMenuActions(el.menu);
 			}
 		}, this)
 	}
-});
-
-/*
-Class: UI.Slider
-	Creates slider and let you attach events action
-
-Requires:
-	Mootools Slider Plugins
-
-Arguments:
-	options
-
-Options: 
-	className - (string) css classname for the given button
-	buttonType - ()
-
-Example:
-	(start code)
-		var button = new UI.Button({
-			onClick		: {},
-			onMouseOver	: {},
-			onDblClick	: {}
-		});
-	(end)
+});/*
+	Class: UI.Slider
+		Creates slider and let you attach events action.
+		Additionnaly to UI.Element and UI.Control methods and events, it handle all the properties of the mootools slider.
+		
+	Extend:
+		<UI.Element>
+	
+	Requires:
+		Mootools Slider plugin
+	
+	Arguments:
+		options
+	
+	Options:
+		type - (string) 'horizontal' or 'vertical'
+		
+		onStart - (function) see mootools slider plugin doc
+		onChange - (function) see mootools slider plugin doc
+		onComplete - (function) see mootools slider plugin doc
+		onTick - (function) see mootools slider plugin doc
+		
+		snap - (boolean) see mootools slider plugin doc
+		offset - (boolean) see mootools slider plugin doc
+		range - (boolean) see mootools slider plugin doc
+		wheel - (boolean) see mootools slider plugin doc
+		steps - (boolean) see mootools slider plugin doc
+		
+		
+	
+	Example:
+		(start code)
+		var step;
+		new UI.Slider({
+			range				: [0, 255],
+			wheel				: true,
+			onChange: function(step){
+				step = step;
+			}
+		}).inject(form);
+		(end)
 */
 
 UI.Slider = new Class({
@@ -3291,12 +3593,8 @@ UI.Slider = new Class({
 	options				: {
 		
 		// default options
-		className		: 'slider',
-		name			: 'ui-slider',
-		
 		component		: 'slider',
 		type			: 'horizontal',
-		state			: 'default',
 		
 		// implemented events
 		onStart			: $empty,
@@ -3312,14 +3610,26 @@ UI.Slider = new Class({
 		steps			: 100
 	},
 	
+	/* 
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	*/
+	
 	initialize: function(options) {
 		this.parent(options);
 	},
 	
 	/* 
-		Method: build
+	Function: build
+		private function
 		
-			Create a div and a hidden input to receive the selected value
+		Call parent method and create a skinned knob element
+	
+	Return:
+		(void)
 	*/
 	
 	build : function(){
@@ -3330,11 +3640,29 @@ UI.Slider = new Class({
 			component			: 'slider',
 			type				: 'knob'
 		}).inject(this.element);
-
 	},
 	
+	/* 
+	Function: inject
+		Create the slider and inject it
+	
+	Arguments:
+		target - (mix) See mootools doc
+		position - (string) See mootools doc
+		
+	Return:
+		this
+	*/
+	
 	inject : function(target, position) {
-		this.parent(target, position);
+		this.fireEvent('inject');
+
+		this.element.inject(target, position);
+		this.element.setStyle('visibility', 'visible');
+		this.setSize();
+		this.setCanvas();
+		this.controller.register(this);
+
 		this.slider = new Slider(this.canvas.canvas, this.handler.element, {
 			snap 		: this.options.snap,
 			offset		: this.options.offset,
@@ -3350,8 +3678,20 @@ UI.Slider = new Class({
 			onChange	: function(step){this.fireEvent('change', step)}.bind(this),
 			onComplete	: function(step){this.fireEvent('complete', step)}.bind(this)
 		});
+		this.fireEvent('injected');
+		
 		return this;
 	},
+	
+	/* 
+	Function: setBehavior
+		private function
+		
+		Set behavior relative to slider (complete)
+	
+	Return:
+		(void)
+	*/
 	
 	setBehavior : function(){
 		this.parent();
@@ -3360,47 +3700,54 @@ UI.Slider = new Class({
 		});
 	},
 	
+	/* 
+	Function: set
+		Set the slider value
+		
+	Arguments:
+		value - (integer) The value to set
+	
+	Return:
+		this
+	*/
+	
 	set : function(value){
 		this.slider.set(value);
 		return this;
 	}
 });
  /*
-Class: UI.Menu
-	Creates a new menu, manages submenus and positionning.
-	
-Require:
-	UI/Scrolling/Scrolling.Menu.js
-	UI/View/View.js
-
-Arguments:
-		options
+	Class: UI.Menu
+		Creates a new menu, manages submenus and positionning as well as scrolling thru <UI.Menu.Scroller>
 		
-Options: 
-		className			: 'ui-menu',
-		menu				: [],
-		useUnderlay			: true,
-		scrollToSelected	: false,
-		zIndex				: 10500,
-		position			: 'relative',	// can be 'relative', 'bottom', 'over'
-		contentTag			: 'div',
-		itemTag				: 'div',
-		onHide				: $empty,
-		ondisplay			: $empty
-
-
-Returns:
-	void
+	Extends:
+		<UI.Element>
 	
-Example:
-	(start code)
-	var submenu = new UI.Menu({
-		container : this.view.element,
-		underlay : this.options.underlay,
-		zIndex : 1
-	});
-	(end)
-
+	Arguments:
+		options
+			
+	Options: 
+		zIndex - (integer) Base z-index for menu element (submenu's z-index will be incremented)
+		contentTag - (string) Tag name for menu elements wrapper
+		itemTag - (string) Tag name for menu elements
+		
+		position - (string) Specify where the new menu must be positionned.
+			It could be normal (element will be positionned on parent's side),
+			over (element will be positionned over the parent element, used for <UI.Select>),
+			bottom (element will be positionned on bottom of parent element, used for <UI.Toolbar>)
+		
+		scrollToSelected - (boolean) Determine if a menu (specifically a <UI.Select>) should remember last item selected
+		scrollMargin - (integer) Determine remaining margin on top and bottom when a menu is too large to feet in window
+		menu - (array) Array containing menu definition
+		
+	Example:
+		(start code)
+		var submenu = new UI.Menu({
+			container : this.view.element,
+			underlay : this.options.underlay,
+			zIndex : 1
+		});
+		(end)
 */
 
 
@@ -3409,6 +3756,7 @@ UI.Menu = new Class({
 	
 	options: {
 		component			: 'menu',
+		rolloverType		: 'menuRollover',
 
 		zIndex				: 3000,
 		contentTag			: 'div',
@@ -3418,32 +3766,21 @@ UI.Menu = new Class({
 		scrollToSelected	: false,
 		scrollMargin		: 20,
 		menu				: [],
-		underlay			: false,
-		
-		styles			: {
-			position	: 'absolute'
-		}
+		underlay			: false
 	},
 
-	/* 
-		Method: initialize
+	/*
+	Function: build
+		private function
 		
-			Construtor
-	 */
-
-	initialize: function(options) {
-		this.parent(options);
-	},
-
-	/* 
-		Method: build
-		
-			Construtor
-			
-		Discussion:
-		
-			the zIndex should be set by the ui.element
-	 */
+		Call UI.Element build, then create a menu wrapper
+	
+	Return:
+		(void)
+	
+	See also:
+		<UI.Element::build>
+	*/
 	
 	build: function(menu) {
 		this.parent();
@@ -3466,9 +3803,14 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: setMenu
-		
-			Set the content of the menu
+	Method: setMenu
+		Set the content of the menu or change menu content
+	
+	Arguments:
+		menu - (array) Array containing menu definition
+	
+	Return:
+		this
 	 */
 	
 	setMenu: function(menu) {
@@ -3492,7 +3834,6 @@ UI.Menu = new Class({
 				}).set(item.options);
 				
 				if (item.action) menuItem.element.addEvent('action', item.action);
-				
 				menuItem.inject(this.content);
 			}
 			this.addSubmenuEvents(item, menuItem);
@@ -3501,9 +3842,17 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: addSubmenuEvents
-		
-			Attach actions and / or submenu to menu elements
+	Method: addSubmenuEvents
+		private function
+	
+		Attach actions and / or submenu to menu elements
+	
+	Arguments:
+		item - (object) Object containing element properties
+		menuItem - (element) Menu item where events will be attached
+	
+	Return:
+		(void)
 	 */
 	
 	addSubmenuEvents : function(item, menuItem){
@@ -3538,6 +3887,20 @@ UI.Menu = new Class({
 		});
 	},
 	
+	/* 
+	Method: addSubmenu
+		private function
+		
+		Attach a submenu to a menu item if needed
+	
+	Arguments:
+		item - (object) Object containing element properties
+		menuItem - (element) Menu item where submenu will be attached
+	
+	Return:
+		(void)
+	 */
+	
 	addSubmenu : function(item, menuItem, position) {
 		this.menuWithAction = false;
 		$clear(this.menuActionDelay);
@@ -3565,10 +3928,18 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: addSubmenuArrow
+	Method: addSubmenuArrow
+		private function
 		
-			Add an arrow on the right side of the element
-	*/
+		Add an arrow on the right side of the element
+	
+	Arguments:
+		menuItem - (element) Menu item where arrow will be attached
+	
+	Return:
+		(void)
+	 */
+	
 	
 	addSubmenuArrow : function(menuItem){
 		//we add the arrow
@@ -3595,10 +3966,17 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: mouseUpAction
+	Method: mouseUpAction
+		private function
 		
-			Do the element action and close the menu
-	*/
+		Execute the menu item action and close the menu (as well as submenu if needed)
+	
+	Arguments:
+		menuItem - (element) Menu item with attached action to fire
+	
+	Return:
+		(void)
+	 */
 	
 	mouseUpAction : function(menuItem){
 		if ($time() - this.time > 300 && this.rollover) {
@@ -3617,15 +3995,20 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: setRollover
+	Method: setRollover
+		private function
 		
-			set a canvas to draw menu elements
+		Create a new rollover element in menu if it doesn't exist
+	
+	Return:
+		(void)
 	 */
 	
 	setRollover : function(){
+		if (this.rollover) return;
 		this.rollover = new UI.Element({
 			skin			: this.options.skin,
-			type			: 'menuRollover',
+			type			: this.options.rolloverType,
 			styles			: {
 				position 	: 'absolute',
 				zIndex 		: 1
@@ -3634,18 +4017,24 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: moveRollover
+	Method: moveRollover
+		private function
 		
-			set the rollover to a new element
+		Move the rollover to a new location (menu item)
+	
+	Arguments:
+		menuItem - (element) Rollover will be moved to this menu item position
+	
+	Return:
+		(void)
 	 */
 	
 	moveRollover : function(menuItem){
 		var coord = menuItem.getCoordinates(this.element);
-		if (!this.rollover) this.setRollover();
+		 this.setRollover();
 		
 		if (this.activeItem) {
 			this.activeItem.element.fireEvent('defaultArrow');
-			
 			this.activeItem.setState('default');
 		}
 		
@@ -3662,9 +4051,13 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: removeRollover
-		
-			Remove the rollover
+	Method: removeRollover
+		private function
+	
+		Remove the rollover from menu and destroy it
+	
+	Return:
+		(void)
 	 */
 	
 	removeRollover : function(){
@@ -3680,9 +4073,13 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: removeSubmenu
-		
-			Remove the current submenu if needed
+	Method: removeSubmenu
+		private function
+	
+		Remove the current submenu as well as submenus if needed
+	
+	Return:
+		(void)
 	 */
 	
 	removeSubmenu : function(){
@@ -3693,9 +4090,16 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: setPosition
+	Method: setPosition
+		private function
 		
-			Set the position of the menu
+		Set the menu position relatively to parent element. Parent could be a menu element or any dom element
+	
+	Arguments:
+		el - (element) Parent element who will define menu position
+	
+	Return:
+		(void)
 	 */
 	
 	setPosition: function(el) {
@@ -3781,12 +4185,15 @@ UI.Menu = new Class({
 
 	/*
     Method: setCorners
+    	private function
 
-      Set corners radius for canvas draw
+		Set corners radius for canvas draw
+	
+	Return:
+		(void)
 	  
 	Discussion:
-	
-		is really needed anymore? 
+		is really needed anymore?
 	*/
 	
 	setCorners: function(corners) {
@@ -3794,9 +4201,13 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: addScrolls
-		
-			Add scrolls to menu
+	Method: addScrolls
+		private function
+	
+		Add scrolls to menu
+	
+	Return:
+		(void)
 	*/
 	
 	addScrolls : function() {
@@ -3822,9 +4233,16 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: addUnderlay
-		
-			Add an underlay to the page, to prevent clicks and scroll on page
+	Method: addUnderlay
+		private function
+	
+		Add an underlay to the page, to prevent clicks and scroll on page, and to keep a track of opened menu element
+	
+	Arguments:
+		underlay - (element) a previously declared underlay to use instead of creating a new one
+	
+	Return:
+		(void)
 	 */
 	
 	addUnderlay: function(underlay){
@@ -3869,9 +4287,13 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: removeUnderlay
-		
-			Remove the underlay
+	Method: removeUnderlay
+		private function
+	
+		Remove the underlay and destroy it
+	
+	Return:
+		this
 	 */
 	
 	removeUnderlay: function(){
@@ -3884,9 +4306,15 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: inject
-		
-			inject the menu and draw the canvas. Overwrite the inject method of UI.Element
+	Method: inject
+		inject the menu and draw the canvas. Overwrite the inject method of <UI.Element>
+	
+	Arguments:
+		element - (element) Injection target
+		target - (string) Determine where to inject.
+	
+	Return:
+		this
 	 */
 	
 	inject : function(element, target){
@@ -3915,9 +4343,19 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: show
-		
-			Show the menu
+	Method: show
+		Show the menu
+	
+	Arguments:
+		parent - (element) Menu location will be determine relatively to this element
+		x - (integer) (optional) new menu width
+		y - (integer) (optional) new menu height
+	
+	Return:
+		this
+	
+	See also:
+		<UI.Element::show>
 	 */
 	
 	show : function(parent, x, y) {
@@ -3932,9 +4370,14 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-		Method: hide
-		
-			Remove the submenu and clean the dom
+	Method: hide
+		Hide the submenu, and clean it (remove rollover, remove scrolls, ...)
+	
+	Arguments:
+		duration - (integer) Fade out duration, in milliseconds
+	
+	Return:
+		this		
 	 */
 	
 	hide: function(duration){
@@ -3959,85 +4402,83 @@ UI.Menu = new Class({
 			}).start('opacity', 0);
 		}
 		
-	
-		
 		return this;
 	},
 	
 	/* 
-		Method: empty
-		
-			Empty the menu content
+	Method: empty
+		Clear menu content
+	
+	Return:
+		this
 	 */
 	
 	empty: function(){
 		this.content.empty();
+		return this;
 	}
 });/*
-Class: UI.Toolbar
-	Create a dropdown menubar
-	
-Require:
-	UI/Menu/Menu.js
-
-Arguments:
-		options
+	Class: UI.Toolbar
+		Create a dropdown menubar to create menu bar or window's toolbar
 		
-Options: 
-	options				: {
-		zIndex			: 10000,
-		presentation	: 'textIcons',  // text, button, icons, textIcons, textButton
-		menus			: []
-	}
-
-Example:
-	(start code)
-	this.toolbar = new UI.Menu.Toolbar({
-			className	: 'ui-menu-dropdown',
-			container	: this.main.content,
-			menu		: [
-			{
-				text : 'Floor App',
-				options	: {	'class' : 'ui-dd-floor'	},
-				menu : [{
-					text : 'About',
-					action : function() { this.test('about'); alert('click')}.bind(this)
-				}]
-			}
-		]						
-	});
-	(end)
-
+	Extends:
+		<UI.Menu>
+	
+	Arguments:
+			options
+			
+	Options:
+		menu - (array) Menu definition, same as in <UI.Menu>
+		openOnRollover - (boolean) When set to true, toolbar's elements will react on mouse over
+		closeOnRollout - (boolean) When set to true, toolbars's submenu will react on mouse leave to close themself
+	
+	Example:
+		(start code)
+		var toolbar = new UI.Menu.Toolbar({
+				className	: 'ui-menu-dropdown',
+				container	: this.main.content,
+				menu		: [
+				{
+					text : 'Floor App',
+					options	: {	'class' : 'ui-dd-floor'	},
+					menu : [{
+						text : 'About',
+						action : function() { this.test('about'); alert('click')}.bind(this)
+					}]
+				}
+			]						
+		});
+		(end)
 */
 
 UI.Toolbar = new Class({
 	Extends				: UI.Menu,
 	
 	options				: {
-		// default options	
+		// default options
+		tag				: 'div',
 		menus			: [],
 		zIndex			: 4000,
 		openOnRollover	: false,
 		closeOnRollout	: false,
 		
 		// styles
+		rolloverType	: 'toolbarRollover',
 		component		: 'toolbar'
 	},
 	
-	/* 
-		Method: initialize
+	/*
+	Function: build
+		private function
 		
-			Construtor
-	*/
-
-	initialize: function(options) {
-		this.parent(options);
-	},
+		Overwrite <UI.Menu::build> to set custom toolbar's style
 	
-	/* 
-		Method: build
-		
-			Overwrite the build method of UI.Menu
+	Return:
+		(void)
+	
+	See also:
+		<UI.Menu::build>
+		<UI.Element::build>
 	*/
 	
 	build: function() {
@@ -4050,11 +4491,27 @@ UI.Toolbar = new Class({
 		});
 	},
 	
+	/* 
+	Method: inject
+		inject the toolbar and draw the canvas. Overwrite the inject method of <UI.Menu>
+	
+	Arguments:
+		element - (element) Injection target
+		target - (string) Determine where to inject.
+	
+	Return:
+		this
+	 */
+	
 	inject : function(element, target){
-		this.element.inject(element, target);
-		this.setSize();
-		this.setCanvas();
+		this.fireEvent('inject');
 		this.setStyle('visibility', 'visible');
+		this.element.inject(element, target);
+		this.setSize($(element).getWidth(), false);
+		this.setCanvas();
+		this.controller.register(this);
+		this.fireEvent('injected');
+		
 		window.addEvent('resize', function(){
 			this.setSize(this.element.getParent().getSize().x);
 		}.bind(this));
@@ -4073,14 +4530,25 @@ UI.Toolbar = new Class({
 	},
 	
 	/* 
-		Method: addSubmenuEvents
+	Method: addSubmenuEvents
+		private function
+	
+		Overwrite the addSubmenuEvents method of UI.Menu to manage mousedown events, ...
+	
+	Arguments:
+		item - (object) Object containing element properties
+		menuItem - (element) Menu item where events will be attached
+	
+	Return:
+		(void)
 		
-			Overwrite the addSubmenuEvents method of UI.Menu to manage mousedown events, ...
+	See also:
+		<UI.Menu::addSubmenuEvents>
 	*/
 	
 	addSubmenuEvents : function(item, menuItem){
 		if(item.menu) {
-			menuItem.addEvents({
+			menuItem.element.addEvents({
 				'mousedown' : function(e){
 					if (this.activeItem != menuItem) {
 						this.time = $time();
@@ -4091,13 +4559,14 @@ UI.Toolbar = new Class({
 						} else {
 							// first push icon, then manage action with delay
 							this.menuWithAction = (function(){
-								if (this.activeItem.submenu) this.activeItem.submenu.hide(0);
+								if (this.activeItem && this.activeItem.submenu) this.activeItem.submenu.hide(0);
 								this.moveRollover(menuItem);
 								this.addSubmenu(item, menuItem, 'bottom');
 								this.menuWithAction = false;
-							}).delay(this.props.delay, this);
+							}).delay(this.props.actionDelay, this);
 						}
 					}
+					new Event(e).stop();
 				}.bind(this),
 				'mouseup' : function(){
 					if ($time() - this.time > 800 && this.underlay) {
@@ -4129,10 +4598,12 @@ UI.Toolbar = new Class({
 				}.bind(this)
 			})
 		}
-		menuItem.addEvents({
-			'mousedown' : function(){
+		menuItem.element.addEvents({
+			'mousedown' : function(e){
+				console.log('stoppp');
 				if (!item.menu && this.activeItem) this.activeItem.fireEvent('hideSubmenu');
 				menuItem.down = true;
+				new Event(e).stop();
 			}.bind(this),
 			'mouseleave' : function(){menuItem.down = false},
 			'mouseup' : function(){
@@ -4152,26 +4623,16 @@ UI.Toolbar = new Class({
 	},
 	
 	/* 
-		Method: setRollover
-		
-			set a canvas to draw menu elements
-	 */
-	
-	setRollover : function(){
-		this.rollover = new UI.Element({
-			skin			: this.options.skin,
-			type			: 'toolbarRollover',
-			styles			: {
-				position 	: 'absolute',
-				zIndex 		: 1
-			}
-		}).inject(this.element);
-	},
-	
-	/* 
 		Method: addUnderlay
+			private function
 		
-			Overwrite the addUnderlay method of UI.Menu to keep the toolbar
+			Overwrite <UI.Menu::addUnderlay> to keep the toolbar
+		
+		Return:
+			(void)
+		
+		See also:
+			<UI.Menu::addUnderlay>
 	*/
 	
 	addUnderlay : function(){
@@ -4191,54 +4652,57 @@ UI.Toolbar = new Class({
 		});
 	}
 });	/*
-Class: UI.Context
-	Create a context menu
-	
-Require:
-	UI/Menu/Menu.js
-
-Arguments:
-		options
+	Class: UI.Context
+		Create a context menu
 		
-Options: 
-	options				: {
-		contexts		: []
-	}
+	Extends:
+		<UI.Menu>		
+	
+	Arguments:
+		options
 
-Example:
-	(start code)
-	this.context = new UI.Menu.Context({
-		contexts : [
-			{
-				name : 'workspace',
-				selector	: '.app-workspace',
-				menu		: [
-					{ text		: 'Workspace menu'},
-					{ text		: 'separator' },
-					{
-						text 	: 'editCategory',
-						action	: function(){ this.test('dorpdown') }.bind(this)
-					}
-					{ text		: 'viewSource'},
-					{ text		: 'separator' },
-					{ text		: 'deleteCategory'}
-				]
-			},
-			{
-				name : 'pageinfo',
-				selector	: '[id^=pageinfo]',
-				menu		: [
-					{
-						text 	: 'editCategory',
-						action	: function(){ this.test('dorpdown') }.bind(this)
-					},
-					{ text 		: 'editCategoryApparence'}
-				]
-			}
-		]
-	});
-	(end)
+	Options: 
+		contexts - (array) An array containing contexts definition. A context definition is an object composed of following keys :
+			a name key, who is the context name,
+			a selector key, who define on wich elements the context menu will be attached. It could be a CSS3 selector as well.
+			a menu key, who is a menu list as defined in <UI.Menu>.
 
+	Discussion:
+		We must still add methods to set dynamically new contexts, ...
+	
+	Example:
+		(start code)
+		var context = new UI.Menu.Context({
+			contexts : [
+				{
+					name : 'workspace',
+					selector	: '.app-workspace',
+					menu		: [
+						{ text		: 'Workspace menu'},
+						{ text		: 'separator' },
+						{
+							text 	: 'Hello world...',
+							action	: function(){ alert('Hello world!') }
+						}
+						{ text		: 'viewSource'},
+						{ text		: 'separator' },
+						{ text		: 'deleteCategory'}
+					]
+				},
+				{
+					name : 'pageinfo',
+					selector	: '[id^=pageinfo]',
+					menu		: [
+						{
+							text 	: 'editCategory',
+							action	: function(){ this.test('dorpdown') }.bind(this)
+						},
+						{ text 		: 'editCategoryApparence'}
+					]
+				}
+			]
+		});
+		(end)
 */
 
 
@@ -4252,9 +4716,15 @@ UI.Context = new Class({
 	},
 	
 	/* 
-		Method: initialize
-		
-			Construtor
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	
+	See also:
+		<UI.Menu::initialize>
+		<UI.Element::initialize>
 	*/
 
 	initialize: function(options) {
@@ -4265,9 +4735,14 @@ UI.Context = new Class({
 	},
 	
 	/* 
-		Method: addContexts
-		
-			Attach context to elements (provided by options.contexts.selector)
+	Method: addContexts
+		Attach context to elements (provided by contexts.selector)
+	
+	Arguments:
+		contexts - (array) an array containing contexts definition. See above in class' options for more details
+	
+	Return:
+		this
 	*/
 	
 	addContexts : function(contexts) {
@@ -4283,24 +4758,44 @@ UI.Context = new Class({
 				});
 			},this);
 		},this);
+		
+		return this;
 	},
 	
 	/* 
-		Method: removeContexts
-		
-			Remove context to elements (provided by selector)
+	Method: removeContexts
+		Remove context to elements (defined by selector)
+	
+	Arguments:
+		selector - (string) Selector defining elements where context will be detached
+	
+	Return:
+		this
 	*/
 	
 	removeContexts : function(selector) {
 		document.body.getElements(selector).each(function(el){
 			el.removeEvents('contextmenu');
 		},this);
+		
+		return this;
 	},	
 	
 	/* 
-		Method: setPosition
+	Method: setPosition
+		private function
 		
-			Overwrite the setPosition method of UI.Menu to use mouse coordinates
+		Overwrite the setPosition method of UI.Menu to use mouse coordinates to set menu location
+	
+	Arguments:
+		x - (integer) X mouse's coordinates
+		y - (integer) Y mouse's coordinates
+	
+	Return:
+		(void)
+	
+	See also:
+		<UI.Menu::setPosition>
 	*/
 	
 	setPosition: function(x,y) {
@@ -4321,8 +4816,19 @@ UI.Context = new Class({
 	
 	/* 
 		Method: show
-		
+			private function
+			
 			Overwrite the show method of UI.Menu to use mouse coordinates
+		
+		Arguments:
+			e - (event) Event who provide cursor's position
+		
+		Return:
+			this
+		
+		See also:
+			<UI.Menu::show>
+			<UI.Element::show>
 	*/
 	
 	show: function(e) {
@@ -4333,42 +4839,36 @@ UI.Context = new Class({
 	}
 });
 /*
-Class: UI.Scroller.Menu
-	Manage scrolls for menus.
+	Class: UI.Menu.Scroller
+		Manage scrolls for menus. Calls to this class are transparently handled by <UI.Menu>
 	
-Require:
-	UI/Scrolling/Scrolling.js
-
-Arguments:
-		parent - the menu to attach scrolls
-		options - a hash
+	Arguments:
+			options
+			
+	Options: 
+		wheel - (integer) Scroll increment when wheel is used
+		speed - (integer) A speed increase factor, by default set to 12
+		margin - (integer) Determine remaining margin on top and bottom when a menu is too large to feet in window
+		target - (element) Menu element where scrolls will be attached
+		onScroll - (function) function to fire on menu scrolling
+		onResize - (function) function to fire on menu resizing
+	
+	Returns:
+		void
 		
-Options: 
-	options: {
-		className		: 'ui-menu',
-		wheel			: 8,
-		speed			: 12,yx
-		margin			: 5,
-		onScroll		: $empty(),
-		onResize		: $empty()
-	},
-
-Returns:
-	void
-	
-Example:
-	(start code)
-	this.scrolls = new UI.Scrolling.Menu(this.view, {
-		onScroll : function(){
-			this.removeSubmenu();
-		}.bind(this),
-		onResize : function(){
-			this.view.canvas.draw();
-			if (this.shadow) this.shadow.show(this.container);
-		}.bind(this)
-	});
-	(end)
-
+	Example:
+		(start code)
+		this.scrolls = new UI.Scrolling.Menu({
+			target : this.view,
+			onScroll : function(){
+				this.removeSubmenu();
+			}.bind(this),
+			onResize : function(){
+				this.view.canvas.draw();
+				if (this.shadow) this.shadow.show(this.container);
+			}.bind(this)
+		});
+		(end)
 */
 
 UI.MenuScroller = new Class({
@@ -4380,22 +4880,21 @@ UI.MenuScroller = new Class({
 		speed			: 12,
 		margin			: 20,
 		target			: 'element',
-		wrapper			: false,
-		props	: {},
 		onScroll		: $empty,
 		onResize		: $empty
 	},
 	
 	/* 
-		Method: initialize
-		
-			Construtor
-	 */
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	*/
 
 	initialize: function(options){
 		this.setOptions(options);
 		
-		this.props = this.options.props;
 		this.element = this.options.element,
 		this.content = this.options.content;
 		this.margin  = this.options.margin;
@@ -4406,9 +4905,13 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-		Method: setNewSize
-		
-			Determine the menu position, his size and scrolls direction
+	Method: setNewSize
+		private function
+	
+		Determine the menu position, it size and scrolls direction
+	
+	Return:
+		(void)
 	*/
 	
 	resetSize : function(){
@@ -4452,9 +4955,13 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-		Method: addWrapper
-		
-			Add a element to the menu content to allow overflow
+	Method: addWrapper
+		private function
+	
+		Add a wrapper to the menu content to allow overflow
+	
+	Return:
+		(void)
 	*/
 	
 	setWrapper : function(){
@@ -4481,9 +4988,13 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-		Method: setBehavior
-		
-			Add event on the mousewheel
+	Method: setBehavior
+		private function
+	
+		Add mousewheel event
+	
+	Return:
+		(void)
 	*/
 	
 	setBehavior : function(){
@@ -4498,9 +5009,13 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-		Method: removeScrolls
-		
-			Remove scrolls
+	Method: removeScrolls
+		private function
+	
+		Remove scrolls and scrolls events
+	
+	Return:
+		(void)
 	*/
 	
 	removeScrolls : function(){
@@ -4521,9 +5036,13 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-		Method: addUpArrow
-		
-			Add the up arrow
+	Method: addUpArrow
+		private function
+	
+		Add the up arrow element and events to manage it
+	
+	Return:
+		(void)
 	*/
 	
 	addUpArrow : function(){
@@ -4572,9 +5091,13 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-		Method: addDownArrow
-		
-			Add the down arrow
+	Method: addDownArrow
+		private function
+	
+		Add the down arrow element and events to manage it
+	
+	Return:
+		(void)
 	*/
 	
 	addDownArrow : function(){
@@ -4623,9 +5146,16 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-		Method: scrollDown
-		
-			scroll the menu down
+	Method: scrollDown
+		private function
+	
+		Scroll the menu down
+	
+	Arguments:
+		e - (event) Event handling mousewheel
+	
+	Return:
+		(void)
 	*/
 	
 	scrollDown : function(e){
@@ -4664,9 +5194,16 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-		Method: scrollUp
-		
-			scroll the menu up
+	Method: scrollUp
+		private function
+	
+		Scroll the menu up
+	
+	Arguments:
+		e - (event) Event handling mousewheel
+	
+	Return:
+		(void)
 	*/
 	
 	scrollUp : function(e){
@@ -4700,43 +5237,42 @@ UI.MenuScroller = new Class({
 		}
 	}
 });/*
-Class: UI.View
-	The UI.View class defines objects that manage the views use by several object like windows, menus.
+	Class: UI.View
+		The UI.View class defines objects that manage the views use by several object like windows, menus.
+	
 
-Require:
-	UI.Core Classes
-	UI.Element Classes
-	UI.ScrollBar
+	Extends:
+		<UI.Element>
 	
-Arguments:
-	options
+	Require:
+		<UI>
+		<UI.Element>
+		<UI.Scrollbar>
+		
+	Arguments:
+		options
+		
+	Options:
+		width - (integer/string) Width of the view wrapper in px or percent
+		height - (integer/string) Height  of the view wrapper in px or percent
+		overflow - (string) hidden, scrollbar or menu
+		tag - (string) Element's tag
+		contentTag - (string) Content's tag
+		
+		content - (object) Object containing content element's options
+		onLoadComplete - (function) Function to fire on list load complete
 	
-Options:
-	className - (String) css class apply to the wrapper
-	width - (number) Width of the view wrapper in px
-	height - (number) Height  of the view wrapper in px
-	overflow - (collection) hidden, scrollbar or menu
-	tag - (string) define the tag to use for the content view
-	contentTag - (string) define the tag to use for the content view
-	wrapper - (object) wrapper element properties
-	content - (object) content element properties (in case of) 
-	addClass - (string) additionnal class
-	useCanvas - (boolean) false
-
-Returns:
-	View object.
-	
-Example:
-	(start code)
-	var view = new UI.View({
-		width			: 260,
-		height			: 400,
-		overflow		: 'scrollbar' 
-	}).setContent('content','content view');
-	(end)
-
-Discussion:
-	
+	Returns:
+		View object.
+		
+	Example:
+		(start code)
+		var view = new UI.View({
+			width			: 260,
+			height			: 400,
+			scroll			: true 
+		}).setContent('content','content view');
+		(end)
 */
 
 UI.View = new Class({
@@ -4752,76 +5288,62 @@ UI.View = new Class({
 
 		tag					: 'div',
 		contentTag			: 'div',			// 
-
+		
 		content				: {},
+
+		scrollbar			: {},
 
 		// implemented events		
 		onLoadComplete		: $empty
 	},
 
 	/*
-	    Method: initialize
-	    Constructor
+	Method: build
+		private function
+		
+		Creates html structure and inject it to the dom. The view is build with two elements: the wrapper and the content. 
+		If the option overflow is set to true, it will also add the scrollbar object
+
+	Returns:
+		(void)
 	
-	*/
- 	  
-	initialize: function(options){
-		this.parent(options);
-	},
-
-	/*
-    Method: build
-
-      Creates html structure and inject it to the dom. The view is build with two elements: the wrapper and the content. 
-      If the option overflow is set to true, it will also add the scrollbar object
-
-    Returns:
-      this
+	See also:
+		<UI.Element::build>
 	*/
 
 	build: function() {
 		this.parent();
 		
+		this.buildOverlay();
 		this.setOverflow();
 		this.show();
 	},
  	
-	/* 
-		Function: setOverlay
-			create a new overlay object 
-	*/
-
-	buildOverlay: function() {
+	/*
+	Method: buildOverlay
+		private function
 		
-		//console.log('show overlay');
-		this.overlay = new Element('div',this.props.components.overlay)
-		 .inject(this.view.element);
-
-		this.addEvents({
-			'onBlur' : function() { console.log('blur');this.overlay.show(); },
-			'onFocus' : function() { this.overlay.hide(); },
-			'onResizeStart' : function() { this.overlay.show(); },
-			'onResizeComplete' : function() { this.overlay.hide(); },
-			'onDragStart' : function() { this.overlay.show(); },
-			'onDragComplete' : function() { this.overlay.hide(); }
-		});
-	},
-
-
-	/* 
-	 * Method: setBehaviors
-	 * 
-	 * 
+		create an overlay displayed when view is resized or moved
+	
+	Returns:
+		(void)
 	 */
 
-	setBehavior: function() {
-		this.parent();
+	buildOverlay: function() {
+		this.overlay = new Element('div',this.props.components.overlay)
+		 .inject(this.element)
+		// .hide();
+		 
 	},
 
 	/*
     Method: setOverflow
+    	private function
 
 		Manage overflow and set scrololbar if needed or requested
+	
+	Returns:
+		(void)
 	*/
 
 	setOverflow: function() {
@@ -4850,74 +5372,104 @@ UI.View = new Class({
 	},
 	
 	/*
-    Method: setScrollbar
-
-      Creates a new scrollbar object
-
+	Method: buildScrollbar
+		private function
+		
+		Creates a new scrollbar object attached to the view
+	
+	Returns:
+		(void)
 	*/
 	
 	buildScrollbar : function() {
-		this.scrollbar = new UI.Scrollbar({
-			container	: this.content
-		});
+		
+		console.log(':'+this.options.skin);
+		
+		if (this.options.skin) 
+		 this.options.scrollbar.skin = this.options.skin;
+		 
+		this.options.scrollbar.container = this.content;
+		
+		this.scrollbar = new UI.Scrollbar(this.options.scrollbar);
 				 
 		this.addEvents({
 			'ondLoadCompplete' : function() { this.scrollbar.update() },
 			'onResize' : function() { this.scrollbar.update() }
-		 });  
-	},
-	
+		 }); 
+		 
 
-	/*
-	 * 	Function: setSize
-	 * 		Set size of the element and its canvas
-	 */
-	
-	setSize : function(width, height, state){
-		this.parent();
-		this.fireEvent('onResize');
 	},
 
 	/*
-    	Function: setContent
-    
-    		Set Content of the Container
+	Function: setContent
+		Set Content of the Container
+	
+	Arguments:
+		method - (string) ajax, ajaxnu, json, content, html or iframe
+		source - (string) source's url
+	
+	Returns:
+		(void)
 	*/
 	
-	setContent: function(method,source,options){
+	setContent: function(method,source){
 		switch (method) {
 			case 'ajax' || 'xhr':
-				this.setAjaxContent(method,source,options);
+				this.setAjaxContent(source);
 				break;
 			case 'ajaxnu' :
-				this.setAjaxNuContent(method,source,options)
+				this.setAjaxNuContent(source)
 				break;
 			case 'json':
-				this.setJsonContent(method,source,options);
+				this.setJsonContent(source);
 				break;
 			case 'content' || 'html':
-				this.setHtmlContent(method,source,options);
+				this.setHtmlContent(source);
 				break;
 			case 'iframe':
-				this.setIFrameContent(method,source,options);
-				break;
-			default:		
+				this.setIFrameContent(source);
+				break;	
 		};
 	},
+	
+	/*
+	Function: setHtmlContent
+		Set html Content
+	
+	Arguments:
+		source - (string) source's html
+	
+	Returns:
+		this
+	*/
 
-	setHtmlContent: function(method,source,options) {
+	setHtmlContent: function(source) {
 		this.content.set('html',source);
 		this.fireEvent('onLoadComplete');
 		this.fireEvent('onResize');
 		return this;
 	},
 	
-	setAjaxContent: function(method,source,options) {
+	/*
+	Function: setAjaxContent
+		Set ajax Content
+	
+	Arguments:
+		source - (string) source's url
+	
+	Returns:
+		this
+	*/
+	
+	setAjaxContent: function(source) {
+		if (this.iframe) 
+		 this.iframe.destroy();
+		
 		new Request.HTML({
 			url 		: source,
 			update		: this.content,
 			method		: 'get',
-			onComplete: function(response){
+			onComplete: function(){
 				this.fireEvent('onLoadComplete');
 				this.fireEvent('onResize');
 			}.bind(this)
@@ -4926,12 +5478,25 @@ UI.View = new Class({
 		return this;
 	},
 	
-	setAjaxNuContent: function(method,source,options) {
+	/*
+	Function: setAjaxNuContent
+		Set ajax content
+	
+	Arguments:
+		source - (string) source's url
+	
+	Returns:
+		this
+	*/
+	
+	setAjaxNuContent: function(source) {
 		new Request.HTML({
 			url : source,
 			method : 'get',
 			onComplete : function(responseTree,responseElements,responseHTML,responseJS){
-				this.fireEvent('onLoadComplete',new Array(responseHTML,responseTree,responseElements,responseJS));
+				this.fireEvent('onLoadComplete',
+					new Array(responseHTML,responseTree,responseElements,responseJS)
+				);
 				this.fireEvent('onResize');
 			}.bind(this)
 		}).send();
@@ -4939,7 +5504,18 @@ UI.View = new Class({
 		return this;
 	},
 	
-	setJsonContent: function(method,source,options) {
+	/*
+	Function: setJsonContent
+		Set JSON content
+	
+	Arguments:
+		source - (string) source's url
+	
+	Returns:
+		this
+	*/
+	
+	setJsonContent: function(source) {
 		new Request.JSON({
 			url : source,
 			onComplete : function(response){
@@ -4951,9 +5527,21 @@ UI.View = new Class({
 		return this;
 	},
 	
-	setIFrameContent : function(method,source,options) {
+	/*
+	Function: setIFrameContent
+		Set ajax content
+	
+	Arguments:
+		source - (string) iFrame's url
+	
+	Returns:
+		this
+	*/
+	
+	setIFrameContent : function(source) {
 		if (!this.iframe) {
-			this.element.empty();
+			if (this.content) this.content.destroy();
+			if (this.scrollbar) this.scrollbar.destroy();
 			this.iframe = new Element('iframe',this.props.components.iframe).inject(this.element);
 		};
 		
@@ -4962,51 +5550,45 @@ UI.View = new Class({
 		 	this.fireEvent('loadComplete');
 			this.fireEvent('onResize');
 		});
-		
+
 		return this;
 	}
 });
 
 /*
-Class: UI.ListView
-	The UI.ListView class defines objects that manage the list.
-
-Require:
-	UI.Canvas
-	UI.Skin
-	UI.Element
-	UI.View
-	UI.ScrollBar
+	Class: UI.ListView
+		The UI.ListView class defines objects that manage the list.
 	
-Arguments:
-	options
+	Extends:
+		<UI.View>
 	
-Options:
-	className - (String) css class apply to the wrapper
-	width - (number) Width of the view wrapper in px
-	height - (number) Height  of the view wrapper in px
-	overflow - (collection) hidden, scrollbar or menu
-	contentTag - (string) define the tag to use for the content view
-	wrapperTag - (string) define the tag to use for the content view
-	wrapper - (object) wrapper element properties
-	content - (object) content element properties (in case of) 
-	addClass - (string) additionnal class
-	useCanvas - (boolean) false
-
-Returns:
-	View object.
+	Require:
+		<UI.Canvas>
+		<UI.Skin>
+		<UI.Element>
+		<UI.View>
+		<UI.Scrollbar>
+		
+	Arguments:
+		options
+		
+	Options:
+		itemType - (string)
+		scroll - (boolean) react on scrollwheel if set to true
+		data - (array)
 	
-Example:
-	(start code)
-	var listview = new UI.ListView({
-		width			: 260,
-		height			: 400,
-		scroll			: true 
-	}).setContent('content','content view');
-	(end)
-
-Discussion:
-	
+	Returns:
+		Listview object.
+		
+	Example:
+		(start code)
+		var listview = new UI.ListView({
+			url				: 'data.php?id=42',
+			width			: 260,
+			height			: 400,
+			scroll			: true 
+		}).inject(this.content);
+		(end)	
 */
 
 UI.ListView = new Class({
@@ -5017,28 +5599,51 @@ UI.ListView = new Class({
 		
 		data				: [],
 		
-		
-		component			: 'Button',
+		itemObject	 		: 'Button',
 		
 		item				: {
-			component		: 'itemList',
-			type			: 'default'
+			component	: 'itemList',
+			type			: 'default',
+			label : false
 		},
 		
 		width				: '100%',
 		height				: '100%',
-
-		overflow			: 'scrollbar',		// hide, scrollbar or scrollmenu
-
-		// implemented events		
-		onLoadComplete		: $empty
+		itemType			: 'itemList',
 	},
+	
+	/*
+	Method: build
+		private function
+	
+		call <UI.View::build> then get listview's data
+
+	Returns:
+		(void)
+
+	See also:
+		<UI.View::build>
+	*/
 
 	build : function() {
 		this.parent();
 		
 		this.getData(this.options.url);
 	},
+	
+	/*
+	Method: getData
+		private function
+	
+		get data by doing an ajax request if url is defined, or using data set in options
+	
+	Arguments:
+		url - (string) Url where to get data
+		options - (object) class options
+
+	Returns:
+		(void)
+	*/
 
 	/*
 	Function: getData
@@ -5058,7 +5663,6 @@ UI.ListView = new Class({
 		    }).get();
 			
 		} else {
-
 			this.addEvent('injected', function(){
 				this.processList(this.options.data);
 			}.bind(this));
@@ -5067,39 +5671,63 @@ UI.ListView = new Class({
 
 	/*
 	Function: processList
-		Used internally. Parse data and inject in view content.
+		private function
+		
+		Parse datas and inject them in view content.
 	
 	Arguments:
-		data - data to be used during template interpolation
+		data - (object) data to be used during template interpolation
+	
+	Return:
+		this
 	*/
 
 	processList : function(data){
+		
+		if (this.options.skin)
+			this.options.item.skin = this.options.skin;
+			
 		data.each(function(element){
-			
-			console.log(this.options.item);
-			
-			var item = new UI[this.options.component].(this.options.item)
+			var item = new UI[this.options.itemObject](this.options.item)
 			.inject(this.content);
 			
-			$H(element).erase('type').each(function(el){
+			$H(element).erase('type').each(function(value,key){
 				new UI.Element({
-					html : el,
-					styles : {
-						padding:'15px 0 0 5px',
-						height:'14px',
-						color:'#fff'
-					}
+					html : value,
+					styles : this.props.components[key].styles,
 				}).inject(item.element);
 				this.fireEvent('onResize');
 			}, this)
 		}, this);
 	}
 });
-
 /*
-Class: UI.PanelView
-	Creates a panelView Object that let you browse inner views(panels) 
-
+	Class: UI.PanelView
+		Creates a panelView Object that let you browse inner views(panels)
+	
+	Extends:
+		<UI.View>
+		
+	Arguments:
+		options
+		
+	Options:
+		
+	
+	Returns:
+		Panelview object.
+		
+	Example:
+		(start code)
+		new UI.PanelView({
+			url				: 'data.php?id=42',
+			width			: 260,
+			height			: 400,
+		}).inject(this.content);
+		(end)
+	
+	Discussion:
+		Need to make some more cleaning in this class
 */
 
 UI.PanelView = new Class({
@@ -5107,7 +5735,6 @@ UI.PanelView = new Class({
 	
 	options: {
 		className			: 'ui-panelview',
-		buildType			: 'div',
 		properties			: {},
 		styles				: {
 			width			:'100%',
@@ -5132,12 +5759,16 @@ UI.PanelView = new Class({
 		onResize			: $empty
 	},
 
-/*
-    Function: initialize
-   
-    	Constructor
-
-*/
+	/* 
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	
+	See also:
+		<UI.Element::initialize>
+	*/
 	
 	initialize: function(options){
 		this.setOptions(options);
@@ -5148,12 +5779,15 @@ UI.PanelView = new Class({
 		this.transitionFx = new Fx.Scroll(this.element.element, this.options.transitionFx);
 	},
 
-/*
-    Function: build
-   
-    	Create mainview
+	/*
+	Method: build
+		private function
+		
+		Overwrite <UI.View::build>. Create mainview
 
-*/
+	Returns:
+		(void)
+	*/
 
  	build: function (){
 		this.element = new UI.View({
@@ -5313,8 +5947,11 @@ UI.PanelView = new Class({
 	}
 });
 /*
-Class: UI.TabView
-	Creates a panels container that let you manage inner panels.
+	Class: UI.TabView
+		Creates a panels container that let you manage inner panels.
+	
+	Extends:
+		<UI.View>
 
 */
 
@@ -5327,24 +5964,28 @@ UI.TabView = new Class({
 	},
 	
 	/*
-	 Method: initialize
-	 Constructor
+	Constructor: initialize
+		Constructor
+	
+	See also:
+		<UI.Element::initialize>
 	 
 	 */
 	initialize: function(options){
 		this.tabs = new Array();
-		
 		this.parent(options);
-		
-		
 	},
 	
 	/*
-	 Function: build
-	 
-	 Creates html structure and inject it to the dom.
-	 
-	 */
+	Function: build
+		private function
+		
+		Creates html structure and inject it to the dom.
+	
+	See also:
+		<UI.View::build>
+		<UI.Element::build>
+	*/
 	build: function(){
 		this.parent();
 		this.buildTabs();
@@ -5458,15 +6099,39 @@ UI.TabView = new Class({
 	
 	
 });
-// JavaScript Document
-
 /*
-Class: UI.Layout.App
-	The Layout.App class of the <http://iframework.org> iframework.
-	Creates a new Layout.App
-
-Arguments:
+	Class: UI.SplitView
+		The UI.SplitView class splits views.
+	
+	Extends:
+		<UI.View>
+	
+	Require:
+		<UI.Canvas>
+		<UI.Skin>
+		<UI.Element>
+		<UI.View>
+		<UI.Scrollbar>
 		
+	Arguments:
+		options
+		
+	Options:
+	
+	Returns:
+		Listview object.
+		
+	Example:
+		(start code)
+		var splitview = new UI.SplitView({
+			width			: 260,
+			height			: 400,
+		}).inject(document.body);
+		
+		splitview.views[0].setContent('ajax','side.php');
+		splitview.views[1].setContent('ajax','content.php');
+		
+		(end)	
 */
 
 UI.SplitView = new Class({
@@ -5478,10 +6143,6 @@ UI.SplitView = new Class({
 		minSize		: 160
 	},
 	
-	initialize: function(options){
-		this.parent(options);
-	},
-
 	build: function(){
 		this.parent();
 		
@@ -5553,43 +6214,51 @@ UI.SplitView = new Class({
 	}
 });/*
 
-Class: UI.Window
-	The UI.Window class defines objects that manage and coordinate the windows an application displays on the screen.
-
-Require:
-	<UI.Element>, <UI.Canvas>, <UI.Skin>, <UI.Button>, <UI.View>.
-
-Inherits from:
-	UI.Element - As window container.
-
-Arguments:
-	Options
+	Class: UI.Window
+		The UI.Window class defines objects that manage and coordinate the windows an application displays on the screen.
 	
-Options: 
-	title - (string) title displayed in the head titlebar.
-	type - (string) define the type of the window (default, transparent).
-	location - ('custom','center','cascade')  override top and left options if defined - default to custom.
-	width - (number) Width of the container wrapper in px.
-	height - (number) Height  of the container wrapper in px.
-	top	- (number) Height  of the container wrapper in px.
-	left - (number) Height  of the container wrapper in px.
-	state - ('normalized','maximized','normalized') Define the initial state - default to normalized.
-	useEffects - (boolean) Define if effects should be implemented.
-	resizable - (boolean) Define if the window is resizable.
-	draggable - (boolean) Define if the window is draggable.
-	scrollbar - (boolean) Define if the container should use scrollbar.
-	register - (bollean) Define if the window should be handle by the window manager.
-	status - (bollean) Define if the window should use a statusbar.
-	url	- (string) Define the url from the window content.
-
-Example:
-	(start code)
-	var win = new UI.Window({
-		width 	: 260,
-		height	: 400,
-		title	: 'bonjour',
-	}).setContent('iframe','http://www.iframework.org');
-	(end)
+	Require:
+		<UI.Element>
+		<UI.Canvas>
+		<UI.Skin>
+		<UI.Button>
+		<UI.Control>
+		<UI.View>
+	
+	Extends:
+		<UI.Element>
+	
+	Arguments:
+		Options
+		
+	Options: 
+		title - (string) title displayed in the head titlebar.
+		type - (string) define the type of the window (default, transparent).
+		location - (string)  Could be either 'custom','center' or 'cascade'. Override top and left options if defined - default to custom.
+		width - (number) Width of the container wrapper in px.
+		height - (number) Height  of the container wrapper in px.
+		top	- (number) Height  of the container wrapper in px.
+		left - (number) Height  of the container wrapper in px.
+		state - ('normalized','maximized','normalized') Define the initial state - default to normalized.
+		useEffects - (boolean) Define if effects should be implemented.
+		resizable - (boolean) Define if the window is resizable.
+		draggable - (boolean) Define if the window is draggable.
+		scrollbar - (boolean) Define if the container should use scrollbar.
+		register - (bollean) Define if the window should be handle by the window manager.
+		status - (bollean) Define if the window should use a statusbar.
+		url	- (string) Define the url from the window content.
+	
+	Example:
+		(start code)
+		var win = new UI.Window({
+			width 	: 260,
+			height	: 400,
+			title	: 'bonjour',
+		}).setContent('iframe','http://www.iframework.org');
+		(end)
+	
+	Discussion:
+		Effects still need to be implemented as option
 */
 
 UI.Window = new Class({
@@ -5644,14 +6313,20 @@ UI.Window = new Class({
 		onClose				: $empty
 	},
 
-	/*
-	    Function: initialize
-	    	Constructor
+	/* 
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	
+	See also:
+		<UI.Element::initialize>
 	*/
 	
 	initialize: function(options) {
 		// handle window manager singleton class
-		this.controller = new UI.Controller.Window();
+		this.controller = UI.windowController;
 		
 		// call parent constructor
 		this.parent(options);
@@ -5664,13 +6339,20 @@ UI.Window = new Class({
 
 		this.controller.focus(this);
 	},
-
-	/*
-	    Function: build
 	
-	      Creates html structure and inject it to the dom.
+	/* 
+	Function: build
+		private function
+		
+		Creates html structure and inject it in the dom.
+	
+	Return:
+		(void)
+	
+	See also:
+		<UI.Element::build>
 	*/
-	
+
 	build: function() {	
 		// call parent builder
 		this.parent()
@@ -5678,7 +6360,6 @@ UI.Window = new Class({
 		this.buildHead();
 		this.buildView();
 		this.buildFoot();
-		this.buildOverlay();
 		
 		this.inject(this.options.container || document.body);
 		
@@ -5686,8 +6367,13 @@ UI.Window = new Class({
 	},
 
 	/* 
-		Function: setHead
-			Create a new head element, set class and styles and inject
+	Function: buildHead
+		private function
+		
+		Create a new head element, set class and styles and inject
+	
+	Returns:
+		(void)
 	*/	
 
 	buildHead : function() {
@@ -5697,24 +6383,32 @@ UI.Window = new Class({
 		this.dragHandlers.push(this.head);
 		this.head.disableSelect();	
 		this.buildControls();
+		
 		this.title = new UI.Label(this.props.components.title)
-		.inject(this.head);
+		 .inject(this.head);
 		
 		this.setTitle(this.options.title);
 		
 		var width = this.controls.getSize().x;
-		width = 70;
+		width = 0;
 		
 		if (this.props.components.controls.styles['float'] == 'right') { 
 			this.title.element.setStyle('paddingLeft',width); 
 		} else { 
 			this.title.element.setStyle('paddingRight',width) 
 		}
+		
+		if (this.options.toolbar) this.buildToolbar(this.options.toolbar);
 	},
 
 	/*
-	    Function: setControls
-	      Create window controls that allow window close, maximize and minimize
+	Function: setControls
+		private function
+		
+		Create window controls that allow window close, maximize and minimize
+	
+	Returns:
+		(void)
 	*/
 	
 	buildControls: function() {
@@ -5723,15 +6417,16 @@ UI.Window = new Class({
 		var controllist = new Array();
 
 		this.controls = new Element('div',this.props.components.controls)
+		
 		.addEvents({
 			mouseenter	: function() {
 				controllist.each(function(button) {
-					button.setState('show');
+					button.setState('over');
 				})
 			},
 			mouseover	: function() {
 				controllist.each(function(button) {
-					button.setState('show');
+					button.setState('over');
 				})
 			},
 			mouseleave	: function() {
@@ -5741,7 +6436,6 @@ UI.Window = new Class({
 			}
 		})
 		.inject(this.head);
-		
 		this.options.controls.each(function(action){
 			this.props.components.control.type = action;
 
@@ -5759,10 +6453,17 @@ UI.Window = new Class({
 	},
 	
 	/*
-	    Function: setToolbar
-			Sets the window's toolbar. and attach related events
-			
-		Note: 	it should be passed as options when the application instanciates its window
+    Function: setToolbar
+    	Sets the window's toolbar. and attach related events
+    
+    Arguments:
+    	toolbar - (object) Toolbar's options object. See <UI.Toolbar>
+    
+    Returns:
+    	this
+		
+	Discussion:
+		it should be passed as options when the application instanciates its window
 	*/
 	
 	buildToolbar: function(toolbar) {
@@ -5770,11 +6471,11 @@ UI.Window = new Class({
 
 		// not really nice because related to a specific layer ... 
 		this.props.layers.underlay.size[1] = this.head.getSize().y;
-		this.updateSize();
+		//this.updateSize();
 		
 		this.addEvents({
-			onMinimize 			: function() { this.toolbar.hide() },
-			onNormalize 		: function() { this.toolbar.show() }
+			onMinimize 			: function() { console.log('bye bye'); this.toolbar.hide() },
+			onNormalize 		: function() { console.log('hello'); this.toolbar.show() }
 		});
 		
 		new UI.Button(this.props.components.toggle)
@@ -5785,8 +6486,16 @@ UI.Window = new Class({
 	},
 
 	/* 
-		Function: setView
-			Create a new view of the define type and attach related window events
+	Function: buildView
+		private function
+		
+		Create a new view of the define type and attach related window events
+	
+	Returns:
+		(void)
+		
+	Discussion:
+		We should setup a better switch to build view according its type
 	*/	
 
 	buildView : function() {
@@ -5808,6 +6517,9 @@ UI.Window = new Class({
 			
 		} else {
 			// should be merge depending on certain conditions 
+			
+			if (this.options.skin) 
+			 this.options.view.skin = this.options.skin;
 			
 			if (!this.options.view.type) 
 			 this.options.view.type = this.props.components.view.type;
@@ -5831,29 +6543,13 @@ UI.Window = new Class({
 	},
 
 	/* 
-		Function: setOverlay
-			create a new overlay object 
-	*/
-
-	buildOverlay: function() {
+	Function: buildFoot
+		private function
 		
-		//console.log('show overlay');
-		this.overlay = new Element('div',this.props.components.overlay)
-		 .inject(this.view.element);
-
-		this.addEvents({
-			'onBlur' : function() { this.overlay.show(); },
-			'onFocus' : function() { this.overlay.hide(); },
-			'onResizeStart' : function() { this.overlay.show(); },
-			'onResizeComplete' : function() { this.overlay.hide(); },
-			'onDragStart' : function() { this.overlay.show(); },
-			'onDragComplete' : function() { this.overlay.hide(); }
-		});
-	},
-
-	/* 
-		Function: setFoot
-			Create a new foot container and inject resize handler and statusbar in it
+		Create a new foot container and inject resize handler and statusbar in it
+	
+	Returns:
+		(void)
 	*/
 
 	buildFoot: function() {
@@ -5882,9 +6578,13 @@ UI.Window = new Class({
 	},
 
 	/*
-		Function: buildResizeHandler
-			Create a new element as resize handler
+	Function: buildResizeHandler
+		private function
 		
+		Create a new element as resize handler
+	
+	Returns:
+		(void)
 	 */
 	
 	buildResizeHandler : function() {
@@ -5895,10 +6595,11 @@ UI.Window = new Class({
 	},
 
 	/*
-		Method: toggleToolbar
-			The action method for the "Hide Toolbar" menu item (which alternates with "Show Toolbar").
-		
-		Note:   it should be passed as options when the application instanciates its window
+	Method: toggleToolbar
+		The action method for the "Hide Toolbar" menu item (which alternates with "Show Toolbar").
+	
+	Returns:
+		this
 	*/
 	
 	toggleToolbar: function() {
@@ -5911,13 +6612,23 @@ UI.Window = new Class({
 		}
 		
 		this.updateSize();
-		this.fireEvent('setCanvasSize', this.state);
+		this.fireEvent('canvasDraw', this.state);
+		
+		return this;
 	},
 
 
 	/*
-	    Function: setBeahaviours
-	    	Define the spcific window behaviours
+	    Function: setBehavior
+	    	private function
+	    	
+	    	Define the specific window behavior
+	    
+	    Returns:
+	    	(void)
+	    
+	    See also:
+	    	<UI.Element::setBehavior>
 	*/
 	
 	setBehavior: function(){
@@ -5932,11 +6643,28 @@ UI.Window = new Class({
 				this.options.height = coord.height;
 			}.bind(this)
 		});
+		
+		this.addEvents({
+			'onBlur' : function() { this.view.overlay.show(); },
+			'onFocus' : function() { this.view.overlay.hide(); },
+			'onResizeStart' : function() { this.view.overlay.show(); },
+			'onResizeComplete' : function() { this.view.overlay.hide(); },
+			'onDragStart' : function() { this.view.overlay.show(); },
+			'onDragComplete' : function() { this.view.overlay.hide(); }
+		});
 	},
 
 	/*
-		Function: enableDrag
-				Add draggable capabilities for the window.
+	Function: enableDrag
+		private function
+		
+		Add draggable capabilities for the window.
+	
+	Returns:
+		(void)
+	
+	See also:
+		<UI.Element::enableDrag>
 	*/
 
 	enableDrag :function() {
@@ -5958,8 +6686,11 @@ UI.Window = new Class({
 
 
 	/*
-	    Function: focus
-	      If minimize normalize and fireEvent OnFocus
+	Function: focus
+		If minimize normalize and fireEvent OnFocus
+	
+	Returns:
+		(void)
 	*/
 	
 	focus: function() {
@@ -5979,6 +6710,9 @@ UI.Window = new Class({
 
     Function: minimize
 		This action method displays the minimized window
+	
+	Returns:
+		(void)
 	*/
 
 	minimize : function() {
@@ -5992,13 +6726,18 @@ UI.Window = new Class({
 		};
 		this.setState('minimized', size);
 		var coord = this.controller.getMinimizedLocation();
-		this.setLocation(coord[0], coord[1], 'morph');
+		this.setLocation(coord[0], coord[1]);
 		this.controller.focus();
 	},
 
 	/*
-	    Function: maximize
-	      This action method set the size to fit the window container
+	Function: maximize
+		private function
+		
+		This action method set the size to fit the window container
+	
+	Returns:
+		(void)
 	*/
 
 	maximize : function() {
@@ -6020,19 +6759,25 @@ UI.Window = new Class({
 	},
 
 	/*
-		Function: normalize
-			Normalize the current window
+	Function: normalize
+		Normalize window
+	
+	Returns:
+		(void)
 	*/
 
 	normalize : function() {
-		this.controller.focus(this);
+		
 		
 		var size = {
 			width : false,
 			height : false
 		};
 		this.setState('default', size);
-		this.setLocation(false, false, 'morph');
+		
+		this.setLocation();
+		
+		this.controller.focus(this);
 		
 		this.maximized = false;
 		this.minimized = false;
@@ -6041,8 +6786,13 @@ UI.Window = new Class({
 	},		
 
 	/*
-		Function: getInitialLocation
-			Return the initial location depending on location options
+	Function: getInitialLocation
+		private function
+		
+		Return the initial location depending on location options and window's size
+	
+	Returns:
+		coordinates - (object) Object containing top and left properties
 	*/
 
 	getInitialLocation: function() {
@@ -6058,8 +6808,11 @@ UI.Window = new Class({
 
 	
 	/*
-	    Function: updateSize
-	      Update size and position of the window inner components
+	Function: updateSize
+		Update size and position of the window inner components
+	
+	Returns:
+		(void)
 	*/
 
 	updateSize : function() {
@@ -6115,22 +6868,34 @@ UI.Window = new Class({
 	},
 
 	
-	 /*
-		Function: setSize
-			Set window's frame size and updateSize
-			
+	/*
+	Function: setSize
+		Set window's frame size and updateSize
+	
+	Returns:
+		this
+	
+	See also:
+		<UI.Element::setSize>			
 	*/  
 	 
 	setSize: function(width,height, state) {
 		this.parent(width,height, state);
 		this.updateSize();
+		
+		return this;
 	},	
 	
 	/* 
-		Function: setTitle
-			set title html 
-			
-	 */
+	Function: setTitle
+		set title html
+	
+	Arguments:
+		html - (string) html formatted title
+	
+	Returns:
+		this
+	*/
 	
 	setTitle : function(html) {
 		this.title.set('html',html);
@@ -6138,8 +6903,16 @@ UI.Window = new Class({
 	},
 
 	/*
-	    Function: setContent
-	    	Set Content of the Window View
+    Function: setContent
+    	Set Content of the Window View. See <UI.View::setContent> for arguments details
+    
+    Arguments:
+    	method - (string)
+    	source - (string)
+    	options - (object)
+    
+    Returns:
+    	this
 	*/
 	
 	setContent: function(method,source,options){
@@ -6148,8 +6921,14 @@ UI.Window = new Class({
 	},
 
 	/*
-	    Function: setStatus
-	    	Set Status of the Window foot
+    Function: setStatus
+    	Set Status of the Window foot
+    
+    Arguments:
+    	html - (string) html formatted new status
+    
+    Returns:
+    	this
 	*/
 
 	setStatus : function(html) {
@@ -6158,11 +6937,14 @@ UI.Window = new Class({
 	},
 
 	/*
-	    Function: control
-	      Toggle state 
-	      
-		Arguments:
-			actions - (minimize,maximize,close)
+	Function: control
+		handle window controls' actions
+      
+	Arguments:
+		actions - (string) minimize,maximize,close
+	
+	Returns:
+		this
 	*/	
 
 	control : function(action) {
@@ -6177,14 +6959,16 @@ UI.Window = new Class({
 				this.close();
 				break;
 		}
+		
+		return this;
 	},
 
 	/*
-	    Function: close
-			Close window
-	      
-		Arguments:
-			actions - (minimize,maximize,close)
+    Function: close
+		Close window
+      
+	Returns:
+		(void)
 	*/	
 	
 	close : function() {
@@ -6192,31 +6976,26 @@ UI.Window = new Class({
 	}
 });
 /*
-Class: UI.Controller
-	base class for controllers.
-
-License:
-	MIT-style license.
-
-Require:
-	UI/Windows.js
-
+	Class: UI.Window.Controller
+		Window controller. It handles windows cascading position, minimize position, focusing, ...
+	
+	Arguments:
+		options - (object)
+	
+	Options:
+		zBase - (integer)
+		zStep - (integer)
+		cascade - (object)
+		stack - (object)
+	
+	Requires:
+		<UI.Window>
+	
+	Discussion:
+		Stacks should be better implemented
 */
 
-UI.Controller = {};
-
-/*
-Class: UI.Window.Controller
-	The window controller class of the <http://app.floor.ch> floor apps framework
-	Creates a new window controller
-
-License:
-	MIT-style license.
-
-Require:
-	UI/Windows.js
-
-*/
+UI.Controller = UI.Controller || {};
 
 UI.Controller.Window = new Class({
 	Singleton			: true,
@@ -6244,6 +7023,17 @@ UI.Controller.Window = new Class({
 		}
 	},
 	
+	/* 
+	Constructor: initialize
+		Construtor
+	
+	Arguments:
+		options - (object) options
+	
+	Returns:
+		(void)
+	*/
+	
 	initialize: function(options){
 		this.setOptions();
 		
@@ -6256,13 +7046,15 @@ UI.Controller.Window = new Class({
 
 
 	/*
-	  Function: register
-	  
-	   	Add passing window to the manage list
-	   
-	  Arguments: window Object
-	  
-	 */	
+	Function: register
+		Add passing window to the manage list
+
+	Arguments:
+		win - (object) the window class instance to register
+	
+	Returns:
+		(void)
+	*/
 	
 	register: function(win) {
 		UI.elements.window.push(win);
@@ -6271,13 +7063,15 @@ UI.Controller.Window = new Class({
 	},
 	
 	/*
-	  Function: close
-	  
-	   Destroy the window class instance
-	   
-	  Arguments: window Object
-	  
-	 */	
+	Function: close
+		Destroy the provided window and focus to next one
+
+	Arguments:
+		win - (object) the window class instance to close and destroy
+	
+	Returns:
+		(void)
+	*/
 	
 	close: function(elementClass) {
 		elementClass.hide();
@@ -6293,13 +7087,15 @@ UI.Controller.Window = new Class({
 	},
 	
 	/*
-	  Function: focus
-	  
-	   	Increment max z-index and blur active window
-	   
-	  Arguments: window Object
-	  
-	 */	
+	Function: focus
+		Increment max z-index and focus provided window
+
+	Arguments:
+		win - (object) the window class instance to focus
+	
+	Returns:
+		(void)
+	*/
 	
 	focus: function(win) {
 		if (!$defined(win)) {
@@ -6314,6 +7110,7 @@ UI.Controller.Window = new Class({
 				}
 			}
 			if (window) window.focus();
+			return;
 		} else if (win && this.active != win) {
 			if (this.active && !this.active.minimized) this.blur(this.active);
 			
@@ -6322,17 +7119,21 @@ UI.Controller.Window = new Class({
 			
 			this.active = win;
 			win.fireEvent('focus');
+			return;
 		}
+		this.active = false;
 	},
 	
 	/*
-	  Function: blur
-	  
-	   	blur active window
-	   
-	  Arguments: window Object
-	  
-	 */	
+	Function: blur
+		Blur active window
+
+	Arguments:
+		win - (object) the window class instance to blur
+	
+	Returns:
+		(void)
+	*/
 	
 	blur: function(win) {
 		if ($defined(win) && !win.minimized) {
@@ -6342,13 +7143,13 @@ UI.Controller.Window = new Class({
 			this.blur(this.active);
 		}
 	},
-
 	
 	/*
-	  Function: getMinimizedLocation
-	  
-	   	Return the position of next minimized window
-	  
+	Function: getMinimizedLocation
+		Return the position of next minimized window
+	
+	Returns:
+		location - (array) Array containing left and top position	  
 	 */	
 	 	
 	getMinimizedLocation: function() {
@@ -6365,11 +7166,12 @@ UI.Controller.Window = new Class({
 	},
 	
 	/*
-	  Function: resetMinimizedLocation
-	  
+	Function: resetMinimizedLocation
 		Replace minimized windows
-	  
-	 */	
+	
+	Returns:
+		(void)
+	*/
 	
 	resetMinimizedLocation : function(){
 		var x = -150;
@@ -6383,11 +7185,12 @@ UI.Controller.Window = new Class({
 	},
 
 	/*
-	  Function: resizeMaximizedWindow
-	  
-	   	Set new maximized size for all mamimized window 
-	  
-	 */	
+	Function: resizeMaximizedWindow
+		Set new maximized size for all mamimized window 
+	
+	Returns:
+		(void)
+	*/	
 	
 	resizeMaximizedWindow: function() {
 		UI.elements.window.each(function(win) {
@@ -6401,18 +7204,16 @@ UI.Controller.Window = new Class({
 	},
 
 	/*
-	  Function: getCascadeLocation
-	  
-	   	Calculate the location of the window in the cascade
-	  
-	  Arguments : window Object
-	  
-	  Return
-	  		Hash of location coordinates { left : 100, top : 100 }
-	  
+	Function: getCascadeLocation
+		Calculate the location of the window in the cascade
+
+	Arguments:
+		win - (object) the window class instance to get location
+
+	Returns:
+		location - (object) location coordinates { left : 100, top : 100 }
 	*/
 
-	
 	getCascadeLocation: function(win) {
 		var location = {
 			left : this.options.cascade.start.x.toInt(),
@@ -6428,17 +7229,21 @@ UI.Controller.Window = new Class({
 		return location;
 	},
 	
-	
 	/*
-	  Function: propagateUnderShadow
-	  
-	   	Propagate click from shadow offset to the back window 
-	  
-	 */
+	Function: propagateUnderShadow
+		private function
+		
+		Propagate click from shadow offset to the back window
+	
+	Arguments:
+		e - (event) Event handling click
+	
+	Returns:
+		(void)
+	
+	*/
 	
 	propagateUnderShadow : function(e) {
-		//console.log('propagate');
-		
 		var x = e.client.x;
 		var y = e.client.y;
 		var z = 0;
@@ -6455,12 +7260,12 @@ UI.Controller.Window = new Class({
 		});
 	},
 
-
 	/*
-	  Function: resetCascade
-	  
-	   	Reset all window location and set a cascade
-	  
+	Function: resetCascade
+		Reset all window location and set a cascade
+	
+	Returns:
+		(void)
 	 */
 	
 	resetCascade: function() {
@@ -6473,8 +7278,9 @@ UI.Controller.Window = new Class({
 			}
 		});
 	}
-	
-});/*
+});
+
+UI.windowController = UI.windowController || new UI.Controller.Window();/*
 About:
 	http://www.nwhite.net/2008/10/10/mootools-singleton-class-mutator/
 	

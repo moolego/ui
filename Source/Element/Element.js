@@ -306,6 +306,10 @@ UI.Element = new Class({
 		var coord = myWindow.getCenterLocation();
 		myWindow.setLocation(coord.left, coord.top, 'morph');
 		(end)
+		
+	Discussion:
+		
+	
 	*/
 	
 	setLocation	: function(left,top,morph) {
