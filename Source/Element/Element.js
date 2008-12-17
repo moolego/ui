@@ -464,6 +464,11 @@ UI.Element = new Class({
 			needed = true;
 		}
 		
+		if (coordinates.top.toInt() < 53) {
+			location.top = 53 + $random(25,75)
+			needed = true;
+		}
+		
 		if (coordinates.left.toInt() + this.element.getStyle('width').toInt() < 0) {
 			location.left = $random(25,75)-this.element.getStyle('width').toInt();
 			needed = true;
