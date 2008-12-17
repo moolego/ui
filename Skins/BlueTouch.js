@@ -342,7 +342,7 @@ UI.props.BlueTouch = {
 						size : ['auto',1],
 						color : '#fff',
 						offset : [0,0,'auto'],
-						opacity : 0.6
+						opacity : 0.1
 					},
 					dark : {
 						size : ['auto',1],
@@ -381,13 +381,13 @@ UI.props.BlueTouch = {
 						size : ['auto',1],
 						color : '#fff',
 						offset : [0,0,'auto'],
-						opacity : 0.4
+						opacity : 0.1
 					},
 					dark : {
 						size : ['auto',1],
 						color : '#000',
 						offset : ['auto',0,0],
-						opacity : 0.05
+						opacity : 0.1
 					},
 				}
 			}
