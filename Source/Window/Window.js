@@ -125,6 +125,7 @@ UI.Window = new Class({
 		this.options.top = location.top;
 		this.options.left = location.left;
 		this.element.setStyles(location);
+		this.adaptLocation();
 
 		this.controller.focus(this);
 	},
@@ -516,6 +517,7 @@ UI.Window = new Class({
 		this.setState('minimized', size);
 		var coord = this.controller.getMinimizedLocation();
 		this.setLocation(coord[0], coord[1], 'morph');
+		this.setStyle('position', 'fixed');
 		this.controller.focus();
 	},
 
