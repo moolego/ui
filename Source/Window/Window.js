@@ -307,8 +307,6 @@ UI.Window = new Class({
 		} else {
 			// should be merge depending on certain conditions 
 			
-			console.log(this.options.skin);
-			
 			if (this.options.skin) 
 			 this.options.view.skin = this.options.skin;
 			

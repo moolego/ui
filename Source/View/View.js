@@ -93,8 +93,11 @@ UI.View = new Class({
 
 	buildOverlay: function() {
 		this.overlay = new Element('div',this.props.components.overlay)
-		 .inject(this.element)
-		 .hide();
+		 .inject(this.element);
+	
+		this.addEvents({
+			'onLoadComplete' : function() { this.overlay.hide(); }
+		});
 		 
 	},
 
@@ -144,8 +147,6 @@ UI.View = new Class({
 	*/
 	
 	buildScrollbar : function() {
-		
-		console.log(':'+this.options.skin);
 		
 		if (this.options.skin) 
 		 this.options.scrollbar.skin = this.options.skin;
@@ -309,7 +310,7 @@ UI.View = new Class({
 		
 		this.iframe.set('src',source)
 		 .addEvent('load',function(){ 
-		 	this.fireEvent('loadComplete');
+		 	this.fireEvent('onLoadComplete');
 			this.fireEvent('onResize');
 		});
 
