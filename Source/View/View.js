@@ -94,7 +94,7 @@ UI.View = new Class({
 	buildOverlay: function() {
 		this.overlay = new Element('div',this.props.components.overlay)
 		 .inject(this.element)
-		 .hide();
+		// .hide();
 		 
 	},
 
@@ -144,8 +144,6 @@ UI.View = new Class({
 	*/
 	
 	buildScrollbar : function() {
-		
-		console.log(':'+this.options.skin);
 		
 		if (this.options.skin) 
 		 this.options.scrollbar.skin = this.options.skin;
