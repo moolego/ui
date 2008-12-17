@@ -464,8 +464,8 @@ UI.Element = new Class({
 			needed = true;
 		}
 		
-		if (coordinates.top.toInt() < 53) {
-			location.top = 53 + $random(25,75)
+		if (coordinates.top.toInt() < 50) {
+			location.top = 53;
 			needed = true;
 		}
 		
