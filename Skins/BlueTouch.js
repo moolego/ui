@@ -37,6 +37,70 @@ UI.props.BlueTouch = {
 			}
 		}
 	},
+	button : {
+		'answer' : {
+			label				: 'Bubble counter',
+			labelStyles			: {
+				fontSize		: '20px',
+				fontWeight		: 'bold',
+				opacity			: '1',
+				color			: '#fff',
+				padding			: '10px 26px'
+			},
+			location			: 'center',
+			draggable			: true,
+
+			props				: {
+				'default'				: {
+					layers				: {
+					reorder			: ['emboss','underlay','front','reflect'],
+						
+						emboss			: {
+							offset		: 0,
+							color		: '#4b5461',
+							opacity		: 1,
+							radius		: 12
+						},
+						underlay		: {
+							offset		: [3,3,2,3],
+							color		: ['#eeb7bf','#262c32']
+						},
+						front			: {
+							offset		: [1,0],
+							color		: ['#c4020e','#f81e0f'],
+						 	opacity		: 1,
+							radius		: [9,9,8,8]
+						},
+						reflect			: {
+							offset		: ['0px', '0px', '50%'],
+							color		: ['#FFF', '#FFF'],
+							opacity		: [.5, .2],
+							radius		: [8, 8, 0, 0]
+						}
+					}
+				},
+				over					: {
+					components			: {
+						label			: {
+							styles		: { opacity	: .8 }
+						}
+					},
+					layers				: {
+						emboss			: {
+							color		: '#00CC00'
+						}
+					}
+				},
+				down					: {
+					components			: {
+						label			: {
+							styles		: { color	: '#ccc' }
+						}
+					}
+				}
+			}
+		}
+	},
 	
 	slider: {
 		'default': {
