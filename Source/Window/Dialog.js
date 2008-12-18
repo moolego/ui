@@ -27,5 +27,5 @@ UI.Dialog = new Class({
 	
 	options: {
 		center				: true
-	},
+	}
 });
