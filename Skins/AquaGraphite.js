@@ -87,7 +87,8 @@ UI.props.AquaGraphite = {
 						radius : 11
 					},
 					main : {
-						color: ['#d4d4d4', '#e5e5e5']
+						color: ['#d4d4d4', '#e5e5e5'],
+						radius : 10
 					},
 					reflect : {
 						offset : ['0px', '3px', '65%'],
