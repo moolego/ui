@@ -1464,6 +1464,7 @@ UI.props.AquaGraphite = {
 			'default' : {
 				styles : {
 					overflow : 'hidden',
+					position : 'relative',
 					left : '0px',
 					top : '0px'
 				},

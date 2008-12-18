@@ -1,0 +1,414 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		
+	<script type="text/javascript" src="mootools/mootools-1.2.1-core-nc.js"></script>
+	<script type="text/javascript" src="mootools/mootools-1.2-more.js"></script>
+		
+	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+	
+	<script type="text/javascript" src="../Source/Core/UI.js"></script>
+	<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
+	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
+	<script type="text/javascript" src="../Source/Core/Interface.js"></script>
+	
+	<script type="text/javascript" src="../Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
+	<script type="text/javascript" src="../Source/Element/Label.js"></script>
+	<script type="text/javascript" src="../Source/Element/Bubble.js"></script>
+	<script type="text/javascript" src="../Source/Element/Scrollbar.js"></script>
+	
+	<script type="text/javascript" src="../Source/Menu/Menu.js"></script>
+	<script type="text/javascript" src="../Source/Menu/Scroller.js"></script>
+	<script type="text/javascript" src="../Source/Menu/Context.js"></script>
+	<script type="text/javascript" src="../Source/Menu/Toolbar.js"></script>
+	
+	<script type="text/javascript" src="../Source/Form/Control.js"></script>
+	<script type="text/javascript" src="../Source/Form/Button.js"></script>
+	<script type="text/javascript" src="../Source/Form/Checkbox.js"></script>
+	<script type="text/javascript" src="../Source/Form/Input.js"></script>
+	<script type="text/javascript" src="../Source/Form/RadiosGroup.js"></script>
+	<script type="text/javascript" src="../Source/Form/Select.js"></script>
+	<script type="text/javascript" src="../Source/Form/Slider.js"></script>
+	<script type="text/javascript" src="../Source/Form/Textarea.js"></script>
+	
+	<script type="text/javascript" src="../Source/View/View.js"></script>
+	<script type="text/javascript" src="../Source/View/ListView.js"></script>
+	<script type="text/javascript" src="../Source/View/PanelView.js"></script>
+	<script type="text/javascript" src="../Source/View/SplitView.js"></script>
+	<script type="text/javascript" src="../Source/View/TabView.js"></script>
+	
+	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
+	<script type="text/javascript" src="../Source/Window/Window.js"></script>
+	<script type="text/javascript" src="../Source/Window/Dialog.js"></script>
+	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
+	
+	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../Skins/Demo.js"></script>
+	<script type="text/javascript" src="../Skins/BlueTouch.js"></script>
+		
+	<script type="text/javascript" src="js/examples.js"></script>
+		
+		<title>mooLego Speed Test</title>
+		
+		<script type="text/javascript">
+		//<!--/*--><![CDATA[//><!--
+				
+			//color settings
+			var saturation = 11;
+			var brightness = 10;
+			var colorStart = [180, 30, 10];
+			
+			//shape setting
+			radius = 8;
+			var offset = 2;
+			var width = 102;
+			var height = 64;
+			var margin = 3;
+			var fontSize = 11;
+			
+			buttons = new Array();
+			
+			var slidator = new UI.Window({
+				title : 'Inspector',
+				width : 240,
+				height : 430,
+				location: 'custom',
+				controls : [],
+				left : 850,
+				top: 70,
+				resizable: false,
+				type : 'transparent',
+				view : {
+					overflow : 'hidden'
+				}
+			});
+			
+			var baseParams = {
+				skin 				: 'BlueTouch',
+				range 				: [-10, 10],
+				snap 				: true,
+				steps 				: 20,
+				styles 				: {
+					margin			: '3px 20px',
+					display			: 'block'
+				},
+				wheel				: true
+			}
+			
+			var colorLabel = new UI.Label({
+				html : 'Start Color (HSB)',
+				styles : {
+					margin: '0 10px'
+				}
+			}).inject(slidator);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [0, 359],
+				steps : 359,
+				onInjected : function(){
+					this.set(colorStart[0]);
+				},
+				onChange: function(step){
+					colorStart[0] = step;
+					colorLabel.set('html', 'Start Color (HSB) - (' + colorStart[0] + ',' + colorStart[1] + ',' + colorStart[2] + ')');
+				}
+			})).inject(slidator);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [0, 100],
+				steps : 100,
+				onInjected : function(){
+					this.set(colorStart[1]);
+				},
+				onChange: function(step){
+					colorStart[1] = step;
+					colorLabel.set('html', 'Start Color (HSB) - (' + colorStart[0] + ',' + colorStart[1] + ',' + colorStart[2] + ')');
+				}
+			})).inject(slidator);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [0, 100],
+				steps : 100,
+				onInjected : function(){
+					this.set(colorStart[2]);
+				},
+				onChange: function(step){
+					colorStart[2] = step;
+					colorLabel.set('html', 'Start Color (HSB) - (' + colorStart[0] + ',' + colorStart[1] + ',' + colorStart[2] + ')');
+				}
+			})).inject(slidator);
+			
+			var saturationLabel = new UI.Label({
+				html : 'Saturation propagation',
+				styles : {
+					margin: '0 10px'
+				}
+			}).inject(slidator);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [-14, 14],
+				steps : 28,
+				onInjected : function(){
+					this.set(saturation);
+				},
+				onChange: function(step){
+					saturation = step;
+					saturationLabel.set('html', 'Saturation propagation - (' + saturation + ')');
+				}
+			})).inject(slidator);
+			
+			var brightnessLabel = new UI.Label({
+				html : 'Brightness propagation',
+				styles : {
+					margin: '0 10px'
+				}
+			}).inject(slidator);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [-14, 14],
+				steps : 28,
+				onInjected : function(){
+					this.set(brightness);
+				},
+				onChange: function(step){
+					brightness = step;
+					brightnessLabel.set('html', 'Brightness propagation - (' + brightness + ')');
+				}
+			})).inject(slidator);
+				
+			var radiusLabel = new UI.Label({
+				html : 'Radius',
+				styles : {
+					margin: '0 10px'
+				}
+			}).inject(slidator);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [0, 30],
+				steps : 30,
+				onInjected : function(){
+					this.set(radius);
+				},
+				onChange: function(step){
+					radius = step;
+					radiusLabel.set('html', 'Radius - (' + radius + ')');
+				}
+			})).inject(slidator);
+			
+			var offsetLabel = new UI.Label({
+				html : 'Layers\' offset',
+				styles : {
+					margin: '0 10px'
+				}
+			}).inject(slidator);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [0, 10],
+				steps : 10,
+				onInjected : function(){
+					this.set(offset);
+				},
+				onChange: function(step){
+					offset = step;
+					offsetLabel.set('html', 'Layers\' offset - (' + offset + ')');
+				}
+			})).inject(slidator);
+			
+			var widthLabel = new UI.Label({
+				html : "Button's width",
+				styles : {
+					margin: '0 10px'
+				}
+			}).inject(slidator);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [50, 200],
+				steps : 150,
+				onInjected : function(){
+					this.set(width);
+				},
+				onChange: function(step){
+					width = step;
+					widthLabel.set('html', 'Button\'s width - (' + width + ')');
+				}
+			})).inject(slidator);
+			
+			var heightLabel = new UI.Label({
+				html : "Button's height",
+				styles : {
+					margin: '0 10px'
+				}
+			}).inject(slidator);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [50, 150],
+				steps : 100,
+				onInjected : function(){
+					this.set(height);
+				},
+				onChange: function(step){
+					height = step;
+					heightLabel.set('html', 'Button\'s height - (' + height + ')');
+				}
+			})).inject(slidator);
+			
+			var fontSizeLabel = new UI.Label({
+				html : "Font Size",
+				styles : {
+					margin: '0 10px'
+				}
+			}).inject(slidator);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [4, 20],
+				steps : 16,
+				onInjected : function(){
+					this.set(fontSize);
+				},
+				onChange: function(step){
+					fontSize = step;
+					fontSizeLabel.set('html', 'Font Size - (' + fontSize + ')');
+				}
+			})).inject(slidator);
+			
+			var marginLabel = new UI.Label({
+				html : "Margin",
+				styles : {
+					margin: '0 10px'
+				}
+			}).inject(slidator);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [0, 20],
+				steps : 20,
+				onInjected : function(){
+					this.set(margin);
+				},
+				onChange: function(step){
+					margin = step;
+					marginLabel.set('html', 'Margin - (' + margin + ')');
+				}
+			})).inject(slidator);
+			
+			var button = new UI.Button({
+				label	: 'Update buttons',
+				type : 'roundtextured',
+				onClick	: function(){
+					fillButtons();
+				},
+				styles	: {
+					margin		: "20px 0 0 107px",
+					fontFamily	: 'arial, helvetica, sans-serif',
+					fontSize	: '13px'
+				}
+			}).inject(slidator);
+			
+			function fillButtons() {
+				var size = 7;
+				time = $time();
+				
+				var index = 0;
+				for (var i = 0; i < size; i++) {
+					for (var j = 0; j < size; j++) {
+					
+						var one = i;// + offone;
+						var two = j;// + offtwo;
+						
+						var colorInit = [colorStart[0], (colorStart[1]  + saturation * one), (colorStart[2]  + brightness * two)].hsbToRgb();
+						
+						var color = RGBtoHex(colorInit[0], colorInit[1], colorInit[2]);
+						if (buttons[index]) {
+							
+							buttons[index].props.width = width;
+							buttons[index].props.height = height;
+							buttons[index].props.layers.front.color = '#' + color;
+							
+							buttons[index].props.layers.emboss.radius = radius;
+							buttons[index].props.layers.front.radius = radius -2;
+							buttons[index].props.layers.front.offset = offset;
+							buttons[index].props.layers.reflect.radius = radius -4;
+							buttons[index].props.layers.reflect.offset = [offset, offset, '40%'];
+							buttons[index].props.styles.margin = margin;
+							buttons[index].props.components.label.styles.fontSize = fontSize;
+							
+							buttons[index].set('html', '<small>time</small><br/>' + (($time() - time) / 1000) + '<br/><small style="font-size:5px: color:#ccc">color</small><br/>' + color);
+							
+							buttons[index].setState('default');
+							//console.log(index)
+						}
+						else {
+							buttons.push(new UI.Button({
+								label: '<small>time</small><br/>' + (($time() - time) / 1000) + '<br/><small style="font-size:5px: color:#ccc">color</small><br/>' + color,
+								skin: 'demo',
+								type: 'speedtest',
+								props: {
+									'default': {
+										width : width,
+										height : height,
+										components : {
+											label : {
+												styles : {
+													fontSize : fontSize,
+													fontWeight: 'bold',
+													fontFamily: 'Arial, Helvetica',
+													opacity: '.7', 
+													padding: '10px 16px',
+													color: '#fff',
+													width: '70px'
+												}
+											}
+										},
+										styles : {
+											margin : margin
+										},
+										layers: {
+											reorder: ['emboss', 'front', 'reflect'],
+											emboss: {
+												radius: radius,
+												offset : 0,
+												color: '#000',
+												opacity: .17
+											},
+											front: {
+												offset: offset,
+												color: '#' + color,
+												radius: radius -2,
+												opacity: 1
+											},
+											reflect: {
+												offset: [offset, offset, '40%'],
+												gradient	: {
+													color: ['#FFF', '#FFF'],
+													opacity: [.4, .03]
+												},
+												radius: radius - 4
+											}
+										}
+									}
+								}
+							}).inject($('speedtest')))
+						}
+						index++;
+					}
+				}
+			};
+			
+			function toHex(n) {
+				if (n==null) return "00";
+				n=parseInt(n); if (n==0 || isNaN(n)) return "00";
+				n=Math.max(0,n); n=Math.min(n,255); n=Math.round(n);
+				return "0123456789ABCDEF".charAt((n-n%16)/16)
+				+ "0123456789ABCDEF".charAt(n%16);
+			};
+			
+			function RGBtoHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B)}
+			fillButtons();
+		//--><!]]>
+		</script>
+	</head>
+	<body style="padding:24px; margin: 0 auto">
+		<div id='speedtest' style="width: 820px;"></div>
+	</body>
+</html>
