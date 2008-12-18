@@ -81,7 +81,10 @@ UI.Controller.Window = new Class({
 	
 	register: function(win) {
 		UI.elements.window.push(win);
-		win.element.setStyle('zIndex', this.zIndex);
+		if (win.options.zIndex == 'auto')
+			win.element.setStyle('zIndex', this.zIndex);
+		else
+			win.element.setStyle('zIndex', win.options.zIndex);
 		this.zIndex += this.options.zStep;
 	},
 	

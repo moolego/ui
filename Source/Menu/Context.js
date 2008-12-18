@@ -19,7 +19,7 @@
 	
 	Example:
 		(start code)
-		var context = new UI.Menu.Context({
+		var context = new UI.Context({
 			contexts : [
 				{
 					name : 'workspace',
