@@ -92,7 +92,7 @@ UI.SplitView = new Class({
 		this.handler.makeDraggable({
 			limit				: this.draglimit,
 			//onStart				: function() { this.fireEvent('onResizeStart') }.bind(this),
-			onDrag				: function() { this.resize() }.bind(this),
+			onDrag				: function() { this.resize() }.bind(this)
 			//onComplete			: function() { this.fireEvent('onResizeEnd') }.bind(this)
 		});
 	},

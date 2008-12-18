@@ -174,8 +174,7 @@ UI.props.demo = {
 							fontFamily: 'Arial, Helvetica',
 							opacity: '.7', 
 							padding: '10px 16px',
-							color: '#fff',
-							width: '70px'
+							color: '#fff'
 						}
 					}
 				},

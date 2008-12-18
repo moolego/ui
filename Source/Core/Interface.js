@@ -104,8 +104,7 @@ UI.Interface = new Class({
 				component : 'fieldset',
 				width		: size.x - fieldset.getStyle('paddingLeft').toInt() - fieldset.getStyle('paddingRight').toInt(),
 				height		: size.y - fieldset.getStyle('paddingTop').toInt() - fieldset.getStyle('paddingBottom').toInt(),
-				styles 		: fieldset.getStyles('padding', 'margin', 'display', 'top', 'left'),
-				
+				styles 		: fieldset.getStyles('padding', 'margin', 'display', 'top', 'left')
 			}).inject(fieldset, 'before');
 			fs.element.adopt(fieldset.getChildren());
 			fieldset.destroy();

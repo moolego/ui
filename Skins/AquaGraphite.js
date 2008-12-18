@@ -15,8 +15,7 @@ UI.props.AquaGraphite = {
 		/* css properties */
 		styles : {
 			fontFamily : 'Helvetica, Arial, sans-serif',
-			fontSize : '12px',
-			//position : 'relative'
+			fontSize : '12px'
 		},
 		fx : {},
 		
@@ -74,9 +73,6 @@ UI.props.AquaGraphite = {
 				
 				/* layers properties */
 				layers : {
-					'default' : {
-						radius : 10
-					},
 					littleshadow : {
 						offset : ['0px', '0px', '0px', '0px'],
 						color : ['#000', '#000'],
@@ -1493,8 +1489,7 @@ UI.props.AquaGraphite = {
 							//height : '100%',
 							cursor : 'e-resize',
 							width : '7px',
-							opacity : '.3',
-							//position : 'absolute'
+							opacity : '.3'
 						}
 					}
 				},
@@ -2866,7 +2861,7 @@ UI.props.AquaGraphite = {
 						gradient : {
 							color : ['#000','#333'],
 							angle : 110,
-							opacity : .8,
+							opacity : .8
 						},
 						
 						radius : 8
@@ -2878,7 +2873,7 @@ UI.props.AquaGraphite = {
 						gradient : {
 							color : ['#000','#fff'],
 							angle : 10,
-							opacity : .8,
+							opacity : .8
 						},
 						radius : [8,8,8,8]
 					}
