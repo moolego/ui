@@ -47,35 +47,154 @@
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
 	<script type="text/javascript" src="../Skins/BlueTouch.js"></script>
+	
+	<script type="text/javascript" src="../Utils/firebug-lite/firebug-lite.js"></script>
 		
 	<script type="text/javascript" src="js/examples.js"></script>
 	
 	<title>MooLego - Components Playground</title>
 	
 	<script type="text/javascript">
-		window.addEvent('domready', function() {
-			
+		window.addEvent('load', function() {
 			var time = $time();
 			
 			/* Elements in page */
+			var form = new Element('form', {
+				id				: 'controltest',
+				styles			: {
+					margin		: '50px 50px 0',
+					background	: '#e8e8e8'
+				}
+			}).inject(document.body);
 			
-	new UI.Element({
-		label : "new window",
-		skin	: 'demo',
-		type	: "gradient",
-		state	: "linear",
-		width	: 400,
-		height	: 400,
-		styles		: {
-			margin	: 100
-		}
-	}).inject(document.body);
+		
+			var time2 = $time();
+			
+			new UI.Input({
+				type			: 'round',
+				group			: 'test',
+				value			: 'Another input field',
+				styles			: {
+					margin		: 10
+				}
+			}).inject(form);
+			new UI.Button({
+				label			: 'Bow',
+				onClick			: function(){new UI.Window()},
+				styles			: {
+					margin		: 10
+				}
+			}).inject(form);
+			
+			var cbstyles = {
+				margin		: '0 10px 5px',
+				display		: 'block'
+			};
+			
+			new UI.Checkbox({
+				label			: '1 checkbox',
+				group			: 'test',
+				styles			: cbstyles
+			}).inject(form);
+			
+			new UI.Checkbox({
+				label			: '2 checkbox',
+				group			: 'test',
+				styles			: cbstyles
+			}).inject(form);
+			
+			new UI.Checkbox({
+				label			: '3 checkbox',
+				group			: 'test',
+				styles			: cbstyles
+			}).inject(form);
+			
+			new Element('br').inject(form);
+			
+			var radiosGroup = new UI.RadiosGroup({
+				name			: 'radios'
+			});
+			
+			var radio = radiosGroup.newRadio({
+				label			: 'Radio 1',
+				selected		: true,
+				styles			: cbstyles
+			}).inject(form);
+			
+			var radio = radiosGroup.newRadio({
+				label			: 'Radio 2',
+				styles			: cbstyles
+			}).inject(form);
+			
+			var radio = radiosGroup.newRadio({
+				label			: 'Radio 3',
+				styles			: cbstyles
+			}).inject(form);
+			
+			var radio = radiosGroup.newRadio({
+				label			: 'Radio 4',
+				styles			: cbstyles
+			}).inject(form);
+			
+			new Element('br').inject(form);
+
+			
+			new UI.Select({
+				list			: [
+					{text		: 'Please choose'},
+					{text		: 'Core'},
+					{text		: 'Control'},
+					{text		: 'Desktop is a long entry'},
+					{text		: 'Menu'},
+					{text		: 'Form'},
+					{text		: 'Un menu'},
+					{text		: 'Plage'},
+					{text		: 'Venise'}
+				],
+				styles			: {
+					margin		: 10
+				}
+			}).inject(form);
+			
+			new UI.Select({
+				list			: [
+					{text		: 'Please choose'},
+					{text		: 'It is long because of this entry in the list'}
+				],
+				styles			: {
+					margin		: 10
+				}
+			}).inject(form);
+
+			new UI.Input({
+				value			: 'An input field',
+				styles			: {
+					margin		: 10
+				}
+			}).inject(form);
+			
+			
+			
+			new Element('br').inject(form);
+			
+			new UI.Textarea({
+				value			: 'A textarea to write long essay. More usefull for that than a UI.Input()',
+				styles			: {
+					margin		: 10
+				}
+			}).inject(form);
+
+			new UI.Slider({
+				width			: 400,
+				group			: 'test',
+				styles			: {
+					margin		: 10
+				}
+			}).inject(form);
 		});
 	</script>
 </head>
 
-<body>
-	
-</body>
+<body></body>
 
 </html>

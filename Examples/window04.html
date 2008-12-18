@@ -49,33 +49,141 @@
 	<script type="text/javascript" src="../Skins/BlueTouch.js"></script>
 		
 	<script type="text/javascript" src="js/examples.js"></script>
-	
-	<title>MooLego - Components Playground</title>
+
+	<title>moolego - Components Playground</title>
 	
 	<script type="text/javascript">
 		window.addEvent('domready', function() {
-			
 			var time = $time();
 			
 			/* Elements in page */
+			var form = new Element('form').inject(document.body);
+			woo = new UI.Window({
+				toolbar : {
+					type : 'window',
+					displayMode : 'text',
+					menu		: [
+						{
+							text	: 'moolego',
+							styles	: {
+								position	: 'relative'
+							},
+							menu : [
+								{
+									text : 'About',
+									action : function() { 
+										new UI.Window({
+											title			: 'about',
+											width			: 300,
+											height			: 160,
+											head			: false,
+											viewOverflow 	: 'hidden',
+											controls		: ['close']
+										});
+									}
+								},
+								{ 
+									text 		: 'Software version...',
+									action : function() { this.test('about'); alert('click')}.bind(this)
+								},
+								{ text		: 'separator' },
+								{ 
+									text 		: 'Préférences systemes...',
+									action : function() { new App.Settings() }
+								},
+								{ text		: 'separator' },{
+									text : 'Elements récents',
+									menu : [
+										{text : 'Finder'},
+										{text : 'Safari'},
+										{text : 'Mail'},
+										{text : 'Protoshop'},
+										{text : 'Nasty Explorer'}
+									]
+								},
+								{ text		: 'separator' },
+								{
+									text : 'Fermer la session'
+								}
+							]
+						},
+						{
+							text : 'New',
+							options : {'class' : 'ui-dd-new'},
+							menu		: [
+								{
+									text : 'Button',
+									action : function() { 
+										new UI.Button().inject(document.body);
+									}.bind(this)
+								},
+								{ 
+									text 		: 'Window',
+									action : function() { 
+										new UI.Window();
+									}.bind(this)
+								}
+							]
+						},
+						{
+							text : 'Window',
+							options : {'class' : 'ui-dd-new'},
+							menu		: [
+								{
+									text : 'About',
+									action : function() { this.test('about'); alert('click')}.bind(this)
+								},
+								{
+									text 		: 'Minimizer',
+									action : function(){woo.minimize();}.bind(this)
+								},
+								{ text		: 'separator' },
+								{ text		: 'Cascade',
+								  action: function(){
+								  	this.windowManager.resetCascade()
+								  }.bind(this)
+								  
+								}
+							]
+						},
+						{
+							text : 'Help',
+							options : {'class' : 'ui-dd-help'},
+							menu : [
+								{ text : 'Welcome' },
+								{ text : 'separator' },
+								{ text : 'Update...' },
+								{ text : 'separator' },
+								{ text : 'Settings...' }
+							]
+						}
+					]						
+				}
+			});
 			
-	new UI.Element({
-		label : "new window",
-		skin	: 'demo',
-		type	: "gradient",
-		state	: "linear",
-		width	: 400,
-		height	: 400,
-		styles		: {
-			margin	: 100
-		}
-	}).inject(document.body);
+			button = new UI.Button({
+				label : "new window",
+				skin	: 'demo',
+				type	: "jgood",
+				labelStyles : {
+					fontWeight : 'bold',
+					padding : '10px 20px'
+				},
+				onClick : function(){
+					var time2 = $time();
+					new UI.Window({ title : time2 });
+					//console.log('draw this window take : ', $time()-time2);
+				},
+				styles		: {
+					margin	: 10
+				}
+			}).inject(form);
+			//console.log('window.html', $time()-time);
+			
 		});
 	</script>
 </head>
 
-<body>
-	
-</body>
+<body style="overflow:hidden"></body>
 
 </html>

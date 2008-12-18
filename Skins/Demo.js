@@ -174,8 +174,7 @@ UI.props.demo = {
 							fontFamily: 'Arial, Helvetica',
 							opacity: '.7', 
 							padding: '10px 16px',
-							color: '#fff',
-							width: '70px'
+							color: '#fff'
 						}
 					}
 				},
@@ -316,6 +315,18 @@ UI.props.demo = {
 		},
 		tube: {
 			'default'				: {
+				components			: {
+					label			: {
+						styles		: {
+							opacity : 1,
+							color	: '#FFF'
+						}
+					}
+				},
+				styles				: {
+					color 	: '#FFF',
+					opacity : 1
+				},
 				layers				: {
 					reorder			: ['shadow', 'front', 'light', 'reflect'],
 					
@@ -367,6 +378,7 @@ UI.props.demo = {
 				components			: {
 					label			: {
 						styles		: {
+							opacity : .8,
 							color 	: '#ccc'
 						}
 					}

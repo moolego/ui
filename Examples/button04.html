@@ -18,6 +18,7 @@
 	<script type="text/javascript" src="../Source/Element/Label.js"></script>
 	<script type="text/javascript" src="../Source/Element/Bubble.js"></script>
 	<script type="text/javascript" src="../Source/Element/Scrollbar.js"></script>
+	<script type="text/javascript" src="../Source/Element/Segment.js"></script>
 	
 	<script type="text/javascript" src="../Source/Menu/Menu.js"></script>
 	<script type="text/javascript" src="../Source/Menu/Scroller.js"></script>
@@ -50,32 +51,22 @@
 		
 	<script type="text/javascript" src="js/examples.js"></script>
 	
-	<title>MooLego - Components Playground</title>
+	<title>MooLego - Segmented buttons</title>
 	
 	<script type="text/javascript">
-		window.addEvent('domready', function() {
+		window.addEvent('load', function() {
 			
-			var time = $time();
+			var group = new UI.Segment().inject(document.body);
 			
-			/* Elements in page */
-			
-	new UI.Element({
-		label : "new window",
-		skin	: 'demo',
-		type	: "gradient",
-		state	: "linear",
-		width	: 400,
-		height	: 400,
-		styles		: {
-			margin	: 100
-		}
-	}).inject(document.body);
+			new UI.Button().inject(group);
+			new UI.Button().inject(group);
+			new UI.Button({
+				group : group
+			}).inject(document.body);
 		});
 	</script>
 </head>
 
-<body>
-	
-</body>
+<body style="overflow:hidden" bgcolor="#e8e8e8"></body>
 
 </html>

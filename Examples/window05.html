@@ -49,33 +49,45 @@
 	<script type="text/javascript" src="../Skins/BlueTouch.js"></script>
 		
 	<script type="text/javascript" src="js/examples.js"></script>
-	
-	<title>MooLego - Components Playground</title>
+
+	<title>moolego - Components Playground</title>
 	
 	<script type="text/javascript">
 		window.addEvent('domready', function() {
-			
 			var time = $time();
 			
 			/* Elements in page */
+			var increment = 120;
+			var form = new Element('form').inject(document.body);
+			button = new UI.Button({
+				label : "new window",
+				skin	: 'demo',
+				type	: "jgood",
+				width : 150,
+				labelStyles : {
+					fontWeight : 'bold',
+					padding : '10px 20px'
+				},
+				onClick : function(){
+					new UI.Window({
+						type : 'transparent',
+						scrollbar : false,
+						top : 100,
+						right : increment,
+						width : 240,
+						height : 320
+					});
+					increment += 20;
+				}
+			}).inject(form);
 			
-	new UI.Element({
-		label : "new window",
-		skin	: 'demo',
-		type	: "gradient",
-		state	: "linear",
-		width	: 400,
-		height	: 400,
-		styles		: {
-			margin	: 100
-		}
-	}).inject(document.body);
+			button.fireEvent('click');
+			//console.log('window.html', $time()-time);
+			
 		});
 	</script>
 </head>
 
-<body>
-	
-</body>
+<body style="overflow:hidden"></body>
 
 </html>

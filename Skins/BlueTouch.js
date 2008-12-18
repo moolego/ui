@@ -207,7 +207,7 @@ UI.props.BlueTouch = {
 					height : '100%',
 					'float':'right',
 					position : 'relative',
-					zIndex : '10000',
+					zIndex : '10000'
 				},
 				layers : {
 					reorder : ['back'],
@@ -452,7 +452,7 @@ UI.props.BlueTouch = {
 						color : '#000',
 						offset : ['auto',0,0],
 						opacity : 0.1
-					},
+					}
 				}
 			}
 		}
@@ -620,7 +620,7 @@ UI.props.BlueTouch = {
 						},
 						offset: ['auto', 1, 25],
 						radius: 0
-					},
+					}
 				}
 			},
 			inactive: {

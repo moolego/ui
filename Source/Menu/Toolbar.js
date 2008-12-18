@@ -15,7 +15,7 @@
 	
 	Example:
 		(start code)
-		var toolbar = new UI.Menu.Toolbar({
+		var toolbar = new UI.Toolbar({
 				className	: 'ui-menu-dropdown',
 				container	: this.main.content,
 				menu		: [
@@ -181,7 +181,6 @@ UI.Toolbar = new Class({
 		}
 		menuItem.element.addEvents({
 			'mousedown' : function(e){
-				console.log('stoppp');
 				if (!item.menu && this.activeItem) this.activeItem.fireEvent('hideSubmenu');
 				menuItem.down = true;
 				new Event(e).stop();
