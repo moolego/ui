@@ -52,7 +52,7 @@ UI.ListView = new Class({
 		
 		width				: '100%',
 		height				: '100%',
-		itemType			: 'itemList',
+		itemType			: 'itemList'
 	},
 	
 	/*
@@ -137,7 +137,7 @@ UI.ListView = new Class({
 			$H(element).erase('type').each(function(value,key){
 				new UI.Element({
 					html : value,
-					styles : this.props.components[key].styles,
+					styles : this.props.components[key].styles
 				}).inject(item.element);
 				this.fireEvent('onResize');
 			}, this)

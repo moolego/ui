@@ -228,7 +228,7 @@ UI.Element = new Class({
 			skin			: this.options.skin,
 			component		: this.options.component,
 			type			: this.options.type,
-			state			: this.options.state,
+			state			: this.options.state
 		}).inject(this.element);
 		
 		this.addEvent('canvasDraw', function(state){
@@ -358,8 +358,7 @@ UI.Element = new Class({
 			mouseenter 	: this.fireEvent.bind(this, 'mouseenter'),
 			mouseleave 	: this.fireEvent.bind(this, 'mouseleave'),
 			mouseover 	: this.fireEvent.bind(this, 'mouseover'),
-			mouseOut 	: this.fireEvent.bind(this, 'mouseOut'),
-			
+			mouseOut 	: this.fireEvent.bind(this, 'mouseOut')
 		});
 	},
 
@@ -461,6 +460,11 @@ UI.Element = new Class({
 		
 		if (coordinates.top.toInt() > window.getHeight()-53) {
 			location.top = window.getHeight()-$random(25,75)
+			needed = true;
+		}
+		
+		if (coordinates.top.toInt() < 50) {
+			location.top = 53;
 			needed = true;
 		}
 		

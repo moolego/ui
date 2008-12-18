@@ -60,19 +60,22 @@ UI.Window = new Class({
 
 		// location options
 		location				: 'cascade',
-		top						: 0,
-		left					: 0,	
+		top						: false,
+		left					: false,
+		right					: false,
+		bottom					: false,
 		zIndex					: 'auto',   // to get zIndex from themanager or an Int as zIndex
 		
 		tag						: 'div',
 		
 		// Components Options
 		head					: true,
-		view					: true,
+		view					: {},
 		foot					: true,
 
 		// 		
 		controls				: ['close','minimize','maximize'],
+		scrollbar				: true,
 	
 		// Not Implemented should be able to enable/disable effects
 		useEffects				: false,
@@ -112,7 +115,7 @@ UI.Window = new Class({
 	
 	initialize: function(options) {
 		// handle window manager singleton class
-		this.controller = UI.windowController;
+		this.controller = ui.windowController;
 		
 		// call parent constructor
 		this.parent(options);
@@ -122,6 +125,7 @@ UI.Window = new Class({
 		this.options.top = location.top;
 		this.options.left = location.left;
 		this.element.setStyles(location);
+		this.adaptLocation();
 
 		this.controller.focus(this);
 	},
@@ -309,8 +313,8 @@ UI.Window = new Class({
 			
 			if (!this.options.view.type) 
 			 this.options.view.type = this.props.components.view.type;
-			 
-			if (this.options.viewOverflow) 
+
+			if (this.options.scrollbar == false) 
 			 this.options.view.overflow = this.options.viewOverflow;
 
 			var props = $merge(this.props.components.view,this.options.view);
@@ -513,6 +517,7 @@ UI.Window = new Class({
 		this.setState('minimized', size);
 		var coord = this.controller.getMinimizedLocation();
 		this.setLocation(coord[0], coord[1], 'morph');
+		this.setStyle('position', 'fixed');
 		this.controller.focus();
 	},
 
@@ -582,13 +587,26 @@ UI.Window = new Class({
 	*/
 
 	getInitialLocation: function() {
-		if (this.options.location == 'center') {
+		if (this.options.top || this.options.right || this.options.bottom || this.options.left) {
+			//right || left
+			var left = (this.options.right && !this.options.left) ? 
+				window.getWidth() - this.options.right - this.options.width : 
+				this.options.left;
+			
+			//top || bottom
+			var top = (this.options.bottom && !this.options.top) ? 
+				window.getHeight() - this.options.bottom - this.options.height : 
+				this.options.top;
+			
+			return { 
+				top : top, 
+				left: left
+			};
+		} else if (this.options.location == 'center') {
 			return this.getCenterLocation();
-		} else if (this.options.location == 'cascade') {
+		} else {
 			var c = this.controller.getCascadeLocation(this)
 			return { top : c.top, left : c.left };
-		} else {
-			return { top : this.options.top, left: this.options.left };
 		}
 	},
 
