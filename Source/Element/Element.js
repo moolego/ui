@@ -160,7 +160,6 @@ UI.Element = new Class({
 			'for'	: this.options['for']
 		});
 		
-		//this.element.setStyle('visibility', 'hidden');
 		if (!this.options.selectable) this.element.disableSelect();
 		this.element.ui = true;
 		this.state = this.options.state;
@@ -230,7 +229,6 @@ UI.Element = new Class({
 			type			: this.options.type,
 			state			: this.options.state
 		}).inject(this.element);
-		
 		this.addEvent('canvasDraw', function(state){
 			if (!state)	var props = this.props;
 			else var props = this.skin[state] || this.props;
