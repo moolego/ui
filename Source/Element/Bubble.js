@@ -72,7 +72,12 @@ UI.Bubble = new Class({
 		if(this.options.label) {
 			this.label = new UI.Label({
 				html : this.options.label,
-				styles : this.props.components.label.styles
+				styles : this.props.components.label.styles,
+				image : this.options.image,
+				onImageLoad : function(){
+					this.setSize();
+					this.setLocation();
+				}.bind(this)
 			}).inject(this.element);
 		}
 		

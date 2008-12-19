@@ -33,12 +33,26 @@ UI.Label = new Class({
 		
 	options: {
 		component			: 'label',
-		
 		tag					: 'span',
 		html				: 'Label',
-		
 		emboss				: false,
-		
 		selectable			: false
+	},
+	
+	build : function(){
+		this.parent();
+		if (this.options.image) this.buildImage();
+	},
+	
+	buildImage : function(){
+		new Element('img', $merge(
+			this.props.components.image,
+			{
+				src : this.options.image,
+				events : {
+					load : this.fireEvent.bind(this, 'onImageLoad')	
+				}
+			}
+		)).inject(this.element, 'top');
 	}
 });
