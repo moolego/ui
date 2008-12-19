@@ -58,7 +58,6 @@ UI.Control = new Class({
 			var twidth = width || this.options.width || this.props.width || this.input.getSize().x;
 			var theight = height || this.options.height || this.props.height || this.input.getSize().y;
 		}
-		
 		this.parent(twidth, theight, state);
 	},
 	

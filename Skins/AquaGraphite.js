@@ -1148,6 +1148,11 @@ UI.props.AquaGraphite = {
 							opacity : '.8',
 							zIndex : '-1'
 						}
+					},
+					image : {
+						styles : {
+							display : 'block'
+						}
 					}
 				}
 			}
@@ -1732,6 +1737,9 @@ UI.props.AquaGraphite = {
 	window : {
 		'default' : {
 			'default' : {
+				styles : {
+					position : 'absolute'
+				},
 				
 				fx : {
 					adaptLocation : {

@@ -58,7 +58,9 @@
 			
 			/* Elements in page */
 			var form = new Element('form').inject(document.body);
-			woo = new UI.Window();
+			woo = new UI.Window({
+				position : 'fixed'
+			});
 			//new UI.Window();
 			
 			button = new UI.Button({

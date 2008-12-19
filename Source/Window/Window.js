@@ -23,8 +23,11 @@
 		location - (string)  Could be either 'custom','center' or 'cascade'. Override top and left options if defined - default to custom.
 		width - (number) Width of the container wrapper in px.
 		height - (number) Height  of the container wrapper in px.
-		top	- (number) Height  of the container wrapper in px.
-		left - (number) Height  of the container wrapper in px.
+		top	- (number) Position of the container wrapper in px from the top.
+		left - (number) Position of the container wrapper in px from the left.
+		right - (number) Position of the container wrapper in px from the right.
+		bottom - (number) Position of the container wrapper in px from the bottom.
+		position - (string) Define if position is "fixed". Default to 'absolute.
 		state - ('normalized','maximized','normalized') Define the initial state - default to normalized.
 		useEffects - (boolean) Define if effects should be implemented.
 		resizable - (boolean) Define if the window is resizable.
@@ -60,6 +63,7 @@ UI.Window = new Class({
 
 		// location options
 		location				: 'cascade',
+		position				: 'absolute',
 		top						: false,
 		left					: false,
 		right					: false,
@@ -126,6 +130,12 @@ UI.Window = new Class({
 		this.options.left = location.left;
 		this.element.setStyles(location);
 		this.adaptLocation();
+		
+		//set the position (absolute or fixed)
+		if (this.options.position == 'fixed'){
+			this.props.styles.position = 'fixed';
+			this.element.setStyle('position', 'fixed');
+		}
 
 		this.controller.focus(this);
 	},
