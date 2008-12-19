@@ -15,7 +15,8 @@ UI.props.AquaGraphite = {
 		/* css properties */
 		styles : {
 			fontFamily : 'Helvetica, Arial, sans-serif',
-			fontSize : '12px'
+			fontSize : '12px',
+			position : 'relative'
 		},
 		fx : {},
 		
@@ -66,7 +67,6 @@ UI.props.AquaGraphite = {
 				
 				/* element css properties */
 				styles : {
-					position : 'relative',
 					display : 'inline-block',
 					cursor : 'pointer'
 				},
@@ -135,7 +135,6 @@ UI.props.AquaGraphite = {
 				
 				/* element css properties */
 				styles : {
-					position : 'relative',
 					display : 'inline-block',
 					cursor : 'pointer',
 					color : '#fff'
@@ -196,7 +195,6 @@ UI.props.AquaGraphite = {
 				
 				/* element css properties */
 				styles : {
-					position : 'relative',
 					display : 'inline-block',
 					cursor : 'pointer'
 				},
@@ -485,7 +483,6 @@ UI.props.AquaGraphite = {
 					label : {
 						styles : {
 							padding : '0px 12px 0px 12px',
-							position : 'relative',
 							'float' : 'left',
 							margin : '0',
 							fontWeight : 'bold',
@@ -550,8 +547,6 @@ UI.props.AquaGraphite = {
 					label : {
 						styles : {
 							padding : '4px 8px 6px 8px',
-							position : 'relative',
-							
 							margin : '0',
 							textTransform : 'uppercase',
 							fontWeight : 'bold',
@@ -644,7 +639,6 @@ UI.props.AquaGraphite = {
 				
 				/* element css properties */
 				styles : {
-					position : 'relative',
 					display : 'inline-block'
 				},
 				
@@ -698,7 +692,6 @@ UI.props.AquaGraphite = {
 				
 				/* element css properties */
 				styles : {
-					position : 'relative',
 					display : 'inline-block'
 				},
 				
@@ -756,7 +749,6 @@ UI.props.AquaGraphite = {
 				
 				/* element css properties */
 				styles : {
-					position : 'relative',
 					display : 'inline-block'
 				},
 				
@@ -799,7 +791,6 @@ UI.props.AquaGraphite = {
 				width : 16,
 				height : 17,
 				styles : {
-					position : 'relative',
 					display : 'inline-block'
 				},
 				
@@ -979,7 +970,6 @@ UI.props.AquaGraphite = {
 				
 				/* element css properties */
 				styles : {
-					position : 'relative',
 					display : 'inline-block'
 				},
 				
@@ -1060,7 +1050,6 @@ UI.props.AquaGraphite = {
 				
 				/* element css properties */
 				styles : {
-					position : 'relative',
 					display : 'inline-block'
 				},
 				
@@ -1113,7 +1102,6 @@ UI.props.AquaGraphite = {
 				//	height 		 : 10,
 				
 				styles : {
-					position : 'relative',
 					zIndex : 1,
 					display : 'block'
 				},
@@ -1159,6 +1147,11 @@ UI.props.AquaGraphite = {
 							top : '1px',
 							opacity : '.8',
 							zIndex : '-1'
+						}
+					},
+					image : {
+						styles : {
+							display : 'block'
 						}
 					}
 				}
@@ -1238,8 +1231,7 @@ UI.props.AquaGraphite = {
 							color : '#000',
 							padding : '4px 40px 5px 16px',
 							whiteSpace : 'nowrap',
-							display : 'block',
-							position : 'relative'
+							display : 'block'
 						}
 					},
 					separator : {
@@ -1398,16 +1390,12 @@ UI.props.AquaGraphite = {
 							zIndex : '100000'
 						}
 					}
-				},
-				styles : {
-					position: 'relative'
 				}
 			}
 		},
 		transparent : {
 			'default' : {
 				styles : {
-					position : 'relative',
 					zIndex : 1,
 					backgroundColor : 'transparent'
 				}
@@ -1440,7 +1428,6 @@ UI.props.AquaGraphite = {
 				},
 				
 				styles : {
-					position : 'relative',
 					zIndex : 1,
 					backgroundColor : '#fff'
 				}
@@ -1461,7 +1448,6 @@ UI.props.AquaGraphite = {
 			'default' : {
 				styles : {
 					overflow : 'hidden',
-					position : 'relative',
 					left : '0px',
 					top : '0px'
 				},
@@ -1502,16 +1488,14 @@ UI.props.AquaGraphite = {
 							'float' : 'left',
 							overflow : 'hidden',
 							backgroundColor : '#d6dde5',
-							borderRight : '1px solid #8b8b8b',
-							position :'relative'
+							borderRight : '1px solid #8b8b8b'
 						}
 					},
 					main: {
 						overflow: 'hidden',
 						styles: {
 							'float': 'left',
-							overflow: 'hidden',
-							position: 'relative'
+							overflow: 'hidden'
 						}
 					}
 				}
@@ -1525,8 +1509,7 @@ UI.props.AquaGraphite = {
 				styles : {
 					'float' : 'left',
 					overflow : 'hidden',
-					height : '600px',
-					position : 'relative'
+					height : '600px'
 				},
 				
 				components : {
@@ -1582,7 +1565,6 @@ UI.props.AquaGraphite = {
 				
 				/* layers properties */
 				styles : {
-					position : 'relative',
 					display : 'block',
 					fontSize : '.7em',
 					width : '100%',
@@ -1679,7 +1661,6 @@ UI.props.AquaGraphite = {
 				styles : {
 					'float' : 'right',
 					height : '100%',
-					position : 'relative',
 					zIndex : '10000'
 				},
 				layers : {
@@ -1712,7 +1693,6 @@ UI.props.AquaGraphite = {
 		thumb : {
 			'default' : {
 				styles : {
-					position : 'relative',
 					margin : '0'
 				},
 				layers : {
@@ -1757,6 +1737,10 @@ UI.props.AquaGraphite = {
 	window : {
 		'default' : {
 			'default' : {
+				styles : {
+					position : 'absolute'
+				},
+				
 				fx : {
 					adaptLocation : {
 						'duration' : 300,
@@ -1770,7 +1754,6 @@ UI.props.AquaGraphite = {
 						styles : {
 							top : '1px',
 							left : '1px',
-							position : 'relative',
 							overflow : 'hidden',
 							width : '100%',
 							zIndex : 1
@@ -2041,7 +2024,6 @@ UI.props.AquaGraphite = {
 		'default' : {
 			'default' : {
 				styles : {
-					position : 'relative',
 					display : 'inline-block',
 					cursor : 'pointer'
 				},
@@ -2182,7 +2164,6 @@ UI.props.AquaGraphite = {
 		'default' : {
 			'default' : {
 				styles : {
-					position : 'relative',
 					display : 'inline-block',
 					cursor : 'pointer'
 				},
@@ -2291,7 +2272,6 @@ UI.props.AquaGraphite = {
 						styles : {
 							top : '1px',
 							left : '1px',
-							position : 'relative',
 							overflow : 'hidden',
 							width : '100%',
 						 	zIndex : 1
@@ -2841,7 +2821,6 @@ UI.props.AquaGraphite = {
 			'default' : {
 				/* css properties */
 				styles : {
-					position : 'relative',
 					display : 'inline-block',
 					paddingBottom : '100' 
 				},
@@ -2887,7 +2866,7 @@ UI.props.AquaGraphite = {
 		'default' : {
 			'default' : {
 				/* css properties */
-				padding : '2px 16px 4px 16px',
+				
 				
 				/* layers properties */
 				

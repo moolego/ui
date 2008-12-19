@@ -52,7 +52,11 @@ UI.Button = new Class({
 			this.label = new UI.Label({
 				skin : this.options.skin,
 				html : this.options.label,
-				styles : this.props.components.label.styles
+				styles : this.props.components.label.styles,
+				image : this.options.image,
+				onImageLoad : function(){
+					this.setSize();
+				}.bind(this)
 			}).inject(this.element);
 		}
 	},
