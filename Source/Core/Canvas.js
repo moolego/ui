@@ -38,15 +38,18 @@ UI.Canvas = new Class({
 	Implements: [Events, Options],
 
 	options: {
-		props			: {},
-		width			: 300,
-		height			: 150,
-		className		: 'ui-canvas',
+		props : {},
+		width : 300,
+		height : 150,
 		
+		zIndex : -1,
+		
+		context : '2d',
+		
+		debug : false,
 		disableShadowOnExplorer : true,
-		debug			: false,
 		
-		onComplete		: $empty
+		onComplete : $empty
 	},
 	
 	/*
@@ -66,9 +69,6 @@ UI.Canvas = new Class({
 		this.build();
 		this.setSize();
 
-		this.shadowsLoaded = false;
-		this.shadowSet 	= false;
-
 		this.draw();
 	},
 
@@ -83,11 +83,10 @@ UI.Canvas = new Class({
 	 */
 
 	build : function() {
-		this.canvas = new Canvas({
-			'class'	: this.options.className,
-			styles	: {
-				position 	: 'absolute',
-				zIndex		: -1
+		this.canvas = new Element('canvas',{
+			styles : {
+				position : 'absolute',
+				zIndex : this.options.zIndex
 			}
 		});
 		
@@ -131,8 +130,8 @@ UI.Canvas = new Class({
 		});
 		
 		this.canvas.setStyles({
-			top	  : - this.shadowThikness,
-			left  : - this.shadowThikness,
+			top : - this.shadowThikness,
+			left : - this.shadowThikness,
 			width : this.canvasSize[0],
 			height: this.canvasSize[1]
 		});
@@ -388,6 +387,9 @@ UI.Canvas = new Class({
 			case 'triangle': 
 				this.triangle(properties);
 				break;
+			case 'bezier': 
+				this.bezier(properties);
+				break;
 		}
 		
 		this.drawShape(properties);
@@ -614,8 +616,8 @@ UI.Canvas = new Class({
 			scale		: $pick(this.props.layers[key].scale,		this.props.layers['default'].scale),
 			composite	: $pick(this.props.layers[key].composite,	this.props.layers['default'].composite)
 		};
-			
-		// we test the position
+		
+		// test the position
 		var coordinates = $pick(this.props.layers[key].offset, this.props.layers['default'].offset);
 		if ($type(coordinates) == 'array') {
 			//4 sides defined
@@ -635,7 +637,7 @@ UI.Canvas = new Class({
 		properties.offset = [coordinates[0], coordinates[1]];
 		properties.size = [coordinates[2], coordinates[3]];
 		
-		// +radius
+		// add the radius
 		var radius = $pick(this.props.layers[key].radius, this.props.layers['default'].radius);
 		
 		if ($type(radius) == 'array') {
@@ -677,16 +679,21 @@ UI.Canvas = new Class({
 			var a = props[p].angle * Math.PI / 180;
 			var aAbs = Math.abs(a);
 			
+			var s0 = props.size[0];
+			var s1 = props.size[1];
+			
+			
+			
 			//set stuff for IE
 			this.ctx.ratio = props.size[1]/props.size[0];
 			this.ctx.angle = a;
-			
+				
 			if (props[p].angle >= -90 && props[p].angle < 90) {
-				var ax = -((Math.cos(a - Math.atan(props.size[1] / props.size[0])) * Math.sqrt(Math.pow(props.size[0], 2) + Math.pow(props.size[1], 2)) * Math.cos(a)) / 2);
-				var ay = -((Math.cos(a - Math.atan(props.size[1] / props.size[0])) * Math.sqrt(Math.pow(props.size[0], 2) + Math.pow(props.size[1], 2)) * Math.sin(a)) / 2);
+				var ax = -((Math.cos(a - Math.atan(s1 / s0)) * Math.sqrt(Math.pow(s0, 2) + Math.pow(s1, 2)) * Math.cos(a)) / 2);
+				var ay = -((Math.cos(a - Math.atan(s1 / s0)) * Math.sqrt(Math.pow(s0, 2) + Math.pow(s1, 2)) * Math.sin(a)) / 2);
 			} else {
-				var ax =  ((Math.cos(Math.PI - a - Math.atan(props.size[1] / props.size[0])) * Math.sqrt((props.size[0]).pow(2) + (props.size[1]).pow(2)) * Math.cos(Math.PI - a)) / 2);
-				var ay =  - ((Math.cos(Math.PI - a - Math.atan(props.size[1] / props.size[0])) * Math.sqrt((props.size[0]).pow(2) + (props.size[1]).pow(2)) * Math.sin(Math.PI - a)) / 2);
+				var ax =  ((Math.cos(Math.PI - a - Math.atan(s1 / s0)) * Math.sqrt((s0).pow(2) + (s1).pow(2)) * Math.cos(Math.PI - a)) / 2);
+				var ay =  - ((Math.cos(Math.PI - a - Math.atan(s1 / s0)) * Math.sqrt((s0).pow(2) + (s1).pow(2)) * Math.sin(Math.PI - a)) / 2);
 			}
 			var bx = -ax;
 			var by = -ay;
@@ -746,7 +753,7 @@ UI.Canvas = new Class({
 	*/
 
 	setTransformation : function(props) {
-		this.ctx.translate(props.size[0]/ 2 + props.offset[0], props.size[1] / 2 + props.offset[1]);
+		this.ctx.translate(props.size[0]/2+props.offset[0], props.size[1] / 2 + props.offset[1]);
 		//rotation
 		if (props.rotation) {
 			this.ctx.rotate(Math.PI * props.rotation / 180);
@@ -835,16 +842,29 @@ UI.Canvas = new Class({
 	*/
 			
 	roundedRect: function(props) {
+		// preparing data befaore drawing
+		var s0 = props.size[0];
+		var s1 = props.size[1];
+		
+		var h0 = s0 / 2;
+		var h1 = s1 / 2;
+
+		var r0 = props.radius[0];
+		var r1 = props.radius[1];
+		var r2 = props.radius[2];
+		var r3 = props.radius[3];
+		
+		// begin path and draw then close
 		this.ctx.beginPath();
-		this.ctx.moveTo(props.radius[0] - props.size[0] / 2, - props.size[1] / 2);
-		this.ctx.lineTo(props.size[0] - props.radius[1] - props.size[0] / 2, - props.size[1] / 2);
-		this.ctx.quadraticCurveTo(props.size[0] - props.size[0] / 2, - props.size[1] / 2, props.size[0] - props.size[0] / 2, props.radius[1] - props.size[1] / 2);
-		this.ctx.lineTo(props.size[0] - props.size[0] / 2, props.size[1] - props.radius[2] - props.size[1] / 2);
-		this.ctx.quadraticCurveTo(props.size[0] - props.size[0] / 2, props.size[1] - props.size[1] / 2, props.size[0] - props.radius[2] - props.size[0] / 2, props.size[1] - props.size[1] / 2);
-		this.ctx.lineTo(props.radius[3] - props.size[0] / 2, props.size[1] - props.size[1] / 2);
-		this.ctx.quadraticCurveTo( - props.size[0] / 2, props.size[1] - props.size[1] / 2,  - props.size[0] / 2, props.size[1] - props.radius[3] - props.size[1] / 2);
-		this.ctx.lineTo( - props.size[0] / 2, props.radius[0] - props.size[1] / 2);
-		this.ctx.quadraticCurveTo( - props.size[0] / 2, - props.size[1] / 2, props.radius[0] - props.size[0] / 2, - props.size[1] / 2);
+		this.ctx.moveTo(r0 - h0, - h1);
+		this.ctx.lineTo(s0 - r1 - h0, - h1);
+		this.ctx.quadraticCurveTo(s0 - h0, - h1, s0 - h0, r1 - h1);
+		this.ctx.lineTo(s0 - h0, s1 - r2 - h1);
+		this.ctx.quadraticCurveTo(s0 - h0, s1 - h1, s0 - r2 - h0, s1 - h1);
+		this.ctx.lineTo(r3 - h0, s1 - h1);
+		this.ctx.quadraticCurveTo( - h0, s1 - h1,  - h0, s1 - r3 - h1);
+		this.ctx.lineTo( - h0, r0 - h1);
+		this.ctx.quadraticCurveTo( - h0, - h1, r0 - h0, - h1);
 		this.ctx.closePath();
 	},
 
@@ -889,9 +909,11 @@ UI.Canvas = new Class({
 	
 	Return:
 		(void)
+
 	*/
 	
 	line : function(props) {
+		// prepare datas
 		props.stroke = props.stroke || {
 			color : props.color,
 			width : props.width
@@ -899,13 +921,17 @@ UI.Canvas = new Class({
 		
 		delete props.color;
 		
+		var h0 = props.size[0]/2;
+		var h1 = props.size[1]/2;
+		
+		// draw
 		this.ctx.beginPath();
 		if (props.direction == 'up') {
-			this.ctx.moveTo(-props.size[0]/2 + 0.5,  props.size[1]/2 - 0.5);
-			this.ctx.lineTo( props.size[0]/2 - 0.5, -props.size[1]/2 + 0.5);
+			this.ctx.moveTo(-h0+0.5,h1-0.5);
+			this.ctx.lineTo(h0-0.5,-h1+0.5);
 		} else {
-			this.ctx.moveTo(-props.size[0]/2 + 0.5, -props.size[1]/2 + 0.5);
-			this.ctx.lineTo( props.size[0]/2 - 0.5,  props.size[1]/2 - 0.5);
+			this.ctx.moveTo(- h0 + 0.5,-h1+0.5);
+			this.ctx.lineTo(h0-0.5,h1-0.5);
 		}
 	},
 	
@@ -923,10 +949,32 @@ UI.Canvas = new Class({
 	*/
 	
 	triangle : function(props) {
+		// prepare datas
+		var h0 = props.size[0]/2;
+		var h1 = props.size[1]/2;
+		
+		// draw
 		this.ctx.beginPath();
-		this.ctx.moveTo(-props.size[0]/2, props.size[1]/2);
-		this.ctx.lineTo( props.size[0]/2, props.size[1]/2);
-		this.ctx.lineTo( 0, -props.size[1]/2);
+		this.ctx.moveTo(-h0,h1);
+		this.ctx.lineTo(h0,h1);
+		this.ctx.lineTo(0,-h1);
 		this.ctx.closePath();
+	},
+	
+	/*
+	Function: bezier
+		private function
+	
+		Draw a triangle in a rectangle determine with props.size (array)
+		
+	Arguments:
+		props - (object) The layer properties.
+	
+	Return:
+		(void)
+	*/
+	
+	bezier : function(props) {
+		console.log(props);
 	}	
 });

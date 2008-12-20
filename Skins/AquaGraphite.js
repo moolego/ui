@@ -102,6 +102,14 @@ UI.props.AquaGraphite = {
 						color : ['#FFF', '#FFF'],
 						opacity : [0, 1],
 						radius : [4, 4, 7, 7]
+					},
+					bezier : {
+						shape : 'bezier',
+						position : 'absolute',
+						offset : ['50%', '5px', '2px'],
+						color : ['#FFF', '#FFF'],
+						opacity : [0, 1],
+						radius : [4, 4, 7, 7]
 					}
 				}
 			},
@@ -1553,7 +1561,8 @@ UI.props.AquaGraphite = {
 							padding : '5px 16px 4px',
 							display :'block',
 							whiteSpace : 'nowrap',
-							lineHeight : '1em'
+							lineHeight : '1em',
+							fontSize : '20px'
 						}
 					}
 				},
@@ -1604,7 +1613,7 @@ UI.props.AquaGraphite = {
 						shape : 'line',
 						width : 2,
 						color : '#414755',
-						offset : [14, 4.5,'auto','auto'],
+						offset : [16, 4.5,'auto','auto'],
 						opacity : 1,
 						size : [6, 6]
 					},
