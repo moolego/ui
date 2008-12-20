@@ -1,5 +1,5 @@
 /*
-	Class: UI.PanelView
+	Class: UI.PaneView
 		Creates a panelView Object that let you browse inner views(panels)
 	
 	Extends:
@@ -16,7 +16,7 @@
 		
 	Example:
 		(start code)
-		new UI.PanelView({
+		new UI.PaneView({
 			url				: 'data.php?id=42',
 			width			: 260,
 			height			: 400,
@@ -27,7 +27,7 @@
 		Need to make some more cleaning in this class
 */
 
-UI.PanelView = new Class({
+UI.PaneView = new Class({
 	Extends					: UI.View,
 	
 	options: {
