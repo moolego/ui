@@ -27,7 +27,7 @@ UI.Interface = new Class({
 	Implements : [Options, Events],
 	options : {
 		target	: 'document.body',
-		replaceTag : 'input, select, textarea'
+		replaceTag : 'input, select, textarea, fieldset'
 	},
 	
 	initialize : function(options){
@@ -78,37 +78,12 @@ UI.Interface = new Class({
 				case 'fieldset' :
 					this.processFieldset(control);
 					break;
+				case 'fieldset' :
+					this.processFieldset(control);
+					break;
 			}
 		}, this);
 		
-		// skin the fieldset
-		this.target.getElements('fieldset').each(function(fieldset){
-			
-			
-			//skin the legend
-			var f = fieldset.getElement('legend')
-			var coord = f.getSize();
-			new UI.Element({
-				component	: 'element',
-				selectable	: false,
-				width		: coord.x,
-				height		: coord.y,
-				html		: f.get('html'),
-				styles		: f.getStyles('width','padding', 'margin', 'display', 'top', 'left')
-			}).inject(fieldset, 'before');
-			f.destroy();
-			
-			
-			var size = fieldset.getSize();
-			var fs = new UI.Element({
-				component : 'fieldset',
-				width		: size.x - fieldset.getStyle('paddingLeft').toInt() - fieldset.getStyle('paddingRight').toInt(),
-				height		: size.y - fieldset.getStyle('paddingTop').toInt() - fieldset.getStyle('paddingBottom').toInt(),
-				styles 		: fieldset.getStyles('padding', 'margin', 'display', 'top', 'left')
-			}).inject(fieldset, 'before');
-			fs.element.adopt(fieldset.getChildren());
-			fieldset.destroy();
-		});
 		
 		// skin the form
 		var coord = this.target.getSize();
@@ -198,5 +173,37 @@ UI.Interface = new Class({
 		params.styles 		= element.getStyles('margin', 'top', 'left', 'float');
 		new UI.Button(params).inject(element, 'before');
 		element.destroy();
+	},
+	
+	processFieldset: function() {
+		// skin the fieldset
+		this.target.getElements('fieldset').each(function(fieldset){
+
+			//skin the legend
+			var f = fieldset.getElement('legend')
+			var coord = f.getSize();
+			new UI.Element({
+				component	: 'element',
+				selectable	: false,
+				width		: coord.x,
+				height		: coord.y,
+				html		: f.get('html'),
+				styles		: f.getStyles('width','padding', 'margin', 'display', 'top', 'left','fontWeight','fontSize','fontFamily')
+			}).inject(fieldset, 'before');
+			f.destroy();
+			
+			
+			
+			var size = fieldset.getSize();
+			var fs = new UI.Element({
+				component : 'fieldset',
+				width		: size.x,
+				height		: size.y,
+				styles 		: fieldset.getStyles('padding', 'margin', 'display', 'top', 'left')
+			}).inject(fieldset, 'before');
+			fs.element.adopt(fieldset.getChildren());
+			fieldset.destroy();
+		});
+		
 	}
 });
