@@ -184,6 +184,9 @@ UI.Window = new Class({
 		this.head.disableSelect();	
 		this.buildControls();
 		
+		if (this.options.skin) 
+		 this.props.components.title.skin = this.options.skin;
+		
 		this.title = new UI.Label(this.props.components.title)
 		 .inject(this.head);
 		
