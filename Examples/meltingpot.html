@@ -44,6 +44,7 @@
 	<script type="text/javascript" src="../Source/Window/Dialog.js"></script>
 	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
 	
+	<script type="text/javascript" src="../Skins/AquaBlack.js"></script>
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
 	<script type="text/javascript" src="../Skins/BlueTouch.js"></script>
@@ -329,6 +330,7 @@
 		
 					
 					new UI.Select({
+						skin : 'AquaBlack',
 						list			: [
 							{text		: 'Please choose'},
 							{text		: 'Core'},
@@ -742,6 +744,7 @@
 			
 			
 			this.daselect = new UI.Select({
+				skin : 'AquaBlack',
 				name						: 'testselect',
 				styles						: {
 					margin					: 10
@@ -762,23 +765,7 @@
 			}).inject(form);
 			
 			
-			this.selecttup = new UI.Bubble({
-				target 			: this.daselect,
-				targetEvent		: 'onMouseOver',
-				type			: 'bottom',
-				
-				props : {
-					'default' : {
-						layers	: {
-							reorder	: ['background','arrow'],
-							background	: {
-								color	: '#000'
-							}
-						}
-					}
-				},
-				label : "il faut préparer un package<br /> googlemap tips replacement!<br/>"
-			});
+			
 			
 			
 			

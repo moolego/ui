@@ -44,6 +44,7 @@
 	<script type="text/javascript" src="../Source/Window/Dialog.js"></script>
 	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
 	
+	<script type="text/javascript" src="../Skins/AquaBlack.js"></script>
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
 	<script type="text/javascript" src="../Skins/BlueTouch.js"></script>
@@ -59,6 +60,7 @@
 			
 			
 			windoo = new UI.Window({
+				skin : 'AquaBlack',
 				title		: 'some controls',
 				overflow	: 'scrollbar'
 			});
@@ -174,6 +176,7 @@
 			}).inject(windoo.content);
 			
 			new UI.Select({
+				skin : 'AquaBlack',
 				list			: [
 					{text		: 'Please choose'},
 					{text		: 'It is long because of this entry in the list'}

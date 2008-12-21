@@ -178,7 +178,8 @@ UI.Interface = new Class({
 	processFieldset: function() {
 		// skin the fieldset
 		this.target.getElements('fieldset').each(function(fieldset){
-
+			
+			
 			//skin the legend
 			var f = fieldset.getElement('legend')
 			var coord = f.getSize();
@@ -193,12 +194,11 @@ UI.Interface = new Class({
 			f.destroy();
 			
 			
-			
 			var size = fieldset.getSize();
 			var fs = new UI.Element({
 				component : 'fieldset',
-				width		: size.x,
-				height		: size.y,
+				width		: size.x - fieldset.getStyle('paddingLeft').toInt() - fieldset.getStyle('paddingRight').toInt(),
+				height		: size.y - fieldset.getStyle('paddingTop').toInt() - fieldset.getStyle('paddingBottom').toInt(),
 				styles 		: fieldset.getStyles('padding', 'margin', 'display', 'top', 'left')
 			}).inject(fieldset, 'before');
 			fs.element.adopt(fieldset.getChildren());

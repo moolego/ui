@@ -10,7 +10,7 @@ Arguments :
 
 */
 
-UI.props.AquaGraphite = {
+UI.props.AquaBlack = {
 	'default' : {
 		/* css properties */
 		styles : {
@@ -968,7 +968,8 @@ UI.props.AquaGraphite = {
 							left : 0,
 							padding : '4px 39px 4px 16px',
 							whiteSpace : 'nowrap',
-							lineHeight : '13px'
+							lineHeight : '13px',
+							color : '#fff'
 						}
 					}
 				},
@@ -993,52 +994,27 @@ UI.props.AquaGraphite = {
 					},
 					background : {
 						offset : ['0px', '1px', '1px', '1px'],
-						opacity : [1, 1],
-						color : ['#5d5d5d', '#5e5e5e'],
-						radius : [5, 10, 5, 5],
+						opacity : [.8, .8],
+						color : ['#000', '#000'],
+						radius : [5, 5, 5, 5],
 						position : 'relative'
 					},
 					main : {
-						offset : [1, 22, 2, 2],
-						color : ['#c3c3c3', '#d4d4d4'],
-						radius : [4, 0, 0, 4]
-					},
-					backButton : {
-						size : [21, 'auto'],
-						offset : [0, 1, 3, 'auto'],
-						color : ['#3b3b55', '#798491'],
-						radius : [0, 5, 5, 0]
-					},
-					button : {
-						size : [19, 'auto'],
-						offset : [1, 2, 2, 'auto'],
-						color : ['#7b8997', '#7b8997'],
-						radius : [0, 4, 4, 0]
+						offset : [1, 2, 2, 2],
+						color : ['#727272', '#343434'],
+						radius : [4, 4, 4, 4]
 					},
 					
-					reflect : {
-						color : ['#FFF', '#FFF'],
-						size : ['auto', '36%'],
-						opacity : [.5, .3],
-						offset : [1, 3, 'auto', 3],
-						radius : [3, 3, 4, 4]
-					},
-					light : {
-						offset : ['45%', '2px', '2px'],
-						color : ['#FFF', '#FFF'],
-						opacity : [0, 0.9],
-						radius : [5, 5, 4, 4]
-					},
 					arrowUp : {
 						shape : 'triangle',
-						color : '#000',
+						color : '#fff',
 						size : [5, 4],
 						offset : ['auto', 10, '65%', 'auto']
 					},
 					arrowDown : {
 						shape : 'triangle',
 						rotation : 180,
-						color : '#000',
+						color : '#fff',
 						size : [5, 4],
 						offset : ['55%', 10, 'auto', 'auto']
 					}
@@ -1181,7 +1157,7 @@ UI.props.AquaGraphite = {
 				styles : {
 					overflow : 'hidden',
 					cursor : 'default',
-					color : '#000',
+					color : '#fff',
 					display : 'block',
 					margin : '1px 0 1px 0',
 					padding : '0',
@@ -1386,7 +1362,7 @@ UI.props.AquaGraphite = {
 					overlay : {
 						styles : {
 							backgroundColor : '#000',
-							opacity : 0.01,
+							opacity : .01,
 							position : 'absolute',
 							height : '100%',
 							width : '100%',
@@ -1434,7 +1410,7 @@ UI.props.AquaGraphite = {
 				
 				styles : {
 					zIndex : 1,
-					backgroundColor : '#fff'
+					backgroundColor : '#000'
 				}
 			}
 		},
@@ -1676,21 +1652,21 @@ UI.props.AquaGraphite = {
 					},
 					back : {
 						offset : [0, 0, 0, 0],
-						color : '#fff'
+						color : '#4c4c4c'
 					},
 					main : {
 						offset : [0, '40%', 0, 0],
 						
 						gradient : {
-							color : ['#c5c5c5', '#fcfcfc'],
+							color : ['#383838', '#4c4c4c'],
 							angle : 0
 						}
 					},
 					side : {
-						offset : [0, 0, 0, '80%'],
+						offset : [0, 0, 0, '60%'],
 						gradient : {
 							angle : 0,
-							color : ['#fcfcfc', '#efefef']
+							color : ['#4c4c4c', '#313131']
 						}
 					}
 				}
@@ -1713,27 +1689,10 @@ UI.props.AquaGraphite = {
 					},
 					main : {
 						gradient : {
-							color : ['#091d38', '#5c5c5c'],
+							color : ['#494949', '#1b1b1b'],
 							angle : 0
 						},
 						radius : 7
-					},
-					light : {
-						gradient : {
-							color : ['#fff', '#fff'],
-							opacity : [.1, .9],
-							angle : 0
-						},
-						radius : 6
-					},
-					reflect : {
-						gradient : {
-							color : ['#fff', '#fff'],
-							opacity : [.8, .5],
-							angle : 0
-						},
-						offset : [4, '65%', 3, 0],
-						radius : [3, 2, 2, 3]
 					}
 				}
 			}
@@ -1859,34 +1818,27 @@ UI.props.AquaGraphite = {
 						radius : 5
 					},
 					underlay : {
-						color : ['#dcdcdc', '#404040'],
+						color : ['#949494', '#404040'],
 						offset : [1, 1, 'auto'],
 						size : ['auto', 20],
 						radius : [4, 4, 0, 0]
 					},
 					head : {
-						color : ['#C4C4C4', '#989898'],
+						color : ['#4c4c4c', '#1f1f1f'],
 						offset : [1, 0],
 						radius : [4, 4, 0, 0]
 					},
 					footline : {
 						position : 'absolute',
 						size : ['auto', 13],
-						color : '#333',
+						color : '#404040',
 						offset : ['auto', 1, 10],
 						radius : 0
 					},
-					footback : {
-						position : 'absolute',
-						size : ['auto', 20],
-						color : ['#fff', '#404040'],
-						offset : ['auto', 1, 2],
-						radius : [0, 0, 4, 4]
-					},
 					foot : {
 						position : 'absolute',
-						size : ['auto', 20],
-						color : ['#C2C2C2', '#989898'],
+						size : ['auto', 21],
+						color : ['#4c4c4c', '#1f1f1f'],
 						offset : ['auto', 1, 1],
 						radius : [0, 0, 4, 4]
 					}
@@ -1903,13 +1855,13 @@ UI.props.AquaGraphite = {
 						opacity : 0.17
 					},
 					underlay : {
-						color : ['#f1f1f1', '#878787']
+						color : ['#a3a3a3', '#595959']
 					},
 					head : {
-						color : ['#e8e8e8', '#d0d0d0']
+						color : ['#656565', '#383838']
 					},
 					foot : {
-						color : ['#e8e8e8', '#d0d0d0']
+						color : ['#656565', '#383838']
 					}
 				}
 			},
@@ -2827,7 +2779,8 @@ UI.props.AquaGraphite = {
 			'default' : {
 				/* css properties */
 				styles : {
-					display : 'inline-block'
+					display : 'inline-block',
+					paddingBottom : '100' 
 				},
 				
 				/* layers properties */
@@ -2841,22 +2794,26 @@ UI.props.AquaGraphite = {
 						opacity : 1,
 						radius : 8
 					},
-					base : {
+					background : {
+						offset : [0,0,50,0],
 						gradient : {
-							color : ['#dedada','#9a9494'],
-							opacity : 1
-						},
-						
-						radius : 10
-					},
-					front : {
-						height: 50,
-						offset : 2,
-						gradient : {
-							color : ['#f7f6f6','#e7e5e5'],
+							color : ['#000','#333'],
+							angle : 110,
 							opacity : .8
 						},
+						
 						radius : 8
+					},
+					reflection : {
+						position : 'bottom',
+						height: 50,
+						offset : [0,0,0,0],
+						gradient : {
+							color : ['#000','#fff'],
+							angle : 10,
+							opacity : .8
+						},
+						radius : [8,8,8,8]
 					}
 				}
 			}
