@@ -2873,16 +2873,16 @@ UI.props.AquaGraphite = {
 				
 				layers : {
 					background : {
-						offset : ['0px', '1px', '1px', '1px'],
+						offset : [0,1,1,1],
 						color : '#cccccc',
 						opacity : 1,
 						radius : 8
 					},
 					main : {
-						mainOffset : ['1px', '1px', '4px', '1px'],
-						mainColor : '#FFF',
-						mainOpacity : 1,
-						mainRadius : 7
+						offset : [1,1,4,1],
+						color : '#FFF',
+						opacity : 1,
+						radius : 7
 					},
 					reflect : {
 						size : ['auto', 30],
