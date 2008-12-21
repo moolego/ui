@@ -55,10 +55,10 @@
 	<script type="text/javascript">
 				window.addEvent('domready', function(){
 					button = new UI.Button({
-						label	: 'mooFace...',
+						label	: 'Interface...',
 						onClick	: function(){
 							var time = $time();
-							new mooFace({
+							new UI.Interface({
 								target : 'formular'
 							});
 							this.set('html', 'in '+($time() - time)/1000+' ms');

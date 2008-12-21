@@ -975,6 +975,20 @@ UI.Canvas = new Class({
 	*/
 	
 	bezier : function(props) {
-		console.log(props);
+		
+		// prepare datas
+		var h0 = props.size[0]/2;
+		var h1 = props.size[1]/2;
+		
+		//console.log(props);
+		this.ctx.beginPath();
+		this.ctx.moveTo(-h0,h1);
+   		this.ctx.bezierCurveTo(8,16,07,19,17,21);
+    	this.ctx.bezierCurveTo(7,23,8,26,11,26);
+		this.ctx.bezierCurveTo(14,26,15,23,15,21);
+		this.ctx.bezierCurveTo(15,19,14,16,11,16);
+		this.ctx.closePath();
+
+		
 	}	
 });

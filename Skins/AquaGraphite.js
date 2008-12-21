@@ -106,10 +106,7 @@ UI.props.AquaGraphite = {
 					bezier : {
 						shape : 'bezier',
 						position : 'absolute',
-						offset : ['50%', '5px', '2px'],
-						color : ['#FFF', '#FFF'],
-						opacity : [0, 1],
-						radius : [4, 4, 7, 7]
+						color: ['#d4d4d4', '#e5e5e5']
 					}
 				}
 			},
@@ -1389,7 +1386,7 @@ UI.props.AquaGraphite = {
 					overlay : {
 						styles : {
 							backgroundColor : '#000',
-							opacity : 0,
+							opacity : 0.01,
 							position : 'absolute',
 							height : '100%',
 							width : '100%',
@@ -2830,8 +2827,7 @@ UI.props.AquaGraphite = {
 			'default' : {
 				/* css properties */
 				styles : {
-					display : 'inline-block',
-					paddingBottom : '100' 
+					display : 'inline-block'
 				},
 				
 				/* layers properties */
@@ -2845,26 +2841,22 @@ UI.props.AquaGraphite = {
 						opacity : 1,
 						radius : 8
 					},
-					background : {
-						offset : [0,0,50,0],
+					base : {
 						gradient : {
-							color : ['#000','#333'],
-							angle : 110,
-							opacity : .8
+							color : ['#dedada','#9a9494'],
+							opacity : 1
 						},
 						
-						radius : 8
+						radius : 12
 					},
-					reflection : {
-						position : 'bottom',
+					front : {
 						height: 50,
-						offset : [0,0,0,0],
+						offset : 10,
 						gradient : {
-							color : ['#000','#fff'],
-							angle : 10,
+							color : ['#f7f6f6','#e7e5e5'],
 							opacity : .8
 						},
-						radius : [8,8,8,8]
+						radius : 8
 					}
 				}
 			}
