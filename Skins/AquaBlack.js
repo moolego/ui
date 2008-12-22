@@ -832,7 +832,7 @@ UI.props.AquaBlack = {
 					main : {
 						position : 'absolute',
 						size : [12, 12],
-						color : ['#d4d4d4', '#e5e5e5'],
+						color : ['#000', '#444'],
 						offset : [3, 2]
 					},
 					reflect : {
@@ -867,7 +867,7 @@ UI.props.AquaBlack = {
 						position : 'absolute',
 						shape : 'line',
 						width : 2,
-						color : '#333',
+						color : '#CCC',
 						offset : [6.3, 4],
 						size : [5, 6]
 					},
@@ -875,12 +875,12 @@ UI.props.AquaBlack = {
 						position : 'absolute',
 						shape : 'lineUp',
 						width : 2.2,
-						color : '#333',
+						color : '#CCC',
 						offset : [0, 8],
 						size : [7, 11]
 					},
 					main : {
-						color : ['#7b8997', '#7b8997']
+						color : ['#000', '#444']
 					},
 					border : {
 						color : ['#455a70', '#777777']

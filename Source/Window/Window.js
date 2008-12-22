@@ -256,8 +256,8 @@ UI.Window = new Class({
 	},
 	
 	/*
-    Function: setToolbar
-    	Sets the window's toolbar. and attach related events
+    Function: buildToolbar
+    	Build the window's toolbar. and attach related events
     
     Arguments:
     	toolbar - (object) Toolbar's options object. See <UI.Toolbar>
@@ -274,16 +274,21 @@ UI.Window = new Class({
 
 		// not really nice because related to a specific layer ... 
 		this.props.layers.underlay.size[1] = this.head.getSize().y;
-		//this.updateSize();
 		
-		this.addEvents({
-			onMinimize 			: function() { console.log('bye bye'); this.toolbar.hide() },
-			onNormalize 		: function() { console.log('hello'); this.toolbar.show() }
-		});
-		
-		new UI.Button(this.props.components.toggle)
+		var toggle = new UI.Button(this.props.components.toggle)
 		.addEvent('onClick', this.toggleToolbar.bind(this))
 		.inject(this.head);	
+		
+		this.addEvents({
+			onMinimize 			: function() { 
+				this.toolbar.element.hide() ;
+				toggle.hide();
+			},
+			onNormalize			: function() {
+				this.toolbar.element.show();
+				toggle.show();
+			}
+		});
 		
 		return this;
 	},
@@ -410,7 +415,11 @@ UI.Window = new Class({
 			this.props.layers.underlay.size[1] = this.head.getSize().y;
 			this.toolbar.element.hide();
 		} else {
-			this.toolbar.element.show();
+			this.toolbar.element.setStyles({
+				opacity : 1,
+				visibility : 'visible',
+				display : 'block'
+			});
 			this.props.layers.underlay.size[1] = this.head.getSize().y;
 		}
 		
@@ -572,7 +581,7 @@ UI.Window = new Class({
 
 	normalize : function() {
 		
-		
+		this.fireEvent('onNormalize');
 		var size = {
 			width : false,
 			height : false
@@ -586,7 +595,7 @@ UI.Window = new Class({
 		this.maximized = false;
 		this.minimized = false;
 		
-		this.fireEvent('onNormalize');
+		
 	},		
 
 	/*

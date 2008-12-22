@@ -102,101 +102,122 @@ UI.props.BlueTouch = {
 		}
 	},
 	
-	slider: {
-		'default': {
-			'default': {
-				width: 200,
-				height: 12,
+	checkbox : {
+		'default' : {
+			'default' : {
+				
+			}
+		}
+	},
+	
+	slider : {
+		'default' : {
+			'default' : {
+				width : 300,
+				height : 40,
 				
 				/* element css properties */
-				styles: {
-					position: 'relative',
-					display: 'inline-block'
+				styles : {
+					display : 'inline-block'
 				},
 				
 				/* layers properties */
-				layers: {
-					reorder: ['border', 'front', 'fakeShadow', 'reflect'],
+				layers : {
+					reorder : ['border', 'front', 'fakeShadow', 'reflect'],
 					
-					border: {
-						offset: ['0px', '0px', '0px', '0px'],
-						color: ['#093889', '#5289d7'],
-						opacity: 1,
-						radius: 5
+					border : {
+						offset : ['0px', '0px', '0px', '0px'],
+						color : ['#093889', '#5289d7'],
+						opacity : 1,
+						radius : 5
 					},
-					front: {
-						position: 'absolute',
-						offset: 1,
-						color: ['#3672dc', '#4085ec'],
-						opacity: 1,
-						radius: [4, 4, 4, 4]
+					front : {
+						position : 'absolute',
+						offset : 1,
+						color : ['#3672dc', '#4085ec'],
+						opacity : 1,
+						radius : [4, 4, 4, 4]
 					},
-					fakeShadow: {
-						position: 'absolute',
-						offset: ['1px', '1px', '23px'],
-						color: ['#000', '#000'],
-						opacity: [.2, 0],
-						radius: [5, 5, 0, 0]
+					fakeShadow : {
+						position : 'absolute',
+						offset : ['1px', '1px', '23px'],
+						color : ['#000', '#000'],
+						opacity : [.2, 0],
+						radius : [5, 5, 0, 0]
 					},
-					reflect: {
-						position: 'absolute',
-						offset: ['50%', '1px', '1px'],
-						color: ['#FFF', '#FFF'],
-						opacity: [.05, .3],
-						radius: [4, 4, 4, 4]
+					reflect : {
+						position : 'absolute',
+						offset : ['50%', '1px', '1px'],
+						color : ['#FFF', '#FFF'],
+						opacity : [.05, .3],
+						radius : [4, 4, 4, 4]
 					}
 				}
 			}
 		},
-		horizontal: {
-			'default': {}
+		horizontal : {
+			'default' : {}
 		},
-		vertical: {
-			'default': {
-				width: 10,
-				height: 300
+		vertical : {
+			'default' : {
+				width : 40,
+				height : 300,
+				layers : {
+					front : {
+						gradient : {
+							color : ['#3672dc', '#4085ec'],
+							angle : 0
+						}
+					},
+					reflect : {
+						offset : [1, 1, 1, '50%'],
+						gradient : {
+							color : ['#FFF', '#FFF'],
+							opacity : [.05, .3],
+							angle : 0
+						}
+					}
+				}
 			}
 		},
-		'knob': {
-			'default': {
-				width: 20,
-				//	height 		: 10,
+		'knob' : {
+			'default' : {
+				width : 40,
+				//	height 		 : 10,
 				
-				styles: {
-					position: 'relative',
-					zIndex: 1,
-					display: 'block'
+				styles : {
+					zIndex : 1,
+					display : 'block'
 				},
 				
-				layers: {
-					reorder: ['checkBg', 'check', 'checkFront'],
+				layers : {
+					reorder : ['checkBg', 'check', 'checkFront'],
 					
-					checkBg: {
-						position: 'absolute',
-						offset: 0,
-						color: '#000',
-						opacity: 0.25,
-						radius: 5
+					checkBg : {
+						position : 'absolute',
+						offset : 0,
+						color : '#000',
+						opacity : 0.25,
+						radius : 5
 					},
-					check: {
-						position: 'absolute',
-						offset: 1,
-						color: ['#FFF', '#FFF'],
-						opacity: 1,
-						radius: 4
+					check : {
+						position : 'absolute',
+						offset : 1,
+						color : ['#FFF', '#FFF'],
+						opacity : 1,
+						radius : 4
 					},
-					checkFront: {
-						position: 'absolute',
-						offset: [2, 2, 1, 1],
-						color: ['#000', '#000'],
-						opacity: [.18, .02],
-						radius: 4
+					checkFront : {
+						position : 'absolute',
+						offset : [2, 2, 1, 1],
+						color : ['#000', '#000'],
+						opacity : [.18, .02],
+						radius : 4
 					}
 				}
 			}
 		}
 	},
-
 	
 	scrollbar : {
 		track : {
