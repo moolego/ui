@@ -25,6 +25,8 @@ UI.Controller = new Class({
 		this.zIndex = this.options.zBase;
 		this.groups = {};
 		this.elements = [];
+		this.closeMenu = $empty;
+		this.setBehavior();
 	},
 
 	/*
@@ -109,6 +111,14 @@ UI.Controller = new Class({
 			if (eC.value) string.push(eC.options.name + '=' + eC.value);
 		});
 		console.log(string.join('&'));
+	},
+	
+	setBehavior : function(){
+		window.addEvent('domready', function(){
+			document.addEvent('mousedown', function(e){
+				this.closeMenu();
+			}.bind(this));
+		}.bind(this));
 	}
 });
 

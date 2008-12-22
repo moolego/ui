@@ -47,8 +47,7 @@ UI.Menu = new Class({
 		position			: 'normal',
 		scrollToSelected	: false,
 		scrollMargin		: 20,
-		menu				: [],
-		underlay			: false
+		menu				: []
 	},
 
 	/*
@@ -77,16 +76,27 @@ UI.Menu = new Class({
 			}
 		}).inject(this.element);
 		
-		this.setMenu();
+		this.buildMenu();
 		
 		this.element.setStyles({
 			zIndex	: this.options.zIndex
 		});
 	},
 	
+	setBehavior : function(){
+		this.parent();
+		if (!this.options.closeMenu)
+			this.addEvent('onCloseMenu', function(){
+				this.hide(300);
+				ui.controller.closeMenu = $empty;
+			}.bind(this));
+		else
+			this.addEvent('onCloseMenu', function(){this.options.closeMenu();}.bind(this));
+	},
+	
 	/* 
-	Method: setMenu
-		Set the content of the menu or change menu content
+	Method: buildMenu
+		Build the content of the menu or change menu content
 	
 	Arguments:
 		menu - (array) Array containing menu definition
@@ -95,7 +105,7 @@ UI.Menu = new Class({
 		this
 	 */
 	
-	setMenu: function(menu) {
+	buildMenu : function(menu) {
 		this.empty();
 		var list = (menu) ? menu : this.options.menu;
 		list.each(function(item){
@@ -108,11 +118,13 @@ UI.Menu = new Class({
 				}).inject(this.content);
 				menuItem.separator = true;
 			} else {
+				//console.log(UI.skin.getComponentProps(this.skin, 'menuItem'), this.skin);
 				var menuItem = new UI.Label({
 					skin		: this.options.skin,
 					tag			: this.options.itemTag,
 					html		: item.text,
-					props		: UI.skin.getComponentProps(this.skin, 'menuItem')
+					props		: UI.skin.getComponentProps(this.skin, 'menuItem'),
+					image 		: item.image
 				}).set(item.options);
 				
 				if (item.action) menuItem.element.addEvent('action', item.action);
@@ -163,7 +175,8 @@ UI.Menu = new Class({
 			'mouseup' : function(){
 				this.mouseUpAction(menuItem);
 			}.bind(this),
-			'mousedown' : function(){
+			'mousedown' : function(e){
+				new Event(e).stop();
 				if (!menuItem.separator) this.fireEvent('change');
 			}.bind(this)
 		});
@@ -186,13 +199,15 @@ UI.Menu = new Class({
 	addSubmenu : function(item, menuItem, position) {
 		this.menuWithAction = false;
 		$clear(this.menuActionDelay);
-		
+		ui.controller.closeMenu = this.fireEvent.bind(this, 'closeMenu');
 		this.menuActionDelay = (function(){
 			if (!menuItem.submenu) {
 				menuItem.submenu = new UI.Menu({
 					skin			: this.options.skin,
 					target			: menuItem,
-					underlay		: this.underlay,
+					closeMenu		: function(){
+						this.fireEvent('closeMenu');
+					}.bind(this),
 					menu			: item.menu,
 					openOnRollover	: this.options.openOnRollover,
 					closeOnRollout	: this.options.closeOnRollout,
@@ -203,7 +218,6 @@ UI.Menu = new Class({
 					}
 				}).inject(document.body);
 			} else {
-				menuItem.submenu.underlay = this.underlay;
 				menuItem.submenu.show(menuItem);
 			}
 		}.bind(this)).delay(this.props.showDelay);
@@ -269,7 +283,7 @@ UI.Menu = new Class({
 					if (this.selected) this.selected.selected = false;
 					this.selected = menuItem.element;
 					menuItem.element.selected = true;
-					this.underlay.fireEvent('click');
+					this.fireEvent('closeMenu');
 					menuItem.element.fireEvent('action');
 				}.bind(this)
 			}).start('opacity', 0, 1);
@@ -515,79 +529,6 @@ UI.Menu = new Class({
 	},
 	
 	/* 
-	Method: addUnderlay
-		private function
-	
-		Add an underlay to the page, to prevent clicks and scroll on page, and to keep a track of opened menu element
-	
-	Arguments:
-		underlay - (element) a previously declared underlay to use instead of creating a new one
-	
-	Return:
-		(void)
-	 */
-	
-	addUnderlay: function(underlay){
-		if (!this.underlay) {
-			if (this.options.underlay) {
-				this.underlay = this.options.underlay;
-			} else {
-				this.underlay = new Element('div', {
-					'class' : 'menu-underlay',
-					styles: {
-						position: 'fixed',
-						width: '100%',
-						height: '100%',
-						background	: '#FFF',
-						opacity: 0.000001,
-						top: 0,
-						left: 0,
-						zIndex: this.options.zIndex-50
-					},
-					events : {
-						'click' : function(){
-							this.hide(300);
-							this.removeUnderlay();
-						}.bind(this),
-						'contextmenu' : function(e){
-							new Event(e).stop();
-							this.hide();
-							this.removeUnderlay();
-						}.bind(this),
-						'mousewheel' : function(e){
-							new Event(e).stop()
-						}
-					}
-				}).inject(document.body);
-				this.removeUnderlayEvent = function(e){
-					if (this.underlay) this.underlay.fireEvent('click');
-					window.removeEvent('resize', this.removeUnderlayEvent);
-				}.bind(this);
-				window.addEvent('resize', this.removeUnderlayEvent.bindWithEvent());
-			}
-		}
-	},
-	
-	/* 
-	Method: removeUnderlay
-		private function
-	
-		Remove the underlay and destroy it
-	
-	Return:
-		this
-	 */
-	
-	removeUnderlay: function(){
-		if (this.underlay && !this.options.underlay) {
-			window.removeEvent('resize', this.removeOverlayEvent);
-			this.underlay.destroy();
-			delete this.underlay;
-		}
-		return this;
-	},
-	
-	/* 
 	Method: inject
 		inject the menu and draw the canvas. Overwrite the inject method of <UI.Element>
 	
@@ -611,14 +552,13 @@ UI.Menu = new Class({
 			this.options.target ? this.setPosition(this.options.target) : this.setPosition(element);
 			this.setCanvas();
 			this.setStyle('visibility', 'visible');
-			this.addUnderlay();
 		} else {
 			this.setCanvas();
 		}
 
 		if (this.options.closeOnRollout)
 		this.canvas.canvas.addEvent('mouseleave', function(){
-			if (this.activeItem) this.underlay.fireEvent('click');
+			this.fireEvent('closeMenu');
 		}.bind(this));
 		
 		return this;
@@ -643,11 +583,9 @@ UI.Menu = new Class({
 	show : function(parent, x, y) {
 		this.time = $time();
 		this.element.setStyle('display', 'block');
-		
 		this.setPosition(parent);
 		this.setSize(x, y);
 		this.parent();
-		this.addUnderlay();
 		return this;
 	},
 	

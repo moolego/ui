@@ -72,6 +72,14 @@ UI.Toolbar = new Class({
 		});
 	},
 	
+	setBehavior : function(){
+		this.addEvent('onCloseMenu', function(){
+			this.removeSubmenu();
+			(function(){this.removeRollover()}.bind(this)).delay(this.props.hideFxDuration);
+			ui.controller.closeMenu = $empty;
+		}.bind(this));
+	},
+	
 	/* 
 	Method: inject
 		inject the toolbar and draw the canvas. Overwrite the inject method of <UI.Menu>
@@ -133,7 +141,6 @@ UI.Toolbar = new Class({
 				'mousedown' : function(e){
 					if (this.activeItem != menuItem) {
 						this.time = $time();
-						this.addUnderlay();
 						if (!item.action) {
 							this.addSubmenu(item, menuItem, 'bottom');
 							this.moveRollover(menuItem);
@@ -150,8 +157,8 @@ UI.Toolbar = new Class({
 					new Event(e).stop();
 				}.bind(this),
 				'mouseup' : function(){
-					if ($time() - this.time > 800 && this.underlay) {
-						this.underlay.fireEvent('click');
+					if ($time() - this.time > 800) {
+						this.fireEvent('closeMenu');
 					}
 				}.bind(this),
 				'mouseenter': function(){
@@ -159,7 +166,6 @@ UI.Toolbar = new Class({
 						if (this.activeItem.submenu) {
 							this.activeItem.submenu.hide(0);
 						}
-						this.addUnderlay();
 						this.addSubmenu(item, menuItem, 'bottom');
 						this.moveRollover(menuItem);
 					} else if (this.options.openOnRollover) {
@@ -172,7 +178,7 @@ UI.Toolbar = new Class({
 						duration	: this.props.hideFxDuration,
 						onComplete	: function(){
 							this.removeRollover();
-							if (this.underlay) this.underlay.fireEvent('click');
+							this.fireEvent('closeMenu');
 							this.removeSubmenu();
 						}.bind(this)
 					}).start('opacity', 0);
@@ -199,36 +205,6 @@ UI.Toolbar = new Class({
 				}
 				menuItem.down = false;
 			}.bind(this)
-		});
-	},
-	
-	/* 
-		Method: addUnderlay
-			private function
-		
-			Overwrite <UI.Menu::addUnderlay> to keep the toolbar
-		
-		Return:
-			(void)
-		
-		See also:
-			<UI.Menu::addUnderlay>
-	*/
-	
-	addUnderlay : function(){
-		this.parent();
-		this.underlay.removeEvents();
-		this.underlay.addEvents({
-			'click' : function(){
-				this.removeSubmenu();
-				(function(){this.removeRollover()}.bind(this)).delay(this.props.hideFxDuration)
-				this.removeUnderlay();
-			}.bind(this),
-			'contextmenu' : function(e){
-				new Event(e).stop();
-				this.underlay.fireEvent('click');
-			}.bind(this),
-			'mousewheel' : function(e){new Event(e).stop()}
 		});
 	}
 });	

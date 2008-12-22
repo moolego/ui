@@ -215,7 +215,7 @@ UI.Element = new Class({
 	*/
 	
 	setCanvas : function(){
-		if (this.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && $H(this.props.layers).getLength() <= 2))
+		if (this.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && $H(this.props.layers).getLength() <= 2) || ($defined(this.props.layers.reorder) && !this.props.layers.reorder.length))
 			return false;
 
 		this.canvas = new UI.Canvas({
@@ -342,8 +342,12 @@ UI.Element = new Class({
 		if (this.options.resizable) { this.enableResize(); }
 		
 		this.element.addEvents({
-			mousedown 	: this.fireEvent.bind(this, 'mousedown'),
-			click		: function(){
+			mousedown 	: function(e){
+				
+				ui.controller.closeMenu();
+				this.fireEvent('mousedown');
+			}.bind(this),
+			click		: function(e){
 				if (!Browser.Engine.trident) 
 				 this.fireEvent('click');
 			}.bind(this),
