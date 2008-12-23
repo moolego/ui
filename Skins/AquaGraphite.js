@@ -102,11 +102,6 @@ UI.props.AquaGraphite = {
 						color : ['#FFF', '#FFF'],
 						opacity : [0, 1],
 						radius : [4, 4, 7, 7]
-					},
-					bezier : {
-						shape : 'bezier',
-						position : 'absolute',
-						color: ['#d4d4d4', '#e5e5e5']
 					}
 				}
 			},

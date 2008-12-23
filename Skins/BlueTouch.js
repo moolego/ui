@@ -13,8 +13,10 @@ Arguments:
 UI.props.BlueTouch = {
 	'default': {
 		/* css properties */
-		styles: {
-			fontSize: '12px'
+		styles : {
+			fontFamily : 'Helvetica, Arial, sans-serif',
+			fontSize : '12px',
+			position : 'relative'
 		},
 		fx: {},
 		
@@ -113,8 +115,8 @@ UI.props.BlueTouch = {
 	slider : {
 		'default' : {
 			'default' : {
-				width : 300,
-				height : 40,
+				width : 200,
+				height : 12,
 				
 				/* element css properties */
 				styles : {
@@ -160,7 +162,7 @@ UI.props.BlueTouch = {
 		},
 		vertical : {
 			'default' : {
-				width : 40,
+				width : 16,
 				height : 300,
 				layers : {
 					front : {
@@ -182,7 +184,7 @@ UI.props.BlueTouch = {
 		},
 		'knob' : {
 			'default' : {
-				width : 40,
+				width : 16,
 				//	height 		 : 10,
 				
 				styles : {
