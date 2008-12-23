@@ -85,13 +85,15 @@ UI.Menu = new Class({
 	
 	setBehavior : function(){
 		this.parent();
-		if (!this.options.closeMenu)
+		if (!this.options.closeMenu) {
 			this.addEvent('onCloseMenu', function(){
 				this.hide(300);
-				ui.controller.closeMenu = $empty;
+				//ui.controller.closeMenu = $empty;
 			}.bind(this));
-		else
-			this.addEvent('onCloseMenu', function(){this.options.closeMenu();}.bind(this));
+		} else 
+			this.addEvent('onCloseMenu', function(){
+				this.options.closeMenu();
+			}.bind(this));
 	},
 	
 	/* 
@@ -132,6 +134,7 @@ UI.Menu = new Class({
 			}
 			this.addSubmenuEvents(item, menuItem);
 		},this);
+		ui.controller.closeMenu = this.fireEvent.bind(this, 'closeMenu');
 		return this;
 	},
 	
