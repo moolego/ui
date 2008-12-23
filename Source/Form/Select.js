@@ -117,6 +117,7 @@ UI.Select = new Class({
 		this.element.addEvents({
 			mousedown : function(e){
 				this.menu.show(this.element);
+				new Event(e).stop();
 			}.bind(this)
 		});
 	},
