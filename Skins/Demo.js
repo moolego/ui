@@ -1179,5 +1179,38 @@ UI.props.demo = {
 				}
 			}
 		}
+	},
+	
+		box : {
+		'default' : {
+			'default' : {
+				/* css properties */
+				
+				
+				/* layers properties */
+				
+				layers : {
+					background : {
+						offset : [0,1,1,1],
+						color : '#cccccc',
+						opacity : 1,
+						radius : 8
+					},
+					main : {
+						offset : [1,1,4,1],
+						color : '#FFF',
+						opacity : 1,
+						radius : 7
+					},
+					reflect : {
+						size : ['auto', 30],
+						offset : ['2px', '0px', 'auto'],
+						color : ['#F1F1F1', '#FFF'],
+						opacity : 1,
+						radius : [7, 7, 0, 0]
+					}
+				}
+			}
+		}
 	}
 }

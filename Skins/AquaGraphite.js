@@ -1478,8 +1478,8 @@ UI.props.AquaGraphite = {
 						styles : {
 							//height : '100%',
 							cursor : 'e-resize',
-							width : '7px',
-							opacity : '.3'
+							width : '17px',
+							opacity : '1'
 						}
 					}
 				},
@@ -1490,8 +1490,8 @@ UI.props.AquaGraphite = {
 						styles : {
 							'float' : 'left',
 							overflow : 'hidden',
-							backgroundColor : '#d6dde5',
-							borderRight : '1px solid #8b8b8b'
+						//	backgroundColor : '#d6dde5',
+						//	borderRight : '1px solid #8b8b8b'
 						}
 					},
 					main: {
@@ -2865,7 +2865,9 @@ UI.props.AquaGraphite = {
 		'default' : {
 			'default' : {
 				/* css properties */
-				
+				styles : {
+					color : '#fff'
+				},
 				
 				/* layers properties */
 				
@@ -2875,19 +2877,6 @@ UI.props.AquaGraphite = {
 						color : '#cccccc',
 						opacity : 1,
 						radius : 8
-					},
-					main : {
-						offset : [1,1,4,1],
-						color : '#FFF',
-						opacity : 1,
-						radius : 7
-					},
-					reflect : {
-						size : ['auto', 30],
-						offset : ['2px', '0px', 'auto'],
-						color : ['#F1F1F1', '#FFF'],
-						opacity : 1,
-						radius : [7, 7, 0, 0]
 					}
 				}
 			}

@@ -56,7 +56,8 @@ UI.Textarea = new Class({
 			styles : {
 				width		: this.props.width - this.input.getStyle('paddingLeft').toInt() - this.input.getStyle('paddingRight').toInt(),
 				height		: this.props.height - this.input.getStyle('paddingTop').toInt() - this.input.getStyle('paddingBottom').toInt(),
-				overflow	: 'hidden'
+				overflow	: 'hidden',
+				margin: 0
 			}
 		});
 	},

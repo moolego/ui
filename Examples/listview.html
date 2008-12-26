@@ -45,6 +45,7 @@
 	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
 	
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../Skins/AquaBlack.js"></script>
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
 	<script type="text/javascript" src="../Skins/BlueTouch.js"></script>
 		
@@ -196,6 +197,7 @@
 			}).inject(document.body);
 			
 			new UI.ListView({
+				skin: 'AquaBlack',
 				width : 260,
 				height : 400,
 				styles : {
@@ -206,7 +208,7 @@
 			}).inject(document.body);
 			
 			new UI.ListView({
-				//skin: 'BlueTouch',
+				skin: 'BlueTouch',
 				width : 260,
 				height : 400,
 				styles : {
