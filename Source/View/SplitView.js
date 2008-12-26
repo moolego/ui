@@ -45,11 +45,13 @@ UI.SplitView = new Class({
 	build: function(){
 		this.parent();
 		
+		this.view = new Array();
+		
 		this.addEvent('injected', function(){
 			this.size = this.getSize(); 
 						
 			this.buildViews();
-			this.buildHandler();
+			this.buildSplitter();
 		
 		}.bind(this));
 	},
@@ -62,17 +64,14 @@ UI.SplitView = new Class({
 	 */
 	
 	buildViews: function() {
-		this.views = [];
-		
-		console.log(this.props);
-		console.log(this.props.views);
-		
-		this.props.views.each( function(view){
-			this.views.push(new UI.View(view)
+		var viewlist = new Hash(this.props.views)
+		viewlist.each( function(view){
+			console.log(view);
+			this.view.push(new UI.View(view)
 			 .inject(this.element))
-		});
+		},this);
 
-		var mainSize = this.size.x - this.side.element.getSize().x;
+		this.view[1].element.setStyle('width', this.element.getSize().x - this.view[0].getSize().x);
 	},
 	
 	buildSplitter : function() {
@@ -83,11 +82,12 @@ UI.SplitView = new Class({
 		
 		this.handler = new Element('div',this.props.components.splitter)
 		 .setStyles({  
-		 	marginLeft	: this.side.element.getSize().x - 2,
-			height	: this.side.element.getSize().y,
+		 	marginLeft	: this.view[0].element.getSize().x - 2,
+			height	: this.view[0].element.getSize().y,
 			backgroundColor : '#000',
-			position: 'abolute'
-		}).inject(this.views[1].element);
+			position: 'abolute',
+			cursor : 'e-resize'
+		}).inject(this.element);
 		 
 		this.handler.makeDraggable({
 			limit				: this.draglimit,
@@ -99,16 +99,8 @@ UI.SplitView = new Class({
 
 	resize: function() {
 
-		this.side.element.setStyle('width', this.handler.getCoordinates().left - this.element.getCoordinates().left + 3);
-		this.main.element.setStyle('width', this.element.getSize().x - this.side.element.getSize().x);
+		this.view[0].setStyle('width', this.handler.getCoordinates().left - this.element.getCoordinates().left + 3);
+		this.view[1].setStyle('width', this.element.getSize().x - this.view[1].element.getSize().x);
 		this.fireEvent('onResize');
-	},
-	
-	inject: function(container,position) {
-		this.parent(container,position);
-		
-		//this.side.setStyles('width','160px');
-		//this.resize();
-		
 	}
 });

@@ -196,6 +196,6 @@ UI.Skin = new Class({
 				mix[key] = ($type(op) == 'object' && $type(mp) == 'object') ? this.merge(mp, op) : op;
 			}
 		}
-		return mix;
+		return mix; 
 	}
 });
