@@ -3,8 +3,8 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		
-	<script type="text/javascript" src="mootools/mootools-1.2.1-core-nc.js"></script>
-	<script type="text/javascript" src="mootools/mootools-1.2-more.js"></script>
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="mootools/more.js"></script>
 		
 	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
 	
@@ -46,7 +46,7 @@
 	
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
-	<script type="text/javascript" src="../Skins/BlueTouch.js"></script>
+	<script type="text/javascript" src="../Skins/TouchBlue.js"></script>
 		
 	<script type="text/javascript" src="js/examples.js"></script>
 
@@ -69,15 +69,16 @@
 			.setContent('ajax','assets/pulp.json');
 			
 			new UI.Window({
-						title				: 'Motion Graphics',
-						type				: 'transparent',
-						controls			: ['close'],
-						viewOverflow		: 'hidden',
-						resizable			: false,
-						right				: '30px',
-						width				: 427,
-						height				: 388,
-						view				: { overflow:'hidden'}
+						title : 'Motion Graphics',
+						type : 'transparent',
+						controls : ['close'],
+						viewOverflow : 'hidden',
+						resizable : false,
+						top: '100px',
+						left : '530px',
+						width : 427,
+						height : 388,
+						view : { overflow:'hidden'}
 			}).setContent('content',
 				'<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/HePWBNcugf8&hl=fr&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/HePWBNcugf8&hl=fr&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>'
 			);

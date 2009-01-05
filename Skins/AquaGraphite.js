@@ -1046,7 +1046,7 @@ UI.props.AquaGraphite = {
 		'default': {
 			'default': {
 				width: 200,
-				height: 12,
+				height: 20,
 				
 				/* element css properties */
 				styles: {
@@ -1056,34 +1056,20 @@ UI.props.AquaGraphite = {
 				
 				/* layers properties */
 				layers: {
-					reorder: ['border', 'front', 'fakeShadow', 'reflect'],
+					reorder: ['border', 'front'],
 					
 					border: {
-						offset: ['0px', '0px', '0px', '0px'],
-						color: ['#093889', '#5289d7'],
+						offset: [5, 8, 10],
+						color: ['#594f4d', '#827877'],
 						opacity: 1,
-						radius: 5
+						radius: 3
 					},
 					front: {
-						position: 'absolute',
+						//position: 'absolute',
 						offset: 1,
-						color: ['#3672dc', '#4085ec'],
+						color: ['#7f7d7d', '#a5a3a3'],
 						opacity: 1,
-						radius: [4, 4, 4, 4]
-					},
-					fakeShadow: {
-						position: 'absolute',
-						offset: ['1px', '1px', '23px'],
-						color: ['#000', '#000'],
-						opacity: [.2, 0],
-						radius: [5, 5, 0, 0]
-					},
-					reflect: {
-						position: 'absolute',
-						offset: ['50%', '1px', '1px'],
-						color: ['#FFF', '#FFF'],
-						opacity: [.05, .3],
-						radius: [4, 4, 4, 4]
+						radius: 2
 					}
 				}
 			}
@@ -1099,8 +1085,8 @@ UI.props.AquaGraphite = {
 		},
 		'knob': {
 			'default': {
-				width: 20,
-				//	height 		: 10,
+				width : 17,
+				height : 20,
 				
 				styles: {
 					position: 'relative',
@@ -1108,29 +1094,88 @@ UI.props.AquaGraphite = {
 					display: 'block'
 				},
 				
-				layers: {
-					reorder: ['checkBg', 'check', 'checkFront'],
+				layers : {
+					reorder : ['littleshadow','shadowarrow','border','borderarrow','main','mainarrow','light','reflect','reflectdown','reflectarrow'],
+					//reorder : ['littleshadow','shadowarrow', , 'main','mainarrow','reflect','reflectdown','reflectarrow'],
+					'default' : {
+						radius : 2,
+						position : 'absolute'
+					},
+					littleshadow : {
+						size : [17, 11],
+						offset : 0,
+						color : '#000',
+						opacity : .1,
+						radius : [4, 4, 0, 0]
+					},
+					border : {
+						size : [15, 10],
+						offset : [1, 1, 8, 1],
+						color : ['#455a70', '#455a70'],
+						opacity : 1,
+						radius : [3, 3, 0, 0]
+					},
 					
-					checkBg: {
-						position: 'absolute',
-						offset: 0,
-						color: '#000',
-						opacity: 0.25,
-						radius: 5
+					main : {
+						size : [13, 10],
+						color : ['#8392a1', '#8392a1'],
+						offset : [2, 2,'auto',2],
+						radius : [2, 2, 0, 0],
+						opacity: 1
 					},
-					check: {
-						position: 'absolute',
-						offset: 1,
-						color: ['#FFF', '#FFF'],
-						opacity: 1,
-						radius: 4
+					light : {
+						size : [13, 8],
+						color : ['#fff', '#fff'],
+						offset : [2, 2,'auto',2],
+						radius : [2, 2, 0, 0],
+						opacity: [0,0.2]
+					}, 
+					reflect : {
+						size : [11, 10],
+						offset : [2, 3, 'auto'],
+						color : ['#FFF', '#8392a1','#FFF'],
+						opacity : [.7,.2,.1],
+						radius : 0
 					},
-					checkFront: {
-						position: 'absolute',
-						offset: [2, 2, 1, 1],
-						color: ['#000', '#000'],
-						opacity: [.18, .02],
-						radius: 4
+					reflectdown : {
+						position : 'absolute',
+						size : [9, 11],
+						offset : [2, 4,'auto'],
+						color : ['#FFF', '#8392a1','#FFF'],
+						opacity : [.8,.4,.6],
+						radius : 0
+					},
+					shadowarrow : {
+						shape : 'triangle',
+						rotation : 180,
+						size : [17,8],
+						offset : [12,0,0],
+						color : ['#000','#000'],
+						opacity : .1
+					},
+					borderarrow : {
+						shape : 'triangle',
+						rotation : 180,
+						size : [15,8],
+						offset : [11,1,1],
+						color : ['#475262','#475262'],
+						opacity:1
+					},
+					mainarrow : {
+						shape : 'triangle',
+						rotation : 180,
+						size : [13,7],
+						offset : [11,2,2],
+						color : ['#8392a1','#a0a5ae'],
+						opacity : 1,
+					},
+					reflectarrow : {
+						shape : 'triangle',
+						rotation : 180,
+						size : [9,5],
+						offset : [12,4,2],
+						color : ['#fff','#fff'],
+						opacity : [1, .9],
 					}
 				}
 			}
@@ -1384,7 +1429,7 @@ UI.props.AquaGraphite = {
 					overlay : {
 						styles : {
 							backgroundColor : '#000',
-							opacity : 0.01,
+							opacity : 0.5,
 							position : 'absolute',
 							height : '100%',
 							width : '100%',
@@ -1476,10 +1521,16 @@ UI.props.AquaGraphite = {
 				components : {
 					splitter : {
 						styles : {
-							//height : '100%',
-							cursor : 'e-resize',
-							width : '17px',
-							opacity : '1'
+							position : 'abolute',
+
+							height : '100%',
+							width : '3px',
+							left : '159px',
+							zIndex : 10,
+							opacity : .05,
+							cursor : 'col-resize',
+							backgroundColor : '#000'
+							
 						}
 					}
 				},
@@ -1490,8 +1541,52 @@ UI.props.AquaGraphite = {
 						styles : {
 							'float' : 'left',
 							overflow : 'hidden',
-						//	backgroundColor : '#d6dde5',
-						//	borderRight : '1px solid #8b8b8b'
+							backgroundColor : '#d6dde5',
+							borderRight : '1px solid #8b8b8b'
+						}
+					},
+					main: {
+						overflow: 'hidden',
+						styles: {
+							'float': 'left',
+							overflow: 'hidden'
+						}
+					}
+				}
+			}
+		},
+		'default' : {
+			'default' : {
+				styles : {
+					'float' : 'left',
+					overflow : 'hidden',
+					height : '600px'
+				},
+				components : {
+					splitter : {
+						styles : {
+							position : 'abolute',
+
+							height : '100%',
+							width : '3px',
+							left : '159px',
+							zIndex : 10,
+							opacity : .01,
+							cursor : 'col-resize',
+							backgroundColor : '#000'
+							
+						}
+					}
+				},
+				views : {
+					side : {
+						width : 240,
+						overflow : 'hidden',
+						styles : {
+							'float' : 'left',
+							overflow : 'hidden',
+							backgroundColor : '#d6dde5',
+							borderRight : '1px solid #8b8b8b'
 						}
 					},
 					main: {
@@ -2019,6 +2114,21 @@ UI.props.AquaGraphite = {
 					foot : {
 						color : ['#CACACA', '#CFCFCF']
 					}
+				}
+			}
+		}
+	},
+
+
+	windowController: {
+		'default' : {	
+			'default' : {
+				fx : {
+					cascade : {
+						'duration': 1400,
+						transition: Fx.Transitions.Back.easeOut,
+						link : 'ignore'
+					},
 				}
 			}
 		}
@@ -2636,11 +2746,12 @@ UI.props.AquaGraphite = {
 		menuRightArrow : {
 			'default' : {
 				width : 10,
-				height : 9,
+				height : 16,
 				
 				/* layers properties */
 				layers		 : {
 					main	 : {
+						size : [12, 9],
 						shape : 'triangle',
 						rotation : 90,
 						color : '#333'

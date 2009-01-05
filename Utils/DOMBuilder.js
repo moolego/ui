@@ -19,7 +19,7 @@ License:
 /*
 
 Class: DomBuilder 0.1
-	A minimimalist Dom Builder class
+	A minimalist Dom Builder class
 	Return or inject a dom object from json string or javascript object source
 
 Arguments:

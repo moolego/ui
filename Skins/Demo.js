@@ -121,8 +121,20 @@ UI.props.demo = {
 				}
 			}
 		},
+		
 		'hardest': {
 			'default'				: {
+				components : {
+					label : {
+						styles				: {
+							fontSize			: '16px',
+							fontWeight			: 'bold',
+							opacity				: '.7',
+							padding				: '18px 26px',
+							color				: '#fff'
+						}
+					}
+				},
 				layers				: {
 					reorder			: ['emboss','front','reflect'],
 					
@@ -160,9 +172,73 @@ UI.props.demo = {
 					}
 				}
 			}
-	
-			
 		},
+		
+		widget : {
+			'default' : {
+				components : {
+					label : {
+						styles : {
+							fontSize				: '32px',
+							fontWeight				: 'bold',
+							opacity					: '.7',
+							padding					: '24px 26px',
+							color					: '#fff'
+						}
+					}
+				},
+
+				layers				: {
+					reorder			: ['emboss','front','reflect','reflect2'],
+					'default'		: {
+						rotation	: 3
+					},
+					
+					emboss			: {
+						offset		: 5,
+						color		: ['#000','#fff'],
+						opacity		: .3,
+						radius		: 9
+					},
+					front			: {
+						offset		: 2,
+						color		: ['#b11a23','#000'],
+					 	opacity		: 1,
+						radius		: 7
+					},
+					reflect			: {
+						offset		: [1, 0, '60%', 2],
+						color		: ['#FFF', '#FFF'],
+						opacity		: [.6, .1],
+						radius		: [5, 5, 9, 9]
+					},
+					reflect2		: {
+						offset		: [1, 1, 2],
+						color		: ['#000', '#000'],
+						opacity		: [.1,0],
+						radius		: [7, 7, 9, 9]
+					}
+				}
+			},
+			over					: {
+				components			: {
+					label			: {
+						styles		: { opacity	: .8 }
+					}
+				},
+				layers				: {
+					emboss			: { color : '#00CC00' }
+				}
+			},
+			down					: {
+				components			: {
+					label			: {
+						styles		: { color : '#ccc' }
+					}
+				}
+			}		
+		},		
+				
 		
 		'jgood': {
 			'default': {
@@ -179,6 +255,10 @@ UI.props.demo = {
 					}
 				},
 				
+				shortcuts : {
+					color : 'layers.front.color'
+				},
+				
 				styles : {					
 					margin	: '1px 3px 0px'
 				},
@@ -186,27 +266,31 @@ UI.props.demo = {
 				layers: {
 					reorder: ['emboss', 'front', 'reflect'],
 
-					emboss: {
-						offset: '0px',
-						color: '#000',
-						opacity: .17,
-						radius: 8
-					},
+					reorder			: ['emboss','background','front','reflect'],
 					
-					front: {
-						offset: 2,
-						opacity: 1,
-						color : '#500',
-						radius: 6
+					emboss			: {
+						offset		: '0px',
+						color		: '#000',
+						opacity		: .17,
+						radius		: 7
 					},
-					reflect: {
-						offset: ['2px', '2px', '40%'],
-						
-						gradient	: {
-							color: ['#FFF', '#FFF'],
-							opacity: [.4, .03]
-						},
-						radius: [4,4, 4, 4]
+					background		: {
+						offset		: 3,
+						color		: ['#2a5179','#2a5179'],
+						opacity		: 1,
+						radius		: 5
+					},
+					front			: {
+						offset		: 1,
+						color		: ['#6094cf','#1d5591'],
+					 	opacity		: 1,
+						radius		: 4
+					},
+					reflect			: {
+						offset		: ['1px', '1px', '35%'],
+						color		: ['#FFF', '#FFF'],
+						opacity		: [.4, 0],
+						radius		: [3, 3, 3, 3]
 					}
 				}
 			},
@@ -222,21 +306,84 @@ UI.props.demo = {
 					reflect : {
 						gradient	: {
 							color: ['#FFF', '#FFF'],
-							opacity: [.6, .04]
+							opacity: [.1, .04]
 						}
 					}
 				}
 			},
 			down: {
-				components: {
-					label: {
-						styles: {
-							color: '#FFF'
-						}
+				styles : {
+					
+					color : '#000'
+				},
+				reflect : {
+					gradient	: {
+						color: ['#000', '#000'],
+						opacity: [.05, .01]
 					}
 				}
 			}
 		},
+		
+		rose : {
+			'default'				: {
+				layers				: {
+					reorder			: ['emboss','front','reflect', 'dark'],
+					
+					emboss			: {
+						offset		: 0,
+						color		: '#cc0033',
+						opacity		: .17,
+						radius		: 9
+					},
+					front			: {
+						offset		: 3,
+						color		: ['#cc0033','#cc0033'],
+					 	opacity		: 1,
+						radius		: 7
+					},
+					reflect			: {
+						offset		: ['1px', '1px', '65%'],
+						color		: ['#FFF', '#FFF'],
+						opacity		: [.8, .0],
+						radius		: [5, 5, 14, 14]
+					},
+					dark			: {
+						position	: 'absolute',
+						size		: ['auto','20px'],						
+						offset		: ['auto', 4, 4],
+						color		: ['#fff', '#fff'],
+						opacity		: [0, .5],
+						radius		: [14, 14, 5, 5]
+					}
+				}
+			},
+			over					: {
+				components			: {
+					label			: {
+						styles		: { opacity : .5 }
+					}
+				},
+				layers				: {
+					emboss			: { color : '#00AA00' }
+				}
+			},
+			down					: {
+				components			: {
+					label			: {
+						styles		: {
+							opacity : .5,
+							color	: '#000'
+						}
+					}
+				},
+				layers				: {
+					emboss			: { color : '#00AA00' }
+				}
+			}
+		},	
+
+		
 		'speedtest': {
 			'default': {}
 		},
@@ -252,6 +399,10 @@ UI.props.demo = {
 							color: '#fff'
 						}
 					}
+				},
+				/* shortcuts */
+				shortcuts : {
+					color : 'layers.front.color'
 				},
 				
 				styles : {					
@@ -387,77 +538,175 @@ UI.props.demo = {
 		}
 	},
 	
-	bubble: {
+	bubble : {
 		'default' : {
 			'default' : {
-				components			: {
-					label			: {
-						styles		: {
-							zIndex			: 1,
-							position		: 'absolute',
-							top				: 0,
-							left			: 0,
-							cursor			: 'default',
-							color			: '#FFF',
-							padding			: '8px 10px 18px',
-							fontSize		: '10px',
-							whiteSpace:'nowrap'
+				styles		 : {
+					display	 : 'block',
+					position : 'absolute',
+					opacity	 : 0		
+				},
+				
+				components	 : {
+					label	 : {
+						styles : {
+							zIndex : 1,
+							position : 'absolute',
+							top : 0,
+							left : 0,
+							cursor : 'default',
+							color : '#FFF',
+							padding : '6px 8px 4px',
+							fontSize : '12px',
+							fontWeight: 'bold',
+							whiteSpace :'nowrap'
+						}
+					}
+				},
+
+				layers		 : {
+					reorder : ['shadow','border','background','reflect'],
+					'default' : {
+						radius : 11,
+						shape : 'roundedRect'
+					},
+					shadow : {
+						size : 2,
+						offsetY : 1,
+						opacity : 0.8
+					},
+					border: {
+						offset: 0,
+						color: '#fff',
+						opacity: 1,
+						radius: 11
+					},
+					background: {
+						offset: 1.5,
+						color: ['#e8010d', '#a60000'],
+						opacity: 1,
+						radius : 10
+					},
+					
+					reflect	 : {
+						position : 'absolute',
+						color : ['#FFFFFF','#FFFFFF'],
+						radius : [11,11,4,4],
+						opacity : [0.4, 0.1],
+						offset : [1,1,'55%']
+					}
+				},
+				shortcuts	 : {
+					labelStyles : 'components.label.styles'
+				}
+			}
+		},
+		'green' : {
+			'default' : {
+				components	 : {
+					label	 : {
+						styles : {
+							zIndex : 1,
+							position : 'absolute',
+							top : 0,
+							left : 0,
+							cursor : 'default',
+							color : '#FFF',
+							padding : '8px 10px 18px',
+							fontSize : '14px',
+							whiteSpace :'nowrap'
 						}
 					}
 				},
 				
-				shortcuts			: {
-					labelStyles		: 'components.label.styles'
+				shortcuts	 : {
+					labelStyles : 'components.label.styles'
 				},
 				
-				styles				: {
-					display			: 'block',
-					position		: 'absolute',
-					opacity			: 0		
+				styles		 : {
+					display	 : 'block',
+					position : 'absolute',
+					opacity	 : 0		
 				},
 				
-				layers				: {
-					'default'		: {
-						position	: 'absolute',
-						color		: '#000',
-						radius		: 5,
-						offset		: 0,
-						opacity		: .8
+				layers		 : {
+					
+					reorder : ['shadow','border','background','arrowborder','arrow','reflect'],
+					
+					'default' : {
+						position: 'absolute'
 					},
-					background		: {
-						offset		: [0,0,8],
-						radius		: 5
+					shadow : {
+						size : 3,
+						offsetY : 2,
+						opacity : 1
 					},
-					arrow			: {
-						shape		: 'triangle',
-						rotation	: 180,
-						size		: [18,8],
-						offset		: ['auto', 20,0]
+					border: {
+						offset: [0, 0, 5, 0],
+						color: '#fff',
+						opacity: 1,
+						radius: 5
 					},
-					reflect			: {
-						color		: ['#FFFFFF','#FFFFFF'],
-						radius		: 4,
-						opacity		: [0.4, 0.1],
-						offset		: [1,1,'55%']
+					
+					background: {
+						position : 'relative',
+						offset: [2, 2, 7, 2],
+						color: ['#33cc33', '#000'],
+						opacity: 1,
+						radius : 3
+					},
+					arrowborder: {
+						position: 'absolute',
+						shape : 'triangle',
+						rotation : 180,
+						size: [14, 7],
+						offset: ['auto', 5, 0],
+						opacity: 1,
+						color: '#fff'
+					},
+					arrow: {
+						position: 'absolute',
+						shape : 'triangle',
+						rotation : 180,
+						size: [10, 5],
+						offset: ['auto', 7, 3],
+						opacity: 1,
+						color: '#000'
+					},
+					reflect	 : {
+						position : 'absolute',
+						color : ['#FFFFFF','#FFFFFF'],
+						radius : [4,4,4,4],
+						opacity : [0.3, .05],
+						offset : [1,1,'55%']
 					}
 				}
 			}
 		},
-		green: {
-			'default': {
-				layers: {
-					background: {
-						offset: [0, 0, 4],
-						color: ['#33cc33', '#000']
+		
+		'bottom' : {
+			'default' : {
+				components : {
+					label : {
+						styles : {
+							padding : '13px 8px 6px'
+						}
+					}
+				},
+				
+				layers : {
+					background : {
+						offset : [8,0,0]
 					},
-					arrow: {
-						size: [9, 4],
-						offset: ['auto', 9, 0]
+					arrow : {
+						shape : 'triangle',
+						rotation : 0,
+						offset : [0,0,'auto',20]
 					}
 				}
 			}
 		}
-	}, 
+	},
 	
 	input: {
 		'default' : {
@@ -1181,7 +1430,7 @@ UI.props.demo = {
 		}
 	},
 	
-		box : {
+	box : {
 		'default' : {
 			'default' : {
 				/* css properties */

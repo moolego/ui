@@ -1,10 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<title>MooLego - Formular replacement demo</title>
 		
-	<script type="text/javascript" src="mootools/mootools-1.2.1-core-nc.js"></script>
-	<script type="text/javascript" src="mootools/mootools-1.2-more.js"></script>
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="mootools/more.js"></script>
 		
 	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
 	
@@ -16,13 +18,8 @@
 	<script type="text/javascript" src="../Source/Element/Element.js"></script>
 	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
 	<script type="text/javascript" src="../Source/Element/Label.js"></script>
-	<script type="text/javascript" src="../Source/Element/Bubble.js"></script>
-	<script type="text/javascript" src="../Source/Element/Scrollbar.js"></script>
-	
+
 	<script type="text/javascript" src="../Source/Menu/Menu.js"></script>
-	<script type="text/javascript" src="../Source/Menu/Scroller.js"></script>
-	<script type="text/javascript" src="../Source/Menu/Context.js"></script>
-	<script type="text/javascript" src="../Source/Menu/Toolbar.js"></script>
 	
 	<script type="text/javascript" src="../Source/Form/Control.js"></script>
 	<script type="text/javascript" src="../Source/Form/Button.js"></script>
@@ -32,55 +29,48 @@
 	<script type="text/javascript" src="../Source/Form/Select.js"></script>
 	<script type="text/javascript" src="../Source/Form/Slider.js"></script>
 	<script type="text/javascript" src="../Source/Form/Textarea.js"></script>
-	
-	<script type="text/javascript" src="../Source/View/View.js"></script>
-	<script type="text/javascript" src="../Source/View/ListView.js"></script>
-	<script type="text/javascript" src="../Source/View/PanelView.js"></script>
-	<script type="text/javascript" src="../Source/View/SplitView.js"></script>
-	<script type="text/javascript" src="../Source/View/TabView.js"></script>
-	
-	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
-	<script type="text/javascript" src="../Source/Window/Window.js"></script>
-	<script type="text/javascript" src="../Source/Window/Dialog.js"></script>
-	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
+
 	
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../Skins/TouchBlue.js"></script>
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
-	<script type="text/javascript" src="../Skins/BlueTouch.js"></script>
 		
 	<script type="text/javascript" src="js/examples.js"></script>
 	
-	<title>moolego - formular replacement demo</title>
 	<link media="screen" type="text/css" href="css/form.css" rel="stylesheet" />
+	
 	<script type="text/javascript">
-				window.addEvent('domready', function(){
-					button = new UI.Button({
-						label	: 'Interface...',
-						onClick	: function(){
-							var time = $time();
-							new UI.Interface({
-								target : 'formular'
-							});
-							this.set('html', 'in '+($time() - time)/1000+' ms');
-						},
-						styles	: {
-							margin		: 10,
-							fontFamily	: 'arial, helvetica, sans-serif',
-							fontSize	: '13px',
-							position	: 'fixed',
-							top			: 10,
-							right		: 10
-						}
-					}).inject(document.body, 'top');
-				});
-			</script>
-	</head>
+		window.addEvent('domready', function(){
+			button = new UI.Button({
+				label : 'Interface...',
+				onClick : function(){
+					var time = $time();
+					new UI.Interface({
+						target : 'formular'
+					});
+					this.set('html', 'in '+($time() - time)/1000+' ms');
+				},
+				styles	: {
+					margin : 10,
+					fontFamily : 'arial, helvetica, sans-serif',
+					fontSize : '13px',
+					position : 'fixed',
+					top : 10,
+					right : 10,
+					zIndex : 1000
+				}
+			}).inject(document.body, 'top');
+		});
+	</script>
+</head>
 <body>
-<div class="container showgrid">	
+<div class="container showgrid">
 	<h1>Forms</h1>
 	<hr />
 	<div class="span-12">
 		<form action="#" method="get" class="span-12 mooface" id="formular">
+			
+			
 			<fieldset>
 			<legend>Simple sample form</legend>
 			<p>
@@ -103,6 +93,58 @@
 				<input type="reset" value="Reset" />
 			</p>
 			</fieldset>
+			<fieldset>
+			<legend>Select, checkboxes, lists</legend>
+			<p>
+				<label for="dummy3">Select field</label>
+				<br />
+				<select id="dummy3" name="dummy3">
+					<option value="1">Ottawa</option>
+					<option value="2">Calgary</option>
+					<option value="3">Moosejaw</option>
+				</select>
+			</p>
+			<p>
+				<label for="dummy4">Select with groups</label>
+				<br />
+				<select id="dummy4" name="dummy4">
+					<option>Favorite pet</option>
+					<optgroup label="mammals">
+					<option>dog</option>
+					<option>cat</option>
+					<option>rabbit</option>
+					<option>horse</option>
+					</optgroup>
+					<optgroup label="reptiles">
+					<option>iguana</option>
+					<option>snake</option>
+					</optgroup>
+				</select>
+			</p>
+			<p>
+				<label>Radio buttons</label>
+				<br />
+				<input type="radio" name="example" />
+				Radio one<br />
+				<input type="radio" name="example" />
+				Radio two<br />
+				<input type="radio" name="example" />
+				Radio three<br />
+			</p>
+			<p>
+				<label for="checkbox">Checkboxes</label>
+				<br />
+				<input type="checkbox" />
+				Check one<br />
+				<input type="checkbox" />
+				Check two<br />
+				<input type="checkbox" />
+				Check three<br />
+			</p>
+			</fieldset>
+			<div class="error"> This is a &lt;div&gt; with the class <strong>.error</strong>. <a href="#">Link</a>. </div>
+			<div class="notice"> This is a &lt;div&gt; with the class <strong>.notice</strong>. <a href="#">Link</a>. </div>
+			<div class="success"> This is a &lt;div&gt; with the class <strong>.success</strong>. <a href="#">Link</a>. </div>
 		</form>
 	</div>
 </div>

@@ -15,35 +15,26 @@
 	<script type="text/javascript" src="../Source/Element/Element.js"></script>
 	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
 	
-	<script type="text/javascript" src="../Skins/Demo.js"></script>
-		
-	<script type="text/javascript" src="js/examples.js"></script>
+	<script type="text/javascript" src="../Source/View/View.js"></script>
+	<script type="text/javascript" src="../Source/View/SplitView.js"></script>
 	
-	<title>MooLego - Components Playground</title>
-
+	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	
+	<title>MooLego SplitView - Component Playground</title>
+	
 	<script type="text/javascript">
 		window.addEvent('domready', function() {
-			
-			var time = $time();
-			
-			/* Elements in page */
-			
-			new UI.Element({
-				label : "new window",
-				skin	: 'demo',
-				type	: "shape02",
-				width	: 400,
-				height	: 400,
-				styles		: {
-					margin	: 10
+			var splitview = new UI.SplitView({
+				width : 600,
+				height : 400,
+				styles: {
+					margin: '40px',
+					backgroundColor:'#fff'
 				}
 			}).inject(document.body);
 		});
 	</script>
 </head>
 
-<body>
-	
-</body>
-
+<body bgcolor="#e8e8e8"></body>
 </html>

@@ -27,6 +27,11 @@
 	},
 	{
 
+		"title" : "UI.Box",
+		"desc"	: "Element/Box.js"
+	},
+	{
+
 		"title" : "UI.Bubble",
 		"desc"	: "Element/Bubble.js"
 	},
@@ -39,6 +44,11 @@
 
 		"title" : "UI.Scrollbar",
 		"desc"	: "Element/Scrollbar.js"
+	},
+	{
+
+		"title" : "UI.Tip",
+		"desc"	: "Element/Tip.js"
 	},
 	{
 		"title" : "UI.ElementController",

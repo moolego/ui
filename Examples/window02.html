@@ -3,8 +3,8 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		
-	<script type="text/javascript" src="mootools/mootools-1.2.1-core-nc.js"></script>
-	<script type="text/javascript" src="mootools/mootools-1.2-more.js"></script>
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="mootools/more.js"></script>
 		
 	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
 	
@@ -47,7 +47,7 @@
 	<script type="text/javascript" src="../Skins/AquaBlack.js"></script>	
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
-	<script type="text/javascript" src="../Skins/BlueTouch.js"></script>
+	<script type="text/javascript" src="../Skins/TouchBlue.js"></script>
 		
 	<script type="text/javascript" src="js/examples.js"></script>
 
@@ -66,7 +66,7 @@
 			//new UI.Window();
 			
 			button = new UI.Button({
-				label : "new window",
+				label : "new UI.Window()",
 				skin	: 'demo',
 				type	: "jgood",
 				labelStyles : {
@@ -77,13 +77,65 @@
 					var time2 = $time();
 					new UI.Window({ title : time2 });
 					//console.log('draw this window take : ', $time()-time2);
-				},
-				styles		: {
-					margin	: 10
 				}
 			}).inject(form);
 			//console.log('window.html', $time()-time);
 			
+			
+			new UI.Button({
+				label : 'Cascade',
+				skin	: 'demo',
+				type	: "jgood",
+				onClick : function() { 
+					ui.windowController.cascade();
+				}
+			}).inject(form);
+			
+			new UI.Button({
+				label : 'Grid',
+				skin	: 'demo',
+				color : 'red',
+				type	: "jgood",
+				onClick : function() { 
+					ui.windowController.grid();
+				}
+			}).inject(form);
+			
+			new UI.Button({
+				label : 'Circle',
+				skin	: 'demo',
+				type	: "jgood",
+				onClick : function() { 
+					ui.windowController.circle();
+				}
+			}).inject(form);
+			
+			new UI.Button({
+				label : 'Wave',
+				skin	: 'demo',
+				type	: "jgood",
+				onClick : function() { 
+					ui.windowController.wave();
+				}
+			}).inject(form);
+				
+			new UI.Button({
+				label : 'Close',
+				skin	: 'demo',
+				type	: "jgood",
+				onClick : function() { 
+					ui.windowController.close();
+				}
+			}).inject(form);
+			
+			new UI.Button({
+				label : 'Close All',
+				skin	: 'demo',
+				type	: "jgood",
+				onClick : function() { 
+					ui.windowController.closeAll();
+				}
+			}).inject(form);
 		});
 	</script>
 </head>

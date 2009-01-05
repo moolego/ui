@@ -45,7 +45,7 @@ UI.ListView = new Class({
 		itemObject	 		: 'Button',
 		
 		item				: {
-			component	: 'itemList',
+			component		: 'itemList',
 			type			: 'default',
 			label : false
 		},
@@ -59,7 +59,7 @@ UI.ListView = new Class({
 	Method: build
 		private function
 	
-		call <UI.View::build> then get listview's data
+		call <UI.View::build>, get listview's data then process list
 
 	Returns:
 		(void)
@@ -96,7 +96,7 @@ UI.ListView = new Class({
 		data - data to be used during template interpolation
 	*/
 
-	getData : function ( url, options) {
+	getData : function (url, options) {
 		if (this.options.url) {
 			 new Request.JSON({
 				url : url,

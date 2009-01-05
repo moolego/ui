@@ -37,70 +37,87 @@ UI.SplitView = new Class({
 	Extends					: UI.View,
 	
 	options : {
-		component	: 'splitview',
-		overflow	: 'hidden',
-		minSize		: 160
+		component : 'splitview',
+		
+		overflow : 'hidden',
+		minSize : 20,
+		
+		splitter : true
 	},
 	
 	build: function(){
 		this.parent();
-		
-		this.view = new Array();
-		
+
 		this.addEvent('injected', function(){
-			this.size = this.getSize(); 
-						
+			this.size = this.getSize();
+							
 			this.buildViews();
-			this.buildSplitter();
+			if (this.options.splitter) this.buildSplitter();
 		
 		}.bind(this));
 	},
 	
 	/*
-		buildViews
+		function : buildViews
 		
+			Get Information from components skin and build views
 		
 		
 	 */
 	
 	buildViews: function() {
-		var viewlist = new Hash(this.props.views)
-		viewlist.each( function(view){
-			console.log(view);
-			this.view.push(new UI.View(view)
-			 .inject(this.element))
+		this.view = new Array();
+		var list = new Hash(this.props.views);
+		
+		list.each( function(view,name){
+			var view = new UI.View(view)
+			 .inject(this.element);	 
+			this.view.push(view);
+			this[name] = view;
 		},this);
 
-		this.view[1].element.setStyle('width', this.element.getSize().x - this.view[0].getSize().x);
+		this.view[1].element.setStyle('width', this.size.x - this.view[0].getSize().x);
 	},
-	
-	buildSplitter : function() {
-		this.draglimit = {
-			x	: [-this.options.minSize,  this.width - this.options.minSize],
-			y	: [0, 0]
-		}
+
+	/*
+		function : buildSplitter
 		
-		this.handler = new Element('div',this.props.components.splitter)
-		 .setStyles({  
-		 	marginLeft	: this.view[0].element.getSize().x - 2,
-			height	: this.view[0].element.getSize().y,
-			backgroundColor : '#000',
-			position: 'abolute',
-			cursor : 'e-resize'
-		}).inject(this.element);
-		 
-		this.handler.makeDraggable({
-			limit				: this.draglimit,
-			//onStart				: function() { this.fireEvent('onResizeStart') }.bind(this),
-			onDrag				: function() { this.resize() }.bind(this)
-			//onComplete			: function() { this.fireEvent('onResizeEnd') }.bind(this)
+			Build splitter element depending on skin def
+		
+		
+	 */
+
+	buildSplitter : function() {
+		var props = this.props.components.splitter;
+		
+		this.draglimit = {
+			x	: [this.options.minSize,  this.size.x-this.options.minSize],
+			y	: [0, 0]
+		};
+		
+		this.splitter = new Element('div',props)
+		.inject(this.element);
+		
+		this.splitter.makeDraggable({
+			limit : this.draglimit,
+			onDrag : this.updateSize.bind(this)
 		});
+		
+		this.splitter.setStyle('left',this.view[0].getSize().x);
 	},
 
-	resize: function() {
+	/*
+		function : resize
+		
+			resize 
+		
+		
+	 */
 
-		this.view[0].setStyle('width', this.handler.getCoordinates().left - this.element.getCoordinates().left + 3);
-		this.view[1].setStyle('width', this.element.getSize().x - this.view[1].element.getSize().x);
+	updateSize: function() {
+		this.view[0].element.setStyle('width', this.splitter.getCoordinates().left - this.element.getCoordinates().left + 3);
+		this.view[1].element.setStyle('width', this.size.x - this.view[0].element.getSize().x);
+		
 		this.fireEvent('onResize');
 	}
 });

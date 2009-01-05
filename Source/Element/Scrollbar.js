@@ -35,7 +35,7 @@ UI.Scrollbar = new Class({
 		type			: 'track',
 
 		maxThumbSize	: 32,
-		wheel			: 32	
+		wheel			: 16
 	},
 
 	initialize: function(options){

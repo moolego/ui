@@ -1,11 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		
-	<script type="text/javascript" src="mootools/mootools-1.2.1-core-nc.js"></script>
-	<script type="text/javascript" src="mootools/mootools-1.2-more.js"></script>
-		
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<title>MooLego - Components Playground</title>
+	
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="mootools/more.js"></script>
+	
 	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
 	
 	<script type="text/javascript" src="../Source/Core/UI.js"></script>
@@ -35,7 +37,7 @@
 	
 	<script type="text/javascript" src="../Source/View/View.js"></script>
 	<script type="text/javascript" src="../Source/View/ListView.js"></script>
-	<script type="text/javascript" src="../Source/View/PanelView.js"></script>
+	<script type="text/javascript" src="../Source/View/PaneView.js"></script>
 	<script type="text/javascript" src="../Source/View/SplitView.js"></script>
 	<script type="text/javascript" src="../Source/View/TabView.js"></script>
 	
@@ -46,14 +48,13 @@
 	
 	<script type="text/javascript" src="../Skins/AquaBlack.js"></script>
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../Skins/TouchBlue.js"></script>
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
-	<script type="text/javascript" src="../Skins/BlueTouch.js"></script>
-		
-	<script type="text/javascript" src="js/examples.js"></script>
 	
-	<title>MooLego - Components Playground</title>
+
 	
 	<script type="text/javascript">
+		//<!--/*--><![CDATA[//><!--
 		window.addEvent('load', function() {
 			var time = $time();
 			
@@ -62,7 +63,7 @@
 				draggable	: false,
 				menu		: [
 					{
-						text	: 'moolego',
+						text	: 'MooLego',
 						styles	: {
 							position	: 'relative'
 						},
@@ -71,11 +72,12 @@
 								text : 'About',
 								action : function() { 
 									new UI.Window({
-										title			: 'about',
+										title			: 'About MooLego',
 										width			: 300,
 										height			: 160,
-										head			: false,
-										viewOverflow 	: 'hidden',
+										foot			: false,
+										view : { overflow 	: 'hidden' },
+										resizable : false,
 										controls		: ['close']
 									});
 								}
@@ -128,15 +130,23 @@
 						options : {'class' : 'ui-dd-new'},
 						menu		: [
 							{
-								text : 'About',
-								action : function() { this.test('about'); alert('click')}.bind(this)
+								text : 'Close',
+								action : function() { ui.windowController.close()  }
 							},
-							{ text 		: 'Minimizer'},
+							{ text 		: 'Close All',
+							 action : function(){ ui.windowController.closeAll() }
+							},
 							{ text		: 'separator' },
 							{ text		: 'Cascade',
-							  action: function(){
-							  	this.windowManager.resetCascade()
-							  }.bind(this)
+							  action: function(){ ui.windowController.cascade() }
+							  
+							},
+							{ text		: 'Wave',
+							  action: function(){ ui.windowController.wave() }
+							  
+							},
+							{ text		: 'Grid',
+							  action: function(){ ui.windowController.grid() }
 							  
 							}
 						]
@@ -151,19 +161,9 @@
 							{ text : 'separator' },
 							{ text : 'Settings...' }
 						]
-					},
-					{
-						text : 'History...',
-						action: function(){alert('menu with action')},
-						menu : [
-							{text: 'Page down'},
-							{text: 'Page up'},
-							{text: 'Microsoft'}
-						]
 					}
 				]						
 			}).inject(document.body,'top');
-			
 			
 			/* Elements in page */
 			var form = new Element('form', {
@@ -195,8 +195,24 @@
 					margin			: 10
 				}
 			}).inject(form);
+		
+			var updateBubble = function(step) {
+				if (this.bubbleslider && this.bubbleslider.element) {
+				
+					this.bubbleslider.label.set('html', step);
+					this.bubbleslider.setSize();
+					
+				} else {
+					this.bubbleslider = new UI.Bubble({
+						skin: 'demo',
+						//type: 'rounded',
+						target: $(firstslider),
+						label: step
+					});
+				}
+			};
 			
-			this.slider = new UI.Slider({
+			var firstslider = new UI.Slider({
 				group		: 'test',
 				type		: 'horizontal',
 				range				: [0, 100],
@@ -205,192 +221,19 @@
 				},
 				wheel				: true,
 				onChange			: function(step){
-					tip.fade(step/100);
+					updateBubble(step);
 				}
 			}).inject(form);
+			
 			
 			button = new UI.Button({
 				group		: 'test',
-				label : "Launch a new Control test",
+				label : "O",
 				labelStyles : {
 					fontWeight : 'bold',
 					padding : '10px 20px'
-				},
-				onClick : function(){
-					var time2 = $time();
-					var window = new UI.Window({
-						title		: 'some controls',
-						width		: 300,
-						height		: 300,
-						overflow	: 'hidden'
-						
-					});
-			
-					new UI.Button({
-						width			: 270,
-						label			: 'Bow',
-						onClick			: function(){
-							new UI.Window({
-							});
-						},
-						labelStyles		: {
-							padding		: '20px 30px',
-							fontWeight : 'normal'
-						},
-						props	: {
-							over		: {
-								components : {
-									label	: {
-										styles : {
-											padding		: '20px',
-											fontWeight : 'bold'
-										}
-									}
-								}
-							},
-							down		: {
-								components : {
-									label	: {
-										styles : {
-											padding		: '20px',
-											fontWeight : 'bold'
-										}
-									}
-								}
-							}
-						},
-						styles			: {
-							margin		: 10
-						}
-					}).inject(window.content);
-					
-					new UI.Button({
-						label			: 'Second button',
-						zIndex			: 6000,
-						styles			: {
-							margin		: 10
-						}
-					}).inject(window.content);
-					
-					new UI.Button({
-						label			: 'Third button',
-						styles			: {
-							margin		: 10
-						}
-					}).inject(window.content);
-					
-					
-					
-					var cbstyles = {
-						margin		: '0 10px 5px',
-						display		: 'block'
-					};
-					
-					new UI.Checkbox({
-						label			: '1 checkbox',
-						styles			: cbstyles
-					}).inject(window.content);
-					
-					new UI.Checkbox({
-						label			: '2 checkbox',
-						styles			: cbstyles
-					}).inject(window.content);
-					
-					new UI.Checkbox({
-						label			: '3 checkbox',
-						styles			: cbstyles
-					}).inject(window.content);
-					
-					
-					
-					var radiosGroup = new UI.RadiosGroup({
-						name			: 'radios'
-					});
-					
-					var radio = radiosGroup.newRadio({
-						label			: 'Radio 1',
-						selected		: true,
-						styles			: cbstyles
-					}).inject(window.content);
-					
-					var radio = radiosGroup.newRadio({
-						label			: 'Radio 2',
-						styles			: cbstyles
-					}).inject(window.content);
-					
-					var radio = radiosGroup.newRadio({
-						label			: 'Radio 3',
-						styles			: cbstyles
-					}).inject(window.content);
-					
-					var radio = radiosGroup.newRadio({
-						label			: 'Radio 4',
-						styles			: cbstyles
-					}).inject(window.content);
-					
-		
-					
-					new UI.Select({
-						skin : 'AquaBlack',
-						list			: [
-							{text		: 'Please choose'},
-							{text		: 'Core'},
-							{text		: 'Control'},
-							{text		: 'Desktop is a long entry'},
-							{text		: 'Menu'},
-							{text		: 'Form'},
-							{text		: 'Un menu'},
-							{text		: 'Plage'},
-							{text		: 'Venise'}
-						],
-						styles			: {
-							margin		: 10
-						}
-					}).inject(window.content);
-					
-					new UI.Select({
-						list			: [
-							{text		: 'Please choose'},
-							{text		: 'It is long because of this entry in the list'}
-						],
-						styles			: {
-							margin		: 10
-						}
-					}).inject(window.content);
-					
-					
-					
-					new UI.Input({
-						value			: 'An input field',
-						styles			: {
-							margin		: 10
-						}
-					}).inject(window.content);
-					
-					
-					
-					new UI.Textarea({
-						value			: 'A textarea to write long essay. More usefull for that than a UI.Input()',
-						styles			: {
-							margin		: 10
-						}
-					}).inject(window.content);
-					
-					
-					
-					new UI.Slider({
-						styles			: {
-							margin		: 10
-						}
-					}).inject(window.content);
-				},
-				styles		: {
-					margin	: 10
 				}
 			}).inject(form);
-			
-			
-			
 			
 			ip = new UI.Input({
 				name : 'text-input-canvas',
@@ -401,32 +244,15 @@
 				}
 			}).inject(form);
 			
-			/*
-			new UI.Bubble({
-				target : $(this.slider),
-				props : {
-					'default' : {
-						layers			: {
-							background	: {
-								color	: ['#A00','#000']
-							}
-						}
-					}
-				},
-				label : "Under Construction!"
-			});
-			*/
-
-			
-			
 			var tip = new UI.Bubble({
 				target : $(button),
-				label : "<p>Babybel c'est de la balle</p><p>Mais que fait la police?</p>"
+				label : "Babybel c'est de la balle<br/>Mais que fait la police?"
 			});
 			
-			
 			this.googlemap = new UI.Button({
-				label				: 'Window',
+				skin : 'demo',
+				type : 'jgood',
+				label				: 'JGood',
 				labelStyles			: {
 					fontSize		: '26px',
 					fontWeight		: 'bold',
@@ -437,56 +263,6 @@
 				onClick: function(){
 					tip.fade(0);
 				}.bind(this),
-				props				: {
-					'default'				: {
-						layers				: {
-							reorder			: ['emboss','background','front','reflect'],
-							
-							emboss			: {
-								offset		: '0px',
-								color		: '#000',
-								opacity		: .17,
-								radius		: 7
-							},
-							background		: {
-								offset		: 3,
-								color		: ['#2a5179','#2a5179'],
-								opacity		: 1,
-								radius		: 5
-							},
-							front			: {
-								offset		: 1,
-								color		: ['#6094cf','#1d5591'],
-							 	opacity		: 1,
-								radius		: 4
-							},
-							reflect			: {
-								offset		: ['1px', '1px', '35%'],
-								color		: ['#FFF', '#FFF'],
-								opacity		: [.9, .1],
-								radius		: [3, 3, 3, 3]
-							}
-						}
-					},
-					over					: {
-						components			: {
-							label			: {
-								styles		: {
-									opacity : .8
-								}
-							}
-						}
-					},
-					down					: {
-						components			: {
-							label			: {
-								styles		: {
-									color 	: '#ccc'
-								}
-							}
-						}
-					}
-				},
 				styles		: {
 					margin	: 10
 				}
@@ -504,243 +280,53 @@
 					color			: '#fff',
 					lineHeight		: '40px'
 				},
-				onClick: function(){
-					var moolego = new UI.Window({
-						type 				: 'transparent',
-						viewOverflow		: 'hidden'
-					});
-					
-					new UI.Button({
-						label			: 'Second button',
-						zIndex			: 6000,
-						styles			: {
-							margin		: 10
-						}
-					}).inject(moolego.content);
-					
-					new UI.Button({
-						label			: 'Third button',
-						styles			: {
-							margin		: 10
-						}
-					}).inject(moolego.content);
-					
-					
-					
-					var cbstyles = {
-						margin		: '0 10px 5px',
-						display		: 'block'
-					};
-					
-					new UI.Checkbox({
-						label			: '1 checkbox',
-						styles			: cbstyles
-					}).inject(moolego.content);
-					
-					new UI.Checkbox({
-						label			: '2 checkbox',
-						styles			: cbstyles
-					}).inject(moolego.content);
-					
-					new UI.Checkbox({
-						label			: '3 checkbox',
-						styles			: cbstyles
-					}).inject(moolego.content);
-					
-					
-					
-					var radiosGroup = new UI.RadiosGroup({
-						name			: 'radios'
-					});
-					
-					var radio = radiosGroup.newRadio({
-						label			: 'Radio 1',
-						selected		: true,
-						styles			: cbstyles
-					}).inject(moolego.content);
-					
-					var radio = radiosGroup.newRadio({
-						label			: 'Radio 2',
-						styles			: cbstyles
-					}).inject(moolego.content);
-					
-					var radio = radiosGroup.newRadio({
-						label			: 'Radio 3',
-						styles			: cbstyles
-					}).inject(moolego.content);
-					
-					var radio = radiosGroup.newRadio({
-						label			: 'Radio 4',
-						styles			: cbstyles
-					}).inject(moolego.content);
-					
-		
-					
-					new UI.Select({
-						list			: [
-							{text		: 'Please choose'},
-							{text		: 'Core'},
-							{text		: 'Control'},
-							{text		: 'Desktop is a long entry'},
-							{text		: 'Menu'},
-							{text		: 'Form'},
-							{text		: 'Un menu'},
-							{text		: 'Plage'},
-							{text		: 'Venise'}
-						],
-						styles			: {
-							margin		: 10
-						}
-					}).inject(moolego.content);
-					
-					new UI.Select({
-						list			: [
-							{text		: 'Please choose'},
-							{text		: 'It is long because of this entry in the list'}
-						],
-						styles			: {
-							margin		: 10
-						}
-					}).inject(moolego.content);
-					
-					
-					
-					new UI.Input({
-						value			: 'An input field',
-						styles			: {
-							margin		: 10
-						}
-					}).inject(moolego.content);
-					
-					
-					
-					new UI.Textarea({
-						value			: 'A textarea to write long essay. More usefull for that than a UI.Input()',
-						styles			: {
-							margin		: 10
-						}
-					}).inject(moolego.content);
-					
-					
-					
-					new UI.Slider({
-						styles			: {
-							margin		: 10
-						}
-					}).inject(moolego.content);
-					
-				}.bind(this),
 				styles		: {
 					margin	: 10
 				}
 			}).inject(form);
 			
-			
+			var touchfoot = new Element('div',{
+				styles : {
+					padding:'5px',
+					backgroundColor: '#000'
+				}
+			}).inject(form)
 			
 			var counter = 1;
 			
 			this.counter = new UI.Button({
+				skin : 'TouchBlue',
+				type : 'foot',
 				label				: 'Bubble counter',
-				labelStyles			: {
-					fontSize		: '20px',
-					fontWeight		: 'bold',
-					opacity			: '1',
-					color			: '#fff',
-					padding			: '10px 26px'
-				},
 				location			: 'center',
 				draggable			: true,
 				onClick				: function() { 
 					
-					if (this.bubble) {
+					if (this.bubble && this.bubble.element) {
 					
 						this.bubble.label.set('html', counter++);
 						this.bubble.setSize();
 					
 					} else {
-					
+						
 						this.bubble = new UI.Bubble({
+							skin : 'demo',
+							type : 'green',
 							target: $(this),
 							label: counter++,
 							labelStyles: {
-								fontSize: '74px',
+								fontSize: '14px',
 								fontWeight: 'bold',
-								padding: '4px 10px'
-							},
-							props: {
-								'default': {
-									layers: {
-										background: {
-											offset: [0, 0, 9],
-											color: ['#33cc33', '#000'],
-											opacity: 1
-										},
-										arrow: {
-											size: [9, 4],
-											offset: ['auto', 9, 0],
-											opacity: 1,
-											color: '#000'
-										}
-									}
-								}
+								padding: '4px 8px 6px'
 							}
 						});
 					}
 				},
-				props				: {
-					'default'				: {
-						layers				: {
-							reorder			: ['emboss','underlay','front','reflect'],
-							
-							emboss			: {
-								offset		: 0,
-								color		: '#4b5461',
-								opacity		: 1,
-								radius		: 12
-							},
-							underlay		: {
-								offset		: [3,3,2,3],
-								radius		: 9,
-								color		: ['#eeb7bf','#262c32']
-							},
-							front			: {
-								offset		: [1,0],
-								color		: ['#c4020e','#f81e0f'],
-							 	opacity		: 1,
-								radius		: [9,9,8,8]
-							},
-							reflect			: {
-								offset		: ['0px', '0px', '50%'],
-								color		: ['#FFF', '#FFF'],
-								opacity		: [.5, .2],
-								radius		: [8, 8, 0, 0]
-							}
-						}
-					},
-					over					: {
-						components			: {
-							label			: {
-								styles		: { opacity	: .8 }
-							}
-						},
-						layers				: {
-							emboss			: {
-								color		: '#00CC00'
-							}
-						}
-					},
-					down					: {
-						components			: {
-							label			: {
-								styles		: { color	: '#ccc' }
-							}
-						}
-					}
-				},
+				
 				styles						: {
 					margin					: 5
 				}
-			}).inject(form);
+			}).inject(touchfoot);
 			
 			
 			
@@ -831,71 +417,16 @@
 				styles						: {
 					margin					: 5
 				}
-			}).inject(form);
+			}).inject(touchfoot);
 			
 			
 			new UI.Button({
+				skin : 'demo',
+				type : 'widget',
 				label						: '18:07',
-				labelStyles					: {
-					fontSize				: '32px',
-					fontWeight				: 'bold',
-					opacity					: '.7',
-					padding					: '24px 26px',
-					color					: '#fff'
-				},
+				
 				draggable					: true,
-				props				: {
-					'default'				: {
-						layers				: {
-							reorder			: ['emboss','front','reflect','reflect2'],
-							'default'		: {
-								rotation	: 3
-							},
-							
-							emboss			: {
-								offset		: 5,
-								color		: ['#000','#fff'],
-								opacity		: .3,
-								radius		: 9
-							},
-							front			: {
-								offset		: 2,
-								color		: ['#b11a23','#000'],
-							 	opacity		: 1,
-								radius		: 7
-							},
-							reflect			: {
-								offset		: [1, 0, '60%', 2],
-								color		: ['#FFF', '#FFF'],
-								opacity		: [.6, .1],
-								radius		: [5, 5, 9, 9]
-							},
-							reflect2		: {
-								offset		: [1, 1, 2],
-								color		: ['#000', '#000'],
-								opacity		: [.1,0],
-								radius		: [7, 7, 9, 9]
-							}
-						}
-					},
-					over					: {
-						components			: {
-							label			: {
-								styles		: { opacity	: .8 }
-							}
-						},
-						layers				: {
-							emboss			: { color : '#00CC00' }
-						}
-					},
-					down					: {
-						components			: {
-							label			: {
-								styles		: { color : '#ccc' }
-							}
-						}
-					}
-				},
+				
 				styles						: {
 					margin					: 5
 				}
@@ -905,7 +436,7 @@
 			this.digitalclock = new UI.Button({
 				label				: '18:07',
 				labelStyles					: {
-					fontSize			: '46px',
+					fontSize			: '16px',
 					fontWeight			: 'bold',
 					opacity				: '.7',
 					padding				: '12px 26px',
@@ -1016,87 +547,23 @@
 
 			
 			
-			new UI.Bubble({
-				skin						: 'demo',
-				target 						: $(this.hardest),
-				label 						: 'réalisation: Michel Gondry',
-				labelStyles					: {
-					padding					: '10px 10px 18px'
+			this.b = new UI.Bubble({
+				skin : 'demo',
+				type : 'green',
+				target : $(this.hardest),
+				label : 'directed by <div style="display:block; font-size:16px; font-weight:bold">Michel Gondry</div>',
+				labelStyles	: {
+					padding	: '10px 10px 16px'
 				}
 			});
 			
 			
-			submit = new UI.Button({
-				label				: 'Submit NOW',
-				labelStyles			: {
-					fontSize			: '2em',
-					fontWeight			: 'bold',
-					opacity				: '8',
-					padding				: '18px 26px',
-					color				: '#fff'
-				},
-				submit				: true,
-				props				: {
-					'default'				: {
-						layers				: {
-							reorder			: ['emboss','front','reflect', 'dark'],
-							
-							emboss			: {
-								offset		: 0,
-								color		: '#cc0033',
-								opacity		: .17,
-								radius		: 9
-							},
-							front			: {
-								offset		: 3,
-								color		: ['#cc0033','#cc0033'],
-							 	opacity		: 1,
-								radius		: 7
-							},
-							reflect			: {
-								offset		: ['1px', '1px', '65%'],
-								color		: ['#FFF', '#FFF'],
-								opacity		: [.8, .0],
-								radius		: [5, 5, 14, 14]
-							},
-							dark			: {
-								position	: 'absolute',
-								size		: ['auto','20px'],						
-								offset		: ['auto', 4, 4],
-								color		: ['#fff', '#fff'],
-								opacity		: [0, .5],
-								radius		: [14, 14, 5, 5]
-							}
-						}
-					},
-					over					: {
-						components			: {
-							label			: {
-								styles		: { opacity : .5 }
-							}
-						},
-						layers				: {
-							emboss			: { color : '#00AA00' }
-						}
-					},
-					down					: {
-						components			: {
-							label			: {
-								styles		: {
-									opacity : .5,
-									color	: '#000'
-								}
-							}
-						},
-						layers				: {
-							emboss			: { color : '#00AA00' }
-						}
-					}
-				},
-				styles						: {
-					margin					: 5
-				}
-			}).inject(form);
+			this.b.setStyles({
+				top: 100,
+				left: 330
+			});
+			
+			
 			
 			
 			this.checkbox = new UI.Checkbox({
@@ -1107,7 +574,7 @@
 			}).inject(form);
 			
 			this.checkbox = new UI.Checkbox({
-				skin				: 'demo',
+				skin				: 'TouchBlue',
 				type				: 'default',
 				styles				: {
 					margin			: '20px'
@@ -1119,6 +586,6 @@
 	</script>
 </head>
 
-<body style="overflow:hidden" bgcolor="#e8e8e8" topmargin=0 leftmargin=0 marginwidth=0 marginheight=0></body>
+<body style="overflow:hidden; margin:0;" bgcolor="#e8e8e8"></body>
 
 </html>

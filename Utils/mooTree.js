@@ -85,7 +85,7 @@ var MooTreeControl = new Class({
 		
 		this.enabled = true;                  // enable visual updates of the control
 		
-		this.theme = config.theme || 'mootree.gif';
+		this.theme = config.theme || 'img/tree.png';
 		
 		this.loader = config.loader || {icon:'mootree_loader.gif', text:'Loading...', color:'#a0a0a0'};
 		
@@ -98,7 +98,6 @@ var MooTreeControl = new Class({
 		this.onClick = config.onClick || new Function(); // called when any node in the tree is clicked
 		
 		this.root.update(true);
-		
 	},
 	
 	/*
@@ -356,8 +355,8 @@ var MooTreeNode = new Class({
 		this.div.main.adopt(this.div.text);
 
 		// put the main and sub divs in the specified parent div:
-		$(options.div).adopt(this.div.main);
-		$(options.div).adopt(this.div.sub);
+		options.div.adopt(this.div.main);
+		options.div.adopt(this.div.sub);
 		
 		// attach event handler to gadget:
 		this.div.gadget._node = this;
@@ -423,31 +422,23 @@ var MooTreeNode = new Class({
 		p.update(true);
 	},
 	
-	_remove: function() {
-		
-		// recursively remove this node's subnodes:
-		var n = this.nodes;
-		while (n.length) n[n.length-1]._remove();
-		
-		// remove the node id from the control's index:
-		delete this.control.index[this.id];
-		
-		// remove this node's divs:
-		this.div.main.remove();
-		this.div.sub.remove();
-		
-		if (this.parent) {
-			
-			// remove this node from the parent's collection of nodes:
-			var p = this.parent.nodes;
-			p.remove(this);
-			
-			// in case we removed the parent's last node, flag it's current last node as being the last:
-			if (p.length) p[p.length-1].last = true;
-			
-		}
-		
-	},
+	_remove: function() { 
+        // recursively remove this node's subnodes: 
+        var n = this.nodes; 
+        while (n.length) { n[n.length-1]._remove(); } 
+        // remove the node id from the control's index: 
+        delete this.control.index[this.id]; 
+        // remove this node's divs: 
+        this.div.main.empty(); 
+        this.div.sub.empty(); 
+        if (this.parent) { 
+                // remove this node from the parent's collection of nodes: 
+                var p = this.parent.nodes; 
+                p.empty(); 
+                if (p.length) p[p.length-1].last = true; 
+                // in case we removed the parent's last node, flag it's current last node as being the last: 
+	                } 
+	        }, 
 	
 	/*
 	Property: clear
@@ -617,20 +608,21 @@ var MooTreeNode = new Class({
 
 		this.insert(this.control.loader);
 		
-		var f = function() {
-			new XHR({
-				method: 'GET',
-				onSuccess: this._loaded.bind(this),
-				onFailure: this._load_err.bind(this)
-			}).send(url, vars || '');
-		};
-		
-		window.setTimeout(f.bind(this), 20); // allowing a small delay for the browser to draw the loader-icon.
-		
+		var f = function(){ 
+       		new Request({
+				method: 'GET', 
+				url: url, 
+				onSuccess: this._loaded.bind(this), 
+				onFailure: this._load_err.bind(this) 
+			}).send(vars || ''); 
+		}.delay(20, this); 
+
+		//window.setTimeout(f.bind(this), 20); // allowing a small delay for the browser to draw the loader-icon.
 	},
 	
 	_loaded: function(text, xml) {
 		// called on success - import nodes from the root element:
+		//this.control.fireEvent('onLoadComplete');
 		this.control.disable();
 		this.clear();
 		this._import(xml.documentElement);

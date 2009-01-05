@@ -1535,7 +1535,8 @@ UI.props.AquaBlack = {
 							display :'block',
 							whiteSpace : 'nowrap',
 							lineHeight : '1em',
-							fontSize : '20px'
+							fontSize : '20px',
+							color : '#fff'
 						}
 					}
 				},
@@ -1555,29 +1556,22 @@ UI.props.AquaBlack = {
 					top : '0px',
 					left : '0px',
 					overflow : 'hidden',
-					color:'#000'
+					color:'#fff'
 				},
 				layers : {
 					'default' : {
 						position: 'absolute'
-						
 					},
 					background : {
 						gradient : {
-							color : ['#d6d6d6', '#d6d6d6']
+							color : ['#333', '#333']
 						},
 						offset : 0
-					},
-					emboss : {
-						gradient : {
-							color : ['#5d5d5d', '#5d5d5d']
-						},
-						offset : [1, 0, 0, 0]
 					},
 					main : {
 						opacity : 1,
 						gradient : {
-							color : ['#9c9c9c', '#888888']
+							color : ['#000', '#000']
 						},
 						offset : [1, 0, 1, 0]
 					},
@@ -1608,7 +1602,7 @@ UI.props.AquaBlack = {
 					
 					base : {
 						gradient : {
-							color : ['#FFF', '#FFF']
+							color : ['#ccc', '#ccc']
 						},
 						offset : 0
 					},

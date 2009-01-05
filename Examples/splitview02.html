@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		
 	<script type="text/javascript" src="mootools/core.js"></script>
 	<script type="text/javascript" src="mootools/more.js"></script>
@@ -15,35 +15,31 @@
 	<script type="text/javascript" src="../Source/Element/Element.js"></script>
 	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
 	
-	<script type="text/javascript" src="../Skins/Demo.js"></script>
-		
-	<script type="text/javascript" src="js/examples.js"></script>
+	<script type="text/javascript" src="../Source/View/View.js"></script>
+	<script type="text/javascript" src="../Source/View/SplitView.js"></script>
 	
-	<title>MooLego - Components Playground</title>
-
+	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	
+	<title>MooLego SplitView - Component Playground</title>
+	
 	<script type="text/javascript">
 		window.addEvent('domready', function() {
-			
-			var time = $time();
-			
-			/* Elements in page */
-			
-			new UI.Element({
-				label : "new window",
-				skin	: 'demo',
-				type	: "shape02",
-				width	: 400,
-				height	: 400,
-				styles		: {
-					margin	: 10
+			var splitview = new UI.SplitView({
+				width : 600,
+				height : 400,
+				styles: {
+					margin: '40px',
+					backgroundColor:'#fff'
 				}
 			}).inject(document.body);
+			
+			var splitview2 = new UI.SplitView({
+				width : 440,
+				height : 400
+			}).inject(splitview.main);
 		});
 	</script>
 </head>
 
-<body>
-	
-</body>
-
+<body bgcolor="#e8e8e8"></body>
 </html>

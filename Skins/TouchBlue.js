@@ -10,7 +10,7 @@ Arguments:
 
 */
 
-UI.props.BlueTouch = {
+UI.props.TouchBlue = {
 	'default': {
 		/* css properties */
 		styles : {

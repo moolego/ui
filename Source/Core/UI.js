@@ -1,6 +1,6 @@
 /*
 	Object: UI
-		Root of moolego UI. All classes will be declared in this object.
+		This sets the UI namespace
 
 	About:
 		moolego UI for mootools v1.2 - 2008-2009

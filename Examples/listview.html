@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		
-	<script type="text/javascript" src="mootools/mootools-1.2.1-core-nc.js"></script>
-	<script type="text/javascript" src="mootools/mootools-1.2-more.js"></script>
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="mootools/more.js"></script>
 		
 	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
 	
@@ -46,8 +46,8 @@
 	
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
 	<script type="text/javascript" src="../Skins/AquaBlack.js"></script>
+	<script type="text/javascript" src="../Skins/TouchBlue.js"></script>
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
-	<script type="text/javascript" src="../Skins/BlueTouch.js"></script>
 		
 	<script type="text/javascript" src="js/examples.js"></script>
 	
@@ -56,7 +56,7 @@
 	<script type="text/javascript">
 		window.addEvent('load', function() {
 			
-			new UI.ListView({
+			var graphite = new UI.ListView({
 				//skin : 'BlueTouch',
 				width : 260,
 				height : 400,
@@ -66,130 +66,152 @@
 				},
 				data : [
 					{
+						"type" : "Core",
 						"title" : "UI",
 						"desc"	: "Core/UI.js"
+					},
+					{
+						"type" : "Core",
+						"title" : "UI.Canvas",
+						"desc"	: "Core/Canvas.js"
+					},
+					{
+						"title" : "UI.Interface",
+						"desc"	: "Core/Interface.js"
 					},
 					{
 						"title" : "UI.Skin",
 						"desc"	: "Core/Skin.js"
 					},
 					{
-						"title" : "UI.Canvas",
-						"desc"	: "Core/Canvas.js"
+						"title" : "UI.Styles",
+						"desc"	: "Core/Styles.js"
 					},
 					{
 						"title" : "UI.Element",
 						"desc"	: "Element/Element.js"
 					},
 					{
-						"title" : "UI.Element.Drag",
-						"desc"	: "Element/Element.Drag.js"
+					
+						"title" : "UI.Box",
+						"desc"	: "Element/Box.js"
 					},
 					{
-						"title" : "UI.Element.Resize",
-						"desc"	: "Element/Element.Resize.js"
+					
+						"title" : "UI.Bubble",
+						"desc"	: "Element/Bubble.js"
 					},
 					{
-						"title" : "UI.Element.Controller",
+					
+						"title" : "UI.Label",
+						"desc"	: "Element/Label.js"
+					},
+					{
+					
+						"title" : "UI.Scrollbar",
+						"desc"	: "Element/Scrollbar.js"
+					},
+					{
+					
+						"title" : "UI.Tip",
+						"desc"	: "Element/Tip.js"
+					},
+					{
+						"title" : "UI.ElementController",
 						"desc"	: "Element/Element.Controller.js"
 					},
 					{
-				
+					
 						"title" : "UI.Control",
-						"desc"	: "Control/Control.js"
+						"desc"	: "Form/Control.js"
 					},
 					{
-				
+					
 						"title" : "UI.Button",
-						"desc"	: "Control/Button.js"
+						"desc"	: "Form/Button.js"
 					},
 					{
-				
+					
 						"title" : "UI.Checkbox",
-						"desc"	: "Control/Checkbox.js"
+						"desc"	: "Form/Checkbox.js"
 					},
 					{
-				
+					
 						"title" : "UI.Input",
-						"desc"	: "Control/Input.js"
+						"desc"	: "Form/Input.js"
 					},
 					{
-				
-						"title" : "UI.Label",
-						"desc"	: "Control/Label.js"
-					},
-					{
-				
+					
 						"title" : "UI.RadioGroup",
-						"desc"	: "Control/RadioGroup.js"
+						"desc"	: "Form/RadioGroup.js"
 					},
 					{
-				
+					
 						"title" : "UI.Select",
-						"desc"	: "Control/Select.js"
+						"desc"	: "Form/Select.js"
 					},
 					{
-				
+					
 						"title" : "UI.Slider",
-						"desc"	: "Control/Slider.js"
+						"desc"	: "Form/Slider.js"
 					},
 					{
-				
+					
 						"title" : "UI.Textarea",
-						"desc"	: "Control/Textarea.js"
+						"desc"	: "Form/Textarea.js"
 					},
 					{
-				
+					
 						"title" : "UI.Menu",
 						"desc"	: "Menu/Menu.js"
 					},
 					{
-				
+					
 						"title" : "UI.Context",
 						"desc"	: "Menu/Context.js"
 					},
 					{
-				
+					
 						"title" : "UI.Toolbar",
 						"desc"	: "menu/Select.js"
 					},
 					{
-				
+					
 						"title" : "UI.Scroller",
 						"desc"	: "Menu/Scroller.js"
 					},
 					{
-				
+					
 						"title" : "UI.View",
 						"desc"	: "View/View.js"
 					},
 					{
-				
+					
 						"title" : "UI.ListView",
 						"desc"	: "view/ListView.js"
 					},
 					{
-				
+					
 						"title" : "UI.PanelView",
 						"desc"	: "View/PanelView.js"
 					},
 					{
-				
+					
 						"title" : "UI.SplitView",
 						"desc"	: "View/SplitView.js"
 					},
 					{
-				
+					
 						"title" : "UI.TabView",
 						"desc"	: "View/TabView.js"
 					},
 					{
-				
+					
 						"title" : "UI.Window",
 						"desc"	: "Window/Window.js"
 					},
 					{
-				
+					
 						"title" : "UI.WindowController",
 						"desc"	: "View/Window.Controller.js"
 					}
@@ -204,11 +226,11 @@
 					margin : '40px 20px 0 0',
 					backgroundColor : '#e8e8e8'
 				},
-				url	: 'assets/list.json'
+				data	: graphite.options.data
 			}).inject(document.body);
 			
 			new UI.ListView({
-				skin: 'BlueTouch',
+				skin: 'TouchBlue',
 				width : 260,
 				height : 400,
 				styles : {
