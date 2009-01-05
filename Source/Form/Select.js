@@ -8,7 +8,7 @@
 	Require:
 		<UI.Control>
 		<UI.Menu>
-		<UI.Scroller.Menu>
+		<UI.Menu.Scroller>
 	
 	Arguments:
 			options
@@ -116,6 +116,7 @@ UI.Select = new Class({
 		//we add events on select
 		this.element.addEvents({
 			mousedown : function(e){
+				ui.controller.closeMenu();
 				this.menu.show(this.element);
 				new Event(e).stop();
 			}.bind(this)
