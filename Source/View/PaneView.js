@@ -46,7 +46,7 @@ UI.PaneView = new Class({
 		panel				: {
 			className		: 'ui-panelview-panel',
 			styles 			: {
-				width			: '600px',
+				width			: '300px',
 				height			: '100%'
 			}
 		},

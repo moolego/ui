@@ -20,13 +20,12 @@
 
 var ui = ui || {};
 
-UI.Controller.Window = new Class({
-	Singleton			: true,
+UI.WindowController = new Class({
+
 	//Extends			: UI.Controller,
 	Implements 			: [Events, Options],
 	
 	options: {
-		className		: 'ui-winman',
 		version			: '0.1a',
 		zBase			: 2000,
 		zStep			: 10,
@@ -99,12 +98,14 @@ UI.Controller.Window = new Class({
 		(void)
 	*/
 	
-	close: function(elementClass) {
-		elementClass.hide();
-		elementClass.fireEvent('onClose');
+	
+	close: function(w) {
+		w = w || this.active; 
+		w.hide();
+		w.fireEvent('onClose');
 		for (var i = UI.elements.window.length - 1; i >= 0; i--) {
-			if (UI.elements.window[i] == elementClass) {
-				elementClass.destroy();
+			if (UI.elements.window[i] == w) {
+				w.destroy();
 				delete UI.elements.window[i];
 				UI.elements.window = UI.elements.window.clean();
 			}
@@ -292,17 +293,118 @@ UI.Controller.Window = new Class({
 	Returns:
 		(void)
 	 */
-	
-	resetCascade: function() {
-		UI.elements.window.each(function(w,i) {
-			console.log(w.state);
+
+	cascade : function() {
+		var xOffset = 20;
+		var yOffset = 20;
+		arrangementType = 'cascade';
+		var containerTopOffset = 50;
+		var containerLeftOffset = 170;
+		UI.elements.window.each(function(w){
 			
-			if (w.state == 'normalized') {
-				w.setStyles(getCascadePosition(w));
-				w.location = 'cascade';
-			}
+			//indexLevel++;					  
+	    	//w.setStyle('zIndex', indexLevel);	
+			containerTopOffset += yOffset;
+			containerLeftOffset += xOffset;
+			var fx = new Fx.Morph(w.element, {
+				'duration': 1000,
+				transition: Fx.Transitions.Sine.easeInOut,
+				link : 'ignore'
+			}).start({		
+				'top': containerTopOffset,
+				'left': containerLeftOffset
+			});	
+			
+			w.location = 'cascade';	
 		});
+	},
+
+	grid: function(){
+		var columns = 7;
+		var xOffset = 100;
+		var yOffset = 100;
+		
+		arrangementType = 'grid';
+		var containerTopOffset = 120;
+		var containerLeftOffset = 150;
+		var i = 1;	
+		
+		UI.elements.window.each(function(w){
+			//indexLevel++;					  
+	        //w.element.setStyle('zIndex', indexLevel);	
+			if (i > 1 && i <= columns){
+				containerLeftOffset += xOffset;
+			} else if (i > 1){
+				containerLeftOffset = 150;
+				containerTopOffset += yOffset;
+				i = 1;
+			}
+
+			w.element.morph({top: containerTopOffset, left: containerLeftOffset});	
+			
+			i++;
+			
+			w.location = 'grid';			
+		});
+	},
+	
+	circle : function(){
+		
+		var centerX = 200;
+		var centerY = 300;
+		var radius = 200;
+		
+		var i = 1;
+		var length = (UI.elements.window.length);
+		UI.elements.window.each(function(w){
+			//indexLevel++;					  
+	        // el.setStyle('zIndex', indexLevel);	
+			var pointRatio = i/length;
+			var xSteps = Math.cos(pointRatio*2*Math.PI);
+			var ySteps = Math.sin(pointRatio*2*Math.PI);
+			var pointX = centerX + xSteps * radius;
+			var pointY = centerY + ySteps * radius;
+			
+			w.element.morph({top: pointY, left: pointX});	
+
+			i++;
+			w.location = 'grid';			
+		});
+	},
+	
+	wave : function(){
+		
+		var centerX = 50;
+		var centerY = 200;
+		var radius = 200;
+		
+		var i = 1;
+		var length = (UI.elements.window.length);
+		UI.elements.window.each(function(w){
+			//indexLevel++;					  
+	        // el.setStyle('zIndex', indexLevel);	
+			var pointRatio = i/length;
+			var xSteps = i/10; // Math.cos(pointRatio*2*Math.PI);
+			var ySteps = (Math.sin(pointRatio*Math.PI))/2; 
+			var pointX = centerX + xSteps * radius;
+			var pointY = centerY + ySteps * radius;
+			
+			w.element.morph({top: pointY, left: pointX});	
+
+			i++;
+			w.location = 'grid';			
+		});
+	},
+	
+
+	
+	closeAll : function(){
+		UI.elements.window.each(function(w){
+			this.close(w);			
+		},this);
 	}
+	
+	
 });
 
-ui.windowController = UI.windowController || new UI.Controller.Window();
+ui.windowController = ui.windowController || new UI.WindowController();

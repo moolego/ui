@@ -93,7 +93,7 @@ UI.View = new Class({
 
 	buildOverlay: function() {
 		this.overlay = new Element('div',this.props.components.overlay)
-		 .inject(this.element);
+		 .inject(this.element).hide();
 	
 		this.addEvents({
 			'onLoadComplete' : function() { this.overlay.hide(); }
@@ -158,9 +158,7 @@ UI.View = new Class({
 		this.addEvents({
 			'ondLoadCompplete' : function() { this.scrollbar.update() },
 			'onResize' : function() { this.scrollbar.update() }
-		 }); 
-		 
-
+		 });
 	},
 
 	/*

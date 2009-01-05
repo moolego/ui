@@ -445,7 +445,9 @@ UI.Window = new Class({
 	
 	setBehavior: function(){
 		this.parent();
-
+		
+		this.setStyle('position','fixed');
+		
 		this.addEvents({
 			mousedown : this.focus.bind(this),
 			resizeComplete: function(){
