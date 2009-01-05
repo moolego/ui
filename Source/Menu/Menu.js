@@ -83,18 +83,21 @@ UI.Menu = new Class({
 		});
 	},
 	
+	
 	setBehavior : function(){
 		this.parent();
 		if (!this.options.closeMenu) {
 			this.addEvent('onCloseMenu', function(){
+				ui.controller.closeMenu = $empty;
 				this.hide(300);
-				//ui.controller.closeMenu = $empty;
 			}.bind(this));
-		} else 
+		} else { 
 			this.addEvent('onCloseMenu', function(){
 				this.options.closeMenu();
 			}.bind(this));
+		}
 	},
+	
 	
 	/* 
 	Method: buildMenu
@@ -120,7 +123,6 @@ UI.Menu = new Class({
 				}).inject(this.content);
 				menuItem.separator = true;
 			} else {
-				//console.log(UI.skin.getComponentProps(this.skin, 'menuItem'), this.skin);
 				var menuItem = new UI.Label({
 					skin		: this.options.skin,
 					tag			: this.options.itemTag,
@@ -134,7 +136,6 @@ UI.Menu = new Class({
 			}
 			this.addSubmenuEvents(item, menuItem);
 		},this);
-		ui.controller.closeMenu = this.fireEvent.bind(this, 'closeMenu');
 		return this;
 	},
 	
@@ -202,7 +203,6 @@ UI.Menu = new Class({
 	addSubmenu : function(item, menuItem, position) {
 		this.menuWithAction = false;
 		$clear(this.menuActionDelay);
-		ui.controller.closeMenu = this.fireEvent.bind(this, 'closeMenu');
 		this.menuActionDelay = (function(){
 			if (!menuItem.submenu) {
 				menuItem.submenu = new UI.Menu({
@@ -220,6 +220,7 @@ UI.Menu = new Class({
 						hide		: this.removeSubmenu
 					}
 				}).inject(document.body);
+				ui.controller.closeMenu = this.fireEvent.bind(this, 'closeMenu');
 			} else {
 				menuItem.submenu.show(menuItem);
 			}
@@ -584,6 +585,7 @@ UI.Menu = new Class({
 	 */
 	
 	show : function(parent, x, y) {
+		ui.controller.closeMenu = this.fireEvent.bind(this, 'closeMenu');
 		this.time = $time();
 		this.element.setStyle('display', 'block');
 		this.setPosition(parent);
@@ -604,7 +606,6 @@ UI.Menu = new Class({
 	 */
 	
 	hide: function(duration){
-		
 		if (!$defined(duration)) duration = this.props.hideFxDuration;
 		
 		this.fireEvent('hide');
