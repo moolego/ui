@@ -343,17 +343,14 @@ UI.Element = new Class({
 		
 		this.element.addEvents({
 			mousedown 	: function(e){
-				
 				ui.controller.closeMenu();
 				this.fireEvent('mousedown');
 			}.bind(this),
 			click		: function(e){
-				if (!Browser.Engine.trident) 
-				 this.fireEvent('click');
+				if (!Browser.Engine.trident) this.fireEvent('click');
 			}.bind(this),
 			mouseup		: function(){
-				if (Browser.Engine.trident)	
-				 this.fireEvent('click');
+				if (Browser.Engine.trident)	this.fireEvent('click');
 				this.fireEvent('mouseup');
 			}.bind(this),
 			

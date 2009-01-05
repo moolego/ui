@@ -158,8 +158,28 @@
 				]						
 			}).inject(document.body,'top');
 			
-			
-			
+			new UI.Select({
+				name			: 'testselect',
+				list			: [{
+					text		: 'Montagne',
+					value		: 'mntgn'
+				},{ 
+					text		: 'Plage',
+					value		: 'plg'
+				},{ 
+					text		: 'Sport',
+					value		: 'sprt'
+				},{ 
+					text		: 'Nuit',
+					value		: 'nt'
+				},{ 
+					text		: 'Glace',
+					value		: 'glc'
+				}],
+				styles : {
+					margin : 10
+				}
+			}).inject(document.body);
 		});
 	</script>
 </head>
