@@ -169,7 +169,7 @@ UI.Toolbar = new Class({
 						this.addSubmenu(item, menuItem, 'bottom');
 						this.moveRollover(menuItem);
 					} else if (this.options.openOnRollover) {
-						menuItem.fireEvent('mousedown');
+						menuItem.element.fireEvent('mousedown');
 					}
 				}.bind(this),
 				'hideSubmenu' : function(){
