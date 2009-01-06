@@ -343,7 +343,7 @@ UI.Element = new Class({
 		
 		this.element.addEvents({
 			mousedown 	: function(e){
-				ui.controller.closeMenu();
+				if(this.options.component != 'label') ui.controller.closeMenu();
 				this.fireEvent('mousedown');
 			}.bind(this),
 			click		: function(e){
