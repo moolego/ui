@@ -295,11 +295,8 @@
 			var counter = 1;
 			
 			this.counter = new UI.Button({
-				skin : 'TouchBlue',
-				type : 'foot',
+				//skin : 'TouchBlue',
 				label				: 'Bubble counter',
-				location			: 'center',
-				draggable			: true,
 				onClick				: function() { 
 					
 					if (this.bubble && this.bubble.element) {
@@ -327,8 +324,6 @@
 					margin					: 5
 				}
 			}).inject(touchfoot);
-			
-			
 			
 			this.daselect = new UI.Select({
 				skin : 'AquaBlack',
