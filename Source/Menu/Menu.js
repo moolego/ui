@@ -208,17 +208,12 @@ UI.Menu = new Class({
 				menuItem.submenu = new UI.Menu({
 					skin			: this.options.skin,
 					target			: menuItem,
-					closeMenu		: function(){
-						this.fireEvent('closeMenu');
-					}.bind(this),
 					menu			: item.menu,
+					closeMenu		: this.fireEvent.bind(this, 'closeMenu'),
 					openOnRollover	: this.options.openOnRollover,
 					closeOnRollout	: this.options.closeOnRollout,
 					position		: position,
-					zIndex			: this.options.component == 'toolbar' ? --this.options.zIndex : ++this.options.zIndex,
-					events			: {
-						hide		: this.removeSubmenu
-					}
+					zIndex			: this.options.component == 'toolbar' ? --this.options.zIndex : ++this.options.zIndex
 				}).inject(document.body);
 				ui.controller.closeMenu = this.fireEvent.bind(this, 'closeMenu');
 			} else {
@@ -242,26 +237,28 @@ UI.Menu = new Class({
 	
 	
 	addSubmenuArrow : function(menuItem){
-		//we add the arrow
-		menuItem.arrow = new UI.Element({
-			skin		: this.options.skin,
-			component 	: 'element',
-			type		: 'menuRightArrow',
-			styles 		: {
-				'padding'	: 0,
-				'position'	: 'absolute',
-				right		: 8,
-				display		: 'block',
-				margin	: '4px 0 0 0'
-			}
-		}).inject(menuItem.element, 'top');
-		menuItem.element.addEvents({
-			'mouseenter': function(){
-				menuItem.arrow.setState('over');
-			},
-			'defaultArrow': function(){
-				menuItem.arrow.setState('default');
-			}
+		this.addEvent('addArrows', function(){
+			//we add the arrow
+			menuItem.arrow = new UI.Element({
+				skin		: this.options.skin,
+				component 	: 'element',
+				type		: 'menuRightArrow',
+				styles 		: {
+					'padding'	: 0,
+					'position'	: 'absolute',
+					right		: 8,
+					display		: 'block'
+				}
+			}).inject(menuItem, 'top');
+			menuItem.arrow.setStyle('top', (menuItem.element.getHeight() - menuItem.arrow.element.getHeight()) / 2);
+			menuItem.element.addEvents({
+				'mouseenter': function(){
+					menuItem.arrow.setState('over');
+				},
+				'defaultArrow': function(){
+					menuItem.arrow.setState('default');
+				}
+			});
 		});
 	},
 	
@@ -432,8 +429,8 @@ UI.Menu = new Class({
 				elCoordinates.top - selected.getCoordinates(this.element).top;
 			
 			this.element.setStyles({
-				'top': top,
-				'left': elCoordinates.left
+				'top': top + 1,
+				'left': elCoordinates.left - 1
 			});
 			windowScroll = Window.getScroll();
 			menuCoordinates = this.element.getCoordinates();
@@ -559,11 +556,11 @@ UI.Menu = new Class({
 		} else {
 			this.setCanvas();
 		}
-
+		this.fireEvent('addArrows');
 		if (this.options.closeOnRollout)
-		this.canvas.canvas.addEvent('mouseleave', function(){
-			this.fireEvent('closeMenu');
-		}.bind(this));
+			this.canvas.canvas.addEvent('mouseleave', function(){
+				this.fireEvent('closeMenu');
+			}.bind(this));
 		
 		return this;
 	},

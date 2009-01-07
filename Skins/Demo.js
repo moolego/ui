@@ -1370,8 +1370,10 @@ UI.props.demo = {
 					},
 					radial : {
 						gradient : {
-							color : ['#F0F', '#0F0', '#FF0'],
-							startPoint : []
+							type : 'radial',
+							color : ['#F0F', '#0F0', '#FF0', '#000', '#AF0'],
+							startCircle : ['2%', '50%', 0],
+							endCircle : ['60%', '50%', '120%']
 						},
 						offset : 20,
 						radius : 0

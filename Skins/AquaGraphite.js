@@ -1168,10 +1168,11 @@ UI.props.AquaGraphite = {
 					mainarrow : {
 						shape : 'triangle',
 						rotation : 180,
-						size : [12,7],
-						offset : [11,2.5,2],
-						color : ['#8392a1','#8392a1'],
-						opacity : 1,
+
+						size : [13,7],
+						offset : [11,2,2],
+						color : ['#8392a1','#a0a5ae'],
+						opacity : 1
 					},
 					reflectarrow : {
 						shape : 'triangle',
@@ -1190,7 +1191,8 @@ UI.props.AquaGraphite = {
 						color: ['#8392a1', '#8392a1'],
 						offset: [2, 2, 'auto', 2],
 						radius: [2, 2, 0, 0],
-						opacity: 1
+						opacity: 1,
+						opacity : [1, .9]
 					}
 				}
 			}
@@ -2143,7 +2145,7 @@ UI.props.AquaGraphite = {
 						'duration': 1400,
 						transition: Fx.Transitions.Back.easeOut,
 						link : 'ignore'
-					},
+					}
 				}
 			}
 		}
@@ -2760,12 +2762,13 @@ UI.props.AquaGraphite = {
 		},
 		menuRightArrow : {
 			'default' : {
-				width : 10,
+				width : 12,
 				height : 16,
 				
 				/* layers properties */
 				layers		 : {
 					main	 : {
+						offset : [3,0],
 						size : [12, 9],
 						shape : 'triangle',
 						rotation : 90,
