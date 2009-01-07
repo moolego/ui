@@ -1059,7 +1059,7 @@ UI.props.AquaGraphite = {
 					reorder: ['border', 'front'],
 					
 					border: {
-						offset: [5, 8, 10],
+						offset: [5, 2, 10],
 						color: ['#594f4d', '#827877'],
 						opacity: 1,
 						radius: 3
@@ -1095,7 +1095,8 @@ UI.props.AquaGraphite = {
 				},
 				
 				layers : {
-					reorder : ['littleshadow','shadowarrow','border','borderarrow','main','mainarrow','light','reflect','reflectdown','reflectarrow'],
+					reorder : ['littleshadow','shadowarrow','border','borderarrow','main','mainarrow','reflect','reflectdown','reflectarrow'],
+					//reorder : ['littleshadow','shadowarrow','border','borderarrow','main','mainarrow','light','reflect','reflectdown'],
 					//reorder : ['littleshadow','shadowarrow', , 'main','mainarrow','reflect','reflectdown','reflectarrow'],
 					'default' : {
 						radius : 2,
@@ -1117,8 +1118,8 @@ UI.props.AquaGraphite = {
 					},
 					
 					main : {
-						size : [13, 10],
-						color : ['#8392a1', '#8392a1'],
+						size : [13, 9],
+						color : ['#95a7b8', '#95a7b8'],
 						offset : [2, 2,'auto',2],
 						radius : [2, 2, 0, 0],
 						opacity: 1
@@ -1139,17 +1140,20 @@ UI.props.AquaGraphite = {
 					},
 					reflectdown : {
 						position : 'absolute',
-						size : [9, 11],
+						size : [9, 9],
 						offset : [2, 4,'auto'],
-						color : ['#FFF', '#8392a1','#FFF'],
-						opacity : [.8,.4,.6],
+						gradient : {
+							color : ['#FFF', '#fff','#FFF'],
+							opacity : [.8,0,.2],
+							stop : [0,.9,1]
+						},
 						radius : 0
 					},
 					shadowarrow : {
 						shape : 'triangle',
 						rotation : 180,
-						size : [17,8],
-						offset : [12,0,0],
+						size : [17,9],
+						offset : [11,0,0],
 						color : ['#000','#000'],
 						opacity : .1
 					},
@@ -1159,23 +1163,34 @@ UI.props.AquaGraphite = {
 						size : [15,8],
 						offset : [11,1,1],
 						color : ['#475262','#475262'],
-						opacity:1
+						opacity : 1
 					},
 					mainarrow : {
 						shape : 'triangle',
 						rotation : 180,
-						size : [13,7],
-						offset : [11,2,2],
-						color : ['#8392a1','#a0a5ae'],
+						size : [12,7],
+						offset : [11,2.5,2],
+						color : ['#8392a1','#8392a1'],
 						opacity : 1,
 					},
 					reflectarrow : {
 						shape : 'triangle',
 						rotation : 180,
-						size : [9,5],
-						offset : [12,4,2],
+						size : [11,6],
+						offset : [11,3,2],
 						color : ['#fff','#fff'],
-						opacity : [1, .9],
+						opacity : [1, .4],
+					}
+				}
+			},
+			'down' : {
+				layers: {
+					main: {
+						size: [13, 9],
+						color: ['#8392a1', '#8392a1'],
+						offset: [2, 2, 'auto', 2],
+						radius: [2, 2, 0, 0],
+						opacity: 1
 					}
 				}
 			}

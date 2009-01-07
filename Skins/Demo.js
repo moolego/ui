@@ -1318,10 +1318,11 @@ UI.props.demo = {
 					radial : {
 						gradient : {
 							color : ['#F0F', '#0F0', '#FF0'],
-							startPoint : []
+							stop : [0,.9,1],
+							angle: 110
 						},
-						offset : 20,
-						radius : 0
+						offset : 20
+						
 					}
 				}
 			},

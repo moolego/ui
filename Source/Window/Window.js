@@ -192,7 +192,13 @@ UI.Window = new Class({
 		
 		this.setTitle(this.options.title);
 		
-		var width = this.controls.getSize().x;
+		this.addEvent('onIntected', function(){
+			
+			var width = this.controls.getSize().x;
+		
+			console.log('test:',width);
+			
+		})
 		width = 0;
 		
 		if (this.props.components.controls.styles['float'] == 'right') { 
