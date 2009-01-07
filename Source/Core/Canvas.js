@@ -265,7 +265,6 @@ UI.Canvas = new Class({
 		
 		for (var i = this.shadowThikness * 1.5; i > 0; i--) {
 			var oratio = opacity/(i* 2 / 1.5 + 10);
-			//console.log(oratio);
 			this.ctx.save();
 				this.setTransformation(props);
 				this[shape](props);
@@ -671,37 +670,57 @@ UI.Canvas = new Class({
 				opacity : props.opacity || 1
 			};
 		}
-		
 		if (props[p] && $type(props[p].color) == 'array') {
-			
-			// convert angle from degree to gradient
-			if (!$defined(props[p].angle)) props[p].angle = 90;
-			var a = props[p].angle * Math.PI / 180;
-			var aAbs = Math.abs(a);
-			
-			var s0 = props.size[0];
-			var s1 = props.size[1];
-			
-			
-			
-			//set stuff for IE
-			this.ctx.ratio = props.size[1]/props.size[0];
-			this.ctx.angle = a;
+			if (props[p].type != 'radial') {
+				// convert angle from degree to gradient
+				if (!$defined(props[p].angle)) props[p].angle = 90;
+				var a = props[p].angle * Math.PI / 180;
+				var aAbs = Math.abs(a);
 				
-			if (props[p].angle >= -90 && props[p].angle < 90) {
-				var ax = -((Math.cos(a - Math.atan(s1 / s0)) * Math.sqrt(Math.pow(s0, 2) + Math.pow(s1, 2)) * Math.cos(a)) / 2);
-				var ay = -((Math.cos(a - Math.atan(s1 / s0)) * Math.sqrt(Math.pow(s0, 2) + Math.pow(s1, 2)) * Math.sin(a)) / 2);
+				var s0 = props.size[0];
+				var s1 = props.size[1];
+				
+				//set stuff for IE
+				this.ctx.ratio = props.size[1]/props.size[0];
+				this.ctx.angle = a;
+				
+				//define start/end points (automatic in IE)
+				if (props[p].angle >= -90 && props[p].angle < 90) {
+					var ax = -((Math.cos(a - Math.atan(s1 / s0)) * Math.sqrt(Math.pow(s0, 2) + Math.pow(s1, 2)) * Math.cos(a)) / 2);
+					var ay = -((Math.cos(a - Math.atan(s1 / s0)) * Math.sqrt(Math.pow(s0, 2) + Math.pow(s1, 2)) * Math.sin(a)) / 2);
+				} else {
+					var ax =  ((Math.cos(Math.PI - a - Math.atan(s1 / s0)) * Math.sqrt((s0).pow(2) + (s1).pow(2)) * Math.cos(Math.PI - a)) / 2);
+					var ay =  - ((Math.cos(Math.PI - a - Math.atan(s1 / s0)) * Math.sqrt((s0).pow(2) + (s1).pow(2)) * Math.sin(Math.PI - a)) / 2);
+				}
+				var bx = -ax;
+				var by = -ay;
+				
+				//make the gradient with start point and end point
+				var color = this.ctx.createLinearGradient(ax, ay, bx, by);
 			} else {
-				var ax =  ((Math.cos(Math.PI - a - Math.atan(s1 / s0)) * Math.sqrt((s0).pow(2) + (s1).pow(2)) * Math.cos(Math.PI - a)) / 2);
-				var ay =  - ((Math.cos(Math.PI - a - Math.atan(s1 / s0)) * Math.sqrt((s0).pow(2) + (s1).pow(2)) * Math.sin(Math.PI - a)) / 2);
+				//set translation correction
+				var cx = props.size[0] / 2;
+				var cy = props.size[1] / 2;
+				
+				//set startCircle, if not defined, set center and size 0
+				if (props[p].startCircle) {
+					var x0 = this.convert2Px(props[p].startCircle[0], 'x') - cx;
+					var y0 = this.convert2Px(props[p].startCircle[1], 'y') - cy;
+					var r0 = this.convert2Px(props[p].startCircle[2], 'x');
+				} else {
+					var x0 = 0, y0 = 0, r0 = 0;
+				}
+				
+				//set endCircle, if not defined, set center 0 and size to layer's width
+				if (props[p].endCircle) {
+					var x1 = this.convert2Px(props[p].endCircle[0], 'x') - cx;
+					var y1 = this.convert2Px(props[p].endCircle[1], 'y') - cy;
+					var r1 = this.convert2Px(props[p].endCircle[2], 'x') / 2;
+				} else {
+					var x1 = 0, y1 = 0, r1 = this.relSize[0] / 2;
+				}
+				var color = this.ctx.createRadialGradient(x0, y0, r0, x1, y1, r1);
 			}
-			var bx = -ax;
-			var by = -ay;
-			
-			//make the gradient with start point and end point
-			//console.log(props.size[0], props.size[1]);
-
-			var color = this.ctx.createLinearGradient(ax, ay, bx, by);
 			
 			//check if opacity exist, else create it
 			var length = props[p].color.length;
@@ -723,11 +742,10 @@ UI.Canvas = new Class({
 			//add color stop
 			for (var i = 0; i < length; i++) {
 				//we get the color
-				var gradient = 'rgba(' + props[p].color[i].hexToRgb(true).join(',') + ', ' + props[p].opacity[i] + ')'
+				var gradient = 'rgba(' + props[p].color[i].hexToRgb(true).join(',') + ', ' + props[p].opacity[i] + ')';
 				color.addColorStop(props[p].stop[i], gradient);
 			}
-			
-			
+		
 		//Normal color management
 		} else {
 			//check if opacity exist, else create it
@@ -975,7 +993,6 @@ UI.Canvas = new Class({
 	*/
 	
 	bezier : function(props) {
-		
 		// prepare datas
 		var h0 = props.size[0]/2;
 		var h1 = props.size[1]/2;
@@ -988,7 +1005,5 @@ UI.Canvas = new Class({
 		this.ctx.bezierCurveTo(14,26,15,23,15,21);
 		this.ctx.bezierCurveTo(15,19,14,16,11,16);
 		this.ctx.closePath();
-
-		
 	}	
 });

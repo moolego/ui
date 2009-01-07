@@ -274,7 +274,7 @@ UI.Element = new Class({
 		this	
 	*/
 	
-	setSize : function(width, height, state){
+	setSize : function(width, height, state, target){
 		this.fireEvent('onResize');
 		this.element.x = width || this.options.width || this.props.width || this.element.getSize().x;
 		this.element.y = height || this.options.height || this.props.height || this.element.getSize().y;
@@ -343,7 +343,7 @@ UI.Element = new Class({
 		
 		this.element.addEvents({
 			mousedown 	: function(e){
-				ui.controller.closeMenu();
+				if(this.options.component != 'label') ui.controller.closeMenu();
 				this.fireEvent('mousedown');
 			}.bind(this),
 			click		: function(e){
@@ -589,7 +589,7 @@ UI.Element.implement({
 
 		this.element.inject(container, position);
 		this.element.setStyle('visibility', 'visible');
-		this.setSize();
+		this.setSize('', '', '', container);
 		this.setCanvas();
 		this.controller.register(this);
 		this.fireEvent('injected');
