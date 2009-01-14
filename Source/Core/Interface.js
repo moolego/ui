@@ -24,13 +24,15 @@ Example:
 */
 
 UI.Interface = new Class({
+	
 	Implements : [Options, Events],
-	options : {
-		target	: 'document.body',
-		replaceTag : 'input, select, textarea, fieldset'
+	
+	options: {
+		target: 'document.body',
+		replaceTag: 'input, select, textarea, fieldset'
 	},
 	
-	initialize : function(options){
+	initialize: function(options){
 		this.setOptions(options);
 		
 		this.radios = {};
@@ -41,44 +43,44 @@ UI.Interface = new Class({
 		this.build();
 	},
 	
-	build : function(){
+	build: function(){
 		//get form elements and replace them
 		this.target.getElements(this.options.replaceTag).each(function(control){
 			switch (control.get('tag')) {
 				case 'input' :
 					switch (control.get('type')) {
-						case 'text' : 
+						case 'text': 
 							this.processInput(control);
 							break;
-						case 'password' : 
+						case 'password': 
 							this.processInput(control);
 							break;
-						case 'radio' :
+						case 'radio':
 							this.processRadio(control);
 							break;
-						case 'button' :
+						case 'button':
 							this.processButton(control); 
 							break;
-						case 'reset' :
+						case 'reset':
 							this.processButton(control); 
 							break;
-						case 'submit' :
+						case 'submit':
 							this.processButton(control); 
 							break;
-						case 'checkbox' : 
+						case 'checkbox': 
 							this.processCheckbox(control);
 					}
 					break;
-				case 'select' :
+				case 'select':
 					this.processSelect(control);
 					break;
-				case 'textarea' :
+				case 'textarea':
 					this.processTextarea(control);
 					break;
-				case 'fieldset' :
+				case 'fieldset':
 					this.processFieldset(control);
 					break;
-				case 'fieldset' :
+				case 'fieldset':
 					this.processFieldset(control);
 					break;
 			}
@@ -94,7 +96,7 @@ UI.Interface = new Class({
 
 	},
 	
-	processRadio : function (element) {
+	processRadio: function (element) {
 		var name = element.get('name');
 		
 		//create a new controller
@@ -112,33 +114,33 @@ UI.Interface = new Class({
 		element.destroy();
 	},
 	
-	processInput : function(element) {
+	processInput: function(element) {
 		var coord = element.getSize();
 		new UI.Input({
-			width		: coord.x,
-			height		: coord.y,
-			name		: element.get('name'),
-			value 		: element.get('value'),
-			inputStyles : element.getStyles('padding', 'fontSize'),
-			styles		: element.getStyles('margin', 'top', 'left')
+			width: coord.x,
+			height: coord.y,
+			name: element.get('name'),
+			value: element.get('value'),
+			inputStyles: element.getStyles('padding', 'fontSize'),
+			styles: element.getStyles('margin', 'top', 'left')
 		}).inject(element, 'before');
 		element.destroy();
 	},
 	
-	processTextarea : function(element) {
+	processTextarea: function(element) {
 		var coord = element.getSize();
 		new UI.Textarea({
-			width		: coord.x,
-			height		: coord.y,
-			name		: element.get('name'),
-			value 		: element.get('value'),
-			inputStyles : element.getStyles('padding'),
-			styles		: element.getStyles('margin', 'top', 'left')
+			width: coord.x,
+			height: coord.y,
+			name: element.get('name'),
+			value: element.get('value'),
+			inputStyles: element.getStyles('padding'),
+			styles: element.getStyles('margin', 'top', 'left')
 		}).inject(element, 'before');
 		element.destroy();
 	},
 	
-	processSelect : function(element) {
+	processSelect: function(element) {
 		//create the menu list
 		var menu = new Array();
 		element.getChildren().each(function(option){
@@ -148,29 +150,29 @@ UI.Interface = new Class({
 		});
 		
 		new UI.Select({
-			name : element.get('name'),
-			list : menu,
-			styles : element.getStyles('padding', 'margin', 'top', 'left')
+			name: element.get('name'),
+			list: menu,
+			styles: element.getStyles('padding', 'margin', 'top', 'left')
 		}).inject(element, 'before');
 		element.destroy();
 	},
 	
-	processCheckbox : function(element) {
+	processCheckbox: function(element) {
 		new UI.Checkbox({
-			label : false,
-			name : element.get('name'),
-			styles : element.getStyles('padding', 'margin', 'top', 'left')
+			label: false,
+			name: element.get('name'),
+			styles: element.getStyles('padding', 'margin', 'top', 'left')
 		}).inject(element, 'before');
 		element.destroy();
 	},
 	
-	processButton : function(element){
+	processButton: function(element){
 		var params = {};
 		// is a submit type or not
 		if (element.get('type') == 'submit') params.submit = true;
-		params.label 		= element.get('value');
-		//params.labelStyles 	= element.getStyles('padding');
-		params.styles 		= element.getStyles('margin', 'top', 'left', 'float');
+		params.label = element.get('value');
+		//params.labelStyles = element.getStyles('padding');
+		params.styles = element.getStyles('margin', 'top', 'left', 'float');
 		new UI.Button(params).inject(element, 'before');
 		element.destroy();
 	},
@@ -184,26 +186,27 @@ UI.Interface = new Class({
 			var f = fieldset.getElement('legend')
 			var coord = f.getSize();
 			new UI.Element({
-				component	: 'element',
-				selectable	: false,
-				width		: coord.x,
-				height		: coord.y,
-				html		: f.get('html'),
-				styles		: f.getStyles('width','padding', 'margin', 'display', 'top', 'left','fontWeight','fontSize','fontFamily')
+				component: 'element',
+				selectable: false,
+				width: coord.x,
+				height: coord.y,
+				html: f.get('html'),
+				styles: f.getStyles('width', 'padding', 'margin', 'display', 'top', 'left', 'fontWeight', 'fontSize', 'fontFamily')
 			}).inject(fieldset, 'before');
 			f.destroy();
 			
 			
 			var size = fieldset.getSize();
 			var fs = new UI.Element({
-				component : 'fieldset',
-				width		: size.x - fieldset.getStyle('paddingLeft').toInt() - fieldset.getStyle('paddingRight').toInt(),
-				height		: size.y - fieldset.getStyle('paddingTop').toInt() - fieldset.getStyle('paddingBottom').toInt(),
-				styles 		: fieldset.getStyles('padding', 'margin', 'display', 'top', 'left')
+				component: 'fieldset',
+				width: size.x - fieldset.getStyle('paddingLeft').toInt() - fieldset.getStyle('paddingRight').toInt(),
+				height: size.y - fieldset.getStyle('paddingTop').toInt() - fieldset.getStyle('paddingBottom').toInt(),
+				styles: fieldset.getStyles('padding', 'margin', 'display', 'top', 'left')
 			}).inject(fieldset, 'before');
 			fs.element.adopt(fieldset.getChildren());
 			fieldset.destroy();
 		});
 		
 	}
+	
 });

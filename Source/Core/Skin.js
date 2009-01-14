@@ -15,10 +15,11 @@
 */
 
 UI.Skin = new Class({
- 	Implements	: [Events, Options],
 	
-	options : {
-		skin	: 'AquaGraphite'
+ 	Implements: [Events, Options],
+	
+	options: {
+		skin: 'AquaGraphite'
 	},
 	
 	/*
@@ -54,7 +55,7 @@ UI.Skin = new Class({
 		(void)
 	*/
 
-	processSkin : function(skinName) {
+	processSkin: function(skinName) {
 		//we merge syles for each states of each type of components
 		for (var cKey in UI.props[skinName]) {
 			if (cKey != 'default') {
@@ -104,13 +105,13 @@ UI.Skin = new Class({
 		properties - (object) An object containing skin properties for current type, merged with optional provided custom properties.
 	 */
 	
-	get : function(className){
+	get: function(className){
 		var
-			skin		= className.options.skin ? className.options.skin : this.defaultSkin,
-			cKey		= className.options.component,
-			tKey		= className.options.type,
-			props		= className.options.props,
-			styles		= className.options.styles;
+			skin = className.options.skin ? className.options.skin : this.defaultSkin,
+			cKey = className.options.component,
+			tKey = className.options.type,
+			props = className.options.props,
+			styles = className.options.styles;
 		
 		//check if it was already preprocessed
 		if(!UI.props[skin].preprocessed) this.processSkin(skin);
@@ -166,7 +167,7 @@ UI.Skin = new Class({
 		properties - (object) Object containing component properties
 	*/
 	
-	getComponentProps : function(skin, component){
+	getComponentProps: function(skin, component){
 		var componentProps = {};
 		$H(skin).each(function(state, key){
 			if (state.components && state.components[component]){
@@ -187,7 +188,7 @@ UI.Skin = new Class({
 		mootools merge function	
 	*/	
 	
-	merge : function() {
+	merge: function() {
 		var mix = {};
 		for (var i = 0, l = arguments.length; i < l; i++){
 			var object = arguments[i];
@@ -198,4 +199,5 @@ UI.Skin = new Class({
 		}
 		return mix; 
 	}
+	
 });

@@ -1379,6 +1379,24 @@ UI.props.demo = {
 						radius : 0
 					}
 				}
+			},
+			'radial2' : {
+				styles : {
+					position : 'relative'
+				},
+				layers : {
+
+					halo : {
+						gradient : {
+							type : 'radial',
+							color : ['#3174cf', '#14396e'],
+							startCircle : ['0%', '50%', 0],
+							endCircle : ['60%', '50%', '180%']
+						},
+						offset : 0,
+						radius : 0
+					}
+				}
 			}
 		},
 		shadows : {

@@ -29,22 +29,23 @@
 */
 
 UI.Label = new Class({
-	Extends					: UI.Element,
+	
+	Extends: UI.Element,
 		
 	options: {
-		component			: 'label',
-		tag					: 'span',
-		html				: 'Label',
-		emboss				: false,
-		selectable			: false
+		component: 'label',
+		tag: 'span',
+		html: 'Label',
+		emboss: false,
+		selectable: false
 	},
 	
-	build : function(){
+	build: function(){
 		this.parent();
 		if (this.options.image) this.buildImage();
 	},
 	
-	buildImage : function(){
+	buildImage: function(){
 		new Element('img', $merge(
 			this.props.components.image,
 			{
@@ -55,4 +56,5 @@ UI.Label = new Class({
 			}
 		)).inject(this.element, 'top');
 	}
+	
 });

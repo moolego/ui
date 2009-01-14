@@ -35,21 +35,22 @@
 */
 
 UI.Canvas = new Class({
+
 	Implements: [Events, Options],
 
 	options: {
-		props : {},
-		width : 300,
-		height : 150,
+		props: {},
+		width: 300,
+		height: 150,
 		
-		zIndex : -1,
+		zIndex: -1,
 		
-		context : '2d',
+		context: '2d',
 		
-		debug : false,
-		disableShadowOnExplorer : true,
+		debug: false,
+		disableShadowOnExplorer: true,
 		
-		onComplete : $empty
+		onComplete: $empty
 	},
 	
 	/*

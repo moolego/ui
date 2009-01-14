@@ -24,17 +24,18 @@
 */
 
 UI.Box = new Class({
-	Extends					: UI.Element,
+	
+	Extends: UI.Element,
 		
 	options: {
-		component			: 'box',
+		component: 'box',
 		
-		tag					: 'div',
-		html				: 'Box',
+		tag: 'div',
+		html: 'Box',
 		
-		emboss				: false,
+		emboss: false,
 		
-		selectable			: false
+		selectable: false
 	},
 
 	/* 
@@ -47,4 +48,5 @@ UI.Box = new Class({
 	build: function(options){
 		this.parent(options);
 	}
+	
 });

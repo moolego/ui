@@ -1324,7 +1324,7 @@ UI.props.AquaGraphite = {
 				/* layers properties */
 				layers : {
 					'default' : {
-						radius : 4
+						radius : 0
 					},
 					shadow : {
 						size : 10,

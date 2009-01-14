@@ -51,59 +51,60 @@
 */
 
 UI.Window = new Class({
-	Extends						: UI.Element,
-	options						: {
-		component				: 'window',
+	
+	Extends: UI.Element,
+	
+	options: {
+		component: 'window',
 		
-		title					: 'Window',
-
+		title: 'Window',
+		
 		// Size options
-		width					: 640,
-		height					: 480,
-
-		// location options
-		location				: 'cascade',
-		position				: 'absolute',
-		top						: false,
-		left					: false,
-		right					: false,
-		bottom					: false,
-		zIndex					: 'auto',   // to get zIndex from themanager or an Int as zIndex
+		width: 640,
+		height: 480,
 		
-		tag						: 'div',
+		// location options
+		location: 'cascade',
+		position: 'absolute',
+		top: false,
+		left: false,
+		right: false,
+		bottom: false,
+		zIndex: 'auto', // to get zIndex from themanager or an Int as zIndex
+		tag: 'div',
 		
 		// Components Options
-		head					: true,
-		view					: {},
-		foot					: true,
-
+		head: true,
+		view: {},
+		foot: true,
+		
 		// 		
-		controls				: ['close','minimize','maximize'],
-		scrollbar				: true,
-	
+		controls: ['close', 'minimize', 'maximize'],
+		scrollbar: true,
+		
 		// Not Implemented should be able to enable/disable effects
-		useEffects				: false,
+		useEffects: false,
 		
 		// Drag options
-		draggable				: true,
-		dragLimitX				: [-1000, window.getWidth() + 1000],
-		dragLimitY				: [50, window.getHeight() + 1000],
-		dragHandlers			: ['head','foot'],
+		draggable: true,
+		dragLimitX: [-1000, window.getWidth() + 1000],
+		dragLimitY: [50, window.getHeight() + 1000],
+		dragHandlers: ['head', 'foot'],
 		
 		// Resize options
-		resizable				: true,
-		resizeLimitX			: [200, window.getWidth()],
-		resizeLimitY			: [200, window.getHeight()],
-		resizeOnDragIfMaximized	: false,
+		resizable: true,
+		resizeLimitX: [200, window.getWidth()],
+		resizeLimitY: [200, window.getHeight()],
+		resizeOnDragIfMaximized: false,
 		
 		// Implemented events
-		onMinimize			: $empty,
-		onMaximize			: $empty,
-		onRestore			: $empty,
-		onLoad				: $empty,
-		onBlur				: $empty,
-		onFocus				: $empty,
-		onClose				: $empty
+		onMinimize: $empty,
+		onMaximize: $empty,
+		onRestore: $empty,
+		onLoad: $empty,
+		onBlur: $empty,
+		onFocus: $empty,
+		onClose: $empty
 	},
 
 	/* 
@@ -117,7 +118,7 @@ UI.Window = new Class({
 		<UI.Element::initialize>
 	*/
 	
-	initialize: function(options) {
+	initialize: function(options){
 		// handle window manager singleton class
 		this.controller = ui.windowController;
 		
@@ -163,7 +164,7 @@ UI.Window = new Class({
 		
 		this.inject(this.options.container || document.body);
 		
-		this.canvas.canvas.addEvent('click', function(e){this.controller.propagateUnderShadow(e)}.bind(this));
+		this.canvas.canvas.addEvent('click', function(e){ this.controller.propagateUnderShadow(e) }.bind(this));
 	},
 
 	/* 
@@ -176,7 +177,7 @@ UI.Window = new Class({
 		(void)
 	*/	
 
-	buildHead : function() {
+	buildHead: function(){
 		this.head = new Element('div', this.props.components.head)
 		.inject(this.element);
 	
@@ -192,13 +193,12 @@ UI.Window = new Class({
 		
 		this.setTitle(this.options.title);
 		
-		this.addEvent('onIntected', function(){
-			
-			var width = this.controls.getSize().x;
+		// should be terminated
 		
-			console.log('test:',width);
-			
+		this.addEvent('onIntected', function(){
+			var width = this.controls.getSize().x;
 		})
+		
 		width = 0;
 		
 		if (this.props.components.controls.styles['float'] == 'right') { 
@@ -220,31 +220,30 @@ UI.Window = new Class({
 		(void)
 	*/
 	
-	buildControls: function() {
+	buildControls: function(){
 		if (!this.options.controls) { return }
 		
 		var controllist = new Array();
-
 		this.controls = new Element('div',this.props.components.controls)
 		
 		.addEvents({
-			mouseenter	: function() {
+			mouseenter: function() {
 				controllist.each(function(button) {
 					button.setState('over');
 				})
 			},
-			mouseover	: function() {
+			mouseover: function() {
 				controllist.each(function(button) {
 					button.setState('over');
 				})
 			},
-			mouseleave	: function() {
+			mouseleave: function() {
 				controllist.each(function(button) {
 					button.setState('default');					
 				})
 			}
-		})
-		.inject(this.head);
+		}).inject(this.head);
+		
 		this.options.controls.each(function(action){
 			this.props.components.control.type = action;
 
@@ -275,7 +274,7 @@ UI.Window = new Class({
 		it should be passed as options when the application instanciates its window
 	*/
 	
-	buildToolbar: function(toolbar) {
+	buildToolbar: function(toolbar){
 		this.toolbar = new UI.Toolbar(toolbar).inject(this.head);
 
 		// not really nice because related to a specific layer ... 
@@ -286,11 +285,11 @@ UI.Window = new Class({
 		.inject(this.head);	
 		
 		this.addEvents({
-			onMinimize 			: function() { 
+			onMinimize: function() { 
 				this.toolbar.element.hide() ;
 				toggle.hide();
 			},
-			onNormalize			: function() {
+			onNormalize: function() {
 				this.toolbar.element.show();
 				toggle.show();
 			}
@@ -320,9 +319,9 @@ UI.Window = new Class({
 			
 			this.view = new UI.TabView(this.options.tabView)
 			.setStyles({
-				position	: 'absolute',
-				top 		: this.props.borderSize,
-				left 		: this.props.borderSize
+				position: 'absolute',
+				top: this.props.borderSize,
+				left: this.props.borderSize
 			}).inject(this.element);
 			
 			this.view.tabbar.setStyles({
@@ -347,9 +346,9 @@ UI.Window = new Class({
 			.inject(this.element);
 			
 			this.addEvents({
-				'injected'		: function() { this.view.fireEvent('onResize'); },
-				onMinimize 		: function() { this.view.hide(); },
-				onNormalize 	: function() { this.foot.show(); this.view.show(); this.setSize(); }
+				'injected': function() { this.view.fireEvent('onResize'); },
+				onMinimize: function() { this.view.hide(); },
+				onNormalize: function() { this.foot.show(); this.view.show(); this.setSize(); }
 			});
 		}
 
@@ -386,8 +385,8 @@ UI.Window = new Class({
 		this.setStatus();
 		
 		this.addEvents({
-			'onMinimize' : function() { this.foot.hide(); },
-			'onNormalize' : function() { this.foot.show(); }
+			'onMinimize': function() { this.foot.hide(); },
+			'onNormalize': function() { this.foot.show(); }
 		});
 	},
 
@@ -403,8 +402,8 @@ UI.Window = new Class({
 	
 	buildResizeHandler : function() {
 		this.resize = new UI.Element({
-			component		: 'element',
-			type			: 'resizeHandler'
+			component: 'element',
+			type: 'resizeHandler'
 		}).inject(this.foot);
 	},
 
@@ -422,9 +421,9 @@ UI.Window = new Class({
 			this.toolbar.element.hide();
 		} else {
 			this.toolbar.element.setStyles({
-				opacity : 1,
-				visibility : 'visible',
-				display : 'block'
+				opacity: 1,
+				visibility: 'visible',
+				display: 'block'
 			});
 			this.props.layers.underlay.size[1] = this.head.getSize().y;
 		}
@@ -452,6 +451,8 @@ UI.Window = new Class({
 	setBehavior: function(){
 		this.parent();
 		
+		// bizarre bizarre...
+		
 		this.setStyle('position','fixed');
 		
 		this.addEvents({
@@ -465,12 +466,24 @@ UI.Window = new Class({
 		});
 		
 		this.addEvents({
-			'onBlur' : function() { this.view.overlay.show(); },
-			'onFocus' : function() { this.view.overlay.hide(); },
-			'onResizeStart' : function() { this.view.overlay.show(); },
-			'onResizeComplete' : function() { this.view.overlay.hide(); },
-			'onDragStart' : function() { this.view.overlay.show(); },
-			'onDragComplete' : function() { this.view.overlay.hide(); }
+			'onBlur': function(){
+				this.view.overlay.show();
+			},
+			'onFocus': function(){
+				this.view.overlay.hide();
+			},
+			'onResizeStart': function(){
+				this.view.overlay.show();
+			},
+			'onResizeComplete': function(){
+				this.view.overlay.hide();
+			},
+			'onDragStart': function(){
+				this.view.overlay.show();
+			},
+			'onDragComplete': function(){
+				this.view.overlay.hide();
+			}
 		});
 	},
 
@@ -487,7 +500,7 @@ UI.Window = new Class({
 		<UI.Element::enableDrag>
 	*/
 
-	enableDrag :function() {
+	enableDrag: function(){
 		this.parent();
 		this.addEvents({
 			onDragComplete 	: function() {
@@ -513,8 +526,8 @@ UI.Window = new Class({
 		(void)
 	*/
 	
-	focus: function() {
-		if (this.minimized) {
+	focus: function(){
+		if (this.minimized){
 			this.normalize();
 			this.controller.resetMinimizedLocation();
 		} else if (this.maximized && this.options.resizeOnDragIfMaximized) {
@@ -541,9 +554,10 @@ UI.Window = new Class({
 		this.minimized = true;
 
 		var size = {
-			width : this.skin['minimized'].width,
-			height : this.skin['minimized'].height
-		};
+			width: this.skin['minimized'].width,
+			height: this.skin['minimized'].height
+		}
+		
 		this.setState('minimized', size);
 		var coord = this.controller.getMinimizedLocation();
 		this.setLocation(coord[0], coord[1], 'morph');
@@ -561,7 +575,7 @@ UI.Window = new Class({
 		(void)
 	*/
 
-	maximize : function() {
+	maximize: function(){
 		if(this.maximized) {
 			this.normalize();
 		} else {
@@ -570,8 +584,8 @@ UI.Window = new Class({
 			this.options.top = coord.top;
 			this.options.left = coord.left;
 			this.element.setStyles({
-				top : this.options.dragLimitY[0],
-				left : 0
+				top: this.options.dragLimitY[0],
+				left: 0
 			})
 			this.minimized = false;
 			this.maximized = true;
@@ -587,12 +601,12 @@ UI.Window = new Class({
 		(void)
 	*/
 
-	normalize : function() {
-		
+	normalize: function(){
 		this.fireEvent('onNormalize');
+		
 		var size = {
-			width : false,
-			height : false
+			width: false,
+			height: false
 		};
 		this.setState('default', size);
 		
@@ -602,8 +616,6 @@ UI.Window = new Class({
 		
 		this.maximized = false;
 		this.minimized = false;
-		
-		
 	},		
 
 	/*
@@ -616,7 +628,7 @@ UI.Window = new Class({
 		coordinates - (object) Object containing top and left properties
 	*/
 
-	getInitialLocation: function() {
+	getInitialLocation: function(){
 		if (this.options.top || this.options.right || this.options.bottom || this.options.left) {
 			//right || left
 			var left = (this.options.right && !this.options.left) ? 
@@ -629,14 +641,17 @@ UI.Window = new Class({
 				this.options.top;
 			
 			return { 
-				top : top, 
+				top: top, 
 				left: left
 			};
 		} else if (this.options.location == 'center') {
 			return this.getCenterLocation();
 		} else {
 			var c = this.controller.getCascadeLocation(this)
-			return { top : c.top, left : c.left };
+			return { 
+				top: c.top, 
+				left: c.left 
+			};
 		}
 	},
 
@@ -649,7 +664,7 @@ UI.Window = new Class({
 		(void)
 	*/
 
-	updateSize : function() {
+	updateSize: function(){
 		var element = this.element.getSize();
 		
 		var bs = this.props.borderSize;
@@ -686,15 +701,15 @@ UI.Window = new Class({
 		this.skin['inactive'].layers.underlay.size[1] = this.head.getSize().y;
 	
 		this.view.element.setStyles({ 
-			top		: bs + topView,
-			width	: element.x - borderOffset,	
-			height	: viewHeight -  borderOffset
+			top: bs + topView,
+			width: element.x - borderOffset,	
+			height: viewHeight -  borderOffset
 		});
 		
 		if (this.options.foot) {
 			this.foot.setStyles({
-				bottom	: -bs,
-				width	: element.x - borderOffset
+				bottom: -bs,
+				width: element.x - borderOffset
 			});
 		}
 		
@@ -713,7 +728,7 @@ UI.Window = new Class({
 		<UI.Element::setSize>			
 	*/  
 	 
-	setSize: function(width,height, state) {
+	setSize: function(width,height, state){
 		this.parent(width,height, state);
 		this.updateSize();
 		
@@ -731,7 +746,7 @@ UI.Window = new Class({
 		this
 	*/
 	
-	setTitle : function(html) {
+	setTitle: function(html){
 		this.title.set('html',html);
 		return this;
 	},
@@ -765,7 +780,7 @@ UI.Window = new Class({
     	this
 	*/
 
-	setStatus : function(html) {
+	setStatus: function(html){
 		this.status.set('html',html);
 		return this;		
 	},
@@ -781,19 +796,8 @@ UI.Window = new Class({
 		this
 	*/	
 
-	control : function(action) {
-		switch (action) {
-			case 'minimize' :
-				this.minimize();
-				break;
-			case 'maximize' : 
-				this.maximize();
-				break;
-			case 'close' : 
-				this.close();
-				break;
-		}
-		
+	control: function(action){
+		this[action]();
 		return this;
 	},
 
@@ -805,7 +809,8 @@ UI.Window = new Class({
 		(void)
 	*/	
 	
-	close : function() {
+	close: function(){
 		this.controller.close(this);
 	}
+	
 });

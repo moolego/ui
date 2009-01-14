@@ -8,11 +8,12 @@
 */
 
 UI.TabView = new Class({
+	
 	Extends: UI.View,
 	
 	options: {
 		component: 'tabview',
-		overflow : 'hidden'
+		overflow: 'hidden'
 	},
 	
 	/*
@@ -22,7 +23,8 @@ UI.TabView = new Class({
 	See also:
 		<UI.Element::initialize>
 	 
-	 */
+	*/
+	
 	initialize: function(options){
 		this.tabs = new Array();
 		this.parent(options);
@@ -38,6 +40,7 @@ UI.TabView = new Class({
 		<UI.View::build>
 		<UI.Element::build>
 	*/
+	
 	build: function(){
 		this.parent();
 		this.buildTabs();
@@ -47,8 +50,8 @@ UI.TabView = new Class({
 	 Function: add
 	 
 	 Create tabbar and add tabs
-	 
 	 */
+	
 	buildTabs: function(){
 		if (this.options.container) {
 			var container = this.options.container
@@ -73,8 +76,9 @@ UI.TabView = new Class({
 	 Function: add
 	 
 	 Create tab and its related view and addEvent
-	 
-	 */
+
+	*/
+	
 	add: function(props){
 		var view = new UI.View({ 
 			height : this.options.height - 21,
@@ -118,11 +122,11 @@ UI.TabView = new Class({
     		Set Content of the current view (tab)
 	*/		
 	
-	setContent: function(method,source,options) {
+	setContent: function(method,source,options){
 		this.view.setContent(method,source,options);
 	},
 	
-	setBehavior : function() {
+	setBehavior: function() {
 		this.parent();
 		
 		this.addEvent('injected', function(){
@@ -142,12 +146,11 @@ UI.TabView = new Class({
     		Set wich tab should be activated
 	*/
 	
-	setActiveTab: function(num) {
+	setActiveTab: function(num){
 		if (num > 0 && num <= this.tabs.length) {
 			this.tabs[--num].setState('active');
 			this.tabs[num].fireEvent('click');
 		}
 	}
-	
-	
+
 });

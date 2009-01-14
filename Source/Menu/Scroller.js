@@ -32,16 +32,17 @@
 */
 
 UI.MenuScroller = new Class({
+	
 	Implements: [Events, Options],
 
 	options: {
-		className		: 'ui-scrollbar',
-		wheel			: 8,
-		speed			: 12,
-		margin			: 20,
-		target			: 'element',
-		onScroll		: $empty,
-		onResize		: $empty
+		className: 'ui-scrollbar',
+		wheel: 8,
+		speed: 12,
+		margin: 20,
+		target: 'element',
+		onScroll: $empty,
+		onResize: $empty
 	},
 	
 	/* 
@@ -74,7 +75,7 @@ UI.MenuScroller = new Class({
 		(void)
 	*/
 	
-	resetSize : function(){
+	resetSize: function(){
 		var windowScroll = Window.getScroll();
 		var elementCoordinates = this.element.getCoordinates();
 		elementCoordinates.top -= windowScroll.y;
@@ -82,30 +83,31 @@ UI.MenuScroller = new Class({
 		var arrows = [0,0];
 		this.element.setStyle('display', 'none');
 		var windowHeight = Window.getHeight();
+		
 		if (elementCoordinates.top <= this.margin && elementCoordinates.bottom > windowHeight - this.margin) {
 			//stick out on both sides (top and bottom)
 			this.content.setStyles({
-				'top' :  elementCoordinates.top - this.margin
+				'top':  elementCoordinates.top - this.margin
 			});
 			this.element.setStyles({
 				'top': this.margin,
-				'height' : windowHeight - this.margin * 2
+				'height': windowHeight - this.margin * 2
 			});
 			arrows = [1,1];
 		} else if (elementCoordinates.bottom > windowHeight - this.margin) {
 			//stick out on bottom
 			this.element.setStyles({
-				'height' : windowHeight - elementCoordinates.top - this.margin
+				'height': windowHeight - elementCoordinates.top - this.margin
 			});
 			arrows[1] = 1;
 		} else if (elementCoordinates.top <= this.margin) {
 			//stick out on top
 			this.content.setStyles({
-				'top' : elementCoordinates.top - this.margin
+				'top': elementCoordinates.top - this.margin
 			});
 			this.element.setStyles({
 				'top': this.margin + windowScroll.y,
-				'height' : elementCoordinates.bottom - this.margin
+				'height': elementCoordinates.bottom - this.margin
 			});
 			arrows[0] = 1;
 		}
@@ -129,6 +131,7 @@ UI.MenuScroller = new Class({
 		this.paddingTop = this.content.getStyle('paddingTop').toInt();
 		this.paddingBottom = this.content.getStyle('paddingBottom').toInt();
 		this.paddingTB = this.paddingTop + this.paddingBottom;
+		
 		this.wrapper = new Element('div', {
 			'class': 'menu-overflow-wrapper',
 			styles: {
@@ -141,9 +144,10 @@ UI.MenuScroller = new Class({
 				zIndex: 2
 			}
 		}).inject(this.element, 'top').grab(this.content);
+		
 		this.content.setStyles({
-			paddingTop : 0,
-			paddingBottom : 0
+			paddingTop: 0,
+			paddingBottom: 0
 		});
 	},
 	
@@ -181,8 +185,8 @@ UI.MenuScroller = new Class({
 	removeScrolls : function(){
 		this.content.setStyles({
 			'top': 0,
-			paddingTop : this.paddingTop,
-			paddingBottom : this.paddingBottom
+			paddingTop: this.paddingTop,
+			paddingBottom: this.paddingBottom
 		});
 		this.element
 		.setStyles({
@@ -205,28 +209,28 @@ UI.MenuScroller = new Class({
 		(void)
 	*/
 	
-	addUpArrow : function(){
+	addUpArrow: function(){
 		var windowScroll = Window.getScroll();
 		var elementCoord = this.element.getCoordinates();
 		elementCoord.top -= windowScroll.y;
 		elementCoord.bottom -= windowScroll.y;
 		
 		this.arrowUp = new Element('div', {'class' : 'ui-menu-arrow-up'}).setStyles({
-			position	: 'absolute',
-			width 		: elementCoord.width,
-			height		: elementCoord.top + 25,
-			top			: - elementCoord.top,
-			left		: 0,
-			zIndex		: 2
+			position: 'absolute',
+			width: elementCoord.width,
+			height: elementCoord.top + 25,
+			top: -elementCoord.top,
+			left: 0,
+			zIndex: 2
 		}).inject(this.element, 'bottom');
 		
 		// new element to inject
 		this.arrowUp.canvas = new UI.Element({
-			width			: elementCoord.width,
-			height			: 25,
-			skin			: this.options.skin,
-			type			: 'menuArrow',
-			state			: 'up'
+			width: elementCoord.width,
+			height: 25,
+			skin: this.options.skin,
+			type: 'menuArrow',
+			state: 'up'
 		}).setStyles({
 			position : 'absolute',
 			bottom : 0,
@@ -260,28 +264,28 @@ UI.MenuScroller = new Class({
 		(void)
 	*/
 	
-	addDownArrow : function(){
+	addDownArrow: function(){
 		var windowScroll = Window.getScroll();
 		var elementCoord = this.element.getCoordinates();
 		elementCoord.top -= windowScroll.y;
 		elementCoord.bottom -= windowScroll.y;
 		
 		this.arrowDown = new Element('div', {'class' : 'ui-menu-arrow-down'}).setStyles({
-			position	: 'absolute',
-			width 		: elementCoord.width,
-			height		: window.getHeight() - elementCoord.bottom + 25,
-			bottom		: elementCoord.bottom - window.getHeight(),
-			left		: 0,
-			zIndex		: 2
+			position: 'absolute',
+			width: elementCoord.width,
+			height: window.getHeight() - elementCoord.bottom + 25,
+			bottom: elementCoord.bottom - window.getHeight(),
+			left: 0,
+			zIndex: 2
 		}).inject(this.element, 'bottom');
 		
 		// new shape to inject
 		this.arrowDown.canvas = new UI.Element({
-			width			: elementCoord.width,
-			height			: 25,
-			skin			: this.options.skin,
-			type			: 'menuArrow',
-			state			: 'down'
+			width: elementCoord.width,
+			height: 25,
+			skin: this.options.skin,
+			type: 'menuArrow',
+			state: 'down'
 		}).setStyles({
 			position : 'absolute',
 			top : 0,
@@ -318,7 +322,7 @@ UI.MenuScroller = new Class({
 		(void)
 	*/
 	
-	scrollDown : function(e){
+	scrollDown: function(e){
 		this.fireEvent('scroll');
 		var elementCoordinates = this.element.getCoordinates();
 		var wrapperCoordinates = this.wrapper.getCoordinates();
@@ -366,7 +370,7 @@ UI.MenuScroller = new Class({
 		(void)
 	*/
 	
-	scrollUp : function(e){
+	scrollUp: function(e){
 		this.fireEvent('scroll');
 		var elementCoordinates = this.element.getCoordinates();
 		var wrapperCoordinates = this.wrapper.getCoordinates();
@@ -396,4 +400,5 @@ UI.MenuScroller = new Class({
 			this.arrowUp = false;
 		}
 	}
+
 });

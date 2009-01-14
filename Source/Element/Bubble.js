@@ -22,16 +22,17 @@
 */
 
 UI.Bubble = new Class({
-	Extends				: UI.Element,
 	
-	options				: {
-		component		: 'bubble',
+	Extends: UI.Element,
+	
+	options: {
+		component: 'bubble',
 		
 		// default options
-		label			: 'Bubble',
-		target			: 'element',
-		resetPosition	: true,
-		zIndex			: 1000
+		label: 'Bubble',
+		target: 'element',
+		resetPosition: true,
+		zIndex: 1000
 	},
 	
 	/* 
@@ -65,9 +66,10 @@ UI.Bubble = new Class({
 		<UI.Element::build>
 	*/
 	
-	build : function(){
+	build: function(){
 		this.parent();
 		this.control = this.element;
+		
 		//we create a span for text
 		if(this.options.label) {
 			this.label = new UI.Label({
@@ -80,7 +82,6 @@ UI.Bubble = new Class({
 				}.bind(this)
 			}).inject(this.element);
 		}
-		
 		
 		// fx should be defined in skin sheet or not
 		// and an option can should be add to use effect on build on not
@@ -111,7 +112,7 @@ UI.Bubble = new Class({
 		<UI.Element::setBehavior>
 	*/
 	
-	setBehavior : function(){
+	setBehavior: function(){
 		this.parent();
 		
 		this.element.addEvents({
@@ -135,16 +136,16 @@ UI.Bubble = new Class({
 		We should also implement left and right position
 	*/
 	
-	setLocation : function(){
+	setLocation: function(){
 		var coord = this.getLocation();
 		this.element.setStyles({
-			left 	: coord.left,
-			top 	: coord.top
+			left: coord.left,
+			top: coord.top
 		});
 		
-		if (this.options.resetPosition) {
-			this.posFx = new Fx.Morph(this.element, {
-				wait : false
+		if (this.options.resetPosition){
+			this.posFx = new Fx.Morph(this.element,{
+				wait: false
 			});
 			
 			this.reposition = function(){
@@ -157,8 +158,8 @@ UI.Bubble = new Class({
 			
 			//add event on windows resize
 			window.addEvents({
-				resize			: this.reposition,
-				setTipsPosition : this.reposition
+				resize: this.reposition,
+				setTipsPosition: this.reposition
 			});
 		}
 	},
@@ -171,7 +172,7 @@ UI.Bubble = new Class({
 		location - (object) Object containing top and left values
 	*/
 	
-	getLocation : function(){
+	getLocation: function(){
 		var bubbleCoord = this.element.getCoordinates();
 		var coord = this.options.target.getCoordinates();
 		
@@ -200,7 +201,7 @@ UI.Bubble = new Class({
 		<UI.Element::setSize>
 	*/
 	
-	setSize : function(width,height){
+	setSize: function(width,height){
 		if (this.label) {
 			width = width || this.options.width || this.props.width || this.label.getSize().x;
 			height = height || this.options.height || this.props.height || this.label.getSize().y;
@@ -219,7 +220,7 @@ UI.Bubble = new Class({
 		this
 	*/
 	
-	fade : function(way){
+	fade: function(way){
 		this.fx.start('opacity', way);
 		return this;
 	},
@@ -235,7 +236,7 @@ UI.Bubble = new Class({
 		<UI.Element::destroy>
 	*/
 	
-	destroy : function(){
+	destroy: function(){
 		window.removeEvent('resize', this.reposition);
 		this.parent();
 	}

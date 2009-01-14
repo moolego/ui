@@ -16,10 +16,8 @@
 	Example:
 		(start code)
 		var toolbar = new UI.Toolbar({
-				className	: 'ui-menu-dropdown',
-				container	: this.main.content,
-				menu		: [
-				{
+				container: this.main.content,
+				menu: [{
 					text : 'Floor App',
 					options	: {	'class' : 'ui-dd-floor'	},
 					menu : [{
@@ -33,19 +31,20 @@
 */
 
 UI.Toolbar = new Class({
-	Extends				: UI.Menu,
 	
-	options				: {
+	Extends: UI.Menu,
+	
+	options: {
 		// default options
-		tag				: 'div',
-		menus			: [],
-		zIndex			: 4000,
-		openOnRollover	: false,
-		closeOnRollout	: false,
+		tag: 'div',
+		menus: [],
+		zIndex: 4000,
+		openOnRollover: false,
+		closeOnRollout: false,
 		
 		// styles
-		rolloverType	: 'toolbarRollover',
-		component		: 'toolbar'
+		rolloverType: 'toolbarRollover',
+		component: 'toolbar'
 	},
 	
 	/*
@@ -62,17 +61,17 @@ UI.Toolbar = new Class({
 		<UI.Element::build>
 	*/
 	
-	build: function() {
+	build: function(){
 		this.addItemStyles();
 		this.parent();
 		
 		this.element.setStyles({
-			position	: 'relative',
-			width		: '100%'
+			position: 'relative',
+			width: '100%'
 		});
 	},
 	
-	setBehavior : function(){
+	setBehavior: function(){
 		this.addEvent('onCloseMenu', function(){
 			this.removeSubmenu();
 			(function(){this.removeRollover()}.bind(this)).delay(this.props.hideFxDuration);
@@ -92,7 +91,7 @@ UI.Toolbar = new Class({
 		this
 	 */
 	
-	inject : function(element, target){
+	inject: function(element, target){
 		this.fireEvent('inject');
 		this.setStyle('visibility', 'visible');
 		this.element.inject(element, target);
@@ -112,8 +111,8 @@ UI.Toolbar = new Class({
 		this.options.menu.each(function(item){
 			item.options = item.options || {};
 			item.options.styles = {
-				'float'	: 'left',
-				color	: this.props.fontColor
+				'float': 'left',
+				color: this.props.fontColor
 			}
 		}, this);
 	},
@@ -135,7 +134,7 @@ UI.Toolbar = new Class({
 		<UI.Menu::addSubmenuEvents>
 	*/
 	
-	addSubmenuEvents : function(item, menuItem){
+	addSubmenuEvents: function(item, menuItem){
 		if(item.menu) {
 			menuItem.element.addEvents({
 				'mousedown' : function(e){
@@ -185,6 +184,7 @@ UI.Toolbar = new Class({
 				}.bind(this)
 			})
 		}
+		
 		menuItem.element.addEvents({
 			'mousedown' : function(e){
 				if (!item.menu && this.activeItem) this.activeItem.fireEvent('hideSubmenu');
@@ -207,4 +207,5 @@ UI.Toolbar = new Class({
 			}.bind(this)
 		});
 	}
+	
 });	

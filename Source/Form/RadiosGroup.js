@@ -37,12 +37,13 @@
 */
 
 UI.RadiosGroup = new Class({
+	
 	Extends				: UI.Control,
 	
-	options				: {
+	options: {
 		// default options
-		name			: 'radiosgroup',
-		component		: 'radio'
+		name: 'radiosgroup',
+		component: 'radio'
 	},
 	
 	/*
@@ -59,7 +60,7 @@ UI.RadiosGroup = new Class({
 		<UI.Element::initialize>
 	*/
 	
-	initialize: function(options) {
+	initialize: function(options){
 		this.parent(options);
 		
 		this.radios = [];
@@ -82,14 +83,14 @@ UI.RadiosGroup = new Class({
 		this method shoul no longer exist.
 	*/
 	
-	newRadio : function(opt) {
-		var radio = new Element('span', {
-			'class'	: 'ui-radio',
-			styles : $merge({
-				position : 'relative',
-				display : 'inline-block',
-				height	: 15,
-				zIndex 	: this.radios.length+1
+	newRadio: function(opt){
+		var radio = new Element('span',{
+			'class': 'ui-radio',
+			styles: $merge({
+				position: 'relative',
+				display: 'inline-block',
+				height: 15,
+				zIndex: this.radios.length+1
 			}, opt.styles)
 		}).store('value', opt.value);
 		
@@ -101,10 +102,10 @@ UI.RadiosGroup = new Class({
 		
 		if (opt.label) {
 			var label = new UI.Label({
-				skin 		: this.options.skin,
-				'for'		: this.options.name,
-				html 		: opt.label,
-				styles 		: this.props.styles
+				skin: this.options.skin,
+				'for': this.options.name,
+				html: opt.label,
+				styles: this.props.styles
 			}).inject(radio);
 			
 			//set width to element
@@ -138,7 +139,7 @@ UI.RadiosGroup = new Class({
 		(void)
 	*/
 	
-	addRadioAction : function(radio) {
+	addRadioAction: function(radio){
 		radio.addEvents({
 			'click': function(){
 				if (this.selectedRadio) this.setState(this.selectedRadio, 'default');
@@ -162,14 +163,14 @@ UI.RadiosGroup = new Class({
 		(void)
 	*/
 	
-	setCanvas : function(radio){
+	setCanvas: function(radio){
 		if (radio.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && this.props.layers.length == 0))
 			return false;
 			
 		radio.canvas = new UI.Canvas({
-			props 			: this.props,
-			width			: this.props.width,
-			height			: this.props.height
+			props: this.props,
+			width: this.props.width,
+			height: this.props.height
 		}).inject(radio);
 		
 		radio.addEvent('drawCanvas', function(){
@@ -191,7 +192,8 @@ UI.RadiosGroup = new Class({
 		(void)
 	*/
 	
-	setState : function(radio, state) {
+	setState: function(radio, state){
 		radio.canvas.draw(this.skin[state]);
 	}
+	
 });

@@ -131,7 +131,7 @@ UI.props.TouchBlue = {
 		'default' : {
 			'default' : {
 				width : 200,
-				height : 12,
+				height : 16,
 				
 				/* element css properties */
 				styles : {

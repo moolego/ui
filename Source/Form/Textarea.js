@@ -22,14 +22,15 @@ Class: UI.Textarea
 */
 
 UI.Textarea = new Class({
-	Extends				: UI.Control,
 	
-	options				: {
-		component		: 'textarea',
+	Extends: UI.Control,
+	
+	options: {
+		component: 'textarea',
 		
 		// default options
-		name			: 'ui-input',
-		value			: ''
+		name: 'ui-input',
+		value: ''
 	},
 	
 	/* 
@@ -46,17 +47,17 @@ UI.Textarea = new Class({
 		<UI.Element::build>
 	*/
 	
-	build : function(){
+	build: function(){
 		//create a new div as input element
 		this.parent();
 				
 		//create input
 		this.setInput(false, 'textarea');
 		this.input.set({
-			styles : {
-				width		: this.props.width - this.input.getStyle('paddingLeft').toInt() - this.input.getStyle('paddingRight').toInt(),
-				height		: this.props.height - this.input.getStyle('paddingTop').toInt() - this.input.getStyle('paddingBottom').toInt(),
-				overflow	: 'hidden',
+			styles: {
+				width: this.props.width - this.input.getStyle('paddingLeft').toInt() - this.input.getStyle('paddingRight').toInt(),
+				height: this.props.height - this.input.getStyle('paddingTop').toInt() - this.input.getStyle('paddingBottom').toInt(),
+				overflow: 'hidden',
 				margin: 0
 			}
 		});
@@ -76,7 +77,7 @@ UI.Textarea = new Class({
 			<UI.Element::setState>
 	*/
 	
-	setState : function(state){
+	setState: function(state){
 		this.parent(state);
 		return this;
 	},
@@ -95,11 +96,11 @@ UI.Textarea = new Class({
 			<UI.Element::setBehavior>
 	*/
 	
-	setBehavior : function() {
+	setBehavior: function(){
 		this.parent();
 		this.addEvents({
-			blur	: this.setState.bind(this, 'default'),
-			focus	: this.setState.bind(this, 'focus')
+			blur: this.setState.bind(this, 'default'),
+			focus: this.setState.bind(this, 'focus')
 		});
 	}
 });
