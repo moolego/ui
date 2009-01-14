@@ -22,29 +22,29 @@
 
  */
 UI.Styles = new Class({
+	
 	Implements : Options,
 	
-	options:
-	{
-		self:				'CSS',
-		limited:			[],
-		_rule:				'',
-		_style:				null,
-		rules:				{}
+	options: {
+		self: 'CSS',
+		limited: [],
+		_rule: '',
+		_style: null,
+		rules: {}
 	},
 	
-	initialize : function(options) {
+	initialize: function(options){
 		this.setOptions(options);
 		this.local = this.options;
 	},
 	
-	destroy : function() {
+	destroy: function(){
 		if(this.local._style) this.local._style.destroy();
 	},
 	
-	refresh : function() {
+	refresh: function(){
 		var text = '';
-		Hash.each(this.local.rules, function(rule, selector) {
+		Hash.each(this.local.rules, function(rule, selector){
 			this.local._rule = '';
 			Hash.each(rule, this.glue, this);
 			text += (this.local._rule == '' ? '' : selector + '{' + this.local._rule + '}');
@@ -53,8 +53,7 @@ UI.Styles = new Class({
 		this.destroy();
 		this.local._style = new Element('style').set('type', 'text/css').inject(document.head);
 		
-		switch(Browser.Engine.name)
-		{
+		switch(Browser.Engine.name){
 			case 'trident':
 				this.local._style.styleSheet.cssText = text;
 				break;
@@ -62,12 +61,12 @@ UI.Styles = new Class({
 			default:
 				this.local._style.grab(document.createTextNode(text));
 				break;
-		}
+		};
 		
 		return this;
 	},
 	
-	glue : function(value, property) {
+	glue: function(value, property){
 		if(this[Browser.Engine.name + '_' + property])
 		{
 			var pair = this[Browser.Engine.name + '_' + property](value, property);
@@ -80,12 +79,12 @@ UI.Styles = new Class({
 	},
 	
 	
-	addRule : function(selector, properties) {
+	addRule: function(selector, properties){
 		var rules = {}; rules[selector] = properties;
 		return this.addRules(rules);
 	},
 	
-	addRules : function(rules) {
+	addRules: function(rules){
 		this.local.rules = $merge(this.local.rules, rules);
 		return this;
 	}

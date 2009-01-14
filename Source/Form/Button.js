@@ -22,14 +22,15 @@
 */
 
 UI.Button = new Class({
-	Extends				: UI.Control,
 	
-	options				: {
-		component		: 'button',
+	Extends: UI.Control,
+	
+	options: {
+		component: 'button',
 		
 		// default options
-		label			: 'Button',
-		submit			: false
+		label: 'Button',
+		submit: false
 	},
 	
 	/* 
@@ -46,7 +47,7 @@ UI.Button = new Class({
 		<UI.Element::build>
 	*/
 	
-	build : function(){
+	build: function(){
 		this.parent();
 		if(this.options.label) {
 			this.label = new UI.Label({
@@ -75,7 +76,7 @@ UI.Button = new Class({
 		<UI.Element::setState>
 	*/
 	
-	setState : function(state){
+	setState: function(state){
 		if (this.label && this.skin[state]) {
 			this.label.setStyles(this.skin[state].components.label.styles);
 		}
@@ -96,19 +97,19 @@ UI.Button = new Class({
 		<UI.Element::setBehavior>
 	*/
 	
-	setBehavior : function() {
+	setBehavior: function(){
 		this.parent();
-		//we add mouse event
+
 		this.element.addEvents({
-			mouseenter	: this.setState.bind(this, 'over'),
-			mousedown	: function(e) {
+			mouseenter: this.setState.bind(this, 'over'),
+			mousedown: function(e) {
 				this.setState('down');
 				new Event(e).stop();
 			}.bind(this),
 			mouseleave: function(){
 				this.setState(this.options.state);
 			}.bind(this),	
-			mouseup		: function(){
+			mouseup: function(){
 				if (this.options.submit) this.submit();
 				this.setState('over');
 			}.bind(this)
@@ -126,7 +127,7 @@ UI.Button = new Class({
 		As we want to remove hidden input, we must instead serialize the group of this button than submitting an unecessary form
 	*/
 	
-	submit : function() {
+	submit: function(){
 		this.getForm().submit();
 	}
 });

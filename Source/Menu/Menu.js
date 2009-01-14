@@ -34,20 +34,21 @@
 
 
 UI.Menu = new Class({
-	Extends					: UI.Element,
+	
+	Extends: UI.Element,
 	
 	options: {
-		component			: 'menu',
-		rolloverType		: 'menuRollover',
-
-		zIndex				: 3000,
-		contentTag			: 'div',
-		itemTag				: 'div',
-
-		position			: 'normal',
-		scrollToSelected	: false,
-		scrollMargin		: 20,
-		menu				: []
+		component: 'menu',
+		rolloverType: 'menuRollover',
+		
+		zIndex: 3000,
+		contentTag: 'div',
+		itemTag: 'div',
+		
+		position: 'normal',
+		scrollToSelected: false,
+		scrollMargin: 20,
+		menu: []
 	},
 
 	/*
@@ -66,13 +67,13 @@ UI.Menu = new Class({
 	build: function(menu) {
 		this.parent();
 		this.content = new Element(this.options.contentTag,{
-			styles : {
-				zIndex		: 2,
-				position	: 'relative',
-				padding		: this.props.components.wrapper.styles.padding,
-				margin		: 0,
-				listStyle	: 'none',
-				lineHeight	: '1em'
+			styles: {
+				zIndex: 2,
+				position: 'relative',
+				padding: this.props.components.wrapper.styles.padding,
+				margin: 0,
+				listStyle: 'none',
+				lineHeight: '1em'
 			}
 		}).inject(this.element);
 		
@@ -113,22 +114,23 @@ UI.Menu = new Class({
 	buildMenu : function(menu) {
 		this.empty();
 		var list = (menu) ? menu : this.options.menu;
+		
 		list.each(function(item){
 			if (item.text == 'separator') {
 				var menuItem = new UI.Label({
-					skin		: this.options.skin,
-					tag			: this.options.itemTag,
-					html		: '',
-					styles		: this.props.components.separator.styles
+					skin: this.options.skin,
+					tag: this.options.itemTag,
+					html: '',
+					styles: this.props.components.separator.styles
 				}).inject(this.content);
 				menuItem.separator = true;
 			} else {
 				var menuItem = new UI.Label({
-					skin		: this.options.skin,
-					tag			: this.options.itemTag,
-					html		: item.text,
-					props		: UI.skin.getComponentProps(this.skin, 'menuItem'),
-					image 		: item.image
+					skin: this.options.skin,
+					tag: this.options.itemTag,
+					html: item.text,
+					props: UI.skin.getComponentProps(this.skin, 'menuItem'),
+					image: item.image
 				}).set(item.options);
 				
 				if (item.action) menuItem.element.addEvent('action', item.action);
@@ -153,10 +155,10 @@ UI.Menu = new Class({
 		(void)
 	 */
 	
-	addSubmenuEvents : function(item, menuItem){
+	addSubmenuEvents: function(item, menuItem){
 		if(item.menu) {
 			menuItem.addEvents({
-				'mouseenter' : function(){
+				'mouseenter': function(){
 					if (this.activeItem && this.activeItem.submenu && this.activeItem != menuItem) this.activeItem.submenu.hide();
 					if (this.activeItem != menuItem) this.addSubmenu(item, menuItem, 'normal');
 					this.moveRollover(menuItem);
@@ -165,7 +167,7 @@ UI.Menu = new Class({
 			this.addSubmenuArrow(menuItem);
 		} else {
 			menuItem.addEvents({
-				'mouseenter' : function(){
+				'mouseenter': function(){
 					this.removeSubmenu();
 					(menuItem.separator) ? this.removeRollover() : this.moveRollover(menuItem);
 				}.bind(this)
@@ -176,10 +178,10 @@ UI.Menu = new Class({
 			'mouseleave': function(){
 				$clear(this.menuActionDelay);
 			}.bind(this),
-			'mouseup' : function(){
+			'mouseup': function(){
 				this.mouseUpAction(menuItem);
 			}.bind(this),
-			'mousedown' : function(e){
+			'mousedown': function(e){
 				new Event(e).stop();
 				if (!menuItem.separator) this.fireEvent('change');
 			}.bind(this)
@@ -200,20 +202,20 @@ UI.Menu = new Class({
 		(void)
 	 */
 	
-	addSubmenu : function(item, menuItem, position) {
+	addSubmenu: function(item, menuItem, position){
 		this.menuWithAction = false;
 		$clear(this.menuActionDelay);
 		this.menuActionDelay = (function(){
 			if (!menuItem.submenu) {
 				menuItem.submenu = new UI.Menu({
-					skin			: this.options.skin,
-					target			: menuItem,
-					menu			: item.menu,
-					closeMenu		: this.fireEvent.bind(this, 'closeMenu'),
-					openOnRollover	: this.options.openOnRollover,
-					closeOnRollout	: this.options.closeOnRollout,
-					position		: position,
-					zIndex			: this.options.component == 'toolbar' ? --this.options.zIndex : ++this.options.zIndex
+					skin: this.options.skin,
+					target: menuItem,
+					menu: item.menu,
+					closeMenu: this.fireEvent.bind(this, 'closeMenu'),
+					openOnRollover: this.options.openOnRollover,
+					closeOnRollout: this.options.closeOnRollout,
+					position: position,
+					zIndex: this.options.component == 'toolbar' ? --this.options.zIndex : ++this.options.zIndex
 				}).inject(document.body);
 				ui.controller.closeMenu = this.fireEvent.bind(this, 'closeMenu');
 			} else {
@@ -236,18 +238,18 @@ UI.Menu = new Class({
 	 */
 	
 	
-	addSubmenuArrow : function(menuItem){
+	addSubmenuArrow: function(menuItem){
 		this.addEvent('addArrows', function(){
 			//we add the arrow
 			menuItem.arrow = new UI.Element({
-				skin		: this.options.skin,
-				component 	: 'element',
-				type		: 'menuRightArrow',
-				styles 		: {
-					'padding'	: 0,
-					'position'	: 'absolute',
-					right		: 8,
-					display		: 'block'
+				skin: this.options.skin,
+				component: 'element',
+				type: 'menuRightArrow',
+				styles: {
+					'padding': 0,
+					'position': 'absolute',
+					right: 8,
+					display: 'block'
 				}
 			}).inject(menuItem, 'top');
 			menuItem.arrow.setStyle('top', (menuItem.element.getHeight() - menuItem.arrow.element.getHeight()) / 2);
@@ -279,9 +281,10 @@ UI.Menu = new Class({
 		if ($time() - this.time > 300 && this.rollover) {
 			// effect!!
 			new Fx.Tween(this.rollover.element, {
-				duration	: 100,
-				onComplete	: function(){
-					if (this.selected) this.selected.selected = false;
+				duration: 100,
+				onComplete: function(){
+					if (this.selected) 
+						this.selected.selected = false;
 					this.selected = menuItem.element;
 					menuItem.element.selected = true;
 					this.fireEvent('closeMenu');
@@ -301,14 +304,14 @@ UI.Menu = new Class({
 		(void)
 	 */
 	
-	setRollover : function(){
+	setRollover: function(){
 		if (this.rollover) return;
 		this.rollover = new UI.Element({
-			skin			: this.options.skin,
-			type			: this.options.rolloverType,
-			styles			: {
-				position 	: 'absolute',
-				zIndex 		: 1
+			skin: this.options.skin,
+			type: this.options.rolloverType,
+			styles: {
+				position: 'absolute',
+				zIndex: 1
 			}
 		}).inject(this.element);
 	},
@@ -326,7 +329,7 @@ UI.Menu = new Class({
 		(void)
 	 */
 	
-	moveRollover : function(menuItem){
+	moveRollover: function(menuItem){
 		var coord = menuItem.getCoordinates(this.element);
 		 this.setRollover();
 		
@@ -338,9 +341,9 @@ UI.Menu = new Class({
 		this.rollover
 		.setSize(coord.width, coord.height)
 		.setStyles({
-			display : 'block',
-			top : coord.top,
-			left : coord.left
+			display: 'block',
+			top: coord.top,
+			left: coord.left
 		});
 		menuItem.setState('over');
 
@@ -357,7 +360,7 @@ UI.Menu = new Class({
 		(void)
 	 */
 	
-	removeRollover : function(){
+	removeRollover: function(){
 		if (this.rollover) {
 			this.rollover.destroy();
 			delete this.rollover;
@@ -379,7 +382,7 @@ UI.Menu = new Class({
 		(void)
 	 */
 	
-	removeSubmenu : function(){
+	removeSubmenu: function(){
 		if(this.activeItem && this.activeItem.submenu) {
 			this.activeItem.element.fireEvent('defaultArrow');
 			this.activeItem.submenu.hide(this.props.hideFxDuration);
@@ -399,7 +402,7 @@ UI.Menu = new Class({
 		(void)
 	 */
 	
-	setPosition: function(el) {
+	setPosition: function(el){
 		var elCoordinates 	= el.getCoordinates();
 		var menuCoordinates = this.element.getCoordinates();
 		this.element.setStyle('height', menuCoordinates.height);
@@ -493,7 +496,7 @@ UI.Menu = new Class({
 		is really needed anymore?
 	*/
 	
-	setCorners: function(corners) {
+	setCorners: function(corners){
 		this.props.layers['default'].radius = corners;
 	},
 	
@@ -507,22 +510,23 @@ UI.Menu = new Class({
 		(void)
 	*/
 	
-	addScrolls : function() {
+	addScrolls: function(){
 		this.scrolls = new UI.MenuScroller({
-			skin			: this.options.skin,
-			element			: this.element,
-			content 		: this.content,
-			margin			: this.options.scrollMargin,
-			props	: this.props,
-			onScroll 		: function(){
+			skin: this.options.skin,
+			element: this.element,
+			content: this.content,
+			margin: this.options.scrollMargin,
+			props: this.props,
+			onScroll: function(){
 				this.removeSubmenu();
 				this.removeRollover();
-			}.bind(this),		
-			onResize 		: function(){
+			}.bind(this)			,
+			onResize: function(){
 				var size = this.element.getSize();
 				this.setSize(size.x, size.y);
 			}.bind(this)
 		});
+		
 		this.addEvent('removeScrolls', function(){
 			this.scrolls.removeScrolls();
 			this.removeEvents('removeScrolls');
@@ -541,12 +545,11 @@ UI.Menu = new Class({
 		this
 	 */
 	
-	inject : function(element, target){
+	inject: function(element, target){
 		this.time = $time();
 		this.fireEvent('inject');
 		
 		this.element.inject(element, target);
-		
 		this.setSize();
 		
 		if (this.options.position != 'over') {
@@ -556,6 +559,7 @@ UI.Menu = new Class({
 		} else {
 			this.setCanvas();
 		}
+		
 		this.fireEvent('addArrows');
 		if (this.options.closeOnRollout)
 			this.canvas.canvas.addEvent('mouseleave', function(){
@@ -608,7 +612,7 @@ UI.Menu = new Class({
 		this.fireEvent('hide');
 		this.removeSubmenu();
 			
-		if (!duration) {
+		if (!duration){
 			this.setStyle('display', 'none');
 			this.removeRollover();
 			this.fireEvent('removeScrolls');
@@ -638,4 +642,5 @@ UI.Menu = new Class({
 		this.content.empty();
 		return this;
 	}
+	
 });

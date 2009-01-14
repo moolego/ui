@@ -18,7 +18,8 @@
 
 
 UI.Control = new Class({
-	Extends					: UI.Element,
+	
+	Extends: UI.Element,
 		
 	options: {},
 
@@ -32,7 +33,7 @@ UI.Control = new Class({
 		<UI.Element::build>
 	*/
 	
-	build: function() {
+	build: function(){
 		this.parent();
 		this.control = this.element;
 	},
@@ -50,14 +51,15 @@ UI.Control = new Class({
 		<UI.Element::setSize>
 	*/
 	
-	setSize : function(width,height, state){
+	setSize: function(width,height, state){
 		if (this.label) {
 			var twidth = width || this.options.width || this.props.width || this.label.getSize().x;
 			var theight = height || this.options.height || this.props.height || this.label.getSize().y;
-		}else if (this.input && this.input.getProperty('type') != 'hidden') {
+		} else if (this.input && this.input.getProperty('type') != 'hidden') {
 			var twidth = width || this.options.width || this.props.width || this.input.getSize().x;
 			var theight = height || this.options.height || this.props.height || this.input.getSize().y;
-		}
+		};
+		
 		this.parent(twidth, theight, state);
 	},
 	
@@ -78,26 +80,26 @@ UI.Control = new Class({
 		As we want to remove input from control, this method should no longer exist.
 	*/
 	
-	setInput : function(type, tag){
+	setInput: function(type, tag){
 		if (!$defined(tag)) tag	= 'input';
 		if (!$defined(type)) type = 'hidden';
 
 		if (type) {
 			this.input = new Element(tag, {
-				type		: type,
-				name 		: this.options.name
+				type: type,
+				name: this.options.name
 			}).inject(this.control);
 		} else {
 			this.input = new Element(tag, {
-				name 		: this.options.name
+				name: this.options.name
 			}).inject(this.control);
 		}
 		
-		switch (tag) {
-			case 'input' :
+		switch (tag){
+			case 'input':
 				this.input.set('value', this.options.value);
 				break;
-			case 'textarea' :
+			case 'textarea':
 				this.input.set('html', this.options.value);
 				break;
 		}
@@ -118,7 +120,7 @@ UI.Control = new Class({
 		We will use instead the group and serialize method of the UI.Controller
 	*/
 	
-	getForm : function(){
+	getForm: function(){
 		if (this.control) {
 			var element = this.control.getParent();
 			while (element.get('tag') != 'form') {
@@ -146,8 +148,8 @@ UI.Control = new Class({
 		this.parent();
 		if (this.input) {
 			this.input.addEvents({
-				blur	: this.fireEvent.bind(this, 'blur'),
-				focus	: this.fireEvent.bind(this, 'focus')
+				blur: this.fireEvent.bind(this, 'blur'),
+				focus: this.fireEvent.bind(this, 'focus')
 			});
 		}
 	},
@@ -168,4 +170,5 @@ UI.Control = new Class({
 			this.element.set(property, value);
 		}
 	}
+	
 });

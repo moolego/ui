@@ -11,6 +11,7 @@
 var UI = UI || {
 	version		: '0.1b',
 	author		: 'Code Floor',
-	elements	: new Array(),
 	props		: {}
 };
+
+var ui = ui || {};

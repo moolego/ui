@@ -54,12 +54,13 @@
 
 
 UI.Context = new Class({
-	Extends : UI.Menu,
 	
-	options: {
-		className		: 'ui-menu-context',
-		contexts		: [],
-		type			: 'context'
+	Extends: UI.Menu,
+	
+	options:{
+		className: 'ui-menu-context',
+		contexts: [],
+		type: 'context'
 	},
 	
 	/* 
@@ -74,7 +75,7 @@ UI.Context = new Class({
 		<UI.Element::initialize>
 	*/
 
-	initialize: function(options) {
+	initialize: function(options){
 		this.parent(options);
 		this.addContexts(this.options.contexts);
 		this.element.setStyle('display', 'none');
@@ -92,7 +93,7 @@ UI.Context = new Class({
 		this
 	*/
 	
-	addContexts : function(contexts) {
+	addContexts: function(contexts){
 		contexts.each(function(context){
 			document.body.getElements(context.selector).each(function(el){
 				el.addEvent('contextmenu', function(e){
@@ -120,7 +121,7 @@ UI.Context = new Class({
 		this
 	*/
 	
-	removeContexts : function(selector) {
+	removeContexts: function(selector){
 		document.body.getElements(selector).each(function(el){
 			el.removeEvents('contextmenu');
 		},this);
@@ -145,7 +146,7 @@ UI.Context = new Class({
 		<UI.Menu::setPosition>
 	*/
 	
-	setPosition: function(x,y) {
+	setPosition: function(x,y){
 		if (!$defined(x) || !$defined(y)) return;
 		
 		var coordinates = this.element.getCoordinates();
@@ -178,10 +179,11 @@ UI.Context = new Class({
 			<UI.Element::show>
 	*/
 	
-	show: function(e) {
+	show: function(e){
 		var coord = this.content.getSize();
 		this.parent(false, coord.x, coord.y);
 		this.setPosition(e.client.x,e.client.y);
 		this.setCanvas();
 	}
+
 });

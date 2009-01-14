@@ -42,26 +42,27 @@
 */
 
 UI.Slider = new Class({
+	
 	Extends				: UI.Element,
 	
-	options				: {
+	options:{
 		
 		// default options
-		component		: 'slider',
-		type			: 'horizontal',
+		component: 'slider',
+		type: 'horizontal',
 		
 		// implemented events
-		onStart			: $empty,
-		onChange		: $empty,
-		onComplete		: $empty,
-		onTick			: $empty,
+		onStart: $empty,
+		onChange: $empty,
+		onComplete: $empty,
+		onTick: $empty,
 		
 		// mootools slider default settings
-		snap			: false,
-		offset			: 0,
-		range			: false,
-		wheel			: false,
-		steps			: 100
+		snap: false,
+		offset: 0,
+		range: false,
+		wheel: false,
+		steps: 100
 	},
 	
 	/* 
@@ -90,9 +91,9 @@ UI.Slider = new Class({
 		this.parent();
 		
 		this.handler = new UI.Element({
-			skin				: this.options.skin,
-			component			: 'slider',
-			type				: 'knob'
+			skin: this.options.skin,
+			component: 'slider',
+			type: 'knob'
 		}).inject(this.element);
 	},
 	
@@ -108,7 +109,7 @@ UI.Slider = new Class({
 		this
 	*/
 	
-	inject : function(target, position) {
+	inject: function(target, position){
 		this.fireEvent('inject');
 
 		this.element.inject(target, position);
@@ -118,19 +119,19 @@ UI.Slider = new Class({
 		this.controller.register(this);
 
 		this.slider = new Slider(this.canvas.canvas, this.handler.element, {
-			snap 		: this.options.snap,
-			offset		: this.options.offset,
-			range		: this.options.range,
-			wheel		: this.options.wheel,
-			steps		: this.options.steps,
-			mode		: this.options.type,
-			onStart		: function(step){this.fireEvent('start', step)}.bind(this),
-			onTick		: function(position){
+			snap: this.options.snap,
+			offset: this.options.offset,
+			range: this.options.range,
+			wheel: this.options.wheel,
+			steps: this.options.steps,
+			mode: this.options.type,
+			onStart: function(step){this.fireEvent('start', step)}.bind(this),
+			onTick: function(position){
 				if(this.options.snap) position = this.toPosition(this.step);
 				this.knob.setStyle(this.property, position);
 			},
-			onChange	: function(step){this.fireEvent('change', step)}.bind(this),
-			onComplete	: function(step){this.fireEvent('complete', step)}.bind(this)
+			onChange: function(step){this.fireEvent('change', step)}.bind(this),
+			onComplete: function(step){this.fireEvent('complete', step)}.bind(this)
 		});
 		this.fireEvent('injected');
 		
@@ -147,7 +148,7 @@ UI.Slider = new Class({
 		(void)
 	*/
 	
-	setBehavior : function(){
+	setBehavior: function(){
 		this.parent();
 		this.addEvent('complete', function(step){
 			this.value = step;
@@ -165,8 +166,9 @@ UI.Slider = new Class({
 		this
 	*/
 	
-	set : function(value){
+	set: function(value){
 		this.slider.set(value);
 		return this;
 	}
+	
 });

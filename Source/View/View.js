@@ -38,25 +38,24 @@
 */
 
 UI.View = new Class({
-	Extends					: UI.Element,
+
+	Extends: UI.Element,
 		
 	options: {
-		component			: 'view',
+		component: 'view',
 		
-		width				: '100%',
-		height				: '100%',
-
-		overflow			: 'scrollbar',		// hide, scrollbar or scrollmenu
-
-		tag					: 'div',
-		contentTag			: 'div',			// 
+		width: '100%',
+		height: '100%',
 		
-		content				: {},
-
-		scrollbar			: {},
-
+		overflow: 'scrollbar', // hide, scrollbar or scrollmenu
+		tag: 'div',
+		contentTag: 'div', // 
+		content: {},
+		
+		scrollbar: {},
+		
 		// implemented events		
-		onLoadComplete		: $empty
+		onLoadComplete: $empty
 	},
 
 	/*
@@ -146,8 +145,7 @@ UI.View = new Class({
 		(void)
 	*/
 	
-	buildScrollbar : function() {
-		
+	buildScrollbar: function(){
 		if (this.options.skin) 
 		 this.options.scrollbar.skin = this.options.skin;
 		 
@@ -156,8 +154,8 @@ UI.View = new Class({
 		this.scrollbar = new UI.Scrollbar(this.options.scrollbar);
 				 
 		this.addEvents({
-			'ondLoadCompplete' : function() { this.scrollbar.update() },
-			'onResize' : function() { this.scrollbar.update() }
+			'ondLoadCompplete': function() { this.scrollbar.update() },
+			'onResize': function() { this.scrollbar.update() }
 		 });
 	},
 
@@ -178,7 +176,7 @@ UI.View = new Class({
 			case 'ajax' || 'xhr':
 				this.setAjaxContent(source);
 				break;
-			case 'ajaxnu' :
+			case 'ajaxnu':
 				this.setAjaxNuContent(source)
 				break;
 			case 'json':
@@ -204,7 +202,7 @@ UI.View = new Class({
 		this
 	*/
 
-	setHtmlContent: function(source) {
+	setHtmlContent: function(source){
 		this.content.set('html',source);
 		this.fireEvent('onLoadComplete');
 		this.fireEvent('onResize');
@@ -222,14 +220,14 @@ UI.View = new Class({
 		this
 	*/
 	
-	setAjaxContent: function(source) {
+	setAjaxContent: function(source){
 		if (this.iframe) 
 		 this.iframe.destroy();
 		
 		new Request.HTML({
-			url 		: source,
-			update		: this.content,
-			method		: 'get',
+			url: source,
+			update: this.content,
+			method: 'get',
 			onComplete: function(){
 				this.fireEvent('onLoadComplete');
 				this.fireEvent('onResize');
@@ -252,9 +250,9 @@ UI.View = new Class({
 	
 	setAjaxNuContent: function(source) {
 		new Request.HTML({
-			url : source,
-			method : 'get',
-			onComplete : function(responseTree,responseElements,responseHTML,responseJS){
+			url: source,
+			method: 'get',
+			onComplete: function(responseTree,responseElements,responseHTML,responseJS){
 				this.fireEvent('onLoadComplete',
 					new Array(responseHTML,responseTree,responseElements,responseJS)
 				);
@@ -278,7 +276,7 @@ UI.View = new Class({
 	
 	setJsonContent: function(source) {
 		new Request.JSON({
-			url : source,
+			url: source,
 			onComplete : function(response){
 				this.fireEvent('onLoadComplete',new Array(response));
 				this.fireEvent('onResize');
@@ -299,7 +297,7 @@ UI.View = new Class({
 		this
 	*/
 	
-	setIFrameContent : function(source) {
+	setIFrameContent: function(source) {
 		if (!this.iframe) {
 			if (this.content) this.content.destroy();
 			if (this.scrollbar) this.scrollbar.destroy();
@@ -314,5 +312,6 @@ UI.View = new Class({
 
 		return this;
 	}
+
 });
 

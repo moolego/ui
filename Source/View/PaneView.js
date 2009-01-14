@@ -28,32 +28,33 @@
 */
 
 UI.PaneView = new Class({
+	
 	Extends					: UI.View,
 	
 	options: {
-		className			: 'ui-panelview',
-		properties			: {},
-		styles				: {
-			width			:'100%',
-			height			:'100%'
+		className: 'ui-panelview',
+		properties: {},
+		styles: {
+			width: '100%',
+			height: '100%'
 		},
-		direction			: 'horizontal',
-		transitionType		: 'scroll',
-		transitionFx		: {
-    		duration		: 1600,
-    		wait			: false
+		direction: 'horizontal',
+		transitionType: 'scroll',
+		transitionFx: {
+			duration: 1600,
+			wait: false
 		},
-		panel				: {
-			className		: 'ui-panelview-panel',
-			styles 			: {
-				width			: '300px',
-				height			: '100%'
+		panel: {
+			className: 'ui-panelview-panel',
+			styles: {
+				width: '300px',
+				height: '100%'
 			}
 		},
-		onLoad				: $empty,
-		onComlete			: $empty,
-		onTransition		: $empty,
-		onResize			: $empty
+		onLoad: $empty,
+		onComlete: $empty,
+		onTransition: $empty,
+		onResize: $empty
 	},
 
 	/* 
@@ -88,8 +89,8 @@ UI.PaneView = new Class({
 
  	build: function (){
 		this.element = new UI.View({
-			overflow			: 'hidden',
-			styles				: {
+			overflow: 'hidden',
+			styles: {
 				height: '100%',
 			    margin: '0',
 			    overflow: 'hidden',
@@ -106,7 +107,7 @@ UI.PaneView = new Class({
 
 	*/
 	
-	add: function() {
+	add: function(){
 		var panel = new UI.View(this.options.panel);
 		panel.element.inject(this.element.content);
 		this.list.push(panel);
@@ -124,7 +125,7 @@ UI.PaneView = new Class({
 	*/
 
 
-	applyTransition: function(panel) {
+	applyTransition: function(panel){
 		this.panel = panel;
 		this.transitionFx.toElement(panel.element);
 	},
@@ -137,7 +138,7 @@ UI.PaneView = new Class({
 
 	*/
 
-	next: function() {
+	next: function(){
 		var next = this.list.indexOf(this.panel)+1;
 				
 		if (this.list[next]) {
@@ -152,7 +153,7 @@ UI.PaneView = new Class({
 
 	*/
 
-	previous: function() {
+	previous: function(){
 		var prev = this.list.indexOf(this.panel)-1;
 		if (this.list[prev]) {
 			this.applyTransition(this.list[prev]);		
@@ -184,7 +185,7 @@ UI.PaneView = new Class({
 
 	*/
 	
-	resize : function() {
+	resize: function(){
 		var size = 0;
 		
 		this.list.each(function(panel,index) {
@@ -201,7 +202,7 @@ UI.PaneView = new Class({
 
 	*/
 
-	inject: function(container) {
+	inject: function(container){
 		this.element.inject(container);
 	},
 
@@ -213,7 +214,7 @@ UI.PaneView = new Class({
 
 	*/
 
-	remove: function(element) {
+	remove: function(element){
 		
 		element.destroy();
 	},
@@ -242,4 +243,5 @@ UI.PaneView = new Class({
 			}
 		}
 	}
+	
 });

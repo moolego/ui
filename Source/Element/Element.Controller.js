@@ -3,13 +3,13 @@ Class: UI.Controller
 	Default element controller.
 	It handle element's z-index as well as group managing and group serialization (usefull for controls values
 */
-var ui = ui || {};
 
 UI.Controller = new Class({
-	Implements 			: [Events, Options],
+	
+	Implements: [Events, Options],
 	
 	options: {
-		zBase			: 1
+		zBase: 1
 	},
 	
 	/*
@@ -21,6 +21,8 @@ UI.Controller = new Class({
 	*/
 	
 	initialize: function(options){
+		ui.elements = new Array();
+		
 		this.setOptions();
 		this.zIndex = this.options.zBase;
 		this.groups = {};
@@ -40,8 +42,8 @@ UI.Controller = new Class({
 	  
 	 */
 	
-	register: function(object) {
-		var oid = UI.elements.push(object) - 1;
+	register: function(object){
+		var oid = ui.elements.push(object) - 1;
 		/*
 		//get first element parent made with UI
 		var element = object.element.getParent();
@@ -86,10 +88,10 @@ UI.Controller = new Class({
 	  
 	 */
 	
-	group : function(oid) {
+	group: function(oid) {
 		//we check if the group exist, else we create it
-		this.groups[UI.elements[oid].options.group] = this.groups[UI.elements[oid].options.group] || new Array();
-		this.groups[UI.elements[oid].options.group].push(oid);
+		this.groups[ui.elements[oid].options.group] = this.groups[ui.elements[oid].options.group] || new Array();
+		this.groups[ui.elements[oid].options.group].push(oid);
 	},
 	
 	/*
@@ -101,9 +103,9 @@ UI.Controller = new Class({
 	Arguments:
 		groupID - (string) name of the group you want to serialize element's value.
 	  
-	 */
+	*/
 	
-	serialize : function(groupID) {
+	serialize: function(groupID) {
 		if (!this.groups[groupID]) return false;
 		//we get all elements
 		var string = [];
@@ -113,11 +115,12 @@ UI.Controller = new Class({
 		console.log(string.join('&'));
 	},
 	
-	setBehavior : function(){
+	setBehavior: function(){
 		document.addEvent('mousedown', function(e){
 			this.closeMenu();
 		}.bind(this));
 	}
+	
 });
 
 ui.controller = ui.controller || new UI.Controller();

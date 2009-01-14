@@ -23,14 +23,15 @@
 */
 
 UI.Input = new Class({
-	Extends				: UI.Control,
 	
-	options				: {
-		component		: 'input',
+	Extends: UI.Control,
+	
+	options: {
+		component: 'input',
 		
 		// default options
-		name			: 'ui-input',
-		value			: ''
+		name: 'ui-input',
+		value: ''
 	},
 	
 	/* 
@@ -47,7 +48,7 @@ UI.Input = new Class({
 		<UI.Element::build>
 	*/
 	
-	build : function(){
+	build: function(){
 		//create a new div as input element
 		this.parent();
 		
@@ -70,7 +71,7 @@ UI.Input = new Class({
 		<UI.Element::setState>
 	*/
 	
-	setState : function(state){
+	setState: function(state){
 		this.parent(state);
 		if (this.skin[state]) this.input.set(this.skin[state].components.input.styles);
 	},
@@ -89,11 +90,12 @@ UI.Input = new Class({
 		<UI.Element::setBehavior>
 	*/
 	
-	setBehavior : function() {
+	setBehavior: function() {
 		this.parent();
 		this.addEvents({
-			blur	: this.setState.bind(this, 'default'),
-			focus	: this.setState.bind(this, 'focus')
+			blur: this.setState.bind(this, 'default'),
+			focus: this.setState.bind(this, 'focus')
 		})
 	}
+	
 });

@@ -20,22 +20,25 @@
 	Example:
 		(start code)
 		new UI.Select({
-			name			: 'testselect',
+			name			: 'formular',
 			list			: [{
-				text		: 'Montagne',
-				value		: 'mntgn'
+				text		: 'Button',
+				value		: 'bttn'
 			},{ 
-				text		: 'Plage',
-				value		: 'plg'
+				text		: 'Checkbox',
+				value		: 'ckbx'
 			},{ 
-				text		: 'Sport',
-				value		: 'sprt'
+				text		: 'Input',
+				value		: 'inpt'
 			},{ 
-				text		: 'Nuit',
-				value		: 'nt'
+				text		: 'Select',
+				value		: 'slct'
 			},{ 
-				text		: 'Glace',
-				value		: 'glc'
+				text		: 'Slider',
+				value		: 'sldr'
+			},{ 
+				text		: 'Textarea',
+				value		: 'txtr'
 			}]
 		}).inject(this.content);
 		(end)
@@ -43,13 +46,14 @@
 
 
 UI.Select = new Class({
-	Extends					: UI.Control,
-	
-	options : {
-		component			: 'select',
 
-		scrollToSelected	: true,
-		list				: {}
+	Extends: UI.Control,
+	
+	options: {
+		component: 'select',
+		
+		scrollToSelected: true,
+		list: {}
 	},
 	
 	/* 
@@ -66,7 +70,7 @@ UI.Select = new Class({
 		<UI.Element::build>
 	*/
 	
-	build : function(){
+	build: function(){
 		//we create a new div as button element
 		this.parent();
 		this.setInput();
@@ -74,25 +78,25 @@ UI.Select = new Class({
 		
 		//we create a menu
 		this.menu = new UI.Menu({
-			width				: this.options.width,
-			skin				: this.options.skin,
-			position 			: 'over',
-			target				: this.element,
-			menu				: this.options.list,
-			scrollToSelected 	: this.options.scrollToSelected
+			width: this.options.width,
+			skin: this.options.skin,
+			position: 'over',
+			target: this.element,
+			menu: this.options.list,
+			scrollToSelected: this.options.scrollToSelected
 		}).inject(document.body);
 		
-		//we create a span for text
+		//we create a label for the selected item
 		var width = this.menu.content.getFirst().getSize().x;
 		width -=  this.menu.content.getFirst().getStyle('paddingRight').toInt();
 		width -=  this.menu.content.getFirst().getStyle('paddingLeft').toInt();
 		this.menu.setStyle('display', 'none');
 		
 		this.label = new UI.Label({
-			width	: width,
-			skin	: this.options.skin,
-			styles	: this.props.components.label.styles,
-			html	: this.options.list[0].text
+			width: width,
+			skin: this.options.skin,
+			styles: this.props.components.label.styles,
+			html: this.options.list[0].text
 		}).inject(this.element);
 	},
 
@@ -110,12 +114,12 @@ UI.Select = new Class({
 			<UI.Element::setBehavior>
 	*/
 
-	setBehavior : function() {
+	setBehavior: function(){
 		this.parent();
 
 		//we add events on select
 		this.element.addEvents({
-			mousedown : function(e){
+			mousedown: function(e){
 				ui.controller.closeMenu();
 				this.menu.show(this.element);
 				new Event(e).stop();
@@ -134,7 +138,7 @@ UI.Select = new Class({
 	*/
 	
 
-	addMenuActions : function(list) {
+	addMenuActions: function(list){
 		list.each(function(el){
 			if (!el.menu && el.text != 'separator') {
 				el.action = function(){
@@ -146,4 +150,5 @@ UI.Select = new Class({
 			}
 		}, this)
 	}
+	
 });

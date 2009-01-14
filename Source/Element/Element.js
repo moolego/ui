@@ -47,47 +47,48 @@
 	*/
 
 UI.Element = new Class({
-	Implements				: [Events, Options],
+
+	Implements: [Events, Options],
 		
 	options: {
-		lib					: 'ui',
-
-		component			: 'element',
-		type				: 'default',
-		state				: 'default',	
+		lib: 'ui',
 		
-		className			: false,
-		tag					: 'span',
+		component: 'element',
+		type: 'default',
+		state: 'default',
 		
-		resizable			: false,
-		draggable			: false,
-		selectable			: true,
-
-		skin				: 'AquaGraphite',
-		props				: false,
+		className: false,
+		tag: 'span',
 		
-		styles				: {},
+		resizable: false,
+		draggable: false,
+		selectable: true,
+		
+		skin: 'AquaGraphite',
+		props: false,
+		
+		styles: {},
 		
 		//devel
-		debug				: false,
+		debug: false,
 		
 		//group id
-		group				: false,
+		group: false,
 		
 		// implemeted events
-		onClick				: $empty,
-		onMouseDown			: $empty,
-		onBuild				: $empty,
-		onBuildComplete		: $empty,
-		onResizeStart		: $empty,
-		onResize			: $empty,
-		onResizeComplete	: $empty,
-		onDragStart			: $empty,
-		onDrag				: $empty,
-		onDragComplete		: $empty,
+		onClick: $empty,
+		onMouseDown: $empty,
+		onBuild: $empty,
+		onBuildComplete: $empty,
+		onResizeStart: $empty,
+		onResize: $empty,
+		onResizeComplete: $empty,
+		onDragStart: $empty,
+		onDrag: $empty,
+		onDragComplete: $empty,
 		
-		onShow				: $empty,
-		onHide				: $empty
+		onShow: $empty,
+		onHide: $empty
 	},
 
 	/* 
@@ -133,7 +134,7 @@ UI.Element = new Class({
 		this.element - (element) The DOM element
 	*/
 	
-	toElement : function(){
+	toElement: function(){
 		return this.element;
 	},
 
@@ -147,17 +148,17 @@ UI.Element = new Class({
 		(void)
 	*/
 	
-	build : function(){
+	build: function(){
 		this.fireEvent('build');
 
 		this.element = new Element(this.options.tag, {
-			'class' : this.className,
-			styles	: this.props.styles,
-			events	: this.options.events,
-			id		: this.options.id,
-			name	: this.options.name,
-			html	: this.options.html,
-			'for'	: this.options['for']
+			'class': this.className,
+			styles: this.props.styles,
+			events: this.options.events,
+			id: this.options.id,
+			name: this.options.name,
+			html: this.options.html,
+			'for': this.options['for']
 		});
 		
 		if (!this.options.selectable) this.element.disableSelect();
@@ -176,7 +177,7 @@ UI.Element = new Class({
 		(void)
 	 */
 	
-	setClassName : function() {
+	setClassName: function(){
 		if (this.options.className) {
 			this.className = this.options.className;
 		} else {
@@ -214,21 +215,22 @@ UI.Element = new Class({
 		Create a canvas element inject it and add a redraw event
 	*/
 	
-	setCanvas : function(){
+	setCanvas: function(){
 		if (this.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && $H(this.props.layers).getLength() <= 2) || ($defined(this.props.layers.reorder) && !this.props.layers.reorder.length))
 			return false;
 
 		this.canvas = new UI.Canvas({
-			props 			: this.props,
-			width			: this.element.x,
-			height			: this.element.y,
-			debug			: this.options.debug,
-			element			: this.element,
-			skin			: this.options.skin,
-			component		: this.options.component,
-			type			: this.options.type,
-			state			: this.options.state
+			props: this.props,
+			width: this.element.x,
+			height: this.element.y,
+			debug: this.options.debug,
+			element: this.element,
+			skin: this.options.skin,
+			component: this.options.component,
+			type: this.options.type,
+			state: this.options.state
 		}).inject(this.element);
+		
 		this.addEvent('canvasDraw', function(state){
 			if (!state)	var props = this.props;
 			else var props = this.skin[state] || this.props;
@@ -248,7 +250,7 @@ UI.Element = new Class({
 		this	
 	*/
 	
-	setState : function(state, size){
+	setState: function(state, size){
 		if (this.skin[state]) {
 			this.state = state;
 			if (this.skin[state].styles) this.setStyles(this.skin[state].styles);
@@ -274,7 +276,7 @@ UI.Element = new Class({
 		this	
 	*/
 	
-	setSize : function(width, height, state, target){
+	setSize: function(width, height, state, target){
 		this.fireEvent('onResize');
 		this.element.x = width || this.options.width || this.props.width || this.element.getSize().x;
 		this.element.y = height || this.options.height || this.props.height || this.element.getSize().y;
@@ -310,7 +312,7 @@ UI.Element = new Class({
 	
 	*/
 	
-	setLocation	: function(left,top,morph) {
+	setLocation: function(left,top,morph){
 		this.element.left = left || this.options.left || this.props.defaultLeft || this.element.getCoordinates().x - this.props.shadowMagnify * 2;
 		this.element.top = top || this.options.top || this.props.defaultTop || this.element.getCoordinates().y - this.props.shadowMagnify * 2;
 		
@@ -336,28 +338,31 @@ UI.Element = new Class({
 		onClick event is fired on mouse up because of Explorer. Sometimes it doesn't fire onClick event (f.e. if a button has no label).
 	*/
 
-	setBehavior : function() {
+	setBehavior: function(){
 		
 		if (this.options.draggable)  { this.enableDrag(); }
 		if (this.options.resizable) { this.enableResize(); }
 		
 		this.element.addEvents({
-			mousedown 	: function(e){
-				if(this.options.component != 'label') ui.controller.closeMenu();
+			mousedown: function(e){
+				if (this.options.component != 'label') 
+					ui.controller.closeMenu();
 				this.fireEvent('mousedown');
 			}.bind(this),
-			click		: function(e){
-				if (!Browser.Engine.trident) this.fireEvent('click');
+			click: function(e){
+				if (!Browser.Engine.trident) 
+					this.fireEvent('click');
 			}.bind(this),
-			mouseup		: function(){
-				if (Browser.Engine.trident)	this.fireEvent('click');
+			mouseup: function(){
+				if (Browser.Engine.trident) 
+					this.fireEvent('click');
 				this.fireEvent('mouseup');
 			}.bind(this),
 			
-			mouseenter 	: this.fireEvent.bind(this, 'mouseenter'),
-			mouseleave 	: this.fireEvent.bind(this, 'mouseleave'),
-			mouseover 	: this.fireEvent.bind(this, 'mouseover'),
-			mouseOut 	: this.fireEvent.bind(this, 'mouseOut')
+			mouseenter: this.fireEvent.bind(this, 'mouseenter'),
+			mouseleave: this.fireEvent.bind(this, 'mouseleave'),
+			mouseover: this.fireEvent.bind(this, 'mouseover'),
+			mouseOut: this.fireEvent.bind(this, 'mouseOut')
 		});
 	},
 
@@ -367,19 +372,22 @@ UI.Element = new Class({
 			Add draggable capabilities for the element.
 	*/
 	
-	enableDrag :function() {
+	enableDrag: function(){
 		
 		if (this.dragHandlers.length == 0) {
 			this.dragHandlers = null;
 		}
 		
 		this.dragHandler = new Drag(this.element, {
-			handle 		: this.dragHandlers,
-			limit 		: { x: this.options.dragLimitX, y: this.options.dragLimitY },
+			handle: this.dragHandlers,
+			limit: {
+				x: this.options.dragLimitX,
+				y: this.options.dragLimitY
+			},
 			
-			onStart 	: this.fireEvent.bind(this, 'onDragStart'),
-			onDrag 		: this.fireEvent.bind(this, 'onDrag'),
-			onComplete 	: this.fireEvent.bind(this, 'onDragComplete')
+			onStart: this.fireEvent.bind(this, 'onDragStart'),
+			onDrag: this.fireEvent.bind(this, 'onDrag'),
+			onComplete: this.fireEvent.bind(this, 'onDragComplete')
 		});
 		
 		this.addEvents({
@@ -394,7 +402,7 @@ UI.Element = new Class({
 			Remove draggable capabilities for the element.
 	*/
 		
-	disableDrag	: function() {
+	disableDrag	: function(){
 		if (this.dragHandler) this.dragHandler.stop();
 		return this;
 	},
@@ -405,7 +413,7 @@ UI.Element = new Class({
 	    	Add resizable capabilities for the element.
 	*/
 	
-	enableResize : function() {
+	enableResize : function(){
 		this.element.makeResizable({
 			handle			: this.resize,
 			limit			: { 
@@ -434,7 +442,7 @@ UI.Element = new Class({
 		location - (object) An object containing top and left properties.	
 	*/
 	
-	getCenterLocation: function() {
+	getCenterLocation: function(){
 		var location = {};
 		
 		location.top = (window.getHeight() - this.options.height.toInt()) / 2,
@@ -452,7 +460,7 @@ UI.Element = new Class({
 		(void)
 	*/
 	
-	adaptLocation : function() {
+	adaptLocation : function(){
 		var location = {};
 		var needed = false;
 		var coordinates = this.element.getCoordinates();
@@ -838,4 +846,5 @@ Element.implement({
 	swapClass: function(remove, add){
 		return this.removeClass(remove).addClass(add);
 	}
+	
 });

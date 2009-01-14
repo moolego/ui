@@ -18,30 +18,28 @@
 		Stacks should be better implemented
 */
 
-var ui = ui || {};
-
 UI.WindowController = new Class({
 
 	//Extends			: UI.Controller,
 	Implements 			: [Events, Options],
 	
 	options: {
-		version			: '0.1a',
-		zBase			: 2000,
-		zStep			: 10,
-		cascade			: {
-			start		: {
-				x		: 51,
-				y		: 101
+		version: '0.1a',
+		zBase: 2000,
+		zStep: 1,
+		cascade: {
+			start: {
+				x: 51,
+				y: 101
 			},
 			step: {
-				x		: 20,
-				y		: 20
+				x: 20,
+				y: 20
 			}
 		},
-		stack			: {
-			offsetWidth : 4,		
-			offsetHeight: 4			
+		stack: {
+			offsetWidth: 4,
+			offsetHeight: 4
 		}
 	},
 	
@@ -58,9 +56,8 @@ UI.WindowController = new Class({
 	
 	initialize: function(options){
 		this.setOptions();
-		
-		UI.elements.window = new Array();
-
+				
+		ui.windows = new Array();
 		this.zIndex = this.options.zBase;
 		
 		window.addEvent('resize', function(){ this.resizeMaximizedWindow(); }.bind(this));
@@ -79,7 +76,7 @@ UI.WindowController = new Class({
 	*/
 	
 	register: function(win) {
-		UI.elements.window.push(win);
+		ui.windows.push(win);
 		if (win.options.zIndex == 'auto')
 			win.element.setStyle('zIndex', this.zIndex);
 		else
@@ -99,15 +96,15 @@ UI.WindowController = new Class({
 	*/
 	
 	
-	close: function(w) {
-		w = w || this.active; 
-		w.hide();
-		w.fireEvent('onClose');
-		for (var i = UI.elements.window.length - 1; i >= 0; i--) {
-			if (UI.elements.window[i] == w) {
-				w.destroy();
-				delete UI.elements.window[i];
-				UI.elements.window = UI.elements.window.clean();
+	close: function(win) {
+		win = win || this.active; 
+		win.hide();
+		win.fireEvent('onClose');
+		for (var i = ui.windows.length - 1; i >= 0; i--) {
+			if (ui.windows[i] == win) {
+				win.destroy();
+				delete ui.windows[i];
+				ui.windows = ui.windows.clean();
 			}
 		}
 		this.focus();
@@ -130,13 +127,14 @@ UI.WindowController = new Class({
 			//make next highest window focus
 			var zIndex = 0;
 			var window;
-			for (var i = UI.elements.window.length - 1; i >= 0; i--) {
-				var windowZIndex = UI.elements.window[i].element.getStyle('zIndex');
-				if (windowZIndex >= zIndex && !UI.elements.window[i].minimized) {
-					window = UI.elements.window[i];
+			for (var i = ui.windows.length - 1; i >= 0; i--) {
+				var windowZIndex = ui.windows[i].element.getStyle('zIndex');
+				if (windowZIndex >= zIndex && !ui.windows[i].minimized) {
+					window = ui.windows[i];
 					zIndex = windowZIndex;
 				}
 			}
+			
 			if (window) window.focus();
 			return;
 		} else if (win && this.active != win) {
@@ -183,7 +181,7 @@ UI.WindowController = new Class({
 		var x = -150;
 		var y = window.getHeight()-35;
 		
-		UI.elements.window.each(function(w,i) {
+		ui.windows.each(function(w,i) {
 			if (w.state == 'minimized') {
 				x += w.getStyle('width').toInt() + 4;
 			}
@@ -203,7 +201,7 @@ UI.WindowController = new Class({
 	resetMinimizedLocation : function(){
 		var x = -150;
 		var y = window.getHeight()-35;
-		UI.elements.window.each(function(win) {
+		ui.windows.each(function(win) {
 			if (win.state == 'minimized') {
 				x += win.getStyle('width').toInt() + 4;
 				win.setLocation(x, y);
@@ -219,12 +217,12 @@ UI.WindowController = new Class({
 		(void)
 	*/	
 	
-	resizeMaximizedWindow: function() {
-		UI.elements.window.each(function(win) {
+	resizeMaximizedWindow: function(){
+		ui.windows.each(function(win) {
 			if (win.state == 'maximized') {
 				win.setSize({
-					height	: window.getHeight()-53,
-					width	: window.getWidth()
+					height: window.getHeight()-53,
+					width: window.getWidth()
 				});
 			}
 		});
@@ -241,12 +239,12 @@ UI.WindowController = new Class({
 		location - (object) location coordinates { left : 100, top : 100 }
 	*/
 
-	getCascadeLocation: function(win) {
+	getCascadeLocation: function(win){
 		var location = {
 			left : this.options.cascade.start.x.toInt(),
 			top : this.options.cascade.start.y.toInt()
 		}
-		UI.elements.window.each(function(w,i) {
+		ui.windows.each(function(w,i) {
 			if (w.state != 'minimized' && w.options.location == 'cascade') {
 				location.left += this.options.cascade.step.x;
 				location.top += this.options.cascade.step.y;
@@ -266,20 +264,20 @@ UI.WindowController = new Class({
 	
 	Returns:
 		(void)
-	
+		
 	*/
 	
-	propagateUnderShadow : function(e) {
+	propagateUnderShadow : function(e){
 		var x = e.client.x;
 		var y = e.client.y;
 		var z = 0;
 		var s = '';
-		UI.elements.window.each(function(w,i) {
-			c = w.element.getCoordinates();
+		ui.windows.each(function(win,i) {
+			c = win.element.getCoordinates();
 			if ( c.left <= x && x <= c.left + c.width && c.top <= y && y < c.top + c.height) {
-				if ( w.element.getStyle('z-index') > z ) {
-					z = w.element.getStyle('z-index');
-					s = w;
+				if ( win.element.getStyle('z-index') > z ) {
+					z = win.element.getStyle('z-index');
+					s = win;
 				}
 				s.focus();
 			}
@@ -287,123 +285,44 @@ UI.WindowController = new Class({
 	},
 
 	/*
-	Function: resetCascade
-		Reset all window location and set a cascade
+	Function: cascade
+		Move every windows to its position in the cascade
 	
 	Returns:
 		(void)
-	 */
+	*/
 
-	cascade : function() {
-		var xOffset = 20;
-		var yOffset = 20;
-		arrangementType = 'cascade';
-		var containerTopOffset = 50;
-		var containerLeftOffset = 170;
-		UI.elements.window.each(function(w){
-			
-			//indexLevel++;					  
-	    	//w.setStyle('zIndex', indexLevel);	
-			containerTopOffset += yOffset;
-			containerLeftOffset += xOffset;
-			var fx = new Fx.Morph(w.element, {
+	cascade: function(group){
+		var start = [170,50];
+		var offset = [20,20];
+		var zIndex = this.zIndex;
+		
+		ui.windows.each(function(win){
+			win.element.style.zIndex = zIndex++;
+
+			start[0] += offset[0];			
+			start[1] += offset[1];
+
+			var fx = new Fx.Morph(win.element, {
 				'duration': 1000,
 				transition: Fx.Transitions.Sine.easeInOut,
-				link : 'ignore'
+				link: 'ignore'
 			}).start({		
-				'top': containerTopOffset,
-				'left': containerLeftOffset
+				'left': start[0],
+				'top': start[1]
 			});	
 			
-			w.location = 'cascade';	
+			win.location = 'cascade';	
 		});
-	},
-
-	grid: function(){
-		var columns = 7;
-		var xOffset = 100;
-		var yOffset = 100;
 		
-		arrangementType = 'grid';
-		var containerTopOffset = 120;
-		var containerLeftOffset = 150;
-		var i = 1;	
-		
-		UI.elements.window.each(function(w){
-			//indexLevel++;					  
-	        //w.element.setStyle('zIndex', indexLevel);	
-			if (i > 1 && i <= columns){
-				containerLeftOffset += xOffset;
-			} else if (i > 1){
-				containerLeftOffset = 150;
-				containerTopOffset += yOffset;
-				i = 1;
-			}
-
-			w.element.morph({top: containerTopOffset, left: containerLeftOffset});	
-			
-			i++;
-			
-			w.location = 'grid';			
-		});
+		this.zIndex = zIndex;
 	},
 	
-	circle : function(){
-		
-		var centerX = 200;
-		var centerY = 300;
-		var radius = 200;
-		
-		var i = 1;
-		var length = (UI.elements.window.length);
-		UI.elements.window.each(function(w){
-			//indexLevel++;					  
-	        // el.setStyle('zIndex', indexLevel);	
-			var pointRatio = i/length;
-			var xSteps = Math.cos(pointRatio*2*Math.PI);
-			var ySteps = Math.sin(pointRatio*2*Math.PI);
-			var pointX = centerX + xSteps * radius;
-			var pointY = centerY + ySteps * radius;
-			
-			w.element.morph({top: pointY, left: pointX});	
-
-			i++;
-			w.location = 'grid';			
-		});
-	},
-	
-	wave : function(){
-		
-		var centerX = 50;
-		var centerY = 200;
-		var radius = 200;
-		
-		var i = 1;
-		var length = (UI.elements.window.length);
-		UI.elements.window.each(function(w){
-			//indexLevel++;					  
-	        // el.setStyle('zIndex', indexLevel);	
-			var pointRatio = i/length;
-			var xSteps = i/10; // Math.cos(pointRatio*2*Math.PI);
-			var ySteps = (Math.sin(pointRatio*Math.PI))/2; 
-			var pointX = centerX + xSteps * radius;
-			var pointY = centerY + ySteps * radius;
-			
-			w.element.morph({top: pointY, left: pointX});	
-
-			i++;
-			w.location = 'grid';			
-		});
-	},
-	
-
-	
-	closeAll : function(){
-		UI.elements.window.each(function(w){
-			this.close(w);			
+	closeAll: function(){
+		ui.windows.each(function(win){
+			this.close(win);			
 		},this);
 	}
-	
 	
 });
 

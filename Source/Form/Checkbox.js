@@ -25,17 +25,18 @@
 */
 
 UI.Checkbox = new Class({
-	Extends				: UI.Control,
+
+	Extends: UI.Control,
 	
-	options				: {
+	options: {
 		// default options
-		label			: false,
-		name			: 'checkbox-input',
-		value			: 'default',
-		checked			: false,
+		label: false,
+		name: 'checkbox-input',
+		value: 'default',
+		checked: false,
 		
 		// styles
-		component		: 'checkbox'
+		component: 'checkbox'
 	},
 	
 	/*
@@ -52,16 +53,16 @@ UI.Checkbox = new Class({
 		<UI.Element::build>
 	*/
 	
-	build : function() {
+	build: function(){
 		this.parent();
 		this.setInput();
 
 		if (this.options.label) {
 			this.label = new UI.Label({
-				'for'		: this.options.name,
-				skin 		: this.options.skin,
-				html 		: this.options.label,
-				styles 		: this.props.labelStyles
+				'for': this.options.name,
+				skin: this.options.skin,
+				html: this.options.label,
+				styles: this.props.labelStyles
 			}).inject(this.element);
 			delete this.props.width;
 			delete this.props.height;
@@ -78,8 +79,7 @@ UI.Checkbox = new Class({
 		this
 	*/
 	
-	toggleValue : function(){
-		
+	toggleValue: function(){
 		if (this.state == 'checked') {
 			this.setState('default');
 			this.state = 'default';
@@ -109,10 +109,10 @@ UI.Checkbox = new Class({
 		<UI.Element::setBehavior>
 	*/
 	
-	setBehavior : function() {
+	setBehavior : function(){
 		this.parent();
 		this.element.addEvents({
-			click : function(e){
+			click: function(e){
 				new Event(e).stop();
 				this.toggleValue()
 			}.bind(this)

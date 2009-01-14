@@ -35,24 +35,25 @@
 */
 
 UI.ListView = new Class({
-	Extends					: UI.View,
+
+	Extends: UI.View,
 		
 	options: {
-		component			: 'listview',
+		component: 'listview',
 		
-		data				: [],
+		data: [],
 		
-		itemObject	 		: 'Button',
+		itemObject: 'Button',
 		
-		item				: {
-			component		: 'itemList',
-			type			: 'default',
-			label : false
+		item: {
+			component: 'itemList',
+			type: 'default',
+			label: false
 		},
 		
-		width				: '100%',
-		height				: '100%',
-		itemType			: 'itemList'
+		width: '100%',
+		height: '100%',
+		itemType: 'itemList'
 	},
 	
 	/*
@@ -68,7 +69,7 @@ UI.ListView = new Class({
 		<UI.View::build>
 	*/
 
-	build : function() {
+	build: function() {
 		this.parent();
 		
 		this.getData(this.options.url);
@@ -96,7 +97,7 @@ UI.ListView = new Class({
 		data - data to be used during template interpolation
 	*/
 
-	getData : function (url, options) {
+	getData: function (url, options) {
 		if (this.options.url) {
 			 new Request.JSON({
 				url : url,
@@ -125,10 +126,8 @@ UI.ListView = new Class({
 		this
 	*/
 
-	processList : function(data){
-		
-		if (this.options.skin)
-			this.options.item.skin = this.options.skin;
+	processList: function(data){
+		if (this.options.skin) this.options.item.skin = this.options.skin;
 			
 		data.each(function(element){
 			var item = new UI[this.options.itemObject](this.options.item)
@@ -136,11 +135,12 @@ UI.ListView = new Class({
 			
 			$H(element).erase('type').each(function(value,key){
 				new UI.Element({
-					html : value,
-					styles : this.props.components[key].styles
+					html: value,
+					styles: this.props.components[key].styles
 				}).inject(item.element);
 				this.fireEvent('onResize');
 			}, this)
 		}, this);
 	}
+	
 });

@@ -34,15 +34,16 @@
 */
 
 UI.SplitView = new Class({
-	Extends					: UI.View,
 	
-	options : {
-		component : 'splitview',
+	Extends: UI.View,
+	
+	options: {
+		component: 'splitview',
 		
-		overflow : 'hidden',
-		minSize : 20,
+		overflow: 'hidden',
+		minSize: 20,
 		
-		splitter : true
+		splitter: true
 	},
 	
 	build: function(){
@@ -87,20 +88,20 @@ UI.SplitView = new Class({
 		
 	 */
 
-	buildSplitter : function() {
+	buildSplitter: function() {
 		var props = this.props.components.splitter;
 		
 		this.draglimit = {
-			x	: [this.options.minSize,  this.size.x-this.options.minSize],
-			y	: [0, 0]
+			x: [this.options.minSize,  this.size.x-this.options.minSize],
+			y: [0, 0]
 		};
 		
 		this.splitter = new Element('div',props)
 		.inject(this.element);
 		
 		this.splitter.makeDraggable({
-			limit : this.draglimit,
-			onDrag : this.updateSize.bind(this)
+			limit: this.draglimit,
+			onDrag: this.updateSize.bind(this)
 		});
 		
 		this.splitter.setStyle('left',this.view[0].getSize().x);
@@ -115,9 +116,10 @@ UI.SplitView = new Class({
 	 */
 
 	updateSize: function() {
-		this.view[0].element.setStyle('width', this.splitter.getCoordinates().left - this.element.getCoordinates().left + 3);
+		this.view[0].element.setStyle('width', this.splitter.getCoordinates().left - this.element.getCoordinates().left);
 		this.view[1].element.setStyle('width', this.size.x - this.view[0].element.getSize().x);
 		
-		this.fireEvent('onResize');
+		this.fireEvent('resize');
 	}
+	
 });

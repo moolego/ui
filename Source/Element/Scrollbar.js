@@ -28,14 +28,15 @@
 
 
 UI.Scrollbar = new Class({
-	Extends				: UI.Element,
+
+	Extends: UI.Element,
 
 	options: {
-		component		: 'scrollbar',
-		type			: 'track',
-
-		maxThumbSize	: 32,
-		wheel			: 16
+		component: 'scrollbar',
+		type: 'track',
+		
+		maxThumbSize: 32,
+		wheel: 16
 	},
 
 	initialize: function(options){
@@ -55,8 +56,7 @@ UI.Scrollbar = new Class({
 		this.attach();
 	},
 	
-	build: function() {
-		
+	build: function(){
 		if (!this.options.width)
 			this.options.width = this.props.width;
 		
@@ -72,7 +72,6 @@ UI.Scrollbar = new Class({
 	},
 	
 	update: function(){
-	
 		this.containerSize = this.options.container.getSize().y;
 		this.setSize(this.options.width.toInt(),this.containerSize);
 		this.containerScrollSize = this.options.container.scrollHeight;
@@ -88,7 +87,6 @@ UI.Scrollbar = new Class({
 			
 		this.updateThumbFromContentScroll();
 		this.updateContentFromThumbPosition();
-		
 	},
 
 	updateContentFromThumbPosition: function(){
@@ -145,8 +143,7 @@ UI.Scrollbar = new Class({
 		event.stop();
 	},
 	
-	isVisible: function() {
-
+	isVisible: function(){
 		if (this.containerSize < this.containerScrollSize) {
 			return true;
 		} else {
