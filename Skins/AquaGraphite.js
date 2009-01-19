@@ -1180,7 +1180,7 @@ UI.props.AquaGraphite = {
 						size : [11,6],
 						offset : [11,3,2],
 						color : ['#fff','#fff'],
-						opacity : [1, .4],
+						opacity : [1, .4]
 					}
 				}
 			},
@@ -1293,6 +1293,7 @@ UI.props.AquaGraphite = {
 					},
 					menuItem : {
 						styles : {
+							lineHeight : '1em',
 							color : '#000',
 							padding : '4px 40px 5px 16px',
 							whiteSpace : 'nowrap',
@@ -2768,8 +2769,7 @@ UI.props.AquaGraphite = {
 				/* layers properties */
 				layers		 : {
 					main	 : {
-						offset : [3,0],
-						size : [12, 9],
+						offset : [2,1],
 						shape : 'triangle',
 						rotation : 90,
 						color : '#333'
@@ -2810,7 +2810,6 @@ UI.props.AquaGraphite = {
 						radius : [0,0,4,4]
 					},
 					arrow	 : {
-						shape : 'triangle',
 						rotation : 180
 					}
 				}
