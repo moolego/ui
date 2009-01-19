@@ -89,7 +89,6 @@ UI.Menu = new Class({
 		this.parent();
 		if (!this.options.closeMenu) {
 			this.addEvent('onCloseMenu', function(e){
-				console.log(e);
 				ui.controller.closeMenu = $empty;
 				this.hide(300);
 			}.bind(this));
@@ -588,6 +587,7 @@ UI.Menu = new Class({
 	
 	show : function(parent, x, y) {
 		ui.controller.closeMenu = this.fireEvent.bind(this, 'closeMenu');
+		
 		this.time = $time();
 		this.element.setStyle('display', 'block');
 		this.setPosition(parent);
