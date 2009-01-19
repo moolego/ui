@@ -72,8 +72,7 @@ UI.Menu = new Class({
 				position: 'relative',
 				padding: this.props.components.wrapper.styles.padding,
 				margin: 0,
-				listStyle: 'none',
-				lineHeight: '1em'
+				listStyle: 'none'
 			}
 		}).inject(this.element);
 		
@@ -114,7 +113,8 @@ UI.Menu = new Class({
 	buildMenu : function(menu) {
 		this.empty();
 		var list = (menu) ? menu : this.options.menu;
-		
+		this.items = new Array();
+		this.currentIndex = 0;
 		list.each(function(item){
 			if (item.text == 'separator') {
 				var menuItem = new UI.Label({
@@ -132,6 +132,8 @@ UI.Menu = new Class({
 					props: UI.skin.getComponentProps(this.skin, 'menuItem'),
 					image: item.image
 				}).set(item.options);
+				
+				this.items.push(menuItem);
 				
 				if (item.action) menuItem.element.addEvent('action', item.action);
 				menuItem.inject(this.content);
@@ -242,6 +244,8 @@ UI.Menu = new Class({
 		this.addEvent('addArrows', function(){
 			//we add the arrow
 			menuItem.arrow = new UI.Element({
+				width : menuItem.element.getHeight()/2,
+				height : menuItem.element.getHeight()/2,
 				skin: this.options.skin,
 				component: 'element',
 				type: 'menuRightArrow',
@@ -533,6 +537,14 @@ UI.Menu = new Class({
 		}.bind(this));
 	},
 	
+	goDown : function(){
+		this.moveRollover(this.items[++this.currentIndex]);
+	},
+	
+	goUp : function(){
+		this.moveRollover(this.items[--this.currentIndex]);
+	},
+	
 	/* 
 	Method: inject
 		inject the menu and draw the canvas. Overwrite the inject method of <UI.Element>
@@ -587,7 +599,7 @@ UI.Menu = new Class({
 	
 	show : function(parent, x, y) {
 		ui.controller.closeMenu = this.fireEvent.bind(this, 'closeMenu');
-		
+		ui.controller.menu = this;
 		this.time = $time();
 		this.element.setStyle('display', 'block');
 		this.setPosition(parent);
@@ -609,7 +621,7 @@ UI.Menu = new Class({
 	
 	hide: function(duration){
 		if (!$defined(duration)) duration = this.props.hideFxDuration;
-		
+		ui.controller.menu = false;
 		this.fireEvent('hide');
 		this.removeSubmenu();
 			

@@ -29,6 +29,7 @@ UI.Controller = new Class({
 		this.elements = [];
 		this.closeMenu = $empty;
 		this.setBehavior();
+		this.handelKeys();
 	},
 
 	/*
@@ -118,6 +119,18 @@ UI.Controller = new Class({
 	setBehavior: function(){
 		document.addEvent('mousedown', function(e){
 			this.closeMenu(e);
+		}.bind(this));
+	},
+	
+	handelKeys : function(){
+		window.addEvent('keydown', function(e){
+			//menuTest
+			if (e.key == 'down' && this.menu) {
+				this.menu.goDown();
+			}
+			else if (e.key == 'up' && this.menu) {
+				this.menu.goUp();
+			}
 		}.bind(this));
 	}
 	
