@@ -60,6 +60,7 @@ UI.Context = new Class({
 	options:{
 		className: 'ui-menu-context',
 		contexts: [],
+		event: 'contextmenu',
 		type: 'context'
 	},
 	
@@ -96,8 +97,9 @@ UI.Context = new Class({
 	addContexts: function(contexts){
 		contexts.each(function(context){
 			document.body.getElements(context.selector).each(function(el){
-				el.addEvent('contextmenu', function(e){
+				el.addEvent(this.options.event, function(e){
 					new Event(e).stop();
+					this.hide(0);
 					this.buildMenu(context.menu);
 					this.show(e);
 				}.bind(this));
@@ -182,7 +184,7 @@ UI.Context = new Class({
 	show: function(e){
 		this.parent();
 		ui.controller.closeMenu = function(event){
-			if (event.rightClick) {
+			if (event.rightClick || this.options.event != 'contextmenu') {
 				ui.controller.closeMenu = $empty;
 				this.hide(0);
 			} else {
