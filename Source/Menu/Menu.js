@@ -88,7 +88,8 @@ UI.Menu = new Class({
 	setBehavior : function(){
 		this.parent();
 		if (!this.options.closeMenu) {
-			this.addEvent('onCloseMenu', function(){
+			this.addEvent('onCloseMenu', function(e){
+				console.log(e);
 				ui.controller.closeMenu = $empty;
 				this.hide(300);
 			}.bind(this));

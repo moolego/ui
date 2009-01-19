@@ -255,10 +255,7 @@ UI.Element = new Class({
 			this.state = state;
 			if (this.skin[state].styles) this.setStyles(this.skin[state].styles);
 			
-			if ($defined(size))
-				this.setSize(size.width, size.height, state);
-			else
-				this.fireEvent('canvasDraw', state);
+			this.fireEvent('canvasDraw', state);
 		}
 		return this;
 	},
@@ -346,10 +343,10 @@ UI.Element = new Class({
 		this.element.addEvents({
 			mousedown: function(e){
 				if (this.options.component != 'label') 
-					ui.controller.closeMenu();
+					ui.controller.closeMenu(e);
 				this.fireEvent('mousedown');
 			}.bind(this),
-			click: function(e){
+			click: function(){
 				if (!Browser.Engine.trident) 
 					this.fireEvent('click');
 			}.bind(this),

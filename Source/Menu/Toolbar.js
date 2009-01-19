@@ -138,6 +138,7 @@ UI.Toolbar = new Class({
 		if(item.menu) {
 			menuItem.element.addEvents({
 				'mousedown' : function(e){
+					ui.controller.closeMenu(e);
 					if (this.activeItem != menuItem) {
 						this.time = $time();
 						if (!item.action) {

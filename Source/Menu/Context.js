@@ -98,7 +98,7 @@ UI.Context = new Class({
 			document.body.getElements(context.selector).each(function(el){
 				el.addEvent('contextmenu', function(e){
 					new Event(e).stop();
-					this.setMenu(context.menu);
+					this.buildMenu(context.menu);
 					this.show(e);
 				}.bind(this));
 				this.element.addEvent('contextmenu', function(e){
@@ -180,10 +180,23 @@ UI.Context = new Class({
 	*/
 	
 	show: function(e){
-		var coord = this.content.getSize();
-		this.parent(false, coord.x, coord.y);
+		this.parent();
+		ui.controller.closeMenu = function(event){
+			if (event.rightClick) {
+				ui.controller.closeMenu = $empty;
+				this.hide(0);
+			} else {
+				ui.controller.closeMenu = $empty;
+				this.hide(300);
+			}
+			
+		}.bind(this);
+		//ui.controller.closeMenu = this.fireEvent.bind(this, 'closeMenu');
+		var coord = this.content.getCoordinates();
+		this.setSize(coord.width, coord.height);
 		this.setPosition(e.client.x,e.client.y);
 		this.setCanvas();
+
 	}
 
 });
