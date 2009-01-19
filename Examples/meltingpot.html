@@ -197,14 +197,13 @@
 			}).inject(form);
 		
 			var updateBubble = function(step) {
-				if (this.bubbleslider && this.bubbleslider.element) {
-				
-					this.bubbleslider.label.set('html', step);
+				if (this.bubbleslider) {
+					this.bubbleslider.set('html', step);
 					this.bubbleslider.setSize();
 					
 				} else {
 					this.bubbleslider = new UI.Bubble({
-						skin: 'demo',
+						//skin: 'demo',
 						//type: 'rounded',
 						target: $(firstslider),
 						label: step
@@ -221,9 +220,11 @@
 				},
 				wheel				: true,
 				onChange			: function(step){
-					updateBubble(step);
+					updateBubble(step.toString());
 				}
 			}).inject(form);
+			
+			//updateBubble('0');
 			
 			
 			button = new UI.Button({
@@ -550,12 +551,6 @@
 				labelStyles	: {
 					padding	: '10px 10px 16px'
 				}
-			});
-			
-			
-			this.b.setStyles({
-				top: 100,
-				left: 330
 			});
 			
 			

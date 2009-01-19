@@ -117,7 +117,7 @@ UI.Controller = new Class({
 	
 	setBehavior: function(){
 		document.addEvent('mousedown', function(e){
-			this.closeMenu();
+			this.closeMenu(e);
 		}.bind(this));
 	}
 	
