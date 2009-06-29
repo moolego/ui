@@ -95,7 +95,6 @@ UI.Context = new Class({
 	*/
 	
 	addContexts: function(contexts){
-		console.log('add context');
 		contexts.each(function(context){
 			$(document.body).getElements(context.target).each(function(el){
 				el.addEvent(this.options.event, function(e){
