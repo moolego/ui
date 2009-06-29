@@ -11,43 +11,27 @@
 	<script type="text/javascript" src="../Source/Core/UI.js"></script>
 	<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
 	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
-	<script type="text/javascript" src="../Source/Core/Interface.js"></script>
 	
 	<script type="text/javascript" src="../Source/Element/Element.js"></script>
 	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
 	<script type="text/javascript" src="../Source/Element/Label.js"></script>
-	<script type="text/javascript" src="../Source/Element/Bubble.js"></script>
 	<script type="text/javascript" src="../Source/Element/Scrollbar.js"></script>
+
+	<script type="text/javascript" src="../Source/Form/Control.js"></script>
+	<script type="text/javascript" src="../Source/Form/Button.js"></script>
 	
 	<script type="text/javascript" src="../Source/Menu/Menu.js"></script>
 	<script type="text/javascript" src="../Source/Menu/Scroller.js"></script>
 	<script type="text/javascript" src="../Source/Menu/Context.js"></script>
-	<script type="text/javascript" src="../Source/Menu/Toolbar.js"></script>
-	
-	<script type="text/javascript" src="../Source/Form/Control.js"></script>
-	<script type="text/javascript" src="../Source/Form/Button.js"></script>
-	<script type="text/javascript" src="../Source/Form/Checkbox.js"></script>
-	<script type="text/javascript" src="../Source/Form/Input.js"></script>
-	<script type="text/javascript" src="../Source/Form/RadiosGroup.js"></script>
-	<script type="text/javascript" src="../Source/Form/Select.js"></script>
-	<script type="text/javascript" src="../Source/Form/Slider.js"></script>
-	<script type="text/javascript" src="../Source/Form/Textarea.js"></script>
 	
 	<script type="text/javascript" src="../Source/View/View.js"></script>
-	<script type="text/javascript" src="../Source/View/ListView.js"></script>
-	<script type="text/javascript" src="../Source/View/PanelView.js"></script>
-	<script type="text/javascript" src="../Source/View/SplitView.js"></script>
-	<script type="text/javascript" src="../Source/View/TabView.js"></script>
-	
-	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
-	<script type="text/javascript" src="../Source/Window/Window.js"></script>
-	<script type="text/javascript" src="../Source/Window/Dialog.js"></script>
-	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
 
-	<script type="text/javascript" src="../Skins/AquaBlack.js"></script>	
+	<script type="text/javascript" src="../Source/Window/Window.js"></script>
+	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
+
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../Skins/AquaBlack.js"></script>
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
-	<script type="text/javascript" src="../Skins/TouchBlue.js"></script>
 		
 	<script type="text/javascript" src="js/examples.js"></script>
 
@@ -55,7 +39,7 @@
 	
 	<script type="text/javascript">
 		
-		UI.WindowController.implement({
+		ui.controller.window = $merge(ui.controller.window,{
 			
 			// inspired by http://blog.greghoustondesign.com/arranging-an-array-of-html-elements-in-a-cascade-circle-or-grid/
 			
@@ -75,7 +59,7 @@
 				var zIndex = this.zIndex;
 				var i = 1;	
 				
-				ui.windows.each(function(win){
+				ui.controller.window.list.each(function(win){
 					win.element.style.zIndex = zIndex++;
 					
 					if (i > 1 && i <= columns){
@@ -114,9 +98,9 @@
 				var zIndex = this.zIndex;
 				
 				var i = 1;
-				var length = (ui.windows.length);
+				var length = (ui.controller.window.list.length);
 				
-				ui.windows.each(function(win){
+				ui.controller.window.list.each(function(win){
 					win.element.style.zIndex = zIndex++;
 						
 					var ratio = i/length;
@@ -156,9 +140,9 @@
 				var zIndex = this.zIndex;
 				
 				var i = 1;
-				var length = (ui.windows.length);
+				var length = (ui.controller.window.list.length);
 				
-				ui.windows.each(function(win){
+				ui.controller.window.list.each(function(win){
 					win.element.style.zIndex = zIndex++;
 		
 					var ratio = i/length;
@@ -221,7 +205,7 @@
 				skin	: 'demo',
 				type	: "jgood",
 				onClick : function() { 
-					ui.windowController.cascade();
+					ui.controller.window.cascade();
 				}
 			}).inject(form);
 			
@@ -233,7 +217,7 @@
 
 				type	: "jgood",
 				onClick : function() { 
-					ui.windowController.grid();
+					ui.controller.window.grid();
 				}
 			}).inject(form);
 			
@@ -242,7 +226,7 @@
 				skin	: 'demo',
 				type	: "jgood",
 				onClick : function() { 
-					ui.windowController.circle();
+					ui.controller.window.circle();
 				}
 			}).inject(form);
 			
@@ -251,7 +235,7 @@
 				skin	: 'demo',
 				type	: "jgood",
 				onClick : function() { 
-					ui.windowController.wave();
+					ui.controller.window.wave();
 				}
 			}).inject(form);
 				
@@ -260,7 +244,7 @@
 				skin	: 'demo',
 				type	: "jgood",
 				onClick : function() { 
-					ui.windowController.close();
+					ui.controller.window.close();
 				}
 			}).inject(form);
 			
@@ -269,7 +253,7 @@
 				skin	: 'demo',
 				type	: "jgood",
 				onClick : function() { 
-					ui.windowController.closeAll();
+					ui.controller.window.closeAll();
 				}
 			}).inject(form);
 		});

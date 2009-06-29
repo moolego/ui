@@ -54,13 +54,12 @@
 	
 	<script type="text/javascript">
 		window.addEvent('load', function() {
-			var time = $time();
-			
-			toolbar = new UI['Toolbar']({
+		
+			var toolbar = new UI.Toolbar({
 				displayMode : 'text',
 				menu		: [
 					{
-						text	: 'moolego',
+						text	: 'MooLego',
 						styles	: {
 							position	: 'relative'
 						},
@@ -72,8 +71,12 @@
 										title			: 'about',
 										width			: 300,
 										height			: 160,
-										head			: false,
+										foot			: false,
 										viewOverflow 	: 'hidden',
+										resizable		: false,
+										view			: {
+											overflow	: 'hidden'
+										},
 										controls		: ['close']
 									});
 								}
@@ -116,7 +119,11 @@
 							{ 
 								text 		: 'Window',
 								action : function() { 
-									new UI.Window();
+									new UI.Window({
+										title: 'about',
+										width: 300,
+										height: 160
+									});
 								}.bind(this)
 							}
 						]
@@ -151,10 +158,7 @@
 						]
 					}
 				]						
-			}).inject(document.body,'top');
-			
-			
-			
+			}).inject($(document.body));
 		});
 	</script>
 </head>

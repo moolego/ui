@@ -57,105 +57,119 @@
 			var time = $time();
 			
 			toolbar = new UI['Toolbar']({
-				displayMode : 'text',
-				menu		: [
-					{
-						text	: 'moolego',
-						image : 'http://www.farles.com/wp-content/themes/fjords01-10/imagenes_qwilm/home_icon.gif',
-						menu : [
-							{
-								text : 'About',
-								image : 'http://www.esl.ch/img/infomenu/categories/btadult.gif',
-								action : function() { 
-									new UI.Window({
-										title			: 'about',
-										width			: 300,
-										height			: 160,
-										head			: false,
-										viewOverflow 	: 'hidden',
-										controls		: ['close']
-									});
-								}
-							},
-							{ 
-								text 		: 'Software version...',
-								image : 'http://www.esl.ch/img/infomenu/categories/btjunior.gif',
-								action : function() { this.test('about'); alert('click')}.bind(this)
-							},
-							{ text		: 'separator' },
-							{ 
-								text 		: 'Préférences systemes...',
-								action : function() { new App.Settings() }
-							},
-							{ text		: 'separator' },{
-								text : 'Elements récents',
-								image : 'http://www.esl.ch/img/infomenu/categories/btgap.gif',
-								menu : [
-									{text : 'Finder'},
-									{text : 'Safari'},
-									{text : 'Mail'},
-									{text : 'Protoshop'},
-									{text : 'Nasty Explorer'}
-								]
-							},
-							{ text		: 'separator' },
-							{
-								text : 'Fermer la session',
-								image : 'http://www.esl.ch/img/infomenu/categories/btcadre.gif'
-							}
-						]
+				displayMode: 'text',
+				menu: [{
+					text: 'moolego',
+					image: 'http://www.farles.com/wp-content/themes/fjords01-10/imagenes_qwilm/home_icon.gif',
+					menu: [{
+						text: 'About',
+						image: 'http://www.esl.ch/img/infomenu/categories/btadult.gif',
+						action: function(){
+							new UI.Window({
+								title: 'about',
+								width: 300,
+								height: 160,
+								foot: false,
+								resizable: false,
+								viewOverflow: 'hidden',
+								scrollbar: false,
+								controls: ['close']
+							});
+						}
+					}, {
+						text: 'Software version...',
+						image: 'http://www.esl.ch/img/infomenu/categories/btjunior.gif',
+						action: function(){
+							this.test('about');
+							alert('click')
+						}.bind(this)
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Préférences systemes...',
+						action: function(){
+							new App.Settings()
+						}
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Elements récents',
+						image: 'http://www.esl.ch/img/infomenu/categories/btgap.gif',
+						menu: [{
+							text: 'Finder'
+						}, {
+							text: 'Safari'
+						}, {
+							text: 'Mail'
+						}, {
+							text: 'Protoshop'
+						}, {
+							text: 'Nasty Explorer'
+						}]
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Fermer la session',
+						image: 'http://www.esl.ch/img/infomenu/categories/btcadre.gif'
+					}]
+				}, {
+					text: 'New',
+					image: 'http://www.farles.com/wp-content/themes/fjords01-10/imagenes_qwilm/gallery_icon.gif',
+					options: {
+						'class': 'ui-dd-new'
 					},
-					{
-						text : 'New',
-						image : 'http://www.farles.com/wp-content/themes/fjords01-10/imagenes_qwilm/gallery_icon.gif',
-						options : {'class' : 'ui-dd-new'},
-						menu		: [
-							{
-								text : 'Button',
-								action : function() { 
-									new UI.Button().inject(document.body);
-								}.bind(this)
-							},
-							{ 
-								text 		: 'Window',
-								action : function() { 
-									new UI.Window();
-								}.bind(this)
-							}
-						]
+					menu: [{
+						text: 'Button',
+						action: function(){
+							new UI.Button().inject(document.body);
+						}.bind(this)
+					}, {
+						text: 'Window',
+						action: function(){
+							new UI.Window();
+						}.bind(this)
+					}]
+				}, {
+					text: 'Window',
+					image: 'http://www.farles.com/wp-content/themes/fjords01-10/imagenes_qwilm/email_icon.gif',
+					options: {
+						'class': 'ui-dd-new'
 					},
-					{
-						text : 'Window',
-						image : 'http://www.farles.com/wp-content/themes/fjords01-10/imagenes_qwilm/email_icon.gif',
-						options : {'class' : 'ui-dd-new'},
-						menu		: [
-							{
-								text : 'About',
-								action : function() { this.test('about'); alert('click')}.bind(this)
-							},
-							{ text 		: 'Minimizer'},
-							{ text		: 'separator' },
-							{ text		: 'Cascade',
-							  action: function(){
-							  	this.windowManager.resetCascade()
-							  }.bind(this)
-							  
-							}
-						]
+					menu: [{
+						text: 'About',
+						action: function(){
+							this.test('about');
+							alert('click')
+						}.bind(this)
+					}, {
+						text: 'Minimizer'
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Cascade',
+						action: function(){
+							this.windowManager.resetCascade()
+						}.bind(this)
+					
+					}]
+				}, {
+					text: 'Help',
+					image: 'http://www.farles.com/wp-content/themes/fjords01-10/imagenes_qwilm/about_icon.gif',
+					options: {
+						'class': 'ui-dd-help'
 					},
-					{
-						text : 'Help',
-						image : 'http://www.farles.com/wp-content/themes/fjords01-10/imagenes_qwilm/about_icon.gif',
-						options : {'class' : 'ui-dd-help'},
-						menu : [
-							{ text : 'Welcome' },
-							{ text : 'separator' },
-							{ text : 'Update...' },
-							{ text : 'separator' },
-							{ text : 'Settings...' }
-						]
-					}
-				]						
+					menu: [{
+						text: 'Welcome'
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Update...'
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Settings...'
+					}]
+				}]
 			}).inject(document.body,'top');
 			
 			new UI.Select({

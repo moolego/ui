@@ -4,27 +4,17 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		
 		<script type="text/javascript" src="mootools/core.js"></script>
-		<script type="text/javascript" src="mootools/more.js"></script>
-			
-		<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
-		
+	
 		<script type="text/javascript" src="../Source/Core/UI.js"></script>
 		<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
 		<script type="text/javascript" src="../Source/Core/Skin.js"></script>
-		<script type="text/javascript" src="../Source/Core/Interface.js"></script>
 		
 		<script type="text/javascript" src="../Source/Element/Element.js"></script>
-		<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
 		<script type="text/javascript" src="../Source/Element/Label.js"></script>
 	
 		<script type="text/javascript" src="../Source/Form/Control.js"></script>
 		<script type="text/javascript" src="../Source/Form/Button.js"></script>
-		<script type="text/javascript" src="../Source/Form/Slider.js"></script>
-	
-		<script type="text/javascript" src="../Source/View/View.js"></script>
-		
-		<script type="text/javascript" src="../Source/Window/Window.js"></script>
-		<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
+
 		
 		<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
 		<script type="text/javascript" src="../Skins/Demo.js"></script>
@@ -57,230 +47,6 @@
 				
 				
 				
-				var slidator = new UI.Window({
-					title : 'Inspector',
-					width : 160,
-					height : 400,
-					location: 'custom',
-					controls : [],
-					right : 50,
-					top: 70,
-					resizable: false,
-					type : 'transparent',
-					styles : {
-						position : 'fixed'
-						
-					},
-					view : { overflow : 'hidden' }
-					
-				});
-				
-				var baseParams = {
-					skin : 'TouchBlue',
-					range : [-10, 10],
-					snap : true,
-					steps : 20,
-					width : 140,
-					styles : {
-						margin : '3px 10px',
-						display : 'block'
-					},
-					wheel : true
-				}
-
-				new Element('br').inject(slidator);
-				
-				new UI.Label({
-					html : 'color offset',
-					styles : {
-						margin: '10px 10px 0',
-						color :'#fff'
-					}
-				}).inject(slidator);
-
-				new UI.Slider($merge(baseParams, {
-					onInjected : function(){
-						this.set(offone);
-					},
-					onChange: function(step){
-						offone = step;
-					}
-				})).inject(slidator);
-				
-				new UI.Slider($merge(baseParams, {
-					onInjected : function(){
-						this.set(offtwo);
-					},
-					onChange: function(step){
-						offtwo = step;
-					}
-				})).inject(slidator);
-				
-				new UI.Label({
-					html : 'color propagation',
-					styles : {
-						margin: '10px 10px 0',
-						color :'#fff'
-					}
-				}).inject(slidator);
-				
-				new UI.Slider($merge(baseParams, {
-					range : [10, 42],
-					steps : 32,
-					onInjected : function(){
-						this.set(ratioone);
-					},
-					onChange: function(step){
-						ratioone = step;
-					}
-				})).inject(slidator);
-				
-				new UI.Slider($merge(baseParams, {
-					range : [10, 42],
-					steps : 32,
-					onInjected : function(){
-						this.set(ratiotwo);
-					},
-					onChange: function(step){
-						ratiotwo = step;
-					}
-				})).inject(slidator);
-					
-				new UI.Label({
-					html : 'Radius',
-					styles : {
-						margin: '10px 10px 0',
-						color :'#fff'
-					}
-				}).inject(slidator);
-				
-				new UI.Slider($merge(baseParams, {
-					range : [0, 30],
-					steps : 30,
-					onInjected : function(){
-						this.set(radius);
-					},
-					onChange: function(step){
-						radius = step;
-					}
-				})).inject(slidator);
-				
-				new UI.Label({
-					html : 'Layers offset',
-					styles : {
-						margin: '10px 10px 0',
-						color :'#fff'
-					}
-				}).inject(slidator);
-				
-				new UI.Slider($merge(baseParams, {
-					range : [0, 10],
-					steps : 10,
-					onInjected : function(){
-						this.set(offset);
-					},
-					onChange: function(step){
-						offset = step;
-					}
-				})).inject(slidator);
-				
-				new UI.Label({
-					html : "Button's width",
-					styles : {
-						margin: '10px 10px 0',
-						color :'#fff'
-					}
-				}).inject(slidator);
-				
-				new UI.Slider($merge(baseParams, {
-					range : [50, 200],
-					steps : 150,
-					onInjected : function(){
-						this.set(width);
-					},
-					onChange: function(step){
-						width = step;
-					}
-				})).inject(slidator);
-				
-				new UI.Label({
-					html : "Button's height",
-					styles : {
-						margin: '10px 10px 0',
-						color :'#fff'
-					}
-				}).inject(slidator);
-				
-				new UI.Slider($merge(baseParams, {
-					range : [50, 150],
-					steps : 100,
-					onInjected : function(){
-						this.set(height);
-					},
-					onChange: function(step){
-						height = step;
-					}
-				})).inject(slidator);
-				
-				new UI.Label({
-					html : "Font Size",
-					styles : {
-						margin: '10px 10px 0',
-						color :'#fff'
-					}
-				}).inject(slidator);
-				
-				new UI.Slider($merge(baseParams, {
-					range : [4, 20],
-					steps : 16,
-					onInjected : function(){
-						this.set(fontSize);
-					},
-					onChange: function(step){
-						fontSize = step;
-					}
-				})).inject(slidator);
-				
-				new UI.Label({
-					html : "Margin",
-					styles : {
-						margin: '10px 10px 0',
-						color :'#fff'
-					}
-				}).inject(slidator);
-				
-				new UI.Slider($merge(baseParams, {
-					range : [0, 20],
-					steps : 20,
-					onInjected : function(){
-						this.set(margin);
-					},
-					onChange: function(step){
-						margin = step;
-					}
-				})).inject(slidator);
-				
-				var button = new UI.Button({
-					label	: 'Update',
-					type : 'roundtextured',
-					onClick	: function(){
-						fillButtons();
-					},
-					styles	: {
-						margin		: "20px 0 0 70px",
-						fontFamily	: 'arial, helvetica, sans-serif',
-						fontSize	: '13px'
-					}
-				}).inject(slidator);				
-								
-				var box = new Element('div',{
-					styles			: {
-						padding		: '0',
-
-						overflow	: 'hidden'
-					}
-				}).inject(document.body);
-				
 				function fillButtons() {
 					var size = 10;
 					time = $time();
@@ -293,80 +59,59 @@
 							
 							var color = RGBtoHex(Math.floor(255 - ratioone * one),  0,Math.floor(255 - ratiotwo * two));
 							//console.log(index)
-							if (buttons[index]) {
-								
-								buttons[index].props.width = width;
-								buttons[index].props.height = height;
-								buttons[index].props.layers.front.color = '#' + color;
-								
-								buttons[index].props.layers.emboss.radius = radius;
-								buttons[index].props.layers.front.radius = radius -2;
-								buttons[index].props.layers.front.offset = offset;
-								buttons[index].props.layers.reflect.radius = radius -4;
-								buttons[index].props.layers.reflect.offset = offset;
-								buttons[index].props.styles.margin = margin;
-								buttons[index].props.components.label.styles.fontSize = fontSize;
-								
-								buttons[index].set('html', '<small>time</small><br/>' + (($time() - time) / 1000) + '<br/><small style="font-size:5px: color:#ccc">color</small><br/>' + color);
-								
-								buttons[index].setState('default');
-								//console.log(index)
-							}
-							else {
-								buttons.push(new UI.Button({
-									label: '<small>time</small><br/>' + (($time() - time) / 1000) + '<br/><small style="font-size:5px: color:#ccc">color</small><br/>' + color,
-									skin: 'demo',
-									type: 'speedtest',
-									props: {
-										'default': {
-											width : width,
-											height : height,
-											components : {
-												label : {
-													styles : {
-														fontSize : fontSize,
-														fontWeight: 'bold',
-														fontFamily: 'Arial, Helvetica',
-														opacity: '.7', 
-														padding: '10px 16px',
-														color: '#fff',
-														width: '70px'
-													}
+							
+							new UI.Button({
+								label: '<small>time</small><br/>' + (($time() - time) / 1000) + '<br/><small style="font-size:5px: color:#ccc">color</small><br/>' + color,
+								skin: 'demo',
+								type: 'speedtest',
+								props: {
+									'default': {
+										width : width,
+										height : height,
+										components : {
+											label : {
+												styles : {
+													fontSize : fontSize,
+													fontWeight: 'bold',
+													fontFamily: 'Arial, Helvetica',
+													opacity: '.7', 
+													padding: '10px 16px',
+													color: '#fff',
+													width: '70px'
 												}
+											}
+										},
+										styles : {
+											margin : margin
+										},
+										layers: {
+											reorder: ['emboss', 'front', 'reflect'],
+											emboss: {
+												radius: radius,
+												offset : 0,
+												color: '#000',
+												opacity: .17
 											},
-											styles : {
-												margin : margin
+											front: {
+												offset: offset,
+												color: '#' + color,
+												radius: radius -2,
+												opacity: 1
 											},
-											layers: {
-												reorder: ['emboss', 'front', 'reflect'],
-												emboss: {
-													radius: radius,
-													offset : 0,
-													color: '#000',
-													opacity: .17
+											reflect: {
+												offset: [offset, offset, '40%'],
+												gradient	: {
+													color: ['#FFF', '#FFF'],
+													opacity: [.2, .0]
 												},
-												front: {
-													offset: offset,
-													color: '#' + color,
-													radius: radius -2,
-													opacity: 1
-												},
-												reflect: {
-													offset: [offset, offset, '40%'],
-													gradient	: {
-														color: ['#FFF', '#FFF'],
-														opacity: [.2, .0]
-													},
-													radius: radius - 4
-												}
+												radius: radius - 4
 											}
 										}
 									}
-								}).inject(box))
-							}
-							index++;
+								}
+							}).inject(document.body);
 						}
-						slidator.setStatus((($time() - time) / 1000));	
+					
 					}
 				};
 				

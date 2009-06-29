@@ -1,8 +1,10 @@
 [
 	{
 		"type" : "Core",
-		"title" : "UI",
-		"desc"	: "Core/UI.js"
+		content : {
+			title : 'UI',
+			"desc"	: "Core/UI.js"
+		}
 	},
 	{
 		"type" : "Core",

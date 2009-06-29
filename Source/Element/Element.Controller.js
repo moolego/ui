@@ -4,27 +4,20 @@ Class: UI.Controller
 	It handle element's z-index as well as group managing and group serialization (usefull for controls values
 */
 
-UI.Controller = new Class({
-	
-	Implements: [Events, Options],
-	
-	options: {
-		zBase: 1
-	},
-	
+ui.controller.element = {
+
 	/*
-	Constructor: initialize
+	Constructor: start
 		Constructor
 		
 	Arguments:
 		options - (object) options
 	*/
 	
-	initialize: function(options){
-		ui.elements = new Array();
+	start: function(){
+		this.list = new Array();
 		
-		this.setOptions();
-		this.zIndex = this.options.zBase;
+		this.zIndex = 1;
 		this.groups = {};
 		this.elements = [];
 		this.closeMenu = $empty;
@@ -44,7 +37,7 @@ UI.Controller = new Class({
 	 */
 	
 	register: function(object){
-		var oid = ui.elements.push(object) - 1;
+		var oid = this.list.push(object) - 1;
 		/*
 		//get first element parent made with UI
 		var element = object.element.getParent();
@@ -60,8 +53,8 @@ UI.Controller = new Class({
 		
 		//store element in UI (element is not in our UI)
 		} else {
-			if (!UI.elements[object.options.component]) UI.elements[object.options.component] = new Array();
-			UI.elements[object.options.component].push(object);
+			if (!this.list[object.options.component]) this.list[object.options.component] = new Array();
+			this.list[object.options.component].push(object);
 		}
 		
 		//replace tips
@@ -91,8 +84,8 @@ UI.Controller = new Class({
 	
 	group: function(oid) {
 		//we check if the group exist, else we create it
-		this.groups[ui.elements[oid].options.group] = this.groups[ui.elements[oid].options.group] || new Array();
-		this.groups[ui.elements[oid].options.group].push(oid);
+		this.groups[this.list[oid].options.group] = this.groups[this.list[oid].options.group] || new Array();
+		this.groups[this.list[oid].options.group].push(oid);
 	},
 	
 	/*
@@ -134,6 +127,6 @@ UI.Controller = new Class({
 		}.bind(this));
 	}
 	
-});
+};
 
-ui.controller = ui.controller || new UI.Controller();
+ui.controller.element.start();

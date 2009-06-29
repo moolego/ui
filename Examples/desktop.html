@@ -58,7 +58,7 @@
 				displayMode : 'text',
 				menu		: [
 					{
-						text	: 'moolego',
+						text	: 'MooLego',
 						styles	: {
 							position	: 'relative'
 						},
@@ -70,7 +70,7 @@
 										title			: 'about',
 										width			: 300,
 										height			: 160,
-										head			: false,
+										foot			: false,
 										viewOverflow 	: 'hidden',
 										controls		: ['close']
 									});
@@ -131,7 +131,7 @@
 							{ text		: 'separator' },
 							{ text		: 'Cascade',
 							  action: function(){
-							  	this.windowManager.resetCascade()
+							  	ui.windowController.cascade()
 							  }.bind(this)
 							  
 							}

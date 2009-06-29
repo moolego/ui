@@ -46,6 +46,10 @@ UI.Toolbar = new Class({
 		rolloverType: 'toolbarRollover',
 		component: 'toolbar'
 	},
+
+ 	initialize: function(options){
+        this.parent(options); //will call initalize of UI.ELEMENT
+    },
 	
 	/*
 	Function: build
@@ -62,6 +66,7 @@ UI.Toolbar = new Class({
 	*/
 	
 	build: function(){
+		
 		this.addItemStyles();
 		this.parent();
 		
@@ -72,10 +77,11 @@ UI.Toolbar = new Class({
 	},
 	
 	setBehavior: function(){
+
 		this.addEvent('onCloseMenu', function(){
 			this.removeSubmenu();
 			(function(){this.removeRollover()}.bind(this)).delay(this.props.hideFxDuration);
-			ui.controller.closeMenu = $empty;
+			ui.controller.element.closeMenu = $empty;
 		}.bind(this));
 	},
 	
@@ -97,7 +103,7 @@ UI.Toolbar = new Class({
 		this.element.inject(element, target);
 		this.setSize($(element).getWidth(), false);
 		this.setCanvas();
-		this.controller.register(this);
+		ui.controller.element.register(this);
 		this.fireEvent('injected');
 		
 		window.addEvent('resize', function(){
@@ -107,7 +113,7 @@ UI.Toolbar = new Class({
 		return this;
 	},
 	
-	addItemStyles : function(){
+	addItemStyles : function(){			
 		this.options.menu.each(function(item){
 			item.options = item.options || {};
 			item.options.styles = {
@@ -138,7 +144,7 @@ UI.Toolbar = new Class({
 		if(item.menu) {
 			menuItem.element.addEvents({
 				'mousedown' : function(e){
-					ui.controller.closeMenu(e);
+					ui.controller.element.closeMenu(e);
 					if (this.activeItem != menuItem) {
 						this.time = $time();
 						if (!item.action) {

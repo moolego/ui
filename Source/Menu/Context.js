@@ -11,7 +11,7 @@
 	Options: 
 		contexts - (array) An array containing contexts definition. A context definition is an object composed of following keys :
 			a name key, who is the context name,
-			a selector key, who define on wich elements the context menu will be attached. It could be a CSS3 selector as well.
+			a target key, who define on wich elements the context menu will be attached. It could be a CSS3 target as well.
 			a menu key, who is a menu list as defined in <UI.Menu>.
 
 	Discussion:
@@ -23,7 +23,7 @@
 			contexts : [
 				{
 					name : 'workspace',
-					selector	: '.app-workspace',
+					target	: '.app-workspace',
 					menu		: [
 						{ text		: 'Workspace menu'},
 						{ text		: 'separator' },
@@ -38,7 +38,7 @@
 				},
 				{
 					name : 'pageinfo',
-					selector	: '[id^=pageinfo]',
+					target	: '[id^=pageinfo]',
 					menu		: [
 						{
 							text 	: 'editCategory',
@@ -79,13 +79,13 @@ UI.Context = new Class({
 	initialize: function(options){
 		this.parent(options);
 		this.addContexts(this.options.contexts);
-		this.element.setStyle('display', 'none');
+		this.element.hide();
 		this.element.inject(document.body);
 	},
 	
 	/* 
 	Method: addContexts
-		Attach context to elements (provided by contexts.selector)
+		Attach context to elements (provided by contexts.target)
 	
 	Arguments:
 		contexts - (array) an array containing contexts definition. See above in class' options for more details
@@ -95,8 +95,9 @@ UI.Context = new Class({
 	*/
 	
 	addContexts: function(contexts){
+		console.log('add context');
 		contexts.each(function(context){
-			document.body.getElements(context.selector).each(function(el){
+			$(document.body).getElements(context.target).each(function(el){
 				el.addEvent(this.options.event, function(e){
 					new Event(e).stop();
 					this.hide(0);
@@ -114,17 +115,17 @@ UI.Context = new Class({
 	
 	/* 
 	Method: removeContexts
-		Remove context to elements (defined by selector)
+		Remove context to elements (defined by target)
 	
 	Arguments:
-		selector - (string) Selector defining elements where context will be detached
+		target - (string) target defining elements where context will be detached
 	
 	Return:
 		this
 	*/
 	
-	removeContexts: function(selector){
-		document.body.getElements(selector).each(function(el){
+	removeContexts: function(target){
+		document.body.getElements(target).each(function(el){
 			el.removeEvents('contextmenu');
 		},this);
 		
@@ -183,17 +184,19 @@ UI.Context = new Class({
 	
 	show: function(e){
 		this.parent();
-		ui.controller.closeMenu = function(event){
+		
+		ui.controller.element.closeMenu = function(event){
 			if (event.rightClick || this.options.event != 'contextmenu') {
-				ui.controller.closeMenu = $empty;
+				ui.controller.element.closeMenu = $empty;
 				this.hide(0);
 			} else {
-				ui.controller.closeMenu = $empty;
+				ui.controller.element.closeMenu = $empty;
 				this.hide(300);
 			}
 			
 		}.bind(this);
-		//ui.controller.closeMenu = this.fireEvent.bind(this, 'closeMenu');
+		
+		//ui.controller.element.closeMenu = this.fireEvent.bind(this, 'closeMenu');
 		var coord = this.content.getCoordinates();
 		this.setSize(coord.width, coord.height);
 		this.setPosition(e.client.x,e.client.y);

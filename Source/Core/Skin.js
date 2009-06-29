@@ -56,6 +56,7 @@ UI.Skin = new Class({
 	*/
 
 	processSkin: function(skinName) {
+		
 		//we merge syles for each states of each type of components
 		for (var cKey in UI.props[skinName]) {
 			if (cKey != 'default') {
@@ -115,7 +116,7 @@ UI.Skin = new Class({
 		
 		//check if it was already preprocessed
 		if(!UI.props[skin].preprocessed) this.processSkin(skin);
-
+		
 		//get properties for provided type
 		if (UI.props[skin][cKey][tKey]) {
 			var type = $unlink(UI.props[skin][cKey][tKey]);

@@ -30,24 +30,39 @@
 	<script type="text/javascript" src="../Source/Window/Window.js"></script>
 	
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../Skins/AeroTrans.js"></script>
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
 	<script type="text/javascript" src="../Skins/TouchBlue.js"></script>
 	
 	<script type="text/javascript">
 		window.addEvent('load', function() {
-			moolego = new UI.Window({
+			var window1 = new UI.Window({
 				title		: 'MooLEgo',
 				width		: 640,
 				height		: 480,
 				overflow	: 'scrollbar',
 				location	: 'center'
-			}).setContent('iframe','formular02.html');
+			});
+			
+			
+			window1.setContent('iframe','formular02.html');
 
 			
-			ogeloom = new UI.Window({
+			var window2 = new UI.Window({
 				title		: 'some controls',
 				overflow	: 'scrollbar'
-			}).setContent('ajax','assets/window.json');
+			});
+			
+			window2.setContent('ajax','assets/window.json');
+			
+			
+			var window3 = new UI.Window({
+				skin		: 'AeroTrans',
+				title		: 'some controls',
+				overflow	: 'scrollbar'
+			});
+			
+			window3.setContent('ajax','assets/window.json');
 		});
 	</script>
 </head>

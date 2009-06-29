@@ -1,5 +1,6 @@
 
 window.addEvent('load', function() {
+	
 	new Asset.javascript('../Source/Form/Select.js', {
 		id: 'myScript',
 		onload: function(){

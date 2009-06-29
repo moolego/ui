@@ -104,16 +104,14 @@
 			
 			new UI.Button({
 				label			: 'Third button',
-				styles			: {
-					margin		: 10
+				styles: {
+					margin: 10
 				}
 			}).inject(windoo.content);
 			
-			
-			
 			var cbstyles = {
-				margin		: '0 10px 5px',
-				display		: 'block'
+				margin: '0 10px 5px',
+				display: 'block'
 			};
 			
 			new UI.Checkbox({
@@ -130,8 +128,6 @@
 				label			: '3 checkbox',
 				styles			: cbstyles
 			}).inject(windoo.content);
-			
-			
 			
 			var radiosGroup = new UI.RadiosGroup({
 				name			: 'radios'
@@ -213,33 +209,34 @@
 			}).inject(windoo.content);
 			
 			new UI.Window({
-						title				: 'Star Guitar',
-						type				: 'transparent',
-						controls			: ['close'],
-						viewOverflow		: 'hidden',
-						resizable			: false,
-						right				: '30px',
-						width				: 427,
-						height				: 388,
-						view				: { overflow:'hidden'}
+				title: 'Star Guitar',
+				type: 'transparent',
+				controls: ['close'],
+				viewOverflow: 'hidden',
+				resizable: false,
+				right: '30px',
+				width: 427,
+				height: 388,
+				view: {
+					overflow: 'hidden'
+				}
 			}).setContent('content',
-				'<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1"></param><param name="allowFullScreen" value="true"><param name="WMODE" value="transparent"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" WMODE="transparent" allowfullscreen="true" width="425" height="344"></embed></object>'
+				'<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/QDe6MZQjpho&hl=en&fs=1&color1=0xe1600f&color2=0xfebd01"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/QDe6MZQjpho&hl=en&fs=1&color1=0xe1600f&color2=0xfebd01" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>'
 			);
-			
-			
+
 			moolego = new UI.Window({
-				title		: 'MooLEgo',
-				width		: 640,
-				height		: 480,
-				overflow	: 'scrollbar',
-				location	: 'center'
+				title: 'MooLEgo',
+				width: 640,
+				height: 480,
+				overflow: 'scrollbar',
+				location: 'center'
 			});
 			//.setContent('iframe','http://mail.google.com/mail/');
 			
 			new UI.Button({
 				label : 'ArrageCascade',
 				onClick : function() { 
-					ui.windowController.arrangeCascade();
+					ui.controller.window.cascade();
 				}
 			}).inject(document.body);
 		

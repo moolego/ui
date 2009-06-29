@@ -48,10 +48,10 @@ UI.View = new Class({
 		height: '100%',
 		
 		overflow: 'scrollbar', // hide, scrollbar or scrollmenu
-		tag: 'div',
+		tag: 'span',
 		contentTag: 'div', // 
 		content: {},
-		
+		useOverlay: true,
 		scrollbar: {},
 		
 		// implemented events		
@@ -75,8 +75,11 @@ UI.View = new Class({
 	build: function() {
 		this.parent();
 		
-		this.buildOverlay();
+		if (this.options.useOverlay) 
+			this.buildOverlay();
+		
 		this.setOverflow();
+		
 		this.show();
 	},
  	
@@ -84,7 +87,7 @@ UI.View = new Class({
 	Method: buildOverlay
 		private function
 		
-		create an overlay displayed when view is resized or moved
+		create an overlay displayed when view is disabled (when moved or resized)
 	
 	Returns:
 		(void)
@@ -92,7 +95,9 @@ UI.View = new Class({
 
 	buildOverlay: function() {
 		this.overlay = new Element('div',this.props.components.overlay)
-		 .inject(this.element).hide();
+		 .inject(this.element);
+		 
+		this.overlay.hide();
 	
 		this.addEvents({
 			'onLoadComplete' : function() { this.overlay.hide(); }
@@ -111,11 +116,12 @@ UI.View = new Class({
 	*/
 
 	setOverflow: function() {
-		if ( this.options.overflow != 'hidden') { 
+		if (this.options.overflow != 'hidden') { 
 			this.content = new Element( this.options.contentTag,  this.options.content )
 			 .setStyles( {
 				height :'100%',
-				position : 'relative'
+				position : 'relative',
+				overflow:'hidden'
 			}).inject(this.element);
 
 			if (this.options.overflow == 'hidden') {
@@ -123,7 +129,10 @@ UI.View = new Class({
 			}
 			
 			if (this.options.overflow == 'scrollbar') {
-				this.content.setStyle('overflow','hidden');
+				this.setScrollbar();
+			}
+			
+			if (this.options.overflow == 'scroller') {
 				this.buildScrollbar();
 			}
 			
@@ -145,9 +154,9 @@ UI.View = new Class({
 		(void)
 	*/
 	
-	buildScrollbar: function(){
+	setScrollbar: function(){
 		if (this.options.skin) 
-		 this.options.scrollbar.skin = this.options.skin;
+			this.options.scrollbar.skin = this.options.skin;
 		 
 		this.options.scrollbar.container = this.content;
 		
@@ -158,10 +167,33 @@ UI.View = new Class({
 			'onResize': function() { this.scrollbar.update() }
 		 });
 	},
+	
+	
+	/*
+	Method: buildScrollbar
+		private function
+		
+		Creates a new scrollbar object attached to the view
+	
+	Returns:
+		(void)
+	*/
+	
+	setScroller : function() {
+		this.scroller = new Scroller(this.content, this.options.scroller)
+		 .addEvents({
+		 	onChange : function(x,y) {	
+				this.scrollbar.update();
+			}.bind(this)
+		});
+			
+		this.scroller.start();
+	},
+	
 
 	/*
 	Function: setContent
-		Set Content of the Container
+		Set Content of the Container (really basic)
 	
 	Arguments:
 		method - (string) ajax, ajaxnu, json, content, html or iframe
@@ -189,6 +221,8 @@ UI.View = new Class({
 				this.setIFrameContent(source);
 				break;	
 		};
+		
+		return this;
 	},
 	
 	/*
@@ -312,6 +346,5 @@ UI.View = new Class({
 
 		return this;
 	}
-
 });
 

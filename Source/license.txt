@@ -1,6 +1,6 @@
 The MIT License
 
-Copyright (c) 2007-2009 Jerome Vial, <http://code.floor.ch/>
+Copyright (c) 2007-2009 Jerome Vial, <http://moolego.org/>
  
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -13,10 +13,10 @@ Arguments:
 UI.props.TouchBlue = {
 	'default': {
 		/* css properties */
-		styles : {
-			fontFamily : 'Helvetica, Arial, sans-serif',
-			fontSize : '12px',
-			position : 'relative'
+		styles: {
+			fontFamily: 'Helvetica, Arial, sans-serif',
+			fontSize: '12px',
+			position: 'relative'
 		},
 		fx: {},
 		
@@ -40,9 +40,9 @@ UI.props.TouchBlue = {
 		}
 	},
 	
-	button : {
+	button: {
 		'default': {
-			'default' : {
+			'default': {
 				/* components properties */
 				components: {
 					label: {
@@ -57,16 +57,16 @@ UI.props.TouchBlue = {
 				},
 				
 				/* shortcuts */
-				shortcuts : {
-					labelStyles : 'components.label.styles'
+				shortcuts: {
+					labelStyles: 'components.label.styles'
 				},
 				
 				/* element css properties */
-				styles : {
-					display : 'inline-block',
-					cursor : 'pointer'
+				styles: {
+					display: 'inline-block',
+					cursor: 'pointer'
 				},
-
+				
 				/* layers */
 				layers: {
 					emboss: {
@@ -119,163 +119,161 @@ UI.props.TouchBlue = {
 		}
 	},
 	
-	checkbox : {
-		'default' : {
-			'default' : {
-				
-			}
+	checkbox: {
+		'default': {
+			'default': {}
 		}
 	},
 	
-	slider : {
-		'default' : {
-			'default' : {
-				width : 200,
-				height : 16,
+	slider: {
+		'default': {
+			'default': {
+				width: 200,
+				height: 16,
 				
 				/* element css properties */
-				styles : {
-					display : 'inline-block'
+				styles: {
+					display: 'inline-block'
 				},
 				
 				/* layers properties */
-				layers : {
-					reorder : ['border', 'front', 'fakeShadow', 'reflect'],
+				layers: {
+					reorder: ['border', 'front', 'fakeShadow', 'reflect'],
 					
-					border : {
-						offset : ['0px', '0px', '0px', '0px'],
-						color : ['#093889', '#5289d7'],
-						opacity : 1,
-						radius : 5
+					border: {
+						offset: ['0px', '0px', '0px', '0px'],
+						color: ['#093889', '#5289d7'],
+						opacity: 1,
+						radius: 5
 					},
-					front : {
-						position : 'absolute',
-						offset : 1,
-						color : ['#3672dc', '#4085ec'],
-						opacity : 1,
-						radius : [4, 4, 4, 4]
+					front: {
+						position: 'absolute',
+						offset: 1,
+						color: ['#3672dc', '#4085ec'],
+						opacity: 1,
+						radius: [4, 4, 4, 4]
 					},
-					fakeShadow : {
-						position : 'absolute',
-						offset : ['1px', '1px', '23px'],
-						color : ['#000', '#000'],
-						opacity : [.2, 0],
-						radius : [5, 5, 0, 0]
+					fakeShadow: {
+						position: 'absolute',
+						offset: ['1px', '1px', '23px'],
+						color: ['#000', '#000'],
+						opacity: [.2, 0],
+						radius: [5, 5, 0, 0]
 					},
-					reflect : {
-						position : 'absolute',
-						offset : ['50%', '1px', '1px'],
-						color : ['#FFF', '#FFF'],
-						opacity : [.05, .3],
-						radius : [4, 4, 4, 4]
+					reflect: {
+						position: 'absolute',
+						offset: ['50%', '1px', '1px'],
+						color: ['#FFF', '#FFF'],
+						opacity: [.05, .3],
+						radius: [4, 4, 4, 4]
 					}
 				}
 			}
 		},
-		horizontal : {
-			'default' : {}
+		horizontal: {
+			'default': {}
 		},
-		vertical : {
-			'default' : {
-				width : 16,
-				height : 300,
-				layers : {
-					front : {
-						gradient : {
-							color : ['#3672dc', '#4085ec'],
-							angle : 0
+		vertical: {
+			'default': {
+				width: 16,
+				height: 300,
+				layers: {
+					front: {
+						gradient: {
+							color: ['#3672dc', '#4085ec'],
+							angle: 0
 						}
 					},
-					reflect : {
-						offset : [1, 1, 1, '50%'],
-						gradient : {
-							color : ['#FFF', '#FFF'],
-							opacity : [.05, .3],
-							angle : 0
+					reflect: {
+						offset: [1, 1, 1, '50%'],
+						gradient: {
+							color: ['#FFF', '#FFF'],
+							opacity: [.05, .3],
+							angle: 0
 						}
 					}
 				}
 			}
 		},
-		'knob' : {
-			'default' : {
-				width : 16,
+		'knob': {
+			'default': {
+				width: 16,
 				//	height 		 : 10,
 				
-				styles : {
-					zIndex : 1,
-					display : 'block'
+				styles: {
+					zIndex: 1,
+					display: 'block'
 				},
 				
-				layers : {
-					reorder : ['checkBg', 'check', 'checkFront'],
+				layers: {
+					reorder: ['checkBg', 'check', 'checkFront'],
 					
-					checkBg : {
-						position : 'absolute',
-						offset : 0,
-						color : '#000',
-						opacity : 0.25,
-						radius : 5
+					checkBg: {
+						position: 'absolute',
+						offset: 0,
+						color: '#000',
+						opacity: 0.25,
+						radius: 5
 					},
-					check : {
-						position : 'absolute',
-						offset : 1,
-						color : ['#FFF', '#FFF'],
-						opacity : 1,
-						radius : 4
+					check: {
+						position: 'absolute',
+						offset: 1,
+						color: ['#FFF', '#FFF'],
+						opacity: 1,
+						radius: 4
 					},
-					checkFront : {
-						position : 'absolute',
-						offset : [2, 2, 1, 1],
-						color : ['#000', '#000'],
-						opacity : [.18, .02],
-						radius : 4
+					checkFront: {
+						position: 'absolute',
+						offset: [2, 2, 1, 1],
+						color: ['#000', '#000'],
+						opacity: [.18, .02],
+						radius: 4
 					}
 				}
 			}
 		}
 	},
 	
-	scrollbar : {
-		track : {
-			'default' : {
-				width : 8,
+	scrollbar: {
+		track: {
+			'default': {
+				width: 8,
 				
-				styles : {
-					height : '100%',
-					'float':'right',
-					position : 'relative',
-					zIndex : '10000'
+				styles: {
+					height: '100%',
+					'float': 'right',
+					position: 'relative',
+					zIndex: '10000'
 				},
-				layers : {
-					reorder : ['back'],
-					'default' : {
-						position : 'absolute'
+				layers: {
+					reorder: ['back'],
+					'default': {
+						position: 'absolute'
 					},
-					back : {
-						offset : [0, 0, 0, 0],
-						color : '#fff'
+					back: {
+						offset: [0, 0, 0, 0],
+						color: '#fff'
 					}
 				}
 			}
 		},
-		thumb : {
-			'default' : {
-				styles : {
-					position : 'relative',
-					margin : '0'
+		thumb: {
+			'default': {
+				styles: {
+					position: 'relative',
+					margin: '0'
 				},
-				layers : {
-					reorder : ['main'],
+				layers: {
+					reorder: ['main'],
 					
-					'default' : {
-						direction : 'vertical'
+					'default': {
+						direction: 'vertical'
 					},
-					main : {
-						offset : [3,2],
-						color : '#000',
+					main: {
+						offset: [3, 2],
+						color: '#000',
 						opacity: 0.2,
-						radius : 3
+						radius: 3
 					}
 				}
 			}
@@ -283,112 +281,112 @@ UI.props.TouchBlue = {
 	},
 	
 	// View
-
+	
 	view: {
 		'default': {
 			'default': {
 				backgroundColor: '#d6d6d6',
 				components: {
-					overlay : {
-						styles : {
-							backgroundColor : '#fff',
-							opacity : .05,
-							position : 'absolute',
-							height : '100%',
-							width : '100%',
-							top :0,
-							left :0,
-							zIndex : '100000'
+					overlay: {
+						styles: {
+							backgroundColor: '#fff',
+							opacity: .05,
+							position: 'absolute',
+							height: '100%',
+							width: '100%',
+							top: 0,
+							left: 0,
+							zIndex: '100000'
 						}
 					}
 				},
-				styles : {
+				styles: {
 					position: 'relative'
 				}
 			}
 		},
-		transparent : {
-			'default' : {
-				styles : {
-					position : 'relative',
-					zIndex : 1,
-					backgroundColor : 'transparent'
+		transparent: {
+			'default': {
+				styles: {
+					position: 'relative',
+					zIndex: 1,
+					backgroundColor: 'transparent'
 				}
 			}
 		},
-		login : {
-			'default' : {}
+		login: {
+			'default': {}
 		},
-		small : {
-			'default' : {
-				styles : {
-					color : 'transparent'
+		small: {
+			'default': {
+				styles: {
+					color: 'transparent'
 				},
-				iconSize : 32
+				iconSize: 32
 			}
 		},
-		window : {
-			'default' : {
-				components : {
-					iframe : {
-						width :'100%',
-						height :'100%',
-						styles : {
-							margin :'0',
-							padding :'0',
-						 	border :'0',
-							overflow :'auto'
+		window: {
+			'default': {
+				components: {
+					iframe: {
+						width: '100%',
+						height: '100%',
+						styles: {
+							margin: '0',
+							padding: '0',
+							border: '0',
+							overflow: 'auto'
 						}
 					}
 				},
 				
-				styles : {
-					position : 'relative',
-					zIndex : 1,
-					backgroundColor : '#fff'
+				styles: {
+					position: 'relative',
+					zIndex: 1,
+					backgroundColor: '#fff'
 				}
 			}
 		},
-		tab : {
-			'default' : {
-				styles : {
-					position : 'absolute'
+		tab: {
+			'default': {
+				styles: {
+					position: 'absolute'
 				}
 			
 			}
 		}
 	},
 	
-
 	
-	listview : {
-		'default' : {
-			'default' : {
-				styles : {
-					'float' : 'left',
-					overflow : 'hidden',
-					height : '600px'
+	
+	listview: {
+		'default': {
+			'default': {
+				styles: {
+					'float': 'left',
+					overflow: 'hidden',
+					height: '600px'
 				},
 				
-				components : {
-					item : {
-						component : 'label'
+				components: {
+					item: {
+						component: 'label'
 					},
-					title : {
-						styles : {
-							display:'block',
-							padding:'8px 0 0 15px',
-							height:'8px',
-							fontWeight : 'bold'
+					title: {
+						styles: {
+							display: 'block',
+							padding: '8px 0 0 15px',
+							height: '8px',
+							fontWeight: 'bold'
 						}
 					},
-					desc : {
-						styles : {
-							display:'block',
-							padding:'0 0 0 15px',
-							height:'10px',
-							fontSize : '11px',
-							color:'#333'
+					desc: {
+						styles: {
+							display: 'block',
+							padding: '0 0 0 15px',
+							height: '10px',
+							fontSize: '11px',
+							color: '#333'
 						}
 					}
 				}
@@ -396,106 +394,106 @@ UI.props.TouchBlue = {
 		}
 	},
 	
-	itemList : {
-		'default' : {
-			'default' : {
+	itemList: {
+		'default': {
+			'default': {
+			
+				height: 42,
 				
-				height : 42,
-				
-				components : {
-					label : {
-						styles : {
-							zIndex : 1,
-							fontWeight : 'normal',
-							cursor : 'pointer',
-							padding : '5px 16px 4px',
-							display :'block',
-							whiteSpace : 'nowrap',
-							lineHeight : '1em'
+				components: {
+					label: {
+						styles: {
+							zIndex: 1,
+							fontWeight: 'normal',
+							cursor: 'pointer',
+							padding: '5px 16px 4px',
+							display: 'block',
+							whiteSpace: 'nowrap',
+							lineHeight: '1em'
 						}
 					}
 				},
 				
 				/* shortcuts */
-				shortcuts : {
-					labelStyles : 'components.label.styles'
+				shortcuts: {
+					labelStyles: 'components.label.styles'
 				},
 				
 				/* layers properties */
-				styles : {
-					position : 'relative',
-					display : 'block',
-					fontSize : '.7em',
-					width : '100%',
-					padding : '0',
-					margin : '0',
-					top : '0px',
-					left : '0px',
-					overflow : 'hidden',
-					backgroundColor : '#fff'
+				styles: {
+					position: 'relative',
+					display: 'block',
+					fontSize: '.7em',
+					width: '100%',
+					padding: '0',
+					margin: '0',
+					top: '0px',
+					left: '0px',
+					overflow: 'hidden',
+					backgroundColor: '#fff'
 				},
-				layers : {
-					'default' : {
-						position : 'absolute',
-						opacity : 1
-						
+				layers: {
+					'default': {
+						position: 'absolute',
+						opacity: 1
+					
 					},
-					light : {
-						size : ['auto',1],
-						color : '#fff',
-						offset : [0,0,'auto'],
-						opacity : 0.1
+					light: {
+						size: ['auto', 1],
+						color: '#fff',
+						offset: [0, 0, 'auto'],
+						opacity: 0.1
 					},
-					dark : {
-						size : ['auto',1],
-						color : '#000',
-						offset : ['auto',0,0],
-						opacity : 0.1
+					dark: {
+						size: ['auto', 1],
+						color: '#000',
+						offset: ['auto', 0, 0],
+						opacity: 0.1
 					},
-					line : {
-						position : 'absolute',
-						shape : 'line',
-						width : 2.5,
-						color : '#808080',
-						offset : [14, 6.5,'auto','auto'],
-						opacity : 1,
-						size : [7, 7]
+					line: {
+						position: 'absolute',
+						shape: 'line',
+						width: 2.5,
+						color: '#808080',
+						offset: [14, 6.5, 'auto', 'auto'],
+						opacity: 1,
+						size: [7, 7]
 					},
-					line2 : {
-						position : 'absolute',
-						shape : 'lineUp',
-						width : 2.5,
-						color : '#808080',
-						offset : [19, 6.5,'auto','auto'],
-						opacity : 1,
-						size : [7, 7]
+					line2: {
+						position: 'absolute',
+						shape: 'lineUp',
+						width: 2.5,
+						color: '#808080',
+						offset: [19, 6.5, 'auto', 'auto'],
+						opacity: 1,
+						size: [7, 7]
 					}
 				}
 			},
-			over : {
-				styles : {
-					backgroundColor : '#e0e0e0'
+			over: {
+				styles: {
+					backgroundColor: '#e0e0e0'
 				},
-				layers : {
-					reorder : ['light','dark','line','line2'],
+				layers: {
+					reorder: ['light', 'dark', 'line', 'line2'],
 					
-					light : {
-						size : ['auto',1],
-						color : '#fff',
-						offset : [0,0,'auto'],
-						opacity : 0.1
+					light: {
+						size: ['auto', 1],
+						color: '#fff',
+						offset: [0, 0, 'auto'],
+						opacity: 0.1
 					},
-					dark : {
-						size : ['auto',1],
-						color : '#000',
-						offset : ['auto',0,0],
-						opacity : 0.1
+					dark: {
+						size: ['auto', 1],
+						color: '#000',
+						offset: ['auto', 0, 0],
+						opacity: 0.1
 					}
 				}
 			}
 		}
 	},
-		
+	
 	
 	window: {
 		'default': {
@@ -601,14 +599,15 @@ UI.props.TouchBlue = {
 						color: '#FFFFFF',
 						opacity: 1,
 						radius: 0
-					},/*
-					shadow: {
-						size: 0,
-						offsetY: 1,
-						diffusion : 4.4,
-						magnify: 0.6,
-						opacity: .3
-					},*/
+					},
+					/*
+					 shadow: {
+					 size: 0,
+					 offsetY: 1,
+					 diffusion : 4.4,
+					 magnify: 0.6,
+					 opacity: .3
+					 },*/
 					background: {
 						offset: 0,
 						color: '#000',
@@ -628,8 +627,8 @@ UI.props.TouchBlue = {
 					},
 					reflect: {
 						offset: [0, 0],
-						size : ['auto',22],
-						gradient	: {
+						size: ['auto', 22],
+						gradient: {
 							color: ['#FFF', '#FFF'],
 							opacity: [.2, .05]
 						},
@@ -652,7 +651,7 @@ UI.props.TouchBlue = {
 					footreflect: {
 						position: 'absolute',
 						size: ['auto', 24],
-						gradient	: {
+						gradient: {
 							color: ['#FFF', '#FFF'],
 							opacity: [.2, .05]
 						},
@@ -697,6 +696,39 @@ UI.props.TouchBlue = {
 						color: ['#CACACA', '#CFCFCF'],
 						offset: [2, 1, 1],
 						radius: 4
+					}
+				}
+			}
+		}
+	},
+	
+	element: {
+		'touchfoot': {
+			'default': {
+				layers: {
+					footbase: {
+						position: 'absolute',
+						size: ['auto', 50],
+						color: ['#000', '#000'],
+						offset: ['auto', 1, 1],
+						opacity: .4
+					},
+					footline: {
+						position: 'absolute',
+						size: ['auto', .5],
+						color: '#434343',
+						offset: ['auto', 1, 49],
+						radius: 0
+					},
+					footreflect: {
+						position: 'absolute',
+						size: ['auto', 24],
+						gradient: {
+							color: ['#FFF', '#FFF'],
+							opacity: [.2, .05]
+						},
+						offset: ['auto', 1, 25],
+						radius: 0
 					}
 				}
 			}

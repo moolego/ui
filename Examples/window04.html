@@ -3,8 +3,9 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		
-	<script type="text/javascript" src="mootools/mootools-1.2.1-core-nc.js"></script>
-	<script type="text/javascript" src="mootools/mootools-1.2-more.js"></script>
+	
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="mootools/more.js"></script>
 		
 	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
 	
@@ -77,8 +78,10 @@
 											title			: 'about',
 											width			: 300,
 											height			: 160,
-											head			: false,
-											viewOverflow 	: 'hidden',
+											foot			: false,
+											view			: {
+												overflow 	: 'hidden'
+											},
 											controls		: ['close']
 										});
 									}
@@ -116,7 +119,7 @@
 								{
 									text : 'Button',
 									action : function() { 
-										new UI.Button().inject(document.body);
+										new UI.Button().inject(woo.content);
 									}.bind(this)
 								},
 								{ 
@@ -169,6 +172,7 @@
 				label : "new window",
 				skin	: 'demo',
 				type	: "jgood",
+				resizable :1,
 				labelStyles : {
 					fontWeight : 'bold',
 					padding : '10px 20px'
@@ -188,6 +192,6 @@
 	</script>
 </head>
 
-<body style="overflow:hidden"></body>
+<body></body>
 
 </html>

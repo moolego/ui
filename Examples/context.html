@@ -55,198 +55,209 @@
 	
 	<script type="text/javascript">
 		window.addEvent('domready', function(){
-			toolbar = new UI['Toolbar']({
-				displayMode : 'text',
-				menu		: [
-					{
-						text	: 'moolego',
-						styles	: {
-							position	: 'relative'
-						},
-						menu : [
-							{
-								text : 'About',
-								action : function() { 
-									new UI.Window({
-										title			: 'about',
-										width			: 300,
-										height			: 160,
-										head			: false,
-										viewOverflow 	: 'hidden',
-										controls		: ['close']
-									});
+			
+			
+				//(?) settings
+				var offone = 0;
+				var offtwo = 0;
+				var ratioone = 10;
+				var ratiotwo = 20;
+				
+				//shape setting
+				radius = 0;
+				var offset = 0;
+				var width = 102;
+				var height = 102;
+				var margin = 0;
+				var fontSize = 11;
+				
+				buttons = new Array();
+				
+				
+				
+				function fillButtons() {
+					var size = 10;
+					time = $time();
+					var index = 0;
+					for (i = 0; i < size; i++) {
+						for (j = 0; j < size; j++) {
+						
+							var one = size - i + offone;
+							var two = size - j + offtwo;
+							
+							var color = RGBtoHex(Math.floor(255 - ratioone * one),  0,Math.floor(255 - ratiotwo * two));
+							color = '#'+color;
+								//console.log(color);
+							var colorover = new Color(color,'hex').setBrightness(50).hex;
+							//console.log(colorover);
+							//console.log(index)
+							
+							new UI.Button({
+								className: 'banane',
+								label: '<small>time</small><br/>' + (($time() - time) / 1000) + '<br/><small style="font-size:5px: color:#ccc">color</small><br/>' + color,
+								skin: 'demo',
+								type: 'speedtest',
+								props: {
+									'default': {
+										width : width,
+										height : height,
+										components : {
+											label : {
+												styles : {
+													fontSize : fontSize,
+													fontWeight: 'bold',
+													fontFamily: 'Arial, Helvetica',
+													opacity: '.7', 
+													padding: '10px 16px',
+													color: '#fff',
+													width: '70px'
+												}
+											}
+										},
+										styles : {
+											margin : margin
+										},
+										layers: {
+											reorder: ['emboss', 'front', 'reflect'],
+											emboss: {
+												radius: radius,
+												offset : 0,
+												color: '#000',
+												opacity: .17
+											},
+											front: {
+												offset: offset,
+												color: color,
+												radius: radius -2,
+												opacity: 1
+											},
+											reflect: {
+												offset: [offset, offset, '40%'],
+												gradient	: {
+													color: ['#FFF', '#FFF'],
+													opacity: [.2, .0]
+												},
+												radius: radius - 4
+											}
+										}
+									},
+									'down': {
+										layers: {
+											front: {
+												color: colorover,
+											}
+										}
+									}
 								}
-							},
-							{ 
-								text 		: 'Software version...',
-								action : function() { this.test('about'); alert('click')}.bind(this)
-							},
-							{ text		: 'separator' },
-							{ 
-								text 		: 'Préférences systemes...',
-								action : function() { new App.Settings() }
-							},
-							{ text		: 'separator' },{
-								text : 'Elements récents',
-								menu : [
-									{text : 'Finder'},
-									{text : 'Safari'},
-									{text : 'Mail'},
-									{text : 'Protoshop'},
-									{text : 'Nasty Explorer'}
-								]
-							},
-							{ text		: 'separator' },
-							{
-								text : 'Fermer la session'
-							}
-						]
-					},
-					{
-						text : 'New',
-						options : {'class' : 'ui-dd-new'},
-						menu		: [
-							{
-								text : 'Button',
-								action : function() { 
-									new UI.Button().inject(document.body);
-								}.bind(this)
-							},
-							{ 
-								text 		: 'Window',
-								action : function() { 
-									new UI.Window();
-								}.bind(this)
-							}
-						]
-					},
-					{
-						text : 'Window',
-						options : {'class' : 'ui-dd-new'},
-						menu		: [
-							{
-								text : 'About',
-								action : function() { this.test('about'); alert('click')}.bind(this)
-							},
-							{ text 		: 'Minimizer'},
-							{ text		: 'separator' },
-							{ text		: 'Cascade',
-							  action: function(){
-							  	this.windowManager.resetCascade()
-							  }.bind(this)
-							  
-							}
-						]
-					},
-					{
-						text : 'Help',
-						options : {'class' : 'ui-dd-help'},
-						menu : [
-							{ text : 'Welcome' },
-							{ text : 'separator' },
-							{ text : 'Update...' },
-							{ text : 'separator' },
-							{ text : 'Settings...' }
-						]
+							}).inject(document.body);
+						}
+
 					}
-				]						
-			}).inject(document.body,'top');
+				};
+				
+				function toHex(n) {
+					if (n==null) return "00";
+					n=parseInt(n); if (n==0 || isNaN(n)) return "00";
+					n=Math.max(0,n); n=Math.min(n,255); n=Math.round(n);
+					return "0123456789ABCDEF".charAt((n-n%16)/16)
+					+ "0123456789ABCDEF".charAt(n%16);
+				};
+				
+				function RGBtoHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B)}
+				fillButtons();
 			
 			new UI.Context({
-				contexts : [
-					{
-						name : 'green',
-						selector	: '.green',
-						menu		: [
-							{ text		: 'Green menu'},
-							{ text		: 'separator' },
-							{
-								text 	: 'Hello world...',
-								action	: function(){ alert('Hello world!') }
-							},
-							{
-								text 	: 'New Window',
-								action	: function(){ new UI.Window(); }
-							},
-							{ text		: 'separator' },
-							{ text		: 'Close this context'}
-						]
-					},
-					{
-						name : 'red',
-						selector	: '.red',
-						menu		: [
-							{ text		: 'Red menu'},
-							{ text		: 'separator' },
-							{
-								text 	: 'Hello world...',
-								action	: function(){ alert('Hello world!') }
-							},
-							{
-								text 	: 'New Window',
-								action	: function(){ new UI.Window(); }
-							},
-							{ text		: 'separator' },
-							{ text		: 'Close this context'}
-						]
-					},
-					{
-						name : 'blue',
-						selector	: '.blue',
-						menu		: [
-							{ text		: 'Blue menu'},
-							{ text		: 'Blue menu'},
-							{ text		: 'Blue menu'},
-							{ text		: 'Blue menu'},
-							{ text		: 'separator' },
-							{
-								text 	: 'Hello world...',
-								action	: function(){ alert('Hello world!') }
-							},
-							{
-								text 	: 'New Window',
-								action	: function(){ new UI.Window(); }
-							},
-							{ text		: 'separator' },
-							{ text		: 'Close this context'}
-						]
-					}
-				]
+				contexts: [{
+					name: 'green',
+					target: '.ui-button-speedtest',
+					menu: [{
+						text: 'Green menu'
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Hello world...',
+						action: function(){
+							alert('Hello world!')
+						}
+					}, {
+						text: 'sub menu',
+						menu: [{
+							text: 'Finder'
+						}, {
+							text: 'Safari'
+						}, {
+							text: 'Mail'
+						}, {
+							text: 'Protoshop'
+						}, {
+							text: 'Nasty Explorer'
+						}]
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Close this context'
+					}]
+				}, {
+					name: 'red',
+					target: '.red',
+					menu: [{
+						text: 'Red menu'
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Hello world...',
+						action: function(){
+							alert('Hello world!')
+						}
+					}, {
+						text: 'New Window',
+						action: function(){
+							new UI.Window();
+						}
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Close this context'
+					}]
+				}, {
+					name: 'blue',
+					target: '.body',
+					menu: [{
+						text: 'Blue menu'
+					}, {
+						text: 'Blue menu'
+					}, {
+						text: 'Blue menu'
+					}, {
+						text: 'Blue menu'
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Hello world...',
+						action: function(){
+							alert('Hello world!')
+						}
+					}, {
+						text: 'New Window',
+						action: function(){
+							new UI.Window();
+						}
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Close this context'
+					}]
+				}]
 			});
 		});
+		
+			
+		
 	</script>
 </head>
 
-<body style="overflow:hidden; margin:0;" bgcolor="#e8e8e8">
-	<style type="text/css">
-		.blue, .green, .red {
-			width : 150px;
-			height : 150px;
-			margin : 5px;
-			border : 1px solid #666;
-			float : left;
-		}
-		.blue {
-			background-color : #66F;
-		}
-		.red {
-			background-color : #F66;
-		}
-		.green {
-			background-color : #6F6;
-		}
-	</style>
-	<div class="blue"> </div>
-	<div class="green"> </div>
-	<div class="red"> </div>
-	<div class="green"> </div>
+<body style="margin:0;" class="body">
 	
-	<div class="red"> </div>
-	<div class="blue"> </div>
-	<div class="red"> </div>
-	<div class="blue"> </div>
-	<div class="red"> </div>
-
 </body>
 
 </html>
