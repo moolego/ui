@@ -57,23 +57,36 @@ UI.Element = new Class({
 		type: 'default',
 		state: 'default',
 		
-		className: false,
+
 		tag: 'span',
 		
 		resizable: false,
 		draggable: false,
 		selectable: true,
 		
+		// Drag options
+		draggable: false,
+		dragLimitX: [-1000, window.getWidth() + 1000],
+		dragLimitY: [0, window.getHeight() + 1000],
+		dragHandlers: ['head', 'foot'],
+		
+		// Resize options
+		resizable: false,
+
+		resizeOnDragIfMaximized: false,
+
 		skin: 'AquaGraphite',
 		props: false,
 		
 		styles: {},
 		
-		//devel
-		debug: false,
-		
 		//group id
 		group: false,
+		
+		// options
+		
+		className: false,
+		useAutoClass: true,
 		
 		// implemeted events
 		onClick: $empty,
@@ -101,7 +114,6 @@ UI.Element = new Class({
 	
 	initialize: function(options){
 		this.setOptions(options);
-		if (!this.controller) this.controller = ui.controller;
 
 		this.setClassName();
 		this.setSkin();
@@ -165,7 +177,40 @@ UI.Element = new Class({
 		this.element.ui = true;
 		this.state = this.options.state;
 		this.dragHandlers = [];
+		if (this.options.resizable) {  this.buildResizer() }
 	},
+
+
+	/*
+	Function: buildResizeHandler
+		private function
+		
+		Create a new element as resize handler
+	
+	Returns:
+		(void)
+	 */
+	
+	buildResizer : function() {
+		this.resizer = new UI.Element({
+			skin: this.options.skin,
+			component: 'element',
+			type: 'resizer',
+			styles : {
+				zIndex : 10001
+			}
+		}).inject(this.element,'bottom');
+		
+		this.resizer.element.addEvent('click',function(e){
+			new Event(e).stop();
+		})
+		
+		this.addEvents({
+			'onMinimize': function() { this.resizer.hide(); },
+			'onNormalize': function() { this.resizer.show(); }
+		});
+	},
+
 
 	/*
 	Function: setClassName
@@ -180,7 +225,7 @@ UI.Element = new Class({
 	setClassName: function(){
 		if (this.options.className) {
 			this.className = this.options.className;
-		} else {
+		} else if (this.options.useAutoClass) {
 			this.className = this.options.lib + '-' + this.options.component;
 			
 			if (this.options.type != 'default') 
@@ -343,7 +388,7 @@ UI.Element = new Class({
 		this.element.addEvents({
 			mousedown: function(e){
 				if (this.options.component != 'label') 
-					ui.controller.closeMenu(e);
+					ui.controller.element.closeMenu(e);
 				this.fireEvent('mousedown');
 			}.bind(this),
 			click: function(){
@@ -411,11 +456,18 @@ UI.Element = new Class({
 	*/
 	
 	enableResize : function(){
+		if (!this.options.resizeLimitX) {
+			this.options.resizeLimitX = 10;
+		};
+		if (!this.options.resizeLimitY) {
+			this.options.resizeLimitY = 10;
+		}
+		
 		this.element.makeResizable({
-			handle			: this.resize,
+			handle			: this.resizer,
 			limit			: { 
 				x			: this.options.resizeLimitX,
-				y			: this.options.resizeLimitX 
+				y			: this.options.resizeLimitY
 			},
 			onStart 		: function() { this.fireEvent('onResizeStart'); }.bind(this),
 			onDrag 			: function() { this.fireEvent('onResizeDrag'); }.bind(this),
@@ -519,8 +571,7 @@ UI.Element = new Class({
 		this.element.hide();
 		
 		return this;
-	}
-});
+	},
 
 
 /*
@@ -535,7 +586,6 @@ UI.Element = new Class({
 		(end)
 */
 
-UI.Element.implement({
 
 	/*
     Function: setStyle
@@ -596,9 +646,10 @@ UI.Element.implement({
 		this.element.setStyle('visibility', 'visible');
 		this.setSize('', '', '', container);
 		this.setCanvas();
-		this.controller.register(this);
+		ui.controller.element.register(this);
+		
 		this.fireEvent('injected');
-		return this;		
+		return this;
 	},
 	
 	/*
@@ -640,7 +691,7 @@ UI.Element.implement({
 	set: function(property, value) {
 		if (property == 'html' && this.label) {
 			this.label.set(property, value);
-			//this.setSize();
+			this.setSize();
 		} else {
 			this.element.set(property, value);
 		}
@@ -713,11 +764,11 @@ UI.Element.implement({
 	}
 });
 
+
+
 /*
-	Some usefull method from clientcide.con
+	Some usefull method for element
 	
-	License:
-		http://clientside.cnet.com/wiki/cnet-libraries#license
 */
 
 Element.implement({
@@ -771,77 +822,5 @@ Element.implement({
 		this.style.cursor = "default";
 		
 		return this;
-	},
-	
-	/*
-    Function: isVisible
-    	See documentation at http://www.clientcide.com/wiki/cnet-libraries
-    
-    Return:
-    	this.element display style
-	*/
-	
-	isVisible: function(){
-		return this.getStyle('display') != 'none';
-	},
-	
-	/*
-    Function: toggle
-    	See documentation at http://www.clientcide.com/wiki/cnet-libraries
-    
-    Return:
-    	this.element new display style
-	*/
-	
-	toggle: function(){
-		return this[this.isVisible() ? 'hide' : 'show']();
-	},
-	
-	/*
-    Function: hide
-    	See documentation at http://www.clientcide.com/wiki/cnet-libraries
-    
-    Return:
-    	this
-	*/
-	
-	hide: function(){
-		var d;
-		try {
-			//IE fails here if the element is not in the dom
-			d = this.getStyle('display');
-		} 
-		catch (e) {
-		}
-		this.store('originalDisplay', d || 'block');
-		this.setStyle('display', 'none');
-		return this;
-	},
-	
-	/*
-    Function: show
-    	See documentation at http://www.clientcide.com/wiki/cnet-libraries
-    
-    Return:
-    	this
-	*/
-	
-	show: function(display){
-		original = this.retrieve('originalDisplay') ? this.retrieve('originalDisplay') : this.get('originalDisplay');
-		this.setStyle('display', (display || original || 'block'));
-		return this;
-	},
-	
-	/*
-    Function: swapClass
-    	See documentation at http://www.clientcide.com/wiki/cnet-libraries
-    
-    Return:
-    	this
-	*/
-	
-	swapClass: function(remove, add){
-		return this.removeClass(remove).addClass(add);
 	}
-	
 });

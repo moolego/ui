@@ -1,3 +1,4 @@
+
  /*
 	Class: UI.Menu
 		Creates a new menu, manages submenus and positionning as well as scrolling thru <UI.Menu.Scroller>
@@ -88,7 +89,7 @@ UI.Menu = new Class({
 		this.parent();
 		if (!this.options.closeMenu) {
 			this.addEvent('onCloseMenu', function(e){
-				ui.controller.closeMenu = $empty;
+				ui.controller.element.closeMenu = $empty;
 				this.hide(300);
 			}.bind(this));
 		} else { 
@@ -219,7 +220,7 @@ UI.Menu = new Class({
 					position: position,
 					zIndex: this.options.component == 'toolbar' ? --this.options.zIndex : ++this.options.zIndex
 				}).inject(document.body);
-				ui.controller.closeMenu = this.fireEvent.bind(this, 'closeMenu');
+				ui.controller.element.closeMenu = this.fireEvent.bind(this, 'closeMenu');
 			} else {
 				menuItem.submenu.show(menuItem);
 			}
@@ -598,8 +599,8 @@ UI.Menu = new Class({
 	 */
 	
 	show : function(parent, x, y) {
-		ui.controller.closeMenu = this.fireEvent.bind(this, 'closeMenu');
-		ui.controller.menu = this;
+		ui.controller.element.closeMenu = this.fireEvent.bind(this, 'closeMenu');
+		ui.controller.element.menu = this;
 		this.time = $time();
 		this.element.setStyle('display', 'block');
 		this.setPosition(parent);
@@ -621,7 +622,7 @@ UI.Menu = new Class({
 	
 	hide: function(duration){
 		if (!$defined(duration)) duration = this.props.hideFxDuration;
-		ui.controller.menu = false;
+		ui.controller.element.menu = false;
 		this.fireEvent('hide');
 		this.removeSubmenu();
 			

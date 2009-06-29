@@ -51,6 +51,14 @@ UI.ListView = new Class({
 			label: false
 		},
 		
+		scroller : false,
+		
+		/*{
+			area:  40,
+			velocity: 2,
+			fps:50
+		},*/
+		
 		width: '100%',
 		height: '100%',
 		itemType: 'itemList'
@@ -73,7 +81,14 @@ UI.ListView = new Class({
 		this.parent();
 		
 		this.getData(this.options.url);
+		
+		if (this.options.scroller)
+			this.setScroller(this.options.scroller);
+
 	},
+	
+	
+	
 	
 	/*
 	Method: getData
@@ -102,13 +117,13 @@ UI.ListView = new Class({
 			 new Request.JSON({
 				url : url,
 		        onComplete:function(response) {
-					this.processList(response);
+					this.addItems(response);
 		        }.bind(this)
 		    }).get();
 			
 		} else {
 			this.addEvent('injected', function(){
-				this.processList(this.options.data);
+				this.addItems(this.options.items);
 			}.bind(this));
 		}
 	},
@@ -126,14 +141,14 @@ UI.ListView = new Class({
 		this
 	*/
 
-	processList: function(data){
+	addItems: function(items){
 		if (this.options.skin) this.options.item.skin = this.options.skin;
 			
-		data.each(function(element){
+		items.each(function(object){
 			var item = new UI[this.options.itemObject](this.options.item)
 			.inject(this.content);
 			
-			$H(element).erase('type').each(function(value,key){
+			$H(object).erase('type').each(function(value,key){
 				new UI.Element({
 					html: value,
 					styles: this.props.components[key].styles
@@ -142,5 +157,4 @@ UI.ListView = new Class({
 			}, this)
 		}, this);
 	}
-	
 });

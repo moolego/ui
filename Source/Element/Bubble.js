@@ -48,7 +48,7 @@ UI.Bubble = new Class({
 	
 	initialize: function(options) {
 		this.parent(options);
-		this.inject(document.body);
+		this.inject($(document.body));
 		this.setLocation();
 		this.fade(1);
 	},
@@ -175,7 +175,7 @@ UI.Bubble = new Class({
 	getLocation: function(){
 		var bubbleCoord = this.element.getCoordinates();
 		var coord = this.options.target.getCoordinates();
-		
+		console.log(coord);
 		if (this.options.type == 'default') {
 			var left = coord.right - 40;
 			var top = coord.top - bubbleCoord.height - 10;

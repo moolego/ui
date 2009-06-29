@@ -18,11 +18,7 @@
 		Stacks should be better implemented
 */
 
-UI.WindowController = new Class({
-
-	//Extends			: UI.Controller,
-	Implements 			: [Events, Options],
-	
+ui.controller.window = {
 	options: {
 		version: '0.1a',
 		zBase: 2000,
@@ -54,10 +50,8 @@ UI.WindowController = new Class({
 		(void)
 	*/
 	
-	initialize: function(options){
-		this.setOptions();
-				
-		ui.windows = new Array();
+	start: function(){
+		this.list = new Array();
 		this.zIndex = this.options.zBase;
 		
 		window.addEvent('resize', function(){ this.resizeMaximizedWindow(); }.bind(this));
@@ -76,7 +70,7 @@ UI.WindowController = new Class({
 	*/
 	
 	register: function(win) {
-		ui.windows.push(win);
+		this.list.push(win);
 		if (win.options.zIndex == 'auto')
 			win.element.setStyle('zIndex', this.zIndex);
 		else
@@ -100,11 +94,11 @@ UI.WindowController = new Class({
 		win = win || this.active; 
 		win.hide();
 		win.fireEvent('onClose');
-		for (var i = ui.windows.length - 1; i >= 0; i--) {
-			if (ui.windows[i] == win) {
+		for (var i = this.list.length - 1; i >= 0; i--) {
+			if (this.list[i] == win) {
 				win.destroy();
-				delete ui.windows[i];
-				ui.windows = ui.windows.clean();
+				delete this.list[i];
+				this.list = this.list.clean();
 			}
 		}
 		this.focus();
@@ -127,10 +121,10 @@ UI.WindowController = new Class({
 			//make next highest window focus
 			var zIndex = 0;
 			var window;
-			for (var i = ui.windows.length - 1; i >= 0; i--) {
-				var windowZIndex = ui.windows[i].element.getStyle('zIndex');
-				if (windowZIndex >= zIndex && !ui.windows[i].minimized) {
-					window = ui.windows[i];
+			for (var i = this.list.length - 1; i >= 0; i--) {
+				var windowZIndex = this.list[i].element.getStyle('zIndex');
+				if (windowZIndex >= zIndex && !this.list[i].minimized) {
+					window = this.list[i];
 					zIndex = windowZIndex;
 				}
 			}
@@ -181,7 +175,7 @@ UI.WindowController = new Class({
 		var x = -150;
 		var y = window.getHeight()-35;
 		
-		ui.windows.each(function(w,i) {
+		this.list.each(function(w,i) {
 			if (w.state == 'minimized') {
 				x += w.getStyle('width').toInt() + 4;
 			}
@@ -201,7 +195,7 @@ UI.WindowController = new Class({
 	resetMinimizedLocation : function(){
 		var x = -150;
 		var y = window.getHeight()-35;
-		ui.windows.each(function(win) {
+		this.list.each(function(win) {
 			if (win.state == 'minimized') {
 				x += win.getStyle('width').toInt() + 4;
 				win.setLocation(x, y);
@@ -218,7 +212,7 @@ UI.WindowController = new Class({
 	*/	
 	
 	resizeMaximizedWindow: function(){
-		ui.windows.each(function(win) {
+		this.list.each(function(win) {
 			if (win.state == 'maximized') {
 				win.setSize({
 					height: window.getHeight()-53,
@@ -244,7 +238,7 @@ UI.WindowController = new Class({
 			left : this.options.cascade.start.x.toInt(),
 			top : this.options.cascade.start.y.toInt()
 		}
-		ui.windows.each(function(w,i) {
+		this.list.each(function(w,i) {
 			if (w.state != 'minimized' && w.options.location == 'cascade') {
 				location.left += this.options.cascade.step.x;
 				location.top += this.options.cascade.step.y;
@@ -272,13 +266,14 @@ UI.WindowController = new Class({
 		var y = e.client.y;
 		var z = 0;
 		var s = '';
-		ui.windows.each(function(win,i) {
+		this.list.each(function(win,i) {
 			c = win.element.getCoordinates();
 			if ( c.left <= x && x <= c.left + c.width && c.top <= y && y < c.top + c.height) {
 				if ( win.element.getStyle('z-index') > z ) {
 					z = win.element.getStyle('z-index');
 					s = win;
 				}
+				console.log('focus'.s);
 				s.focus();
 			}
 		});
@@ -296,34 +291,36 @@ UI.WindowController = new Class({
 		var start = [170,50];
 		var offset = [20,20];
 		var zIndex = this.zIndex;
+		var last;
 		
-		ui.windows.each(function(win){
+		this.list.each(function(win){
+			console.log(win);
 			win.element.style.zIndex = zIndex++;
+			
 
 			start[0] += offset[0];			
 			start[1] += offset[1];
-
-			var fx = new Fx.Morph(win.element, {
-				'duration': 1000,
-				transition: Fx.Transitions.Sine.easeInOut,
-				link: 'ignore'
-			}).start({		
+			
+			win.element.morph({ 
 				'left': start[0],
 				'top': start[1]
 			});	
+		
 			
-			win.location = 'cascade';	
+			
+			win.location = 'cascade';
+			last = win;
 		});
 		
 		this.zIndex = zIndex;
 	},
 	
 	closeAll: function(){
-		ui.windows.each(function(win){
+		this.list.each(function(win){
 			this.close(win);			
 		},this);
 	}
 	
-});
+};
 
-ui.windowController = ui.windowController || new UI.WindowController();
+ui.controller.window.start();

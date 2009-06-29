@@ -9,10 +9,11 @@
 		options
 		
 	Options:
+		see <UI.View>
 		
-	
+		
 	Returns:
-		Panelview object.
+		Paneview object.
 		
 	Example:
 		(start code)
@@ -29,25 +30,27 @@
 
 UI.PaneView = new Class({
 	
-	Extends					: UI.View,
+	Extends: UI.View,
 	
 	options: {
-		className: 'ui-panelview',
+		className: 'ui-paneview',
+		component: 'view',
 		properties: {},
 		styles: {
 			width: '100%',
 			height: '100%'
 		},
+		overflow:'slide',
 		direction: 'horizontal',
 		transitionType: 'scroll',
 		transitionFx: {
 			duration: 1600,
 			wait: false
 		},
-		panel: {
-			className: 'ui-panelview-panel',
+		pane: {
+			className: 'ui-paneview-pane',
 			styles: {
-				width: '300px',
+				width: '200px',
 				height: '100%'
 			}
 		},
@@ -55,26 +58,6 @@ UI.PaneView = new Class({
 		onComlete: $empty,
 		onTransition: $empty,
 		onResize: $empty
-	},
-
-	/* 
-	Constructor: initialize
-		Construtor
-	
-	Arguments:
-		options - (object) options
-	
-	See also:
-		<UI.Element::initialize>
-	*/
-	
-	initialize: function(options){
-		this.setOptions(options);
-		this.list = new Array();
-		this.fireEvent("onResize");
-		this.build();
-		
-		this.transitionFx = new Fx.Scroll(this.element.element, this.options.transitionFx);
 	},
 
 	/*
@@ -88,58 +71,64 @@ UI.PaneView = new Class({
 	*/
 
  	build: function (){
-		this.element = new UI.View({
-			overflow: 'hidden',
-			styles: {
-				height: '100%',
-			    margin: '0',
-			    overflow: 'hidden',
-			    padding: '0',
-			    backgroundColor: '#FFF'
-			}
-		});
+		this.list = new Array();
+		this.parent();
+		this.setBehaviour();
+		
+		
+	},
+	/*
+    Function: setBehaviour
+   
+    	Add pane(subview), intect it in the container, resize container and return it
+
+	*/
+	
+	setBehaviour : function(){
+		this.transitionFx = new Fx.Scroll(this.element, this.options.transitionFx);
 	},
 
 	/*
     Function: add
    
-    	Add panel(subview), intect it in the container, resize container and return it
+    	Add pane(subview), intect it in the container, resize container and return it
 
 	*/
 	
-	add: function(){
-		var panel = new UI.View(this.options.panel);
-		panel.element.inject(this.element.content);
-		this.list.push(panel);
+	add: function(pane){
+		var pane = new UI.View(this.options.pane).inject(this.content);
 		
-		//console.log('create panel: '+this.list.indexOf(panel));
+		this.list.push(pane);
+		
 		this.resize();	
-		return panel;
+		return pane;
 	},
 
 	/*
     Function: applyTransition
    
-    	Set the given panel as active and move to it 
+    	Set the given pane as active and move to it 
 
 	*/
 
 
-	applyTransition: function(panel){
-		this.panel = panel;
-		this.transitionFx.toElement(panel.element);
+	applyTransition: function(pane){
+		console.log('apply transition on element '+this.element);
+		this.pane = pane;
+		this.transitionFx.toElement(this.list.getLast());
+		console.log('list length:'+this.list.length);
 	},
 
 
 	/*
     Function: next
    
-    	Find the next panel from the list and move to it if exist
+    	Find the next pane from the list and move to it if exist
 
 	*/
 
 	next: function(){
-		var next = this.list.indexOf(this.panel)+1;
+		var next = this.list.indexOf(this.pane)+1;
 				
 		if (this.list[next]) {
 			this.applyTransition(this.list[next]);		
@@ -149,12 +138,12 @@ UI.PaneView = new Class({
 	/*
     Function: previous
    
-    	Find the previous panel from the list and move to it if exist
+    	Find the previous pane from the list and move to it if exist
 
 	*/
 
 	previous: function(){
-		var prev = this.list.indexOf(this.panel)-1;
+		var prev = this.list.indexOf(this.pane)-1;
 		if (this.list[prev]) {
 			this.applyTransition(this.list[prev]);		
 		}
@@ -171,8 +160,8 @@ UI.PaneView = new Class({
 	*/
 
 	updateScrollBar : function(){
-		this.list.each(function(panel,index) {
-			panel.scrollbar.update();			  
+		this.list.each(function(pane,index) {
+			pane.scrollbar.update();			  
 		},this);
 	},
 
@@ -188,11 +177,12 @@ UI.PaneView = new Class({
 	resize: function(){
 		var size = 0;
 		
-		this.list.each(function(panel,index) {
-			size = size + panel.element.getSize().x;				  
+		this.list.each(function(pane,index) {
+			size = size + pane.element.getSize().x;
+			console.log('update size');				  
 		});
 
-		//this.element.content.setStyle('width',size+'px');
+		this.content.setStyle('width',size+'px');
 	},
 
 	/*
@@ -220,28 +210,26 @@ UI.PaneView = new Class({
 	},
 
 	/*
-    Function: removePanel
+    Function: removePane
    
-    	Destroy the given wrapper panel 
+    	Destroy the given wrapper pane 
     	
-    Note: it seems that the pop function that remove the panel from the list doesn't work
+    Note: it seems that the pop function that remove the pane from the list doesn't work
 
 	*/
 	
-	removeAllNext: function(panel) {
-		var next = this.list.indexOf(panel) + 1;
-		var last = this.list.indexOf(this.list.getLast());
-		
-		if (next > last)  { return  } 
-		
-		for (var i = next; i <= last; i++) {
-			//console.log('remove panel:'+i);
-			var panel = this.list[i];
-			if (panel) {
-				this.list.pop(panel);
-				panel.destroy();
-			}
+	removeAllNext: function(pane) {
+		console.log('-- removeAllNext() from pane '+this.list.indexOf(pane));
+		var last = this.list.getLast();
+		console.log('last '+this.list.indexOf(last));
+		while (last != pane) {
+			console.log('remove '+this.list.indexOf(last));	
+			this.list.erase(last);
+			last.destroy();
+			last = this.list.getLast();
 		}
 	}
+	
+	
 	
 });

@@ -120,7 +120,7 @@ UI.Select = new Class({
 		//we add events on select
 		this.element.addEvents({
 			mousedown: function(e){
-				ui.controller.closeMenu();
+				ui.controller.element.closeMenu();
 				this.menu.show(this.element);
 				new Event(e).stop();
 			}.bind(this)

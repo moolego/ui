@@ -118,11 +118,11 @@ UI.Canvas = new Class({
 			this.props.layers.shadow.offsetY
 		];
 		
-		this.shadowThikness = this.shadowSize + this.shadowMagnify;
+		this.shadowThickness = this.shadowSize + this.shadowMagnify;
 
 		this.canvasSize = [
-			(width  || this.options.width) + this.shadowThikness * 2 + Math.abs(this.shadowOffset[0]),
-			(height || this.options.height) + this.shadowThikness * 2 + Math.abs(this.shadowOffset[1])
+			(width  || this.options.width) + this.shadowThickness * 2 + Math.abs(this.shadowOffset[0]),
+			(height || this.options.height) + this.shadowThickness * 2 + Math.abs(this.shadowOffset[1])
 		];
 		
 		this.canvas.setProperties({
@@ -131,19 +131,19 @@ UI.Canvas = new Class({
 		});
 		
 		this.canvas.setStyles({
-			top : - this.shadowThikness,
-			left : - this.shadowThikness,
+			top : - this.shadowThickness,
+			left : - this.shadowThickness,
 			width : this.canvasSize[0],
 			height: this.canvasSize[1]
 		});
 		
 		this.absSize = [
-			this.canvasSize[0] - this.shadowThikness * 2 - Math.abs(this.shadowOffset[0]),
-			this.canvasSize[1] - this.shadowThikness * 2 - Math.abs(this.shadowOffset[1])
+			this.canvasSize[0] - this.shadowThickness * 2 - Math.abs(this.shadowOffset[0]),
+			this.canvasSize[1] - this.shadowThickness * 2 - Math.abs(this.shadowOffset[1])
 		];
 		
 		this.relSize = this.absSize;
-		this.offset = [this.shadowThikness, this.shadowThikness];
+		this.offset = [this.shadowThickness, this.shadowThickness];
 		
 		if (width, height) this.draw();
 	},
@@ -188,10 +188,10 @@ UI.Canvas = new Class({
 			}, this);
 		}
 
-		this.offset = [this.shadowThikness, this.shadowThikness];
+		this.offset = [this.shadowThickness, this.shadowThickness];
 		this.relSize = [
-			this.canvasSize[0] - this.shadowThikness * 2 - Math.abs(this.shadowOffset[0]),
-			this.canvasSize[1] - this.shadowThikness * 2 - Math.abs(this.shadowOffset[1])
+			this.canvasSize[0] - this.shadowThickness * 2 - Math.abs(this.shadowOffset[0]),
+			this.canvasSize[1] - this.shadowThickness * 2 - Math.abs(this.shadowOffset[1])
 		];
 		this.shadowSet 	= false;
 		this.fireEvent('complete');
@@ -264,7 +264,7 @@ UI.Canvas = new Class({
 			offset		: [this.shadowOffset[0], this.shadowOffset[1]]
 		}
 		
-		for (var i = this.shadowThikness * 1.5; i > 0; i--) {
+		for (var i = this.shadowThickness * 1.5; i > 0; i--) {
 			var oratio = opacity/(i* 2 / 1.5 + 10);
 			this.ctx.save();
 				this.setTransformation(props);
@@ -436,7 +436,7 @@ UI.Canvas = new Class({
 	Function: setOffset
 		private function
 		
-		Determine the start point's coordinates as width and height for a layer
+		Determine the start point's coordinates as width and height for a shape
 	
 	Arguments: 
 		value - (array) Array with three entries to determine offset
@@ -485,8 +485,8 @@ UI.Canvas = new Class({
 		// calculate size from offsets
 		if (!size) {
 			if (absolute) {
-				var offsetX = value[3] + this.shadowThikness;
-				var offsetY = value[0] + this.shadowThikness;
+				var offsetX = value[3] + this.shadowThickness;
+				var offsetY = value[0] + this.shadowThickness;
 				var width = this.absSize[0] - value[1] - value[3];
 				var height = this.absSize[1] - value[0] - value[2];
 			} else {
@@ -506,7 +506,7 @@ UI.Canvas = new Class({
 				case value[3] != 'auto' : 
 					if (absolute) {
 						var width 		= (size[0] == 'auto') ? this.absSize[0] - value[1] - value[3] : size[0];
-						var offsetX 	= value[3] + this.shadowThikness;
+						var offsetX 	= value[3] + this.shadowThickness;
 					} else {
 						var width 		= (size[0] == 'auto') ? this.relSize[0] - value[1] - value[3] : size[0];
 						var offsetX 	= this.offset[0] + value[3];
@@ -519,7 +519,7 @@ UI.Canvas = new Class({
 				case value[1] != 'auto' :
 					if (absolute) {
 						var width 		= (size[0] == 'auto') ? this.absSize[0] - value[1] - value[3] : size[0];
-						var offsetX 	= this.absSize[0] - width - value[1] + this.shadowThikness;
+						var offsetX 	= this.absSize[0] - width - value[1] + this.shadowThickness;
 					} else {
 						var width		= (size[0] == 'auto') ? this.relSize[0] - value[1] - value[3] : size[0];
 						var offsetX		= this.offset[0] + this.relSize[0] - width - value[1];
@@ -532,7 +532,7 @@ UI.Canvas = new Class({
 				case value[3] == 'auto' && value[1] == 'auto' :
 					if (absolute) {
 						var width 		= size[0];
-						var offsetX 	= (this.absSize[0] - width) / 2 + this.shadowThikness;
+						var offsetX 	= (this.absSize[0] - width) / 2 + this.shadowThickness;
 					} else {
 						var width		= size[0];
 						var offsetX		= (this.relSize[0] - width) / 2;
@@ -548,7 +548,7 @@ UI.Canvas = new Class({
 				case value[0] != 'auto' : 
 					if (absolute) {
 						var height 		= (size[1] == 'auto') ? this.absSize[1] - value[0] - value[2] : size[1];
-						var offsetY 	= value[0] + this.shadowThikness;
+						var offsetY 	= value[0] + this.shadowThickness;
 					} else {
 						var height 		= (size[1] == 'auto') ? this.relSize[1] - value[0] - value[2] : size[1];
 						var offsetY 	= this.offset[1] + value[0];
@@ -561,7 +561,7 @@ UI.Canvas = new Class({
 				case value[2] != 'auto' :
 					if (absolute) {
 						var height 		= (size[1] == 'auto') ? this.absSize[1] - value[0] - value[2] : size[1];
-						var offsetY 	= this.absSize[1] - height - value[2] + this.shadowThikness;
+						var offsetY 	= this.absSize[1] - height - value[2] + this.shadowThickness;
 					} else {
 						var height		= (size[1] == 'auto') ? this.relSize[1] - value[0] - value[2] : size[1];
 						var offsetY		= this.offset[1] + this.relSize[1] - height - value[2];
@@ -574,7 +574,7 @@ UI.Canvas = new Class({
 				case value[0] == 'auto' && value[2] == 'auto' : 
 					if (absolute) {
 						var height 		= size[1];
-						var offsetY 	= (this.absSize[1] - height) / 2 + this.shadowThikness;
+						var offsetY 	= (this.absSize[1] - height) / 2 + this.shadowThickness;
 					} else {
 						var width		= size[1];
 						var offsetY		= (this.relSize[1] - height) / 2;
@@ -777,13 +777,13 @@ UI.Canvas = new Class({
 		if (props.rotation) {
 			this.ctx.rotate(Math.PI * props.rotation / 180);
 		}
-		
+
 		//scale
 		if (props.scale) {
 			if ($type(props.scale) != 'array') props.scale = [props.scale, props.scale];
 			this.ctx.scale(props.scale[0], props.scale[1]);
 		}
-		
+
 		//composite
 		if (props.composite) this.ctx.globalCompositeOperation = props.composite;
 
