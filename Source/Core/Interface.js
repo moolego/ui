@@ -7,7 +7,7 @@ Require:
 	UI.Skin
 	UI.Canvas
 	UI.Element
-	And the compinents you want to be replaced
+	And the components you want to be replaced
 
 Arguments:
 	Options
