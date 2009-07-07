@@ -22,6 +22,12 @@
 				label		: 'Hello world!'			
 			}).inject(document.body);
 		(end)
+		
+		
+	Implied global: 
+		Class - 27
+		Event - 118
+		UI - 27 29 61
 */
 
 UI.Checkbox = new Class({
@@ -68,7 +74,9 @@ UI.Checkbox = new Class({
 			delete this.props.height;
 		}
 		this.control.store('value', this.options.value);
-		if (this.options.checked) this.toggleValue();
+		if (this.options.checked) {
+			this.toggleValue();
+		}
 	},	
 	
 	/* 
@@ -113,8 +121,8 @@ UI.Checkbox = new Class({
 		this.parent();
 		this.element.addEvents({
 			click: function(e){
-				new Event(e).stop();
-				this.toggleValue()
+				var ev = new Event(e).stop();
+				this.toggleValue();
 			}.bind(this)
 		});
 	}

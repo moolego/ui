@@ -1,7 +1,19 @@
 /*
-Class: UI.Controller
+Class: Controller
 	Default element controller.
 	It handle element's z-index as well as group managing and group serialization (usefull for controls values
+	
+	Implied global: 
+		$empty - 23
+		ui - 7 146
+		window - 133
+		
+	Members
+		addEvent, bind, closeMenu, controller, each, element, elements, 
+	    getStyle, goDown, goUp, group, groups, handelKeys, join, key, list, 
+	    menu, name, options, push, register, serialize, setBehavior, setStyle, 
+	    start, value, zIndex
+	
 */
 
 ui.controller.element = {
@@ -15,7 +27,7 @@ ui.controller.element = {
 	*/
 	
 	start: function(){
-		this.list = new Array();
+		this.list = [];
 		
 		this.zIndex = 1;
 		this.groups = {};
@@ -64,11 +76,14 @@ ui.controller.element = {
 		*/
 		
 		//set z-index
-		if (object.element.getStyle('zIndex') == 'auto' || object.element.getStyle('zIndex') == 0)
+		if (object.element.getStyle('zIndex') == 'auto' || object.element.getStyle('zIndex') === 0) {
 			object.element.setStyle('zIndex', object.options.zIndex || this.zIndex++);
+		}
 			
 		//add element to the group if needed
-		if (object.options.group) this.group(oid);
+		if (object.options.group) {
+			this.group(oid);
+		}
 	},
 	
 	/*
@@ -84,7 +99,7 @@ ui.controller.element = {
 	
 	group: function(oid) {
 		//we check if the group exist, else we create it
-		this.groups[this.list[oid].options.group] = this.groups[this.list[oid].options.group] || new Array();
+		this.groups[this.list[oid].options.group] = this.groups[this.list[oid].options.group] || [];
 		this.groups[this.list[oid].options.group].push(oid);
 	},
 	
@@ -96,17 +111,28 @@ ui.controller.element = {
 	   
 	Arguments:
 		groupID - (string) name of the group you want to serialize element's value.
+		
+	Discussion:
+	
+		Not implemented
 	  
 	*/
 	
 	serialize: function(groupID) {
-		if (!this.groups[groupID]) return false;
+		if (!this.groups[groupID]) {
+			return false;
+		}
+		
 		//we get all elements
 		var string = [];
 		this.groups[groupID].each(function(eC){
-			if (eC.value) string.push(eC.options.name + '=' + eC.value);
+			if (eC.value) {
+				string.push(eC.options.name + '=' + eC.value);
+			}
 		});
-		console.log(string.join('&'));
+		
+		return string.join('&');
+		// console.log(string.join('&'));
 	},
 	
 	setBehavior: function(){

@@ -1,5 +1,5 @@
 /*
-Class: UI.Textarea
+	Class: UI.Textarea
 		Create a skinnable textarea element
 	
 	Extends:
@@ -56,29 +56,33 @@ UI.Textarea = new Class({
 		this.input.set({
 			styles: {
 				width: this.props.width - this.input.getStyle('paddingLeft').toInt() - this.input.getStyle('paddingRight').toInt(),
-				height: this.props.height - this.input.getStyle('paddingTop').toInt() - this.input.getStyle('paddingBottom').toInt(),
-				overflow: 'hidden',
-				margin: 0
-			}
-		});
+				height: this.props.height - this.inpt(document.body);
+		(end)
+*/
+
+UI.Textarea = new Class({
+	
+	Extends: UI.Control,
+	
+	options: {
+		component: 'textarea',
+		
+		// default options
+		name: 'ui-input',
+		value: ''
 	},
 	
 	/* 
-		Method: setState
-			Set the button state
+	Function: build
+		private function
 		
-		Arguments:
-			state - (string)
-			
-		Return:
-			(void)
+		Call <UI.Control::build> and make a textarea element
 		
-		See als0:
-			<UI.Element::setState>
-	*/
+	Return:
+		(void)
 	
-	setState: function(state){
-		this.parent(state);
+	See also:
+		<UI.Control::buil(state);
 		return this;
 	},
 	

@@ -60,7 +60,7 @@ UI.Context = new Class({
 	options:{
 		className: 'ui-menu-context',
 		contexts: [],
-		event: 'contextmenu',
+		trigger: 'contextmenu',
 		type: 'context'
 	},
 	
@@ -97,7 +97,7 @@ UI.Context = new Class({
 	addContexts: function(contexts){
 		contexts.each(function(context){
 			$(document.body).getElements(context.target).each(function(el){
-				el.addEvent(this.options.event, function(e){
+				el.addEvent(this.options.trigger, function(e){
 					new Event(e).stop();
 					this.hide(0);
 					this.buildMenu(context.menu);

@@ -218,7 +218,7 @@ UI.MenuScroller = new Class({
 		this.arrowUp = new Element('div', {'class' : 'ui-menu-arrow-up'}).setStyles({
 			position: 'absolute',
 			width: elementCoord.width,
-			height: elementCoord.top + 25,
+			height: elementCoord.top + 20,
 			top: -elementCoord.top,
 			left: 0,
 			zIndex: 2
@@ -227,7 +227,7 @@ UI.MenuScroller = new Class({
 		// new element to inject
 		this.arrowUp.canvas = new UI.Element({
 			width: elementCoord.width,
-			height: 25,
+			height: 20,
 			skin: this.options.skin,
 			type: 'menuArrow',
 			state: 'up'
@@ -273,7 +273,7 @@ UI.MenuScroller = new Class({
 		this.arrowDown = new Element('div', {'class' : 'ui-menu-arrow-down'}).setStyles({
 			position: 'absolute',
 			width: elementCoord.width,
-			height: window.getHeight() - elementCoord.bottom + 25,
+			height: window.getHeight() - elementCoord.bottom + 20,
 			bottom: elementCoord.bottom - window.getHeight(),
 			left: 0,
 			zIndex: 2
@@ -282,7 +282,7 @@ UI.MenuScroller = new Class({
 		// new shape to inject
 		this.arrowDown.canvas = new UI.Element({
 			width: elementCoord.width,
-			height: 25,
+			height: 20,
 			skin: this.options.skin,
 			type: 'menuArrow',
 			state: 'down'

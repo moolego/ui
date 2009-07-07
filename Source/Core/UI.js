@@ -6,6 +6,9 @@
 		MooLego UI for mootools v1.2
 		
 		MIT-style license
+		
+	Members 
+		controller, props, version
 */
 
 var UI = UI || {

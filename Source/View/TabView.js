@@ -111,6 +111,12 @@ UI.TabView = new Class({
 			}.bind(this)
 		});
 		
+		this.addEvent('resize',function(){
+			view.scrollbar.update();
+		});
+		
+		
+		
 		if (props.selected) this.selected = tab;
 		
 		this.tabs.push(tab);		
