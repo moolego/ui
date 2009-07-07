@@ -20,49 +20,14 @@
 			value: 'Hello world'
 		}).inject(document.body);
 		(end)
-*/
-
-UI.Input = new Class({
-	
-	Extends: UI.Control,
-	
-	options: {
-		component: 'input',
 		
-		// default options
-		name: 'ui-input',
-		value: ''
-	},
-	
-	/* 
-	Function: build
-		private function
+	Implied global: 
+		Class - 25
+		UI - 25 27
 		
-		Create a div and a hidden input to receive the selected value
-	
-	Return:
-		(void)
-	
-	See also:
-		<UI.Control::build>
-		<UI.Element::build>
-	*/
-	
-	build: function(){
-		//create a new div as input element
-		this.parent();
-		
-		//create input
-		this.setInput('text');
-		this.input.setStyle('width', this.props.width - this.input.getStyle('paddingLeft').toInt() - this.input.getStyle('paddingRight').toInt());
-	},
-	
-	/* 
-	Function: setState
-		Set element state
-	
-	Argunject(document.body);
-		(end)
+	Members:
+		Control, Extends, Input, addEvents, bind, blur, component, 
+    	focus, name, options, parent, setBehavior, setState, value
 */
 
 UI.Input = new Class({
@@ -102,7 +67,7 @@ UI.Input = new Class({
 		this.addEvents({
 			blur: this.setState.bind(this, 'default'),
 			focus: this.setState.bind(this, 'focus')
-		})
+		});
 	}
 	
 });

@@ -1,35 +1,48 @@
 /*
 
-Class: UI.Panel
-	Build UI.Window component.
-
-Arguments:
-	className - (string) css class apply to the wrapper - default 'ui-win'.
-	title - (string) title dissplayed in the header titlebar.
-	type - ('default''modal') define the type of the panel.
-	position - ('custom','center','cascade')  override top and left options if defined - default to custom.
-	width - (number) Width of the container wrapper in px.
-	height - (number) Height  of the container wrapper in px.
-	top	- (number) Height  of the container wrapper in px.
-	left - (number) Height  of the container wrapper in px.
-	state - ('normalized','maximized','normalized') Define the initial state - default to normalized.
-	useEffects - (boolean) Define if effects should be implemented.
-	resizable - (boolean) Define if the panel is resizable.
-	draggable - (boolean) Define if the panel is draggable.
-	shadow -	(boolean) Define if the panel should use a shadow.
-	scrollbar - (boolean) Define if the container should use scrollbar.
-	register - (bollean) Define if the panel should be handle by the panel manager.
-	status - (bollean) Define if the panel should use a statusbar.
-	url	- (string) Define the url from the panel content.
-
-Example:
-	(start code)
-	var win = new UI.panel({
-		width 	: 260,
-		height	: 400,
-		title	: 'bonjour'
-	});
-	(end)
+	Class: UI.Panel
+		Build UI.Window component.
+	
+	Arguments:
+		className - (string) css class apply to the wrapper - default 'ui-win'.
+		title - (string) title dissplayed in the header titlebar.
+		type - ('default''modal') define the type of the panel.
+		position - ('custom','center','cascade')  override top and left options if defined - default to custom.
+		width - (number) Width of the container wrapper in px.
+		height - (number) Height  of the container wrapper in px.
+		top	- (number) Height  of the container wrapper in px.
+		left - (number) Height  of the container wrapper in px.
+		state - ('normalized','maximized','normalized') Define the initial state - default to normalized.
+		useEffects - (boolean) Define if effects should be implemented.
+		resizable - (boolean) Define if the panel is resizable.
+		draggable - (boolean) Define if the panel is draggable.
+		shadow -	(boolean) Define if the panel should use a shadow.
+		scrollbar - (boolean) Define if the container should use scrollbar.
+		register - (bollean) Define if the panel should be handle by the panel manager.
+		status - (bollean) Define if the panel should use a statusbar.
+		url	- (string) Define the url from the panel content.
+	
+	Example:
+		(start code)
+		var win = new UI.panel({
+			width 	: 260,
+			height	: 400,
+			title	: 'bonjour'
+		});
+		(end)
+		
+	Implied global: 
+		Class - 35
+		UI - 35 36
+		window - 70 71 76 77
+		
+	Members: 
+		Extends, Panel, Window, borderSize, bottom, component, 
+	    controls, dragHandlers, dragLimitX, dragLimitY, draggable, drawCanvas, 
+	    foot, frame, getHeight, getSize, getWidth, head, height, left, location, 
+	    options, resizable, resizeLimitX, resizeLimitY, scrollbar, setStyles, 
+	    styles, tag, title, top, type, updateInnerSize, url, useEffects, 
+	    useFoot, useHead, view, viewOverflow, width, wrapper, x, y, zIndex
 */
 
 UI.Panel = new Class({
@@ -74,7 +87,7 @@ UI.Panel = new Class({
 		// Resize options
 		resizable: true,
 		resizeLimitX: [200, window.getWidth()],
-		resizeLimitY: [200, window.getHeight()],
+		resizeLimitY: [200, window.getHeight()]
 	},
 	
 	
@@ -85,7 +98,7 @@ UI.Panel = new Class({
 	updateInnerSize: function(){
 		var wrapper = this.frame.getSize();
 		var bs = this.options.borderSize;
-		var borderOffset = bs * 2
+		var borderOffset = bs * 2;
 		
 		var offsetHeight = 0;
 		if (this.options.useHead) {
