@@ -1,25 +1,36 @@
-
 /*
-Class: UI.Dialog
-	The UI.Dialog class defines objects that manage and coordinate the dialog an application displays on the screen.
-
-Arguments
-	options
-
-Options:
-		width
-		height
-
-Example:
-	(start code)
-	var dialog = new UI.Dialog({
-		width': 		'260',
-		height': 		'400',
-	});
-	(end)
-
-Discussion:
-	Still we need this class?
+	Class: UI.Dialog
+		The UI.Dialog class defines objects that manage and coordinate the dialog an application displays on the screen.
+	
+	Arguments
+		options
+	
+	Options:
+			width
+			height
+	
+	Example:
+		(start code)
+		var dialog = new UI.Dialog({
+			width': 		'260',
+			height': 		'400',
+		});
+		(end)
+	
+	Discussion:
+		Still we need this class? yes
+	
+	Implied global: $ 79, Class 25, Element 68 86 97, UI 25 26 102, console 51 65, document 79
+	
+	Members 
+		Button, Dialog, Extends, Window, addEvent, backgroundColor, 
+	    bind, body, build, buildButtons, buildMessage, buildUnderlay, buttons, 
+	    center, components, content, control, controls, destroy, each, element, 
+	    foot, head, height, inject, left, location, log, message, opacity, 
+	    options, padding, parent, position, props, resizable, scrollbar, set, 
+	    setStyle, setStyles, styles, title, top, type, underlay, view, width, 
+	    zIndex
+	
 */
 
 UI.Dialog = new Class({
@@ -27,8 +38,9 @@ UI.Dialog = new Class({
 	
 	options: {
 		center: true,
-		title: 'Dialog' ,
-		// Size options
+		title: 'Dialog',
+		
+		// Default size
 		width: 480,
 		height: 200,
 		
@@ -52,7 +64,9 @@ UI.Dialog = new Class({
 		this.buildUnderlay();
 		
 		this.parent();
-		this.element.setStyle('zIndex','1000')
+		
+		// should be handle by the conroller!
+		this.element.setStyle('zIndex','1000');
 		
 		this.buildMessage();
 		this.buildButtons();
@@ -61,6 +75,8 @@ UI.Dialog = new Class({
 	
 	buildUnderlay: function() {
 		console.log('buildunderlay');
+		
+		// and that by the skin!		
 		this.underlay = new Element('div',{
 			styles: {
 				position: 'absolute',
@@ -74,7 +90,7 @@ UI.Dialog = new Class({
 			}
 		}).inject($(document.body));
 		
-		this.addEvent('onClose',function(){ this.underlay.destroy() })
+		this.addEvent('onClose',function(){ this.underlay.destroy(); });
 		
 	},
 	
@@ -90,7 +106,7 @@ UI.Dialog = new Class({
 	
 	buildButtons: function() {
 		
-		this.buttons = new Element('div',this.props.components.controls)
+		this.buttons = new Element('div',this.props.components.controls);
 		
 		this.options.buttons.each(function(action){
 			this.props.components.control.type = action;
