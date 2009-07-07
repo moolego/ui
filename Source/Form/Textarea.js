@@ -43,45 +43,6 @@ UI.Textarea = new Class({
 		(void)
 	
 	See also:
-		<UI.Control::build>
-		<UI.Element::build>
-	*/
-	
-	build: function(){
-		//create a new div as input element
-		this.parent();
-				
-		//create input
-		this.setInput(false, 'textarea');
-		this.input.set({
-			styles: {
-				width: this.props.width - this.input.getStyle('paddingLeft').toInt() - this.input.getStyle('paddingRight').toInt(),
-				height: this.props.height - this.inpt(document.body);
-		(end)
-*/
-
-UI.Textarea = new Class({
-	
-	Extends: UI.Control,
-	
-	options: {
-		component: 'textarea',
-		
-		// default options
-		name: 'ui-input',
-		value: ''
-	},
-	
-	/* 
-	Function: build
-		private function
-		
-		Call <UI.Control::build> and make a textarea element
-		
-	Return:
-		(void)
-	
-	See also:
 		<UI.Control::buil(state);
 		return this;
 	},

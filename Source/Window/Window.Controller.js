@@ -14,8 +14,28 @@
 	Requires:
 		<UI.Window>
 	
+	
+	Implied global: 
+		$defined - 122 165
+		c - 278 279
+		console - 284 305
+		ui - 21 334
+		window - 57 183 204 225 226
+	
+	Members 
+		active, addEvent, bind, blur, cascade, clean, client, close, 
+	    closeAll, controller, destroy, each, element, fireEvent, focus, 
+	    getCascadeLocation, getCoordinates, getHeight, getMinimizedLocation, 
+	    getStyle, getWidth, height, hide, left, length, list, location, log, 
+	    minimized, morph, offsetHeight, offsetWidth, options, 
+	    propagateUnderShadow, push, register, resetMinimizedLocation, 
+	    resizeMaximizedWindow, s, setLocation, setSize, setState, setStyle, 
+	    stack, start, state, step, style, toInt, top, version, width, window, x, 
+	    y, zBase, zIndex, zStep
+	
 	Discussion:
 		Stacks should be better implemented
+		
 */
 
 ui.controller.window = {
@@ -51,7 +71,7 @@ ui.controller.window = {
 	*/
 	
 	start: function(){
-		this.list = new Array();
+		this.list = [];
 		this.zIndex = this.options.zBase;
 		
 		window.addEvent('resize', function(){ this.resizeMaximizedWindow(); }.bind(this));
@@ -71,10 +91,12 @@ ui.controller.window = {
 	
 	register: function(win) {
 		this.list.push(win);
-		if (win.options.zIndex == 'auto')
+		if (win.options.zIndex == 'auto') {
 			win.element.setStyle('zIndex', this.zIndex);
-		else
+		}
+		else {
 			win.element.setStyle('zIndex', win.options.zIndex);
+		}
 		this.zIndex += this.options.zStep;
 	},
 	
@@ -129,10 +151,15 @@ ui.controller.window = {
 				}
 			}
 			
-			if (window) window.focus();
+			if (window) {
+				window.focus();
+			}
+			
 			return;
 		} else if (win && this.active != win) {
-			if (this.active && !this.active.minimized) this.blur(this.active);
+			if (this.active && !this.active.minimized) {
+				this.blur(this.active);
+			}
 			
 			this.zIndex += this.options.zStep;
 			win.element.style.zIndex = this.zIndex;
@@ -237,7 +264,8 @@ ui.controller.window = {
 		var location = {
 			left : this.options.cascade.start.x.toInt(),
 			top : this.options.cascade.start.y.toInt()
-		}
+		};
+		
 		this.list.each(function(w,i) {
 			if (w.state != 'minimized' && w.options.location == 'cascade') {
 				location.left += this.options.cascade.step.x;

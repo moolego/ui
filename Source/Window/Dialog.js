@@ -20,7 +20,13 @@
 	Discussion:
 		Still we need this class? yes
 	
-	Implied global: $ 79, Class 25, Element 68 86 97, UI 25 26 102, console 51 65, document 79
+	Implied global: 
+		$ - 79 
+		Class - 25
+		Element - 68 86 97
+		UI - 25 26 102
+		console - 51 65
+		document - 79
 	
 	Members 
 		Button, Dialog, Extends, Window, addEvent, backgroundColor, 
