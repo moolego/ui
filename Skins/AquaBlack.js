@@ -76,9 +76,8 @@ UI.props.AquaBlack = {
 					littleshadow: {
 						offset: ['0px', '0px', '0px', '0px'],
 						color: ['#000', '#000'],
-						radius: 11,
-						opacity: .1,
-						radius: 12
+						radius: 12,
+						opacity: .1
 					},
 					background: {
 						offset: ['0px', '1px', '1px', '1px'],
@@ -622,8 +621,6 @@ UI.props.AquaBlack = {
 					input: {
 						styles: {
 							padding: '4px 4px 3px',
-							border: 'none',
-							
 							zIndex: 1,
 							position: 'absolute',
 							top: 0,

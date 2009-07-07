@@ -19,6 +19,19 @@
 			onClick		: { alert('click') }
 		}).inject(document.body);
 	(end)
+	
+	
+	Implied global: 
+		Class - 24
+		Event - 107 
+		UI - 24 26 53
+	
+	Members:
+		Button, Control, Extends, Label, addEvents, bind, build, 
+	    component, components, element, getForm, html, image, inject, label, 
+	    mousedown, mouseenter, mouseleave, mouseup, onImageLoad, options, 
+	    parent, props, setBehavior, setSize, setState, setStyles, skin, state, 
+	    stop, styles, submit
 */
 
 UI.Button = new Class({

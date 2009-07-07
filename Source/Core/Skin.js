@@ -12,7 +12,20 @@
 		(start code)
 		UI.skin = new UI.Skin('AquaGraphite');
 		(end)
-*/
+
+	Implied global:
+		$H - 173, 
+		$type - 198, 
+		$unlink - 122 124 127, 
+		Class - 17, Events 19, Options 19, UI 17 61 63 64 66 67 70 71 76 77 79 85 118 121 122 123 124 127
+	
+	Members:
+		Implements, Skin, component, components, default, defaultSkin, 
+	    each, get, getComponentProps, initialize, layers, length, merge, 
+	    options, preprocessed, processSkin, props, setOptions, shadow, shadows, 
+	    shortcuts, size, skin, styles, type
+
+ */
 
 UI.Skin = new Class({
 	
@@ -57,13 +70,18 @@ UI.Skin = new Class({
 
 	processSkin: function(skinName) {
 		
+		var cKey,
+			tKey,
+			sKey,
+			props;
+		
 		//we merge syles for each states of each type of components
-		for (var cKey in UI.props[skinName]) {
+		for (cKey in UI.props[skinName]) {
 			if (cKey != 'default') {
-				for(var tKey in UI.props[skinName][cKey]) {
-					for(var sKey in  UI.props[skinName][cKey][tKey]) {
+				for (tKey in UI.props[skinName][cKey]) {
+					for (sKey in  UI.props[skinName][cKey][tKey]) {
 						if (sKey != 'shortcuts') {
-							var props = UI.props[skinName]['default'];
+							props = UI.props[skinName]['default'];
 							if (UI.props[skinName][cKey]['default']) {
 								props = this.merge(
 									props,
@@ -115,44 +133,53 @@ UI.Skin = new Class({
 			styles = className.options.styles;
 		
 		//check if it was already preprocessed
-		if(!UI.props[skin].preprocessed) this.processSkin(skin);
+		if (!UI.props[skin].preprocessed) {
+			this.processSkin(skin);
+		}
+		
+		var type;
 		
 		//get properties for provided type
 		if (UI.props[skin][cKey][tKey]) {
-			var type = $unlink(UI.props[skin][cKey][tKey]);
+			type = $unlink(UI.props[skin][cKey][tKey]);
 		} else if (UI.props[skin][cKey]['default']) {
-			var type = $unlink(UI.props[skin][cKey]['default']);
+			type = $unlink(UI.props[skin][cKey]['default']);
 		} else {
-			var type = {
+			type = {
 				'default': $unlink(UI.props[skin]['default'])
 			};
 		}
 		//add custom states
-		for(var csKey in props) {
-			if(!type[csKey]) type[csKey] = props[csKey];
+		for (var csKey in props) {
+			if (!type[csKey]) {
+				type[csKey] = props[csKey];
+			}
 		}
 		
 		for (var sKey in type) {
 			//bind shortcuts
 			if(type[sKey].shortcuts) {
 				for (var scKey in type[sKey].shortcuts) {
-					if (className.options[scKey])
+					if (className.options[scKey]) {
+						// eval is evil..					
 						eval('type[\'' + sKey + '\'].' + type[sKey].shortcuts[scKey] + ' = this.merge(type[\'' + sKey + '\'].' + type[sKey].shortcuts[scKey] + ',className.options.' + scKey + ')');
+					}
 				}
 			}
 
 			//merge custom properties
-			if (props)
+			if (props) {
 				type[sKey] = this.merge(type[sKey], props['default'], props[sKey]);
+			}
 			
 			//merge custom styles
 			type[sKey].styles = this.merge(type[sKey].styles, styles);
 		}
 		
 		//remove shadows if not used
-		if (type['default'].layers.shadow.size == 0) {
+		if (type['default'].layers.shadow.size === 0) {
 			delete type['default'].shadows;
-		};
+		}
 		
 		return type;
 	},

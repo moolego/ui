@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -60,7 +60,7 @@
 				//skin : 'BlueTouch',
 				width : 260,
 				height : 400,
-				resizable:false,
+				resizable:true,
 				styles : {
 					margin : '40px 20px 0 40px',
 					backgroundColor : '#e8e8e8'
@@ -230,18 +230,10 @@
 				},
 				items : [
 					{	
-						component : {
-							
-							
-						},
-						"type" : "Core",
-						content : {
-							title : "UI",
-							desc	: "Core/UI.js"
-						}
+						title : "UI",
+						desc	: "Core/UI.js"
 					},
 					{
-						"type" : "Core",
 						title : "UI.Canvas",
 						desc	: "Core/Canvas.js"
 					},
@@ -392,11 +384,12 @@
 				skin: 'TouchBlue',
 				width : 260,
 				height : 400,
+				resizable:true,
 				styles : {
 					margin : '40px 20px 0 0',
 					backgroundColor : '#e8e8e8'
 				},
-				url	: 'assets/list.json'
+				url	: 'assets/list2.json'
 			}).inject(document.body);
 			
 			

@@ -1,6 +1,6 @@
 /*
-	Class: Box
-		UI.Box is used to make a skinnable container
+	Class: UI.Image
+		UI.Image is used to make a skinnable image container
 	
 	Arguments:
 		options
@@ -18,24 +18,17 @@
 			html	: 'Hello world!',
 		}).inject(this.element);
 		(end)
-
-	Implied global:
-		Class 26, UI 26 28
-		
-	Members:
-		Box, Element, Extends, build, component, emboss, html, options, 
-    	parent, selectable, tag
-    
-    Discussion:
+	
+	Discussion:
 	
 */
 
-UI.Box = new Class({
-	
+UI.Image = new Class({
+
 	Extends: UI.Element,
-		
+	
 	options: {
-		component: 'box',
+		component: 'image',
 		
 		tag: 'div',
 		html: 'Box',
@@ -44,14 +37,13 @@ UI.Box = new Class({
 		
 		selectable: false
 	},
-
-	/* 
-	Function: build
-		private function
-		
-		Call UI.Element build
-	*/
 	
+	/* 
+	 Function: build
+	 private function
+	 
+	 Call UI.Element build
+	 */
 	build: function(options){
 		this.parent(options);
 	}

@@ -59,7 +59,7 @@ UI.props.demo = {
 					}
 				}
 			}
-		},
+		}
 	},
 			
 	button: {
@@ -102,8 +102,7 @@ UI.props.demo = {
 						offset: ['0px', '0px', '0px', '0px'],
 						color: ['#000', '#000'],
 						radius: 11,
-						opacity: .1,
-						radius: 11
+						opacity: .1
 					},
 					background: {
 						offset: ['0px', '1px', '1px', '1px'],

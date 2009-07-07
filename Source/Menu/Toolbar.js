@@ -72,7 +72,8 @@ UI.Toolbar = new Class({
 		
 		this.element.setStyles({
 			position: 'relative',
-			width: '100%'
+			width: '100%',
+			overflow: 'hidden'
 		});
 	},
 	
@@ -112,6 +113,21 @@ UI.Toolbar = new Class({
 		
 		return this;
 	},
+	
+	
+	/* 
+	Method: addItemStyles
+		set Styles for each item
+	
+	Arguments:
+	
+	Return:
+		this
+		
+	Discussion: 
+		not really nice...
+	 */
+	
 	
 	addItemStyles : function(){			
 		this.options.menu.each(function(item){

@@ -55,121 +55,121 @@
 	
 	<script type="text/javascript">
 		window.addEvent('domready', function(){
+		
+		
+			//(?) settings
+			var offone = 0;
+			var offtwo = 0;
+			var ratioone = 10;
+			var ratiotwo = 20;
+			
+			//shape setting
+			radius = 0;
+			var offset = 0;
+			var width = 102;
+			var height = 102;
+			var margin = 0;
+			var fontSize = 11;
+			
+			buttons = new Array();
 			
 			
-				//(?) settings
-				var offone = 0;
-				var offtwo = 0;
-				var ratioone = 10;
-				var ratiotwo = 20;
-				
-				//shape setting
-				radius = 0;
-				var offset = 0;
-				var width = 102;
-				var height = 102;
-				var margin = 0;
-				var fontSize = 11;
-				
-				buttons = new Array();
-				
-				
-				
-				function fillButtons() {
-					var size = 10;
-					time = $time();
-					var index = 0;
-					for (i = 0; i < size; i++) {
-						for (j = 0; j < size; j++) {
+			
+			function fillButtons() {
+				var size = 3;
+				time = $time();
+				var index = 0;
+				for (i = 0; i < size; i++) {
+					for (j = 0; j < size; j++) {
+					
+						var one = size - i + offone;
+						var two = size - j + offtwo;
 						
-							var one = size - i + offone;
-							var two = size - j + offtwo;
-							
-							var color = RGBtoHex(Math.floor(255 - ratioone * one),  0,Math.floor(255 - ratiotwo * two));
-							color = '#'+color;
-								//console.log(color);
-							var colorover = new Color(color,'hex').setBrightness(50).hex;
-							//console.log(colorover);
-							//console.log(index)
-							
-							new UI.Button({
-								className: 'banane',
-								label: '<small>time</small><br/>' + (($time() - time) / 1000) + '<br/><small style="font-size:5px: color:#ccc">color</small><br/>' + color,
-								skin: 'demo',
-								type: 'speedtest',
-								props: {
-									'default': {
-										width : width,
-										height : height,
-										components : {
-											label : {
-												styles : {
-													fontSize : fontSize,
-													fontWeight: 'bold',
-													fontFamily: 'Arial, Helvetica',
-													opacity: '.7', 
-													padding: '10px 16px',
-													color: '#fff',
-													width: '70px'
-												}
-											}
-										},
-										styles : {
-											margin : margin
-										},
-										layers: {
-											reorder: ['emboss', 'front', 'reflect'],
-											emboss: {
-												radius: radius,
-												offset : 0,
-												color: '#000',
-												opacity: .17
-											},
-											front: {
-												offset: offset,
-												color: color,
-												radius: radius -2,
-												opacity: 1
-											},
-											reflect: {
-												offset: [offset, offset, '40%'],
-												gradient	: {
-													color: ['#FFF', '#FFF'],
-													opacity: [.2, .0]
-												},
-												radius: radius - 4
+						var color = RGBtoHex(Math.floor(255 - ratioone * one),  0,Math.floor(255 - ratiotwo * two));
+						color = '#'+color;
+							//console.log(color);
+						var colorover = new Color(color,'hex').setBrightness(50).hex;
+						//console.log(colorover);
+						//console.log(index)
+						
+						new UI.Button({
+							className: 'banane',
+							label: '<small>time</small><br/>' + (($time() - time) / 1000) + '<br/><small style="font-size:5px: color:#ccc">color</small><br/>' + color,
+							skin: 'demo',
+							type: 'speedtest',
+							props: {
+								'default': {
+									width : width,
+									height : height,
+									components : {
+										label : {
+											styles : {
+												fontSize : fontSize,
+												fontWeight: 'bold',
+												fontFamily: 'Arial, Helvetica',
+												opacity: '.7', 
+												padding: '10px 16px',
+												color: '#fff',
+												width: '70px'
 											}
 										}
 									},
-									'down': {
-										layers: {
-											front: {
-												color: colorover,
-											}
+									styles : {
+										margin : margin
+									},
+									layers: {
+										reorder: ['emboss', 'front', 'reflect'],
+										emboss: {
+											radius: radius,
+											offset : 0,
+											color: '#000',
+											opacity: .17
+										},
+										front: {
+											offset: offset,
+											color: color,
+											radius: radius -2,
+											opacity: 1
+										},
+										reflect: {
+											offset: [offset, offset, '40%'],
+											gradient	: {
+												color: ['#FFF', '#FFF'],
+												opacity: [.2, .0]
+											},
+											radius: radius - 4
+										}
+									}
+								},
+								'down': {
+									layers: {
+										front: {
+											color: colorover,
 										}
 									}
 								}
-							}).inject(document.body);
-						}
-
+							}
+						}).inject(document.body);
 					}
-				};
-				
-				function toHex(n) {
-					if (n==null) return "00";
-					n=parseInt(n); if (n==0 || isNaN(n)) return "00";
-					n=Math.max(0,n); n=Math.min(n,255); n=Math.round(n);
-					return "0123456789ABCDEF".charAt((n-n%16)/16)
-					+ "0123456789ABCDEF".charAt(n%16);
-				};
-				
-				function RGBtoHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B)}
-				fillButtons();
+
+				}
+			};
+			
+			function toHex(n) {
+				if (n==null) return "00";
+				n=parseInt(n); if (n==0 || isNaN(n)) return "00";
+				n=Math.max(0,n); n=Math.min(n,255); n=Math.round(n);
+				return "0123456789ABCDEF".charAt((n-n%16)/16)
+				+ "0123456789ABCDEF".charAt(n%16);
+			};
+			
+			function RGBtoHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B)}
+			fillButtons();
 			
 			new UI.Context({
 				contexts: [{
 					name: 'green',
-					target: '.ui-button-speedtest',
+					selector: '.ui-button-speedtest',
 					menu: [{
 						text: 'Green menu'
 					}, {

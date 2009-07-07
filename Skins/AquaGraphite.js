@@ -106,7 +106,37 @@ UI.props.AquaGraphite = {
 				}
 			},
 			over: {},
-			'down': {
+			down: {
+				layers: {
+					main: {
+						color: ['#7b8997', '#7b8997']
+					},
+					background: {
+						color: ['#494949', '#5f5f5f']
+					}
+				}
+			},
+			disabled: {
+				layers: {
+					main: {
+						color: ['#7b8997', '#7b8997']
+					},
+					background: {
+						color: ['#494949', '#5f5f5f']
+					}
+				}
+			},
+			first: {
+				layers: {
+					main: {
+						color: ['#7b8997', '#7b8997']
+					},
+					background: {
+						color: ['#494949', '#5f5f5f']
+					}
+				}
+			},
+			last: {
 				layers: {
 					main: {
 						color: ['#7b8997', '#7b8997']
@@ -117,6 +147,7 @@ UI.props.AquaGraphite = {
 				}
 			}
 		},
+		
 		'recessed': {
 			'default': {
 				/* components properties */
@@ -487,7 +518,8 @@ UI.props.AquaGraphite = {
 							margin: '0',
 							fontWeight: 'bold',
 							fontSize: '0.75em',
-							lineHeight: '2em'
+							lineHeight: '2em',
+							position:'relative'
 						}
 					}
 				},
@@ -1272,6 +1304,24 @@ UI.props.AquaGraphite = {
 					height: '17px'
 				}
 			}
+		},
+		panelTitle: {
+			'default': {
+				/* css properties */
+				styles: {
+					overflow: 'hidden',
+					cursor: 'default',
+					color: '#000',
+					display: 'block',
+					padding: '0px 70px 0px 2px',
+					textAlign: 'center',
+					textTransform: 'capitalize',
+					fontWeight: 'normal',
+					fontSize: '10px',
+					lineHeight: '18px',
+					height: '13px'
+				}
+			}
 		}
 	},
 	
@@ -1375,7 +1425,8 @@ UI.props.AquaGraphite = {
 				components: {
 					wrapper: {
 						styles: {
-							padding: '0 0 0 10px'
+							padding: '0 0 0 10px',
+							overflow:'hidden'
 						}
 					},
 					menuItem: {
@@ -1526,6 +1577,7 @@ UI.props.AquaGraphite = {
 			'default': {
 				styles: {
 					overflow: 'hidden',
+					backgroundColor: '#fff',
 					left: '0px',
 					top: '0px'
 				},
@@ -1820,7 +1872,8 @@ UI.props.AquaGraphite = {
 		thumb: {
 			'default': {
 				styles: {
-					margin: '0'
+					margin: '0',
+					position: 'absolute'
 				},
 				layers: {
 					'default': {
@@ -2066,18 +2119,18 @@ UI.props.AquaGraphite = {
 			},
 			minimized: {
 				width: 160,
-				height: 25,
+				height: 22,
 				styles: {
 					width: '160px',
-					height: '25px'
+					height: '22px'
 				
 				},
 				layers: {
-					reorder: ['shadow', 'background', 'underlay', 'head'],
+					reorder: ['shadow', 'background', 'head'],
 					shadow: {
-						size: 2,
-						offsetY: 1,
-						opacity: .10
+						size: 3,
+						offsetY: 0,
+						opacity: .72
 					},
 					head: {
 						position: 'absolute',
@@ -2179,6 +2232,221 @@ UI.props.AquaGraphite = {
 					}
 				}
 			}
+		},
+		panel: {
+			'default': {
+				styles: {
+					position: 'absolute',
+					opacity: 1
+				},
+				
+				fx: {
+					adaptLocation: {
+						'duration': 300,
+						//	'transition' : Fx.Transitions.Elastic.easeOut,
+						'wait': true
+					}
+				},
+				/* components */
+				components: {
+					controls: {
+						styles: {
+							height: 13
+						}
+					},
+					control: {
+						component: 'panelButton',
+						label: false,
+						width: 12,
+						height: 12,
+						styles: {
+							margin: '1px 3px 1px 2px'
+						}
+					},
+					toggle: {
+						type: 'toggleToolbar',
+						label: false,
+						styles: {
+							position: 'absolute',
+							top: 5,
+							right: 10,
+							margin: 0,
+							padding: 0
+						}
+					},
+					title: {
+						type: 'panelTitle',
+						emboss: true
+					},
+					view: {
+						type: 'window',
+						overflow: 'scrollbar',
+						styles: {
+							position: 'absolute',
+							top: '51px',
+							left: '1px',
+							overflow: 'hidden'
+						}
+					},
+					foot: {
+						styles: {
+						
+							zIndex: 10,
+							position: 'absolute',
+							right: '0',
+							width: '100%'
+						}
+					},
+					status: {
+						styles: {
+							fontSize: '1em',
+							padding: '3px 16px',
+							height: '16px'
+						}
+					},
+					resize: {
+						styles: {
+							position: 'absolute',
+							zIndex: 100,
+							right: 0,
+							marginBottom: 0,
+							width: '24px',
+							height: '24px'
+						}
+					}
+				},
+				
+				
+				borderSize: 1,
+				
+				/* layers properties */
+				layers: {
+					'default': {
+						position: 'relative',
+						shape: 'roundedRect',
+						offset: '0px',
+						color: '#FFFFFF',
+						opacity: 1,
+						radius: 5
+					},
+					shadow: {
+						size: 8,
+						offsetY: 2,
+						opacity: .5
+					},
+					background: {
+						offset: 0,
+						color: '#000',
+						opacity: .2,
+						radius: 0
+					},
+					underlay: {
+						color: ['#dcdcdc', '#404040'],
+						offset: [1, 1, 'auto'],
+						size: ['auto', 20],
+						radius: [0, 0, 0, 0]
+					},
+					head: {
+						color: ['#C4C4C4', '#989898'],
+						offset: [1, 0],
+						radius: [0, 0, 0, 0]
+					},
+					footline: {
+						position: 'absolute',
+						size: ['auto', 13],
+						color: '#333',
+						offset: ['auto', 1, 10],
+						radius: 0
+					},
+					footback: {
+						position: 'absolute',
+						size: ['auto', 20],
+						color: ['#fff', '#404040'],
+						offset: ['auto', 1, 2],
+						radius: [0, 0, 0, 0]
+					},
+					foot: {
+						position: 'absolute',
+						size: ['auto', 20],
+						color: ['#C2C2C2', '#989898'],
+						offset: ['auto', 1, 1],
+						radius: [0, 0, 0, 0]
+					}
+				}
+			},
+			inactive: {
+				styles: {
+					opacity: 0.95
+				
+				},
+				layers: {
+					shadow: {
+						size: 5,
+						offsetY: 2,
+						opacity: .52
+					},
+					background: {
+						opacity: 0.17
+					},
+					underlay: {
+						color: ['#f1f1f1', '#878787']
+					},
+					head: {
+						color: ['#e8e8e8', '#d0d0d0']
+					},
+					foot: {
+						color: ['#e8e8e8', '#d0d0d0']
+					}
+				}
+			},
+			over: {
+				styles: {
+					opacity: 1
+				
+				},
+				layers: {
+					shadow: {
+						size: 5,
+						offsetY: 2,
+						opacity: 1
+					},
+					background: {
+						opacity: 0.17
+					},
+					underlay: {
+						color: ['#f1f1f1', '#878787']
+					},
+					head: {
+						color: ['#e8e8e8', '#d0d0d0']
+					},
+					foot: {
+						color: ['#e8e8e8', '#d0d0d0']
+					}
+				}
+			},
+			minimized: {
+				width: 160,
+				height: 22,
+				styles: {
+					width: '160px',
+					height: '22px'
+				
+				},
+				layers: {
+					reorder: ['shadow', 'background', 'head'],
+					shadow: {
+						size: 3,
+						offsetY: 0,
+						opacity: .72
+					},
+					head: {
+						position: 'absolute',
+						color: ['#CACACA', '#CFCFCF'],
+						offset: [2, 1, 1],
+						radius: 4
+					}
+				}
+			}
 		}
 	},
 	
@@ -2204,8 +2472,6 @@ UI.props.AquaGraphite = {
 					display: 'inline-block',
 					cursor: 'pointer'
 				},
-				
-				
 				layers: {
 					reorder: ['emboss', 'background', 'main', 'reflect', 'cache'],
 					
@@ -2331,6 +2597,145 @@ UI.props.AquaGraphite = {
 		}
 	},
 	
+	
+	
+	panelButton: {
+		'default': {
+			'default': {
+				styles: {
+					display: 'inline-block',
+					cursor: 'pointer'
+				},
+				
+				
+				layers: {
+					reorder: ['emboss', 'background', 'main', 'reflect','cache'],
+					
+					'default': {
+						position: 'absolute',
+						shape: 'circle',
+						size: [11, 11],
+						opacity: 1,
+						offset: 0
+					},
+					emboss: {
+						offset: ['1px', '1px', '0px', '1px'],
+						color: '#FFF',
+						opacity: .4
+					},
+					background: {
+						offset: ['0px', '1px', '1px', '1px'],
+						gradient: {
+							color: ['#2e323d', '#848995']
+						}
+					},
+					main: {
+						size: [9, 9],
+						offset: [1, 2],
+						gradient: {
+							color: ['#fff', '#fff'],
+							opacity: [.2, .8]
+						}
+					},
+					reflect: {
+						size: [2,3.5],
+						offset: [1, 5.5],
+						gradient: {
+							color: ['#fff', '#fff'],
+							opacity: [1, .5]
+						}
+					},
+					cache: {
+						shape: 'roundedRect',
+						size: [3, 1],
+						radius: 0,
+						offset: [1, 5],
+						
+						color: '#545861',
+						opacity: .81
+					}
+				}
+			}
+		},
+		close: {
+			'default': {},
+			
+			over: {
+				layers: {
+					reorder: ['emboss', 'background', 'main', 'reflect', 'cache', 'line', 'line2'],
+					line: {
+						position: 'absolute',
+						shape: 'line',
+						width: 1,
+						color: '#414755',
+						offset: [3, 4],
+						opacity: 1,
+						size: [5, 5]
+					},
+					line2: {
+						position: 'absolute',
+						shape: 'lineUp',
+						width: 1,
+						color: '#414755',
+						offset: [3, 4],
+						opacity: 1,
+						size: [5, 5]
+					}
+				}
+			}
+		},
+		minimize: {
+			'default': {},
+			over: {
+				layers: {
+					reorder: ['emboss', 'background', 'main', 'reflect', 'cache', 'line'],
+					line: {
+						position: 'absolute',
+						shape: 'lineUp',
+						width: 1.5,
+						color: '#414755',
+						offset: [3, 4],
+						opacity: 1,
+						size: [5, 5],
+						rotation: 45
+					}
+				}
+			}
+		},
+		maximize: {
+			'default': {},
+			
+			over: {
+				layers: {
+					reorder: ['emboss', 'background', 'main', 'reflect', 'cache', 'line', 'line2'],
+					line: {
+						position: 'absolute',
+						shape: 'lineUp',
+						width: 1.5,
+						color: '#414755',
+						offset: [3, 4],
+						opacity: 1,
+						size: [5, 5],
+						rotation: 45
+					},
+					line2: {
+						position: 'absolute',
+						shape: 'line',
+						width: 1.5,
+						color: '#414755',
+						offset: [3, 4],
+						opacity: 1,
+						size: [5, 5],
+						rotation: 45
+					
+					}
+				}
+			}
+		}
+	},
+	
+	
+	
 	transparentWindowButton: {
 		'default': {
 			'default': {
@@ -2426,278 +2831,7 @@ UI.props.AquaGraphite = {
 			}
 		}
 	},
-	
-	panel: {
-		'default': {
-			'default': {
-				fx: {
-					adaptLocation: {
-						'duration': 1000,
-						'transition': Fx.Transitions.Elastic.easeOut,
-						'wait': true
-					}
-				},
-				/* components */
-				components: {
-					head: {
-						styles: {
-							top: '1px',
-							left: '1px',
-							overflow: 'hidden',
-							width: '100%',
-							zIndex: 1
-						}
-					},
-					controls: {
-						styles: {
-							'float': 'left',
-							padding: '1px 3px 1px',
-							margin: '1px 0px 0px 1px',
-							height: 18
-						}
-					},
-					control: {
-						type: 'window',
-						label: false,
-						width: 15,
-						height: 15,
-						styles: {
-							margin: '2px 3px'
-						}
-					},
-					toggle: {
-						type: 'toggleToolbar',
-						label: false,
-						styles: {
-							position: 'absolute',
-							top: 5,
-							right: 10,
-							margin: 0,
-							padding: 0
-						}
-					},
-					title: {
-						type: 'windowTitle',
-						emboss: true
-					},
-					view: {
-						type: 'defaultWindow',
-						overflow: 'scrollbar',
-						styles: {
-							position: 'absolute',
-							top: '51px',
-							left: '1px',
-							overflow: 'hidden'
-						}
-					},
-					foot: {
-						styles: {
-						
-							zIndex: 10,
-							position: 'absolute',
-							right: '0',
-							width: '100%'
-						}
-					},
-					status: {
-						styles: {
-							fontSize: '1em',
-							padding: '3px 16px',
-							height: '16px'
-						}
-					},
-					resize: {
-						styles: {
-							position: 'absolute',
-							right: 0,
-							marginBottom: 0,
-							width: '24px',
-							height: '24px'
-						}
-					},
-					overlay: {
-						styles: {
-							backgroundColor: '#fff',
-							opacity: '.5',
-							position: 'absolute',
-							height: '100%',
-							width: '100%',
-							zIndex: '100000'
-						}
-					}
-				},
-				
-				
-				borderSize: 1,
-				
-				/* layers properties */
-				layers: {
-					'default': {
-						position: 'relative',
-						shape: 'roundedRect',
-						offset: 1,
-						color: '#FFFFFF',
-						opacity: 1,
-						radius: 0
-					},
-					/*	shadow : {
-					 size : 42,
-					 offsetY : 10
-					 },*/
-					background: {
-						offset: '0px',
-						color: '#000',
-						opacity: .20,
-						radius: 0
-					},
-					underlay: {
-						color: ['#dcdcdc', '#404040'],
-						offset: [1, 1, 'auto'],
-						size: ['auto', 20]
-					},
-					head: {
-						color: ['#C4C4C4', '#989898'],
-						offset: [1, 0],
-						radius: 0
-					},
-					footline: {
-						position: 'absolute',
-						size: ['auto', 20],
-						color: '#333',
-						offset: ['auto', 1, 3],
-						radius: 0
-					},
-					footback: {
-						position: 'absolute',
-						size: ['auto', 20],
-						color: ['#fff', '#404040'],
-						offset: ['auto', 1, 2]
-					},
-					foot: {
-						position: 'absolute',
-						size: ['auto', 20],
-						color: ['#C2C2C2', '#989898'],
-						offset: ['auto', 1, 1]
-					}
-				}
-			},
-			inactive: {
-				layers: {
-					shadow: {
-						offsetY: 8,
-						magnify: -5
-					},
-					background: {
-						opacity: 0.17
-					},
-					underlay: {
-						color: ['#f1f1f1', '#878787']
-					},
-					head: {
-						color: ['#e8e8e8', '#d0d0d0']
-					},
-					foot: {
-						color: ['#e8e8e8', '#d0d0d0']
-					}
-				}
-			},
-			minimized: {
-				layers: {
-					head: {
-						color: ['#CACACA', '#CFCFCF']
-					},
-					foot: {
-						color: ['#CACACA', '#CFCFCF']
-					}
-				}
-			}
-		},
-		transparent: {
-			'default': {
-				/* components */
-				components: {
-					controls: {
-						padding: '2px 2px 1px 2px'
-					},
-					control: {
-						type: 'transparent',
-						width: 15,
-						height: 15,
-						styles: {
-							margin: '0 2px 0 0'
-						}
-					},
-					title: {
-						type: 'transparentTitle'
-					},
-					view: {
-						type: 'transparent'
-					}
-				},
-				
-				borderSize: 1,
-				
-				/* layers properties */
-				layers: {
-					reorder: ['shadow', 'background', 'head', 'reflect'],
-					'default': {
-						position: 'relative',
-						shape: 'roundedRect',
-						offset: 1,
-						color: '#FFF',
-						opacity: 1,
-						radius: 5
-					},
-					shadow: {
-						size: 16,
-						offsetY: 5
-					},
-					background: {
-						offset: 0,
-						color: '#000',
-						opacity: .50,
-						radius: 7
-					},
-					head: {
-						color: '#fff',
-						offset: [1, 1, 'auto'],
-						opacity: .1,
-						radius: [5, 5, 0, 0],
-						size: ['auto', 18]
-					},
-					reflect: {
-						color: '#fff',
-						offset: [0, 0, 'auto'],
-						size: ['auto', 9],
-						opacity: .05,
-						radius: [5, 5, 0, 0]
-					}
-				}
-			},
-			inactive: {
-				layers: {
-					reorder: ['shadow', 'background'],
-					shadow: {
-						offsetY: 2,
-						size: 20,
-						
-						magnify: 0
-					}
-				}
-			},
-			minimized: {
-				layers: {
-					head: {
-						color: ['#CACACA', '#CFCFCF']
-					},
-					foot: {
-						color: ['#CACACA', '#CFCFCF']
-					}
-				}
-			}
-		}
-	},
-	
+
 	
 	element: {
 		'default': {
@@ -2716,7 +2850,7 @@ UI.props.AquaGraphite = {
 					width: '24px',
 					height: '24px',
 					opacity: '.5',
-					marginRight: '1px'
+					marginRight: '0px'
 				},
 				/* layers properties */
 				layers: {

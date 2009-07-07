@@ -44,7 +44,46 @@
 			html : 'Hello World'
 		}).inject(document.body);
 		(end)
-	*/
+
+ 	Implied global:
+ 		$H - 284
+ 		$defined - 284
+ 		$empty - 114 115 116 117 118 119 120 121 122 123 125 126
+ 		$random - 557 567 572 
+ 		$type - 857
+ 		Browser - 428 433
+ 		Class - 73
+ 		Drag - 458
+ 		Element - 188 811
+ 		Event - 227
+ 		Events - 75
+ 		Fx - 578
+ 		Options - 75, UI 73 217 269 271 288
+ 		ui - 423 688
+ 		window - 91 92 97 98 536 537 556 557 571 572
+ 	
+ 	Members:
+	 	Canvas, Element, Engine, Implements, Morph, MozUserSelect, 
+	    Skin, adaptLocation, addClass, addEvent, addEvents, adopt, bind, build, 
+	    buildResizer, canvas, class, className, click, closeMenu, component, 
+	    controller, cursor, debug, defaultLeft, defaultTop, destroy, 
+	    disableDrag, disableSelect, dragHandler, dragHandlers, dragLimitX, 
+	    dragLimitY, draggable, element, enableDrag, enableResize, enableSelect, 
+	    events, fireEvent, for, fx, get, getCenterLocation, getCoordinates, 
+	    getHeight, getLength, getSize, getStyle, getWidth, group, handle, 
+	    height, hide, html, id, implement, initialize, inject, label, layers, 
+	    left, length, lib, limit, makeResizable, mouseOut, mousedown, 
+	    mouseenter, mouseleave, mouseover, mouseup, name, onBuild, 
+	    onBuildComplete, onClick, onComplete, onDrag, onDragComplete, 
+	    onDragStart, onHide, onMouseDown, onResize, onResizeComplete, 
+	    onResizeStart, onShow, onStart, onmousedown, onselectstart, options, 
+	    props, register, reorder, reposFx, resizable, resizeDrag, resizeLimitX, 
+	    resizeLimitY, resizer, selectable, set, setBehavior, setCanvas, 
+	    setClassName, setLocation, setOptions, setSize, setSkin, setState, 
+	    setStyle, setStyles, shadowMagnify, show, skin, start, state, stop, 
+	    style, styles, tag, toElement, toInt, top, trident, type, ui, 
+	    useAutoClass, width, x, y, zIndex
+*/
 
 UI.Element = new Class({
 
@@ -60,8 +99,6 @@ UI.Element = new Class({
 
 		tag: 'span',
 		
-		resizable: false,
-		draggable: false,
 		selectable: true,
 		
 		// Drag options
@@ -72,8 +109,8 @@ UI.Element = new Class({
 		
 		// Resize options
 		resizable: false,
-
-		resizeOnDragIfMaximized: false,
+		resizeLimitX: [100, window.getWidth()],
+		resizeLimitY: [100, window.getHeight()],
 
 		skin: 'AquaGraphite',
 		props: false,
@@ -173,11 +210,11 @@ UI.Element = new Class({
 			'for': this.options['for']
 		});
 		
-		if (!this.options.selectable) this.element.disableSelect();
+		if (!this.options.selectable) { this.element.disableSelect(); }
 		this.element.ui = true;
 		this.state = this.options.state;
 		this.dragHandlers = [];
-		if (this.options.resizable) {  this.buildResizer() }
+		if (this.options.resizable) { this.buildResizer(); }
 	},
 
 
@@ -197,17 +234,12 @@ UI.Element = new Class({
 			component: 'element',
 			type: 'resizer',
 			styles : {
-				zIndex : 10001
+				zIndex : '10000'
 			}
 		}).inject(this.element,'bottom');
 		
-		this.resizer.element.addEvent('click',function(e){
-			new Event(e).stop();
-		})
-		
-		this.addEvents({
-			'onMinimize': function() { this.resizer.hide(); },
-			'onNormalize': function() { this.resizer.show(); }
+		this.resizer.element.addEvent('click', function(e) {
+			var ev = new Event(e).stop();
 		});
 	},
 
@@ -228,10 +260,13 @@ UI.Element = new Class({
 		} else if (this.options.useAutoClass) {
 			this.className = this.options.lib + '-' + this.options.component;
 			
-			if (this.options.type != 'default') 
+			if (this.options.type != 'default') {
 				this.className = this.className + '-' + this.options.type;
-			if (this.options.state != 'default') 
+			}
+			
+			if (this.options.state != 'default') { 
 				this.className = this.className + '-' + this.options.state;
+			}
 		}
 	},
 	
@@ -261,8 +296,9 @@ UI.Element = new Class({
 	*/
 	
 	setCanvas: function(){
-		if (this.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && $H(this.props.layers).getLength() <= 2) || ($defined(this.props.layers.reorder) && !this.props.layers.reorder.length))
-			return false;
+		if (this.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && $H(this.props.layers).getLength() <= 2) || ($defined(this.props.layers.reorder) && !this.props.layers.reorder.length)) {
+			 return false; 
+		}
 
 		this.canvas = new UI.Canvas({
 			props: this.props,
@@ -276,9 +312,16 @@ UI.Element = new Class({
 			state: this.options.state
 		}).inject(this.element);
 		
-		this.addEvent('canvasDraw', function(state){
-			if (!state)	var props = this.props;
-			else var props = this.skin[state] || this.props;
+		this.addEvent('canvasDraw', function(state) {
+			var props;
+			
+			if (!state)	{ 
+				props = this.props; 
+			}
+			else { 
+				props = this.skin[state] || this.props;
+			}
+			
 			this.canvas.setSize(this.element.x,this.element.y, props);
 		});
 	},
@@ -298,7 +341,9 @@ UI.Element = new Class({
 	setState: function(state, size){
 		if (this.skin[state]) {
 			this.state = state;
-			if (this.skin[state].styles) this.setStyles(this.skin[state].styles);
+			if (this.skin[state].styles) { 
+				this.setStyles(this.skin[state].styles);
+			}
 			
 			this.fireEvent('canvasDraw', state);
 		}
@@ -319,11 +364,11 @@ UI.Element = new Class({
 	*/
 	
 	setSize: function(width, height, state, target){
-		this.fireEvent('onResize');
+		this.fireEvent('resize');
 		this.element.x = width || this.options.width || this.props.width || this.element.getSize().x;
 		this.element.y = height || this.options.height || this.props.height || this.element.getSize().y;
-		if (this.element.x) this.element.setStyle('width', this.element.x);
-		if (this.element.y) this.element.setStyle('height', this.element.y);
+		if (this.element.x) { this.element.setStyle('width', this.element.x); }
+		if (this.element.y) { this.element.setStyle('height', this.element.y); }
 		this.fireEvent('canvasDraw', state);
 
 		return this;
@@ -382,24 +427,29 @@ UI.Element = new Class({
 
 	setBehavior: function(){
 		
+		var that = this;
+		
 		if (this.options.draggable)  { this.enableDrag(); }
 		if (this.options.resizable) { this.enableResize(); }
 		
 		this.element.addEvents({
 			mousedown: function(e){
-				if (this.options.component != 'label') 
+				if (that.options.component != 'label') {
 					ui.controller.element.closeMenu(e);
-				this.fireEvent('mousedown');
-			}.bind(this),
+				}
+				that.fireEvent('mousedown');
+			},
 			click: function(){
-				if (!Browser.Engine.trident) 
-					this.fireEvent('click');
-			}.bind(this),
+				if (!Browser.Engine.trident) {
+					that.fireEvent('click');
+				}
+			},
 			mouseup: function(){
-				if (Browser.Engine.trident) 
-					this.fireEvent('click');
-				this.fireEvent('mouseup');
-			}.bind(this),
+				if (Browser.Engine.trident) {
+					that.fireEvent('click');
+				}
+				that.fireEvent('mouseup');
+			},
 			
 			mouseenter: this.fireEvent.bind(this, 'mouseenter'),
 			mouseleave: this.fireEvent.bind(this, 'mouseleave'),
@@ -416,7 +466,7 @@ UI.Element = new Class({
 	
 	enableDrag: function(){
 		
-		if (this.dragHandlers.length == 0) {
+		if (this.dragHandlers.length === 0) {
 			this.dragHandlers = null;
 		}
 		
@@ -445,7 +495,10 @@ UI.Element = new Class({
 	*/
 		
 	disableDrag	: function(){
-		if (this.dragHandler) this.dragHandler.stop();
+		if (this.dragHandler) {
+			this.dragHandler.stop();
+		}
+		
 		return this;
 	},
 	
@@ -458,7 +511,8 @@ UI.Element = new Class({
 	enableResize : function(){
 		if (!this.options.resizeLimitX) {
 			this.options.resizeLimitX = 10;
-		};
+		}
+		
 		if (!this.options.resizeLimitY) {
 			this.options.resizeLimitY = 10;
 		}
@@ -469,13 +523,13 @@ UI.Element = new Class({
 				x			: this.options.resizeLimitX,
 				y			: this.options.resizeLimitY
 			},
-			onStart 		: function() { this.fireEvent('onResizeStart'); }.bind(this),
-			onDrag 			: function() { this.fireEvent('onResizeDrag'); }.bind(this),
-			onComplete		: function() { this.fireEvent("onResizeComplete"); }.bind(this)
+			onStart 		: function() { this.fireEvent('resizeStart'); }.bind(this),
+			onDrag 			: function() { this.fireEvent('resizeDrag');  }.bind(this),
+			onComplete		: function() { this.fireEvent("resizeComplete"); }.bind(this)
 		});
 		
 		this.addEvents({
-			onResizeDrag 	: function(){
+			resizeDrag 	: function(){
 				this.setSize(this.element.getSize().x,this.element.getSize().y);
 			}
 		});
@@ -494,8 +548,8 @@ UI.Element = new Class({
 	getCenterLocation: function(){
 		var location = {};
 		
-		location.top = (window.getHeight() - this.options.height.toInt()) / 2,
-		location.left = (window.getWidth() - this.options.width.toInt()) / 2
+		location.top = (window.getHeight() - this.options.height.toInt()) / 2;
+		location.left = (window.getWidth() - this.options.width.toInt()) / 2;
 		
 		return location;
 	},
@@ -515,7 +569,7 @@ UI.Element = new Class({
 		var coordinates = this.element.getCoordinates();
 		
 		if (coordinates.top.toInt() > window.getHeight()-53) {
-			location.top = window.getHeight()-$random(25,75)
+			location.top = window.getHeight()-$random(25,75);
 			needed = true;
 		}
 		
@@ -536,7 +590,7 @@ UI.Element = new Class({
 		
 		if (needed) {
 			if (this.props.fx && this.props.fx.adaptLocation)  {
-				if (!this.reposFx) this.reposFx = new Fx.Morph(this.element, this.props.fx.adaptLocation);
+				if (!this.reposFx) { this.reposFx = new Fx.Morph(this.element, this.props.fx.adaptLocation); }
 				this.reposFx.start(location) ;
 			}
 		}
@@ -764,8 +818,6 @@ UI.Element = new Class({
 	}
 });
 
-
-
 /*
 	Some usefull method for element
 	
@@ -782,19 +834,23 @@ Element.implement({
 	*/
 	
 	disableSelect: function(){
-		if (typeof this.onselectstart != "undefined") 
+		if (typeof this.onselectstart != "undefined") {
 			this.onselectstart = function(){
-				return false
+				return false;
+			};
+		}
+		else {
+			if (typeof this.style.MozUserSelect != 'undefined') {
+				this.style.MozUserSelect = 'none';
 			}
-		else 
-			if (typeof this.style.MozUserSelect != 'undefined') 
-				this.style.MozUserSelect = 'none'
-			else 
+			else {
 				this.onmousedown = function(){
-					return false
-				}
+					return false;
+				};
+			}
+		}
 				
-		this.style.cursor = 'default'
+		this.style.cursor = 'default';
 		
 		return this;
 	},
@@ -809,17 +865,21 @@ Element.implement({
 	
 	enableSelect: function(){
 	
-		if (this.onselectstart) 
-			this.onselectstart = '' // for the badboy
-		else 
-			if ($type(this.style.MozUserSelect) == "none") 
-				this.style.MozUserSelect = '' // for Firefox 
-			else 
+		if (this.onselectstart) {
+			this.onselectstart = ''; // for ie
+		}
+		else {
+			if ($type(this.style.MozUserSelect) == "none") {
+				this.style.MozUserSelect = ''; // for Firefox 
+			}
+			else {
 				this.onmousedown = function(){
-					return true
-				} //finaly the others (opera, not sure for safari)
-				
-		this.style.cursor = "default";
+					return true;
+				}; //finaly the others (opera, not sure for safari)
+			}
+		}
+		
+		this.style.cursor = 'default';
 		
 		return this;
 	}

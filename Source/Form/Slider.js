@@ -43,7 +43,7 @@
 
 UI.Slider = new Class({
 	
-	Extends				: UI.Element,
+	Extends: UI.Element,
 	
 	options:{
 		

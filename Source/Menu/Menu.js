@@ -31,6 +31,42 @@
 			zIndex : 1
 		});
 		(end)
+	
+	Implied global: 
+		$clear - 200 230, 
+		$defined - 659, 
+		$empty - 92, 
+		$time - 306 590 639, 
+		Class - 37, 
+		Element - 70, 
+		Event - 206, 
+		Fx - 308 672, 
+		UI - 37 39 125 133 137 233 267 337 547, 
+		Window - 448 471 476 485 494 497, 
+		document - 242, ui 92 243 637 638 663, 
+		windowScroll - 471 473 474
+		
+	Members 
+		Element, Extends, Label, Menu, MenuScroller, Tween, action, 
+	    activeItem, addEvent, addEvents, addScrolls, addSubmenu, 
+	    addSubmenuArrow, addSubmenuEvents, arrow, bind, body, bottom, build, 
+	    buildMenu, canvas, closeMenu, closeOnRollout, component, components, 
+	    content, contentTag, controller, currentIndex, default, defaultArrow, 
+	    delay, destroy, display, duration, each, element, empty, fireEvent, 
+	    getComponentProps, getCoordinates, getElements, getHeight, getScroll, 
+	    getSize, getStyle, getWidth, goDown, goUp, height, hide, hideFxDuration, 
+	    html, image, inject, itemTag, items, layers, left, listStyle, margin, 
+	    menu, menuActionDelay, menuWithAction, mouseUpAction, mousedown, 
+	    mouseenter, mouseleave, mouseup, moveRollover, onComplete, onResize, 
+	    onScroll, openOnRollover, options, padding, parent, position, props, 
+	    push, radius, removeEvents, removeRollover, removeScrolls, 
+	    removeSubmenu, right, rollover, rolloverType, scrollMargin, 
+	    scrollToSelected, scrolls, selected, separator, set, setBehavior, 
+	    setCanvas, setCorners, setPosition, setRollover, setSize, setState, 
+	    setStyle, setStyles, show, showDelay, skin, start, stop, styles, 
+	    submenu, tag, target, text, time, toInt, top, type, width, wrapper, x, 
+	    y, zIndex
+	
 */
 
 
@@ -114,11 +150,15 @@ UI.Menu = new Class({
 	buildMenu : function(menu) {
 		this.empty();
 		var list = (menu) ? menu : this.options.menu;
-		this.items = new Array();
+		var menuItem;
+		this.items = [];
 		this.currentIndex = 0;
+		
+		
+		
 		list.each(function(item){
 			if (item.text == 'separator') {
-				var menuItem = new UI.Label({
+				menuItem = new UI.Label({
 					skin: this.options.skin,
 					tag: this.options.itemTag,
 					html: '',
@@ -126,7 +166,7 @@ UI.Menu = new Class({
 				}).inject(this.content);
 				menuItem.separator = true;
 			} else {
-				var menuItem = new UI.Label({
+				menuItem = new UI.Label({
 					skin: this.options.skin,
 					tag: this.options.itemTag,
 					html: item.text,
@@ -136,7 +176,9 @@ UI.Menu = new Class({
 				
 				this.items.push(menuItem);
 				
-				if (item.action) menuItem.element.addEvent('action', item.action);
+				if (item.action) {
+					menuItem.element.addEvent('action', item.action);
+				}
 				menuItem.inject(this.content);
 			}
 			this.addSubmenuEvents(item, menuItem);
@@ -159,35 +201,49 @@ UI.Menu = new Class({
 	 */
 	
 	addSubmenuEvents: function(item, menuItem){
+		
+		var that = this;
+		
 		if(item.menu) {
 			menuItem.addEvents({
 				'mouseenter': function(){
-					if (this.activeItem && this.activeItem.submenu && this.activeItem != menuItem) this.activeItem.submenu.hide();
-					if (this.activeItem != menuItem) this.addSubmenu(item, menuItem, 'normal');
-					this.moveRollover(menuItem);
-				}.bind(this)
+					if (that.activeItem && that.activeItem.submenu && that.activeItem != menuItem) {
+						that.activeItem.submenu.hide();
+					}
+					if (that.activeItem != menuItem) {
+						that.addSubmenu(item, menuItem, 'normal');
+					}
+					that.moveRollover(menuItem);
+				}
 			});
-			this.addSubmenuArrow(menuItem);
+			that.addSubmenuArrow(menuItem);
 		} else {
 			menuItem.addEvents({
 				'mouseenter': function(){
-					this.removeSubmenu();
-					(menuItem.separator) ? this.removeRollover() : this.moveRollover(menuItem);
-				}.bind(this)
+					that.removeSubmenu();
+					if (menuItem.separator) {
+						that.removeRollover();
+					}
+					else {
+						that.moveRollover(menuItem);
+					}
+				}
 			});
 		}
 		
 		menuItem.element.addEvents({
 			'mouseleave': function(){
-				$clear(this.menuActionDelay);
-			}.bind(this),
+				$clear(that.menuActionDelay);
+			},
 			'mouseup': function(){
-				this.mouseUpAction(menuItem);
-			}.bind(this),
+				that.mouseUpAction(menuItem);
+			},
 			'mousedown': function(e){
-				new Event(e).stop();
-				if (!menuItem.separator) this.fireEvent('change');
-			}.bind(this)
+				var ev = new Event(e).stop();
+				if (!menuItem.separator) {
+					that.fireEvent('change');
+				}
+			}
 		});
 	},
 	
@@ -284,12 +340,13 @@ UI.Menu = new Class({
 	
 	mouseUpAction : function(menuItem){
 		if ($time() - this.time > 300 && this.rollover) {
-			// effect!!
-			new Fx.Tween(this.rollover.element, {
+
+			var fx = new Fx.Tween(this.rollover.element, {
 				duration: 100,
 				onComplete: function(){
-					if (this.selected) 
+					if (this.selected) {
 						this.selected.selected = false;
+					}
 					this.selected = menuItem.element;
 					menuItem.element.selected = true;
 					this.fireEvent('closeMenu');
@@ -310,7 +367,9 @@ UI.Menu = new Class({
 	 */
 	
 	setRollover: function(){
-		if (this.rollover) return;
+		if (this.rollover) {
+			return;
+		}
 		this.rollover = new UI.Element({
 			skin: this.options.skin,
 			type: this.options.rolloverType,
@@ -411,7 +470,10 @@ UI.Menu = new Class({
 		var elCoordinates 	= el.getCoordinates();
 		var menuCoordinates = this.element.getCoordinates();
 		this.element.setStyle('height', menuCoordinates.height);
-
+		
+		var left,
+			top;
+		
 		if (this.options.position == 'bottom') {
 			this.setCorners([0,0,4,4]);
 			this.element.setStyles({
@@ -429,10 +491,12 @@ UI.Menu = new Class({
 			if (this.options.scrollToSelected) {
 				//we set the position to selected element
 				this.content.getElements(this.options.itemTag).each(function(menuItem){
-					if (menuItem.selected) selected = menuItem;
+					if (menuItem.selected) {
+						selected = menuItem;
+					}
 				});
 			}
-			var top = (!selected) ? 
+			top = (!selected) ? 
 				elCoordinates.top - this.content.getStyle('paddingTop').toInt() :
 				elCoordinates.top - selected.getCoordinates(this.element).top;
 			
@@ -452,24 +516,24 @@ UI.Menu = new Class({
 		//default location
 		} else {
 			var corners = [4,4,4,4];
-
+			
 			//determine if menu position is left or right
 			if (menuCoordinates.width > (Window.getWidth() - elCoordinates.right)) {
 				// menu on left
-				var left = elCoordinates.left - menuCoordinates.width+2;
+				left = elCoordinates.left - menuCoordinates.width+2;
 				corners[1] = 0;
 			} else {
 				// menu on right
-				var left = elCoordinates.right-2;
+				left = elCoordinates.right-2;
 				corners[0] = 0;
 			}
 			if (menuCoordinates.height < (Window.getHeight() - elCoordinates.top + Window.getScroll().y)) {
 				// menu is under
-				var top = elCoordinates.top - this.content.getStyle('paddingTop').toInt();
+				top = elCoordinates.top - this.content.getStyle('paddingTop').toInt();
 			} else if(menuCoordinates.height < (elCoordinates.top - Window.getScroll().y)) {
 				// menu is over
-				var top = elCoordinates.bottom - menuCoordinates.height + this.content.getStyle('paddingTop').toInt();
-				corners = [4,4,corners[1],corners[0]]
+				top = elCoordinates.bottom - menuCoordinates.height + this.content.getStyle('paddingTop').toInt();
+				corners = [4,4,corners[1],corners[0]];
 			} else {
 				// menu is on side
 				corners = [4,4,4,4];
@@ -566,7 +630,12 @@ UI.Menu = new Class({
 		this.setSize();
 		
 		if (this.options.position != 'over') {
-			this.options.target ? this.setPosition(this.options.target) : this.setPosition(element);
+			if (this.options.target) {
+				this.setPosition(this.options.target);
+			}
+			else {
+				this.setPosition(element);
+			}
 			this.setCanvas();
 			this.setStyle('visibility', 'visible');
 		} else {
@@ -574,10 +643,12 @@ UI.Menu = new Class({
 		}
 		
 		this.fireEvent('addArrows');
-		if (this.options.closeOnRollout)
+		
+		if (this.options.closeOnRollout) {
 			this.canvas.canvas.addEvent('mouseleave', function(){
 				this.fireEvent('closeMenu');
 			}.bind(this));
+		}
 		
 		return this;
 	},
@@ -621,7 +692,10 @@ UI.Menu = new Class({
 	 */
 	
 	hide: function(duration){
-		if (!$defined(duration)) duration = this.props.hideFxDuration;
+		if (!$defined(duration)) {
+			duration = this.props.hideFxDuration;
+		}
+		
 		ui.controller.element.menu = false;
 		this.fireEvent('hide');
 		this.removeSubmenu();
@@ -631,7 +705,7 @@ UI.Menu = new Class({
 			this.removeRollover();
 			this.fireEvent('removeScrolls');
 		} else {
-			new Fx.Tween(this.element, {
+			var fx = new Fx.Tween(this.element, {
 				duration: duration,
 				onComplete: function(){
 					this.setStyle('display', 'none');

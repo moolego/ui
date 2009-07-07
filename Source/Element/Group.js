@@ -1,5 +1,5 @@
 /*
-	Class: Box
+	Class: UI.Group
 		UI.Box is used to make a skinnable container
 	
 	Arguments:
@@ -18,27 +18,20 @@
 			html	: 'Hello world!',
 		}).inject(this.element);
 		(end)
-
-	Implied global:
-		Class 26, UI 26 28
-		
-	Members:
-		Box, Element, Extends, build, component, emboss, html, options, 
-    	parent, selectable, tag
-    
-    Discussion:
+	
+	Discussion:
 	
 */
 
-UI.Box = new Class({
+UI.Group = new Class({
 	
 	Extends: UI.Element,
 		
 	options: {
-		component: 'box',
+		component: 'group',
 		
 		tag: 'div',
-		html: 'Box',
+		html: 'group',
 		
 		emboss: false,
 		

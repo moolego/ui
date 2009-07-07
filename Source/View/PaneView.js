@@ -1,6 +1,6 @@
 /*
 	Class: UI.PaneView
-		Creates a panelView Object that let you browse inner views(panels)
+		Creates a paneView Object that let you browse inner views(panes)
 	
 	Extends:
 		<UI.View>
@@ -38,26 +38,26 @@ UI.PaneView = new Class({
 		properties: {},
 		styles: {
 			width: '100%',
-			height: '100%'
+			height: '100%',
+			overflow:'hidden'
 		},
 		overflow:'slide',
 		direction: 'horizontal',
 		transitionType: 'scroll',
 		transitionFx: {
-			duration: 1600,
+			transition: Fx.Transitions.Quad.easeOut,
+			duration: 300,
 			wait: false
 		},
 		pane: {
 			className: 'ui-paneview-pane',
 			styles: {
+				'float': 'left',
 				width: '200px',
 				height: '100%'
 			}
 		},
-		onLoad: $empty,
-		onComlete: $empty,
-		onTransition: $empty,
-		onResize: $empty
+		onTransition: $empty
 	},
 
 	/*
@@ -96,9 +96,16 @@ UI.PaneView = new Class({
 	*/
 	
 	add: function(pane){
-		var pane = new UI.View(this.options.pane).inject(this.content);
+		var pane = new UI.View(this.options.pane)
+		 .inject(this.content);
 		
 		this.list.push(pane);
+		
+		this.addEvent('resize',function(){
+			pane.scrollbar.update();
+			
+		});
+		
 		
 		this.resize();	
 		return pane;
@@ -113,10 +120,14 @@ UI.PaneView = new Class({
 
 
 	applyTransition: function(pane){
-		console.log('apply transition on element '+this.element);
 		this.pane = pane;
-		this.transitionFx.toElement(this.list.getLast());
-		console.log('list length:'+this.list.length);
+		if (this.element.getSize().x < this.content.getSize().x) {
+			console.log('apply transition');
+			this.transitionFx.toElement(pane);
+		} else {
+			//if (pane.element.getPrevious())
+			//	this.transitionFx.toElement(pane.element.getPrevious());
+		}
 	},
 
 
@@ -150,22 +161,6 @@ UI.PaneView = new Class({
 	},
 
 	/*
-    Function: updateScrollBar
-   
-    	Update scrollbars of all subviews
-    	
-    Note:
-    	Should be attach as event when creating subviews
-
-	*/
-
-	updateScrollBar : function(){
-		this.list.each(function(pane,index) {
-			pane.scrollbar.update();			  
-		},this);
-	},
-
-	/*
     Function: resize
    
     	Resize main view content to fit its components (to enbable slide)
@@ -178,8 +173,7 @@ UI.PaneView = new Class({
 		var size = 0;
 		
 		this.list.each(function(pane,index) {
-			size = size + pane.element.getSize().x;
-			console.log('update size');				  
+			size = size + pane.element.getSize().x;			  
 		});
 
 		this.content.setStyle('width',size+'px');
@@ -194,6 +188,7 @@ UI.PaneView = new Class({
 
 	inject: function(container){
 		this.element.inject(container);
+		return this;
 	},
 
 
@@ -205,7 +200,6 @@ UI.PaneView = new Class({
 	*/
 
 	remove: function(element){
-		
 		element.destroy();
 	},
 
@@ -219,11 +213,8 @@ UI.PaneView = new Class({
 	*/
 	
 	removeAllNext: function(pane) {
-		console.log('-- removeAllNext() from pane '+this.list.indexOf(pane));
 		var last = this.list.getLast();
-		console.log('last '+this.list.indexOf(last));
 		while (last != pane) {
-			console.log('remove '+this.list.indexOf(last));	
 			this.list.erase(last);
 			last.destroy();
 			last = this.list.getLast();

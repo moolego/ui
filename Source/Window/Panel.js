@@ -33,76 +33,67 @@ Example:
 */
 
 UI.Panel = new Class({
-	Extends						: UI.Window,
-	options						: {
-		component				: 'panel',
+	Extends: UI.Window,
+	options: {
+		component: 'window',
+		type: 'panel',
+		title: 'Panel',
 		
-		title					: 'Panel',
-
 		// Size options
-		width					: 200,
-		height					: 200,
+		width: 240,
+		height: 480,
 		
 		// see UI.VIew.setContent() for information about loading window's content.
-		url						: false,
-
-		// location options
-		location				: 'cascade',
-		top						: 0,
-		left					: 0,	
-		zIndex					: 'auto',   // to get zIndex from themanager or an Int as zIndex
+		url: false,
 		
-		tag						: 'div',
+		// location options
+		location: 'cascade',
+		top: 0,
+		left: 0,
+		zIndex: 'auto', // to get zIndex from themanager or an Int as zIndex
+		tag: 'div',
 		
 		// Components Options
-		head					: true,
-		view					: true,
-		foot					: false,
-
+		head: true,
+		view: true,
+		foot: false,
+		
 		// 		
-		controls				: ['close','minimize','maximize'],
-	
+		controls: ['close', 'minimize', 'maximize'],
+		
 		// Not Implemented should be able to enable/disable effects
-		useEffects				: false,
-		viewOverflow			: 'hidden',
+		useEffects: false,
+		viewOverflow: 'hidden',
+		scrollbar: false,
 		// Drag options
-		draggable				: false,
-		dragLimitX				: [-1000, window.getWidth() + 1000],
-		dragLimitY				: [50, window.getHeight() + 1000],
-		dragHandlers			: ['head','foot'],
+		draggable: true,
+		dragLimitX: [-1000, window.getWidth() + 1000],
+		dragLimitY: [0, window.getHeight() + 1000],
+		dragHandlers: ['head'],
 		
 		// Resize options
-		resizable				: false,
-		resizeLimitX			: [200, window.getWidth()],
-		resizeLimitY			: [200, window.getHeight()],
-		
-		// Implemented events
-		onResize			: $empty,
-		onMinimize			: $empty,
-		onMaximize			: $empty,
-		onRestore			: $empty,
-		onLoad				: $empty,
-		onBlur				: $empty,
-		onFocus				: $empty,
-		onClose				: $empty
+		resizable: true,
+		resizeLimitX: [200, window.getWidth()],
+		resizeLimitY: [200, window.getHeight()],
 	},
-
-
-/*
-    Function: updateInnerSize
-
-      Update size of the window inner components
-
-*/
-
-	updateInnerSize : function() {
+	
+	
+	/*
+	 Function: updateInnerSize
+	 Update size of the window inner components
+	 */
+	updateInnerSize: function(){
 		var wrapper = this.frame.getSize();
 		var bs = this.options.borderSize;
-		var borderOffset = bs*2
-
+		var borderOffset = bs * 2
+		
 		var offsetHeight = 0;
-		if (this.options.useHead) { offsetHeight = offsetHeight + this.options.styles.head.height; }
-		if (this.options.useFoot) { offsetHeight = offsetHeight + this.options.styles.foot.height; }
+		if (this.options.useHead) {
+			offsetHeight = offsetHeight + this.options.styles.head.height;
+		}
+		if (this.options.useFoot) {
+			offsetHeight = offsetHeight + this.options.styles.foot.height;
+		}
 		
 		var bodyHeight = wrapper.y - offsetHeight;
 		
@@ -112,7 +103,10 @@ UI.Panel = new Class({
 			});
 		}
 		
-		this.view.wrapper.setStyles({ width	: wrapper.x - borderOffset,	height	: bodyHeight -  borderOffset });
+		this.view.wrapper.setStyles({
+			width: wrapper.x - borderOffset,
+			height: bodyHeight - borderOffset
+		});
 		
 		if (this.options.useFoot) {
 			this.foot.setStyles({

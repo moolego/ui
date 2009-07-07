@@ -1573,7 +1573,7 @@ UI.props.AeroTrans = {
 				}
 			}
 		},
-		'default': {
+		'default2': {
 			'default': {
 				styles: {
 					'float': 'left',

@@ -35,6 +35,26 @@
 			scroll			: true 
 		}).setContent('content','content view');
 		(end)
+		
+		
+	Implied global: 
+		Class - 40
+		Element - 101 124 350
+		Request - 268 295 320
+		Scroller - 189
+		UI - 40 42 169
+		
+	Members:
+		Element, Extends, HTML, JSON, Scrollbar, View, _setOverflow, 
+	    addEvent, addEvents, bind, build, buildOverlay, buildScrollbar, 
+	    component, components, container, content, contentTag, destroy, element, 
+	    fireEvent, get, height, hide, iframe, inject, loadCompplete, method, 
+	    onChange, onComplete, onInject, onLoadComplete, options, overflow, 
+	    overlay, parent, position, props, resize, scrollbar, scroller, send, 
+	    set, setAjaxContent, setAjaxNuContent, setContent, setHtmlContent, 
+	    setIFrameContent, setJsonContent, setProperties, setScrollbar, 
+	    setScroller, setStyle, setStyles, show, skin, start, tag, update, 
+	    updateSize, url, useOverlay, width
 */
 
 UI.View = new Class({
@@ -52,10 +72,13 @@ UI.View = new Class({
 		contentTag: 'div', // 
 		content: {},
 		useOverlay: true,
-		scrollbar: {},
+		scrollbar: {}
 		
 		// implemented events		
-		onLoadComplete: $empty
+		/*
+		onLoadComplete: $empty,
+		onResize: $empty
+		*/
 	},
 
 	/*
@@ -75,10 +98,11 @@ UI.View = new Class({
 	build: function() {
 		this.parent();
 		
-		if (this.options.useOverlay) 
+		if (this.options.useOverlay) {
 			this.buildOverlay();
+		}
 		
-		this.setOverflow();
+		this._setOverflow();
 		
 		this.show();
 	},
@@ -115,7 +139,7 @@ UI.View = new Class({
 		(void)
 	*/
 
-	setOverflow: function() {
+	_setOverflow: function() {
 		if (this.options.overflow != 'hidden') { 
 			this.content = new Element( this.options.contentTag,  this.options.content )
 			 .setStyles( {
@@ -138,10 +162,12 @@ UI.View = new Class({
 			
 			this.content.addEvents({
 				onInject : function(){
-					this.updateSize()
+					this.updateSize();
 				}.bind(this)
 			});
-		} else { this.content = this.element }
+		} else { 
+			this.content = this.element; 
+		}
 	},
 	
 	/*
@@ -155,16 +181,16 @@ UI.View = new Class({
 	*/
 	
 	setScrollbar: function(){
-		if (this.options.skin) 
+		if (this.options.skin) {
 			this.options.scrollbar.skin = this.options.skin;
-		 
+		}
 		this.options.scrollbar.container = this.content;
 		
 		this.scrollbar = new UI.Scrollbar(this.options.scrollbar);
 				 
 		this.addEvents({
-			'ondLoadCompplete': function() { this.scrollbar.update() },
-			'onResize': function() { this.scrollbar.update() }
+			'loadCompplete': function() { this.scrollbar.update(); },
+			'resize': function() { this.scrollbar.update(); }
 		 });
 	},
 	
@@ -209,7 +235,7 @@ UI.View = new Class({
 				this.setAjaxContent(source);
 				break;
 			case 'ajaxnu':
-				this.setAjaxNuContent(source)
+				this.setAjaxNuContent(source);
 				break;
 			case 'json':
 				this.setJsonContent(source);
@@ -220,7 +246,7 @@ UI.View = new Class({
 			case 'iframe':
 				this.setIFrameContent(source);
 				break;	
-		};
+		}
 		
 		return this;
 	},
@@ -238,8 +264,8 @@ UI.View = new Class({
 
 	setHtmlContent: function(source){
 		this.content.set('html',source);
-		this.fireEvent('onLoadComplete');
-		this.fireEvent('onResize');
+		this.fireEvent('loadComplete');
+		this.fireEvent('resize');
 		return this;
 	},
 	
@@ -255,16 +281,17 @@ UI.View = new Class({
 	*/
 	
 	setAjaxContent: function(source){
-		if (this.iframe) 
-		 this.iframe.destroy();
+		if (this.iframe) {
+			this.iframe.destroy();
+		}
 		
-		new Request.HTML({
+		var request = new Request.HTML({
 			url: source,
 			update: this.content,
 			method: 'get',
 			onComplete: function(){
-				this.fireEvent('onLoadComplete');
-				this.fireEvent('onResize');
+				this.fireEvent('loadComplete');
+				this.fireEvent('resize');
 			}.bind(this)
 		}).send();
 		
@@ -283,15 +310,16 @@ UI.View = new Class({
 	*/
 	
 	setAjaxNuContent: function(source) {
-		new Request.HTML({
+		var that = this;
+		
+		var request = new Request.HTML({
 			url: source,
 			method: 'get',
 			onComplete: function(responseTree,responseElements,responseHTML,responseJS){
-				this.fireEvent('onLoadComplete',
-					new Array(responseHTML,responseTree,responseElements,responseJS)
-				);
-				this.fireEvent('onResize');
-			}.bind(this)
+				var list = [responseHTML,responseTree,responseElements,responseJS];
+				that.fireEvent('onLoadComplete',list);
+				that.fireEvent('resize');
+			}
 		}).send();
 		
 		return this;
@@ -309,11 +337,11 @@ UI.View = new Class({
 	*/
 	
 	setJsonContent: function(source) {
-		new Request.JSON({
+		var request = new Request.JSON({
 			url: source,
 			onComplete : function(response){
-				this.fireEvent('onLoadComplete',new Array(response));
-				this.fireEvent('onResize');
+				this.fireEvent('loadComplete',new Array(response));
+				this.fireEvent('resize');
 			}.bind(this)
 		}).get();
 		
@@ -333,15 +361,23 @@ UI.View = new Class({
 	
 	setIFrameContent: function(source) {
 		if (!this.iframe) {
-			if (this.content) this.content.destroy();
-			if (this.scrollbar) this.scrollbar.destroy();
-			this.iframe = new Element('iframe',this.props.components.iframe).inject(this.element);
-		};
+			if (this.content) {
+				this.content.destroy();
+			}
+			if (this.scrollbar) {
+				this.scrollbar.destroy();
+			}
+			this.iframe = new Element('iframe',this.props.components.iframe)
+			.setStyles({height:'100%',width:'100%'})
+			.setProperties({height:'100%',width:'100%'})
+			.inject(this.element);
+			
+		}
 		
 		this.iframe.set('src',source)
 		 .addEvent('load',function(){ 
-		 	this.fireEvent('onLoadComplete');
-			this.fireEvent('onResize');
+		 	this.fireEvent('loadComplete');
+			this.fireEvent('resize');
 		});
 
 		return this;

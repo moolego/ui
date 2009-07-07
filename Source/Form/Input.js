@@ -61,26 +61,33 @@ UI.Input = new Class({
 	Function: setState
 		Set element state
 	
-	Arguments:
-		state - (string) State name
+	Argunject(document.body);
+		(end)
+*/
+
+UI.Input = new Class({
+	
+	Extends: UI.Control,
+	
+	options: {
+		component: 'input',
 		
+		// default options
+		name: 'ui-input',
+		value: ''
+	},
+	
+	/* 
+	Function: build
+		private function
+		
+		Create a div and a hidden input to receive the selected value
+	
 	Return:
 		(void)
 	
 	See also:
-		<UI.Element::setState>
-	*/
-	
-	setState: function(state){
-		this.parent(state);
-		if (this.skin[state]) this.input.set(this.skin[state].components.input.styles);
-	},
-	
-	/* 
-	Function: setBehavior
-		private function
-		
-		Set control relative behavior (blur and focus)
+		<UI.Controlocus)
 	
 	Return:
 		(void)

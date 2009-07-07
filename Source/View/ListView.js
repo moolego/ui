@@ -32,6 +32,20 @@
 			scroll			: true 
 		}).inject(this.content);
 		(end)	
+		
+		
+	Implied global: 
+		$H - 155 
+		Class - 37 
+		Request - 117 
+		UI - 37 39 152 157
+		
+	Members: 
+		Element, Extends, JSON, ListView, View, addEvent, addItems, 
+	    bind, build, component, components, content, data, each, element, erase, 
+	    fireEvent, get, getData, height, html, inject, item, itemObject, 
+	    itemType, items, label, onSuccess, options, parent, props, scroller, 
+	    setScroller, skin, styles, type, url, width
 */
 
 UI.ListView = new Class({
@@ -82,9 +96,9 @@ UI.ListView = new Class({
 		
 		this.getData(this.options.url);
 		
-		if (this.options.scroller)
+		if (this.options.scroller) {
 			this.setScroller(this.options.scroller);
-
+		}
 	},
 	
 	
@@ -104,24 +118,17 @@ UI.ListView = new Class({
 		(void)
 	*/
 
-	/*
-	Function: getData
-		if the url options is give 
-	
-	Arguments:
-		data - data to be used during template interpolation
-	*/
-
-	getData: function (url, options) {
+	getData: function(url, options){
 		if (this.options.url) {
-			 new Request.JSON({
-				url : url,
-		        onComplete:function(response) {
+			var request = new Request.JSON({
+				url: url,
+				onSuccess: function(response,text){
 					this.addItems(response);
-		        }.bind(this)
-		    }).get();
+				}.bind(this)
+			}).get();
 			
-		} else {
+		}
+		else {
 			this.addEvent('injected', function(){
 				this.addItems(this.options.items);
 			}.bind(this));
@@ -142,19 +149,23 @@ UI.ListView = new Class({
 	*/
 
 	addItems: function(items){
-		if (this.options.skin) this.options.item.skin = this.options.skin;
+		
+		if (this.options.skin) {
+			this.options.item.skin = this.options.skin;
+		}
 			
 		items.each(function(object){
 			var item = new UI[this.options.itemObject](this.options.item)
 			.inject(this.content);
 			
 			$H(object).erase('type').each(function(value,key){
-				new UI.Element({
+				//console.log(value,key);
+				var o = new UI.Element({
 					html: value,
 					styles: this.props.components[key].styles
 				}).inject(item.element);
-				this.fireEvent('onResize');
-			}, this)
+				this.fireEvent('resize');
+			}, this);
 		}, this);
 	}
 });
