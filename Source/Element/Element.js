@@ -736,19 +736,13 @@ UI.Element = new Class({
 			this.setSize();
 		} else if (property == 'morph')  {
 			var that = this;
-			
-			this.element.set(property,value)
-			
+			this.element.set(property,value);
 			this.element.get('morph').addEvents({
 				onMorph: function() {
 					var size = this.element.getSize();
 					that.setSize(size.x, size.y);
-					console.log(size)
 				}
-				
-				
-			})
-			
+			});
 		} else {
 			this.element.set(property, value);
 		}
