@@ -1,0 +1,14 @@
+echo cat moolego.js
+cat ../Source/Core/UI.js ../Source/Core/Canvas.js ../Source/Core/Skin.js ../Source/Core/Interface.js ../Source/Element/Element.js ../Source/Element/Box.js ../Source/Element/Bubble.js ../Source/Element/Label.js ../Source/Element/Scrollbar.js ../Source/Element/Element.Controller.js ../Source/Form/Control.js ../Source/Form/Input.js ../Source/Form/Button.js ../Source/Form/Textarea.js ../Source/Form/Checkbox.js ../Source/Form/RadiosGroup.js ../Source/Form/Select.js ../Source/Form/Slider.js ../Source/Menu/Menu.js ../Source/Menu/Toolbar.js ../Source/Menu/Context.js ../Source/Menu/Scroller.js ../Source/View/View.js  ../Source/View/ListView.js ../Source/View/PaneView.js ../Source/View/TabView.js ../Source/View/SplitView.js ../Source/Window/Window.js  ../Source/Window/Window.Controller.js > moolego.js
+
+echo minifiy moolego-yc.js from moolego.js
+java -jar /usr/local/www/yuicompressor/yuicompressor.jar moolego.js > moolego-yc.js
+
+echo tar moolego.tar.gz moolego-yc.js 
+tar -cvzf moolego.tar.gz moolego-yc.js
+
+echo minify aquagraphite 
+java -jar /usr/local/www/yuicompressor/yuicompressor.jar ../Skins/AquaGraphite.js > aquag-yc.js 
+
+echo tar aquag.tar.gz
+tar -cvzf aquag.tar.gz aquag-yc.js
