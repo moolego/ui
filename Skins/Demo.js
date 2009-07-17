@@ -47,7 +47,7 @@ UI.props.demo = {
 							margin: '0',
 							color: '#fff',
 							top: '1px',
-							opacity: '.8',
+							opacity: '0.8',
 							zIndex: '-1'
 						}
 					},
@@ -102,7 +102,7 @@ UI.props.demo = {
 						offset: ['0px', '0px', '0px', '0px'],
 						color: ['#000', '#000'],
 						radius: 11,
-						opacity: .1
+						opacity: 0.1
 					},
 					background: {
 						offset: ['0px', '1px', '1px', '1px'],
@@ -116,7 +116,7 @@ UI.props.demo = {
 					reflect: {
 						offset: ['0px', '3px', '65%'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.8, .3],
+						opacity: [0.8, 0.3],
 						radius: [7, 7, 4, 4]
 					},
 					light: {
@@ -166,7 +166,7 @@ UI.props.demo = {
 					emboss: {
 						offset: 0,
 						color: '#000',
-						opacity: .17,
+						opacity: 0.17,
 						radius: 9
 					},
 					front: {
@@ -178,7 +178,7 @@ UI.props.demo = {
 					reflect: {
 						offset: ['2px', '2px', '65%'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.8, .0],
+						opacity: [0.8, 0.0],
 						radius: [5, 5, 6, 6]
 					}
 				}
@@ -224,7 +224,7 @@ UI.props.demo = {
 					emboss: {
 						offset: 5,
 						color: ['#000', '#fff'],
-						opacity: .3,
+						opacity: 0.3,
 						radius: 9
 					},
 					front: {
@@ -236,13 +236,13 @@ UI.props.demo = {
 					reflect: {
 						offset: [1, 0, '60%', 2],
 						color: ['#FFF', '#FFF'],
-						opacity: [.6, .1],
+						opacity: [0.6, 0.1],
 						radius: [5, 5, 9, 9]
 					},
 					reflect2: {
 						offset: [1, 1, 2],
 						color: ['#000', '#000'],
-						opacity: [.1, 0],
+						opacity: [0.1, 0],
 						radius: [7, 7, 9, 9]
 					}
 				}
@@ -251,7 +251,7 @@ UI.props.demo = {
 				components: {
 					label: {
 						styles: {
-							opacity: .8
+							opacity: 0.8
 						}
 					}
 				},
@@ -281,7 +281,7 @@ UI.props.demo = {
 							fontSize: '11px',
 							fontWeight: 'bold',
 							fontFamily: 'Arial, Helvetica',
-							opacity: '.7',
+							opacity: 0.7,
 							padding: '10px 16px',
 							color: '#fff'
 						}
@@ -297,14 +297,12 @@ UI.props.demo = {
 				},
 				
 				layers: {
-					reorder: ['emboss', 'front', 'reflect'],
-					
 					reorder: ['emboss', 'background', 'front', 'reflect'],
 					
 					emboss: {
 						offset: '0px',
 						color: '#000',
-						opacity: .17,
+						opacity: 0.17,
 						radius: 7
 					},
 					background: {
@@ -322,7 +320,7 @@ UI.props.demo = {
 					reflect: {
 						offset: ['1px', '1px', '35%'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.4, 0],
+						opacity: [0.4, 0],
 						radius: [3, 3, 3, 3]
 					}
 				}
@@ -339,7 +337,7 @@ UI.props.demo = {
 					reflect: {
 						gradient: {
 							color: ['#FFF', '#FFF'],
-							opacity: [.1, .04]
+							opacity: [0.1, 0.04]
 						}
 					}
 				}
@@ -352,7 +350,7 @@ UI.props.demo = {
 				reflect: {
 					gradient: {
 						color: ['#000', '#000'],
-						opacity: [.05, .01]
+						opacity: [0.05, 0.01]
 					}
 				}
 			}
@@ -366,7 +364,7 @@ UI.props.demo = {
 					emboss: {
 						offset: 0,
 						color: '#cc0033',
-						opacity: .17,
+						opacity: 0.17,
 						radius: 9
 					},
 					front: {
@@ -378,7 +376,7 @@ UI.props.demo = {
 					reflect: {
 						offset: ['1px', '1px', '65%'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.8, .0],
+						opacity: [0.8, 0.0],
 						radius: [5, 5, 14, 14]
 					},
 					dark: {
@@ -386,7 +384,7 @@ UI.props.demo = {
 						size: ['auto', '20px'],
 						offset: ['auto', 4, 4],
 						color: ['#fff', '#fff'],
-						opacity: [0, .5],
+						opacity: [0, 0.5],
 						radius: [14, 14, 5, 5]
 					}
 				}
@@ -395,7 +393,7 @@ UI.props.demo = {
 				components: {
 					label: {
 						styles: {
-							opacity: .5
+							opacity: 0.5
 						}
 					}
 				},
@@ -409,7 +407,7 @@ UI.props.demo = {
 				components: {
 					label: {
 						styles: {
-							opacity: .5,
+							opacity: 0.5,
 							color: '#000'
 						}
 					}
@@ -454,7 +452,7 @@ UI.props.demo = {
 					emboss: {
 						offset: '0px',
 						color: '#000',
-						opacity: .17,
+						opacity: 0.17,
 						radius: 7
 					},
 					
@@ -469,7 +467,7 @@ UI.props.demo = {
 						
 						gradient: {
 							color: ['#FFF', '#FFF'],
-							opacity: [.9, .1]
+							opacity: [0.9, 0.1]
 						},
 						radius: [3, 3, 3, 3]
 					}
@@ -482,7 +480,7 @@ UI.props.demo = {
 							fontSize: '20px',
 							fontWeight: 'bold',
 							fontFamily: 'Arial, Helvetica',
-							opacity: '.7',
+							opacity: '0.7',
 							color: '#fff'
 						}
 					}
@@ -525,7 +523,7 @@ UI.props.demo = {
 						size: 4,
 						offsetX: 0,
 						offsetY: 0,
-						opacity: .4,
+						opacity: 0.4,
 						magnify: 1
 					},
 					
@@ -559,7 +557,7 @@ UI.props.demo = {
 				components: {
 					label: {
 						styles: {
-							opacity: .8
+							opacity: 0.8
 						}
 					}
 				}
@@ -568,7 +566,7 @@ UI.props.demo = {
 				components: {
 					label: {
 						styles: {
-							opacity: .8,
+							opacity: 0.8,
 							color: '#ccc'
 						}
 					}
@@ -716,7 +714,7 @@ UI.props.demo = {
 						position: 'absolute',
 						color: ['#FFFFFF', '#FFFFFF'],
 						radius: [4, 4, 4, 4],
-						opacity: [0.3, .05],
+						opacity: [0.3, 0.05],
 						offset: [1, 1, '55%']
 					}
 				}
@@ -839,7 +837,7 @@ UI.props.demo = {
 						position: 'abolute',
 						offset: [0, 0, 0, 0],
 						color: ['#000', '#000'],
-						opacity: [.6, 0]
+						opacity: [0.6, 0]
 					},
 					border: {
 						radius: 11,
@@ -914,14 +912,14 @@ UI.props.demo = {
 						position: 'absolute',
 						offset: ['1px', '1px', '23px'],
 						color: ['#000', '#000'],
-						opacity: [.2, 0],
+						opacity: [0.2, 0],
 						radius: [5, 5, 0, 0]
 					},
 					reflect: {
 						position: 'absolute',
 						offset: ['50%', '1px', '1px'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.05, .3],
+						opacity: [0.05, 0.3],
 						radius: [4, 4, 4, 4]
 					}
 				}
@@ -968,7 +966,7 @@ UI.props.demo = {
 						position: 'absolute',
 						offset: [2, 2, 1, 1],
 						color: ['#000', '#000'],
-						opacity: [.18, .02],
+						opacity: [0.18, 0.02],
 						radius: 4
 					}
 				}
@@ -1008,7 +1006,7 @@ UI.props.demo = {
 						position: 'absolute',
 						offset: ['1px', '1px', '23px'],
 						color: ['#000', '#000'],
-						opacity: [.2, 0],
+						opacity: [0.2, 0],
 						radius: [5, 5, 0, 0]
 					},
 					on: {
@@ -1031,7 +1029,7 @@ UI.props.demo = {
 						position: 'absolute',
 						offset: ['50%', '1px', '1px'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.05, .3],
+						opacity: [0.05, 0.3],
 						radius: [4, 4, 4, 4]
 					},
 					checkShadow: {
@@ -1066,7 +1064,7 @@ UI.props.demo = {
 						position: 'absolute',
 						offset: ['2px', '54px', '1px', '1px'],
 						color: ['#000', '#000'],
-						opacity: [.18, .02],
+						opacity: [0.18, 0.02],
 						radius: [4, 4, 4, 4]
 					}
 				}
@@ -1170,7 +1168,7 @@ UI.props.demo = {
 						size: 4,
 						offsetX: 0,
 						offsetY: 0,
-						opacity: .4,
+						opacity: 0.4,
 						magnify: 1
 					},
 					
@@ -1204,13 +1202,6 @@ UI.props.demo = {
 		}
 	},
 	
-	// needed for button
-	label: {
-		'default': {
-			'default': {}
-		}
-	},
-	
 	element: {
 		'default': {
 			'default': {
@@ -1240,7 +1231,7 @@ UI.props.demo = {
 					'default': {
 						position: 'absolute',
 						shape: 'lineUp',
-						opacity: .05,
+						opacity: 0.05,
 						width: 1,
 						color: '#000'
 					},
@@ -1293,7 +1284,7 @@ UI.props.demo = {
 							color: ['#F0F', '#0F0', '#FF0'],
 							angle: 45,
 							opacity: [1, 1, 1],
-							stop: [0, .5, 1]
+							stop: [0, 0.5, 1]
 						},
 						stroke: {
 							color: '#F0F',
@@ -1380,7 +1371,7 @@ UI.props.demo = {
 						size: 16,
 						offsetX: 0,
 						offsetY: 0,
-						opacity: .5
+						opacity: 0.5
 					},
 					big: {
 						color: '#222',
@@ -1412,7 +1403,7 @@ UI.props.demo = {
 					radial: {
 						gradient: {
 							color: ['#F0F', '#0F0', '#FF0'],
-							stop: [0, .9, 1],
+							stop: [0, 0.9, 1],
 							angle: 110
 						},
 						offset: 20
@@ -1504,12 +1495,12 @@ UI.props.demo = {
 						size: 10,
 						offsetX: 0,
 						offsetY: 4,
-						opacity: .7
+						opacity: 0.7
 					},
 					back: {
 						color: '#000',
-						opacity: .3,
-						radius: 9,
+						opacity: 0.3,
+						radius: 9
 					},
 					front: {
 						color: '#fff',
@@ -1584,4 +1575,4 @@ UI.props.demo = {
 			}
 		}
 	}
-}
+};
