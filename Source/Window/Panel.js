@@ -31,11 +31,11 @@
 		});
 		(end)
 		
-	Implied global: 
-		Class - 35
-		UI - 35 36
-		window - 70 71 76 77
-		
+	Implied global:
+		UI, 
+		Class,
+		window
+
 	Members: 
 		Extends, Panel, Window, borderSize, bottom, component, 
 	    controls, dragHandlers, dragLimitX, dragLimitY, draggable, drawCanvas, 

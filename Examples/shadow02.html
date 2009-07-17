@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="mootools/more.js"></script>
+		
+	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+	
+	<script type="text/javascript" src="../Source/Core/UI.js"></script>
+	<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
+	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
+	
+	<script type="text/javascript" src="../Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
+	<script type="text/javascript" src="../Source/Element/Label.js"></script>
+
+	<script type="text/javascript" src="../Skins/Demo.js"></script>
+		
+	<script type="text/javascript" src="js/examples.js"></script>
+	
+	<title>MooLego - Components Playground</title>
+	
+	
+	<style media="screen">
+		body {
+			background: url(assets/1.jpg) no-repeat;
+			margin:0;
+			border:0;
+			padding:0;
+		}
+		
+	</style>
+	
+	<script type="text/javascript">
+		window.addEvent('domready', function() {
+			
+			var time = $time();
+			
+			/* Elements in page */
+			
+			var box = new UI.Element({
+				label : "new window",
+				skin	: 'demo',
+				type	: "shadows",
+				width	: 300,
+				height	: 180,
+				draggable: true,
+				resizable: false
+			})
+			.inject($(document.body))
+			.addEvents('click',{
+				click: function() {
+					this.element.fade(0);
+					
+				}	
+				
+			});
+			
+			new UI.Label({
+				component: 'element',
+				
+				'text':'drag me, please!',
+				styles: {
+					padding:'20px',
+					margin:'0',
+					color: '#ccc'
+				}
+			}).inject(box);
+			
+			
+		});
+	</script>
+</head>
+
+<body>
+	
+</body>
+
+</html>

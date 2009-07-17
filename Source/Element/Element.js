@@ -46,21 +46,9 @@
 		(end)
 
  	Implied global:
- 		$H - 284
- 		$defined - 284
- 		$empty - 114 115 116 117 118 119 120 121 122 123 125 126
- 		$random - 557 567 572 
- 		$type - 857
- 		Browser - 428 433
- 		Class - 73
- 		Drag - 458
- 		Element - 188 811
- 		Event - 227
- 		Events - 75
- 		Fx - 578
- 		Options - 75, UI 73 217 269 271 288
- 		ui - 423 688
- 		window - 91 92 97 98 536 537 556 557 571 572
+ 		window,UI,ui,
+ 		Browser,Class,Drag,Element,Event,Events,Fx,Options,
+ 		$H,$defined,$empty,$random,$type
  	
  	Members:
 	 	Canvas, Element, Engine, Implements, Morph, MozUserSelect, 
@@ -746,6 +734,21 @@ UI.Element = new Class({
 		if (property == 'html' && this.label) {
 			this.label.set(property, value);
 			this.setSize();
+		} else if (property == 'morph')  {
+			var that = this;
+			
+			this.element.set(property,value)
+			
+			this.element.get('morph').addEvents({
+				onMorph: function() {
+					var size = this.element.getSize();
+					that.setSize(size.x, size.y);
+					console.log(size)
+				}
+				
+				
+			})
+			
 		} else {
 			this.element.set(property, value);
 		}
@@ -786,6 +789,27 @@ UI.Element = new Class({
 	
 	getCoordinates: function(ref) {
 		return this.element.getCoordinates(ref);
+	},
+	
+	
+		
+	/*
+    Function: set
+    	See mootools getCoordinates documentation
+    
+    Return:
+    	this.element coordinates
+	*/
+	
+	morph: function(opt) {
+		return this.element.morph(opt).addEvents({
+			onComplete: function() {
+				alert('Compltee')
+				
+			}
+			
+			
+		});
 	},
 
 	

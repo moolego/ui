@@ -71,12 +71,12 @@ UI.Select = new Class({
 	*/
 	
 	build: function(){
-		//we create a new div as button element
+		//Create new div as button element
 		this.parent();
 		this.setInput();
 		this.addMenuActions(this.options.list);
 		
-		//we create a menu
+		// Create a menu
 		this.menu = new UI.Menu({
 			width: this.options.width,
 			skin: this.options.skin,
@@ -86,7 +86,7 @@ UI.Select = new Class({
 			scrollToSelected: this.options.scrollToSelected
 		}).inject(document.body);
 		
-		//we create a label for the selected item
+		// Create a label for the selected item
 		var width = this.menu.content.getFirst().getSize().x;
 		width -=  this.menu.content.getFirst().getStyle('paddingRight').toInt();
 		width -=  this.menu.content.getFirst().getStyle('paddingLeft').toInt();

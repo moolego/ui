@@ -519,7 +519,7 @@ UI.props.AquaGraphite = {
 							fontWeight: 'bold',
 							fontSize: '0.75em',
 							lineHeight: '2em',
-							position:'relative'
+							position: 'relative'
 						}
 					}
 				},
@@ -1426,13 +1426,13 @@ UI.props.AquaGraphite = {
 					wrapper: {
 						styles: {
 							padding: '0 0 0 10px',
-							overflow:'hidden'
+							overflow: 'hidden'
 						}
 					},
 					menuItem: {
 						styles: {
 							padding: '30px 10px 5px',
-							lineHeight: '1em',
+							lineHeight: '1.2em',
 							whiteSpace: 'nowrap',
 							color: '#000'
 						}
@@ -1607,7 +1607,7 @@ UI.props.AquaGraphite = {
 							
 							height: '100%',
 							width: '15px',
-							left: '158px',
+							left: '120px',
 							zIndex: '10',
 							opacity: '.45',
 							cursor: 'col-resize',
@@ -1618,7 +1618,7 @@ UI.props.AquaGraphite = {
 				},
 				views: {
 					side: {
-						width: 160,
+						width: 120,
 						overflow: 'hidden',
 						styles: {
 							'float': 'left',
@@ -1662,7 +1662,7 @@ UI.props.AquaGraphite = {
 				},
 				views: {
 					side: {
-						width: 240,
+						width: 160,
 						overflow: 'hidden',
 						styles: {
 							'float': 'left',
@@ -2609,7 +2609,7 @@ UI.props.AquaGraphite = {
 				
 				
 				layers: {
-					reorder: ['emboss', 'background', 'main', 'reflect','cache'],
+					reorder: ['emboss', 'background', 'main', 'reflect', 'cache'],
 					
 					'default': {
 						position: 'absolute',
@@ -2638,7 +2638,7 @@ UI.props.AquaGraphite = {
 						}
 					},
 					reflect: {
-						size: [2,3.5],
+						size: [2, 3.5],
 						offset: [1, 5.5],
 						gradient: {
 							color: ['#fff', '#fff'],
@@ -2831,7 +2831,7 @@ UI.props.AquaGraphite = {
 			}
 		}
 	},
-
+	
 	
 	element: {
 		'default': {

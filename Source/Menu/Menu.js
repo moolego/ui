@@ -33,18 +33,10 @@
 		(end)
 	
 	Implied global: 
-		$clear - 200 230, 
-		$defined - 659, 
-		$empty - 92, 
-		$time - 306 590 639, 
-		Class - 37, 
-		Element - 70, 
-		Event - 206, 
-		Fx - 308 672, 
-		UI - 37 39 125 133 137 233 267 337 547, 
-		Window - 448 471 476 485 494 497, 
-		document - 242, ui 92 243 637 638 663, 
-		windowScroll - 471 473 474
+		UI,ui,
+		$clear,$defined,$empty,$time, 
+		Class,Element,Event,	Fx,Window,
+		document
 		
 	Members 
 		Element, Extends, Label, Menu, MenuScroller, Tween, action, 
@@ -504,7 +496,7 @@ UI.Menu = new Class({
 				'top': top + 1,
 				'left': elCoordinates.left - 1
 			});
-			windowScroll = Window.getScroll();
+			var windowScroll = Window.getScroll();
 			menuCoordinates = this.element.getCoordinates();
 			menuCoordinates.top -= windowScroll.y;
 			menuCoordinates.bottom -= windowScroll.y;

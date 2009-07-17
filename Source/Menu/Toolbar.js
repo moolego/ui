@@ -28,6 +28,24 @@
 			]						
 		});
 		(end)
+		
+	Implied global:
+		UI,ui,
+		$,$clear,$empty,$time,
+		Class,Event,Fx,
+		window
+		
+	Members:
+		Extends, Menu, Toolbar, Tween, action, actionDelay, activeItem, 
+	    addEvent, addEvents, addItemStyles, addSubmenu, addSubmenuEvents, bind, 
+	    build, closeMenu, closeOnRollout, color, component, controller, delay, 
+	    down, duration, each, element, fireEvent, float, fontColor, getParent, 
+	    getSize, getStyle, getWidth, hide, hideFx, hideFxDuration, hideSubmenu, 
+	    initialize, inject, menu, menuWithAction, menus, mousedown, mouseenter, 
+	    mouseleave, mouseup, moveRollover, onComplete, openOnRollover, options, 
+	    overflow, parent, position, props, register, removeRollover, 
+	    removeSubmenu, rolloverType, setBehavior, setCanvas, setSize, setStyle, 
+	    setStyles, start, stop, styles, submenu, tag, time, width, x, zIndex
 */
 
 UI.Toolbar = new Class({
@@ -81,7 +99,7 @@ UI.Toolbar = new Class({
 
 		this.addEvent('onCloseMenu', function(){
 			this.removeSubmenu();
-			(function(){this.removeRollover()}.bind(this)).delay(this.props.hideFxDuration);
+			(function(){this.removeRollover();}.bind(this)).delay(this.props.hideFxDuration);
 			ui.controller.element.closeMenu = $empty;
 		}.bind(this));
 	},
@@ -135,7 +153,7 @@ UI.Toolbar = new Class({
 			item.options.styles = {
 				'float': 'left',
 				color: this.props.fontColor
-			}
+			};
 		}, this);
 	},
 	
@@ -169,14 +187,16 @@ UI.Toolbar = new Class({
 						} else {
 							// first push icon, then manage action with delay
 							this.menuWithAction = (function(){
-								if (this.activeItem && this.activeItem.submenu) this.activeItem.submenu.hide(0);
+								if (this.activeItem && this.activeItem.submenu) {
+									this.activeItem.submenu.hide(0);
+								}
 								this.moveRollover(menuItem);
 								this.addSubmenu(item, menuItem, 'bottom');
 								this.menuWithAction = false;
 							}).delay(this.props.actionDelay, this);
 						}
 					}
-					new Event(e).stop();
+					var ev = new Event(e).stop();
 				}.bind(this),
 				'mouseup' : function(){
 					if ($time() - this.time > 800) {
@@ -195,7 +215,9 @@ UI.Toolbar = new Class({
 					}
 				}.bind(this),
 				'hideSubmenu' : function(){
-					if (!menuItem.submenu) return;
+					if (!menuItem.submenu) {
+						return;
+					}
 					this.hideFx = new Fx.Tween(menuItem.submenu.element, {
 						duration	: this.props.hideFxDuration,
 						onComplete	: function(){
@@ -205,16 +227,18 @@ UI.Toolbar = new Class({
 						}.bind(this)
 					}).start('opacity', 0);
 				}.bind(this)
-			})
+			});
 		}
 		
 		menuItem.element.addEvents({
 			'mousedown' : function(e){
-				if (!item.menu && this.activeItem) this.activeItem.fireEvent('hideSubmenu');
+				if (!item.menu && this.activeItem) {
+					this.activeItem.fireEvent('hideSubmenu');
+				}
 				menuItem.down = true;
-				new Event(e).stop();
+				var ev = new Event(e).stop();
 			}.bind(this),
-			'mouseleave' : function(){menuItem.down = false},
+			'mouseleave' : function(){menuItem.down = false;},
 			'mouseup' : function(){
 				if (this.menuWithAction || !item.menu) {
 					this.removeSubmenu();

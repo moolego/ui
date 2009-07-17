@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="mootools/more.js"></script>
+		
+	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+	
+	<script type="text/javascript" src="../Source/Core/UI.js"></script>
+	<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
+	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
+	
+	<script type="text/javascript" src="../Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
+	<script type="text/javascript" src="../Source/Element/Label.js"></script>
+	<script type="text/javascript" src="../Source/Element/Scrollbar.js"></script>
+
+	<script type="text/javascript" src="../Source/Form/Control.js"></script>
+	<script type="text/javascript" src="../Source/Form/Button.js"></script>
+	
+	<script type="text/javascript" src="../Source/Menu/Menu.js"></script>
+	<script type="text/javascript" src="../Source/Menu/Scroller.js"></script>
+	<script type="text/javascript" src="../Source/Menu/Context.js"></script>
+	
+	<script type="text/javascript" src="../Source/View/View.js"></script>
+
+	<script type="text/javascript" src="../Source/Window/Window.js"></script>
+	<script type="text/javascript" src="../Source/Window/Dialog.js"></script>
+	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
+
+	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../Skins/AquaBlack.js"></script>
+	<script type="text/javascript" src="../Skins/Demo.js"></script>
+		
+	<script type="text/javascript" src="js/examples.js"></script>
+
+	<title>moolego - Components Playground</title>
+	
+	<script type="text/javascript">
+		
+		
+		
+		
+		window.addEvent('domready', function() {
+			var time = $time();
+			
+			button = new UI.Button({
+				label : "new UI.Dialog()",
+				skin	: 'demo',
+				type	: "jgood",
+				labelStyles : {
+					fontWeight : 'bold',
+					padding : '10px 20px'
+				},
+				onClick : function(){
+					var time2 = $time();
+					new UI.Dialog();
+				}
+			}).inject($(document.body));
+			//console.log('window.html', $time()-time);
+			
+		});
+	</script>
+</head>
+
+<body style="overflow:hidden"></body>
+
+</html>

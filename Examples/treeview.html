@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="mootools/more.js"></script>
+
+	<script type="text/javascript" src="../Utils/mooTree.js"></script>		
+	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+	
+	<script type="text/javascript" src="../Source/Core/UI.js"></script>
+	<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
+	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
+	<script type="text/javascript" src="../Source/Core/Interface.js"></script>
+	
+	<script type="text/javascript" src="../Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
+	<script type="text/javascript" src="../Source/Element/Label.js"></script>
+	<script type="text/javascript" src="../Source/Element/Bubble.js"></script>
+	<script type="text/javascript" src="../Source/Element/Scrollbar.js"></script>
+	
+	<script type="text/javascript" src="../Source/Menu/Menu.js"></script>
+	<script type="text/javascript" src="../Source/Menu/Scroller.js"></script>
+	<script type="text/javascript" src="../Source/Menu/Context.js"></script>
+	<script type="text/javascript" src="../Source/Menu/Toolbar.js"></script>
+	
+	<script type="text/javascript" src="../Source/Form/Control.js"></script>
+	<script type="text/javascript" src="../Source/Form/Button.js"></script>
+	<script type="text/javascript" src="../Source/Form/Checkbox.js"></script>
+	<script type="text/javascript" src="../Source/Form/Input.js"></script>
+	<script type="text/javascript" src="../Source/Form/RadiosGroup.js"></script>
+	<script type="text/javascript" src="../Source/Form/Select.js"></script>
+	<script type="text/javascript" src="../Source/Form/Slider.js"></script>
+	<script type="text/javascript" src="../Source/Form/Textarea.js"></script>
+	
+	<script type="text/javascript" src="../Source/View/View.js"></script>
+	<script type="text/javascript" src="../Source/View/ListView.js"></script>
+	<script type="text/javascript" src="../Source/View/PanelView.js"></script>
+	<script type="text/javascript" src="../Source/View/SplitView.js"></script>
+	<script type="text/javascript" src="../Source/View/TabView.js"></script>
+	
+	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
+	<script type="text/javascript" src="../Source/Window/Window.js"></script>
+	<script type="text/javascript" src="../Source/Window/Dialog.js"></script>
+	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
+	
+	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../Skins/Demo.js"></script>
+	<script type="text/javascript" src="../Skins/TouchBlue.js"></script>
+		
+	<script type="text/javascript" src="js/examples.js"></script>
+
+	<link rel="stylesheet" href="css/treeview.css" type="text/css" media="screen, projection" />
+
+	<title>MooLego SplitView - Component Playground</title>
+	
+	<script type="text/javascript">
+		window.addEvent('load', function() {
+			var time = $time();
+			
+			var view = new UI.View({
+				skin : 'TouchBlue',
+				width : 200,
+				height : 400,
+				styles: {
+					margin : '40px',
+					backgroundColor : '#fff',
+					border : '1px solid #ccc'
+				}
+			}).inject(document.body);
+			
+			var tree = new MooTreeControl({
+				div: view.content,
+				mode: 'files',
+				grid: true,
+				onSelect: function(node, state) {
+					if (state && node.data.alert) window.alert(node.data.alert);
+				}
+			},{
+				text: 'MooLego',
+				open: true
+			});
+			
+			
+			(tree.selected||tree.root).load('assets/tree.xml');
+			
+			new UI.Button({
+				label : 'test',
+				onClick : function(){ view.scrollbar.update() }	
+			}).inject(document.body);
+			//tree.root.div.main.inject(view.content);
+			
+			//view.fireEvent('loadCompplete');
+			
+		});
+	</script>
+</head>
+
+<body style="overflow:hidden" bgcolor="#e8e8e8"></body>
+</html>

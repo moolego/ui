@@ -1,0 +1,46 @@
+<pre>	Class: UI.Window
+		The UI.Window class defines objects that manage and coordinate the windows an application displays on the screen.
+	
+	Require:
+		<UI.Element>
+		<UI.Canvas>
+		<UI.Skin>
+		<UI.Button>
+		<UI.Control>
+		<UI.View>
+	
+	Extends:
+		<UI.Element>
+	
+	Arguments:
+		Options
+		
+	Options: 
+		title - (string) title displayed in the head titlebar.
+		type - (string) define the type of the window (default, transparent).
+		location - (string)  Could be either 'custom','center' or 'cascade'. Override top and left options if defined - default to custom.
+		width - (number) Width of the container wrapper in px.
+		height - (number) Height  of the container wrapper in px.
+		top	- (number) Height  of the container wrapper in px.
+		left - (number) Height  of the container wrapper in px.
+		state - ('normalized','maximized','normalized') Define the initial state - default to normalized.
+		useEffects - (boolean) Define if effects should be implemented.
+		resizable - (boolean) Define if the window is resizable.
+		draggable - (boolean) Define if the window is draggable.
+		scrollbar - (boolean) Define if the container should use scrollbar.
+		register - (bollean) Define if the window should be handle by the window manager.
+		status - (bollean) Define if the window should use a statusbar.
+		url	- (string) Define the url from the window content.
+	
+	Example:
+		(start code)
+		var win = new UI.Window({
+			width 	: 260,
+			height	: 400,
+			title	: 'bonjour',
+		}).setContent('iframe','http://www.iframework.org');
+		(end)
+	
+	Discussion:
+		Effects still need to be implemented as option
+</pre>

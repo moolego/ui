@@ -30,8 +30,20 @@
 		splitview.views[0].setContent('ajax','side.php');
 		splitview.views[1].setContent('ajax','content.php');
 		
-		(end)	
-*/
+		(end)
+		
+		
+	Implied global: 
+		UI,
+		Class,Element,Hash
+	
+	Members:
+		Extends, SplitView, View, addEvent, bind, build, buildSplitter, 
+	    buildViews, component, components, draglimit, each, element, fireEvent, 
+	    getCoordinates, getSize, inject, left, limit, makeDraggable, minSize, 
+	    onDrag, options, overflow, parent, props, push, setStyle, size, 
+	    splitter, updateSize, view, views, x, y
+	*/
 
 UI.SplitView = new Class({
 	
@@ -53,7 +65,9 @@ UI.SplitView = new Class({
 			this.size = this.getSize();
 							
 			this.buildViews();
-			if (this.options.splitter) this.buildSplitter();
+			if (this.options.splitter) {
+				this.buildSplitter();
+			}
 		
 		}.bind(this));
 	},
@@ -62,16 +76,15 @@ UI.SplitView = new Class({
 		function : buildViews
 		
 			Get Information from components skin and build views
-		
-		
+
 	 */
 	
 	buildViews: function() {
-		this.view = new Array();
+		this.view = [];
 		var list = new Hash(this.props.views);
 		
-		list.each( function(view,name){
-			var view = new UI.View(view)
+		list.each( function(props,name){
+			var view = new UI.View(props)
 			 .inject(this.element);	 
 			this.view.push(view);
 			this[name] = view;

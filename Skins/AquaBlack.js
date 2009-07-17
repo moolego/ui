@@ -26,8 +26,8 @@ UI.props.AquaBlack = {
 				position: 'relative',
 				shape: 'roundedRect',
 				offset: 1,
-				color: '#fff',
-				opacity: 1,
+				color: '#000',
+				opacity: 0.8,
 				radius: 0,
 				direction: 'horizontal'
 			},
@@ -1201,13 +1201,13 @@ UI.props.AquaBlack = {
 				components: {
 					wrapper: {
 						styles: {
-							padding: '6px 1px'
+							padding: '5px 1px'
 						}
 					},
 					menuItem: {
 						styles: {
-							color: '#000',
-							padding: '4px 40px 5px 16px',
+							color: '#fff',
+							padding: '2px 40px 2px 16px',
 							whiteSpace: 'nowrap',
 							display: 'block'
 						}
@@ -1237,7 +1237,8 @@ UI.props.AquaBlack = {
 				/* layers properties */
 				layers: {
 					'default': {
-						radius: 4
+						radius: 4,
+						opacity: 0.6
 					},
 					shadow: {
 						size: 10,

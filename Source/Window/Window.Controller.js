@@ -15,13 +15,11 @@
 		<UI.Window>
 	
 	
-	Implied global: 
-		$defined - 122 165
-		c - 278 279
-		console - 284 305
-		ui - 21 334
-		window - 57 183 204 225 226
-	
+	Implied global:
+		ui,
+		$defined,
+		window
+
 	Members 
 		active, addEvent, bind, blur, cascade, clean, client, close, 
 	    closeAll, controller, destroy, each, element, fireEvent, focus, 
@@ -295,13 +293,12 @@ ui.controller.window = {
 		var z = 0;
 		var s = '';
 		this.list.each(function(win,i) {
-			c = win.element.getCoordinates();
+			var c = win.element.getCoordinates();
 			if ( c.left <= x && x <= c.left + c.width && c.top <= y && y < c.top + c.height) {
 				if ( win.element.getStyle('z-index') > z ) {
 					z = win.element.getStyle('z-index');
 					s = win;
 				}
-				console.log('focus'.s);
 				s.focus();
 			}
 		});

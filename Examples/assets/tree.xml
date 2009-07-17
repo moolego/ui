@@ -1,0 +1,50 @@
+<nodes text="MooLego">
+	<node text="Core" open="true">
+		<node text="UI"/>
+		<node text="Canvas"/>
+		<node text="Skin"/>
+	</node>
+	
+	<node text="Element" open="true">
+		<node text="Element"/>
+		<node text="Bubble"/>
+		<node text="Box"/>
+		<node text="Label"/>
+		<node text="ProgressBar"/>
+		<node text="Scrollbar"/>
+	</node>
+	<node text="Form" open="true">
+		<node text="Control"/>
+		<node text="Button"/>
+		<node text="Checkbox"/>
+		<node text="Input"/>
+		<node text="RadioGroup"/>
+		<node text="Select"/>
+		<node text="Slider"/>
+		<node text="Textarea"/>
+		
+	</node>
+	<node text="Menu" open="true">
+		<node text="Context"/>
+		<node text="Menu"/>
+		<node text="Scroller"/>
+		<node text="Toolbar"/>
+	</node>
+	<node text="View" open="true">
+		<node text="View"/>
+		<node text="ListView"/>
+		<node text="PaneView"/>
+		<node text="SplitView"/>
+		<node text="TabView"/>
+			<node text="TabView"/>
+	</node>
+	<node text="Window" open="true">
+		<node text="Window"/>
+		<node text="Dialog"/>
+	</node>
+	<node text="Skin" open="true">
+		<node text="AquaGraphite"/>
+		<node text="AquaBlue"/>
+		<node text="TouchBlue"/>
+	</node>
+</nodes>

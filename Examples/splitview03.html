@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="mootools/more.js"></script>
+		
+	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+	
+	<script type="text/javascript" src="../Source/Core/UI.js"></script>
+	<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
+	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
+	
+	<script type="text/javascript" src="../Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../Source/Element/Scrollbar.js"></script>
+	<script type="text/javascript" src="../Source/Element/Label.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
+
+	<script type="text/javascript" src="../Source/Form/Button.js"></script>
+	
+	<script type="text/javascript" src="../Source/View/View.js"></script>
+	<script type="text/javascript" src="../Source/View/SplitView.js"></script>
+	<script type="text/javascript" src="../Source/View/ListView.js"></script>
+	
+	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../Skins/TouchBlue.js"></script>
+	
+	<title>MooLego SplitView - Component Playground</title>
+	
+	<script type="text/javascript">
+		window.addEvent('domready', function() {
+			var splitview = new UI.SplitView({
+				width : 600,
+				height : 400,
+				styles: {
+					margin: '40px'
+				}
+			}).inject(document.body);
+			
+			var listview = new UI.ListView({
+				skin: 'BlueTouch',
+				width : 260,
+				height : 400,
+				styles : {
+					backgroundColor : '#e8e8e8'
+				},
+				url	: 'assets/list.json'
+			}).inject(splitview.main.element);
+		});
+	</script>
+</head>
+
+<body bgcolor="#e8e8e8"></body>
+</html>
