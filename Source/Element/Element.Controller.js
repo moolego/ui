@@ -1,12 +1,12 @@
 /*
 Class: Controller
 	Default element controller.
-	It handle element's z-index as well as group managing and group serialization (usefull for controls values
+	It handle element's z-index as well as group managing and group serialization (usefull for controls values)
 	
-	Implied global: 
-		$empty - 23
-		ui - 7 146
-		window - 133
+	Implied global:
+		ui, 
+		$empty,
+		window
 		
 	Members
 		addEvent, bind, closeMenu, controller, each, element, elements, 

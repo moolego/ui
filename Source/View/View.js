@@ -38,11 +38,8 @@
 		
 		
 	Implied global: 
-		Class - 40
-		Element - 101 124 350
-		Request - 268 295 320
-		Scroller - 189
-		UI - 40 42 169
+		UI,
+		Class,Element,Request,Scroller
 		
 	Members:
 		Element, Extends, HTML, JSON, Scrollbar, View, _setOverflow, 

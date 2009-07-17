@@ -46,15 +46,11 @@
 		(end)
 	
 	
-	Implied global: 
-		$ - 164
-		$empty - 101 102 103 104 105 106 107
-		$merge - 354
-		Class - 53
-		Element - 180 232 382 387
-		UI - 53 55 191 257 285 290 330 356 
-		document - 164, ui 139 140 166 561 565 595 601 655 691 853
-		window - 90 91 96 97 618 676 681
+	Implied global:
+		UI,
+		$,$empty,$merge,
+		Class,Element,Window,
+		document
 	
 	Members:
 		Button, Element, Extends, Label, TabView, Toolbar, View, 
@@ -121,14 +117,14 @@ UI.Window = new Class({
 		
 		// Drag options
 		draggable: true,
-		dragLimitX: [-1000, window.getWidth() + 1000],
-		dragLimitY: [50, window.getHeight() + 1000],
+		dragLimitX: [-1000, Window.getWidth() + 1000],
+		dragLimitY: [50, Window.getHeight() + 1000],
 		dragHandlers: ['head', 'foot'],
 		
 		// Resize options
 		resizable: true,
-		resizeLimitX: [200, window.getWidth()],
-		resizeLimitY: [200, window.getHeight()],
+		resizeLimitX: [200, Window.getWidth()],
+		resizeLimitY: [200, Window.getHeight()],
 		resizeOnDragIfMaximized: false,
 		
 		// Implemented events
@@ -649,7 +645,7 @@ UI.Window = new Class({
 		if(this.maximized) {
 			this.normalize();
 		} else {
-			this.setSize(window.getWidth(),window.getHeight()-this.options.dragLimitY[0]);
+			this.setSize(Window.getWidth(),Window.getHeight()-this.options.dragLimitY[0]);
 			var coord = this.getCoordinates();
 			this.options.top = coord.top;
 			this.options.left = coord.left;
@@ -707,12 +703,12 @@ UI.Window = new Class({
 		if (this.options.top || this.options.right || this.options.bottom || this.options.left) {
 			//right || left
 			var left = (this.options.right && !this.options.left) ? 
-				window.getWidth() - this.options.right - this.options.width : 
+				Window.getWidth() - this.options.right - this.options.width : 
 				this.options.left;
 			
 			//top || bottom
 			var top = (this.options.bottom && !this.options.top) ? 
-				window.getHeight() - this.options.bottom - this.options.height : 
+				Window.getHeight() - this.options.bottom - this.options.height : 
 				this.options.top;
 			
 			return { 

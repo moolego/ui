@@ -5,6 +5,18 @@
 	Extends:
 		<UI.View>
 
+	Implied global: 
+		UI,
+		Class
+		
+	Members:
+		Button, Element, Extends, TabView, View, add, addEvent, 
+	    addEvents, bind, build, buildTabs, component, components, container, 
+	    content, each, element, fireEvent, height, hide, initialize, inject, 
+	    label, length, name, onClick, options, overflow, parent, props, push, 
+	    scrollbar, selected, setActiveTab, setBehavior, setContent, setState, 
+	    setStyle, show, state, tab, tabbar, tabs, type, update, url, view
+
 */
 
 UI.TabView = new Class({
@@ -26,7 +38,7 @@ UI.TabView = new Class({
 	*/
 	
 	initialize: function(options){
-		this.tabs = new Array();
+		this.tabs = [];
 		this.parent(options);
 	},
 	
@@ -53,16 +65,17 @@ UI.TabView = new Class({
 	 */
 	
 	buildTabs: function(){
+		var container = '';
 		if (this.options.container) {
-			var container = this.options.container
+			container = this.options.container;
 		} else {
-			var container = this.element
+			container = this.element;
 		}
 		
 		this.tabbar = new UI.Element(this.props.components.tabbar)
 		.addEvents({
 			onClick : function() {
-				this.element.setStyle('height','21px')			
+				this.element.setStyle('height','21px');		
 			} 
 		})
 		.inject(container);
@@ -91,14 +104,19 @@ UI.TabView = new Class({
 			type: 'tab',
 			label: props.name,
 			onClick: function() { 
-				if (tab == this.tab) return;
+				if (tab == this.tab) {
+					return;
+				}
 			
-				if (props.url) 
-					view.setContent('ajax',props.url);
-				
+				if (props.url) {
+					view.setContent('ajax', props.url);
+				}
+					
 				view.show();
 				
-				if (this.view) this.view.hide();
+				if (this.view) {
+					this.view.hide();
+				}
 				tab.options.state = 'active';
 				
 				if (this.tab) {
@@ -117,7 +135,9 @@ UI.TabView = new Class({
 		
 		
 		
-		if (props.selected) this.selected = tab;
+		if (props.selected) {
+			this.selected = tab;
+		}
 		
 		this.tabs.push(tab);		
 	},

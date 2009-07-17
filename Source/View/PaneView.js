@@ -26,7 +26,23 @@
 	
 	Discussion:
 		Need to make some more cleaning in this class
-*/
+		
+	Implied global: 
+		UI,
+		$empty,
+		Class,Fx
+		
+	Members:
+		Extends, PaneView, Quad, Scroll, Transitions, View, add, 
+	    addEvent, applyTransition, build, className, component, content, 
+	    destroy, direction, duration, each, easeOut, element, erase, float, 
+	    getLast, getSize, height, indexOf, inject, list, next, onTransition, 
+	    options, overflow, pane, parent, previous, properties, push, remove, 
+	    removeAllNext, resize, scrollbar, setBehaviour, setStyle, styles, 
+	    toElement, transition, transitionFx, transitionType, update, wait, 
+	    width, x
+		
+	*/
 
 UI.PaneView = new Class({
 	
@@ -71,7 +87,7 @@ UI.PaneView = new Class({
 	*/
 
  	build: function (){
-		this.list = new Array();
+		this.list = [];
 		this.parent();
 		this.setBehaviour();
 		
@@ -95,7 +111,7 @@ UI.PaneView = new Class({
 
 	*/
 	
-	add: function(pane){
+	add: function(){
 		var pane = new UI.View(this.options.pane)
 		 .inject(this.content);
 		
@@ -121,8 +137,9 @@ UI.PaneView = new Class({
 
 	applyTransition: function(pane){
 		this.pane = pane;
+		
 		if (this.element.getSize().x < this.content.getSize().x) {
-			console.log('apply transition');
+
 			this.transitionFx.toElement(pane);
 		} else {
 			//if (pane.element.getPrevious())

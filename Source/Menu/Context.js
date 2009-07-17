@@ -50,6 +50,21 @@
 			]
 		});
 		(end)
+		
+	Implied global:
+		UI,ui,
+		$,$defined,$empty,
+		Class,Event,	Window, 
+		document
+		
+	Members:
+		Context, Extends, Menu, addContexts, addEvent, bind, body, 
+	    buildMenu, className, client, closeMenu, content, contexts, controller, 
+	    each, element, event, getCoordinates, getElements, getHeight, 
+	    getScrollLeft, getScrollTop, getWidth, height, hide, initialize, inject, 
+	    left, menu, options, parent, removeContexts, removeEvents, rightClick, 
+	    setCanvas, setPosition, setSize, setStyles, show, stop, target, top, 
+	    trigger, type, width, x, y
 */
 
 
@@ -95,16 +110,18 @@ UI.Context = new Class({
 	*/
 	
 	addContexts: function(contexts){
+		var stopEvent;
+		
 		contexts.each(function(context){
 			$(document.body).getElements(context.target).each(function(el){
 				el.addEvent(this.options.trigger, function(e){
-					new Event(e).stop();
+					stopEvent = new Event(e).stop();
 					this.hide(0);
 					this.buildMenu(context.menu);
 					this.show(e);
 				}.bind(this));
 				this.element.addEvent('contextmenu', function(e){
-					new Event(e).stop();
+					stopEvent = new Event(e).stop();
 				});
 			},this);
 		},this);
@@ -146,17 +163,20 @@ UI.Context = new Class({
 	
 	See also:
 		<UI.Menu::setPosition>
+		
 	*/
 	
 	setPosition: function(x,y){
-		if (!$defined(x) || !$defined(y)) return;
+		if (!$defined(x) || !$defined(y)) {
+			return;
+		}
 		
 		var coordinates = this.element.getCoordinates();
 		var top = y+Window.getScrollTop();
 		var left = x+Window.getScrollLeft();
 		
-		if ((x + coordinates.width + 20) > Window.getWidth()) left = left - coordinates.width;
-		if ((y + coordinates.height + 20) > Window.getHeight())	top = top - coordinates.height;
+		if ((x + coordinates.width + 20) > Window.getWidth()) {left =  left - coordinates.width;}
+		if ((y + coordinates.height + 20) > Window.getHeight())	{top =  top - coordinates.height;}
 		
 		this.element.setStyles({
 			'top' : top,

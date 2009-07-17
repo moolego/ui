@@ -21,11 +21,10 @@
 	(end)
 	
 	
-	Implied global: 
-		Class - 24
-		Event - 107 
-		UI - 24 26 53
-	
+	Implied global:
+		UI, 
+		Class,Event 
+
 	Members:
 		Button, Control, Extends, Label, addEvents, bind, build, 
 	    component, components, element, getForm, html, image, inject, label, 

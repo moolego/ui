@@ -14,10 +14,7 @@
 		(end)
 
 	Implied global:
-		$H - 173, 
-		$type - 198, 
-		$unlink - 122 124 127, 
-		Class - 17, Events 19, Options 19, UI 17 61 63 64 66 67 70 71 76 77 79 85 118 121 122 123 124 127
+		$H,$type,$unlink,Class,Events,Options,UI
 	
 	Members:
 		Implements, Skin, component, components, default, defaultSkin, 

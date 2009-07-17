@@ -34,11 +34,10 @@
 		(end)	
 		
 		
-	Implied global: 
-		$H - 155 
-		Class - 37 
-		Request - 117 
-		UI - 37 39 152 157
+	Implied global:
+		UI,
+		$H,
+		Class,Request 
 		
 	Members: 
 		Element, Extends, JSON, ListView, View, addEvent, addItems, 

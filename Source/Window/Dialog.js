@@ -21,12 +21,10 @@
 		Still we need this class? yes
 	
 	Implied global: 
-		$ - 79 
-		Class - 25
-		Element - 68 86 97
-		UI - 25 26 102
-		console - 51 65
-		document - 79
+		UI,
+		$, 
+		Class,Element,
+		document
 	
 	Members 
 		Button, Dialog, Extends, Window, addEvent, backgroundColor, 
@@ -66,7 +64,6 @@ UI.Dialog = new Class({
 	
 	
 	build:function(){
-		console.log('build dialog');
 		this.buildUnderlay();
 		
 		this.parent();
@@ -80,7 +77,6 @@ UI.Dialog = new Class({
 	},
 	
 	buildUnderlay: function() {
-		console.log('buildunderlay');
 		
 		// and that by the skin!		
 		this.underlay = new Element('div',{
