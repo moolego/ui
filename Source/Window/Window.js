@@ -85,6 +85,8 @@ UI.Window = new Class({
 	Extends: UI.Element,
 	
 	options: {
+
+		
 		component: 'window',
 		
 		title: 'Window',
@@ -127,7 +129,6 @@ UI.Window = new Class({
 		resizeLimitY: [200, Window.getHeight()],
 		resizeOnDragIfMaximized: false,
 		
-		// Implemented events
 		onMinimize: $empty,
 		onMaximize: $empty,
 		onRestore: $empty,
@@ -135,6 +136,8 @@ UI.Window = new Class({
 		onBlur: $empty,
 		onFocus: $empty,
 		onClose: $empty
+		
+		
 	},
 
 	/* 
@@ -259,9 +262,7 @@ UI.Window = new Class({
 		if (!this.options.controls) { return; }
 		
 		var controllist = [];
-		this.controls = new Element('div',this.props.components.controls)
-
-		.addEvents({
+		this.controls = new Element('div',this.props.components.controls).addEvents({
 			mouseenter: function() {
 				this.setStyle('opacity','1');
 				controllist.each(function(button) {

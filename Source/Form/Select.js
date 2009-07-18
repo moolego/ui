@@ -42,6 +42,19 @@
 			}]
 		}).inject(this.content);
 		(end)
+	
+	Implied global: 
+		UI, ui
+		Class, Event
+		document
+		
+	Members Control, Extends, Label, Menu, Select, action, addEvents, 
+	    addMenuActions, bind, body, build, closeMenu, component, components, 
+	    content, controller, each, element, getFirst, getSize, getStyle, html, 
+	    inject, input, label, list, menu, mousedown, options, parent, position, 
+	    props, scrollToSelected, set, setBehavior, setInput, setStyle, show, 
+	    skin, stop, styles, target, text, toInt, value, width, x
+		
 */
 
 
@@ -122,7 +135,7 @@ UI.Select = new Class({
 			mousedown: function(e){
 				ui.controller.element.closeMenu();
 				this.menu.show(this.element);
-				new Event(e).stop();
+				var ev = new Event(e).stop();
 			}.bind(this)
 		});
 	},
@@ -148,7 +161,7 @@ UI.Select = new Class({
 			} else if (el.menu) {
 				this.addMenuActions(el.menu);
 			}
-		}, this)
+		}, this);
 	}
 	
 });

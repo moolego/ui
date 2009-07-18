@@ -10,12 +10,21 @@
 	
 	Returns:
 		Canvas object.
+		
+	Implied global: 
+		$defined 
+		Class, Element, UI
+		
+	Members: 
+		Control, Element, Extends, addEvents, bind, blur, build, 
+	    components, control, element, fireEvent, focus, get, getForm, getParent, 
+	    getProperty, getSize, height, inject, input, label, name, options, 
+	    parent, props, set, setBehavior, setInput, setSize, type, value, width, 
+	    x, y
 	
 	Discussion:
 	
 */
-
-
 
 UI.Control = new Class({
 	
@@ -52,13 +61,15 @@ UI.Control = new Class({
 	*/
 	
 	setSize: function(width,height, state){
+		var twidth,theight;
+		
 		if (this.label) {
-			var twidth = width || this.options.width || this.props.width || this.label.getSize().x;
-			var theight = height || this.options.height || this.props.height || this.label.getSize().y;
+			twidth = width || this.options.width || this.props.width || this.label.getSize().x;
+			theight = height || this.options.height || this.props.height || this.label.getSize().y;
 		} else if (this.input && this.input.getProperty('type') != 'hidden') {
-			var twidth = width || this.options.width || this.props.width || this.input.getSize().x;
-			var theight = height || this.options.height || this.props.height || this.input.getSize().y;
-		};
+			twidth = width || this.options.width || this.props.width || this.input.getSize().x;
+			theight = height || this.options.height || this.props.height || this.input.getSize().y;
+		}
 		
 		this.parent(twidth, theight, state);
 	},
@@ -81,8 +92,8 @@ UI.Control = new Class({
 	*/
 	
 	setInput: function(type, tag){
-		if (!$defined(tag)) tag	= 'input';
-		if (!$defined(type)) type = 'hidden';
+		if (!$defined(tag)) { tag	= 'input'; }
+		if (!$defined(type)) { type = 'hidden'; }
 
 		if (type) {
 			this.input = new Element(tag, {
@@ -164,7 +175,9 @@ UI.Control = new Class({
 
 	set : function(property, value){
 		if (property == 'html') {
-			if (this.label) this.label.set(property, value);
+			if (this.label) {
+				this.label.set(property, value);
+			}
 			this.setSize();
 		} else {
 			this.element.set(property, value);

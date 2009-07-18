@@ -205,7 +205,6 @@ UI.Element = new Class({
 		if (this.options.resizable) { this.buildResizer(); }
 	},
 
-
 	/*
 	Function: buildResizeHandler
 		private function
@@ -362,7 +361,6 @@ UI.Element = new Class({
 		return this;
 	},
 
-
 	/* 
 	Method: setLocation
 		Set the element location
@@ -384,7 +382,6 @@ UI.Element = new Class({
 		
 	Discussion:
 		
-	
 	*/
 	
 	setLocation: function(left,top,morph){
@@ -399,7 +396,6 @@ UI.Element = new Class({
 		return this;
 	},
 
-	
 	/*
     Function: setBehavior
     	private function
@@ -446,7 +442,6 @@ UI.Element = new Class({
 		});
 	},
 
-
 	/*
 		Function: enableDrag
 			Add draggable capabilities for the element.
@@ -489,7 +484,6 @@ UI.Element = new Class({
 		
 		return this;
 	},
-	
 	
 	/*
 	    Function: enableResize
@@ -542,7 +536,6 @@ UI.Element = new Class({
 		return location;
 	},
 
-
 	/*
 	Function: adaptLocation
 		Adapt element location if it is dragged out of its boundaries
@@ -550,7 +543,7 @@ UI.Element = new Class({
 	Return:
 		(void)
 	*/
-	
+
 	adaptLocation : function(){
 		var location = {};
 		var needed = false;
@@ -614,7 +607,6 @@ UI.Element = new Class({
 		
 		return this;
 	},
-
 
 /*
 	Native Mootools Element:
@@ -772,7 +764,7 @@ UI.Element = new Class({
 	getSize: function() {
 		return this.element.getSize();	
 	},
-	
+
 	/*
     Function: set
     	See mootools getCoordinates documentation
@@ -780,13 +772,11 @@ UI.Element = new Class({
     Return:
     	this.element coordinates
 	*/
-	
+
 	getCoordinates: function(ref) {
 		return this.element.getCoordinates(ref);
 	},
-	
-	
-		
+
 	/*
     Function: set
     	See mootools getCoordinates documentation
@@ -806,7 +796,6 @@ UI.Element = new Class({
 		});
 	},
 
-	
 	/*
     Function: destroy
     	See mootools getCoordinates documentation
@@ -875,7 +864,7 @@ Element.implement({
 	
 	/*
     Function: enableSelect
-    	Enable the ability to select element content text
+    	Enable the ability to select element content
     
     Return:
     	this
@@ -893,7 +882,7 @@ Element.implement({
 			else {
 				this.onmousedown = function(){
 					return true;
-				}; //finaly the others (opera, not sure for safari)
+				}; // finaly the others (opera, perfectible on safari and chrome)
 			}
 		}
 		
@@ -902,3 +891,4 @@ Element.implement({
 		return this;
 	}
 });
+
