@@ -19,6 +19,21 @@
 				label : 'This bubble says Hello world!'
 			});
 		(end)
+		
+	Implied global: 
+		$, 
+		Class, Fx, UI, 
+		document, window
+		
+	Members 
+		Bubble, Element, Extends, Label, Morph, Tween, addEvents, bind, 
+	    body, build, click, component, components, control, destroy, element, 
+	    fade, fx, getCoordinates, getLocation, getSize, getStyle, height, hide, 
+	    html, image, initialize, inject, label, left, onComplete, onImageLoad, 
+	    onStart, options, parent, posFx, props, removeEvent, reposition, 
+	    resetPosition, resize, right, setBehavior, setLocation, setSize, 
+	    setStyles, setTipsPosition, show, start, styles, target, top, type, 
+	    wait, width, x, y, zIndex
 */
 
 UI.Bubble = new Class({
@@ -137,7 +152,7 @@ UI.Bubble = new Class({
 		
 		
 		var coord = this.getLocation();
-		console.log('setLocation: ',coord);
+		//console.log('setLocation: ',coord);
 		this.element.setStyles({
 			left: coord.left,
 			top: coord.top
@@ -174,21 +189,21 @@ UI.Bubble = new Class({
 	getLocation: function(){
 		var bubbleCoord = this.element.getCoordinates();
 		var coord = this.options.target.getCoordinates();
-		console.log(coord);
+		var left,top;
 		if (this.options.type == 'default') {
-			var left = coord.right - 40;
-			var top = coord.top - bubbleCoord.height - 10;
+			left = coord.right - 40;
+			top = coord.top - bubbleCoord.height - 10;
 		}
 		else 
 			if (this.options.type == 'bottom') {
-				var left = coord.right - 40;
-				var top = coord.top + coord.height + 10;
-			};
+				left = coord.right - 40;
+				top = coord.top + coord.height + 10;
+			}
 		
 		return {
 			top: top,
 			left: left
-		}
+		};
 	},
 	
 	/* 
@@ -205,7 +220,7 @@ UI.Bubble = new Class({
 		if (this.label) {
 			width = width || this.options.width || this.props.width || this.label.getSize().x;
 			height = height || this.options.height || this.props.height || this.label.getSize().y;
-		};
+		}
 		this.parent(width, height);
 	},
 	

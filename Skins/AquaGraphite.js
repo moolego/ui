@@ -17,7 +17,8 @@ UI.props.AquaGraphite = {
 		
 			fontFamily: 'Helvetica, Arial, sans-serif',
 			fontSize: '12px',
-			position: 'relative'
+			position: 'relative',
+			color: '#000'
 		},
 		fx: {},
 		
@@ -93,7 +94,7 @@ UI.props.AquaGraphite = {
 					reflect: {
 						offset: ['0px', '3px', '65%'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.8, .3],
+						opacity: [0.8, 0.3],
 						radius: [7, 7, 4, 4]
 					},
 					light: {
@@ -239,7 +240,7 @@ UI.props.AquaGraphite = {
 					emboss: {
 						offset: '0px',
 						color: '#fff',
-						opacity: .5,
+						opacity: 0.5,
 						radius: 5
 					},
 					border: {
@@ -315,7 +316,7 @@ UI.props.AquaGraphite = {
 						offset: ['auto', 1, 0],
 						size: [14, 14],
 						color: '#FFF',
-						opacity: .4
+						opacity: 0.4
 					},
 					background: {
 						gradient: {
@@ -328,7 +329,7 @@ UI.props.AquaGraphite = {
 						offset: [2, 2.5],
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [.2, .8]
+							opacity: [0.2, 0.8]
 						}
 					},
 					reflect: {
@@ -336,7 +337,7 @@ UI.props.AquaGraphite = {
 						offset: [1.5, 6.5],
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [1, .5]
+							opacity: [1, 0.5]
 						}
 					},
 					cache: {
@@ -407,7 +408,7 @@ UI.props.AquaGraphite = {
 					emboss: {
 						offset: [3, 3],
 						color: '#FFF',
-						opacity: .27
+						opacity: 0.27
 					},
 					background: {
 						offset: [0, 1],
@@ -423,7 +424,7 @@ UI.props.AquaGraphite = {
 						size: 2,
 						offset: [0, 1],
 						color: ['#fff', '#fff'],
-						opacity: [1, .5]
+						opacity: [1, 0.5]
 					}
 				}
 			},
@@ -483,14 +484,14 @@ UI.props.AquaGraphite = {
 					reflect: {
 						offset: ['0px', '3px', '65%'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.8, .3],
+						opacity: [0.8, 0.3],
 						radius: 2
 					},
 					light: {
 						position: 'absolute',
 						offset: ['65%', '5px', '2px'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.1, .7],
+						opacity: [0.1, 0.7],
 						radius: [2, 2, 3, 3]
 					}
 				}
@@ -507,13 +508,13 @@ UI.props.AquaGraphite = {
 			'default': {
 			
 				//width : 100,
-				height: 17,
+				height: 35,
 				/* css properties */
 				
 				components: {
 					label: {
 						styles: {
-							padding: '0px 12px 0px 12px',
+							padding: '4px 12px 4px 12px',
 							'float': 'left',
 							margin: '0',
 							fontWeight: 'bold',
@@ -650,15 +651,13 @@ UI.props.AquaGraphite = {
 						styles: {
 							padding: '4px 4px 3px',
 							border: 'none',
-							
 							zIndex: 1,
 							position: 'absolute',
 							top: 0,
 							left: 0,
 							background: 'transparent',
 							resize: 'none',
-							whiteSpace: 'nowrap',
-							border: 'none'
+							whiteSpace: 'nowrap'
 						}
 					}
 				},
@@ -737,7 +736,7 @@ UI.props.AquaGraphite = {
 						position: 'abolute',
 						offset: [0, 0, 0, 0],
 						color: ['#000', '#000'],
-						opacity: [.6, 0]
+						opacity: [0.6, 0]
 					},
 					border: {
 						radius: 11,
@@ -844,7 +843,7 @@ UI.props.AquaGraphite = {
 						size: [16, 15],
 						offset: [2, 0, 0, 0],
 						color: ['#000', '#000'],
-						opacity: [0.05, .1],
+						opacity: [0.05, 0.1],
 						radius: [5, 5, 5, 5]
 					},
 					
@@ -867,7 +866,7 @@ UI.props.AquaGraphite = {
 						size: [10, 5],
 						offset: [3, 3, '60%'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.8, .5],
+						opacity: [0.8, 0.5],
 						radius: 0
 					},
 					reflectdown: {
@@ -875,7 +874,7 @@ UI.props.AquaGraphite = {
 						size: [10, 6],
 						offset: [9, 3, 2],
 						color: ['#FFF', '#FFF'],
-						opacity: [.1, 1],
+						opacity: [0.1, 1],
 						radius: 0
 					},
 					light: {
@@ -883,7 +882,7 @@ UI.props.AquaGraphite = {
 						size: [14, 10],
 						offset: [4, 1, 4],
 						color: ['#FFF', '#FFF'],
-						opacity: [0.05, .5],
+						opacity: [0.05, 0.5],
 						radius: 0
 					}
 				}
@@ -939,7 +938,7 @@ UI.props.AquaGraphite = {
 					littleshadow: {
 						offset: [1, 0, 0, 0],
 						color: ['#000', '#000'],
-						opacity: .1
+						opacity: 0.1
 					},
 					background: {
 						offset: [0, 1, 1, 1],
@@ -968,7 +967,7 @@ UI.props.AquaGraphite = {
 					dot: {
 						offset: [5, 5.5],
 						size: 5,
-						opacity: .7
+						opacity: 0.7
 					},
 					background: {
 						offset: [0, 1, 1, 1],
@@ -1013,7 +1012,7 @@ UI.props.AquaGraphite = {
 					},
 					littleshadow: {
 						offset: ['0px', '0px', '0px', '0px'],
-						opacity: [.1, .1],
+						opacity: [0.1, 0.1],
 						color: ['#000', '#000'],
 						radius: [8, 8, 8, 8],
 						position: 'relative'
@@ -1046,7 +1045,7 @@ UI.props.AquaGraphite = {
 					reflect: {
 						color: ['#FFF', '#FFF'],
 						size: ['auto', '36%'],
-						opacity: [.5, .3],
+						opacity: [0.5, 0.3],
 						offset: [1, 3, 'auto', 3],
 						radius: [3, 3, 4, 4]
 					},
@@ -1138,7 +1137,7 @@ UI.props.AquaGraphite = {
 						size: [17, 11],
 						offset: 0,
 						color: '#000',
-						opacity: .1,
+						opacity: 0.1,
 						radius: [4, 4, 0, 0]
 					},
 					border: {
@@ -1167,7 +1166,7 @@ UI.props.AquaGraphite = {
 						size: [11, 10],
 						offset: [2, 3, 'auto'],
 						color: ['#FFF', '#8392a1', '#FFF'],
-						opacity: [.7, .2, .1],
+						opacity: [0.7, 0.2, 0.1],
 						radius: 0
 					},
 					reflectdown: {
@@ -1176,8 +1175,8 @@ UI.props.AquaGraphite = {
 						offset: [2, 4, 'auto'],
 						gradient: {
 							color: ['#FFF', '#fff', '#FFF'],
-							opacity: [.8, 0, .2],
-							stop: [0, .9, 1]
+							opacity: [0.8, 0, 0.2],
+							stop: [0, 0.9, 1]
 						},
 						radius: 0
 					},
@@ -1187,7 +1186,7 @@ UI.props.AquaGraphite = {
 						size: [17, 9],
 						offset: [11, 0, 0],
 						color: ['#000', '#000'],
-						opacity: .1
+						opacity: 0.1
 					},
 					borderarrow: {
 						shape: 'triangle',
@@ -1212,7 +1211,7 @@ UI.props.AquaGraphite = {
 						size: [11, 6],
 						offset: [11, 3, 2],
 						color: ['#fff', '#fff'],
-						opacity: [1, .4]
+						opacity: [1, 0.4]
 					}
 				}
 			},
@@ -1223,8 +1222,7 @@ UI.props.AquaGraphite = {
 						color: ['#8392a1', '#8392a1'],
 						offset: [2, 2, 'auto', 2],
 						radius: [2, 2, 0, 0],
-						opacity: 1,
-						opacity: [1, .9]
+						opacity: [1, 0.9]
 					}
 				}
 			}
@@ -1286,7 +1284,24 @@ UI.props.AquaGraphite = {
 				}
 			}
 		},
-		
+		MignifiedTitle: {
+			'default': {
+				/* css properties */
+				styles: {
+					overflow: 'hidden',
+					cursor: 'default',
+					color: '#fff',
+					display: 'block',
+					padding: '4px 20px 4px 20px',
+					textAlign: 'center',
+					textTransform: 'capitalize',
+					fontWeight: 'normal',
+					fontSize: '12px',
+					lineHeight: '17px',
+					height: '17px'
+				}
+			}
+		},		
 		transparentTitle: {
 			'default': {
 				/* css properties */
@@ -1376,7 +1391,7 @@ UI.props.AquaGraphite = {
 				layers: {
 					'default': {
 						radius: 0,
-						opacity: .98
+						opacity: 0.98
 					},
 					shadow: {
 						size: 10,
@@ -1386,7 +1401,7 @@ UI.props.AquaGraphite = {
 					background: {
 						color: '#000',
 						offset: 0,
-						opacity: .27
+						opacity: 0.27
 					},
 					main: {}
 				}
@@ -1593,50 +1608,6 @@ UI.props.AquaGraphite = {
 	},
 	
 	splitview: {
-		'default': {
-			'default': {
-				styles: {
-					'float': 'left',
-					overflow: 'hidden',
-					height: '600px'
-				},
-				components: {
-					splitter: {
-						styles: {
-							position: 'abolute',
-							
-							height: '100%',
-							width: '15px',
-							left: '120px',
-							zIndex: '10',
-							opacity: '.45',
-							cursor: 'col-resize',
-							backgroundColor: '#000'
-						
-						}
-					}
-				},
-				views: {
-					side: {
-						width: 120,
-						overflow: 'hidden',
-						styles: {
-							'float': 'left',
-							overflow: 'hidden',
-							backgroundColor: '#d6dde5',
-							borderRight: '1px solid #8b8b8b'
-						}
-					},
-					main: {
-						overflow: 'hidden',
-						styles: {
-							'float': 'left',
-							overflow: 'hidden'
-						}
-					}
-				}
-			}
-		},
 		'default': {
 			'default': {
 				styles: {
@@ -1883,7 +1854,7 @@ UI.props.AquaGraphite = {
 						offset: [1, 0, 1, 0],
 						color: '#000',
 						radius: 9,
-						opacity: .3
+						opacity: 0.3
 					},
 					main: {
 						gradient: {
@@ -1895,7 +1866,7 @@ UI.props.AquaGraphite = {
 					light: {
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [.1, .9],
+							opacity: [0.1, 0.9],
 							angle: 0
 						},
 						radius: 6
@@ -1903,7 +1874,7 @@ UI.props.AquaGraphite = {
 					reflect: {
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [.8, .5],
+							opacity: [0.8, 0.5],
 							angle: 0
 						},
 						offset: [4, '65%', 3, 0],
@@ -1944,7 +1915,9 @@ UI.props.AquaGraphite = {
 							'float': 'left',
 							padding: '1px 3px 1px',
 							margin: '1px 0px 0px 1px',
-							height: 18
+							height: 18,
+							opacity: 1,
+							zIndex:10
 						}
 					},
 					control: {
@@ -2025,12 +1998,12 @@ UI.props.AquaGraphite = {
 					shadow: {
 						size: 16,
 						offsetY: 8,
-						opacity: .5
+						opacity: 0.5
 					},
 					background: {
 						offset: 0,
 						color: '#000',
-						opacity: .2,
+						opacity: 0.2,
 						radius: 5
 					},
 					underlay: {
@@ -2076,7 +2049,7 @@ UI.props.AquaGraphite = {
 					shadow: {
 						size: 5,
 						offsetY: 2,
-						opacity: .52
+						opacity: 0.52
 					},
 					background: {
 						opacity: 0.17
@@ -2119,18 +2092,24 @@ UI.props.AquaGraphite = {
 			},
 			minimized: {
 				width: 160,
-				height: 22,
+				height: 32,
 				styles: {
 					width: '160px',
-					height: '22px'
+					height: '32px',
 				
 				},
+				components: {
+					title: {
+						type: 'MignifiedTitle',
+						emboss: true
+					},
+				},
 				layers: {
-					reorder: ['shadow', 'background', 'head'],
+					reorder: ['background', 'head'],
 					shadow: {
-						size: 3,
+						size: 0,
 						offsetY: 0,
-						opacity: .72
+						opacity: 0.72
 					},
 					head: {
 						position: 'absolute',
@@ -2198,13 +2177,13 @@ UI.props.AquaGraphite = {
 					background: {
 						offset: 0,
 						color: '#000',
-						opacity: .7,
+						opacity: 0.7,
 						radius: 7
 					},
 					head: {
 						color: '#fff',
 						offset: [1, 1, 'auto'],
-						opacity: .1,
+						opacity: 0.1,
 						radius: [5, 5, 0, 0],
 						size: ['auto', 18]
 					},
@@ -2212,7 +2191,7 @@ UI.props.AquaGraphite = {
 						color: '#fff',
 						offset: [0, 0, 'auto'],
 						size: ['auto', 9],
-						opacity: .05,
+						opacity: 0.05,
 						radius: [5, 5, 0, 0]
 					}
 				}
@@ -2332,12 +2311,12 @@ UI.props.AquaGraphite = {
 					shadow: {
 						size: 8,
 						offsetY: 2,
-						opacity: .5
+						opacity: 0.5
 					},
 					background: {
 						offset: 0,
 						color: '#000',
-						opacity: .2,
+						opacity: 0.2,
 						radius: 0
 					},
 					underlay: {
@@ -2383,7 +2362,7 @@ UI.props.AquaGraphite = {
 					shadow: {
 						size: 5,
 						offsetY: 2,
-						opacity: .52
+						opacity: 0.52
 					},
 					background: {
 						opacity: 0.17
@@ -2437,7 +2416,7 @@ UI.props.AquaGraphite = {
 					shadow: {
 						size: 3,
 						offsetY: 0,
-						opacity: .72
+						opacity: 0.72
 					},
 					head: {
 						position: 'absolute',
@@ -2485,7 +2464,7 @@ UI.props.AquaGraphite = {
 					emboss: {
 						offset: ['1px', '1px', '0px', '1px'],
 						color: '#FFF',
-						opacity: .4
+						opacity: 0.4
 					},
 					background: {
 						offset: ['0px', '1px', '1px', '1px'],
@@ -2498,7 +2477,7 @@ UI.props.AquaGraphite = {
 						offset: [2, 2.5],
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [.2, .8]
+							opacity: [0.2, 0.8]
 						}
 					},
 					reflect: {
@@ -2506,7 +2485,7 @@ UI.props.AquaGraphite = {
 						offset: [1.5, 6.5],
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [1, .5]
+							opacity: [1, 0.5]
 						}
 					},
 					cache: {
@@ -2621,7 +2600,7 @@ UI.props.AquaGraphite = {
 					emboss: {
 						offset: ['1px', '1px', '0px', '1px'],
 						color: '#FFF',
-						opacity: .4
+						opacity: 0.4
 					},
 					background: {
 						offset: ['0px', '1px', '1px', '1px'],
@@ -2634,7 +2613,7 @@ UI.props.AquaGraphite = {
 						offset: [1, 2],
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [.2, .8]
+							opacity: [0.2, 0.8]
 						}
 					},
 					reflect: {
@@ -2642,7 +2621,7 @@ UI.props.AquaGraphite = {
 						offset: [1, 5.5],
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [1, .5]
+							opacity: [1, 0.5]
 						}
 					},
 					cache: {
@@ -2652,7 +2631,7 @@ UI.props.AquaGraphite = {
 						offset: [1, 5],
 						
 						color: '#545861',
-						opacity: .81
+						opacity: 0.81
 					}
 				}
 			}
@@ -2755,7 +2734,7 @@ UI.props.AquaGraphite = {
 						size: [13, 13],
 						offset: [0, 1],
 						color: '#fff',
-						opacity: .7
+						opacity: 0.7
 					}
 				}
 			}
@@ -2770,7 +2749,7 @@ UI.props.AquaGraphite = {
 						width: 1.5,
 						color: '#000',
 						offset: [3, 4],
-						opacity: .8,
+						opacity: 0.8,
 						size: [7, 7]
 					},
 					line2: {
@@ -2779,7 +2758,7 @@ UI.props.AquaGraphite = {
 						width: 1.5,
 						color: '#000',
 						offset: [3, 4],
-						opacity: .8,
+						opacity: 0.8,
 						size: [7, 7]
 					}
 				}
@@ -2795,7 +2774,7 @@ UI.props.AquaGraphite = {
 						width: 1.5,
 						color: '#000',
 						offset: [3.5, 4.5],
-						opacity: .8,
+						opacity: 0.8,
 						size: [6, 6],
 						rotation: 45
 					}
@@ -2857,7 +2836,7 @@ UI.props.AquaGraphite = {
 					'default': {
 						position: 'absolute',
 						shape: 'lineUp',
-						opacity: .05,
+						opacity: 0.05,
 						width: 1,
 						color: '#000'
 					},
@@ -2927,7 +2906,7 @@ UI.props.AquaGraphite = {
 					reflect: {
 						color: ['#fff', '#fff'],
 						offset: [1, 2, '35%'],
-						opacity: [.1, 0],
+						opacity: [0.1, 0],
 						radius: [5, 5, 0, 0]
 					}
 				}
@@ -2990,7 +2969,7 @@ UI.props.AquaGraphite = {
 		tabbar: {
 			'default': {
 			
-				height: 21,
+				height: 32,
 				width: 1000,
 				
 				/* layers properties */
@@ -2998,7 +2977,7 @@ UI.props.AquaGraphite = {
 					position: 'relative',
 					display: 'block',
 					fontSize: '.7em',
-					height: '24px',
+					height: '32px',
 					width: '100%',
 					padding: '0',
 					margin: '0',
@@ -3074,7 +3053,7 @@ UI.props.AquaGraphite = {
 						color: '#000',
 						radius: 5,
 						offset: 0,
-						opacity: .8
+						opacity: 0.8
 					},
 					background: {
 						offset: [0, 0, 8],
@@ -3153,7 +3132,7 @@ UI.props.AquaGraphite = {
 						offset: 2,
 						gradient: {
 							color: ['#f7f6f6', '#e7e5e5'],
-							opacity: .8
+							opacity: 0.8
 						},
 						radius: 8
 					}
@@ -3183,4 +3162,4 @@ UI.props.AquaGraphite = {
 			}
 		}
 	}
-}
+};

@@ -103,10 +103,10 @@
 				ui.controller.window.list.each(function(win){
 					win.element.style.zIndex = zIndex++;
 						
-					var ratio = i/length;
+					var ratio = i/length*2;
 					
-					offset[0] = Math.cos(ratio*2*Math.PI);
-					offset[1] = Math.sin(ratio*2*Math.PI);
+					offset[0] = Math.cos(ratio*Math.PI);
+					offset[1] = Math.sin(ratio*Math.PI);
 					
 					var left = center[0] + offset[0] * radius;
 					var top = center[1] + offset[1] * radius;

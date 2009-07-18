@@ -31,6 +31,19 @@
 				selected	: true
 			}).inject(document.body);
 		(end)
+	
+	Implied global: 
+		$merge, 
+		Class, Element, UI
+	
+	Members:
+		Canvas, Control, Extends, Label, RadiosGroup, addEvent, 
+	    addEvents, addRadioAction, bind, canvas, class, click, component, 
+	    control, display, draw, element, for, height, html, initialize, inject, 
+	    input, label, layers, length, name, newRadio, options, parent, position, 
+	    props, push, radios, retrieve, selected, selectedRadio, setCanvas, 
+	    setInput, setSize, setState, setStyle, skin, store, styles, value, 
+	    width, x, y, zIndex
 		
 	Discussion:
 		Should use UI.Controller group instead of a radiogroup, then create a UI.Radio class
@@ -142,7 +155,9 @@ UI.RadiosGroup = new Class({
 	addRadioAction: function(radio){
 		radio.addEvents({
 			'click': function(){
-				if (this.selectedRadio) this.setState(this.selectedRadio, 'default');
+				if (this.selectedRadio) {
+					this.setState(this.selectedRadio, 'default');
+				}
 				this.setState(radio, 'selected');
 				this.selectedRadio = radio;
 				this.input.value = radio.retrieve('value');
@@ -164,8 +179,9 @@ UI.RadiosGroup = new Class({
 	*/
 	
 	setCanvas: function(radio){
-		if (radio.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && this.props.layers.length == 0))
+		if (radio.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && this.props.layers.length === 0)) {
 			return false;
+		}
 			
 		radio.canvas = new UI.Canvas({
 			props: this.props,

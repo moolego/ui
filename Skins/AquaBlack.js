@@ -77,7 +77,7 @@ UI.props.AquaBlack = {
 						offset: ['0px', '0px', '0px', '0px'],
 						color: ['#000', '#000'],
 						radius: 12,
-						opacity: .1
+						opacity: 0.1
 					},
 					background: {
 						offset: ['0px', '1px', '1px', '1px'],
@@ -92,7 +92,7 @@ UI.props.AquaBlack = {
 					reflect: {
 						offset: ['0px', '3px', '65%'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.8, .3],
+						opacity: [0.8, 0.3],
 						radius: [7, 7, 4, 4]
 					},
 					light: {
@@ -212,7 +212,7 @@ UI.props.AquaBlack = {
 					emboss: {
 						offset: '0px',
 						color: '#fff',
-						opacity: .5,
+						opacity: 0.5,
 						radius: 5
 					},
 					border: {
@@ -288,7 +288,7 @@ UI.props.AquaBlack = {
 						offset: ['auto', 1, 0],
 						size: [14, 14],
 						color: '#FFF',
-						opacity: .4
+						opacity: 0.4
 					},
 					background: {
 						gradient: {
@@ -301,7 +301,7 @@ UI.props.AquaBlack = {
 						offset: [2, 2.5],
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [.2, .8]
+							opacity: [0.2, 0.8]
 						}
 					},
 					reflect: {
@@ -309,7 +309,7 @@ UI.props.AquaBlack = {
 						offset: [1.5, 6.5],
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [1, .5]
+							opacity: [1, 0.5]
 						}
 					},
 					cache: {
@@ -380,7 +380,7 @@ UI.props.AquaBlack = {
 					emboss: {
 						offset: [3, 3],
 						color: '#FFF',
-						opacity: .27
+						opacity: 0.27
 					},
 					background: {
 						offset: [0, 1],
@@ -396,7 +396,7 @@ UI.props.AquaBlack = {
 						size: 2,
 						offset: [0, 1],
 						color: ['#fff', '#fff'],
-						opacity: [1, .5]
+						opacity: [1, 0.5]
 					}
 				}
 			},
@@ -456,14 +456,14 @@ UI.props.AquaBlack = {
 					reflect: {
 						offset: ['0px', '3px', '65%'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.8, .3],
+						opacity: [0.8, 0.3],
 						radius: 2
 					},
 					light: {
 						position: 'absolute',
 						offset: ['65%', '5px', '2px'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.1, .7],
+						opacity: [0.1, 0.7],
 						radius: [2, 2, 3, 3]
 					}
 				}
@@ -707,7 +707,7 @@ UI.props.AquaBlack = {
 						position: 'abolute',
 						offset: [0, 0, 0, 0],
 						color: ['#000', '#000'],
-						opacity: [.6, 0]
+						opacity: [0.6, 0]
 					},
 					border: {
 						radius: 11,
@@ -814,7 +814,7 @@ UI.props.AquaBlack = {
 						size: [16, 15],
 						offset: [2, 0, 0, 0],
 						color: ['#000', '#000'],
-						opacity: [0.05, .1],
+						opacity: [0.05, 0.1],
 						radius: [5, 5, 5, 5]
 					},
 					
@@ -837,7 +837,7 @@ UI.props.AquaBlack = {
 						size: [10, 5],
 						offset: [3, 3, '60%'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.8, .5],
+						opacity: [0.8, 0.5],
 						radius: 0
 					},
 					reflectdown: {
@@ -845,7 +845,7 @@ UI.props.AquaBlack = {
 						size: [10, 6],
 						offset: [9, 3, 2],
 						color: ['#FFF', '#FFF'],
-						opacity: [.1, 1],
+						opacity: [0.1, 1],
 						radius: 0
 					},
 					light: {
@@ -853,7 +853,7 @@ UI.props.AquaBlack = {
 						size: [14, 10],
 						offset: [4, 1, 4],
 						color: ['#FFF', '#FFF'],
-						opacity: [0.05, .5],
+						opacity: [0.05, 0.5],
 						radius: 0
 					}
 				}
@@ -909,7 +909,7 @@ UI.props.AquaBlack = {
 					littleshadow: {
 						offset: [1, 0, 0, 0],
 						color: ['#000', '#000'],
-						opacity: .1
+						opacity: 0.1
 					},
 					background: {
 						offset: [0, 1, 1, 1],
@@ -938,7 +938,7 @@ UI.props.AquaBlack = {
 					dot: {
 						offset: [5, 5.5],
 						size: 5,
-						opacity: .7
+						opacity: 0.7
 					},
 					background: {
 						offset: [0, 1, 1, 1],
@@ -984,14 +984,14 @@ UI.props.AquaBlack = {
 					},
 					littleshadow: {
 						offset: ['0px', '0px', '0px', '0px'],
-						opacity: [.1, .1],
+						opacity: [0.1, 0.1],
 						color: ['#000', '#000'],
 						radius: [8, 8, 8, 8],
 						position: 'relative'
 					},
 					background: {
 						offset: ['0px', '1px', '1px', '1px'],
-						opacity: [.8, .8],
+						opacity: [0.8, 0.8],
 						color: ['#000', '#000'],
 						radius: [5, 5, 5, 5],
 						position: 'relative'
@@ -1052,14 +1052,14 @@ UI.props.AquaBlack = {
 						position: 'absolute',
 						offset: ['1px', '1px', '23px'],
 						color: ['#000', '#000'],
-						opacity: [.2, 0],
+						opacity: [0.2, 0],
 						radius: [5, 5, 0, 0]
 					},
 					reflect: {
 						position: 'absolute',
 						offset: ['50%', '1px', '1px'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.05, .3],
+						opacity: [0.05, 0.3],
 						radius: [4, 4, 4, 4]
 					}
 				}
@@ -1105,7 +1105,7 @@ UI.props.AquaBlack = {
 						position: 'absolute',
 						offset: [2, 2, 1, 1],
 						color: ['#000', '#000'],
-						opacity: [.18, .02],
+						opacity: [0.18, 0.02],
 						radius: 4
 					}
 				}
@@ -1248,7 +1248,7 @@ UI.props.AquaBlack = {
 					background: {
 						color: '#000',
 						offset: 0,
-						opacity: .27
+						opacity: 0.27
 					},
 					main: {}
 				}
@@ -1360,7 +1360,7 @@ UI.props.AquaBlack = {
 					overlay: {
 						styles: {
 							backgroundColor: '#000',
-							opacity: .01,
+							opacity: 0.01,
 							position: 'absolute',
 							height: '100%',
 							width: '100%',
@@ -1677,7 +1677,7 @@ UI.props.AquaBlack = {
 						offset: [1, 0, 1, 0],
 						color: '#000',
 						radius: 9,
-						opacity: .3
+						opacity: 0.3
 					},
 					main: {
 						gradient: {
@@ -1801,12 +1801,12 @@ UI.props.AquaBlack = {
 					shadow: {
 						size: 16,
 						offsetY: 8,
-						opacity: .5
+						opacity: 0.5
 					},
 					background: {
 						offset: 0,
 						color: '#000',
-						opacity: .2,
+						opacity: 0.2,
 						radius: 5
 					},
 					underlay: {
@@ -1841,7 +1841,7 @@ UI.props.AquaBlack = {
 					shadow: {
 						size: 8,
 						offsetY: 3,
-						opacity: .22
+						opacity: 0.22
 					},
 					background: {
 						opacity: 0.17
@@ -1865,7 +1865,7 @@ UI.props.AquaBlack = {
 					shadow: {
 						size: 6,
 						offsetY: 3,
-						opacity: .20
+						opacity: 0.20
 					},
 					head: {
 						position: 'absolute',
@@ -1933,13 +1933,13 @@ UI.props.AquaBlack = {
 					background: {
 						offset: 0,
 						color: '#000',
-						opacity: .7,
+						opacity: 0.7,
 						radius: 7
 					},
 					head: {
 						color: '#fff',
 						offset: [1, 1, 'auto'],
-						opacity: .1,
+						opacity: 0.1,
 						radius: [5, 5, 0, 0],
 						size: ['auto', 18]
 					},
@@ -1947,7 +1947,7 @@ UI.props.AquaBlack = {
 						color: '#fff',
 						offset: [0, 0, 'auto'],
 						size: ['auto', 9],
-						opacity: .05,
+						opacity: 0.05,
 						radius: [5, 5, 0, 0]
 					}
 				}
@@ -1992,7 +1992,7 @@ UI.props.AquaBlack = {
 					emboss: {
 						offset: ['1px', '1px', '0px', '1px'],
 						color: '#FFF',
-						opacity: .4
+						opacity: 0.4
 					},
 					background: {
 						offset: ['0px', '1px', '1px', '1px'],
@@ -2005,7 +2005,7 @@ UI.props.AquaBlack = {
 						offset: [2, 2.5],
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [.2, .8]
+							opacity: [0.2, 0.8]
 						}
 					},
 					reflect: {
@@ -2013,7 +2013,7 @@ UI.props.AquaBlack = {
 						offset: [1.5, 6.5],
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [1, .5]
+							opacity: [1, 0.5]
 						}
 					},
 					cache: {
@@ -2123,7 +2123,7 @@ UI.props.AquaBlack = {
 						size: [13, 13],
 						offset: [0, 1],
 						color: '#fff',
-						opacity: .7
+						opacity: 0.7
 					}
 				}
 			}
@@ -2138,7 +2138,7 @@ UI.props.AquaBlack = {
 						width: 1.5,
 						color: '#000',
 						offset: [3, 4],
-						opacity: .8,
+						opacity: 0.8,
 						size: [7, 7]
 					},
 					line2: {
@@ -2147,7 +2147,7 @@ UI.props.AquaBlack = {
 						width: 1.5,
 						color: '#000',
 						offset: [3, 4],
-						opacity: .8,
+						opacity: 0.8,
 						size: [7, 7]
 					}
 				}
@@ -2163,7 +2163,7 @@ UI.props.AquaBlack = {
 						width: 1.5,
 						color: '#000',
 						offset: [3.5, 4.5],
-						opacity: .8,
+						opacity: 0.8,
 						size: [6, 6],
 						rotation: 45
 					}
@@ -2320,7 +2320,7 @@ UI.props.AquaBlack = {
 					background: {
 						offset: '0px',
 						color: '#000',
-						opacity: .20,
+						opacity: 0.20,
 						radius: 0
 					},
 					underlay: {
@@ -2428,13 +2428,13 @@ UI.props.AquaBlack = {
 					background: {
 						offset: 0,
 						color: '#000',
-						opacity: .50,
+						opacity: 0.50,
 						radius: 7
 					},
 					head: {
 						color: '#fff',
 						offset: [1, 1, 'auto'],
-						opacity: .1,
+						opacity: 0.1,
 						radius: [5, 5, 0, 0],
 						size: ['auto', 18]
 					},
@@ -2442,7 +2442,7 @@ UI.props.AquaBlack = {
 						color: '#fff',
 						offset: [0, 0, 'auto'],
 						size: ['auto', 9],
-						opacity: .05,
+						opacity: 0.05,
 						radius: [5, 5, 0, 0]
 					}
 				}
@@ -2482,8 +2482,6 @@ UI.props.AquaBlack = {
 				width: 20,
 				height: 20,
 				styles: {
-					height: '20px',
-					width: '20px',
 					position: 'absolute',
 					right: 0,
 					marginBottom: 0,
@@ -2497,7 +2495,7 @@ UI.props.AquaBlack = {
 					'default': {
 						position: 'absolute',
 						shape: 'lineUp',
-						opacity: .05,
+						opacity: 0.05,
 						width: 1,
 						color: '#000'
 					},
@@ -2567,7 +2565,7 @@ UI.props.AquaBlack = {
 					reflect: {
 						color: ['#fff', '#fff'],
 						offset: [1, 2, '35%'],
-						opacity: [.1, 0],
+						opacity: [0.1, 0],
 						radius: [5, 5, 0, 0]
 					}
 				}
@@ -2713,7 +2711,7 @@ UI.props.AquaBlack = {
 						color: '#000',
 						radius: 5,
 						offset: 0,
-						opacity: .8
+						opacity: 0.8
 					},
 					background: {
 						offset: [0, 0, 8],
@@ -2785,7 +2783,7 @@ UI.props.AquaBlack = {
 						gradient: {
 							color: ['#000', '#333'],
 							angle: 110,
-							opacity: .8
+							opacity: 0.8
 						},
 						
 						radius: 8
@@ -2797,7 +2795,7 @@ UI.props.AquaBlack = {
 						gradient: {
 							color: ['#000', '#fff'],
 							angle: 10,
-							opacity: .8
+							opacity: 0.8
 						},
 						radius: [8, 8, 8, 8]
 					}
@@ -2838,4 +2836,4 @@ UI.props.AquaBlack = {
 			}
 		}
 	}
-}
+};

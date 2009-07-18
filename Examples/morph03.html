@@ -48,54 +48,50 @@
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
 
 	<script type="text/javascript">
-		
-		//window on dom ready
+
 		window.addEvent('domready', function(){
-			//for every switch-view link
-		
-			var button1 = new UI.Button({
-				type: 'roundtextured',
-				label: 'initial size',
-				styles: {
-					margin: 10
-				}
-			}).inject(document.body);
 			
-			var button2 = new UI.Button({
-				type: 'roundtextured',
-				label: 'get bigger',
-				styles: {
-					margin: 10
-				}
-			}).inject(document.body);
-			
-			var br = new Element('br').inject(document.body);
-			
-			var element = new UI.Button({
+			var button = new UI.Button({
 				skin: 'demo',
 				type: 'jgood'
-			}).inject(document.body);
+			}).inject(document.body)
+			.addEvent('click', function() {
+				if (!button.element.retrieve('big')) {
+					fx.start({
+						'width': 600
+					});
+					button.element.store('big',true);
+					
+				} else {
+					fxback.start({
+						'width': button.element.retrieve('defaultWidth')
+					});
+					button.element.store('big',false);
+				}
+				
+			});
 			
-			fxElement = new Fx.Morph(element, {
+			button.element.retrieve('defaultWidth', button.getSize().x);
+			button.element.retrieve('big', false);
+			
+			var fx = new Fx.Morph(button, {
+				duration: 1500,
+				transition: Fx.Transitions.Elastic.easeOut
+			}).addEvents({
+				onMorph: function(){
+					var size = button.element.getSize();
+					button.setSize(size.x, size.y);
+				}
+			});
+			
+			var fxback = new Fx.Morph(button, {
 				duration: 500,
 				transition: Fx.Transitions.Bounce.easeOut
 			}).addEvents({
 				onMorph: function(){
-					var size = element.element.getSize();
-					element.setSize(size.x, size.y);
+					var size = button.element.getSize();
+					button.setSize(size.x, size.y);
 				}
-			});
-			
-			button1.addEvent('click', function(){
-				fxElement.start({
-					'width': 100
-				});
-			});
-			
-			button2.addEvent('click', function(){
-				fxElement.start({
-					'width': 600
-				});
 			});
 		});
 		

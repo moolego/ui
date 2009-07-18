@@ -62,7 +62,7 @@
 				styles			: {
 					margin		: '50px 50px 0'
 				}
-			}).inject(document.body);
+			}).inject($(document.body));
 			
 			
 				
@@ -93,15 +93,15 @@
 				label : "Under Construction!"
 			});
 			
-
+		*/
+			
 			
 			
 			var tip = new UI.Bubble({
 				target : $(button),
 				label : "<p>Babybel c'est de la balle</p><p>Mais que fait la police?</p>"
 			});
-			*/
-			
+	
 			
 			this.googlemap = new UI.Button({
 				label				: 'Falling',
@@ -184,7 +184,7 @@
 				onClick: function(){
 					new UI.Window({
 						type 				: 'transparent',
-						view : { overflow : 'hidden' },
+						view : { overflow : 'hidden' }
 					}).setContent('iframe','http://www.youtube.com');
 				}.bind(this),
 				styles		: {

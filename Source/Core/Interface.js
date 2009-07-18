@@ -169,7 +169,9 @@ UI.Interface = new Class({
 	processButton: function(element){
 		var params = {};
 		// is a submit type or not
-		if (element.get('type') == 'submit') params.submit = true;
+		if (element.get('type') == 'submit') {
+			params.submit = true;
+		}
 		params.label = element.get('value');
 		//params.labelStyles = element.getStyles('padding');
 		params.styles = element.getStyles('margin', 'top', 'left', 'float');
@@ -206,7 +208,5 @@ UI.Interface = new Class({
 			fs.element.adopt(fieldset.getChildren());
 			fieldset.destroy();
 		});
-		
 	}
-	
 });

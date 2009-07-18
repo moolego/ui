@@ -26,7 +26,19 @@
 		wheel - (boolean) see mootools slider plugin doc
 		steps - (boolean) see mootools slider plugin doc
 		
+	Implied global: 
+		UI, ui,
+		$empty, 
+		Class, Slider
 		
+		
+	Members:
+		Element, Extends, Slider, addEvent, build, canvas, component, 
+	    controller, element, fireEvent, handler, initialize, inject, knob, mode, 
+	    offset, onChange, onComplete, onStart, onTick, options, parent, 
+	    property, range, register, set, setBehavior, setCanvas, setSize, 
+	    setStyle, skin, slider, snap, step, steps, toPosition, type, value, 
+	    wheel
 	
 	Example:
 		(start code)
@@ -111,7 +123,9 @@ UI.Slider = new Class({
 	
 	inject: function(target, position){
 		this.fireEvent('inject');
-
+		
+		var that = this;
+		
 		this.element.inject(target, position);
 		this.element.setStyle('visibility', 'visible');
 		this.setSize();
@@ -125,13 +139,20 @@ UI.Slider = new Class({
 			wheel: this.options.wheel,
 			steps: this.options.steps,
 			mode: this.options.type,
-			onStart: function(step){this.fireEvent('start', step)}.bind(this),
+			
+			onStart: function(step){
+				that.fireEvent('start', step);
+			},
 			onTick: function(position){
-				if(this.options.snap) position = this.toPosition(this.step);
+				if(this.options.snap) { position = this.toPosition(this.step); }
 				this.knob.setStyle(this.property, position);
 			},
-			onChange: function(step){this.fireEvent('change', step)}.bind(this),
-			onComplete: function(step){this.fireEvent('complete', step)}.bind(this)
+			onChange: function(step){
+				that.fireEvent('change', step);
+			},
+			onComplete: function(step){
+				that.fireEvent('complete', step);
+			}
 		});
 		this.fireEvent('injected');
 		
@@ -167,8 +188,7 @@ UI.Slider = new Class({
 	*/
 	
 	set: function(value){
-		this.slider.set(value);
-		return this;
+		return this.slider.set(value);
 	}
 	
 });
