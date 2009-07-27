@@ -9,23 +9,23 @@
 		options
 	
 	Options: 
-		label - (string) bubble content
-		target - (string / element) Can be either an element id either a <UI.Element> instance
+		- label - (string) bubble content
+		- target - (string / element) Can be either an element id either a <UI.Element> instance
 	
 	Example:
 		(start code)
-			var Bubble = new UI.Bubble({
+			var bubble = new UI.Bubble({
 				target : 'myElement',
 				label : 'This bubble says Hello world!'
 			});
 		(end)
 		
 	Implied global: 
-		$, 
-		Class, Fx, UI, 
-		document, window
+		- MooLego - UI
+		- Mootools - $,	Class, Fx
+		- Javascript - document, window
 		
-	Members 
+	Members:
 		Bubble, Element, Extends, Label, Morph, Tween, addEvents, bind, 
 	    body, build, click, component, components, control, destroy, element, 
 	    fade, fx, getCoordinates, getLocation, getSize, getStyle, height, hide, 

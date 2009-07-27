@@ -292,12 +292,20 @@
 				},
 				onClick: function(){
 					tip.fade(0);
-				}.bind(this)				,
+				}.bind(this),
 				styles: {
 					margin: 10
 				}
 			}).inject(form);
 			
+			
+			this.checkbox = new UI.Checkbox({
+				skin: 'demo',
+				type: 'small',
+				styles: {
+					margin: 10
+				}
+			}).inject(form);
 			
 			this.youtube = new UI.Button({
 				skin: 'demo',

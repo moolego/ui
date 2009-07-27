@@ -1238,7 +1238,7 @@ UI.props.AquaBlack = {
 				layers: {
 					'default': {
 						radius: 4,
-						opacity: 0.6
+						opacity: 0.1
 					},
 					shadow: {
 						size: 10,
@@ -1248,7 +1248,7 @@ UI.props.AquaBlack = {
 					background: {
 						color: '#000',
 						offset: 0,
-						opacity: 0.27
+						opacity: 0.9
 					},
 					main: {}
 				}

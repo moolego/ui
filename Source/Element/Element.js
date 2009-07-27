@@ -10,33 +10,35 @@
 		Options
 		
 	Options: 
-		lib - (string) The prefix used for element class
-		component - (string) Component name, used for skinning
-		type - (string) Type name, used for skinning
-		state - (string) Default state applied on initialize
+		- lib - (string) The prefix used for element class
+		- component - (string) Component name, used for skinning
+		- type - (string) Type name, used for skinning
+		- state - (string) Default state applied on initialize
 		
-		className - (string) If this is defined, UI.Element will use this as element class name instead of generating one with options.lib, component and type
-		tag - (string) The element tag. By default it is 'div'
+		- className - (string) If this is defined, UI.Element will use this as element class name instead of generating one with options.lib, component and type
+		- tag - (string) The element tag. By default it is 'div'
 		
-		resizable - (boolean) Define if the element will be resizable. By default set to false
-		draggable - (boolean) Define if the element will be draggable. By default set to false
-		selectable - (boolean) Define if element content is selectable
+		- resizable - (boolean) Define if the element will be resizable. By default set to false
+		- draggable - (boolean) Define if the element will be draggable. By default set to false
+		- selectable - (boolean) Define if element content is selectable
 		
-		skin - (string) The skin name to use by default for components
-		props - (object) Skin properties that will overwrite properties defined in skin sheet
+		- skin - (string) The skin name to use by default for components
+		- props - (object) Skin properties that will overwrite properties defined in skin sheet
 		
-		style - (object) Element styles properties that will overwrite styles defined in skin sheet
+		- style - (object) Element styles properties that will overwrite styles defined in skin sheet
 		
-		onClick - (function) A function who will be fired on element click
-		onMouseDown - (function) A function who will be fired on element mousedown
-		onBuild - (function) A function who will be fired on element build start
-		onBuildComplete - (function) A function who will be fired on element build complete
-		onResizeStart - (function) A function who will be fired on element resize start
-		onResize - (function) A function who will be fired on element resize
-		onResizeComplete - (function) A function who will be fired on element complete
-		onDragStart - (function) A function who will be fired on element drag start
-		onDrag - (function) A function who will be fired on element drag
-		onDragComplete - (function) A function who will be fired on element drag complete
+	Events:
+		
+		- onClick - (function) A function who will be fired on element click
+		- onMouseDown - (function) A function who will be fired on element mousedown
+		- onBuild - (function) A function who will be fired on element build start
+		- onBuildComplete - (function) A function who will be fired on element build complete
+		- onResizeStart - (function) A function who will be fired on element resize start
+		- onResize - (function) A function who will be fired on element resize
+		- onResizeComplete - (function) A function who will be fired on element complete
+		- onDragStart - (function) A function who will be fired on element drag start
+		- onDrag - (function) A function who will be fired on element drag
+		- onDragComplete - (function) A function who will be fired on element drag complete
 		
 	Example:
 		(start code)
@@ -71,6 +73,10 @@
 	    setStyle, setStyles, shadowMagnify, show, skin, start, state, stop, 
 	    style, styles, tag, toElement, toInt, top, trident, type, ui, 
 	    useAutoClass, width, x, y, zIndex
+
+	Discussion:
+		Why don't we extend Mootools native Element or refactor...
+	    
 */
 
 UI.Element = new Class({
@@ -114,6 +120,8 @@ UI.Element = new Class({
 		useAutoClass: true,
 		
 		// implemeted events
+		
+		/*
 		onClick: $empty,
 		onMouseDown: $empty,
 		onBuild: $empty,
@@ -126,7 +134,7 @@ UI.Element = new Class({
 		onDragComplete: $empty,
 		
 		onShow: $empty,
-		onHide: $empty
+		onHide: $empty*/
 	},
 
 	/* 
@@ -775,25 +783,6 @@ UI.Element = new Class({
 
 	getCoordinates: function(ref) {
 		return this.element.getCoordinates(ref);
-	},
-
-	/*
-    Function: set
-    	See mootools getCoordinates documentation
-    
-    Return:
-    	this.element coordinates
-	*/
-	
-	morph: function(opt) {
-		return this.element.morph(opt).addEvents({
-			onComplete: function() {
-				alert('Compltee')
-				
-			}
-			
-			
-		});
 	},
 
 	/*

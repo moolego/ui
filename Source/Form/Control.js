@@ -60,7 +60,7 @@ UI.Control = new Class({
 		<UI.Element::setSize>
 	*/
 	
-	setSize: function(width,height, state){
+	setSize: function(width, height, state){
 		var twidth,theight;
 		
 		if (this.label) {

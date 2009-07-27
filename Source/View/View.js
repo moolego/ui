@@ -15,14 +15,14 @@
 		options
 		
 	Options:
-		width - (integer/string) Width of the view wrapper in px or percent
-		height - (integer/string) Height  of the view wrapper in px or percent
-		overflow - (string) hidden, scrollbar or menu
-		tag - (string) Element's tag
-		contentTag - (string) Content's tag
+		- width - (integer/string) Width of the view wrapper in px or percent
+		- height - (integer/string) Height  of the view wrapper in px or percent
+		- overflow - (string) hidden, scrollbar or menu
+		- tag - (string) Element's tag
+		- contentTag - (string) Content's tag
 		
-		content - (object) Object containing content element's options
-		onLoadComplete - (function) Function to fire on list load complete
+		- content - (object) Object containing content element's options
+		- onLoadComplete - (function) Function to fire on list load complete
 	
 	Returns:
 		View object.

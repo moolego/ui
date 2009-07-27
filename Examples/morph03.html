@@ -63,7 +63,7 @@
 					button.element.store('big',true);
 					
 				} else {
-					fxback.start({
+					fx.start({
 						'width': button.element.retrieve('defaultWidth')
 					});
 					button.element.store('big',false);
@@ -74,9 +74,10 @@
 			button.element.retrieve('defaultWidth', button.getSize().x);
 			button.element.retrieve('big', false);
 			
-			var fx = new Fx.Morph(button, {
+			var fx1 = new Fx.Morph(button, {
 				duration: 1500,
-				transition: Fx.Transitions.Elastic.easeOut
+				transition: Fx.Transitions.Elastic.easeOut,
+				link: 'ignore'
 			}).addEvents({
 				onMorph: function(){
 					var size = button.element.getSize();
@@ -84,9 +85,10 @@
 				}
 			});
 			
-			var fxback = new Fx.Morph(button, {
+			var fx = new Fx.Morph(button, {
 				duration: 500,
-				transition: Fx.Transitions.Bounce.easeOut
+				transition: Fx.Transitions.Bounce.easeOut,
+				link: 'ignore'
 			}).addEvents({
 				onMorph: function(){
 					var size = button.element.getSize();
@@ -94,6 +96,17 @@
 				}
 			});
 		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+		
 		
 	</script>
 </head>

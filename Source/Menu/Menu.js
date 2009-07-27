@@ -10,18 +10,18 @@
 		options
 			
 	Options: 
-		zIndex - (integer) Base z-index for menu element (submenu's z-index will be incremented)
-		contentTag - (string) Tag name for menu elements wrapper
-		itemTag - (string) Tag name for menu elements
+		- zIndex - (integer) Base z-index for menu element (submenu's z-index will be incremented)
+		- contentTag - (string) Tag name for menu elements wrapper
+		- itemTag - (string) Tag name for menu elements
 		
-		position - (string) Specify where the new menu must be positionned.
+		- position - (string) Specify where the new menu must be positionned.
 			It could be normal (element will be positionned on parent's side),
 			over (element will be positionned over the parent element, used for <UI.Select>),
 			bottom (element will be positionned on bottom of parent element, used for <UI.Toolbar>)
 		
-		scrollToSelected - (boolean) Determine if a menu (specifically a <UI.Select>) should remember last item selected
-		scrollMargin - (integer) Determine remaining margin on top and bottom when a menu is too large to feet in window
-		menu - (array) Array containing menu definition
+		- scrollToSelected - (boolean) Determine if a menu (specifically a <UI.Select>) should remember last item selected
+		- scrollMargin - (integer) Determine remaining margin on top and bottom when a menu is too large to feet in window
+		- menu - (array) Array containing menu definition
 		
 	Example:
 		(start code)
@@ -33,12 +33,11 @@
 		(end)
 	
 	Implied global: 
-		UI,ui,
-		$clear,$defined,$empty,$time, 
-		Class,Element,Event,	Fx,Window,
-		document
+		- MooLego - UI,ui,
+		- MooTools - $clear, $defined, $empty, $time, Class, Element, Event, Fx, Window
+		- Javascript - document
 		
-	Members 
+	Members:
 		Element, Extends, Label, Menu, MenuScroller, Tween, action, 
 	    activeItem, addEvent, addEvents, addScrolls, addSubmenu, 
 	    addSubmenuArrow, addSubmenuEvents, arrow, bind, body, bottom, build, 

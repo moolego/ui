@@ -116,13 +116,15 @@ UI.Button = new Class({
 			mouseenter: this.setState.bind(this, 'over'),
 			mousedown: function(e) {
 				this.setState('down');
-				new Event(e).stop();
+				var ev = new Event(e).stop();
 			}.bind(this),
 			mouseleave: function(){
 				this.setState(this.options.state);
 			}.bind(this),	
 			mouseup: function(){
-				if (this.options.submit) this.submit();
+				if (this.options.submit) {
+					this.submit();
+				}
 				this.setState('over');
 			}.bind(this)
 		});
@@ -143,3 +145,4 @@ UI.Button = new Class({
 		this.getForm().submit();
 	}
 });
+

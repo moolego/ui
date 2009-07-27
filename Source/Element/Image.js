@@ -6,8 +6,8 @@
 		options
 		
 	Options:
-		tag - (string) element tag, by default 'span'
-		html - (string) label text, by default Label
+		- tag - (string) element tag, by default 'span'
+		- html - (string) label text, by default Label
 	
 	Returns:
 		Box element

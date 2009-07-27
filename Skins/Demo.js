@@ -71,6 +71,98 @@ UI.props.demo = {
 						styles: {
 							zIndex: 1,
 							fontWeight: 'normal',
+							fontSize: '32px',
+							position: 'absolute',
+							cursor: 'pointer',
+							top: 0,
+							left: 0,
+							padding: '4px 16px',
+							whiteSpace: 'nowrap',
+							opacity:0
+						}
+					}
+				},
+				
+				/* shortcuts */
+				shortcuts: {
+					labelStyles: 'components.label.styles'
+				},
+				
+				/* element css properties */
+				styles: {
+					position: 'relative',
+					display: 'inline-block',
+					cursor: 'pointer'
+				},
+				
+				/* layers properties */
+				layers: {
+					'default': {
+						shape: 'complex',
+						baseSize: [150, 150],
+						def: [
+							['moveTo', 75, 25], 
+							['quadraticCurveTo', 25, 25, 25, 62.5], 
+							['quadraticCurveTo', 25, 100, 50, 100], 
+							['quadraticCurveTo', 50, 120, 30, 125], 
+							['quadraticCurveTo', 60, 120, 65, 100], 
+							['quadraticCurveTo', 125, 100, 125, 62.5], 
+							['quadraticCurveTo', 125, 25, 75, 25]
+						],
+						shadow: {
+							opacity: 1,
+							color: '#000',
+							offsetX: 0,
+							offsetY: 2,
+							blur: 12
+						}
+					},
+					main: {
+						color: ['#d4d4d4', '#000']
+					
+					},
+					'yes': {
+						shape: 'complex',
+						offset: 50,
+						opacity: [0.3,1],
+						color: ['#fff', '#fff'],
+						baseSize: [150, 150],
+						def: [
+							['moveTo', 75, 25], 
+							['quadraticCurveTo', 25, 25, 25, 62.5], 
+							['quadraticCurveTo', 25, 100, 50, 100], 
+							['quadraticCurveTo', 125, 100, 125, 62.5], 
+							['quadraticCurveTo', 125, 25, 75, 25]
+						]
+					},
+				
+				}
+			},
+			over: {
+				layers: {
+					main: {
+					color: ['#d4d4d4', '#e5e5e5']
+					}
+				}
+			},
+			down: {
+				layers: {
+					main: {
+						color: ['#d4d4d4', '#e5e5e5']
+					}
+				}
+			}
+		},
+		heart: {
+			'default': {
+				
+				/* components properties */
+				components: {
+					label: {
+						styles: {
+							zIndex: 1,
+							fontWeight: 'normal',
+							fontSize: '100px',
 							position: 'absolute',
 							cursor: 'pointer',
 							top: 0,
@@ -95,36 +187,16 @@ UI.props.demo = {
 				
 				/* layers properties */
 				layers: {
+					'reorder': ['main'],
 					'default': {
-						radius: 10
+						shape: 'complex',
+						baseSize: [150, 150],
+						def: [['moveTo', 75, 40], ['bezierCurveTo', 75, 37, 70, 25, 50, 25], ['bezierCurveTo', 20, 25, 20, 62.5, 20, 62.5], ['bezierCurveTo', 20, 80, 40, 102, 75, 120], ['bezierCurveTo', 110, 102, 130, 80, 130, 62.5], ['bezierCurveTo', 130, 62.5, 130, 25, 100, 25], ['bezierCurveTo', 85, 25, 75, 37, 75, 40]],
+						
 					},
-					littleshadow: {
-						offset: ['0px', '0px', '0px', '0px'],
-						color: ['#000', '#000'],
-						radius: 11,
-						opacity: 0.1
-					},
-					background: {
-						offset: ['0px', '1px', '1px', '1px'],
-						color: ['#494949', '#5f5f5f'],
-						opacity: 1,
-						radius: 11
-					},
+					
 					main: {
-						color: ['#d4d4d4', '#e5e5e5']
-					},
-					reflect: {
-						offset: ['0px', '3px', '65%'],
-						color: ['#FFF', '#FFF'],
-						opacity: [0.8, 0.3],
-						radius: [7, 7, 4, 4]
-					},
-					light: {
-						position: 'absolute',
-						offset: ['50%', '5px', '2px'],
-						color: ['#FFF', '#FFF'],
-						opacity: [0, 1],
-						radius: [4, 4, 7, 7]
+						color: ['#a1a1a1', '#d5d5d5']
 					}
 				}
 			},
@@ -139,14 +211,10 @@ UI.props.demo = {
 				layers: {
 					main: {
 						color: ['#7b8997', '#7b8997']
-					},
-					background: {
-						color: ['#494949', '#5f5f5f']
 					}
 				}
 			}
 		},
-		
 		hardest: {
 			'default': {
 				components: {

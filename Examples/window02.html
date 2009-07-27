@@ -1,11 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE HTML>
+<html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 	<script type="text/javascript" src="mootools/core.js"></script>
 	<script type="text/javascript" src="mootools/more.js"></script>
-		
 	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
 	
 	<script type="text/javascript" src="../Source/Core/UI.js"></script>
@@ -39,6 +38,8 @@
 	
 	<script type="text/javascript">
 		
+		
+		
 		ui.controller.window = $merge(ui.controller.window,{
 			
 			// inspired by http://blog.greghoustondesign.com/arranging-an-array-of-html-elements-in-a-cascade-circle-or-grid/
@@ -60,6 +61,8 @@
 				var i = 1;	
 				
 				ui.controller.window.list.each(function(win){
+					if (win.state == 'minimized') { next; }
+					
 					win.element.style.zIndex = zIndex++;
 					
 					if (i > 1 && i <= columns){
@@ -101,6 +104,8 @@
 				var length = (ui.controller.window.list.length);
 				
 				ui.controller.window.list.each(function(win){
+					if (win.state == 'minimized') { next; }
+					
 					win.element.style.zIndex = zIndex++;
 						
 					var ratio = i/length*2;
@@ -143,6 +148,8 @@
 				var length = (ui.controller.window.list.length);
 				
 				ui.controller.window.list.each(function(win){
+					if (win.state == 'minimized') { next; }
+					
 					win.element.style.zIndex = zIndex++;
 		
 					var ratio = i/length;
@@ -173,15 +180,27 @@
 		
 		
 		window.addEvent('domready', function() {
+			
+			var background  = new UI.Element({
+				skin	: 'demo',
+				type	: "gradient",
+				state	: 'radial2',
+				width	: Window.getWidth(),
+				height	: Window.getHeight(),
+				styles : {
+					padding: '25px'
+				}
+			}).inject($(document.body)).show();
+		
+			window.addEvents({
+				resize: function(){
+					background.setSize(Window.getWidth(), Window.getHeight());
+					background.setState('radial2');
+				}
+			});
+			
 			var time = $time();
 			
-			/* Elements in page */
-			var form = new Element('form').inject(document.body);
-			woo = new UI.Window({
-				skin : 'AquaBlack',
-				position : 'fixed'
-			});
-			//new UI.Window();
 			
 			button = new UI.Button({
 				label : "new UI.Window()",
@@ -196,7 +215,7 @@
 					new UI.Window({ title : time2 });
 					//console.log('draw this window take : ', $time()-time2);
 				}
-			}).inject(form);
+			}).inject(background);
 			//console.log('window.html', $time()-time);
 			
 			
@@ -207,7 +226,7 @@
 				onClick : function() { 
 					ui.controller.window.cascade();
 				}
-			}).inject(form);
+			}).inject(background);
 			
 			
 			
@@ -219,7 +238,7 @@
 				onClick : function() { 
 					ui.controller.window.grid();
 				}
-			}).inject(form);
+			}).inject(background);
 			
 			new UI.Button({
 				label : 'Circle',
@@ -228,7 +247,7 @@
 				onClick : function() { 
 					ui.controller.window.circle();
 				}
-			}).inject(form);
+			}).inject(background);
 			
 			new UI.Button({
 				label : 'Wave',
@@ -237,7 +256,7 @@
 				onClick : function() { 
 					ui.controller.window.wave();
 				}
-			}).inject(form);
+			}).inject(background);
 				
 			new UI.Button({
 				label : 'Close',
@@ -246,7 +265,7 @@
 				onClick : function() { 
 					ui.controller.window.close();
 				}
-			}).inject(form);
+			}).inject(background);
 			
 			new UI.Button({
 				label : 'Close All',
@@ -255,11 +274,11 @@
 				onClick : function() { 
 					ui.controller.window.closeAll();
 				}
-			}).inject(form);
+			}).inject(background);
 		});
 	</script>
 </head>
 
-<body style="overflow:hidden"></body>
+<body style="overflow:hidden; margin:0;"></body>
 
 </html>
