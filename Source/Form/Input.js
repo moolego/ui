@@ -42,7 +42,7 @@ UI.Input = new Class({
 		value: ''
 	},
 	
-	/* 
+/* 
 	Function: build
 		private function
 		
@@ -52,7 +52,43 @@ UI.Input = new Class({
 		(void)
 	
 	See also:
-		<UI.Controlocus)
+		<UI.Control::build>
+		<UI.Element::build>
+	*/
+	
+	build: function(){
+		//create a new div as input element
+		this.parent();
+		
+		//create input
+		this.setInput('text');
+		this.input.setStyle('width', this.props.width - this.input.getStyle('paddingLeft').toInt() - this.input.getStyle('paddingRight').toInt());
+	},
+	
+	/* 
+	Function: setState
+		Set element state
+	
+	Arguments:
+		state - (string) State name
+		
+	Return:
+		(void)
+	
+	See also:
+		<UI.Element::setState>
+	*/
+	
+	setState: function(state){
+		this.parent(state);
+		if (this.skin[state]) this.input.set(this.skin[state].components.input.styles);
+	},
+	
+	/* 
+	Function: setBehavior
+		private function
+		
+		Set control relative behavior (blur and focus)
 	
 	Return:
 		(void)

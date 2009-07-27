@@ -1,6 +1,6 @@
 /*
-	Class: UI.Box
-		UI.Box is used to make a skinnable container
+	Class: UI.Segment
+		Allows to group elements visually (buttons for example)
 	
 	Arguments:
 		options
@@ -10,40 +10,28 @@
 		- html - (string) label text, by default Label
 	
 	Returns:
-		Box element
+		Segement element
 		
 	Example:
 		(start code)
-		var box = new UI.Box({
-			html	: 'Hello world!',
+		var segment = new UI.Segment({
+			html: 'group of buttons',
 		}).inject(this.element);
 		(end)
-
-	Implied global:
+	
+	Implied global: 
 		- MooLego - UI
 		- MooTools - Class
-		
-	Members:
-		Box, Element, Extends, build, component, emboss, html, options, 
-    	parent, selectable, tag
-    
-    Discussion:
+
 	
 */
 
-UI.Box = new Class({
+UI.Segment = new Class({
 	
 	Extends: UI.Element,
 		
 	options: {
-		component: 'box',
-		
-		tag: 'div',
-		html: 'Box',
-		
-		emboss: false,
-		
-		selectable: false
+		component: 'segment'
 	},
 
 	/* 
@@ -56,5 +44,4 @@ UI.Box = new Class({
 	build: function(options){
 		this.parent(options);
 	}
-	
 });

@@ -26,19 +26,18 @@
 	Example:
 		(start code)
 		var listview = new UI.ListView({
-			url				: 'data.php?id=42',
-			width			: 260,
-			height			: 400,
-			scroll			: true 
+			url: 'data.php?id=42',
+			width: 260,
+			height: 400,
+			scroll: true 
 		}).inject(this.content);
 		(end)	
-		
-		
+
 	Implied global:
 		UI,
 		$H,
 		Class,Request 
-		
+
 	Members: 
 		Element, Extends, JSON, ListView, View, addEvent, addItems, 
 	    bind, build, component, components, content, data, each, element, erase, 

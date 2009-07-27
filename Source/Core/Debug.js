@@ -1,7 +1,6 @@
 /*
-Class: UI.Debug
+Class: ui.debugger
 	Default element debugger.
-	It handle element's z-index as well as group managing and group serialization (usefull for controls values
 */
 
 
@@ -9,7 +8,6 @@ Class: UI.Debug
 ui.debugger = {
 	start: function() {
 		console.log('start debugger');
-		
 	},
 	
 	trace: function(){
@@ -38,4 +36,4 @@ ui.debugger = {
 
 
 
-ui.debugger.element.start();
+ui.debugger.start();

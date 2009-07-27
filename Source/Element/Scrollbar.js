@@ -9,9 +9,9 @@
 		options
 		
 	Options:
-		width - (integer) The scollbar track width
-		maxThumbSize - (integer)
-		wheel - (integer) The scroll increment
+		- width - (integer) The scollbar track width
+		- maxThumbSize - (integer)
+		- wheel - (integer) The scroll increment
 		
 	Example:
 		(start code)
@@ -19,13 +19,17 @@
 			container	: this.content
 		});
 		(end)
-
+	
+	Implied global: 
+		- MooLego - UI
+		- MooTools -Class
+		- Javascript - document
+	
 	Credits: 
 		based on Valerio's Mootools scrollbar plugin.
 		found in upload folder of mootools website
 
 */
-
 
 UI.Scrollbar = new Class({
 
@@ -38,7 +42,16 @@ UI.Scrollbar = new Class({
 		maxThumbSize: 32,
 		wheel: 16
 	},
-
+	/* 
+	 Constructor: initialize
+	 Construtor
+	 
+	 Arguments:
+	 options - (object) options
+	 
+	 See also:
+	 <UI.Element::initialize>
+	 */
 	initialize: function(options){
 		this.parent(options);
 		
@@ -55,10 +68,22 @@ UI.Scrollbar = new Class({
 		this.update();
 		this.attach();
 	},
-	
+	/* 
+	Method: build
+		private method
+	 
+	Make a  Label and set the fade Fx
+	 
+	 Return:
+	 (void)
+	 
+	 See also:
+	 <UI.Element::build>
+	 */		
 	build: function(){
-		if (!this.options.width)
+		if (!this.options.width) {
 			this.options.width = this.props.width;
+		}
 		
 		this.parent();
 		
@@ -77,9 +102,16 @@ UI.Scrollbar = new Class({
 		this.containerSize = this.options.container.getSize().y;
 		this.setSize(this.options.width.toInt(),this.containerSize);
 		this.containerScrollSize = this.options.container.scrollHeight;
-		if(this.containerScrollSize == 0) return;
+		if (this.containerScrollSize === 0) {
+			return;
+		}
 
-		this.isVisible() ?	this.thumb.element.setStyle('visibility','visible') : this.thumb.element.setStyle('visibility','hidden');
+		if (this.isVisible()) {
+			this.thumb.element.setStyle('visibility', 'visible');
+		}
+		else {
+			this.thumb.element.setStyle('visibility', 'hidden');
+		}
 		
 		this.trackSize = this.element.offsetHeight.toInt();
 		this.containerRatio = this.containerSize / this.containerScrollSize;
@@ -103,8 +135,9 @@ UI.Scrollbar = new Class({
 	attach: function(){
 		this.thumb.element.addEvent('mousedown', this.bound.start);
 		//this.thumb.element.addEvent('whileclick', this.bound.start);
-		if (this.options.wheel) 
+		if (this.options.wheel) {
 			this.options.container.addEvent('mousewheel', this.bound.wheel);
+		}
 		this.element.addEvent('mouseup', this.bound.page);
 	},
 
@@ -115,8 +148,12 @@ UI.Scrollbar = new Class({
 	},
 
 	page: function(event){
-		if (event.page.y > this.thumb.element.getPosition().y) this.options.container.scrollTop += this.options.container.offsetHeight;
-		else this.options.container.scrollTop -= this.options.container.offsetHeight;
+		if (event.page.y > this.thumb.element.getPosition().y) {
+			this.options.container.scrollTop += this.options.container.offsetHeight;
+		}
+		else {
+			this.options.container.scrollTop -= this.options.container.offsetHeight;
+		}
 		this.updateThumbFromContentScroll();
 		event.stop();
 	},

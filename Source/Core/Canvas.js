@@ -9,14 +9,16 @@
 		options
 		
 	Options:
-		props - (object) All the stuff needed to draw the canvas (layers, shadows, ...). These properties are generated from a skin sheet.
-		className - (string) The class name set to the canvas element
-		width - (integer) Canvas width
-		height - (integer) Canvas height
+		- props - (object) All the stuff needed to draw the canvas (layers, shadows, ...). These properties are generated from a skin sheet.
+		- className - (string) The class name set to the canvas element
+		- width - (integer) Canvas width
+		- height - (integer) Canvas height
 		
-		disableShadowOnExplorer - (boolean) Disable shadows on Explorer navigators for performance reasons.
+		- disableShadowOnExplorer - (boolean) Disable shadows on Explorer navigators for performance reasons.
 		
-		onComplete : (function) - function to fire when the canvas is drawn
+	Events:	
+	
+		- onComplete - (function) - function to fire when the canvas is drawn
 	
 	
 	
@@ -35,12 +37,9 @@
 	
 
 	Implied global:
-		$empty - 53
-		Class - 37
-		Element - 87
-		Events - 39
-		Options - 39
-		UI - 37
+		MooLego - UI
+		MooTools - $empty, Class, Element, Events, Options
+		
 		
 	Members:
 		Canvas, Engine, Implements, PI, abs, absSize, addColorStop, 
@@ -183,6 +182,7 @@ UI.Canvas = new Class({
 	 (void)
 	 */
 	draw: function(props){
+		
 		if (!this.shadowSet) {
 			if (props) {
 				this.props = props;
@@ -365,8 +365,8 @@ UI.Canvas = new Class({
 			case 'triangle':
 				this.triangle(properties);
 				break;
-			case 'bezier':
-				this.bezier(properties);
+			case 'complex':
+				this.complex(properties);
 				break;
 		}
 		
@@ -613,10 +613,13 @@ UI.Canvas = new Class({
 			angle: $pick(this.props.layers[key].angle, this.props.layers['default'].angle),
 			rotation: $pick(this.props.layers[key].rotation, this.props.layers['default'].rotation),
 			scale: $pick(this.props.layers[key].scale, this.props.layers['default'].scale),
-			composite: $pick(this.props.layers[key].composite, this.props.layers['default'].composite)
+			composite: $pick(this.props.layers[key].composite, this.props.layers['default'].composite),
+			def: $pick(this.props.layers[key].def, this.props.layers['default'].def),
+			baseSize: $pick(this.props.layers[key].baseSize, this.props.layers['default'].baseSize)
 		};
 		
 		// test the position
+		
 		var coordinates = $pick(this.props.layers[key].offset, this.props.layers['default'].offset);
 		if ($type(coordinates) == 'array') {
 			//4 sides defined
@@ -649,6 +652,7 @@ UI.Canvas = new Class({
 		else {
 			properties.radius = [radius, radius, radius, radius];
 		}
+		
 		
 		return properties;
 	},
@@ -792,7 +796,11 @@ UI.Canvas = new Class({
 	 (void)
 	 */
 	setTransformation: function(props){
-		this.ctx.translate(props.size[0] / 2 + props.offset[0], props.size[1] / 2 + props.offset[1]);
+
+		
+		if (props.shape != 'complex') {
+			this.ctx.translate(props.size[0] / 2 + props.offset[0], props.size[1] / 2 + props.offset[1]);
+		}
 		//rotation
 		if (props.rotation) {
 			this.ctx.rotate(Math.PI * props.rotation / 180);
@@ -1006,7 +1014,7 @@ UI.Canvas = new Class({
 	 Function: bezier
 	 private function
 	 
-	 Draw a triangle in a rectangle determine with props.size (array)
+	 to draw complex shapes
 	 
 	 Arguments:
 	 props - (object) The layer properties.
@@ -1014,18 +1022,65 @@ UI.Canvas = new Class({
 	 Return:
 	 (void)
 	 */
-	bezier: function(props){
+	complex: function(props){
+		var ctx = this.ctx;
 		// prepare datas
-		var h0 = props.size[0] / 2;
-		var h1 = props.size[1] / 2;
 		
 		//console.log(props);
-		this.ctx.beginPath();
-		this.ctx.moveTo(-h0, h1);
-		this.ctx.bezierCurveTo(8, 16, 7, 19, 17, 21);
-		this.ctx.bezierCurveTo(7, 23, 8, 26, 11, 26);
-		this.ctx.bezierCurveTo(14, 26, 15, 23, 15, 21);
-		this.ctx.bezierCurveTo(15, 19, 14, 16, 11, 16);
-		this.ctx.closePath();
+		
+		var width = props.size[0];
+		var height = props.size[1];
+		
+		//console.log(width,height);
+		
+		
+		ctx.beginPath();
+		var i = 0;
+		
+		var defaultWidth = props.baseSize[0] || 100;
+		var defaultHeight = props.baseSize[1] || 100;
+		
+		var ratioX = width / defaultWidth;
+		var ratioY = height / defaultHeight;
+		
+		var def = new Hash(props.def);
+		
+		props.def.each(function(list){
+			var p = [];
+			var j = 0;
+			var command;
+			
+			list.each(function(val){
+			
+				if (j == 0) {
+				
+					command = val
+				}
+				else {
+					if ((j % 2) === 0) {
+						p[j] = val * ratioY;
+					}
+					else {
+						p[j] = val * ratioX;
+						
+					}
+					
+				}
+				j++;
+			});
+			
+			if (command == 'moveTo') {
+				ctx.moveTo(p[1], p[2]);
+			}
+			if (command == 'quadraticCurveTo') {
+				ctx.quadraticCurveTo(p[1], p[2], p[3], p[4]);
+			}
+			if (command == 'bezierCurveTo') {
+				ctx.quadraticCurveTo(p[1], p[2], p[3], p[4], p[5], p[6]);
+			}
+			i++;
+		});
+		
+		ctx.closePath();
 	}
 });

@@ -1,14 +1,34 @@
 /*
 	Class: UI.TabView
-		Creates a panels container that let you manage inner panels.
+		Creates a tabbar that let you manage inner view.
 	
 	Extends:
 		<UI.View>
 
+	
+	Example:
+	(start code)
+		var tabview = new UI.TabView({
+			resizable: true,
+			tabs : [
+				{
+					name : 'Mootools',
+					url	: 'assets/pulp1.json'
+				},
+				{
+					name : 'MooLego',
+					url	: 'assets/pulp2.json',
+					selected : true
+				}
+			]
+		}).inject(document.body);)
+	(end)
+
 	Implied global: 
-		UI,
-		Class
-		
+		- MooLego - UI,
+		- MooTools - Class -
+	
+	
 	Members:
 		Button, Element, Extends, TabView, View, add, addEvent, 
 	    addEvents, bind, build, buildTabs, component, components, container, 

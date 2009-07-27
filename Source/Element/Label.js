@@ -9,13 +9,13 @@
 		options
 		
 	Options:
-		tag - (string) element tag, by default 'span'
-		html - (string) label text, by default Label
-		emboss - (boolean) duplicate the text to create an emboss effect
-		selectable - (boolean) Define if the text is selectable or not
+		- tag - (string) element tag, by default 'span'
+		- html - (string) label text, by default Label
+		- emboss - (boolean) duplicate the text to create an emboss effect
+		- selectable - (boolean) Define if the text is selectable or not
 	
 	Returns:
-		Label element
+		Image element
 		
 	Example:
 		(start code)
@@ -23,6 +23,15 @@
 			html	: 'Hello world!',
 		}).inject(this.element);
 		(end)
+	
+	Implied global: 
+		- MooLego - UI
+		- MooTools - $merge, Class, Element
+	
+	Members:
+		Element, Extends, Label, bind, build, buildImage, component, 
+	    components, element, emboss, events, fireEvent, html, image, inject, 
+	    load, options, parent, props, selectable, src, tag
 	
 	Discussion:
 	
@@ -39,14 +48,35 @@ UI.Label = new Class({
 		emboss: false,
 		selectable: false
 	},
-	
+	/* 
+	Method: build
+		private method
+	 
+	Make a  Label and set the fade Fx
+	 
+	 Return:
+	 (void)
+	 
+	 See also:
+	 <UI.Element::build>
+	 */	
 	build: function(){
 		this.parent();
-		if (this.options.image) this.buildImage();
+		if (this.options.image) {
+			this.buildImage();
+		}
 	},
-	
+	/* 
+	Method: buildImage
+	 	private method
+	 
+		Define image props form element
+	 
+	Return:
+	 	(void)
+	*/		
 	buildImage: function(){
-		new Element('img', $merge(
+		this.image = new Element('img', $merge(
 			this.props.components.image,
 			{
 				src : this.options.image,
@@ -56,5 +86,4 @@ UI.Label = new Class({
 			}
 		)).inject(this.element, 'top');
 	}
-	
 });
