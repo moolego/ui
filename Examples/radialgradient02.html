@@ -1,0 +1,368 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+	<script type="text/javascript" src="mootools/core.js"></script>
+	<script type="text/javascript" src="mootools/more.js"></script>
+		
+	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+	
+	<script type="text/javascript" src="../Source/Core/UI.js"></script>
+	<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
+	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
+	
+	<script type="text/javascript" src="../Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
+
+	<script type="text/javascript" src="../Source/Element/Label.js"></script>
+	<script type="text/javascript" src="../Source/Element/Scrollbar.js"></script>
+	
+	<script type="text/javascript" src="../Source/Form/Control.js"></script>
+	<script type="text/javascript" src="../Source/Form/Button.js"></script>
+	<script type="text/javascript" src="../Source/Form/Slider.js"></script>
+	
+	<script type="text/javascript" src="../Source/View/View.js"></script>
+	
+	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
+	<script type="text/javascript" src="../Source/Window/Window.js"></script>
+
+	<script type="text/javascript" src="../Skins/Demo.js"></script>
+		
+	<script type="text/javascript" src="js/examples.js"></script>
+
+	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../Skins/Demo.js"></script>
+	<script type="text/javascript" src="../Skins/TouchBlue.js"></script>
+	
+	<title>MooLego - Components Playground</title>
+
+	<script type="text/javascript">
+		window.addEvent('domready', function() {
+			
+			var time = $time();
+			
+			/* Elements in page */
+			
+			var background  = new UI.Element({
+				label : "new window",
+				skin	: 'demo',
+				type	: "gradient",
+				state	: 'radial2',
+				width	: window.getWidth(),
+				height	: window.getHeight()
+			}).inject(document.body).hide();
+			
+			window.addEvents({
+				resize: function(){
+					console.log('test');
+					background.setSize(window.getWidth(), window.getHeight());
+					
+					background.setState('radial2');
+				},
+				dblclick :function(e){
+					new UI.Button({
+						editable : true,
+						draggable : true,
+						styles : {
+							position: 'absolute',
+							left : e.client.x,
+							top : e.client.y
+							
+						}						
+					}).inject(background);
+					//console.log('x:'+e.client.x+',y:'+e.client.y);
+
+				}
+			});
+
+			//(?) settings
+			var offone = 0;
+			var offtwo = 0;
+			var ratioone = 10;
+			var ratiotwo = 20;
+			
+			//shape setting
+			radius = 0;
+			var offset = 0;
+			var width = 102;
+			var height = 102;
+			var margin = 0;
+			var fontSize = 11;
+			var startCircle = [];
+			var endCircle = [];
+			buttons = new Array();
+
+			//color settings
+			var red = -20;
+			var green = 20;
+			var blue = 10;
+			
+			var colorStart = [180, 30, 10];
+			var colorEnd = [255, 255, 0];
+			
+			var startCircle = [0, -30, 0];
+			var endCircle = [60, 50, 180];
+			
+			buttons = new Array();
+			
+			var slidator = new UI.Window({
+				title : 'Inspector',
+				width : 220,
+				height : 420,
+				location: 'custom',
+				controls : [],
+				left : window.getCoordinates().right - 300,
+				top: 200,
+				resizable: false,
+				type: 'transparent',
+				view : {
+					overflow : 'hidden'
+				}
+			});
+			
+			var baseParams = {
+				skin 				: 'TouchBlue',
+				range 				: [-10, 10],
+				snap 				: true,
+				steps 				: 20,
+				styles 				: {
+					margin			: '3px 10px',
+					display			: 'block'
+				},
+				wheel				: true
+			}
+			
+			var Label = {
+				styles: {
+					margin: '10px 10px 3px',
+					display: 'block',
+					color: '#ccc',
+					fontSize:'10px'
+					
+				}
+			}
+			
+			new Element('br').inject(slidator);
+			
+			// color slider
+			
+			var colorLabel = new UI.Label($merge(Label, {
+				html : 'Start Color (RVB)'
+			})).inject(slidator.content);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [0, 255],
+				steps : 255,
+				onInjected : function(){
+					this.set(colorStart[0]);
+				},
+				onChange: function(step){
+					colorStart[0] = step;
+					colorLabel.set('html', 'Color (RVB) - (' + colorStart[0] + ',' + colorStart[1] + ',' + colorStart[2] + ')');
+					updateBackground();
+				}
+			})).inject(slidator.content);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [0, 255],
+				steps : 255,
+				onInjected : function(){
+					this.set(colorStart[1]);
+				},
+				onChange: function(step){
+					colorStart[1] = step;
+					colorLabel.set('html', 'Color (RVB) - (' + colorStart[0] + ',' + colorStart[1] + ',' + colorStart[2] + ')');
+					updateBackground();
+				}
+			})).inject(slidator.content);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [0, 255],
+				steps : 255,
+				onInjected : function(){
+					this.set(colorStart[2]);
+				},
+				onChange: function(step){
+					colorStart[2] = step;
+					colorLabel.set('html', 'Color (RVB) - (' + colorStart[0] + ',' + colorStart[1] + ',' + colorStart[2] + ')');
+					updateBackground();
+				}
+			})).inject(slidator.content);
+			
+			
+			// color slider end
+			
+			var colorLabel = new UI.Label($merge(Label, {
+				html : 'End Color (RVB)'
+			})).inject(slidator.content);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [0, 255],
+				steps : 255,
+				onInjected : function(){
+					this.set(colorEnd[0]);
+				},
+				onChange: function(step){
+					colorEnd[0] = step;
+					colorLabel.set('html', 'End Color (RVB) - (' + colorEnd[0] + ',' + colorEnd[1] + ',' + colorEnd[2] + ')');
+					updateBackground();
+				}
+			})).inject(slidator.content);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [0, 255],
+				steps : 255,
+				onInjected : function(){
+					this.set(colorStart[1]);
+				},
+				onChange: function(step){
+					colorEnd[1] = step;
+					colorLabel.set('html', 'End Color (RVB) - (' + colorEnd[0] + ',' + colorEnd[1] + ',' + colorEnd[2] + ')');
+					updateBackground();
+				}
+			})).inject(slidator.content);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [0, 255],
+				steps : 255,
+				onInjected : function(){
+					this.set(colorEnd[2]);
+				},
+				onChange: function(step){
+					colorEnd[2] = step;
+					colorLabel.set('html', 'Color (RVB) - (' + colorEnd[0] + ',' + colorEnd[1] + ',' + colorEnd[2] + ')');
+					updateBackground();
+				}
+			})).inject(slidator.content);
+
+			// start circle
+
+			var startLabel = new UI.Label($merge(Label, {
+				html : 'Start Circle (%)'
+			})).inject(slidator.content);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [-100, 150],
+				steps : 250,
+				onInjected : function(){
+					this.set(startCircle[0]);
+				},
+				onChange: function(step){
+					startCircle[0] = step + '%';
+					startLabel.set('html', 'Start Circle (%) - (' + startCircle[0] + ',' + startCircle[1] + ',' + startCircle[2] + ')');
+					updateBackground();
+				}
+			})).inject(slidator.content);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [-30, 170],
+				steps : 100,
+				onInjected : function(){
+					this.set(startCircle[1]);
+				},
+				onChange: function(step){
+					startCircle[1] = step + '%';
+					startLabel.set('html', 'Start Circle (%) - (' + startCircle[0] + ',' + startCircle[1] + ',' + startCircle[2] + ')');
+					updateBackground();
+				}
+			})).inject(slidator.content);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [-25, 25],
+				steps : 50,
+				onInjected : function(){
+					this.set(startCircle[2]);
+				},
+				onChange: function(step){
+					startCircle[2] = step + '%';
+					startLabel.set('html', 'Start Circle (%) - (' + startCircle[0] + ',' + startCircle[1] + ',' + startCircle[2] + ')');
+					updateBackground();
+				}
+			})).inject(slidator.content);
+
+			// end circle
+
+			var endLabel = new UI.Label($merge(Label, {
+				html : 'End Circle (%)'
+			})).inject(slidator.content);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [0, 100],
+				steps : 100,
+				onInjected : function(){
+					this.set(endCircle[0]);
+				},
+				onChange: function(step){
+					endCircle[0] = step + '%';
+					endLabel.set('html', 'End Circle (%) - (' + endCircle[0] + ',' + endCircle[1] + ',' + endCircle[2] + ')');
+					updateBackground();
+				}
+			})).inject(slidator.content);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [0, 100],
+				steps : 100,
+				onInjected : function(){
+					this.set(endCircle[1]);
+				},
+				onChange: function(step){
+					endCircle[1] = step + '%';
+					endLabel.set('html', 'End Circle (%) - (' + endCircle[0] + ',' + endCircle[1] + ',' + endCircle[2] + ')');
+					updateBackground();
+				}
+			})).inject(slidator.content);
+			
+			new UI.Slider($merge(baseParams, {
+				range : [0, 360],
+				steps : 360,
+				onInjected : function(){
+					this.set(endCircle[2]);
+				},
+				onChange: function(step){
+					endCircle[2] = step + '%';
+					endLabel.set('html', 'End Circle (%) - (' + endCircle[0] + ',' + endCircle[1] + ',' + endCircle[2] + ')');
+					updateBackground();
+				}
+			})).inject(slidator.content);
+			
+			
+			// updateBackground
+			
+			function updateBackground(){
+				//console.log(index)
+				var color = RGBtoHex(Math.abs(colorStart[0] + red), Math.abs(colorStart[1] + green),  Math.abs(colorStart[2] + blue));						
+				var color2 = RGBtoHex(Math.abs(colorEnd[0] + red), Math.abs(colorEnd[1] + green),  Math.abs(colorEnd[2] + blue));						
+				
+				//startCircle = [startCircle[0] + '%', startCircle[1] + '%', startCircle[2] + '%'];
+				//endCircle = [endCircle[0] + '%', endCircle[1] + '%', endCircle[2] + '%'];
+				
+				background.props.layers.halo.gradient.color[0] = '#' + color;
+				background.props.layers.halo.gradient.color[1] = '#' + color2;
+				background.props.layers.halo.gradient.startCircle = startCircle;
+				background.props.layers.halo.gradient.endCircle = endCircle;
+				
+				background.setState('radial2');
+			
+			};
+			
+			function toHex(n) {
+				if (n==null) return "00";
+				n=parseInt(n); if (n==0 || isNaN(n)) return "00";
+				n=Math.max(0,n); n=Math.min(n,255); n=Math.round(n);
+				return "0123456789ABCDEF".charAt((n-n%16)/16)
+				+ "0123456789ABCDEF".charAt(n%16);
+			};
+			
+			function RGBtoHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B)}
+		
+			
+		});
+	</script>
+</head>
+
+<body bgcolor='#14396e' style="margin:0; overflow: hidden">
+	
+</body>
+
+</html>
