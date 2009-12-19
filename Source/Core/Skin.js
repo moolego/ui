@@ -6,7 +6,7 @@
 		Options
 		
 	Options: 
-		skin - (string) skin name defined in skins. ie: AquaGraphite
+		- skin - (string) skin name defined in skins. ie: AquaGraphite
 	
 	Example:
 		(start code)
@@ -14,7 +14,8 @@
 		(end)
 
 	Implied global:
-		$H,$type,$unlink,Class,Events,Options,UI
+		- MooLego -UI
+		- MooTools - $H,$type,$unlink,Class,Events,Options
 	
 	Members:
 		Implements, Skin, component, components, default, defaultSkin, 
@@ -39,7 +40,7 @@ UI.Skin = new Class({
 		Set the default skin
 		
 	Arguments:
-		options - (object) options
+		- options - (object) options
 	
 	Returns:
 		this
@@ -59,7 +60,7 @@ UI.Skin = new Class({
 		Merge what can be merged on the skin sheet the first time it's called so it will be faster for next calls.
 		
 	Arguments:
-		skinName - (string) the name of the skin who should be preprocessed.
+		- skinName - (string) the name of the skin who should be preprocessed.
 	
 	Return:
 		(void)
@@ -106,7 +107,7 @@ UI.Skin = new Class({
 		get properties for provided class. This methos will check in the options of the instance needed parameters.
 		
 	Properties:
-		className - (object) A UI.Element (or a child class) instance.
+		- className - (object) A UI.Element (or a child class) instance.
 		
 	className: (object)
 		the get method will use in the provided instance following options :
@@ -118,7 +119,7 @@ UI.Skin = new Class({
 		It will also check for other options, as defined in skin sheet as shortkeys
 		
 	Return:
-		properties - (object) An object containing skin properties for current type, merged with optional provided custom properties.
+		- properties - (object) An object containing skin properties for current type, merged with optional provided custom properties.
 	 */
 	
 	get: function(className){
@@ -174,9 +175,9 @@ UI.Skin = new Class({
 		}
 		
 		//remove shadows if not used
-		if (type['default'].layers.shadow.size === 0) {
-			delete type['default'].shadows;
-		}
+		//if (type['default'].layers.base.shadow.size === 0) {
+		//	delete type['default'].shadows;
+		//}
 		
 		return type;
 	},
@@ -186,10 +187,10 @@ UI.Skin = new Class({
 		get skin definition for specified component (inside an other element)
 		
 	Properties:
-		component - (string) the name of the component
+		- component - (string) the name of the component
 		
 	Return:
-		properties - (object) Object containing component properties
+		- properties - (object) Object containing component properties
 	*/
 	
 	getComponentProps: function(skin, component){

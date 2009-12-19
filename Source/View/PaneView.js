@@ -11,7 +11,6 @@
 	Options:
 		see <UI.View>
 		
-		
 	Returns:
 		Paneview object.
 		
@@ -121,8 +120,7 @@ UI.PaneView = new Class({
 			pane.scrollbar.update();
 			
 		});
-		
-		
+
 		this.resize();	
 		return pane;
 	},

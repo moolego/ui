@@ -97,7 +97,7 @@ UI.Bubble = new Class({
 		}
 		
 		// fx should be defined in skin sheet or not
-		// and an option can should be add to use effect on build on not
+		// and an option can/should be add to use effect on build or not
 		
 		this.fx = new Fx.Tween(this.element, {
 			wait: false,
@@ -130,8 +130,7 @@ UI.Bubble = new Class({
 		this.element.addEvents({
 			'click': function(){
 				this.fade(0);
-			}
-.bind(this)
+			}.bind(this)
 		});
 	},
 	
@@ -189,15 +188,16 @@ UI.Bubble = new Class({
 	getLocation: function(){
 		var bubbleCoord = this.element.getCoordinates();
 		var coord = this.options.target.getCoordinates();
+		
 		var left,top;
-		if (this.options.type == 'default') {
-			left = coord.right - 40;
-			top = coord.top - bubbleCoord.height - 10;
-		}
-		else 
+		
 			if (this.options.type == 'bottom') {
 				left = coord.right - 40;
 				top = coord.top + coord.height + 10;
+			} else {
+				left = coord.right - 40;
+				top = coord.top - bubbleCoord.height - 10;
+				
 			}
 		
 		return {

@@ -13,15 +13,11 @@
 		- className - (string) The class name set to the canvas element
 		- width - (integer) Canvas width
 		- height - (integer) Canvas height
-		
-		- disableShadowOnExplorer - (boolean) Disable shadows on Explorer navigators for performance reasons.
-		
+
 	Events:	
 	
 		- onComplete - (function) - function to fire when the canvas is drawn
-	
-	
-	
+
 	Returns:
 		Canvas object.
 		
@@ -47,7 +43,7 @@
 	    canvasSize, circle, clearRect, closePath, color, composite, context, 
 	    convert2Px, cos, createLinearGradient, createPattern, 
 	    createRadialGradient, ctx, debug, default, direction, 
-	    disableShadowOnExplorer, draw, drawShadows, drawShadowsCalled, 
+	    draw, drawShadows, drawShadowsCalled, 
 	    drawShape, each, endCircle, fill, fillStyle, fireEvent, getContext, 
 	    getProperties, globalCompositeOperation, gradient, height, hexToRgb, 
 	    image, initialize, inject, join, layers, left, length, line, lineTo, 
@@ -77,12 +73,9 @@ UI.Canvas = new Class({
 		height: 150,
 		
 		zIndex: -1,
-		
 		context: '2d',
 		
 		debug: false,
-		disableShadowOnExplorer: true,
-		
 		onComplete: $empty
 	},
 	
@@ -92,7 +85,7 @@ UI.Canvas = new Class({
 	 Create a new canvas object and draw it
 	 
 	 Arguments:
-	 options - (object) options
+	 - options - (object) options
 	 */
 	initialize: function(options){
 		this.setOptions(options);
@@ -128,9 +121,9 @@ UI.Canvas = new Class({
 	 set size of the canvas object handling the shadow, then draw it.
 	 
 	 Arguments:
-	 width - (integer) Width of the canvas without shadow offsets
-	 height - (integer) Width of the canvas without shadow offsets
-	 props - (object) Skin properties. If not set, will get props passed on initialize
+	 - width - (integer) Width of the canvas without shadow offsets
+	 - height - (integer) Width of the canvas without shadow offsets
+	 - props - (object) Skin properties. If not set, will get props passed on initialize
 	 
 	 Return:
 	 (void)
@@ -140,14 +133,17 @@ UI.Canvas = new Class({
 			this.props = props;
 		}
 		
-		this.shadowSize = this.props.layers.shadow.size;
-		this.shadowMagnify = this.props.layers.shadow.magnify;
-		
-		this.shadowOffset = [this.props.layers.shadow.offsetX, this.props.layers.shadow.offsetY];
-		
-		this.shadowThickness = this.shadowSize + this.shadowMagnify;
-		
-		this.canvasSize = [(width || this.options.width) + this.shadowThickness * 2 + Math.abs(this.shadowOffset[0]), (height || this.options.height) + this.shadowThickness * 2 + Math.abs(this.shadowOffset[1])];
+		if (this.props.layers.base && this.props.layers.base.shadow && this.props.layers.base.shadow) {
+			this.shadowSize = this.props.layers.base.shadow.size;
+			if (!this.props.layers.base.shadow.offsetX) { this.props.layers.base.shadow.offsetX = 0; }
+			if (!this.props.layers.base.shadow.offsetY) { this.props.layers.base.shadow.offsetY = 0; }
+			this.shadowOffset = [this.props.layers.base.shadow.offsetX, this.props.layers.base.shadow.offsetY];
+		} else {
+			this.shadowSize = 0;
+			this.shadowOffset = [0,0];
+		}
+
+		this.canvasSize = [(width || this.options.width) + this.shadowSize * 2 + Math.abs(this.shadowOffset[0]), (height || this.options.height) + this.shadowSize * 2 + Math.abs(this.shadowOffset[1])];
 		
 		this.canvas.setProperties({
 			width: this.canvasSize[0],
@@ -155,16 +151,16 @@ UI.Canvas = new Class({
 		});
 		
 		this.canvas.setStyles({
-			top: -this.shadowThickness,
-			left: -this.shadowThickness,
+			top: -this.shadowSize,
+			left: -this.shadowSize,
 			width: this.canvasSize[0],
 			height: this.canvasSize[1]
 		});
 		
-		this.absSize = [this.canvasSize[0] - this.shadowThickness * 2 - Math.abs(this.shadowOffset[0]), this.canvasSize[1] - this.shadowThickness * 2 - Math.abs(this.shadowOffset[1])];
+		this.absSize = [this.canvasSize[0] - this.shadowSize * 2 - Math.abs(this.shadowOffset[0]), this.canvasSize[1] - this.shadowSize * 2 - Math.abs(this.shadowOffset[1])];
 		
 		this.relSize = this.absSize;
-		this.offset = [this.shadowThickness, this.shadowThickness];
+		this.offset = [this.shadowSize, this.shadowSize];
 		
 		if (width && height) {
 			this.draw();
@@ -176,28 +172,13 @@ UI.Canvas = new Class({
 	 Draw layers defined in props
 	 
 	 Arguments:
-	 props - (object) draw properties
+	 - props - (object) draw properties
 	 
 	 Returns:
 	 (void)
 	 */
 	draw: function(props){
 		
-		if (!this.shadowSet) {
-			if (props) {
-				this.props = props;
-			}
-			this.ctx.clearRect(0, 0, this.canvasSize[0], this.canvasSize[1]);
-			
-			if (this.shadowSize &&
-			!this.drawShadowsCalled &&
-			(Browser.Engine.trident &&
-			!this.options.disableShadowOnExplorer ||
-			!Browser.Engine.trident)) {
-				this.drawShadows();
-				return;
-			}
-		}
 		var layers = new Hash(this.props.layers);
 		if (this.props.layers.reorder) {
 			this.props.layers.reorder.each(function(key){
@@ -214,116 +195,9 @@ UI.Canvas = new Class({
 			}, this);
 		}
 		
-		this.offset = [this.shadowThickness, this.shadowThickness];
-		this.relSize = [this.canvasSize[0] - this.shadowThickness * 2 - Math.abs(this.shadowOffset[0]), this.canvasSize[1] - this.shadowThickness * 2 - Math.abs(this.shadowOffset[1])];
-		this.shadowSet = false;
-		this.fireEvent('complete');
-	},
-	
-	/*
-	 Function: drawShadows
-	 private function
-	 
-	 Draw shadow with successive rounded rect
-	 
-	 Returns:
-	 (void)
-	 */
-	drawShadows: function(){
-		//get first layer parameters
-		var layerKey = null;
-		$H(this.props.layers).each(function(props, key){
-			if (key != 'shadow' && key != 'default') {
-				layerKey = layerKey || key;
-			}
-		});
-		var modelProps = this.getProperties(layerKey);
-		
-		//set color
-		//console.log(this.props.layers.shadow.color);
-		
-		var color = '';
-		
-		if (this.props.layers.shadow.color && this.props.layers.shadow.color.test(/#[0-9A-F]+/)) {
-			color = this.props.layers.shadow.color.hexToRgb(true);
-		}
-		else {
-			color = '0,0,0';
-		}
-		
-		//set size
-		var size = [this.canvasSize[0] - this.shadowOffset[0], this.canvasSize[1] - this.shadowOffset[1]];
-		
-		//set diffusion
-		var diffusion = 1.3;
-		
-		//set radius
-		if ($defined(this.props.layers.shadow.radius)) {
-			modelProps.radius = [this.props.layers.shadow.radius, this.props.layers.shadow.radius, this.props.layers.shadow.radius, this.props.layers.shadow.radius];
-		}
-		var radius = [diffusion * (this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[0]), diffusion * (this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[1]), diffusion * (this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[2]), diffusion * (this.props.layers.shadow.size - 1 - this.props.layers.shadow.magnify + modelProps.radius[3])];
-		
-		
-		//set opacity
-		var opacity = (this.props.layers.shadow.opacity || 1) / 1;
-		
-		//set shape
-		var shape = modelProps.shape;
-		
-		//draw
-		var props = {
-			radius: radius,
-			color: this.props.layers.shadow.color || '#000',
-			size: size,
-			offset: [this.shadowOffset[0], this.shadowOffset[1]]
-		};
-		
-		for (var i = this.shadowThickness * 1.5; i > 0; i--) {
-			var oratio = opacity / (i * 2 / 1.5 + 10);
-			this.ctx.save();
-			this.setTransformation(props);
-			this[shape](props);
-			this.ctx.fillStyle = "rgba(" + color + ", " + oratio + ")";
-			this.ctx.fill();
-			this.ctx.restore();
-			
-			props.size = [props.size[0] - 2, props.size[1] - 2];
-			props.offset = [++props.offset[0], ++props.offset[1]];
-			props.radius = [props.radius[0] > 0 ? props.radius[0] - diffusion : 0, props.radius[1] > 0 ? props.radius[1] - diffusion : 0, props.radius[2] > 0 ? props.radius[2] - diffusion : 0, props.radius[3] > 0 ? props.radius[3] - diffusion : 0];
-		}
-		
-		modelProps.offset[0]++;
-		modelProps.offset[1]++;
-		
-		modelProps.size[0] = modelProps.size[0] - 2;
-		modelProps.size[1] = modelProps.size[1] - 2;
-		
-		this.ctx.save();
-		this.setTransformation(modelProps);
-		this.ctx.globalCompositeOperation = 'destination-out';
-		this[shape](modelProps);
-		this.ctx.fill();
-		this.ctx.restore();
-		
-		
-		this.shadowSet = true;
-		this.draw();
-	},
-	
-	/*
-	 Function: inject
-	 inject canvas then return class instance
-	 
-	 Arguments:
-	 target		: (element) - the target dom element
-	 position	: (string - optional) the position were to inject
-	 
-	 Returns:
-	 this
-	 */
-	inject: function(target, position){
-		this.canvas.inject(target, position);
-		return this;
+		this.offset = [this.shadowSize, this.shadowSize];
+		this.relSize = [this.canvasSize[0] - this.shadowSize * 2 - Math.abs(this.shadowOffset[0]), this.canvasSize[1] - this.shadowSize * 2 - Math.abs(this.shadowOffset[1])];
+			this.fireEvent('complete');
 	},
 	
 	/*
@@ -332,15 +206,16 @@ UI.Canvas = new Class({
 	 draw the shape depending on the skin component props definition
 	 
 	 Arguments:
-	 key - (string) key
+	 - key - (string) key
 	 
 	 Return
 	 (void)
 	 */
 	trace: function(key){
 		var properties = this.getProperties(key);
+		
 		if (this.options.debug) {
-			this.debug('trace', properties);
+			console.log(key+':',properties);
 		}
 		
 		this.ctx.save();
@@ -384,9 +259,9 @@ UI.Canvas = new Class({
 	 draw the shape depending on the skin component props definition
 	 
 	 Arguments:
-	 value - (string/integer/float) value
-	 direction - (string) Direction. Could be either 'x' or 'y'
-	 absolute - (boolean) Determine if the position is relative to previous element or absolute (relative to canvas)
+	- value - (string/integer/float) value
+	- direction - (string) Direction. Could be either 'x' or 'y'
+	- absolute - (boolean) Determine if the position is relative to previous element or absolute (relative to canvas)
 	 
 	 Return
 	 value - (float) The value converted in pixel
@@ -399,16 +274,14 @@ UI.Canvas = new Class({
 			if (value.match(/%$/)) {
 				return value.toInt() / 100 * refSize;
 				//size is in px	
+			} 
+			else if (value.match(/px$/)) {
+				return value.toInt();
+			//size is auto
 			}
-			else 
-				if (value.match(/px$/)) {
-					return value.toInt();
-				//size is auto
-				}
-				else 
-					if (value == 'auto') {
-						return value;
-					}
+			else if (value == 'auto') {
+				return value;
+			}
 		}
 		else {
 			// size is in px (int or float)
@@ -423,9 +296,9 @@ UI.Canvas = new Class({
 	 Determine the start point's coordinates as width and height for a shape
 	 
 	 Arguments:
-	 value - (array) Array with three entries to determine offset
-	 position - (string) Determine if the position is relative to previous element or absolute (relative to canvas)
-	 size - (array) Array containing layer's width and height. Could be either a number or 'auto' to determine it from offset
+	 - value - (array) Array with three entries to determine offset
+	 - position - (string) Determine if the position is relative to previous element or absolute (relative to canvas)
+	 - size - (array) Array containing layer's width and height. Could be either a number or 'auto' to determine it from offset
 	 
 	 Return:
 	 offset - (array) An array with x and y start point coordinates, as well as width and height
@@ -434,48 +307,37 @@ UI.Canvas = new Class({
 		var absolute = (position == 'relative') ? false : true;
 		value = [this.convert2Px(value[0], 'y', absolute), this.convert2Px(value[1], 'x', absolute), this.convert2Px(value[2], 'y', absolute), this.convert2Px(value[3], 'x', absolute)];
 		// check size
-		if (size) {
-			// automatic width
+		if (size) { // automatic width
 			if ($type(size) == 'array' && size[1] && size[0] == 'auto' && size[1] != 'auto') {
 				size[1] = this.convert2Px(size[1], 'y', absolute);
-				
-				// automatic height
-			}
+			} // automatic height
 			else 
 				if ($type(size) == 'array' && size[1] && size[0] != 'auto' && size[1] == 'auto') {
 					size[0] = this.convert2Px(size[0], 'x', absolute);
-					
-				// both width and height specified
-				}
+				} // both width and height specified
 				else 
 					if ($type(size) == 'array' && size[1] && size[0] != 'auto' && size[1] != 'auto') {
 						size[0] = this.convert2Px(size[0], 'x', absolute);
 						size[1] = this.convert2Px(size[1], 'y', absolute);
-						
-					// both auto => error
-					}
+					} // both auto => error
 					else 
 						if ($type(size) == 'array' && size[1] && size[0] == 'auto' && size[1] == 'auto') {
 							size = false;
-							
-						// just one value is specified
-						}
+						} // just one value is specified
 						else 
 							if (size != 'auto') {
 								size = [this.convert2Px(size, 'x', absolute), this.convert2Px(size, 'y', absolute)];
 							}
 		}
+		
 		// calculate size from offsets
 		
-		var offsetX,
-			offsetY,
-			width,
-			height;
+		var offsetX, offsetY, width, height;
 		
 		if (!size) {
 			if (absolute) {
-				offsetX = value[3] + this.shadowThickness;
-				offsetY = value[0] + this.shadowThickness;
+				offsetX = value[3] + this.shadowSize;
+				offsetY = value[0] + this.shadowSize;
 				width = this.absSize[0] - value[1] - value[3];
 				height = this.absSize[1] - value[0] - value[2];
 			}
@@ -488,7 +350,7 @@ UI.Canvas = new Class({
 				this.offset = [offsetX, offsetY];
 				this.relSize = [width, height];
 			}
-			// size is given
+		// size is given
 		}
 		else {
 			// determine X coordinates
@@ -497,7 +359,7 @@ UI.Canvas = new Class({
 				case value[3] != 'auto':
 					if (absolute) {
 						width = (size[0] == 'auto') ? this.absSize[0] - value[1] - value[3] : size[0];
-						offsetX = value[3] + this.shadowThickness;
+						offsetX = value[3] + this.shadowSize;
 					}
 					else {
 						width = (size[0] == 'auto') ? this.relSize[0] - value[1] - value[3] : size[0];
@@ -512,7 +374,7 @@ UI.Canvas = new Class({
 				case value[1] != 'auto':
 					if (absolute) {
 						width = (size[0] == 'auto') ? this.absSize[0] - value[1] - value[3] : size[0];
-						offsetX = this.absSize[0] - width - value[1] + this.shadowThickness;
+						offsetX = this.absSize[0] - width - value[1] + this.shadowSize;
 					}
 					else {
 						width = (size[0] == 'auto') ? this.relSize[0] - value[1] - value[3] : size[0];
@@ -527,7 +389,7 @@ UI.Canvas = new Class({
 				case value[3] == 'auto' && value[1] == 'auto':
 					if (absolute) {
 						width = size[0];
-						offsetX = (this.absSize[0] - width) / 2 + this.shadowThickness;
+						offsetX = (this.absSize[0] - width) / 2 + this.shadowSize;
 					}
 					else {
 						width = size[0];
@@ -545,7 +407,7 @@ UI.Canvas = new Class({
 				case value[0] != 'auto':
 					if (absolute) {
 						height = (size[1] == 'auto') ? this.absSize[1] - value[0] - value[2] : size[1];
-						offsetY = value[0] + this.shadowThickness;
+						offsetY = value[0] + this.shadowSize;
 					}
 					else {
 						height = (size[1] == 'auto') ? this.relSize[1] - value[0] - value[2] : size[1];
@@ -559,7 +421,7 @@ UI.Canvas = new Class({
 				case value[2] != 'auto':
 					if (absolute) {
 						height = (size[1] == 'auto') ? this.absSize[1] - value[0] - value[2] : size[1];
-						offsetY = this.absSize[1] - height - value[2] + this.shadowThickness;
+						offsetY = this.absSize[1] - height - value[2] + this.shadowSize;
 					}
 					else {
 						height = (size[1] == 'auto') ? this.relSize[1] - value[0] - value[2] : size[1];
@@ -573,7 +435,7 @@ UI.Canvas = new Class({
 				case value[0] == 'auto' && value[2] == 'auto':
 					if (absolute) {
 						height = size[1];
-						offsetY = (this.absSize[1] - height) / 2 + this.shadowThickness;
+						offsetY = (this.absSize[1] - height) / 2 + this.shadowSize;
 					}
 					else {
 						width = size[1];
@@ -615,7 +477,8 @@ UI.Canvas = new Class({
 			scale: $pick(this.props.layers[key].scale, this.props.layers['default'].scale),
 			composite: $pick(this.props.layers[key].composite, this.props.layers['default'].composite),
 			def: $pick(this.props.layers[key].def, this.props.layers['default'].def),
-			baseSize: $pick(this.props.layers[key].baseSize, this.props.layers['default'].baseSize)
+			baseSize: $pick(this.props.layers[key].baseSize, this.props.layers['default'].baseSize),
+			shadow: $pick(this.props.layers[key].shadow, this.props.layers['default'].shadow)
 		};
 		
 		// test the position
@@ -652,8 +515,7 @@ UI.Canvas = new Class({
 		else {
 			properties.radius = [radius, radius, radius, radius];
 		}
-		
-		
+
 		return properties;
 	},
 	
@@ -671,8 +533,7 @@ UI.Canvas = new Class({
 	 */
 	setColor: function(part, props){
 		var ax, ay, bx, by, cx, cy, color;
-		
-		
+
 		var p = (part == 'fill') ? 'gradient' : 'stroke';
 		
 		if (!props[p]) {
@@ -796,11 +657,9 @@ UI.Canvas = new Class({
 	 (void)
 	 */
 	setTransformation: function(props){
-
-		
 		if (props.shape != 'complex') {
 			this.ctx.translate(props.size[0] / 2 + props.offset[0], props.size[1] / 2 + props.offset[1]);
-		}
+		 }
 		//rotation
 		if (props.rotation) {
 			this.ctx.rotate(Math.PI * props.rotation / 180);
@@ -833,21 +692,46 @@ UI.Canvas = new Class({
 	 (void)
 	 */
 	drawShape: function(props){
+		if (props.shadow) {
+			this.setShadow(props.shadow);
+		}
+
 		if (props.image) {
 			this.setImage(props);
+		} else if (props.color || props.gradient) {
+			this.setColor('fill', props);
+			this.ctx.fill();
 		}
-		else 
-			if (props.color || props.gradient) {
-				this.setColor('fill', props);
-				this.ctx.fill();
-			}
+		
 		if (props.stroke) {
 			//determine lineWidth
 			this.ctx.lineWidth = (props.stroke.width) ? props.stroke.width : 1;
 			this.setColor('stroke', props);
 			this.ctx.stroke();
 		}
-		
+	},
+	
+	/*
+	 Function: setShadow
+	 private function
+	 
+	 Set Shadow Options
+	 
+	 Arguments:
+	 props - (object) The shadow properties.
+	 
+	 Return:
+	 (void)
+	 */
+	setShadow: function(shadow) {
+		var opacity = shadow.opacity || 1;
+		var color = shadow.color || '#000000';
+		var coloralpha = 'rgba(' + color.hexToRgb(true).join(',') + ', ' + opacity + ')';
+
+		this.ctx.shadowColor = coloralpha;
+        this.ctx.shadowOffsetX = shadow.offsetX || 0;
+        this.ctx.shadowOffsetY = shadow.offsetY || 0;
+        this.ctx.shadowBlur = shadow.blur || 0;
 	},
 	
 	/*
@@ -864,7 +748,7 @@ UI.Canvas = new Class({
 	 */
 	setImage: function(props){
 		
-		var that = this;
+		var self = this;
 		
 		//set vars
 		props.image.pattern = props.image.pattern || 'repeat';
@@ -874,8 +758,8 @@ UI.Canvas = new Class({
 		img.onload = function(){
 			// create pattern
 			var ptrn = this.ctx.createPattern(img, props.image.pattern);
-			that.ctx.fillStyle = ptrn;
-			that.ctx.fill();
+			self.ctx.fillStyle = ptrn;
+			self.ctx.fill();
 		};
 		//we draw it as a pattern
 		img.src = props.image.url;
@@ -888,7 +772,19 @@ UI.Canvas = new Class({
 	 Draw a rounded rectangle path
 	 
 	 Arguments:
-	 props - (object) The layer properties.
+	 - props - (object) The layer properties.
+	 
+	 Example:
+	 	(start code)
+	 	layers: {
+			roundRect: {
+				offset: 1,
+				color: ['#494949', '#5f5f5f'],
+				opacity: 1,
+				radius: 4
+			}
+		}
+		(end)
 	 
 	 Return:
 	 (void)
@@ -917,17 +813,32 @@ UI.Canvas = new Class({
 		this.ctx.quadraticCurveTo(-h0, s1 - h1, -h0, s1 - r3 - h1);
 		this.ctx.lineTo(-h0, r0 - h1);
 		this.ctx.quadraticCurveTo(-h0, -h1, r0 - h0, -h1);
+
 		this.ctx.closePath();
 	},
 	
 	/*
-	 Function: circle
+	Function: circle
 	 private function
 	 
 	 Draw a circle or a circle part, determined width props.angle (array).
 	 
 	 Arguments:
-	 props - (object) The layer properties.
+	- props - (object) The layer properties.
+	 
+	Example:
+	 	(start code)
+	 	layers: {
+			circle: {
+				shape: 'circle',
+				position: 'absolute',
+				size: [10, 10],
+				opacity: 1,
+				offset: 0
+			}
+		}
+		(end)
+	 
 	 
 	 Return:
 	 (void)
@@ -956,11 +867,35 @@ UI.Canvas = new Class({
 	 Draw a line
 	 
 	 Arguments:
-	 props - (object) The layer properties.
+	 - props - (object) The layer properties.
+	 
+	 Props:
+	 	- shape - (string)lineUp/lineDown
+	 	- width - 
+	 	- opacity - (float)
+	 	- color - (string)
+	 	- offset - (float/array)
+
+	 Example:
+	 	(start code)
+	 	layers: {
+			line: {
+				position: 'absolute',
+				shape: 'lineUp',
+				opacity: 1,
+				width: 1,
+				color: '#000'
+			}
+		}
+		(end)
+	 
+	 Discussion:
+	 	
 	 
 	 Return:
 	 (void)
-	 */
+	*/
+	
 	line: function(props){
 		// prepare datas
 		props.stroke = props.stroke || {
@@ -992,7 +927,22 @@ UI.Canvas = new Class({
 	 Draw a triangle in a rectangle determine with props.size (array)
 	 
 	 Arguments:
-	 props - (object) The layer properties.
+	 - props - (object) The layer properties.
+	 
+	 Example:
+		(start code)
+ 		layers: {
+ 			triangle: {
+				shape: 'triangle',
+				radius: [8, 8, 8, 8],
+				position: 'abolute',
+				offset: 13,
+				color: '#fff'
+			}
+		}
+		(end)
+	 
+	 
 	 
 	 Return:
 	 (void)
@@ -1011,76 +961,115 @@ UI.Canvas = new Class({
 	},
 	
 	/*
-	 Function: bezier
-	 private function
+	Function: complex
+	private function
 	 
-	 to draw complex shapes
+	to draw complex shapes
 	 
-	 Arguments:
-	 props - (object) The layer properties.
-	 
-	 Return:
-	 (void)
-	 */
+	Arguments:
+	- props - (object) The layer properties.
+	
+	Example of a layer using complex shape:
+		(start code)
+		layers: {
+			complex: {
+				shape: 'complex',
+				baseSize: [150, 150],
+				def: [
+					['moveTo', 75, 25], 
+					['quadraticCurveTo', 25, 25, 25, 62.5], 
+					['quadraticCurveTo', 25, 100, 50, 100], 
+					['quadraticCurveTo', 50, 120, 30, 125], 
+					['quadraticCurveTo', 60, 120, 65, 100], 
+					['quadraticCurveTo', 125, 100, 125, 62.5], 
+					['quadraticCurveTo', 125, 25, 75, 25]
+				]
+			}
+		}
+		(end)
+	
+	Return:
+	(void)
+	
+	Discussion:
+	This method is an experiment
+	
+	*/
 	complex: function(props){
 		var ctx = this.ctx;
-		// prepare datas
 		
-		//console.log(props);
-		
-		var width = props.size[0];
-		var height = props.size[1];
-		
-		//console.log(width,height);
-		
+		var ratioX = props.size[0] / props.baseSize[0] || 100;
+		var ratioY = props.size[1] / props.baseSize[1] || 100;
 		
 		ctx.beginPath();
-		var i = 0;
-		
-		var defaultWidth = props.baseSize[0] || 100;
-		var defaultHeight = props.baseSize[1] || 100;
-		
-		var ratioX = width / defaultWidth;
-		var ratioY = height / defaultHeight;
-		
-		var def = new Hash(props.def);
-		
+
 		props.def.each(function(list){
 			var p = [];
 			var j = 0;
 			var command;
 			
 			list.each(function(val){
-			
-				if (j == 0) {
-				
-					command = val
+				if (j === 0) {
+					command = val;
 				}
 				else {
 					if ((j % 2) === 0) {
-						p[j] = val * ratioY;
+						if (command != 'arc') {
+							p[j] = val * ratioY;
+						} else {
+							p[j] = val;
+						}
 					}
 					else {
-						p[j] = val * ratioX;
-						
+						if (command != 'arc') {
+							p[j] = val * ratioX;
+						} else {
+							p[j] = val;
+							
+						}
 					}
-					
 				}
 				j++;
 			});
 			
-			if (command == 'moveTo') {
-				ctx.moveTo(p[1], p[2]);
+			switch (command) {
+				case 'moveTo':
+					ctx.moveTo(p[1], p[2]);
+					break;
+				case 'lineTo':
+					ctx.moveTo(p[1], p[2]);
+					break;
+				case 'arc':
+					p[1] = p[1] * ratioX;
+					p[2] = p[2] * ratioY;
+					p[3] = p[3] * (ratioY+ratioX)/2;
+					ctx.arc(p[1], p[2], p[3], p[4], p[5], p[6]);
+					break;
+				case 'quadraticCurveTo':
+					ctx.quadraticCurveTo(p[1], p[2], p[3], p[4]);
+					break;
+				case 'bezierCurveTo':
+					ctx.bezierCurveTo(p[1], p[2], p[3], p[4], p[5], p[6]);
+					break;
 			}
-			if (command == 'quadraticCurveTo') {
-				ctx.quadraticCurveTo(p[1], p[2], p[3], p[4]);
-			}
-			if (command == 'bezierCurveTo') {
-				ctx.quadraticCurveTo(p[1], p[2], p[3], p[4], p[5], p[6]);
-			}
-			i++;
 		});
 		
 		ctx.closePath();
+	},
+	
+	/*
+	 Function: inject
+	 inject canvas then return class instance
+	 
+	 Arguments:
+	 - target		: (element) - the target dom element
+	 - position	: (string - optional) the position were to inject
+	 
+	 Returns:
+	 this
+	 */
+	inject: function(target, position){
+		this.canvas.inject(target, position);
+		return this;
 	}
 });

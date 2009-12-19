@@ -18,12 +18,14 @@ Inspiration:
 */
 
 var UI = {
-  props		: {}
+  props		: {},
+  
 };
 
 var ui = {
 	'version': '0.2',
- 	'build': '%build%'
+ 	'build': '%build%',
+	'defaultSkin': 'AquaGraphite'
 };
 ui.controller = {};
 
@@ -220,6 +222,8 @@ ui.controller.element = {
 		}
 		
 		//replace tips
+		// should in tips contreller in tips.js
+		
 		if (object.options.component != 'tip') {
 			window.fireEvent('setTipsPosition');
 		}
@@ -309,15 +313,49 @@ ui.controller.element = {
 
 	handelKeys : function(){
 		window.addEvent('keydown', function(e){
+			//console.log(e.key);
+			
 			if (e.key == 'down' && this.menu) {
 				this.menu.goDown();
 			}
 			else if (e.key == 'up' && this.menu) {
 				this.menu.goUp();
 			}
+			
+			//var ev = new Event(e).stop();
 		}.bind(this));
 	}
 	
 };
 
 ui.controller.element.start();
+
+/*
+Class: ui.debugger
+	Default element debugger.
+*/
+
+ui.debug = {
+	trace: function(properties){
+		for (var id in properties) {
+			if (properties[id] == 'NaN') {
+				return;
+			}
+			if ($type(properties[id]) == 'array' || $type(properties[id]) == 'object') {
+				for (var val in properties[id]) {
+					if (properties[id][val] == 'NaN') {
+						console.log(						//this.options.element,  ": ",
+						val + ' , Nan', "(" + this.options.skin + "=>" + this.options.component + "=>" + this.options.type + "=>" + this.options.state + ")");
+						return;
+					}
+				}
+			}
+		}
+		if (properties.size && !properties.size[0] && !properties.size[1]) {
+			console.log(			//this.options.element,  ": ",
+			key + ' , size is null', "(" + this.options.skin + "=>" + this.options.component + "=>" + this.options.type + "=>" + this.options.state + ")");
+			return;
+		}
+	}
+}
+
