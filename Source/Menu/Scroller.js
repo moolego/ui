@@ -263,14 +263,14 @@ UI.MenuScroller = new Class({
 			zIndex: -1
 		}).inject(this.arrowUp);
 		
-		var that = this;
+		var self = this;
 		
 		this.arrowUp.addEvents({
 			'mouseover': function(){
-				that.scroller = that.scrollUp.periodical(30, that, 2);
+				self.scroller = self.scrollUp.periodical(30, self, 2);
 			},
 			'mouseout': function(){
-				$clear(that.scroller);
+				$clear(self.scroller);
 			}
 		});
 		

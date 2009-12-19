@@ -18,7 +18,7 @@
 
 	<script type="text/javascript" src="../Skins/Demo.js"></script>
 		
-	<script type="text/javascript" src="js/examples.js"></script>
+	<!--script type="text/javascript" src="js/examples.js"></script-->
 
 	<title>MooLego - Components Playground</title>
 	
@@ -48,6 +48,27 @@
 				height	: 400,
 				styles		: {
 					margin	: 100
+				},
+				props: {
+					'default': {
+						layers: {
+							base: {
+								shadow: {
+									color: '#ff3333'
+								}
+							}
+						}
+					},
+					over: {
+						layers: {
+							base: {
+								shadow: {
+									blur: 256,
+									color: '#000'
+								}
+							}
+						}
+					}
 				}
 			}).inject(document.body);
 		});

@@ -124,7 +124,7 @@ UI.Slider = new Class({
 	inject: function(target, position){
 		this.fireEvent('inject');
 		
-		var that = this;
+		var self = this;
 		
 		this.element.inject(target, position);
 		this.element.setStyle('visibility', 'visible');
@@ -141,17 +141,17 @@ UI.Slider = new Class({
 			mode: this.options.type,
 			
 			onStart: function(step){
-				that.fireEvent('start', step);
+				self.fireEvent('start', step);
 			},
 			onTick: function(position){
 				if(this.options.snap) { position = this.toPosition(this.step); }
 				this.knob.setStyle(this.property, position);
 			},
 			onChange: function(step){
-				that.fireEvent('change', step);
+				self.fireEvent('change', step);
 			},
 			onComplete: function(step){
-				that.fireEvent('complete', step);
+				self.fireEvent('complete', step);
 			}
 		});
 		this.fireEvent('injected');

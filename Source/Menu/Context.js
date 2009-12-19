@@ -75,6 +75,8 @@ UI.Context = new Class({
 	options:{
 		className: 'ui-menu-context',
 		contexts: [],
+		scope:$(document.body),
+		container:$(document.body),
 		trigger: 'contextmenu',
 		type: 'context'
 	},
@@ -93,9 +95,10 @@ UI.Context = new Class({
 
 	initialize: function(options){
 		this.parent(options);
-		this.addContexts(this.options.contexts);
+
+		this.addContexts(this.options.contexts,this.options.container);
 		this.element.hide();
-		this.element.inject(document.body);
+		this.element.inject(this.options.container);
 	},
 	
 	/* 
@@ -109,19 +112,17 @@ UI.Context = new Class({
 		this
 	*/
 	
-	addContexts: function(contexts){
-		var stopEvent;
-		
+	addContexts: function(contexts,container){
 		contexts.each(function(context){
-			$(document.body).getElements(context.target).each(function(el){
+			container.getElements(context.target).each(function(el){
 				el.addEvent(this.options.trigger, function(e){
-					stopEvent = new Event(e).stop();
+					new Event(e).stop();
 					this.hide(0);
 					this.buildMenu(context.menu);
 					this.show(e);
 				}.bind(this));
 				this.element.addEvent('contextmenu', function(e){
-					stopEvent = new Event(e).stop();
+					new Event(e).stop();
 				});
 			},this);
 		},this);
@@ -170,13 +171,13 @@ UI.Context = new Class({
 		if (!$defined(x) || !$defined(y)) {
 			return;
 		}
-		
+				
 		var coordinates = this.element.getCoordinates();
-		var top = y+Window.getScrollTop();
-		var left = x+Window.getScrollLeft();
+		var top = y+this.options.container.getScrollTop();
+		var left = x+this.options.container.getScrollLeft();
 		
-		if ((x + coordinates.width + 20) > Window.getWidth()) {left =  left - coordinates.width;}
-		if ((y + coordinates.height + 20) > Window.getHeight())	{top =  top - coordinates.height;}
+		if ((x + coordinates.width + 20) > this.options.container.getWidth()) {left =  left - coordinates.width;}
+		if ((y + coordinates.height + 20) > this.options.container.getHeight())	{top =  top - coordinates.height;}
 		
 		this.element.setStyles({
 			'top' : top,

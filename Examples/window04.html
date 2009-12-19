@@ -1,8 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="content-script-type" content="text/javascript">		
 	
 	<script type="text/javascript" src="mootools/core.js"></script>
 	<script type="text/javascript" src="mootools/more.js"></script>
@@ -15,7 +14,6 @@
 	<script type="text/javascript" src="../Source/Core/Interface.js"></script>
 	
 	<script type="text/javascript" src="../Source/Element/Element.js"></script>
-	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
 	<script type="text/javascript" src="../Source/Element/Label.js"></script>
 	<script type="text/javascript" src="../Source/Element/Bubble.js"></script>
 	<script type="text/javascript" src="../Source/Element/Scrollbar.js"></script>
@@ -39,15 +37,12 @@
 	<script type="text/javascript" src="../Source/View/PanelView.js"></script>
 	<script type="text/javascript" src="../Source/View/SplitView.js"></script>
 	<script type="text/javascript" src="../Source/View/TabView.js"></script>
-	
-	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
+
 	<script type="text/javascript" src="../Source/Window/Window.js"></script>
 	<script type="text/javascript" src="../Source/Window/Dialog.js"></script>
 	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
 	
-	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
-	<script type="text/javascript" src="../Skins/Demo.js"></script>
-	<script type="text/javascript" src="../Skins/BlueTouch.js"></script>
+	<script type="text/javascript" src="../Skins/MinimalGrey.js"></script>
 		
 	<script type="text/javascript" src="js/examples.js"></script>
 
@@ -57,141 +52,64 @@
 		window.addEvent('domready', function() {
 			var time = $time();
 			
+			ui.defaultSkin = 'MinimalGrey';
+			
 			/* Elements in page */
 			var form = new Element('form').inject(document.body);
-			woo = new UI.Window({
-				toolbar : {
-					type : 'window',
-					displayMode : 'text',
-					menu		: [
-						{
-							text	: 'moolego',
-							image : 'http://www.farles.com/wp-content/themes/fjords01-10/imagenes_qwilm/home_icon.gif',
-							styles	: {
-								position	: 'relative'
-							},
-							menu : [
-								{
-									text : 'About',
-									action : function() { 
-										new UI.Window({
-											title			: 'about',
-											width			: 300,
-											height			: 160,
-											foot			: false,
-											view			: {
-												overflow 	: 'hidden'
-											},
-											controls		: ['close']
-										});
-									}
-								},
-								{ 
-									text 		: 'Software version...',
-									action : function() { this.test('about'); alert('click')}.bind(this)
-								},
-								{ text		: 'separator' },
-								{ 
-									text 		: 'Préférences systemes...',
-									action : function() { new App.Settings() }
-								},
-								{ text		: 'separator' },{
-									text : 'Elements récents',
-									menu : [
-										{text : 'Finder'},
-										{text : 'Safari'},
-										{text : 'Mail'},
-										{text : 'Protoshop'},
-										{text : 'Nasty Explorer'}
-									]
-								},
-								{ text		: 'separator' },
-								{
-									text : 'Fermer la session'
-								}
-							]
-						},
-						{
-							text : 'New',
-							image : 'http://www.farles.com/wp-content/themes/fjords01-10/imagenes_qwilm/gallery_icon.gif',
-							options : {'class' : 'ui-dd-new'},
-							menu		: [
-								{
-									text : 'Button',
-									action : function() { 
-										new UI.Button().inject(woo.content);
-									}.bind(this)
-								},
-								{ 
-									text 		: 'Window',
-									action : function() { 
-										new UI.Window();
-									}.bind(this)
-								}
-							]
-						},
-						{
-							text : 'Window',
-							image : 'http://www.farles.com/wp-content/themes/fjords01-10/imagenes_qwilm/email_icon.gif',
-							options : {'class' : 'ui-dd-new'},
-							menu		: [
-								{
-									text : 'About',
-									action : function() { this.test('about'); alert('click')}.bind(this)
-								},
-								{
-									text 		: 'Minimizer',
-									action : function(){woo.minimize();}.bind(this)
-								},
-								{ text		: 'separator' },
-								{ text		: 'Cascade',
-								  action: function(){
-								  	this.windowManager.resetCascade()
-								  }.bind(this)
-								  
-								}
-							]
-						},
-						{
-							text : 'Help',
-							image : 'http://www.farles.com/wp-content/themes/fjords01-10/imagenes_qwilm/about_icon.gif',
-							options : {'class' : 'ui-dd-help'},
-							menu : [
-								{ text : 'Welcome' },
-								{ text : 'separator' },
-								{ text : 'Update...' },
-								{ text : 'separator' },
-								{ text : 'Settings...' }
-							]
-						}
-					]						
-				}
-			});
 			
 			button = new UI.Button({
-				label : "new window",
-				skin	: 'demo',
-				type	: "jgood",
-				resizable :1,
-				labelStyles : {
-					fontWeight : 'bold',
-					padding : '10px 20px'
-				},
+				label : 'new window()',
 				onClick : function(){
 					var time2 = $time();
-					new UI.Window({ title : time2 });
+					new UI.Window({ 
+					width:360,
+					height:360,
+						title : time2 
+					});
 					//console.log('draw this window take : ', $time()-time2);
 				},
 				styles		: {
-					margin	: 10
+					margin	: 5
 				}
 			}).inject(form);
+			
+			
+			new UI.Button({
+				label : 'Cascade',
+				onClick : function() { 
+					ui.controller.window.cascade();
+				},
+				styles		: {
+					margin	: 5
+				}
+			}).inject(form);
+				
+			new UI.Button({
+				label : 'Close',
+				onClick : function() { 
+					ui.controller.window.close();
+				},
+				styles		: {
+					margin	: 5
+				}
+			}).inject(form);
+			
+			new UI.Button({
+				label : 'Close All',
+				onClick : function() { 
+					ui.controller.window.closeAll();
+				},
+				styles		: {
+					margin	: 5
+				}
+			}).inject(form);
+
 			//console.log('window.html', $time()-time);
 			
 		});
 	</script>
 </head>
 
-<body></body>
+<body background="img/bg/01.png"></body>
 
 </html>

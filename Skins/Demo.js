@@ -36,7 +36,6 @@ UI.props.demo = {
 		}
 	},
 
-	
 	label: {
 		'default': {
 			'default': {
@@ -71,98 +70,6 @@ UI.props.demo = {
 						styles: {
 							zIndex: 1,
 							fontWeight: 'normal',
-							fontSize: '32px',
-							position: 'absolute',
-							cursor: 'pointer',
-							top: 0,
-							left: 0,
-							padding: '4px 16px',
-							whiteSpace: 'nowrap',
-							opacity:0
-						}
-					}
-				},
-				
-				/* shortcuts */
-				shortcuts: {
-					labelStyles: 'components.label.styles'
-				},
-				
-				/* element css properties */
-				styles: {
-					position: 'relative',
-					display: 'inline-block',
-					cursor: 'pointer'
-				},
-				
-				/* layers properties */
-				layers: {
-					'default': {
-						shape: 'complex',
-						baseSize: [150, 150],
-						def: [
-							['moveTo', 75, 25], 
-							['quadraticCurveTo', 25, 25, 25, 62.5], 
-							['quadraticCurveTo', 25, 100, 50, 100], 
-							['quadraticCurveTo', 50, 120, 30, 125], 
-							['quadraticCurveTo', 60, 120, 65, 100], 
-							['quadraticCurveTo', 125, 100, 125, 62.5], 
-							['quadraticCurveTo', 125, 25, 75, 25]
-						],
-						shadow: {
-							opacity: 1,
-							color: '#000',
-							offsetX: 0,
-							offsetY: 2,
-							blur: 12
-						}
-					},
-					main: {
-						color: ['#d4d4d4', '#000']
-					
-					},
-					'yes': {
-						shape: 'complex',
-						offset: 50,
-						opacity: [0.3,1],
-						color: ['#fff', '#fff'],
-						baseSize: [150, 150],
-						def: [
-							['moveTo', 75, 25], 
-							['quadraticCurveTo', 25, 25, 25, 62.5], 
-							['quadraticCurveTo', 25, 100, 50, 100], 
-							['quadraticCurveTo', 125, 100, 125, 62.5], 
-							['quadraticCurveTo', 125, 25, 75, 25]
-						]
-					},
-				
-				}
-			},
-			over: {
-				layers: {
-					main: {
-					color: ['#d4d4d4', '#e5e5e5']
-					}
-				}
-			},
-			down: {
-				layers: {
-					main: {
-						color: ['#d4d4d4', '#e5e5e5']
-					}
-				}
-			}
-		},
-		heart: {
-			'default': {
-				
-				/* components properties */
-				components: {
-					label: {
-						styles: {
-							zIndex: 1,
-							fontWeight: 'normal',
-							fontSize: '100px',
 							position: 'absolute',
 							cursor: 'pointer',
 							top: 0,
@@ -187,16 +94,36 @@ UI.props.demo = {
 				
 				/* layers properties */
 				layers: {
-					'reorder': ['main'],
 					'default': {
-						shape: 'complex',
-						baseSize: [150, 150],
-						def: [['moveTo', 75, 40], ['bezierCurveTo', 75, 37, 70, 25, 50, 25], ['bezierCurveTo', 20, 25, 20, 62.5, 20, 62.5], ['bezierCurveTo', 20, 80, 40, 102, 75, 120], ['bezierCurveTo', 110, 102, 130, 80, 130, 62.5], ['bezierCurveTo', 130, 62.5, 130, 25, 100, 25], ['bezierCurveTo', 85, 25, 75, 37, 75, 40]],
-						
+						radius: 10
 					},
-					
+					littleshadow: {
+						offset: ['0px', '0px', '0px', '0px'],
+						color: ['#000', '#000'],
+						radius: 11,
+						opacity: 0.1
+					},
+					background: {
+						offset: ['0px', '1px', '1px', '1px'],
+						color: ['#494949', '#5f5f5f'],
+						opacity: 1,
+						radius: 11
+					},
 					main: {
-						color: ['#a1a1a1', '#d5d5d5']
+						color: ['#d4d4d4', '#e5e5e5']
+					},
+					reflect: {
+						offset: ['0px', '3px', '65%'],
+						color: ['#FFF', '#FFF'],
+						opacity: [0.8, 0.3],
+						radius: [7, 7, 4, 4]
+					},
+					light: {
+						position: 'absolute',
+						offset: ['50%', '5px', '2px'],
+						color: ['#FFF', '#FFF'],
+						opacity: [0, 1],
+						radius: [4, 4, 7, 7]
 					}
 				}
 			},
@@ -211,10 +138,14 @@ UI.props.demo = {
 				layers: {
 					main: {
 						color: ['#7b8997', '#7b8997']
+					},
+					background: {
+						color: ['#494949', '#5f5f5f']
 					}
 				}
 			}
 		},
+
 		hardest: {
 			'default': {
 				components: {
@@ -673,27 +604,35 @@ UI.props.demo = {
 				},
 				
 				layers: {
-					reorder: ['shadow', 'border', 'background', 'reflect'],
+					reorder: ['shadow', 'border', 'base', 'reflect'],
 					'default': {
 						radius: 11,
 						shape: 'roundedRect'
 					},
-					shadow: {
-						size: 2,
-						offsetY: 1,
-						opacity: 0.8
-					},
+					
 					border: {
 						offset: 0,
 						color: '#fff',
 						opacity: 1,
 						radius: 11
 					},
-					background: {
-						offset: 1.5,
+					shadow: {
+						size:8,
+						blur: 8,
+						opacity: 1,
+						color: '#000'
+					},
+					base: {
+						offset: 2,
 						color: ['#e8010d', '#a60000'],
 						opacity: 1,
-						radius: 10
+						radius: 10,
+						shadow: {
+							size:20,
+							blur: 4,
+							opacity: .8,
+							color: '#000'
+						}
 					},
 					
 					reflect: {
@@ -1281,7 +1220,193 @@ UI.props.demo = {
 				}
 			}
 		},
+
+
+		complex: {
+			'default': {
+				height:150,
+				width:150,
+				
+				
+				/* element css properties */
+				styles: {
+					position: 'relative',
+					display: 'inline-block',
+					cursor: 'pointer'
+				},
+				
+				/* layers properties */
+				layers: {
+					'reorder' : ['base','yes'],
+					'default': {
+						shape: 'complex',
+						baseSize: [150, 150],
+						def: [
+							['moveTo', 75, 25], 
+							['quadraticCurveTo', 25, 25, 25, 62.5], 
+							['quadraticCurveTo', 25, 100, 50, 100], 
+							['quadraticCurveTo', 50, 120, 30, 125], 
+							['quadraticCurveTo', 60, 120, 65, 100], 
+							['quadraticCurveTo', 125, 100, 125, 62.5], 
+							['quadraticCurveTo', 125, 25, 75, 25]
+						]
+					},
+					base: {
+						color: ['#d4d4d4', '#000'],
+						shadow: {
+							size:16,
+							blur: 32,
+							offsetY: 2,
+							opacity: 0.5,
+							color: '#000'
+						}
+					},
+					yes: {
+						shape: 'complex',
+						offset: -10,
+						opacity: [0.6,0.1],
+						position:'absolute',
+						color: ['#fff', '#fff'],
+						baseSize: [200, 200],
+						def: [
+							['moveTo', 75, 25], 
+							['quadraticCurveTo', 25, 25, 25, 62.5], 
+							['quadraticCurveTo', 25, 100, 50, 100], 
+							['quadraticCurveTo', 125, 100, 125, 62.5], 
+							['quadraticCurveTo', 125, 25, 75, 25]
+						],
+						stroke: {
+							width: 1,
+							opacity: 0.5,
+							color: '#000'
+						}
+					}
+				}
+			},
+			over: {
+				layers: {
+					main: {
+					color: ['#d4d4d4', '#000']
+					}
+				}
+			},
+			down: {
+				layers: {
+					main: {
+						color: ['#d4d4d4', '#000']
+					}
+				}
+			}
+		},
+		heart: {
+			'default': {
+				height:150,
+				width:150,
+				
+				/* element css properties */
+				styles: {
+					position: 'relative',
+					display: 'inline-block',
+					cursor: 'pointer'
+				},
+				
+				/* layers properties */
+				layers: {
+					'reorder': ['base'],
+					'default': {
+						shape: 'complex',
+						baseSize: [150, 150],
+						def: [
+							['moveTo', 75, 40], 
+							['bezierCurveTo', 75, 37, 70, 25, 50, 25], 
+							['bezierCurveTo', 20, 25, 20, 62.5, 20, 62.5], 
+							['bezierCurveTo', 20, 80, 40, 102, 75, 120], 
+							['bezierCurveTo', 110, 102, 130, 80, 130, 62.5], 
+							['bezierCurveTo', 130, 62.5, 130, 25, 100, 25], 
+							['bezierCurveTo', 85, 25, 75, 37, 75, 40]
+						]
+					},
+					
+					base: {
+						opacity:'.8',
+						color: ['#C00', '#600'],
+						shadow: {
+							size:16,
+							blur: 132,
+							offsetY: 0,
+							opacity: 0.8,
+							color: '#000'
+						}
+						//rotation: 100
+					}
+				}
+			}
+		},
+		pacman: {
+			'default': {
+				height: 150,
+				width: 150,
+				
+				/* element css properties */
+				styles: {
+					position: 'relative',
+					display: 'inline-block',
+					cursor: 'pointer'
+				},
+				
+				/* layers properties */
+				layers: {
+					'reorder': ['main'],
+					'default': {
+						shape: 'complex',
+						baseSize: [150, 150],
+						def: [['arc', 37, 37, 13, Math.PI / 7, -Math.PI / 7, false], ['lineTo', 34, 37]]
+					},
+					
+					main: {
+						color:'#000'
+					}
+				}
+			}
+		},
 		
+		smiley: {
+			'default': {
+				height:150,
+				width:150,
+				
+				/* element css properties */
+				styles: {
+					position: 'relative',
+					display: 'inline-block',
+					cursor: 'pointer'
+				},
+				/* layers properties */
+				layers: {
+					'reorder': ['main'],
+					'default': {
+						shape: 'complex',
+						baseSize: [150, 150],
+						def: [
+							['arc',75,75,50,0,Math.PI*2,true], 
+							['moveTo',110,75],
+							['arc',75,75,35,0,Math.PI,false],   // Mouth (clockwise)
+							['moveTo',65,65],
+							['arc',60,65,5,0,Math.PI*2,true],  // Left eye
+							['moveTo',95,65],
+							['arc',90,65,5,0,Math.PI*2,true]  // Right eye
+						]
+					},
+					
+					main: {
+						stroke: {
+							width: 5,
+							color:'#000'
+						}
+					}
+				}
+			}
+		},	
 			
 		resizer: {
 			'default': {
@@ -1437,18 +1562,50 @@ UI.props.demo = {
 					position: 'relative'
 				},
 				layers: {
-					shadow: {
-						color: '#0F0',
-						size: 16,
-						offsetX: 0,
-						offsetY: 0,
-						opacity: 0.5
-					},
-					big: {
-						color: '#222',
+					base: {
+						offset: 0,
+						color: '#ccc',
 						opacity: 1,
-						radius: 20,
-						offset: 0
+						radius: 100,
+						shadow: {
+							size:32,
+							blur: 512,
+							offsetY: 0,
+							opacity: 1,
+							color: '#33ff00'
+						},
+					},
+					fisrt: {
+						offset: 3,
+						color: '#ccc',
+						opacity: 0.5,
+						radius: 100
+					}
+				}
+			},
+			down: {
+				styles: {
+					position: 'relative'
+				},
+				layers: {
+					base: {
+						offset: 0,
+						color: '#ccc',
+						opacity: 1,
+						radius: 100,
+						shadow: {
+							size:32,
+							blur: 512,
+							offsetY: 0,
+							opacity: 1,
+							color: '#000'
+						},
+					},
+					fisrt: {
+						offset: 3,
+						color: '#ccc',
+						opacity: 0.5,
+						radius: 100
 					}
 				}
 			}
@@ -1553,31 +1710,87 @@ UI.props.demo = {
 						radius: 0
 					}
 				}
+			},
+			'button': {
+				
+				styles: {
+					position: 'relative'
+				},
+				layers: {
+					'default':{
+						position:'absolute'
+						
+					},
+					
+					border: {
+						position:'absolute',
+						size: ['96%', '96%'],
+						opacity:[1,'.6'],
+						shape:'circle',
+						color: ['#6d2c2d','#fff'],
+						offset: [0,0]
+					},
+					base: {
+						size: ['88%', '88%'],
+						position:'absolute',
+						shape:'circle',
+						color: '#f53b3a',
+						offset: ['4%','4%','4%','4%']
+					},
+					
+					light: {
+						size: ['60%', '60%'],
+						shape:'circle',
+						opacity: [1,1],
+						gradient: {
+							type: 'radial',
+							color: ['#fff', '#f53b3a'],
+							startCircle: ['10%', '90%', 0],
+							endCircle: ['40%', '60%', '100%']
+						},
+						offset: ['auto','auto','8%']
+					},
+					reflect: {
+						position:'absolute',
+						size: ['50%', '50%'],
+						shape:'circle',
+						opacity: [1,0],
+						gradient: {
+							type: 'radial',
+							opacity: [1,.1],
+							color: ['#fff', '#f53b3a'],
+							startCircle: ['26%', '16%', '1%','10%'],
+							endCircle: ['38%', '36%', '120%']
+						},
+						offset: ['2%','auto','auto']
+					},
+				}
 			}
 		},
+		
 		shadows: {
 			'default': {
 				styles: {
 					position: 'relative'
 				},
 				layers: {
-					shadow: {
-						color: '#ccc',
-						size: 10,
-						offsetX: 0,
-						offsetY: 4,
-						opacity: 0.7
-					},
-					back: {
+					border: {
 						color: '#000',
 						opacity: 0.3,
 						radius: 9
 					},
-					front: {
+					base: {
 						color: '#fff',
 						opacity: 1,
 						radius: 7,
-						offset: 2
+						offset: 2,
+						shadow: {
+							color: '#fff',
+							size: 30,
+							blur:164,
+							offsetY: 8,
+							opacity: 0.7
+						},
 					}
 				}
 			}

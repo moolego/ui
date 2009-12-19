@@ -2,17 +2,18 @@
 <html>
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+	<meta http-equiv="content-script-type" content="text/javascript">
+	
 	<script type="text/javascript" src="mootools/core.js"></script>
 	<script type="text/javascript" src="mootools/more.js"></script>
 	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
 	
 	<script type="text/javascript" src="../Source/Core/UI.js"></script>
+	
 	<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
 	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
 	
 	<script type="text/javascript" src="../Source/Element/Element.js"></script>
-	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
 	<script type="text/javascript" src="../Source/Element/Label.js"></script>
 	<script type="text/javascript" src="../Source/Element/Scrollbar.js"></script>
 
@@ -26,7 +27,6 @@
 	<script type="text/javascript" src="../Source/View/View.js"></script>
 
 	<script type="text/javascript" src="../Source/Window/Window.js"></script>
-	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
 
 	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
 	<script type="text/javascript" src="../Skins/AquaBlack.js"></script>
@@ -195,7 +195,7 @@
 			window.addEvents({
 				resize: function(){
 					background.setSize(Window.getWidth(), Window.getHeight());
-					background.setState('radial2');
+					//background.setState('radial2');
 				}
 			});
 			
@@ -212,7 +212,11 @@
 				},
 				onClick : function(){
 					var time2 = $time();
-					new UI.Window({ title : time2 });
+					new UI.Window({ 
+						title : time2,
+						height: 400,
+						width: 400
+					});
 					//console.log('draw this window take : ', $time()-time2);
 				}
 			}).inject(background);

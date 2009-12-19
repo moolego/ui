@@ -95,10 +95,6 @@ UI.View = new Class({
 	build: function() {
 		this.parent();
 		
-		if (this.options.useOverlay) {
-			this.buildOverlay();
-		}
-		
 		this._setOverflow();
 		
 		this.show();
@@ -117,11 +113,11 @@ UI.View = new Class({
 	buildOverlay: function() {
 		this.overlay = new Element('div',this.props.components.overlay)
 		 .inject(this.element);
-		 
-		this.overlay.hide();
-	
+
 		this.addEvents({
-			'onLoadComplete' : function() { this.overlay.hide(); }
+			'onLoadComplete' : function() { 
+				this.overlay.hide(); 
+			}
 		});
 		 
 	},
@@ -187,7 +183,7 @@ UI.View = new Class({
 				 
 		this.addEvents({
 			'loadCompplete': function() { this.scrollbar.update(); },
-			'resize': function() { this.scrollbar.update(); }
+			'resize': function() { 	this.scrollbar.update(); }
 		 });
 	},
 	
@@ -296,7 +292,7 @@ UI.View = new Class({
 	},
 	
 	/*
-	Function: setAjaxNuContent
+	Function: setAjaxContent
 		Set ajax content
 	
 	Arguments:
@@ -307,15 +303,15 @@ UI.View = new Class({
 	*/
 	
 	setAjaxNuContent: function(source) {
-		var that = this;
+		var self = this;
 		
 		var request = new Request.HTML({
 			url: source,
 			method: 'get',
 			onComplete: function(responseTree,responseElements,responseHTML,responseJS){
 				var list = [responseHTML,responseTree,responseElements,responseJS];
-				that.fireEvent('onLoadComplete',list);
-				that.fireEvent('resize');
+				self.fireEvent('onLoadComplete',list);
+				self.fireEvent('resize');
 			}
 		}).send();
 		
@@ -356,7 +352,7 @@ UI.View = new Class({
 		this
 	*/
 	
-	setIFrameContent: function(source) {
+	setIFrameContent: function(source) {		
 		if (!this.iframe) {
 			if (this.content) {
 				this.content.destroy();
@@ -364,18 +360,28 @@ UI.View = new Class({
 			if (this.scrollbar) {
 				this.scrollbar.destroy();
 			}
-			this.iframe = new Element('iframe',this.props.components.iframe)
-			.setStyles({height:'100%',width:'100%'})
+			
+			this.iframe = new IFrame(this.props.components.iframe)
+			.setStyles({
+				height:'100%',
+				width:'100%',
+				margin:0,
+				padding:0,
+				border:0
+			})
 			.setProperties({height:'100%',width:'100%'})
 			.inject(this.element);
-			
 		}
 		
 		this.iframe.set('src',source)
-		 .addEvent('load',function(){ 
+		 .addEvent('load',function(){
 		 	this.fireEvent('loadComplete');
 			this.fireEvent('resize');
-		});
+		}.bind(this));
+		
+		if (this.options.useOverlay) {
+			this.buildOverlay();
+		}
 
 		return this;
 	}

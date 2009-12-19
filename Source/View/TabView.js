@@ -49,20 +49,6 @@ UI.TabView = new Class({
 	},
 	
 	/*
-	Constructor: initialize
-		Constructor
-	
-	See also:
-		<UI.Element::initialize>
-	 
-	*/
-	
-	initialize: function(options){
-		this.tabs = [];
-		this.parent(options);
-	},
-	
-	/*
 	Function: build
 		private function
 		
@@ -74,9 +60,17 @@ UI.TabView = new Class({
 	*/
 	
 	build: function(){
+		this.list = [];
+		
 		this.parent();
 		this.buildTabs();
+		this.buildView();
+		
+		this.options.tabs.each(function(tab){
+			this.add(tab);
+		}.bind(this));
 	},
+
 	
 	/*
 	 Function: add
@@ -92,19 +86,38 @@ UI.TabView = new Class({
 			container = this.element;
 		}
 		
-		this.tabbar = new UI.Element(this.props.components.tabbar)
-		.addEvents({
-			onClick : function() {
-				this.element.setStyle('height','21px');		
-			} 
-		})
-		.inject(container);
 		
-		this.options.tabs.each(function(tab){
-			this.add(tab);
-		}.bind(this));
+		
+		this.tabbar = new UI.Segment(this.props.components.tabbar)
+		.inject(container);
 	},
+
+	/* 
+	Function: buildView
+		private function
+		
+		Create a new view of the define type and attach related window events
 	
+	Returns:
+		(void)
+		
+	Discussion:
+		We should setup a better switch to build view according its type
+	*/
+	buildView : function() {
+		this.tabview = new UI.View({
+			
+			overflow: 'hidden',
+			styles:{ marginTop:'-10px' } 
+		}).inject(this.content);
+		
+		this.addEvents({
+			injected: function() {
+				this.updateSize();
+				this.tabview.fireEvent('onResize'); 
+			}
+		});
+	},
 	/*
 	 Function: add
 	 
@@ -113,12 +126,9 @@ UI.TabView = new Class({
 	*/
 	
 	add: function(props){
-		var view = new UI.View({ 
-			height : this.options.height - 21,
+		var view = new UI.View({
 			type : 'tab'
-		})
-		.setStyle('height',this.options.height - 21)
-		.inject(this.content).hide();
+		}).inject(this.tabview).hide();
 		
 		var tab = new UI.Button({
 			type: 'tab',
@@ -128,15 +138,21 @@ UI.TabView = new Class({
 					return;
 				}
 			
-				if (props.url) {
+				// to be continued...
+				
+				if (props.url && !view.element.retrieve('loaded')) {
 					view.setContent('ajax', props.url);
+					view.element.store('loaded',true);
 				}
 					
 				view.show();
+				view.scrollbar.update();
 				
 				if (this.view) {
 					this.view.hide();
 				}
+				tab.options.type = 'tab:selected';
+				tab.canvas.type = 'tab:selected';
 				tab.options.state = 'active';
 				
 				if (this.tab) {
@@ -153,13 +169,14 @@ UI.TabView = new Class({
 			view.scrollbar.update();
 		});
 		
-		
-		
 		if (props.selected) {
 			this.selected = tab;
 		}
 		
-		this.tabs.push(tab);		
+		this.list.push(tab);
+		
+		tab.index = this.list.indexOf(tab);
+			console.log(tab.index);
 	},
 	
 	/*
@@ -169,21 +186,67 @@ UI.TabView = new Class({
 	*/		
 	
 	setContent: function(method,source,options){
-		this.view.setContent(method,source,options);
+		this.active.setContent(method,source,options);
 	},
+	
+	/*
+    	Function: setBehavior
+    
+    		Set some behaviours
+	*/		
 	
 	setBehavior: function() {
 		this.parent();
 		
 		this.addEvent('injected', function(){
-			var item = this.selected || this.tabs[0];
+			var item = this.selected || this.list[0];
 			item.options.state = 'active';
-			this.tabs.each(function(tab){
+			this.list.each(function(tab){
 				tab.inject(this.tabbar);
 			}.bind(this));
 			item.setState('active');
 			item.fireEvent('click');
 		});
+	},
+
+
+	/*
+	Function: setSize
+		Set window's frame size and updateSize
+	
+	Returns:
+		this
+	
+	See also:
+		<UI.Element::setSize>			
+	*/  
+
+	setSize: function(width, height, state){
+		this.parent(width, height, state);
+		this.updateSize();
+		
+		return this;
+	},	
+
+	/*
+	Function: updateSize
+		Update size and position of the window inner components
+	
+	Returns:
+		(void)
+	*/
+	updateSize: function(){
+		element = this.element.getComputedSize();
+		
+		// hummm...
+		
+		this.tabbarHeight = this.tabbar.getComputedSize().totalHeight;
+		//this.tabbar.setSize(element.width,'21');
+		var view = this.tabview.getComputedSize();
+		
+		var viewHeight = element.height - this.tabbarHeight - (view.computedBottom + view.computedTop);
+		this.tabview.setStyle('height', viewHeight);
+		this.fireEvent('onResize');
 	},
 	
 	/*
@@ -191,11 +254,23 @@ UI.TabView = new Class({
     
     		Set wich tab should be activated
 	*/
-	
 	setActiveTab: function(num){
-		if (num > 0 && num <= this.tabs.length) {
-			this.tabs[--num].setState('active');
-			this.tabs[num].fireEvent('click');
+		if (num > 0 && num <= this.list.length) {
+			this.list[--num].setState('active');
+			this.list[num].fireEvent('click');
+		}
+	},
+	
+	/*
+    	Function: next
+    
+    		Set next tab active. nothing if last.
+	*/
+	
+	next: function(num){
+		if (num > 0 && num <= this.list.length) {
+			this.list[--num].setState('active');
+			this.list[num].fireEvent('click');
 		}
 	}
 

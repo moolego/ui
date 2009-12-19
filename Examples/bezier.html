@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<script type="text/javascript" src="mootools/core.js"></script>
+		<script type="text/javascript" src="mootools/more.js"></script>
+	
+		<script type="text/javascript" src="../Source/Core/UI.js"></script>
+		<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
+		<script type="text/javascript" src="../Source/Core/Skin.js"></script>
+		
+		<script type="text/javascript" src="../Source/Element/Element.js"></script>
+		<script type="text/javascript" src="../Source/Element/Label.js"></script>
+		<script type="text/javascript" src="../Source/Element/Bubble.js"></script>
+		
+		<script type="text/javascript" src="../Source/Form/Control.js"></script>
+		<script type="text/javascript" src="../Source/Form/Button.js"></script>
+		
+
+		<script type="text/javascript" src="../Skins/Demo.js"></script>
+		<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+			
+		
+		<title>MooLego Bezier experiment</title>
+		
+		<script type="text/javascript">
+		//<!--/*--><![CDATA[//><!--
+		
+			window.addEvent('domready', function(){
+				new UI.Element({
+					skin: 'demo',
+					type: 'complex'
+				}).inject($(document.body));
+				
+				new UI.Element({
+					skin: 'demo',
+					type: 'pacman',
+					resizable: true
+				}).inject($(document.body));
+				
+				new UI.Element({
+					skin: 'demo',
+					type: 'heart',
+					resizable: true
+				}).inject($(document.body));
+				
+				new UI.Element({
+					skin: 'demo',
+					type: 'smiley',
+					resizable: true
+				}).inject($(document.body));
+			});
+		//--><!]]>
+		</script>
+	</head>
+	<body style="padding:0px; margin: 0 auto">
+	</body>
+</html>

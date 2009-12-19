@@ -53,8 +53,8 @@ UI.Panel = new Class({
 		title: 'Panel',
 		
 		// Size options
-		width: 240,
-		height: 480,
+		width: 280,
+		height: 400,
 		
 		// see UI.VIew.setContent() for information about loading window's content.
 		url: false,
@@ -90,12 +90,17 @@ UI.Panel = new Class({
 		resizeLimitY: [200, window.getHeight()]
 	},
 	
+	build: function() {	
+		this.parent();
+
+	},
+
 	
 	/*
 	 Function: updateInnerSize
 	 Update size of the window inner components
 	 */
-	updateInnerSize: function(){
+	updatecInnerSize: function(){
 		var wrapper = this.frame.getSize();
 		var bs = this.options.borderSize;
 		var borderOffset = bs * 2;

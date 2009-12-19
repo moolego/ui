@@ -57,6 +57,9 @@
 	    setStyle, setStyles, show, showDelay, skin, start, stop, styles, 
 	    submenu, tag, target, text, time, toInt, top, type, width, wrapper, x, 
 	    y, zIndex
+
+	Discussion
+		Should use listView
 	
 */
 
@@ -112,6 +115,19 @@ UI.Menu = new Class({
 	},
 	
 	
+	/*
+	Function: setBehavior
+		private function
+		
+		Call UI.Element build, then create a menu wrapper
+	
+	Return:
+		(void)
+	
+	See also:
+		<UI.Element::build>
+	*/
+
 	setBehavior : function(){
 		this.parent();
 		if (!this.options.closeMenu) {
@@ -144,8 +160,6 @@ UI.Menu = new Class({
 		var menuItem;
 		this.items = [];
 		this.currentIndex = 0;
-		
-		
 		
 		list.each(function(item){
 			if (item.text == 'separator') {
@@ -193,30 +207,30 @@ UI.Menu = new Class({
 	
 	addSubmenuEvents: function(item, menuItem){
 		
-		var that = this;
+		var self = this;
 		
 		if(item.menu) {
 			menuItem.addEvents({
 				'mouseenter': function(){
-					if (that.activeItem && that.activeItem.submenu && that.activeItem != menuItem) {
-						that.activeItem.submenu.hide();
+					if (self.activeItem && self.activeItem.submenu && self.activeItem != menuItem) {
+						self.activeItem.submenu.hide();
 					}
-					if (that.activeItem != menuItem) {
-						that.addSubmenu(item, menuItem, 'normal');
+					if (self.activeItem != menuItem) {
+						self.addSubmenu(item, menuItem, 'normal');
 					}
-					that.moveRollover(menuItem);
+					self.moveRollover(menuItem);
 				}
 			});
-			that.addSubmenuArrow(menuItem);
+			self.addSubmenuArrow(menuItem);
 		} else {
 			menuItem.addEvents({
 				'mouseenter': function(){
-					that.removeSubmenu();
+					self.removeSubmenu();
 					if (menuItem.separator) {
-						that.removeRollover();
+						self.removeRollover();
 					}
 					else {
-						that.moveRollover(menuItem);
+						self.moveRollover(menuItem);
 					}
 				}
 			});
@@ -224,15 +238,15 @@ UI.Menu = new Class({
 		
 		menuItem.element.addEvents({
 			'mouseleave': function(){
-				$clear(that.menuActionDelay);
+				$clear(self.menuActionDelay);
 			},
 			'mouseup': function(){
-				that.mouseUpAction(menuItem);
+				self.mouseUpAction(menuItem);
 			},
 			'mousedown': function(e){
 				var ev = new Event(e).stop();
 				if (!menuItem.separator) {
-					that.fireEvent('change');
+					self.fireEvent('change');
 				}
 			}
 		});
@@ -283,6 +297,9 @@ UI.Menu = new Class({
 	Arguments:
 		menuItem - (element) Menu item where arrow will be attached
 	
+	Discussion:
+		should be drawn on the menuItem, probably
+	
 	Return:
 		(void)
 	 */
@@ -291,9 +308,8 @@ UI.Menu = new Class({
 	addSubmenuArrow: function(menuItem){
 		this.addEvent('addArrows', function(){
 			//we add the arrow
+			console.log(this.options.skin);
 			menuItem.arrow = new UI.Element({
-				width : menuItem.element.getHeight()/2,
-				height : menuItem.element.getHeight()/2,
 				skin: this.options.skin,
 				component: 'element',
 				type: 'menuRightArrow',

@@ -22,8 +22,10 @@
 	Implied global: 
 		- MooLego - UI
 		- MooTools - Class
-
 	
+	Discussion will may act like a minimal controller for inner elements managing way of they will be display
+	or maybe the element controller will take care of that using the group properties
+		
 */
 
 UI.Segment = new Class({

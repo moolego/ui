@@ -14,9 +14,11 @@ UI.props.AeroTrans = {
 	'default': {
 		/* css properties */
 		styles: {
+		
 			fontFamily: 'Helvetica, Arial, sans-serif',
 			fontSize: '12px',
-			position: 'relative'
+			position: 'relative',
+			color: '#000'
 		},
 		fx: {},
 		
@@ -30,12 +32,6 @@ UI.props.AeroTrans = {
 				opacity: 1,
 				radius: 0,
 				direction: 'horizontal'
-			},
-			shadow: {
-				size: 0,
-				magnify: 0,
-				offsetX: 0,
-				offsetY: 0
 			}
 		}
 	},
@@ -76,8 +72,7 @@ UI.props.AeroTrans = {
 					littleshadow: {
 						offset: ['0px', '0px', '0px', '0px'],
 						color: ['#000', '#000'],
-						radius: 11,
-						opacity: .1,
+						opacity: '.1',
 						radius: 12
 					},
 					background: {
@@ -93,7 +88,7 @@ UI.props.AeroTrans = {
 					reflect: {
 						offset: ['0px', '3px', '65%'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.8, .3],
+						opacity: [0.8, 0.3],
 						radius: [7, 7, 4, 4]
 					},
 					light: {
@@ -106,7 +101,37 @@ UI.props.AeroTrans = {
 				}
 			},
 			over: {},
-			'down': {
+			down: {
+				layers: {
+					main: {
+						color: ['#7b8997', '#7b8997']
+					},
+					background: {
+						color: ['#494949', '#5f5f5f']
+					}
+				}
+			},
+			disabled: {
+				layers: {
+					main: {
+						color: ['#7b8997', '#7b8997']
+					},
+					background: {
+						color: ['#494949', '#5f5f5f']
+					}
+				}
+			},
+			first: {
+				layers: {
+					main: {
+						color: ['#7b8997', '#7b8997']
+					},
+					background: {
+						color: ['#494949', '#5f5f5f']
+					}
+				}
+			},
+			last: {
 				layers: {
 					main: {
 						color: ['#7b8997', '#7b8997']
@@ -117,6 +142,7 @@ UI.props.AeroTrans = {
 				}
 			}
 		},
+		
 		'recessed': {
 			'default': {
 				/* components properties */
@@ -208,7 +234,7 @@ UI.props.AeroTrans = {
 					emboss: {
 						offset: '0px',
 						color: '#fff',
-						opacity: .5,
+						opacity: 0.5,
 						radius: 5
 					},
 					border: {
@@ -276,7 +302,7 @@ UI.props.AeroTrans = {
 					'default': {
 						position: 'absolute',
 						shape: 'circle',
-						size: [14, 14],
+						size: [10, 10],
 						opacity: 1,
 						offset: 0
 					},
@@ -284,7 +310,7 @@ UI.props.AeroTrans = {
 						offset: ['auto', 1, 0],
 						size: [14, 14],
 						color: '#FFF',
-						opacity: .4
+						opacity: 0.4
 					},
 					background: {
 						gradient: {
@@ -297,7 +323,7 @@ UI.props.AeroTrans = {
 						offset: [2, 2.5],
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [.2, .8]
+							opacity: [0.2, 0.8]
 						}
 					},
 					reflect: {
@@ -305,7 +331,7 @@ UI.props.AeroTrans = {
 						offset: [1.5, 6.5],
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [1, .5]
+							opacity: [1, 0.5]
 						}
 					},
 					cache: {
@@ -376,7 +402,7 @@ UI.props.AeroTrans = {
 					emboss: {
 						offset: [3, 3],
 						color: '#FFF',
-						opacity: .27
+						opacity: 0.27
 					},
 					background: {
 						offset: [0, 1],
@@ -392,7 +418,7 @@ UI.props.AeroTrans = {
 						size: 2,
 						offset: [0, 1],
 						color: ['#fff', '#fff'],
-						opacity: [1, .5]
+						opacity: [1, 0.5]
 					}
 				}
 			},
@@ -452,14 +478,14 @@ UI.props.AeroTrans = {
 					reflect: {
 						offset: ['0px', '3px', '65%'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.8, .3],
+						opacity: [0.8, 0.3],
 						radius: 2
 					},
 					light: {
 						position: 'absolute',
 						offset: ['65%', '5px', '2px'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.1, .7],
+						opacity: [0.1, 0.7],
 						radius: [2, 2, 3, 3]
 					}
 				}
@@ -476,18 +502,19 @@ UI.props.AeroTrans = {
 			'default': {
 			
 				//width : 100,
-				height: 17,
+				height: 35,
 				/* css properties */
 				
 				components: {
 					label: {
 						styles: {
-							padding: '0px 12px 0px 12px',
+							padding: '4px 12px 4px 12px',
 							'float': 'left',
 							margin: '0',
 							fontWeight: 'bold',
 							fontSize: '0.75em',
-							lineHeight: '2em'
+							lineHeight: '2em',
+							position: 'relative'
 						}
 					}
 				},
@@ -618,15 +645,13 @@ UI.props.AeroTrans = {
 						styles: {
 							padding: '4px 4px 3px',
 							border: 'none',
-							
 							zIndex: 1,
 							position: 'absolute',
 							top: 0,
 							left: 0,
 							background: 'transparent',
 							resize: 'none',
-							whiteSpace: 'nowrap',
-							border: 'none'
+							whiteSpace: 'nowrap'
 						}
 					}
 				},
@@ -705,7 +730,7 @@ UI.props.AeroTrans = {
 						position: 'abolute',
 						offset: [0, 0, 0, 0],
 						color: ['#000', '#000'],
-						opacity: [.6, 0]
+						opacity: [0.6, 0]
 					},
 					border: {
 						radius: 11,
@@ -812,7 +837,7 @@ UI.props.AeroTrans = {
 						size: [16, 15],
 						offset: [2, 0, 0, 0],
 						color: ['#000', '#000'],
-						opacity: [0.05, .1],
+						opacity: [0.05, 0.1],
 						radius: [5, 5, 5, 5]
 					},
 					
@@ -835,7 +860,7 @@ UI.props.AeroTrans = {
 						size: [10, 5],
 						offset: [3, 3, '60%'],
 						color: ['#FFF', '#FFF'],
-						opacity: [.8, .5],
+						opacity: [0.8, 0.5],
 						radius: 0
 					},
 					reflectdown: {
@@ -843,7 +868,7 @@ UI.props.AeroTrans = {
 						size: [10, 6],
 						offset: [9, 3, 2],
 						color: ['#FFF', '#FFF'],
-						opacity: [.1, 1],
+						opacity: [0.1, 1],
 						radius: 0
 					},
 					light: {
@@ -851,7 +876,7 @@ UI.props.AeroTrans = {
 						size: [14, 10],
 						offset: [4, 1, 4],
 						color: ['#FFF', '#FFF'],
-						opacity: [0.05, .5],
+						opacity: [0.05, 0.5],
 						radius: 0
 					}
 				}
@@ -907,7 +932,7 @@ UI.props.AeroTrans = {
 					littleshadow: {
 						offset: [1, 0, 0, 0],
 						color: ['#000', '#000'],
-						opacity: .1
+						opacity: 0.1
 					},
 					background: {
 						offset: [0, 1, 1, 1],
@@ -936,7 +961,7 @@ UI.props.AeroTrans = {
 					dot: {
 						offset: [5, 5.5],
 						size: 5,
-						opacity: .7
+						opacity: 0.7
 					},
 					background: {
 						offset: [0, 1, 1, 1],
@@ -981,7 +1006,7 @@ UI.props.AeroTrans = {
 					},
 					littleshadow: {
 						offset: ['0px', '0px', '0px', '0px'],
-						opacity: [.1, .1],
+						opacity: [0.1, 0.1],
 						color: ['#000', '#000'],
 						radius: [8, 8, 8, 8],
 						position: 'relative'
@@ -1014,7 +1039,7 @@ UI.props.AeroTrans = {
 					reflect: {
 						color: ['#FFF', '#FFF'],
 						size: ['auto', '36%'],
-						opacity: [.5, .3],
+						opacity: [0.5, 0.3],
 						offset: [1, 3, 'auto', 3],
 						radius: [3, 3, 4, 4]
 					},
@@ -1106,7 +1131,7 @@ UI.props.AeroTrans = {
 						size: [17, 11],
 						offset: 0,
 						color: '#000',
-						opacity: .1,
+						opacity: 0.1,
 						radius: [4, 4, 0, 0]
 					},
 					border: {
@@ -1135,7 +1160,7 @@ UI.props.AeroTrans = {
 						size: [11, 10],
 						offset: [2, 3, 'auto'],
 						color: ['#FFF', '#8392a1', '#FFF'],
-						opacity: [.7, .2, .1],
+						opacity: [0.7, 0.2, 0.1],
 						radius: 0
 					},
 					reflectdown: {
@@ -1144,8 +1169,8 @@ UI.props.AeroTrans = {
 						offset: [2, 4, 'auto'],
 						gradient: {
 							color: ['#FFF', '#fff', '#FFF'],
-							opacity: [.8, 0, .2],
-							stop: [0, .9, 1]
+							opacity: [0.8, 0, 0.2],
+							stop: [0, 0.9, 1]
 						},
 						radius: 0
 					},
@@ -1155,7 +1180,7 @@ UI.props.AeroTrans = {
 						size: [17, 9],
 						offset: [11, 0, 0],
 						color: ['#000', '#000'],
-						opacity: .1
+						opacity: 0.1
 					},
 					borderarrow: {
 						shape: 'triangle',
@@ -1180,7 +1205,7 @@ UI.props.AeroTrans = {
 						size: [11, 6],
 						offset: [11, 3, 2],
 						color: ['#fff', '#fff'],
-						opacity: [1, .4]
+						opacity: [1, 0.4]
 					}
 				}
 			},
@@ -1191,8 +1216,7 @@ UI.props.AeroTrans = {
 						color: ['#8392a1', '#8392a1'],
 						offset: [2, 2, 'auto', 2],
 						radius: [2, 2, 0, 0],
-						opacity: 1,
-						opacity: [1, .9]
+						opacity: [1, 0.9]
 					}
 				}
 			}
@@ -1254,7 +1278,24 @@ UI.props.AeroTrans = {
 				}
 			}
 		},
-		
+		MignifiedTitle: {
+			'default': {
+				/* css properties */
+				styles: {
+					overflow: 'hidden',
+					cursor: 'default',
+					color: '#fff',
+					display: 'block',
+					padding: '4px 20px 4px 20px',
+					textAlign: 'center',
+					textTransform: 'capitalize',
+					fontWeight: 'normal',
+					fontSize: '12px',
+					lineHeight: '17px',
+					height: '17px'
+				}
+			}
+		},		
 		transparentTitle: {
 			'default': {
 				/* css properties */
@@ -1270,6 +1311,24 @@ UI.props.AeroTrans = {
 					fontSize: '12px',
 					lineHeight: '17px',
 					height: '17px'
+				}
+			}
+		},
+		panelTitle: {
+			'default': {
+				/* css properties */
+				styles: {
+					overflow: 'hidden',
+					cursor: 'default',
+					color: '#000',
+					display: 'block',
+					padding: '0px 70px 0px 2px',
+					textAlign: 'center',
+					textTransform: 'capitalize',
+					fontWeight: 'normal',
+					fontSize: '10px',
+					lineHeight: '18px',
+					height: '13px'
 				}
 			}
 		}
@@ -1325,17 +1384,22 @@ UI.props.AeroTrans = {
 				/* layers properties */
 				layers: {
 					'default': {
-						radius: 0
+						radius: 0,
+						opacity: 0.98
 					},
-					shadow: {
-						size: 10,
-						offsetY: 5,
-						opacity: 0.3
-					},
-					background: {
+					border: {
 						color: '#000',
 						offset: 0,
-						opacity: .27
+						opacity: 0.3
+					},
+					base: {
+						shadow: {
+							size: 10,
+							blur: 32,
+							offsetY: 6,
+							opacity: 0.3,
+							color: '#000'
+						}
 					},
 					main: {}
 				}
@@ -1374,14 +1438,16 @@ UI.props.AeroTrans = {
 				components: {
 					wrapper: {
 						styles: {
-							padding: '0 0 0 10px'
+							padding: '0 0 0 10px',
+							overflow: 'hidden'
 						}
 					},
 					menuItem: {
 						styles: {
 							padding: '30px 10px 5px',
-							lineHeight: '1em',
-							whiteSpace: 'nowrap'
+							lineHeight: '1.2em',
+							whiteSpace: 'nowrap',
+							color: '#000'
 						}
 					},
 					separator: {
@@ -1418,6 +1484,16 @@ UI.props.AeroTrans = {
 					},
 					main: {}
 				}
+			},
+			over: {
+				/* components properties */
+				components: {
+					menuItem: {
+						styles: {
+							color: '#ddd'
+						}
+					}
+				}
 			}
 		},
 		window: {
@@ -1446,8 +1522,8 @@ UI.props.AeroTrans = {
 				components: {
 					overlay: {
 						styles: {
-							backgroundColor: '#000',
-							opacity: 0.5,
+							backgroundColor: '#fff',
+							opacity: 0.2,
 							position: 'absolute',
 							height: '100%',
 							width: '100%',
@@ -1514,6 +1590,7 @@ UI.props.AeroTrans = {
 			'default': {
 				styles: {
 					overflow: 'hidden',
+					backgroundColor: '#fff',
 					left: '0px',
 					top: '0px'
 				},
@@ -1544,8 +1621,8 @@ UI.props.AeroTrans = {
 							height: '100%',
 							width: '3px',
 							left: '159px',
-							zIndex: 10,
-							opacity: .05,
+							zIndex: '10',
+							opacity: '.01',
 							cursor: 'col-resize',
 							backgroundColor: '#000'
 						
@@ -1555,50 +1632,6 @@ UI.props.AeroTrans = {
 				views: {
 					side: {
 						width: 160,
-						overflow: 'hidden',
-						styles: {
-							'float': 'left',
-							overflow: 'hidden',
-							backgroundColor: '#d6dde5',
-							borderRight: '1px solid #8b8b8b'
-						}
-					},
-					main: {
-						overflow: 'hidden',
-						styles: {
-							'float': 'left',
-							overflow: 'hidden'
-						}
-					}
-				}
-			}
-		},
-		'default2': {
-			'default': {
-				styles: {
-					'float': 'left',
-					overflow: 'hidden',
-					height: '600px'
-				},
-				components: {
-					splitter: {
-						styles: {
-							position: 'abolute',
-							
-							height: '100%',
-							width: '3px',
-							left: '159px',
-							zIndex: 10,
-							opacity: .01,
-							cursor: 'col-resize',
-							backgroundColor: '#000'
-						
-						}
-					}
-				},
-				views: {
-					side: {
-						width: 240,
 						overflow: 'hidden',
 						styles: {
 							'float': 'left',
@@ -1629,9 +1662,7 @@ UI.props.AeroTrans = {
 				},
 				
 				components: {
-					item: {
-						component: 'label'
-					},
+				
 					title: {
 						styles: {
 							display: 'block',
@@ -1811,7 +1842,7 @@ UI.props.AeroTrans = {
 			'default': {
 				styles: {
 					margin: '0',
-					position:'relative'
+					position: 'absolute'
 				},
 				layers: {
 					'default': {
@@ -1821,7 +1852,7 @@ UI.props.AeroTrans = {
 						offset: [1, 0, 1, 0],
 						color: '#000',
 						radius: 9,
-						opacity: .3
+						opacity: 0.3
 					},
 					main: {
 						gradient: {
@@ -1833,7 +1864,7 @@ UI.props.AeroTrans = {
 					light: {
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [.1, .9],
+							opacity: [0.1, 0.9],
 							angle: 0
 						},
 						radius: 6
@@ -1841,7 +1872,7 @@ UI.props.AeroTrans = {
 					reflect: {
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [.8, .5],
+							opacity: [0.8, 0.5],
 							angle: 0
 						},
 						offset: [4, '65%', 3, 0],
@@ -1851,13 +1882,13 @@ UI.props.AeroTrans = {
 			}
 		}
 	},
-	
 	window: {
 		'default': {
 			'default': {
-				borderSize:'5px',
 				styles: {
-					position: 'absolute'
+					position: 'fixed',
+					opacity: 1,
+					padding:'1px'
 				},
 				
 				fx: {
@@ -1871,23 +1902,25 @@ UI.props.AeroTrans = {
 				components: {
 					head: {
 						styles: {
-							margin: '1px',
 							overflow: 'hidden',
-							zIndex: 1,
-							padding:'5px'
+							width: '100%',
+							zIndex: 1
 						}
 					},
 					controls: {
 						styles: {
-							'float': 'right',
+							position: 'absolute',
+							top:'1px',
+							right:'4px',
 							padding: '1px 3px 1px',
 							margin: '1px 0px 0px 1px',
-							height: 18
+							height: 18,
+							opacity: 1,
+							zIndex:100
 						}
 					},
 					control: {
 						component: 'windowButton',
-						skin: 'AeroTrans',
 						label: false,
 						width: 16,
 						height: 16,
@@ -1914,18 +1947,12 @@ UI.props.AeroTrans = {
 						type: 'window',
 						overflow: 'scrollbar',
 						styles: {
-							position: 'absolute',
-							top: '51px',
-							left: '5px',
 							overflow: 'hidden'
 						}
 					},
 					foot: {
 						styles: {
-						
 							zIndex: 10,
-							position: 'absolute',
-							right: '0',
 							width: '100%'
 						}
 					},
@@ -1939,7 +1966,7 @@ UI.props.AeroTrans = {
 					resize: {
 						styles: {
 							position: 'absolute',
-							zIndex:100,
+							zIndex: 100,
 							right: 0,
 							marginBottom: 0,
 							width: '24px',
@@ -1947,10 +1974,7 @@ UI.props.AeroTrans = {
 						}
 					}
 				},
-				
-				
-				borderSize: 1,
-				
+
 				/* layers properties */
 				layers: {
 					'default': {
@@ -1959,27 +1983,28 @@ UI.props.AeroTrans = {
 						offset: '0px',
 						color: '#FFFFFF',
 						opacity: 1,
-						radius: 5
+						radius: 4
 					},
-					shadow: {
-						size: 16,
-						offsetY: 8,
-						opacity: .5
-					},
-					background: {
+					border: {
 						offset: 0,
 						color: '#000',
-						opacity: .8,
-						radius: [5, 5, 0, 0]
+						opacity: 0.3,
+						radius: 5
 					},
-					underlay: {
-						color: ['#dcdcdc', '#404040'],
-						offset: [1, 1, 'auto'],
-						size: ['auto', 'auto'],
-						radius: [4, 4, 0, 0]
+					base: {
+						offset: 1,
+						color: '#ccc',
+						opacity: 1,
+						radius: 4
 					},
 					head: {
-						color: ['#99b4d1', '#bbd2eb'],
+						color: ['#dcdcdc', '#404040'],
+						offset: [0, 0, 'auto'],
+						size: ['auto', 22],
+						radius: [4, 4, 0, 0]
+					},
+					headfront: {
+						color: ['#C4C4C4', '#989898'],
 						offset: [1, 0],
 						radius: [4, 4, 0, 0]
 					},
@@ -1995,25 +2020,44 @@ UI.props.AeroTrans = {
 						size: ['auto', 20],
 						color: ['#fff', '#404040'],
 						offset: ['auto', 1, 2],
-						radius: [0, 0, 0, 0]
+						radius: [0, 0, 4, 4]
 					},
 					foot: {
 						position: 'absolute',
 						size: ['auto', 20],
 						color: ['#C2C2C2', '#989898'],
 						offset: ['auto', 1, 1],
-						radius: [0, 0, 0, 0]
+						radius: [0, 0, 4, 4]
 					}
 				}
 			},
 			inactive: {
+				styles: {
+					opacity: 0.95
+				
+				},
 				layers: {
-					shadow: {
-						size: 8,
-						offsetY: 3,
-						opacity: .22
+					base: {
+						opacity: 0.17
 					},
-					background: {
+					head: {
+						color: ['#f1f1f1', '#878787']
+					},
+					headfront: {
+						color: ['#e8e8e8', '#d0d0d0']
+					},
+					foot: {
+						color: ['#e8e8e8', '#d0d0d0']
+					}
+				}
+			},
+			over: {
+				styles: {
+					opacity: 1
+				
+				},
+				layers: {
+					base: {
 						opacity: 0.17
 					},
 					underlay: {
@@ -2029,24 +2073,27 @@ UI.props.AeroTrans = {
 			},
 			minimized: {
 				width: 160,
-				height: 25,
+				height: 32,
 				styles: {
 					width: '160px',
-					height: '25px',
-					
+					height: '32px',
+					position: 'fixed'
+				
+				},
+				components: {
+					title: {
+						type: 'MignifiedTitle',
+						emboss: true,
+						padding: '14px 0'
+					}
 				},
 				layers: {
-					reorder: ['shadow', 'background', 'underlay', 'head'],
-					shadow: {
-						size: 4,
-						offsetY: 1,
-						opacity: .20
-					},
+					reorder: ['head'],
 					head: {
 						position: 'absolute',
 						color: ['#CACACA', '#CFCFCF'],
 						offset: [2, 1, 1],
-						radius: 4
+						radius: 8
 					}
 				}
 			}
@@ -2054,6 +2101,9 @@ UI.props.AeroTrans = {
 		transparent: {
 			'default': {
 				/* components */
+				styles :{
+					padding:1	
+				},
 				components: {
 					controls: {
 						styles: {
@@ -2079,9 +2129,6 @@ UI.props.AeroTrans = {
 						type: 'transparent',
 						overflow: 'scrollbar',
 						styles: {
-							position: 'absolute',
-							top: '51px',
-							left: '1px',
 							overflow: 'hidden'
 						}
 					}
@@ -2091,7 +2138,7 @@ UI.props.AeroTrans = {
 				
 				/* layers properties */
 				layers: {
-					reorder: ['shadow', 'background', 'head', 'reflect'],
+					reorder: ['base', 'head', 'reflect'],
 					'default': {
 						position: 'relative',
 						shape: 'roundedRect',
@@ -2100,21 +2147,23 @@ UI.props.AeroTrans = {
 						opacity: 1,
 						radius: 5
 					},
-					shadow: {
-						size: 5,
-						offsetY: 2,
-						opacity: 0.5
-					},
-					background: {
+					
+					base: {
 						offset: 0,
 						color: '#000',
-						opacity: .7,
-						radius: 7
+						opacity: 0.7,
+						radius: 7,
+						shadow: {
+							size: 5,
+							blur:6,
+							offsetY: 1,
+							opacity: 0.5
+						}
 					},
 					head: {
 						color: '#fff',
 						offset: [1, 1, 'auto'],
-						opacity: .1,
+						opacity: 0.1,
 						radius: [5, 5, 0, 0],
 						size: ['auto', 18]
 					},
@@ -2122,14 +2171,14 @@ UI.props.AeroTrans = {
 						color: '#fff',
 						offset: [0, 0, 'auto'],
 						size: ['auto', 9],
-						opacity: .05,
+						opacity: 0.05,
 						radius: [5, 5, 0, 0]
 					}
 				}
 			},
 			inactive: {
 				layers: {
-					reorder: ['shadow', 'background', 'head']
+					reorder: ['base', 'head']
 				}
 			},
 			minimized: {
@@ -2139,6 +2188,225 @@ UI.props.AeroTrans = {
 					},
 					foot: {
 						color: ['#CACACA', '#CFCFCF']
+					}
+				}
+			}
+		},
+		panel: {
+			'default': {
+				styles: {
+					position: 'absolute',
+					opacity: 1
+				},
+				
+				fx: {
+					adaptLocation: {
+						'duration': 300,
+						//	'transition' : Fx.Transitions.Elastic.easeOut,
+						'wait': true
+					}
+				},
+				/* components */
+				components: {
+					controls: {
+						styles: {
+							height: 13
+						}
+					},
+					control: {
+						component: 'panelButton',
+						label: false,
+						width: 12,
+						height: 12,
+						styles: {
+							margin: '1px 3px 1px 2px'
+						}
+					},
+					toggle: {
+						type: 'toggleToolbar',
+						label: false,
+						styles: {
+							position: 'absolute',
+							top: 5,
+							right: 10,
+							margin: 0,
+							padding: 0
+						}
+					},
+					title: {
+						type: 'panelTitle',
+						emboss: true
+					},
+					view: {
+						type: 'window',
+						overflow: 'scrollbar',
+						styles: {
+							position: 'absolute',
+							top: '51px',
+							left: '1px',
+							overflow: 'hidden'
+						}
+					},
+					foot: {
+						styles: {
+						
+							zIndex: 10,
+							position: 'absolute',
+							right: '0',
+							width: '100%'
+						}
+					},
+					status: {
+						styles: {
+							fontSize: '1em',
+							padding: '3px 16px',
+							height: '16px'
+						}
+					},
+					resize: {
+						styles: {
+							position: 'absolute',
+							zIndex: 100,
+							right: 0,
+							marginBottom: 0,
+							width: '24px',
+							height: '24px'
+						}
+					}
+				},
+				
+				
+				borderSize: 1,
+				
+				/* layers properties */
+				layers: {
+					'default': {
+						position: 'relative',
+						shape: 'roundedRect',
+						offset: '0px',
+						color: '#FFFFFF',
+						opacity: 1,
+						radius: 5
+					},
+					
+					base: {
+						offset: 0,
+						color: '#000',
+						opacity: 0.2,
+						radius: 0,
+						shadow: {
+							size: 8,
+							offsetY: 2,
+							opacity: 0.5
+						}
+					},
+					underlay: {
+						color: ['#dcdcdc', '#404040'],
+						offset: [1, 1, 'auto'],
+						size: ['auto', 20],
+						radius: [0, 0, 0, 0]
+					},
+					head: {
+						color: ['#C4C4C4', '#989898'],
+						offset: [1, 0],
+						radius: [0, 0, 0, 0]
+					},
+					footline: {
+						position: 'absolute',
+						size: ['auto', 13],
+						color: '#333',
+						offset: ['auto', 1, 10],
+						radius: 0
+					},
+					footback: {
+						position: 'absolute',
+						size: ['auto', 20],
+						color: ['#fff', '#404040'],
+						offset: ['auto', 1, 2],
+						radius: [0, 0, 0, 0]
+					},
+					foot: {
+						position: 'absolute',
+						size: ['auto', 20],
+						color: ['#C2C2C2', '#989898'],
+						offset: ['auto', 1, 1],
+						radius: [0, 0, 0, 0]
+					}
+				}
+			},
+			inactive: {
+				styles: {
+					opacity: 0.95
+				
+				},
+				layers: {
+					base: {
+						opacity: 0.17,
+						shadow: {
+							size: 5,
+							offsetY: 2,
+							opacity: 0.52
+						}
+					},
+					underlay: {
+						color: ['#f1f1f1', '#878787']
+					},
+					head: {
+						color: ['#e8e8e8', '#d0d0d0']
+					},
+					foot: {
+						color: ['#e8e8e8', '#d0d0d0']
+					}
+				}
+			},
+			over: {
+				styles: {
+					opacity: 1
+				
+				},
+				layers: {
+					
+					base: {
+						opacity: 0.17,
+						shadow: {
+							size: 5,
+							offsetY: 2,
+							opacity: 1
+						}
+					},
+					underlay: {
+						color: ['#f1f1f1', '#878787']
+					},
+					head: {
+						color: ['#e8e8e8', '#d0d0d0']
+					},
+					foot: {
+						color: ['#e8e8e8', '#d0d0d0']
+					}
+				}
+			},
+			minimized: {
+				width: 160,
+				height: 22,
+				styles: {
+					width: '160px',
+					height: '22px'
+				
+				},
+				layers: {
+					reorder: ['base', 'head'],
+					base: {
+						shadow: {
+							size: 3,
+							offsetY: 0,
+							opacity: 0.72
+						}
+					},
+					head: {
+						position: 'absolute',
+						color: ['#CACACA', '#CFCFCF'],
+						offset: [2, 1, 1],
+						radius: 4
 					}
 				}
 			}
@@ -2167,13 +2435,12 @@ UI.props.AeroTrans = {
 					display: 'inline-block',
 					cursor: 'pointer'
 				},
-				
-				
 				layers: {
 					reorder: ['emboss', 'background', 'main', 'reflect', 'cache'],
 					
 					'default': {
 						position: 'absolute',
+						shape: 'circle',
 						size: [14, 14],
 						opacity: 1,
 						offset: 0
@@ -2181,7 +2448,7 @@ UI.props.AeroTrans = {
 					emboss: {
 						offset: ['1px', '1px', '0px', '1px'],
 						color: '#FFF',
-						opacity: .4
+						opacity: 0.4
 					},
 					background: {
 						offset: ['0px', '1px', '1px', '1px'],
@@ -2194,7 +2461,7 @@ UI.props.AeroTrans = {
 						offset: [2, 2.5],
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [.2, .8]
+							opacity: [0.2, 0.8]
 						}
 					},
 					reflect: {
@@ -2202,7 +2469,7 @@ UI.props.AeroTrans = {
 						offset: [1.5, 6.5],
 						gradient: {
 							color: ['#fff', '#fff'],
-							opacity: [1, .5]
+							opacity: [1, 0.5]
 						}
 					},
 					cache: {
@@ -2293,7 +2560,9 @@ UI.props.AeroTrans = {
 		}
 	},
 	
-	transparentWindowButton: {
+	
+	
+	panelButton: {
 		'default': {
 			'default': {
 				styles: {
@@ -2301,18 +2570,157 @@ UI.props.AeroTrans = {
 					cursor: 'pointer'
 				},
 				
+				
 				layers: {
-					reorder: ['main', 'line', 'line2'],
+					reorder: ['emboss', 'background', 'main', 'reflect', 'cache'],
 					
 					'default': {
 						position: 'absolute',
-						shape: 'circle'
+						shape: 'circle',
+						size: [11, 11],
+						opacity: 1,
+						offset: 0
+					},
+					emboss: {
+						offset: ['1px', '1px', '0px', '1px'],
+						color: '#FFF',
+						opacity: 0.4
+					},
+					background: {
+						offset: ['0px', '1px', '1px', '1px'],
+						gradient: {
+							color: ['#2e323d', '#848995']
+						}
 					},
 					main: {
-						size: [13, 13],
-						offset: [0, 1],
-						color: '#fff',
-						opacity: .7
+						size: [9, 9],
+						offset: [1, 2],
+						gradient: {
+							color: ['#fff', '#fff'],
+							opacity: [0.2, 0.8]
+						}
+					},
+					reflect: {
+						size: [2, 3.5],
+						offset: [1, 5.5],
+						gradient: {
+							color: ['#fff', '#fff'],
+							opacity: [1, 0.5]
+						}
+					},
+					cache: {
+						shape: 'roundedRect',
+						size: [3, 1],
+						radius: 0,
+						offset: [1, 5],
+						
+						color: '#545861',
+						opacity: 0.81
+					}
+				}
+			}
+		},
+		close: {
+			'default': {},
+			
+			over: {
+				layers: {
+					reorder: ['emboss', 'background', 'main', 'reflect', 'cache', 'line', 'line2'],
+					line: {
+						position: 'absolute',
+						shape: 'line',
+						width: 1,
+						color: '#414755',
+						offset: [3, 4],
+						opacity: 1,
+						size: [5, 5]
+					},
+					line2: {
+						position: 'absolute',
+						shape: 'lineUp',
+						width: 1,
+						color: '#414755',
+						offset: [3, 4],
+						opacity: 1,
+						size: [5, 5]
+					}
+				}
+			}
+		},
+		minimize: {
+			'default': {},
+			over: {
+				layers: {
+					reorder: ['emboss', 'background', 'main', 'reflect', 'cache', 'line'],
+					line: {
+						position: 'absolute',
+						shape: 'lineUp',
+						width: 1.5,
+						color: '#414755',
+						offset: [3, 4],
+						opacity: 1,
+						size: [5, 5],
+						rotation: 45
+					}
+				}
+			}
+		},
+		maximize: {
+			'default': {},
+			
+			over: {
+				layers: {
+					reorder: ['emboss', 'background', 'main', 'reflect', 'cache', 'line', 'line2'],
+					line: {
+						position: 'absolute',
+						shape: 'lineUp',
+						width: 1.5,
+						color: '#414755',
+						offset: [3, 4],
+						opacity: 1,
+						size: [5, 5],
+						rotation: 45
+					},
+					line2: {
+						position: 'absolute',
+						shape: 'line',
+						width: 1.5,
+						color: '#414755',
+						offset: [3, 4],
+						opacity: 1,
+						size: [5, 5],
+						rotation: 45
+					
+					}
+				}
+			}
+		}
+	},
+	
+	transparentWindowButton: {
+		'default': {
+			'default': {
+				styles: {
+					display: 'inline-block',
+					cursor: 'pointer'
+				},
+				layers: {
+					reorder: ['main'],
+					
+					'default': {
+						position: 'absolute',
+						shape: 'circle',
+						size: [16, 16],
+						opacity: 1,
+						offset: 0
+					},
+					main: {
+						size: [12, 12],
+						offset: [1, 2],
+						gradient: {
+							color: '#fff',
+							opacity: 0.7
+						}
 					}
 				}
 			}
@@ -2320,23 +2728,23 @@ UI.props.AeroTrans = {
 		close: {
 			'default': {
 				layers: {
-					reorder: ['main', 'line', 'line2'],
+					reorder: ['main','line', 'line2'],
 					line: {
 						position: 'absolute',
 						shape: 'line',
 						width: 1.5,
-						color: '#000',
-						offset: [3, 4],
-						opacity: .8,
+						color: '#414755',
+						offset: [3.5, 4.5],
+						opacity: 1,
 						size: [7, 7]
 					},
 					line2: {
 						position: 'absolute',
 						shape: 'lineUp',
 						width: 1.5,
-						color: '#000',
-						offset: [3, 4],
-						opacity: .8,
+						color: '#414755',
+						offset: [3.5, 4.5],
+						opacity: 1,
 						size: [7, 7]
 					}
 				}
@@ -2350,10 +2758,10 @@ UI.props.AeroTrans = {
 						position: 'absolute',
 						shape: 'lineUp',
 						width: 1.5,
-						color: '#000',
+						color: '#414755',
 						offset: [3.5, 4.5],
-						opacity: .8,
-						size: [6, 6],
+						opacity: 1,
+						size: [7, 7],
 						rotation: 45
 					}
 				}
@@ -2363,297 +2771,26 @@ UI.props.AeroTrans = {
 			'default': {
 				layers: {
 					reorder: ['main', 'line', 'line2'],
-					
 					line: {
 						position: 'absolute',
 						shape: 'lineUp',
 						width: 1.5,
-						color: '#000',
+						color: '#414755',
 						offset: [3.5, 4.5],
 						opacity: 1,
-						size: [6, 6],
+						size: [7, 7],
 						rotation: 45
 					},
 					line2: {
 						position: 'absolute',
 						shape: 'line',
 						width: 1.5,
-						color: '#000',
+						color: '#414755',
 						offset: [3.5, 4.5],
 						opacity: 1,
-						size: [6, 6],
+						size: [7, 7],
 						rotation: 45
-					}
-				}
-			}
-		}
-	},
-	
-	panel: {
-		'default': {
-			'default': {
-				fx: {
-					adaptLocation: {
-						'duration': 1000,
-						'transition': Fx.Transitions.Elastic.easeOut,
-						'wait': true
-					}
-				},
-				/* components */
-				components: {
-					head: {
-						styles: {
-							top: '1px',
-							left: '1px',
-							overflow: 'hidden',
-							width: '100%',
-							zIndex: 1
-						}
-					},
-					controls: {
-						styles: {
-							'float': 'left',
-							padding: '1px 3px 1px',
-							margin: '1px 0px 0px 1px',
-							height: 18
-						}
-					},
-					control: {
-						type: 'window',
-						label: false,
-						width: 15,
-						height: 15,
-						styles: {
-							margin: '2px 3px'
-						}
-					},
-					toggle: {
-						type: 'toggleToolbar',
-						label: false,
-						styles: {
-							position: 'absolute',
-							top: 5,
-							right: 10,
-							margin: 0,
-							padding: 0
-						}
-					},
-					title: {
-						type: 'windowTitle',
-						emboss: true
-					},
-					view: {
-						type: 'defaultWindow',
-						overflow: 'scrollbar',
-						styles: {
-							position: 'absolute',
-							top: '51px',
-							left: '1px',
-							overflow: 'hidden'
-						}
-					},
-					foot: {
-						styles: {
-						
-							zIndex: 10,
-							position: 'absolute',
-							right: '0',
-							width: '100%'
-						}
-					},
-					status: {
-						styles: {
-							fontSize: '1em',
-							padding: '3px 16px',
-							height: '16px'
-						}
-					},
-					resize: {
-						styles: {
-							position: 'absolute',
-							right: 0,
-							marginBottom: 0,
-							width: '24px',
-							height: '24px'
-						}
-					},
-					overlay: {
-						styles: {
-							backgroundColor: '#fff',
-							opacity: '.5',
-							position: 'absolute',
-							height: '100%',
-							width: '100%',
-							zIndex: '100000'
-						}
-					}
-				},
-				
-				
-				borderSize: 1,
-				
-				/* layers properties */
-				layers: {
-					'default': {
-						position: 'relative',
-						shape: 'roundedRect',
-						offset: 1,
-						color: '#FFFFFF',
-						opacity: 1,
-						radius: 0
-					},
-					/*	shadow : {
-					 size : 42,
-					 offsetY : 10
-					 },*/
-					background: {
-						offset: '0px',
-						color: '#000',
-						opacity: .20,
-						radius: 0
-					},
-					underlay: {
-						color: ['#dcdcdc', '#404040'],
-						offset: [1, 1, 'auto'],
-						size: ['auto', 20]
-					},
-					head: {
-						color: ['#C4C4C4', '#989898'],
-						offset: [1, 0],
-						radius: 0
-					},
-					footline: {
-						position: 'absolute',
-						size: ['auto', 20],
-						color: '#333',
-						offset: ['auto', 1, 3],
-						radius: 0
-					},
-					footback: {
-						position: 'absolute',
-						size: ['auto', 20],
-						color: ['#fff', '#404040'],
-						offset: ['auto', 1, 2]
-					},
-					foot: {
-						position: 'absolute',
-						size: ['auto', 20],
-						color: ['#C2C2C2', '#989898'],
-						offset: ['auto', 1, 1]
-					}
-				}
-			},
-			inactive: {
-				layers: {
-					shadow: {
-						offsetY: 8,
-						magnify: -5
-					},
-					background: {
-						opacity: 0.17
-					},
-					underlay: {
-						color: ['#f1f1f1', '#878787']
-					},
-					head: {
-						color: ['#e8e8e8', '#d0d0d0']
-					},
-					foot: {
-						color: ['#e8e8e8', '#d0d0d0']
-					}
-				}
-			},
-			minimized: {
-				layers: {
-					head: {
-						color: ['#CACACA', '#CFCFCF']
-					},
-					foot: {
-						color: ['#CACACA', '#CFCFCF']
-					}
-				}
-			}
-		},
-		transparent: {
-			'default': {
-				/* components */
-				components: {
-					controls: {
-						padding: '2px 2px 1px 2px'
-					},
-					control: {
-						type: 'transparent',
-						width: 15,
-						height: 15,
-						styles: {
-							margin: '0 2px 0 0'
-						}
-					},
-					title: {
-						type: 'transparentTitle'
-					},
-					view: {
-						type: 'transparent'
-					}
-				},
-				
-				borderSize: 1,
-				
-				/* layers properties */
-				layers: {
-					reorder: ['shadow', 'background', 'head', 'reflect'],
-					'default': {
-						position: 'relative',
-						shape: 'roundedRect',
-						offset: 1,
-						color: '#FFF',
-						opacity: 1,
-						radius: 5
-					},
-					shadow: {
-						size: 16,
-						offsetY: 5
-					},
-					background: {
-						offset: 0,
-						color: '#000',
-						opacity: .50,
-						radius: 7
-					},
-					head: {
-						color: '#fff',
-						offset: [1, 1, 'auto'],
-						opacity: .1,
-						radius: [5, 5, 0, 0],
-						size: ['auto', 18]
-					},
-					reflect: {
-						color: '#fff',
-						offset: [0, 0, 'auto'],
-						size: ['auto', 9],
-						opacity: .05,
-						radius: [5, 5, 0, 0]
-					}
-				}
-			},
-			inactive: {
-				layers: {
-					reorder: ['shadow', 'background'],
-					shadow: {
-						offsetY: 2,
-						size: 20,
-						
-						magnify: 0
-					}
-				}
-			},
-			minimized: {
-				layers: {
-					head: {
-						color: ['#CACACA', '#CFCFCF']
-					},
-					foot: {
-						color: ['#CACACA', '#CFCFCF']
+					
 					}
 				}
 			}
@@ -2666,7 +2803,7 @@ UI.props.AeroTrans = {
 			'default': {}
 		},
 		
-		resizeHandler: {
+		resizer: {
 			'default': {
 				width: 20,
 				height: 20,
@@ -2678,14 +2815,14 @@ UI.props.AeroTrans = {
 					width: '24px',
 					height: '24px',
 					opacity: '.5',
-					marginRight: '1px'
+					marginRight: '0px'
 				},
 				/* layers properties */
 				layers: {
 					'default': {
 						position: 'absolute',
 						shape: 'lineUp',
-						opacity: .05,
+						opacity: 0.05,
 						width: 1,
 						color: '#000'
 					},
@@ -2755,7 +2892,7 @@ UI.props.AeroTrans = {
 					reflect: {
 						color: ['#fff', '#fff'],
 						offset: [1, 2, '35%'],
-						opacity: [.1, 0],
+						opacity: [0.1, 0],
 						radius: [5, 5, 0, 0]
 					}
 				}
@@ -2818,7 +2955,7 @@ UI.props.AeroTrans = {
 		tabbar: {
 			'default': {
 			
-				height: 21,
+				height: 32,
 				width: 1000,
 				
 				/* layers properties */
@@ -2826,7 +2963,7 @@ UI.props.AeroTrans = {
 					position: 'relative',
 					display: 'block',
 					fontSize: '.7em',
-					height: '24px',
+					height: '32px',
 					width: '100%',
 					padding: '0',
 					margin: '0',
@@ -2880,7 +3017,7 @@ UI.props.AeroTrans = {
 							cursor: 'default',
 							color: '#FFF',
 							padding: '8px 10px 18px',
-							fontSize: '10px',
+							fontSize: '12px',
 							whiteSpace: 'nowrap'
 						}
 					}
@@ -2902,23 +3039,17 @@ UI.props.AeroTrans = {
 						color: '#000',
 						radius: 5,
 						offset: 0,
-						opacity: .8
+						opacity: 0.7
 					},
 					background: {
-						offset: [0, 0, 8],
-						radius: 5
+						offset: [0, 0, 9],
+						radius: 7
 					},
 					arrow: {
 						shape: 'triangle',
 						rotation: 180,
-						size: [18, 8],
+						size: [18, 9],
 						offset: ['auto', 20, 0]
-					},
-					reflect: {
-						color: ['#FFFFFF', '#FFFFFF'],
-						radius: 4,
-						opacity: [0.4, 0.1],
-						offset: [1, 1, '55%']
 					}
 				}
 			}
@@ -2929,14 +3060,14 @@ UI.props.AeroTrans = {
 				components: {
 					label: {
 						styles: {
-							padding: '13px 8px 6px'
+							padding: '15px 8px 6px'
 						}
 					}
 				},
 				
 				layers: {
 					background: {
-						offset: [8, 0, 0]
+						offset: [9, 0, 0]
 					},
 					arrow: {
 						shape: 'triangle',
@@ -2981,7 +3112,7 @@ UI.props.AeroTrans = {
 						offset: 2,
 						gradient: {
 							color: ['#f7f6f6', '#e7e5e5'],
-							opacity: .8
+							opacity: 0.8
 						},
 						radius: 8
 					}
@@ -3011,4 +3142,4 @@ UI.props.AeroTrans = {
 			}
 		}
 	}
-}
+};

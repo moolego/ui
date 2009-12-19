@@ -32,18 +32,11 @@
 */
 
 UI.Box = new Class({
-	
 	Extends: UI.Element,
 		
 	options: {
 		component: 'box',
-		
-		tag: 'div',
-		html: 'Box',
-		
-		emboss: false,
-		
-		selectable: false
+		title: 'box'
 	},
 
 	/* 
@@ -55,6 +48,10 @@ UI.Box = new Class({
 	
 	build: function(options){
 		this.parent(options);
+		
+		this.title = new UI.Label(this.props.components.title)
+		 .inject(this.head);
+		
 	}
 	
 });

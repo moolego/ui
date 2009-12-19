@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="content-script-type" content="text/javascript">
 	
 	<title>MooLego - Components Playground</title>
 	
@@ -16,7 +17,6 @@
 	<script type="text/javascript" src="../Source/Core/Interface.js"></script>
 	
 	<script type="text/javascript" src="../Source/Element/Element.js"></script>
-	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
 	<script type="text/javascript" src="../Source/Element/Box.js"></script>
 	<script type="text/javascript" src="../Source/Element/Label.js"></script>
 	<script type="text/javascript" src="../Source/Element/Bubble.js"></script>
@@ -41,8 +41,7 @@
 	<script type="text/javascript" src="../Source/View/PaneView.js"></script>
 	<script type="text/javascript" src="../Source/View/SplitView.js"></script>
 	<script type="text/javascript" src="../Source/View/TabView.js"></script>
-	
-	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
+
 	<script type="text/javascript" src="../Source/Window/Window.js"></script>
 	<script type="text/javascript" src="../Source/Window/Dialog.js"></script>
 	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
@@ -92,7 +91,8 @@
 						action: function(){
 							this.test('about');
 							alert('click')
-						}.bind(this)
+						}
+.bind(this)
 					}, {
 						text: 'separator'
 					}, {
@@ -129,12 +129,14 @@
 						text: 'Button',
 						action: function(){
 							new UI.Button().inject(form, 'top');
-						}.bind(this)
+						}
+.bind(this)
 					}, {
 						text: 'Window',
 						action: function(){
 							new UI.Window();
-						}.bind(this)
+						}
+.bind(this)
 					}]
 				}, {
 					text: 'Window',
@@ -227,7 +229,6 @@
 			var updateBubble = function(step){
 				if (bubbleslider) {
 					bubbleslider.set('html', step);
-					bubbleslider.setSize();
 					
 				}
 				else {
@@ -252,6 +253,14 @@
 					updateBubble(step.toString());
 				}
 			}).inject(form);
+			
+			
+			bubbleslider = new UI.Bubble({
+				skin: 'demo',
+				type: 'rounded',
+				target: $(firstslider),
+				label: '0'
+			});
 			
 			//updateBubble('0');
 			
@@ -292,7 +301,8 @@
 				},
 				onClick: function(){
 					tip.fade(0);
-				}.bind(this),
+				}
+.bind(this)				,
 				styles: {
 					margin: 10
 				}
@@ -328,7 +338,7 @@
 				type: 'touchfoot',
 				styles: {
 					padding: '5px',
-					height:'50px',
+					height: '50px',
 					backgroundColor: '#000'
 				}
 			}).inject(form)
@@ -391,13 +401,7 @@
 					text: 'Plage'
 				}, {
 					text: 'Venise'
-				}],
-				onMouseDown: function(){
-					this.selecttup.hide();
-				}.bind(this),
-				onChange: function(){
-					this.selecttup.show();
-				}.bind(this)
+				}]
 			}).inject(form);
 			
 			this.cancel = new UI.Button({
@@ -473,7 +477,7 @@
 				skin: 'demo',
 				type: 'widget',
 				label: '18:07',
-				resizable:true,
+				resizable: true,
 				draggable: true,
 				
 				styles: {

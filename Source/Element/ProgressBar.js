@@ -1,90 +1,96 @@
-var ProgressBar=new Class({
+/*
+	Class: UI.ProgressBar
+		The UI.ProgressBar act as a progressbar.
 	
-	initialize:function(value,parameters){
-		var vals={
-			'id':'progressbar_'+(ProgressBars++),
-			'value':$pick(value,0),
-			'width':0,
-			'height':0,
-			'darkbg':'#006',
-			'darkfg':'#fff',
-			'lightbg':'#fff',
-			'lightfg':'#000'
-		};
-		if(parameters && $type(parameters)=='object')$extend(vals,parameters);
-		if(vals.height<12)vals.height=12;
-		var obj=new Element('div',{
-			'id':vals.id,
-			'class':'progressbar_wrapper',
-			'styles':{
-				'border':'1px solid #000',
-				'width':vals.width,
-				'height':vals.height,
-				'position':'relative'
+
+	Extends:
+		<UI.Element>
+	
+	Require:
+		<UI>
+		<UI.Element>
+		
+	Arguments:
+		options
+		
+	Options:
+		- width - (integer/string) Width of the progressbar wrapper in px or percent
+		- height - (integer/string) Height  of the progressbar wrapper in px or percent
+		- fx - 
+		
+	Returns:
+		ProgressBar object.
+		
+	Example:
+		(start code)
+		var progressbar = new UI.ProgressBar({
+			width			: 260,
+			height			: 17
+		}).inject(document.body).reach(50);
+		(end)
+		
+	Implied global: 
+		UI,
+		Class,Element
+*/
+
+UI.ProgressBar = new Class({
+	Extends: UI.Element,
+
+	//options
+	options: {
+		component: 'progressbar',
+		tag: 'div',
+		
+		width: 200,
+		height: 18,
+
+		speed: 200,
+		fx: Fx.Transitions.Quad.easeOut
+	},
+
+	build: function() {
+		this.parent();
+		this.progress = new UI.Element({
+			component: 'progressbar',
+			height: this.options.height,
+			width:1,
+			type: this.options.type,
+			state: 'progress'
+		}).inject(this.element);
+		
+		//this.progress.show();
+	},
+
+	reach: function(percentage) {
+		this.progress.show()
+		var zero = 0;
+		if (percentage == 0) {
+			zero = 1;
+			percentage = 1;
+		}
+		var width = this.element.getSize().x * percentage / 100;
+		var that = this;
+		
+		this.progress.set('morph',{
+			duration: this.options.speed,
+			transition: this.options.fx,
+			onComplete: function() {
+				if (zero) {
+					that.fireEvent('render');
+					that.progress.hide()
+				}
+				else {
+					that.progress.setSize(width.toInt(),this.options.height)
+					that.fireEvent('render');
+				}
 			}
 		});
-		obj.vals=vals;
-		obj.vals.dark=new Element('div',{
-			'id':vals.id+'_dark',
-			'class':'progressbar_dark',
-			'styles':{
-				'width':vals.width,
-				'height':vals.height,
-				'background':vals.darkbg,
-				'color':vals.darkfg,
-				'position':'absolute',
-				'text-align':'center',
-				'left':0,
-				'top':0,
-				'line-height':vals.height-2
-			}
+		
+		this.progress.morph({
+			width: width.toInt()
 		});
-		obj.vals.light=new Element('div',{
-			'id':vals.id+'_light',
-			'class':'progressbar_light',
-			'styles':{
-				'width':vals.width,
-				'height':vals.height,
-				'background':vals.lightbg,
-				'color':vals.lightfg,
-				'position':'absolute',
-				'text-align':'center',
-				'left':0,
-				'top':0,
-				'line-height':vals.height-2
-			}
-		});
-		obj.appendChild(obj.vals.dark);
-		obj.appendChild(obj.vals.light);
-		obj.setValue=ProgressBar_setValue;
-		if(vals.width)obj.setValue(vals.value);
-		else setTimeout('ProgressBar_checkForParent("'+obj.id+'")',1);
-		return obj;
-	}
+		
+		return this;
+	}	
 });
-function ProgressBar_setValue(value){
-	value=parseFloat(value);
-	if(isNaN(value))value=0;
-	if(value>100)value=100;
-	if(value<0)value=0;
-	this.vals.value=value;
-	this.vals.dark.empty();
-	this.vals.light.empty();
-	this.vals.dark.appendText(value+'%');
-	this.vals.light.appendText(value+'%');
-	var r=parseInt(this.vals.width*(value/100));
-	this.vals.dark.setStyle('clip','rect(0,'+r+'px,'+this.vals.height+'px,0)');
-	this.vals.light.setStyle('clip','rect(0,'+this.vals.width+'px,'+this.vals.height+'px,'+r+'px)');
-}
-function ProgressBar_checkForParent(id){
-	var obj=$(id);
-	if(!obj)return;
-	if(!obj.parentNode)return setTimeout('ProgressBar_checkForParent("'+id+'")',1);
-	obj.setStyle('width','100%');
-	var w=obj.offsetWidth;
-	obj.vals.dark.setStyle('width',w);
-	obj.vals.light.setStyle('width',w);
-	obj.vals.width=w;
-	obj.setValue(obj.vals.value);
-}
-var ProgressBars=0;

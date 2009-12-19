@@ -1206,6 +1206,7 @@ UI.props.AquaBlack = {
 					},
 					menuItem: {
 						styles: {
+							fontSize: '13px',
 							color: '#fff',
 							padding: '2px 40px 2px 16px',
 							whiteSpace: 'nowrap',
@@ -1237,20 +1238,25 @@ UI.props.AquaBlack = {
 				/* layers properties */
 				layers: {
 					'default': {
-						radius: 4,
-						opacity: 0.1
+						radius: 0,
+						opacity: 0.98
 					},
-					shadow: {
-						size: 10,
-						offsetY: 5,
-						opacity: 0.3
-					},
-					background: {
-						color: '#000',
+					border: {
+						color: '#fff',
 						offset: 0,
-						opacity: 0.9
+						opacity: 0.7
 					},
-					main: {}
+					base: {
+						offset:'2px',
+						opacity:'.8', 
+						shadow: {
+							size: 10,
+							blur: 32,
+							offsetY: 6,
+							opacity: 0.5,
+							color: '#000'
+						}
+					}
 				}
 			},
 			over: {
@@ -1718,7 +1724,9 @@ UI.props.AquaBlack = {
 					},
 					controls: {
 						styles: {
-							'float': 'left',
+							position: 'absolute',
+							top:'1px',
+							right:'10px',
 							padding: '1px 3px 1px',
 							margin: '1px 0px 0px 1px',
 							height: 18
@@ -2537,11 +2545,11 @@ UI.props.AquaBlack = {
 				layers: {
 					background: {
 						color: ['#606971', '444f5a'],
-						offset: [1, 0]
+						offset: [0, 2]
 					},
 					main: {
 						color: ['#6b737b', '#555e69'],
-						offset: [2, 0]
+						offset: [1, 0]
 					}
 				}
 			}
@@ -2598,7 +2606,7 @@ UI.props.AquaBlack = {
 				/* layers properties */
 				layers: {
 					background: {
-						color: '#FFF',
+						color: '#000',
 						radius: [4, 4, 0, 0]
 					},
 					arrow: {

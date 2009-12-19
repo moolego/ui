@@ -1,20 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"  dir="ltr">
-<head>
-	<title>Morphing test of an UI.Element</title>
-	<meta name="description" content="Morphing an element between CSS classes is another great trick the MooTools javascript library enables you to do. Morphing isn't the most practical use of MooTools, but it's still a trick at your disposal." />
-
+<!DOCTYPE html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="content-script-type" content="text/javascript">		
+	
 	<script type="text/javascript" src="mootools/core.js"></script>
 	<script type="text/javascript" src="mootools/more.js"></script>
-	
 		
+	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+	
 	<script type="text/javascript" src="../Source/Core/UI.js"></script>
 	<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
 	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
 	<script type="text/javascript" src="../Source/Core/Interface.js"></script>
 	
 	<script type="text/javascript" src="../Source/Element/Element.js"></script>
-	<script type="text/javascript" src="../Source/Element/Element.Controller.js"></script>
 	<script type="text/javascript" src="../Source/Element/Label.js"></script>
 	<script type="text/javascript" src="../Source/Element/Bubble.js"></script>
 	<script type="text/javascript" src="../Source/Element/Scrollbar.js"></script>
@@ -35,79 +34,89 @@
 	
 	<script type="text/javascript" src="../Source/View/View.js"></script>
 	<script type="text/javascript" src="../Source/View/ListView.js"></script>
-	<script type="text/javascript" src="../Source/View/PaneView.js"></script>
+	<script type="text/javascript" src="../Source/View/PanelView.js"></script>
 	<script type="text/javascript" src="../Source/View/SplitView.js"></script>
 	<script type="text/javascript" src="../Source/View/TabView.js"></script>
-	
-	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
+
 	<script type="text/javascript" src="../Source/Window/Window.js"></script>
 	<script type="text/javascript" src="../Source/Window/Dialog.js"></script>
 	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
 	
-	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
-	<script type="text/javascript" src="../Skins/TouchBlue.js"></script>
-	<script type="text/javascript" src="../Skins/Demo.js"></script>
+	<script type="text/javascript" src="../Skins/MinimalGrey.js"></script>
 		
+	<script type="text/javascript" src="js/examples.js"></script>
+
+	<title>moolego - Components Playground</title>
 	
 	<script type="text/javascript">
-		
-		//window on dom ready
 		window.addEvent('domready', function(){
-			//for every switch-view link
-		
-			var button1 = new UI.Button({
-				type: 'roundtextured',
-				label: 'get smaller',
-				styles: {
-					margin: 10
-				}
-			}).inject(document.body);
+			ui.defaultSkin = 'MinimalGrey';
 			
-			var button2 = new UI.Button({
-				type: 'roundtextured',
-				label: 'get bigger',
-				styles: {
-					margin: 10
-				}
-			}).inject(document.body);
-			
-			var win = new UI.Window({
-				type: 'roundtextured'
-			}).inject(document.body);
-			
-			
-			win.set('morph',{
-				duration: 500,
-				transition: Fx.Transitions.Quad.easeOut,
-				onComplete: function() {
-					console.log('reder');
-					win.fireEvent('render')
-					
-				}
-			});
-			
-			button1.addEvent('click', function(){
-				win.morph({
-					'width': 320,
-					'height': 240
-				});
-			});
-			
-			button2.addEvent('click', function(){
-				win.morph({
-					'width': 640,
-					'height': 480
-				});
-			});
-		});
-		
-	</script>
-</head>
-<body>
+			var form = new Element('form', {
+				id				: 'controltest',
+				method			: 'get',
+				action			: '#'
+			}).inject($(document.body));
 	
-	<div class="view1" id="content-block">
+			new UI.Select({
+				name			: 'testselect',
+				list			: [
+				{text		: 'Please choose'},
+				{text		: 'Montagne'},
+				{text		: 'Plage'},
+				{text		: 'Restaurant'},
+				{text		: 'Sport'},
+				{text		: 'Voiture'},
+				{text		: 'Montagne',
+					menu		: [
+						{text	: 'Everest' },
+						{text	: 'Mont blanc' },
+						{text	: 'Monte leone' },
+						{text	: 'Vanil noir' },
+						{text	: 'Moléson' }
+					]
+				},{ 
+					text		: 'Plage',
+					value		: 'plg'
+				},{
+					text		: 'Venise',
+					value		: 'vns'
+				}]
+			}).setStyle('margin', 10).inject(form);
+	
+			new UI.Select({
+				name			: 'testselect',
+				list			: [
+					{ text		: 'Please choose'},
+					{ text		: 'Montagne'},
+					{ text		: 'Plage'},
+					{ text		: 'Restaurant'},
+					{ text		: 'Sport'},
+					{ text		: 'Voiture'},
+					{ text		: 'Montagne',
+				 	  menu		: [
+						{text	: 'Everest' },
+					{text	: 'Mont blanc' },
+						{text	: 'Monte leone' },
+						{text	: 'Vanil noir' },
+						{text	: 'Moléson' }
+						]
+					},{ 
+						text		: 'Plage',
+						value		: 'plg'
+					},{
+						text		: 'Venise',
+						value		: 'vns'
+					}]
+			}).setStyles({ 
+				margin : 10,
+				fontSize : '9px'}
+			).inject(form);
 		
-	</div>
+		});
+		</script>
+</head>
 
-</body>
+<body background="img/bg/01.png"></body>
+
 </html>

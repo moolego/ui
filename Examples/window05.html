@@ -63,10 +63,8 @@
 				label : "new window",
 				skin	: 'demo',
 				type	: "jgood",
-				width : 150,
 				labelStyles : {
-					fontWeight : 'bold',
-					padding : '10px 20px'
+					fontWeight : 'bold'
 				},
 				onClick : function(){
 					new UI.Window({
@@ -78,6 +76,18 @@
 						height : 320
 					});
 					increment += 20;
+				}
+			}).inject(form);
+			
+			new UI.Button({
+				label : 'Cascade',
+				skin	: 'demo',
+				type	: "jgood",
+				onClick : function() { 
+					ui.controller.window.cascade();
+				},
+				styles		: {
+					margin	: 5
 				}
 			}).inject(form);
 			

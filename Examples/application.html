@@ -1,219 +1,219 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html  style="height:100%;" xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	
+		<title>MooLego - Components Playground</title>
 		
-	<script type="text/javascript" src="mootools/core.js"></script>
-	<script type="text/javascript" src="mootools/more.js"></script>
-		
-	<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
-	<script type="text/javascript" src="../Utils/mooTree.js"></script>
-	
-	<script type="text/javascript" src="../Source/Core/UI.js"></script>
-	<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
-	<script type="text/javascript" src="../Source/Core/Skin.js"></script>
-	<script type="text/javascript" src="../Source/Core/Interface.js"></script>
-	
-	<script type="text/javascript" src="../Source/Element/Element.js"></script>
-	<script type="text/javascript" src="../Source/Element/Label.js"></script>
-	<script type="text/javascript" src="../Source/Element/Bubble.js"></script>
-	<script type="text/javascript" src="../Source/Element/Scrollbar.js"></script>
-	
-	<script type="text/javascript" src="../Source/Menu/Menu.js"></script>
-	<script type="text/javascript" src="../Source/Menu/Scroller.js"></script>
-	<script type="text/javascript" src="../Source/Menu/Context.js"></script>
-	<script type="text/javascript" src="../Source/Menu/Toolbar.js"></script>
-	
-	<script type="text/javascript" src="../Source/Form/Control.js"></script>
-	<script type="text/javascript" src="../Source/Form/Button.js"></script>
-	<script type="text/javascript" src="../Source/Form/Checkbox.js"></script>
-	<script type="text/javascript" src="../Source/Form/Input.js"></script>
-	<script type="text/javascript" src="../Source/Form/RadiosGroup.js"></script>
-	<script type="text/javascript" src="../Source/Form/Select.js"></script>
-	<script type="text/javascript" src="../Source/Form/Slider.js"></script>
-	<script type="text/javascript" src="../Source/Form/Textarea.js"></script>
-	
-	<script type="text/javascript" src="../Source/View/View.js"></script>
-	<script type="text/javascript" src="../Source/View/ListView.js"></script>
-	<script type="text/javascript" src="../Source/View/PaneView.js"></script>
-	<script type="text/javascript" src="../Source/View/SplitView.js"></script>
-	<script type="text/javascript" src="../Source/View/TabView.js"></script>
-	
-	<script type="text/javascript" src="../Source/Window/Window.Controller.js"></script>
-	<script type="text/javascript" src="../Source/Window/Window.js"></script>
-	<script type="text/javascript" src="../Source/Window/Dialog.js"></script>
-	<script type="text/javascript" src="../Source/Window/Panel.js"></script>
-	
-	<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
-	<script type="text/javascript" src="../Skins/Demo.js"></script>
-	<script type="text/javascript" src="../Skins/TouchBlue.js"></script>
-		
-	<script type="text/javascript" src="js/examples.js"></script>
-
-	<title>MooLego - Components Playground</title>
-	
-	<script type="text/javascript">
-		window.addEvent('load', function() {
-			var time = $time();
+		<script type="text/javascript" src="mootools/core.js"></script>
+		<script type="text/javascript" src="mootools/more.js"></script>
 			
-			toolbar = new UI['Toolbar']({
-				displayMode : 'text',
-				menu		: [
-					{
-						text	: 'MooLego',
-						styles	: {
-							position	: 'relative'
-						},
-						menu : [
-							{
-								text : 'About',
-								action : function() { 
-									new UI.Window({
-										title			: 'about',
-										width			: 300,
-										height			: 160,
-										head			: false,
-										viewOverflow 	: 'hidden',
-										controls		: ['close']
-									});
+		<script type="text/javascript" src="../Utils/mooCanvas.js"></script>
+		<script type="text/javascript" src="../Utils/mooTree.js"></script>
+		
+		<script type="text/javascript" src="../Source/Core/UI.js"></script>
+		<script type="text/javascript" src="../Source/Core/Canvas.js"></script>
+		<script type="text/javascript" src="../Source/Core/Skin.js"></script>
+		<script type="text/javascript" src="../Source/Core/Interface.js"></script>
+		
+		<script type="text/javascript" src="../Source/Element/Element.js"></script>
+		<script type="text/javascript" src="../Source/Element/Label.js"></script>
+		<script type="text/javascript" src="../Source/Element/Bubble.js"></script>
+		<script type="text/javascript" src="../Source/Element/Scrollbar.js"></script>
+		
+		<script type="text/javascript" src="../Source/Menu/Menu.js"></script>
+		<script type="text/javascript" src="../Source/Menu/Scroller.js"></script>
+		<script type="text/javascript" src="../Source/Menu/Context.js"></script>
+		<script type="text/javascript" src="../Source/Menu/Toolbar.js"></script>
+		
+		<script type="text/javascript" src="../Source/Form/Control.js"></script>
+		<script type="text/javascript" src="../Source/Form/Button.js"></script>
+		<script type="text/javascript" src="../Source/Form/Checkbox.js"></script>
+		<script type="text/javascript" src="../Source/Form/Input.js"></script>
+		<script type="text/javascript" src="../Source/Form/RadiosGroup.js"></script>
+		<script type="text/javascript" src="../Source/Form/Select.js"></script>
+		<script type="text/javascript" src="../Source/Form/Slider.js"></script>
+		<script type="text/javascript" src="../Source/Form/Textarea.js"></script>
+		
+		<script type="text/javascript" src="../Source/View/View.js"></script>
+		<script type="text/javascript" src="../Source/View/ListView.js"></script>
+		<script type="text/javascript" src="../Source/View/PaneView.js"></script>
+		<script type="text/javascript" src="../Source/View/SplitView.js"></script>
+		<script type="text/javascript" src="../Source/View/TabView.js"></script>
+	
+		<script type="text/javascript" src="../Source/Window/Window.js"></script>
+		<script type="text/javascript" src="../Source/Window/Dialog.js"></script>
+		<script type="text/javascript" src="../Source/Window/Panel.js"></script>
+		
+		<script type="text/javascript" src="../Skins/AquaGraphite.js"></script>
+		<script type="text/javascript" src="../Skins/Demo.js"></script>
+		<script type="text/javascript" src="../Skins/TouchBlue.js"></script>
+			
+		<script type="text/javascript" src="js/examples.js"></script>
+		
+		<script type="text/javascript">
+			window.addEvent('load', function() {
+				var time = $time();
+				
+				toolbar = new UI['Toolbar']({
+					displayMode : 'text',
+					menu		: [
+						{
+							text	: 'MooLego',
+							styles	: {
+								position	: 'relative'
+							},
+							menu : [
+								{
+									text : 'About',
+									action : function() { 
+										new UI.Window({
+											title			: 'about',
+											width			: 300,
+											height			: 160,
+											head			: false,
+											viewOverflow 	: 'hidden',
+											controls		: ['close']
+										});
+									}
+								},
+								{ 
+									text 		: 'Software version...',
+									action : function() { this.test('about'); alert('click')}.bind(this)
+								},
+								{ text		: 'separator' },
+								{ 
+									text 		: 'Préférences systemes...',
+									action : function() { new App.Settings() }
+								},
+								{ text		: 'separator' },{
+									text : 'Elements récents',
+									menu : [
+										{text : 'Finder'},
+										{text : 'Safari'},
+										{text : 'Mail'},
+										{text : 'Protoshop'},
+										{text : 'Nasty Explorer'}
+									]
+								},
+								{ text		: 'separator' },
+								{
+									text : 'Fermer la session'
 								}
-							},
-							{ 
-								text 		: 'Software version...',
-								action : function() { this.test('about'); alert('click')}.bind(this)
-							},
-							{ text		: 'separator' },
-							{ 
-								text 		: 'Préférences systemes...',
-								action : function() { new App.Settings() }
-							},
-							{ text		: 'separator' },{
-								text : 'Elements récents',
-								menu : [
-									{text : 'Finder'},
-									{text : 'Safari'},
-									{text : 'Mail'},
-									{text : 'Protoshop'},
-									{text : 'Nasty Explorer'}
-								]
-							},
-							{ text		: 'separator' },
-							{
-								text : 'Fermer la session'
-							}
-						]
-					},
-					{
-						text : 'New',
-						options : {'class' : 'ui-dd-new'},
-						menu		: [
-							{
-								text : 'Button',
-								action : function() { 
-									new UI.Button().inject(form, 'top');
-								}.bind(this)
-							},
-							{ 
-								text 		: 'Window',
-								action : function() { 
-									new UI.Window();
-								}.bind(this)
-							}
-						]
-					},
-					{
-						text : 'Window',
-						options : {'class' : 'ui-dd-new'},
-						menu		: [
-							{
-								text : 'About',
-								action : function() { this.test('about'); alert('click')}.bind(this)
-							},
-							{ text 		: 'Minimizer'},
-							{ text		: 'separator' },
-							{ text		: 'Cascade',
-							  action: function(){
-							  	this.windowManager.resetCascade()
-							  }.bind(this)
-							  
-							}
-						]
-					},
-					{
-						text : 'Help',
-						options : {'class' : 'ui-dd-help'},
-						menu : [
-							{ text : 'Welcome' },
-							{ text : 'separator' },
-							{ text : 'Update...' },
-							{ text : 'separator' },
-							{ text : 'Settings...' }
-						]
+							]
+						},
+						{
+							text : 'New',
+							options : {'class' : 'ui-dd-new'},
+							menu		: [
+								{
+									text : 'Button',
+									action : function() { 
+										new UI.Button().inject(form, 'top');
+									}.bind(this)
+								},
+								{ 
+									text 		: 'Window',
+									action : function() { 
+										new UI.Window();
+									}.bind(this)
+								}
+							]
+						},
+						{
+							text : 'Window',
+							options : {'class' : 'ui-dd-new'},
+							menu		: [
+								{
+									text : 'About',
+									action : function() { this.test('about'); alert('click')}.bind(this)
+								},
+								{ text 		: 'Minimizer'},
+								{ text		: 'separator' },
+								{ text		: 'Cascade',
+								  action: function(){
+								  	this.windowManager.resetCascade()
+								  }.bind(this)
+								  
+								}
+							]
+						},
+						{
+							text : 'Help',
+							options : {'class' : 'ui-dd-help'},
+							menu : [
+								{ text : 'Welcome' },
+								{ text : 'separator' },
+								{ text : 'Update...' },
+								{ text : 'separator' },
+								{ text : 'Settings...' }
+							]
+						}
+					]						
+				}).inject(document.body,'top');
+	
+	
+				this.workspace = new UI.SplitView().inject(document.body);
+				
+				
+				new UI.TabView({
+					tabs : [
+						{
+							name : 'Layers',
+							url	: 'assets/pulp1.json'
+						},
+						{
+							name : 'Components',
+							url	: 'assets/pulp2.json'
+						},
+						{
+							name : 'Styles',
+							url	: 'assets/pulp3.json'
+						}
+					],
+					height : 200,
+					styles: {
+						backgroundColor : '#fff',
+						borderBottom : '1px solid #000',
+						position : 'relative'
 					}
-				]						
-			}).inject(document.body,'top');
-
-
-			this.workspace = new UI.SplitView().inject(document.body);
-			
-			
-			new UI.TabView({
-				tabs : [
-					{
-						name : 'Layers',
-						url	: 'assets/pulp1.json'
-					},
-					{
-						name : 'Components',
-						url	: 'assets/pulp2.json'
-					},
-					{
-						name : 'Styles',
-						url	: 'assets/pulp3.json'
+				}).inject(workspace.view[0].content);
+				
+				new UI.TabView({
+					tabs : [
+						{
+							name : 'Chapter 1',
+							url	: 'assets/pulp1.json'
+						},
+						{
+							name : 'Chapter 2',
+							url	: 'assets/pulp2.json'
+						},
+						{
+							name : 'Chapter 3',
+							url	: 'assets/pulp3.json'
+						},
+						{
+							name : 'Chapter 4',
+							url	: 'assets/pulp4.json'
+						}
+					],
+					height : 200,
+					styles: {
+						backgroundColor : '#fff',
+						borderBottom : '1px solid #000',
+						position : 'relative'
 					}
-				],
-				height : 200,
-				styles: {
-					backgroundColor : '#fff',
-					borderBottom : '1px solid #000',
-					position : 'relative'
-				}
-			}).inject(workspace.view[0].content);
-			
-			new UI.TabView({
-				tabs : [
-					{
-						name : 'Chapter 1',
-						url	: 'assets/pulp1.json'
-					},
-					{
-						name : 'Chapter 2',
-						url	: 'assets/pulp2.json'
-					},
-					{
-						name : 'Chapter 3',
-						url	: 'assets/pulp3.json'
-					},
-					{
-						name : 'Chapter 4',
-						url	: 'assets/pulp4.json'
-					}
-				],
-				height : 200,
-				styles: {
-					backgroundColor : '#fff',
-					borderBottom : '1px solid #000',
-					position : 'relative'
-				}
-			}).inject(workspace.view[0].content);
-			
-			
-			
-			
-		});
-	</script>
-</head>
+				}).inject(workspace.view[0].content);
+				
+				
+				
+				
+			});
+		</script>
+	</head>
 
-<body style="overflow:hidden;height:100%;margin:0" bgcolor="#e8e8e8"></body>
+	<body style="overflow:hidden;height:100%;margin:0" bgcolor="#e8e8e8">
+	</body>
 
 </html>
