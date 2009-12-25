@@ -1139,7 +1139,7 @@ ui.controller.window = {
 		var offset = [20,20];
 		var zIndex = this.zIndex;
 		var last;
-		console.log(this.options.cascade.start,start.x,start.y);
+		
 		this.list.each(function(win){
 			if (win.state != 'minimized') {
 				

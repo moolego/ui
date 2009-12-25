@@ -469,14 +469,6 @@ UI.Element = new Class({
             this.dragHandlers = null;
         }
         
-        
-        
-        //dragLimitX: [-1000, Window.getWidth() + 1000],
-        //dragLimitY: [0, Window.getHeight() + 1000],
-        
-        //console.log(this.options.container);
-        
-        
         this.dragHandler = new Drag(this.element, {
             handle: this.dragHandlers,
             limit: {
@@ -547,7 +539,6 @@ UI.Element = new Class({
                 this.fireEvent('redraw', 'button')
             },
             resizeComplete: function(){
-                console.log('complete');
                 this.setSize(this.element.getComputedSize().width, this.element.getComputedSize().height);
                 
             }
@@ -704,14 +695,6 @@ UI.Element = new Class({
      */
     inject: function(container, position){
         this.fireEvent('inject');
-        
-		//console.log(container);
-		//console.log('--',container.component);
-		
-		//if (container.component && container.component == 'segment') {
-		//	console.log(element.index);
-			
-		//}
 		
         this.element.inject(container, position);
         this.element.setStyle('visibility', 'visible');

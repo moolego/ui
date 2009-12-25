@@ -3054,7 +3054,6 @@ UI.props.AquaGraphite = {
 				/* layers properties */
 				layers: {
 					base: {
-						offset: [2, 1],
 						shape: 'triangle',
 						rotation: 90,
 						color: '#333'

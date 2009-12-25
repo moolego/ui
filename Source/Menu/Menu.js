@@ -307,13 +307,14 @@ UI.Menu = new Class({
 	
 	addSubmenuArrow: function(menuItem){
 		this.addEvent('addArrows', function(){
-			//we add the arrow
-			console.log(this.options.skin);
+			// add arrow
 			menuItem.arrow = new UI.Element({
 				skin: this.options.skin,
 				component: 'element',
 				type: 'menuRightArrow',
 				styles: {
+					height:'10',
+					width:'20',
 					'padding': 0,
 					'position': 'absolute',
 					right: 8,

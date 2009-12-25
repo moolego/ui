@@ -45,7 +45,7 @@ UI.ProgressBar = new Class({
 		width: 200,
 		height: 18,
 
-		speed: 200,
+		speed: 2000,
 		fx: Fx.Transitions.Quad.easeOut
 	},
 
@@ -85,9 +85,7 @@ UI.ProgressBar = new Class({
 					that.fireEvent('render');
 				}
 			}
-		});
-		
-		this.progress.morph({
+		}).morph({
 			width: width.toInt()
 		});
 		

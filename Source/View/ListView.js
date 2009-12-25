@@ -157,7 +157,6 @@ UI.ListView = new Class({
 			.inject(this.content);
 			
 			$H(object).erase('type').each(function(value,key){
-				//console.log(value,key);
 				var o = new UI.Element({
 					html: value,
 					styles: this.props.components[key].styles

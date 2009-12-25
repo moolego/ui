@@ -2585,6 +2585,7 @@ UI.props.AquaBlack = {
 				height: 9,
 				
 				/* layers properties */
+				
 				layers: {
 					main: {
 						shape: 'triangle',

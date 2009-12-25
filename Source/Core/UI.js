@@ -313,8 +313,6 @@ ui.controller.element = {
 
 	handelKeys : function(){
 		window.addEvent('keydown', function(e){
-			//console.log(e.key);
-			
 			if (e.key == 'down' && this.menu) {
 				this.menu.goDown();
 			}

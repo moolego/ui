@@ -151,7 +151,6 @@ UI.Bubble = new Class({
 		
 		
 		var coord = this.getLocation();
-		//console.log('setLocation: ',coord);
 		this.element.setStyles({
 			left: coord.left,
 			top: coord.top

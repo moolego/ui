@@ -1,18 +1,51 @@
 //MooTools More, <http://mootools.net/more>. Copyright (c) 2006-2009 Aaron Newton <http://clientcide.com/>, Valerio Proietti <http://mad4milk.net> & the MooTools team <http://mootools.net/developers>, MIT Style License.
 
+/*
+---
+
+script: More.js
+
+description: MooTools More
+
+license: MIT-style license
+
+authors:
+- Guillermo Rauch
+- Thomas Aylott
+- Scott Kyle
+
+requires:
+- core:1.2.4/MooTools
+
+provides: [MooTools.More]
+
+...
+*/
+
 MooTools.More = {
-	'version': '1.2.3.1'
+	'version': '1.2.4.2',
+	'build': 'bd5a93c0913cce25917c48cbdacde568e15e02ef'
 };
 
 /*
-Script: MooTools.Lang.js
-	Provides methods for localization.
+---
 
-	License:
-		MIT-style license.
+script: MooTools.Lang.js
 
-	Authors:
-		Aaron Newton
+description: Provides methods for localization.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Events
+- /MooTools.More
+
+provides: [MooTools.Lang]
+
+...
 */
 
 (function(){
@@ -98,40 +131,104 @@ Script: MooTools.Lang.js
 })();
 
 /*
-Script: Log.js
-	Provides basic logging functionality for plugins to implement.
+---
 
-	License:
-		MIT-style license.
+script: Log.js
 
-	Authors:
-		Guillermo Rauch
+description: Provides basic logging functionality for plugins to implement.
+
+license: MIT-style license
+
+authors:
+- Guillermo Rauch
+- Thomas Aylott
+- Scott Kyle
+
+requires:
+- core:1.2.4/Class
+- /MooTools.More
+
+provides: [Log]
+
+...
 */
 
-var Log = new Class({
+(function(){
+
+var global = this;
+
+var log = function(){
+	if (global.console && console.log){
+		try {
+			console.log.apply(console, arguments);
+		} catch(e) {
+			console.log(Array.slice(arguments));
+		}
+	} else {
+		Log.logged.push(arguments);
+	}
+	return this;
+};
+
+var disabled = function(){
+	this.logged.push(arguments);
+	return this;
+};
+
+this.Log = new Class({
 	
-	log: function(){
-		Log.logger.call(this, arguments);
+	logged: [],
+	
+	log: disabled,
+	
+	resetLog: function(){
+		this.logged.empty();
+		return this;
+	},
+
+	enableLog: function(){
+		this.log = log;
+		this.logged.each(function(args){
+			this.log.apply(this, args);
+		}, this);
+		return this.resetLog();
+	},
+
+	disableLog: function(){
+		this.log = disabled;
+		return this;
 	}
 	
 });
 
-Log.logged = [];
+Log.extend(new Log).enableLog();
 
+// legacy
 Log.logger = function(){
-	if(window.console && console.log) console.log.apply(console, arguments);
-	else Log.logged.push(arguments);
+	return this.log.apply(this, arguments);
 };
 
+})();
+
 /*
-Script: Class.Refactor.js
-	Extends a class onto itself with new property, preserving any items attached to the class's namespace.
+---
 
-	License:
-		MIT-style license.
+script: Class.Refactor.js
 
-	Authors:
-		Aaron Newton
+description: Extends a class onto itself with new property, preserving any items attached to the class's namespace.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Class
+- /MooTools.More
+
+provides: [Class.refactor]
+
+...
 */
 
 Class.refactor = function(original, refactors){
@@ -152,14 +249,24 @@ Class.refactor = function(original, refactors){
 };
 
 /*
-Script: Class.Binds.js
-	Automagically binds specified methods in a class to the instance of the class.
+---
 
-	License:
-		MIT-style license.
+script: Class.Binds.js
 
-	Authors:
-		Aaron Newton
+description: Automagically binds specified methods in a class to the instance of the class.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Class
+- /MooTools.More
+
+provides: [Class.Binds]
+
+...
 */
 
 Class.Mutators.Binds = function(binds){
@@ -176,15 +283,27 @@ Class.Mutators.initialize = function(initialize){
 	};
 };
 
+
 /*
-Script: Class.Occlude.js
-	Prevents a class from being applied to a DOM element twice.
+---
 
-	License:
-		MIT-style license.
+script: Class.Occlude.js
 
-	Authors:
-		Aaron Newton
+description: Prevents a class from being applied to a DOM element twice.
+
+license: MIT-style license.
+
+authors:
+- Aaron Newton
+
+requires: 
+- core/1.2.4/Class
+- core:1.2.4/Element
+- /MooTools.More
+
+provides: [Class.Occlude]
+
+...
 */
 
 Class.Occlude = new Class({
@@ -192,26 +311,37 @@ Class.Occlude = new Class({
 	occlude: function(property, element){
 		element = document.id(element || this.element);
 		var instance = element.retrieve(property || this.property);
-		if (instance && !$defined(this.occluded)){
-			this.occluded = instance;
-		} else {
-			this.occluded = false;
-			element.store(property || this.property, this);
-		}
+		if (instance && !$defined(this.occluded))
+			return this.occluded = instance;
+
+		this.occluded = false;
+		element.store(property || this.property, this);
 		return this.occluded;
 	}
 
 });
 
 /*
-Script: Chain.Wait.js
-	Adds a method to inject pauses between chained events.
+---
 
-	License:
-		MIT-style license.
+script: Chain.Wait.js
 
-	Authors:
-		Aaron Newton
+description: value, Adds a method to inject pauses between chained events.
+
+license: MIT-style license.
+
+authors:
+- Aaron Newton
+
+requires: 
+- core:1.2.4/Chain 
+- core:1.2.4/Element
+- core:1.2.4/Fx
+- /MooTools.More
+
+provides: [Chain.Wait]
+
+...
 */
 
 (function(){
@@ -233,37 +363,43 @@ Script: Chain.Wait.js
 		});
 	}
 
-	try {
-		Element.implement({
-			chains: function(effects){
-				$splat($pick(effects, ['tween', 'morph', 'reveal'])).each(function(effect){
-					effect = this.get(effect);
-					if (!effect) return;
-					effect.setOptions({
-						link:'chain'
-					});
-				}, this);
-				return this;
-			},
-			pauseFx: function(duration, effect){
-				this.chains(effect).get($pick(effect, 'tween')).wait(duration);
-				return this;
-			}
-		});
-	} catch(e){}
+	Element.implement({
+		chains: function(effects){
+			$splat($pick(effects, ['tween', 'morph', 'reveal'])).each(function(effect){
+				effect = this.get(effect);
+				if (!effect) return;
+				effect.setOptions({
+					link:'chain'
+				});
+			}, this);
+			return this;
+		},
+		pauseFx: function(duration, effect){
+			this.chains(effect).get($pick(effect, 'tween')).wait(duration);
+			return this;
+		}
+	});
 
 })();
 
 /*
-Script: Array.Extras.js
-	Extends the Array native object to include useful methods to work with arrays.
+---
 
-	License:
-		MIT-style license.
+script: Array.Extras.js
 
-	Authors:
-		Christoph Pojer
+description: Extends the Array native object to include useful methods to work with arrays.
 
+license: MIT-style license
+
+authors:
+- Christoph Pojer
+
+requires:
+- core:1.2.4/Array
+
+provides: [Array.Extras]
+
+...
 */
 Array.implement({
 
@@ -296,25 +432,47 @@ Array.implement({
 });
 
 /*
-Script: Date.js
-	Extends the Date native object to include methods useful in managing dates.
+---
 
-	License:
-		MIT-style license.
+script: Date.js
 
-	Authors:
-		Aaron Newton
-		Nicholas Barthelemy - https://svn.nbarthelemy.com/date-js/
-		Harald Kirshner - mail [at] digitarald.de; http://digitarald.de
-		Scott Kyle - scott [at] appden.com; http://appden.com
+description: Extends the Date native object to include methods useful in managing dates.
 
+license: MIT-style license
+
+authors:
+- Aaron Newton
+- Nicholas Barthelemy - https://svn.nbarthelemy.com/date-js/
+- Harald Kirshner - mail [at] digitarald.de; http://digitarald.de
+- Scott Kyle - scott [at] appden.com; http://appden.com
+
+requires:
+- core:1.2.4/Array
+- core:1.2.4/String
+- core:1.2.4/Number
+- core:1.2.4/Lang
+- core:1.2.4/Date.English.US
+- /MooTools.More
+
+provides: [Date]
+
+...
 */
 
 (function(){
 
+var Date = this.Date;
+
 if (!Date.now) Date.now = $time;
 
-Date.Methods = {};
+Date.Methods = {
+	ms: 'Milliseconds',
+	year: 'FullYear',
+	min: 'Minutes',
+	mo: 'Month',
+	sec: 'Seconds',
+	hr: 'Hours'
+};
 
 ['Date', 'Day', 'FullYear', 'Hours', 'Milliseconds', 'Minutes', 'Month', 'Seconds', 'Time', 'TimezoneOffset',
 	'Week', 'Timezone', 'GMTOffset', 'DayOfYear', 'LastMonth', 'LastDayOfMonth', 'UTCDate', 'UTCDay', 'UTCFullYear',
@@ -322,19 +480,8 @@ Date.Methods = {};
 	Date.Methods[method.toLowerCase()] = method;
 });
 
-$each({
-	ms: 'Milliseconds',
-	year: 'FullYear',
-	min: 'Minutes',
-	mo: 'Month',
-	sec: 'Seconds',
-	hr: 'Hours'
-}, function(value, key){
-	Date.Methods[key] = value;
-});
-
-var zeroize = function(what, length){
-	return new Array(length - what.toString().length + 1).join('0') + what;
+var pad = function(what, length){
+	return new Array(length - String(what).length + 1).join('0') + what;
 };
 
 Date.implement({
@@ -397,23 +544,10 @@ Date.implement({
 		return this.set({hr: 0, min: 0, sec: 0, ms: 0});
 	},
 
-	diff: function(d, resolution){
-		resolution = resolution || 'day';
-		if ($type(d) == 'string') d = Date.parse(d);
-
-		switch (resolution){
-			case 'year':
-				return d.get('year') - this.get('year');
-			case 'month':
-				var months = (d.get('year') - this.get('year')) * 12;
-				return months + d.get('mo') - this.get('mo');
-			default:
-				var diff = d.get('time') - this.get('time');
-				if (Date.units[resolution]() > diff.abs()) return 0;
-				return ((d.get('time') - this.get('time')) / Date.units[resolution]()).round();
-		}
-
-		return null;
+	diff: function(date, resolution){
+		if ($type(date) == 'string') date = Date.parse(date);
+		
+		return ((date - this) / Date.units[resolution || 'day'](3, 3)).toInt(); // non-leap year, 30-day month
 	},
 
 	getLastDayOfMonth: function(){
@@ -441,7 +575,7 @@ Date.implement({
 
 	getGMTOffset: function(){
 		var off = this.get('timezoneOffset');
-		return ((off > 0) ? '-' : '+') + zeroize((off.abs() / 60).floor(), 2) + zeroize(off % 60, 2);
+		return ((off > 0) ? '-' : '+') + pad((off.abs() / 60).floor(), 2) + pad(off % 60, 2);
 	},
 
 	setAMPM: function(ampm){
@@ -471,23 +605,23 @@ Date.implement({
 		f = formats[f.toLowerCase()] || f; // replace short-hand with actual format
 		var d = this;
 		return f.replace(/%([a-z%])/gi,
-			function($1, $2){
-				switch ($2){
+			function($0, $1){
+				switch ($1){
 					case 'a': return Date.getMsg('days')[d.get('day')].substr(0, 3);
 					case 'A': return Date.getMsg('days')[d.get('day')];
 					case 'b': return Date.getMsg('months')[d.get('month')].substr(0, 3);
 					case 'B': return Date.getMsg('months')[d.get('month')];
 					case 'c': return d.toString();
-					case 'd': return zeroize(d.get('date'), 2);
-					case 'H': return zeroize(d.get('hr'), 2);
+					case 'd': return pad(d.get('date'), 2);
+					case 'H': return pad(d.get('hr'), 2);
 					case 'I': return ((d.get('hr') % 12) || 12);
-					case 'j': return zeroize(d.get('dayofyear'), 3);
-					case 'm': return zeroize((d.get('mo') + 1), 2);
-					case 'M': return zeroize(d.get('min'), 2);
+					case 'j': return pad(d.get('dayofyear'), 3);
+					case 'm': return pad((d.get('mo') + 1), 2);
+					case 'M': return pad(d.get('min'), 2);
 					case 'o': return d.get('ordinal');
 					case 'p': return Date.getMsg(d.get('ampm'));
-					case 'S': return zeroize(d.get('seconds'), 2);
-					case 'U': return zeroize(d.get('week'), 2);
+					case 'S': return pad(d.get('seconds'), 2);
+					case 'U': return pad(d.get('week'), 2);
 					case 'w': return d.get('day');
 					case 'x': return d.format(Date.getMsg('shortDate'));
 					case 'X': return d.format(Date.getMsg('shortTime'));
@@ -496,7 +630,7 @@ Date.implement({
 					case 'T': return d.get('GMTOffset');
 					case 'Z': return d.get('Timezone');
 				}
-				return $2;
+				return $1;
 			}
 		);
 	},
@@ -507,6 +641,7 @@ Date.implement({
 
 });
 
+Date.alias('toISOString', 'toJSON');
 Date.alias('diff', 'compare');
 Date.alias('format', 'strftime');
 
@@ -519,6 +654,7 @@ var formats = {
 	'long': '%B %d, %Y %H:%M'
 };
 
+var parsePatterns = [];
 var nativeParse = Date.parse;
 
 var parseWord = function(type, word, num){
@@ -544,7 +680,6 @@ var parseWord = function(type, word, num){
 
 	return (num) ? translated.indexOf(ret) : ret;
 };
-
 
 Date.extend({
 
@@ -574,7 +709,7 @@ Date.extend({
 	},
 
 	isLeapYear: function(year){
-		return new Date(year, 1, 29).get('date') == 29;
+		return ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0);
 	},
 
 	parse: function(from){
@@ -585,9 +720,9 @@ Date.extend({
 		if (!from.length) return null;
 
 		var parsed;
-		Date.parsePatterns.some(function(pattern){
-			var r = pattern.re.exec(from);
-			return (r) ? (parsed = pattern.handler(r)) : false;
+		parsePatterns.some(function(pattern){
+			var bits = pattern.re.exec(from);
+			return (bits) ? (parsed = pattern.handler(bits)) : false;
 		});
 
 		return parsed || new Date(nativeParse(from));
@@ -603,12 +738,14 @@ Date.extend({
 
 	parseUTC: function(value){
 		var localDate = new Date(value);
-		var utcSeconds = Date.UTC(localDate.get('year'), 
-		localDate.get('mo'),
-		localDate.get('date'), 
-		localDate.get('hr'), 
-		localDate.get('min'), 
-		localDate.get('sec'));
+		var utcSeconds = Date.UTC(
+			localDate.get('year'),
+			localDate.get('mo'),
+			localDate.get('date'),
+			localDate.get('hr'),
+			localDate.get('min'),
+			localDate.get('sec')
+		);
 		return new Date(utcSeconds);
 	},
 
@@ -621,13 +758,13 @@ Date.extend({
 	},
 
 	defineFormats: function(formats){
-		for (var name in formats) Date.defineFormat(name, formats[f]);
+		for (var name in formats) Date.defineFormat(name, formats[name]);
 	},
 
-	parsePatterns: [],
+	parsePatterns: parsePatterns, // this is deprecated
 	
 	defineParser: function(pattern){
-		Date.parsePatterns.push( pattern.re && pattern.handler ? pattern : build(pattern) );
+		parsePatterns.push((pattern.re && pattern.handler) ? pattern : build(pattern));
 	},
 	
 	defineParsers: function(){
@@ -635,84 +772,96 @@ Date.extend({
 	},
 	
 	define2DigitYearStart: function(year){
-		yr_start = year % 100;
-		yr_base = year - yr_start;
+		startYear = year % 100;
+		startCentury = year - startYear;
 	}
 
 });
 
-var yr_base = 1900;
-var yr_start = 70;
+var startCentury = 1900;
+var startYear = 70;
+
+var regexOf = function(type){
+	return new RegExp('(?:' + Date.getMsg(type).map(function(name){
+		return name.substr(0, 3);
+	}).join('|') + ')[a-z]*');
+};
 
 var replacers = function(key){
 	switch(key){
 		case 'x': // iso8601 covers yyyy-mm-dd, so just check if month is first
-			return (Date.orderIndex('month') == 1) ? '%m[.-/]%d([.-/]%y)?' : '%d[.-/]%m([.-/]%y)?';
+			return ((Date.orderIndex('month') == 1) ? '%m[.-/]%d' : '%d[.-/]%m') + '([.-/]%y)?';
 		case 'X':
-			return '%H([.:]%M)?([.:]%S([.:]%s)?)?\\s?%p?\\s?%T?';
-		case 'o':
-			return '[^\\d\\s]*';
+			return '%H([.:]%M)?([.:]%S([.:]%s)?)? ?%p? ?%T?';
 	}
 	return null;
 };
 
 var keys = {
-	a: /[a-z]{3,}/,
 	d: /[0-2]?[0-9]|3[01]/,
 	H: /[01]?[0-9]|2[0-3]/,
 	I: /0?[1-9]|1[0-2]/,
 	M: /[0-5]?\d/,
 	s: /\d+/,
+	o: /[a-z]*/,
 	p: /[ap]\.?m\.?/,
 	y: /\d{2}|\d{4}/,
 	Y: /\d{4}/,
 	T: /Z|[+-]\d{2}(?::?\d{2})?/
 };
 
-keys.B = keys.b = keys.A = keys.a;
 keys.m = keys.I;
 keys.S = keys.M;
 
-var lang;
+var currentLanguage;
+
+var recompile = function(language){
+	currentLanguage = language;
+	
+	keys.a = keys.A = regexOf('days');
+	keys.b = keys.B = regexOf('months');
+	
+	parsePatterns.each(function(pattern, i){
+		if (pattern.format) parsePatterns[i] = build(pattern.format);
+	});
+};
 
 var build = function(format){
-	if (!lang) return {format: format}; // wait until language is set
+	if (!currentLanguage) return {format: format};
 	
-	var parsed = [null];
-
+	var parsed = [];
 	var re = (format.source || format) // allow format to be regex
 	 .replace(/%([a-z])/gi,
-		function($1, $2){
-			return replacers($2) || $1;
+		function($0, $1){
+			return replacers($1) || $0;
 		}
 	).replace(/\((?!\?)/g, '(?:') // make all groups non-capturing
 	 .replace(/ (?!\?|\*)/g, ',? ') // be forgiving with spaces and commas
 	 .replace(/%([a-z%])/gi,
-		function($1, $2){
-			var p = keys[$2];
-			if (!p) return $2;
-			parsed.push($2);
+		function($0, $1){
+			var p = keys[$1];
+			if (!p) return $1;
+			parsed.push($1);
 			return '(' + p.source + ')';
 		}
-	);
+	).replace(/\[a-z\]/gi, '[a-z\\u00c0-\\uffff]'); // handle unicode words
 
 	return {
 		format: format,
 		re: new RegExp('^' + re + '$', 'i'),
 		handler: function(bits){
+			bits = bits.slice(1).associate(parsed);
 			var date = new Date().clearTime();
-			for (var i = 1; i < parsed.length; i++)
-				date = handle.call(date, parsed[i], bits[i]);
+			if ('d' in bits) handle.call(date, 'd', 1);
+			if ('m' in bits) handle.call(date, 'm', 1);
+			for (var key in bits) handle.call(date, key, bits[key]);
 			return date;
 		}
 	};
 };
 
 var handle = function(key, value){
-	if (!value){
-		if (key == 'm' || key == 'd') value = 1;
-		else return this;
-	}
+	if (!value) return this;
 
 	switch(key){
 		case 'a': case 'A': return this.set('day', Date.parseDay(value, true));
@@ -728,13 +877,13 @@ var handle = function(key, value){
 		case 'Y': return this.set('year', value);
 		case 'y':
 			value = +value;
-			if (value < 100) value += yr_base + (value < yr_start ? 100 : 0);
+			if (value < 100) value += startCentury + (value < startYear ? 100 : 0);
 			return this.set('year', value);
 		case 'T':
 			if (value == 'Z') value = '+00';
 			var offset = value.match(/([+-])(\d{2}):?(\d{2})?/);
 			offset = (offset[1] + '1') * (offset[2] * 60 + (+offset[3] || 0)) + this.getTimezoneOffset();
-			return this.set('time', (this * 1) - offset * 60000);
+			return this.set('time', this - offset * 60000);
 	}
 
 	return this;
@@ -745,38 +894,63 @@ Date.defineParsers(
 	'%Y%m%d(T%H(%M%S?)?)?', // "19991231", "19991231T1159", compact
 	'%x( %X)?', // "12/31", "12.31.99", "12-31-1999", "12/31/2008 11:59 PM"
 	'%d%o( %b( %Y)?)?( %X)?', // "31st", "31st December", "31 Dec 1999", "31 Dec 1999 11:59pm"
-	'%b %d%o?( %Y)?( %X)?', // Same as above with month and day switched
-	'%b %Y' // "December 1999"
+	'%b( %d%o)?( %Y)?( %X)?', // Same as above with month and day switched
+	'%Y %b( %d%o( %X)?)?', // Same as above with year coming first
+	'%o %b %d %X %T %Y' // "Thu Oct 22 08:11:23 +0000 2009"
 );
 
 MooTools.lang.addEvent('langChange', function(language){
-	if (!MooTools.lang.get('Date')) return;
-
-	lang = language;
-	Date.parsePatterns.each(function(pattern, i){
-		if (pattern.format) Date.parsePatterns[i] = build(pattern.format);
-	});
-
+	if (MooTools.lang.get('Date')) recompile(language);
 }).fireEvent('langChange', MooTools.lang.getCurrentLanguage());
 
 })();
 
 /*
-Script: Date.Extras.js
-	Extends the Date native object to include extra methods (on top of those in Date.js).
+---
 
-	License:
-		MIT-style license.
+script: Date.Extras.js
 
-	Authors:
-		Aaron Newton
+description: Extends the Date native object to include extra methods (on top of those in Date.js).
 
+license: MIT-style license
+
+authors:
+- Aaron Newton
+- Scott Kyle
+
+requires:
+- /Date
+
+provides: [Date.Extras]
+
+...
 */
 
 Date.implement({
 
 	timeDiffInWords: function(relative_to){
 		return Date.distanceOfTimeInWords(this, relative_to || new Date);
+	},
+
+	timeDiff: function(to, joiner){
+		if (to == null) to = new Date;
+		var delta = ((to - this) / 1000).toInt();
+		if (!delta) return '0s';
+		
+		var durations = {s: 60, m: 60, h: 24, d: 365, y: 0};
+		var duration, vals = [];
+		
+		for (var step in durations){
+			if (!delta) break;
+			if ((duration = durations[step])){
+				vals.unshift((delta % duration) + step);
+				delta = (delta / duration).toInt();
+			} else {
+				vals.unshift(delta + step);
+			}
+		}
+		
+		return vals.join(joiner || ':');
 	}
 
 });
@@ -793,21 +967,29 @@ Date.extend({
 		var suffix = (delta < 0) ? 'Until' : 'Ago';
 		if (delta < 0) delta *= -1;
 		
-		var msg = (delta < 60) ? 'lessThanMinute' :
-				  (delta < 120) ? 'minute' :
-				  (delta < (45 * 60)) ? 'minutes' :
-				  (delta < (90 * 60)) ? 'hour' :
-				  (delta < (24 * 60 * 60)) ? 'hours' :
-				  (delta < (48 * 60 * 60)) ? 'day' :
-				  'days';
+		var units = {
+			minute: 60,
+			hour: 60,
+			day: 24,
+			week: 7,
+			month: 52 / 12,
+			year: 12,
+			eon: Infinity
+		};
 		
-		switch(msg){
-			case 'minutes': delta = (delta / 60).round(); break;
-			case 'hours':   delta = (delta / 3600).round(); break;
-			case 'days': 	delta = (delta / 86400).round();
+		var msg = 'lessThanMinute';
+		
+		for (var unit in units){
+			var interval = units[unit];
+			if (delta < 1.5 * interval){
+				if (delta > 0.75 * interval) msg = unit;
+				break;
+			}
+			delta /= interval;
+			msg = unit + 's';
 		}
 		
-		return Date.getMsg(msg + suffix, delta).substitute({delta: delta});
+		return Date.getMsg(msg + suffix).substitute({delta: delta.round()});
 	}
 
 });
@@ -817,7 +999,7 @@ Date.defineParsers(
 
 	{
 		// "today", "tomorrow", "yesterday"
-		re: /^tod|tom|yes/i,
+		re: /^(?:tod|tom|yes)/i,
 		handler: function(bits){
 			var d = new Date().clearTime();
 			switch(bits[0]){
@@ -846,14 +1028,24 @@ Date.defineParsers(
 
 
 /*
-Script: Hash.Extras.js
-	Extends the Hash native object to include getFromPath which allows a path notation to child elements.
+---
 
-	License:
-		MIT-style license.
+script: Hash.Extras.js
 
-	Authors:
-		Aaron Newton
+description: Extends the Hash native object to include getFromPath which allows a path notation to child elements.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Hash.base
+- /MooTools.More
+
+provides: [Hash.Extras]
+
+...
 */
 
 Hash.implement({
@@ -887,21 +1079,31 @@ Hash.implement({
 });
 
 /*
-Script: String.Extras.js
-	Extends the String native object to include methods useful in managing various kinds of strings (query strings, urls, html, etc).
+---
 
-	License:
-		MIT-style license.
+script: String.Extras.js
 
-	Authors:
-		Aaron Newton
-		Guillermo Rauch
+description: Extends the String native object to include methods useful in managing various kinds of strings (query strings, urls, html, etc).
 
+license: MIT-style license
+
+authors:
+- Aaron Newton
+- Guillermo Rauch
+
+requires:
+- core:1.2.4/String
+- core:1.2.4/$util
+- core:1.2.4/Array
+
+provides: [String.Extras]
+
+...
 */
 
 (function(){
   
-var special = ['Ã€','Ã ','Ã','Ã¡','Ã‚','Ã¢','Ãƒ','Ã£','Ã„','Ã¤','Ã…','Ã¥','Ä‚','Äƒ','Ä„','Ä…','Ä†','Ä‡','ÄŒ','Ä','Ã‡','Ã§', 'ÄŽ','Ä','Ä','Ä‘', 'Ãˆ','Ã¨','Ã‰','Ã©','ÃŠ','Ãª','Ã‹','Ã«','Äš','Ä›','Ä˜','Ä™', 'Äž','ÄŸ','ÃŒ','Ã¬','Ã','Ã­','ÃŽ','Ã®','Ã','Ã¯', 'Ä¹','Äº','Ä½','Ä¾','Å','Å‚', 'Ã‘','Ã±','Å‡','Åˆ','Åƒ','Å„','Ã’','Ã²','Ã“','Ã³','Ã”','Ã´','Ã•','Ãµ','Ã–','Ã¶','Ã˜','Ã¸','Å‘','Å˜','Å™','Å”','Å•','Å ','Å¡','Åž','ÅŸ','Åš','Å›', 'Å¤','Å¥','Å¤','Å¥','Å¢','Å£','Ã™','Ã¹','Ãš','Ãº','Ã›','Ã»','Ãœ','Ã¼','Å®','Å¯', 'Å¸','Ã¿','Ã½','Ã','Å½','Å¾','Å¹','Åº','Å»','Å¼', 'Ãž','Ã¾','Ã','Ã°','ÃŸ','Å’','Å“','Ã†','Ã¦','Âµ'];
+var special = ['À','à','Á','á','Â','â','Ã','ã','Ä','ä','Å','å','Ă','ă','Ą','ą','Ć','ć','Č','č','Ç','ç', 'Ď','ď','Đ','đ', 'È','è','É','é','Ê','ê','Ë','ë','Ě','ě','Ę','ę', 'Ğ','ğ','Ì','ì','Í','í','Î','î','Ï','ï', 'Ĺ','ĺ','Ľ','ľ','Ł','ł', 'Ñ','ñ','Ň','ň','Ń','ń','Ò','ò','Ó','ó','Ô','ô','Õ','õ','Ö','ö','Ø','ø','ő','Ř','ř','Ŕ','ŕ','Š','š','Ş','ş','Ś','ś', 'Ť','ť','Ť','ť','Ţ','ţ','Ù','ù','Ú','ú','Û','û','Ü','ü','Ů','ů', 'Ÿ','ÿ','ý','Ý','Ž','ž','Ź','ź','Ż','ż', 'Þ','þ','Ð','ð','ß','Œ','œ','Æ','æ','µ'];
 
 var standard = ['A','a','A','a','A','a','A','a','Ae','ae','A','a','A','a','A','a','C','c','C','c','C','c','D','d','D','d', 'E','e','E','e','E','e','E','e','E','e','E','e','G','g','I','i','I','i','I','i','I','i','L','l','L','l','L','l', 'N','n','N','n','N','n', 'O','o','O','o','O','o','O','o','Oe','oe','O','o','o', 'R','r','R','r', 'S','s','S','s','S','s','T','t','T','t','T','t', 'U','u','U','u','U','u','Ue','ue','U','u','Y','y','Y','y','Z','z','Z','z','Z','z','TH','th','DH','dh','ss','OE','oe','AE','ae','u'];
 
@@ -914,6 +1116,13 @@ var tidymap = {
 	"\u2013": "-",
 	"\u2014": "--",
 	"\uFFFD": "&raquo;"
+};
+
+var getRegForTag = function(tag, contents) {
+	tag = tag || '';
+	var regstr = contents ? "<" + tag + "[^>]*>([\\s\\S]*?)<\/" + tag + ">" : "<\/?" + tag + "([^>]+)?>";
+	reg = new RegExp(regstr, "gi");
+	return reg;
 };
 
 String.implement({
@@ -932,15 +1141,18 @@ String.implement({
 
 	pad: function(length, str, dir){
 		if (this.length >= length) return this;
-		str = str || ' ';
-		var pad = str.repeat(length - this.length).substr(0, length - this.length);
+		var pad = (str == null ? ' ' : '' + str).repeat(length - this.length).substr(0, length - this.length);
 		if (!dir || dir == 'right') return this + pad;
 		if (dir == 'left') return pad + this;
 		return pad.substr(0, (pad.length / 2).floor()) + this + pad.substr(0, (pad.length / 2).ceil());
 	},
 
-	stripTags: function(){
-		return this.replace(/<\/?[^>]+>/gi, '');
+	getTags: function(tag, contents){
+		return this.match(getRegForTag(tag, contents)) || [];
+	},
+
+	stripTags: function(tag, contents){
+		return this.replace(getRegForTag(tag, contents), '');
 	},
 
 	tidy: function(){
@@ -956,14 +1168,25 @@ String.implement({
 })();
 
 /*
-Script: String.QueryString.js
-	...
+---
 
-	License:
-		MIT-style license.
+script: String.QueryString.js
 
-	Authors:
-		Sebastian MarkbÃ¥ge, Aaron Newton, Lennart Pilon, Valerio Proietti
+description: Methods for dealing with URI query strings.
+
+license: MIT-style license
+
+authors:
+- Sebastian Markbåge, Aaron Newton, Lennart Pilon, Valerio Proietti
+
+requires:
+- core:1.2.4/Array
+- core:1.2.4/String
+- /MooTools.More
+
+provides: [String.QueryString]
+
+...
 */
 
 String.implement({
@@ -1000,38 +1223,46 @@ String.implement({
 });
 
 /*
-Script: URI.js
-	Provides methods useful in managing the window location and uris.
+---
 
-	License:
-		MIT-style license.
+script: URI.js
 
-	Authors:
-		Sebastian Markbåge, Aaron Newton
+description: Provides methods useful in managing the window location and uris.
+
+license: MIT-style license
+
+authors:
+- Sebastian Markb�ge
+- Aaron Newton
+
+requires:
+- core:1.2.4/Selectors
+- /String.QueryString
+
+provides: URI
+
+...
 */
 
 var URI = new Class({
 
 	Implements: Options,
 
-	/*
 	options: {
-		base: false
+		/*base: false*/
 	},
-	*/
 
 	regex: /^(?:(\w+):)?(?:\/\/(?:(?:([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?)?(\.\.?$|(?:[^?#\/]*\/)*)([^?#]*)(?:\?([^#]*))?(?:#(.*))?/,
 	parts: ['scheme', 'user', 'password', 'host', 'port', 'directory', 'file', 'query', 'fragment'],
-	schemes: { http: 80, https: 443, ftp: 21, rtsp: 554, mms: 1755, file: 0 },
+	schemes: {http: 80, https: 443, ftp: 21, rtsp: 554, mms: 1755, file: 0},
 
 	initialize: function(uri, options){
 		this.setOptions(options);
 		var base = this.options.base || URI.base;
-		uri = uri || base;
-		if (uri && uri.parsed)
-			this.parsed = $unlink(uri.parsed);
-		else
-			this.set('value', uri.href || uri.toString(), base ? new URI(base) : false);
+		if(!uri) uri = base;
+		
+		if (uri && uri.parsed) this.parsed = $unlink(uri.parsed);
+		else this.set('value', uri.href || uri.toString(), base ? new URI(base) : false);
 	},
 
 	parse: function(value, base){
@@ -1094,7 +1325,7 @@ var URI = new Class({
 			case 'value': return this.combine(this.parsed, base ? base.parsed : false);
 			case 'data' : return this.getData();
 		}
-		return this.parsed[part] || undefined;
+		return this.parsed[part] || '';
 	},
 
 	go: function(){
@@ -1113,9 +1344,9 @@ var URI = new Class({
 	},
 
 	setData: function(values, merge, part){
-		if ($type(arguments[0]) == 'string'){ 
-			values = this.getData(); 
-			values[arguments[0]] = arguments[1]; 
+		if (typeof values == 'string'){
+			values = this.getData();
+			values[arguments[0]] = arguments[1];
 		} else if (merge) {
 			values = $merge(this.getData(), values);
 		}
@@ -1128,12 +1359,9 @@ var URI = new Class({
 
 });
 
-['toString', 'valueOf'].each(function(method){
-	URI.prototype[method] = function(){
-		return this.get('value');
-	};
-});
-
+URI.prototype.toString = URI.prototype.valueOf = function(){
+	return this.get('value');
+};
 
 URI.regs = {
 	endSlash: /\/$/,
@@ -1141,23 +1369,36 @@ URI.regs = {
 	directoryDot: /\.\/|\.$/
 };
 
-URI.base = new URI($$('base[href]').getLast(), { base: document.location });
+URI.base = new URI(document.getElements('base[href]', true).getLast(), {base: document.location});
 
 String.implement({
 
-	toURI: function(options){ return new URI(this, options); }
+	toURI: function(options){
+		return new URI(this, options);
+	}
 
 });
 
 /*
-Script: URI.Relative.js
-	Extends the URI class to add methods for computing relative and absolute urls.
+---
 
-	License:
-		MIT-style license.
+script: URI.Relative.js
 
-	Authors:
-		Sebastian MarkbÃ¥ge
+description: Extends the URI class to add methods for computing relative and absolute urls.
+
+license: MIT-style license
+
+authors:
+- Sebastian Markbåge
+
+
+requires:
+- /Class.refactor
+- /URI
+
+provides: [URI.Relative]
+
+...
 */
 
 URI = Class.refactor(URI, {
@@ -1195,15 +1436,24 @@ URI = Class.refactor(URI, {
 });
 
 /*
-Script: Element.Forms.js
-	Extends the Element native object to include methods useful in managing inputs.
+---
 
-	License:
-		MIT-style license.
+script: Element.Forms.js
 
-	Authors:
-		Aaron Newton
+description: Extends the Element native object to include methods useful in managing inputs.
 
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Element
+- /MooTools.More
+
+provides: [Element.Forms]
+
+...
 */
 
 Element.implement({
@@ -1232,9 +1482,10 @@ Element.implement({
 			pos.end = pos.start + range.text.length;
 		} else {
 			var value = this.get('value');
-			var offset = value.length - value.match(/[\n\r]*$/)[0].length;
+			var offset = value.length;
 			dup.moveToElementText(this);
 			dup.setEndPoint('StartToEnd', range);
+			if(dup.text.length) offset -= value.match(/[\n\r]*$/)[0].length;
 			pos.end = offset - dup.text.length;
 			dup.setEndPoint('StartToStart', range);
 			pos.start = offset - dup.text.length;
@@ -1311,19 +1562,172 @@ Element.implement({
 });
 
 /*
-Script: Element.Measure.js
-	Extends the Element native object to include methods useful in measuring dimensions.
+---
 
-	Element.measure / .expose methods by Daniel Steigerwald
-	License: MIT-style license.
-	Copyright: Copyright (c) 2008 Daniel Steigerwald, daniel.steigerwald.cz
+script: Elements.From.js
 
-	License:
-		MIT-style license.
+description: Returns a collection of elements from a string of html.
 
-	Authors:
-		Aaron Newton
+license: MIT-style license
 
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Element
+- /MooTools.More
+
+provides: [Elements.from]
+
+...
+*/
+
+Elements.from = function(text, excludeScripts){
+	if ($pick(excludeScripts, true)) text = text.stripScripts();
+
+	var container, match = text.match(/^\s*<(t[dhr]|tbody|tfoot|thead)/i);
+
+	if (match){
+		container = new Element('table');
+		var tag = match[1].toLowerCase();
+		if (['td', 'th', 'tr'].contains(tag)){
+			container = new Element('tbody').inject(container);
+			if (tag != 'tr') container = new Element('tr').inject(container);
+		}
+	}
+
+	return (container || new Element('div')).set('html', text).getChildren();
+};
+
+/*
+---
+
+script: Element.Delegation.js
+
+description: Extends the Element native object to include the delegate method for more efficient event management.
+
+credits:
+- "Event checking based on the work of Daniel Steigerwald. License: MIT-style license.	Copyright: Copyright (c) 2008 Daniel Steigerwald, daniel.steigerwald.cz"
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+- Daniel Steigerwald
+
+requires:
+- core:1.2.4/Element.Event
+- core:1.2.4/Selectors
+- /MooTools.More
+
+provides: [Element.Delegation]
+
+...
+*/
+(function(){
+	
+	var match = /(.*?):relay\(([^)]+)\)$/,
+		combinators = /[+>~\s]/,
+		splitType = function(type){
+			var bits = type.match(match);
+			return !bits ? {event: type} : {
+				event: bits[1],
+				selector: bits[2]
+			};
+		},
+		check = function(e, selector){
+			var t = e.target;
+			if (combinators.test(selector = selector.trim())){
+				var els = this.getElements(selector);
+				for (var i = els.length; i--; ){
+					var el = els[i];
+					if (t == el || el.hasChild(t)) return el;
+				}
+			} else {
+				for ( ; t && t != this; t = t.parentNode){
+					if (Element.match(t, selector)) return document.id(t);
+				}
+			}
+			return null;
+		};
+
+	var oldAddEvent = Element.prototype.addEvent,
+		oldRemoveEvent = Element.prototype.removeEvent;
+		
+	Element.implement({
+
+		addEvent: function(type, fn){
+			var splitted = splitType(type);
+			if (splitted.selector){
+				var monitors = this.retrieve('$moo:delegateMonitors', {});
+				if (!monitors[type]){
+					var monitor = function(e){
+						var el = check.call(this, e, splitted.selector);
+						if (el) this.fireEvent(type, [e, el], 0, el);
+					}.bind(this);
+					monitors[type] = monitor;
+					oldAddEvent.call(this, splitted.event, monitor);
+				}
+			}
+			return oldAddEvent.apply(this, arguments);
+		},
+
+		removeEvent: function(type, fn){
+			var splitted = splitType(type);
+			if (splitted.selector){
+				var events = this.retrieve('events');
+				if (!events || !events[type] || (fn && !events[type].keys.contains(fn))) return this;
+
+				if (fn) oldRemoveEvent.apply(this, [type, fn]);
+				else oldRemoveEvent.apply(this, type);
+
+				events = this.retrieve('events');
+				if (events && events[type] && events[type].length == 0){
+					var monitors = this.retrieve('$moo:delegateMonitors', {});
+					oldRemoveEvent.apply(this, [splitted.event, monitors[type]]);
+					delete monitors[type];
+				}
+				return this;
+			}
+
+			return oldRemoveEvent.apply(this, arguments);
+		},
+
+		fireEvent: function(type, args, delay, bind){
+			var events = this.retrieve('events');
+			if (!events || !events[type]) return this;
+			events[type].keys.each(function(fn){
+				fn.create({bind: bind || this, delay: delay, arguments: args})();
+			}, this);
+			return this;
+		}
+
+	});
+
+})();
+
+/*
+---
+
+script: Element.Measure.js
+
+description: Extends the Element native object to include methods useful in measuring dimensions.
+
+credits: "Element.measure / .expose methods by Daniel Steigerwald License: MIT-style license. Copyright: Copyright (c) 2008 Daniel Steigerwald, daniel.steigerwald.cz"
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Element.Style
+- core:1.2.4/Element.Dimensions
+- /MooTools.More
+
+provides: [Element.Measure]
+
+...
 */
 
 Element.implement({
@@ -1334,8 +1738,8 @@ Element.implement({
 		};
 		if (vis(this)) return fn.apply(this);
 		var parent = this.getParent(),
-			toMeasure = [], 
-			restorers = [];
+			restorers = [],
+			toMeasure = []; 
 		while (!vis(parent) && parent != document.body) {
 			toMeasure.push(parent.expose());
 			parent = parent.getParent();
@@ -1368,14 +1772,17 @@ Element.implement({
 		var getSize = function(el, options){
 			return (options.computeSize)?el.getComputedSize(options):el.getSize();
 		};
-		if (this.getStyle('display') == 'none'){
+		var parent = this.getParent('body');
+		if (parent && this.getStyle('display') == 'none'){
 			dim = this.measure(function(){
 				return getSize(this, options);
 			});
-		} else {
+		} else if (parent){
 			try { //safari sometimes crashes here, so catch it
 				dim = getSize(this, options);
 			}catch(e){}
+		} else {
+			dim = {x: 0, y: 0};
 		}
 		return $chk(dim.x) ? $extend(dim, {width: dim.x, height: dim.y}) : $extend(dim, {x: dim.width, y: dim.height});
 	},
@@ -1414,8 +1821,7 @@ Element.implement({
 		var subtracted = [];
 		$each(options.plains, function(plain, key){ //keys: width, height, plains: ['left', 'right'], ['top','bottom']
 			var capitalized = key.capitalize();
-			size['total' + capitalized] = 0;
-			size['computed' + capitalized] = 0;
+			size['total' + capitalized] = size['computed' + capitalized] = 0;
 			plain.each(function(edge){ //top, left, right, bottom
 				size['computed' + edge.capitalize()] = 0;
 				getStyles.each(function(style, i){ //padding, border, etc.
@@ -1450,14 +1856,26 @@ Element.implement({
 });
 
 /*
-Script: Element.Pin.js
-	Extends the Element native object to include the pin method useful for fixed positioning for elements.
+---
 
-	License:
-		MIT-style license.
+script: Element.Pin.js
 
-	Authors:
-		Aaron Newton
+description: Extends the Element native object to include the pin method useful for fixed positioning for elements.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Element.Event
+- core:1.2.4/Element.Dimensions
+- core:1.2.4/Element.Style
+- /MooTools.More
+
+provides: [Element.Pin]
+
+...
 */
 
 (function(){
@@ -1477,13 +1895,14 @@ Script: Element.Pin.js
 		pin: function(enable){
 			if (this.getStyle('display') == 'none') return null;
 			
-			var p;
+			var p,
+					scroll = window.getScroll();
 			if (enable !== false){
 				p = this.getPosition();
 				if (!this.retrieve('pinned')){
 					var pos = {
-						top: p.y - window.getScroll().y,
-						left: p.x - window.getScroll().x
+						top: p.y - scroll.y,
+						left: p.x - scroll.x
 					};
 					if (supportsPositionFixed){
 						this.setStyle('position', 'fixed').setStyles(pos);
@@ -1493,12 +1912,13 @@ Script: Element.Pin.js
 							position: 'absolute',
 							top: p.y,
 							left: p.x
-						});
+						}).addClass('isPinned');
 						this.store('scrollFixer', (function(){
 							if (this.retrieve('pinned'))
+								var scroll = window.getScroll();
 								this.setStyles({
-									top: pos.top.toInt() + window.getScroll().y,
-									left: pos.left.toInt() + window.getScroll().x
+									top: pos.top.toInt() + scroll.y,
+									left: pos.left.toInt() + scroll.x
 								});
 						}).bind(this));
 						window.addEvent('scroll', this.retrieve('scrollFixer'));
@@ -1508,16 +1928,16 @@ Script: Element.Pin.js
 			} else {
 				var op;
 				if (!Browser.Engine.trident){
-					if (this.getParent().getComputedStyle('position') != 'static') op = this.getParent();
-					else op = this.getParent().getOffsetParent();
+					var parent = this.getParent();
+					op = (parent.getComputedStyle('position') != 'static' ? parent : parent.getOffsetParent());
 				}
 				p = this.getPosition(op);
 				this.store('pinned', false);
 				var reposition;
 				if (supportsPositionFixed && !this.retrieve('pinnedByJS')){
 					reposition = {
-						top: p.y + window.getScroll().y,
-						left: p.x + window.getScroll().x
+						top: p.y + scroll.y,
+						left: p.x + scroll.x
 					};
 				} else {
 					this.store('pinnedByJS', false);
@@ -1527,13 +1947,13 @@ Script: Element.Pin.js
 						left: p.x
 					};
 				}
-				this.setStyles($merge(reposition, {position: 'absolute'}));
+				this.setStyles($merge(reposition, {position: 'absolute'})).removeClass('isPinned');
 			}
-			return this.addClass('isPinned');
+			return this;
 		},
 
 		unpin: function(){
-			return this.pin(false).removeClass('isPinned');
+			return this.pin(false);
 		},
 
 		togglepin: function(){
@@ -1545,14 +1965,24 @@ Script: Element.Pin.js
 })();
 
 /*
-Script: Element.Position.js
-	Extends the Element native object to include methods useful positioning elements relative to others.
+---
 
-	License:
-		MIT-style license.
+script: Element.Position.js
 
-	Authors:
-		Aaron Newton
+description: Extends the Element native object to include methods useful positioning elements relative to others.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Element.Dimensions
+- /Element.Measure
+
+provides: [Elements.Position]
+
+...
 */
 
 (function(){
@@ -1566,6 +1996,8 @@ Element.implement({
 		if (options && ($defined(options.x) || $defined(options.y))) return original ? original.apply(this, arguments) : this;
 		$each(options||{}, function(v, k){ if (!$defined(v)) delete options[k]; });
 		options = $merge({
+			// minimum: { x: 0, y: 0 },
+			// maximum: { x: 0, y: 0},
 			relativeTo: document.body,
 			position: {
 				x: 'center', //left, center, right
@@ -1576,11 +2008,12 @@ Element.implement({
 			returnPos: false,
 			relFixedPosition: false,
 			ignoreMargins: false,
+			ignoreScroll: false,
 			allowNegative: false
 		}, options);
 		//compute the offset of the parent positioned element if this element is in one
-		var parentOffset = {x: 0, y: 0};
-		var parentPositioned = false;
+		var parentOffset = {x: 0, y: 0}, 
+				parentPositioned = false;
 		/* dollar around getOffsetParent should not be necessary, but as it does not return
 		 * a mootools extended element in IE, an error occurs on the call to expose. See:
 		 * http://mootools.lighthouseapp.com/projects/2706/tickets/333-element-getoffsetparent-inconsistency-between-ie-and-other-browsers */
@@ -1591,7 +2024,7 @@ Element.implement({
 			parentOffset = offsetParent.measure(function(){
 				return this.getPosition();
 			});
-			parentPositioned = true;
+			parentPositioned = offsetParent != document.id(options.relativeTo);
 			options.offset.x = options.offset.x - parentOffset.x;
 			options.offset.y = options.offset.y - parentOffset.y;
 		}
@@ -1617,26 +2050,19 @@ Element.implement({
 		}
 
 		this.setStyle('position', 'absolute');
-		var rel = document.id(options.relativeTo) || document.body;
-		var calc = rel == document.body ? window.getScroll() : rel.getPosition();
-		var top = calc.y;
-		var left = calc.x;
+		var rel = document.id(options.relativeTo) || document.body,
+				calc = rel == document.body ? window.getScroll() : rel.getPosition(),
+				top = calc.y, left = calc.x;
 
-		if (Browser.Engine.trident){
-			var scrolls = rel.getScrolls();
-			top += scrolls.y;
-			left += scrolls.x;
-		}
+		var scrolls = rel.getScrolls();
+		top += scrolls.y;
+		left += scrolls.x;
 
 		var dim = this.getDimensions({computeSize: true, styles:['padding', 'border','margin']});
-		if (options.ignoreMargins){
-			options.offset.x = options.offset.x - dim['margin-left'];
-			options.offset.y = options.offset.y - dim['margin-top'];
-		}
-		var pos = {};
-		var prefY = options.offset.y;
-		var prefX = options.offset.x;
-		var winSize = window.getSize();
+		var pos = {},
+				prefY = options.offset.y,
+				prefX = options.offset.x,
+				winSize = window.getSize();
 		switch(options.position.x){
 			case 'left':
 				pos.x = left + prefX;
@@ -1659,7 +2085,6 @@ Element.implement({
 				pos.y = top + ((rel == document.body ? winSize.y : rel.offsetHeight)/2) + prefY;
 				break;
 		}
-
 		if (options.edge){
 			var edgeOffset = {};
 
@@ -1671,7 +2096,7 @@ Element.implement({
 					edgeOffset.x = -dim.x-dim.computedRight-dim.computedLeft;
 					break;
 				default: //center
-					edgeOffset.x = -(dim.x/2);
+					edgeOffset.x = -(dim.totalWidth/2);
 					break;
 			}
 			switch(options.edge.y){
@@ -1682,22 +2107,47 @@ Element.implement({
 					edgeOffset.y = -dim.y-dim.computedTop-dim.computedBottom;
 					break;
 				default: //center
-					edgeOffset.y = -(dim.y/2);
+					edgeOffset.y = -(dim.totalHeight/2);
 					break;
 			}
-			pos.x = pos.x + edgeOffset.x;
-			pos.y = pos.y + edgeOffset.y;
+			pos.x += edgeOffset.x;
+			pos.y += edgeOffset.y;
 		}
 		pos = {
 			left: ((pos.x >= 0 || parentPositioned || options.allowNegative) ? pos.x : 0).toInt(),
 			top: ((pos.y >= 0 || parentPositioned || options.allowNegative) ? pos.y : 0).toInt()
 		};
+		var xy = {left: 'x', top: 'y'};
+		['minimum', 'maximum'].each(function(minmax) {
+			['left', 'top'].each(function(lr) {
+				var val = options[minmax] ? options[minmax][xy[lr]] : null;
+				if (val != null && pos[lr] < val) pos[lr] = val;
+			});
+		});
 		if (rel.getStyle('position') == 'fixed' || options.relFixedPosition){
 			var winScroll = window.getScroll();
-			pos.top = pos.top.toInt() + winScroll.y;
-			pos.left = pos.left.toInt() + winScroll.x;
+			pos.top+= winScroll.y;
+			pos.left+= winScroll.x;
 		}
-
+		if (options.ignoreScroll) {
+			var relScroll = rel.getScroll();
+			pos.top-= relScroll.y;
+			pos.left-= relScroll.x;
+		}
+		if (options.ignoreMargins) {
+			pos.left += (
+				options.edge.x == 'right' ? dim['margin-right'] : 
+				options.edge.x == 'center' ? -dim['margin-left'] + ((dim['margin-right'] + dim['margin-left'])/2) : 
+					- dim['margin-left']
+			);
+			pos.top += (
+				options.edge.y == 'bottom' ? dim['margin-bottom'] : 
+				options.edge.y == 'center' ? -dim['margin-top'] + ((dim['margin-bottom'] + dim['margin-top'])/2) : 
+					- dim['margin-top']
+			);
+		}
+		pos.left = Math.ceil(pos.left);
+		pos.top = Math.ceil(pos.top);
 		if (options.returnPos) return pos;
 		else this.setStyles(pos);
 		return this;
@@ -1708,21 +2158,36 @@ Element.implement({
 })();
 
 /*
-Script: Element.Shortcuts.js
-	Extends the Element native object to include some shortcut methods.
+---
 
-	License:
-		MIT-style license.
+script: Element.Shortcuts.js
 
-	Authors:
-		Aaron Newton
+description: Extends the Element native object to include some shortcut methods.
 
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Element.Style
+- /MooTools.More
+
+provides: [Element.Shortcuts]
+
+...
 */
 
 Element.implement({
 
 	isDisplayed: function(){
 		return this.getStyle('display') != 'none';
+	},
+
+	isVisible: function(){
+		var w = this.offsetWidth,
+			h = this.offsetHeight;
+		return (w == 0 && h == 0) ? false : (w > 0 && h > 0) ? true : this.isDisplayed();
 	},
 
 	toggle: function(){
@@ -1732,10 +2197,10 @@ Element.implement({
 	hide: function(){
 		var d;
 		try {
-			//IE fails here if the element is not in the dom
-			if ('none' != this.getStyle('display')) d = this.getStyle('display');
+			// IE fails here if the element is not in the dom
+			if ((d = this.getStyle('display')) == 'none') d = null;
 		} catch(e){}
-
+		
 		return this.store('originalDisplay', d || 'block').setStyle('display', 'none');
 	},
 
@@ -1751,15 +2216,296 @@ Element.implement({
 
 
 /*
-Script: FormValidator.js
-	A css-class based form validation system.
+---
 
-	License:
-		MIT-style license.
+script: Form.Request.js
 
-	Authors:
-		Aaron Newton
+description: Handles the basic functionality of submitting a form and updating a dom element with the result.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Element.Event
+- core:1.2.4/Request.HTML
+- /Class.Binds
+- /Class.Occlude
+- /Spinner
+- /String.QueryString
+
+provides: [Form.Request]
+
+...
 */
+
+if (!window.Form) window.Form = {};
+
+(function(){
+
+	Form.Request = new Class({
+
+		Binds: ['onSubmit', 'onFormValidate'],
+
+		Implements: [Options, Events, Class.Occlude],
+
+		options: {
+			//onFailure: $empty,
+			//onSuccess: #empty, //aliased to onComplete,
+			//onSend: $empty
+			requestOptions: {
+				evalScripts: true,
+				useSpinner: true,
+				emulation: false,
+				link: 'ignore'
+			},
+			extraData: {},
+			resetForm: true
+		},
+
+		property: 'form.request',
+
+		initialize: function(form, update, options) {
+			this.element = document.id(form);
+			if (this.occlude()) return this.occluded;
+			this.update = document.id(update);
+			this.setOptions(options);
+			this.makeRequest();
+			if (this.options.resetForm) {
+				this.request.addEvent('success', function(){
+					$try(function(){ this.element.reset(); }.bind(this));
+					if (window.OverText) OverText.update();
+				}.bind(this));
+			}
+			this.attach();
+		},
+
+		toElement: function() {
+			return this.element;
+		},
+
+		makeRequest: function(){
+			this.request = new Request.HTML($merge({
+					url: this.element.get('action'),
+					update: this.update,
+					emulation: false,
+					spinnerTarget: this.element,
+					method: this.element.get('method') || 'post'
+			}, this.options.requestOptions)).addEvents({
+				success: function(text, xml){
+					['success', 'complete'].each(function(evt){
+						this.fireEvent(evt, [this.update, text, xml]);
+					}, this);
+				}.bind(this),
+				failure: function(xhr){
+					this.fireEvent('failure', xhr);
+				}.bind(this),
+				exception: function(){
+					this.fireEvent('failure', xhr);
+				}.bind(this)
+			});
+		},
+
+		attach: function(attach){
+			attach = $pick(attach, true);
+			method = attach ? 'addEvent' : 'removeEvent';
+			
+			var fv = this.element.retrieve('validator');
+			if (fv) fv[method]('onFormValidate', this.onFormValidate);
+			if (!fv || !attach) this.element[method]('submit', this.onSubmit);
+		},
+
+		detach: function(){
+			this.attach(false);
+		},
+
+		//public method
+		enable: function(){
+			this.attach();
+		},
+
+		//public method
+		disable: function(){
+			this.detach();
+		},
+
+		onFormValidate: function(valid, form, e) {
+			if (valid || !fv.options.stopOnFailure) {
+				if (e && e.stop) e.stop();
+				this.send();
+			}
+		},
+
+		onSubmit: function(e){
+			if (this.element.retrieve('validator')) {
+				//form validator was created after Form.Request
+				this.detach();
+				this.addFormEvent();
+				return;
+			}
+			e.stop();
+			this.send();
+		},
+
+		send: function(){
+			var str = this.element.toQueryString().trim();
+			var data = $H(this.options.extraData).toQueryString();
+			if (str) str += "&" + data;
+			else str = data;
+			this.fireEvent('send', [this.element, str]);
+			this.request.send({data: str});
+			return this;
+		}
+
+	});
+
+	Element.Properties.formRequest = {
+
+		set: function(){
+			var opt = Array.link(arguments, {options: Object.type, update: Element.type, updateId: String.type});
+			var update = opt.update || opt.updateId;
+			var updater = this.retrieve('form.request');
+			if (update) {
+				if (updater) updater.update = document.id(update);
+				this.store('form.request:update', update);
+			}
+			if (opt.options) {
+				if (updater) updater.setOptions(opt.options);
+				this.store('form.request:options', opt.options);
+			}
+			return this;
+		},
+
+		get: function(){
+			var opt = Array.link(arguments, {options: Object.type, update: Element.type, updateId: String.type});
+			var update = opt.update || opt.updateId;
+			if (opt.options || update || !this.retrieve('form.request')){
+				if (opt.options || !this.retrieve('form.request:options')) this.set('form.request', opt.options);
+				if (update) this.set('form.request', update);
+				this.store('form.request', new Form.Request(this, this.retrieve('form.request:update'), this.retrieve('form.request:options')));
+			}
+			return this.retrieve('form.request');
+		}
+
+	};
+
+	Element.implement({
+
+		formUpdate: function(update, options){
+			this.get('form.request', update, options).send();
+			return this;
+		}
+
+	});
+
+})();
+
+/*
+---
+
+script: Form.Request.Append.js
+
+description: Handles the basic functionality of submitting a form and updating a dom element with the result. The result is appended to the DOM element instead of replacing its contents.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- /Form.Request
+- /Fx.Reveal
+- /Elements.from
+
+provides: [Form.Request.Append]
+
+...
+*/
+
+Form.Request.Append = new Class({
+
+	Extends: Form.Request,
+
+	options: {
+		//onBeforeEffect: $empty,
+		useReveal: true,
+		revealOptions: {},
+		inject: 'bottom'
+	},
+
+	makeRequest: function(){
+		this.request = new Request.HTML($merge({
+				url: this.element.get('action'),
+				method: this.element.get('method') || 'post',
+				spinnerTarget: this.element
+			}, this.options.requestOptions, {
+				evalScripts: false
+			})
+		).addEvents({
+			success: function(tree, elements, html, javascript){
+				var container;
+				var kids = Elements.from(html);
+				if (kids.length == 1) {
+					container = kids[0];
+				} else {
+					 container = new Element('div', {
+						styles: {
+							display: 'none'
+						}
+					}).adopt(kids);
+				}
+				container.inject(this.update, this.options.inject);
+				if (this.options.requestOptions.evalScripts) $exec(javascript);
+				this.fireEvent('beforeEffect', container);
+				var finish = function(){
+					this.fireEvent('success', [container, this.update, tree, elements, html, javascript]);
+				}.bind(this);
+				if (this.options.useReveal) {
+					container.get('reveal', this.options.revealOptions).chain(finish);
+					container.reveal();
+				} else {
+					finish();
+				}
+			}.bind(this),
+			failure: function(xhr){
+				this.fireEvent('failure', xhr);
+			}.bind(this)
+		});
+	}
+
+});
+
+/*
+---
+
+script: Form.Validator.js
+
+description: A css-class based form validation system.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Options
+- core:1.2.4/Events
+- core:1.2.4/Selectors
+- core:1.2.4/Element.Event
+- core:1.2.4/Element.Style
+- core:1.2.4/JSON
+- /Lang- /Class.Binds
+- /Date Element.Forms
+- /Form.Validator.English
+- /Element.Shortcuts
+
+provides: [Form.Validator, InputValidator, FormValidator.BaseValidators]
+
+...
+*/
+if (!window.Form) window.Form = {};
+
 var InputValidator = new Class({
 
 	Implements: [Options],
@@ -1831,7 +2577,7 @@ Element.Properties.validatorProps = {
 
 };
 
-var FormValidator = new Class({
+Form.Validator = new Class({
 
 	Implements:[Options, Events],
 
@@ -1844,6 +2590,7 @@ var FormValidator = new Class({
 		onElementFail: $empty(field, validatorsFailed) */
 		fieldSelectors: 'input, select, textarea',
 		ignoreHidden: true,
+		ignoreDisabled: true,
 		useTitles: false,
 		evaluateOnSubmit: true,
 		evaluateFieldsOnBlur: true,
@@ -1851,10 +2598,10 @@ var FormValidator = new Class({
 		serial: true,
 		stopOnFailure: true,
 		warningPrefix: function(){
-			return FormValidator.getMsg('warningPrefix') || 'Warning: ';
+			return Form.Validator.getMsg('warningPrefix') || 'Warning: ';
 		},
 		errorPrefix: function(){
-			return FormValidator.getMsg('errorPrefix') || 'Error: ';
+			return Form.Validator.getMsg('errorPrefix') || 'Error: ';
 		}
 	},
 
@@ -1954,24 +2701,16 @@ var FormValidator = new Class({
 	},
 
 	test: function(className, field, warn){
-		var validator = this.getValidator(className);
 		field = document.id(field);
+		if((this.options.ignoreHidden && !field.isVisible()) || (this.options.ignoreDisabled && field.get('disabled'))) return true;
+		var validator = this.getValidator(className);
 		if (field.hasClass('ignoreValidation')) return true;
 		warn = $pick(warn, false);
 		if (field.hasClass('warnOnly')) warn = true;
 		var isValid = validator ? validator.test(field) : true;
-		if (validator && this.isVisible(field)) this.fireEvent('elementValidate', [isValid, field, className, warn]);
+		if (validator && field.isVisible()) this.fireEvent('elementValidate', [isValid, field, className, warn]);
 		if (warn) return true;
 		return isValid;
-	},
-
-	isVisible : function(field){
-		if (!this.options.ignoreHidden) return true;
-		while(field != document.body){
-			if (document.id(field).getStyle('display') == 'none') return false;
-			field = field.getParent();
-		}
-		return true;
 	},
 
 	resetField: function(field){
@@ -2015,17 +2754,17 @@ var FormValidator = new Class({
 
 });
 
-FormValidator.getMsg = function(key){
-	return MooTools.lang.get('FormValidator', key);
+Form.Validator.getMsg = function(key){
+	return MooTools.lang.get('Form.Validator', key);
 };
 
-FormValidator.adders = {
+Form.Validator.adders = {
 
 	validators:{},
 
 	add : function(className, options){
 		this.validators[className] = new InputValidator(className, options);
-		//if this is a class (this method is used by instances of FormValidator and the FormValidator namespace)
+		//if this is a class (this method is used by instances of Form.Validator and the Form.Validator namespace)
 		//extend these validators into it
 		//this allows validators to be global and/or per instance
 		if (!this.initialize){
@@ -2047,11 +2786,11 @@ FormValidator.adders = {
 
 };
 
-$extend(FormValidator, FormValidator.adders);
+$extend(Form.Validator, Form.Validator.adders);
 
-FormValidator.implement(FormValidator.adders);
+Form.Validator.implement(Form.Validator.adders);
 
-FormValidator.add('IsEmpty', {
+Form.Validator.add('IsEmpty', {
 
 	errorMsg: false,
 	test: function(element){
@@ -2063,21 +2802,21 @@ FormValidator.add('IsEmpty', {
 
 });
 
-FormValidator.addAllThese([
+Form.Validator.addAllThese([
 
 	['required', {
 		errorMsg: function(){
-			return FormValidator.getMsg('required');
+			return Form.Validator.getMsg('required');
 		},
 		test: function(element){
-			return !FormValidator.getValidator('IsEmpty').test(element);
+			return !Form.Validator.getValidator('IsEmpty').test(element);
 		}
 	}],
 
 	['minLength', {
 		errorMsg: function(element, props){
 			if ($type(props.minLength))
-				return FormValidator.getMsg('minLength').substitute({minLength:props.minLength,length:element.get('value').length });
+				return Form.Validator.getMsg('minLength').substitute({minLength:props.minLength,length:element.get('value').length });
 			else return '';
 		},
 		test: function(element, props){
@@ -2090,7 +2829,7 @@ FormValidator.addAllThese([
 		errorMsg: function(element, props){
 			//props is {maxLength:10}
 			if ($type(props.maxLength))
-				return FormValidator.getMsg('maxLength').substitute({maxLength:props.maxLength,length:element.get('value').length });
+				return Form.Validator.getMsg('maxLength').substitute({maxLength:props.maxLength,length:element.get('value').length });
 			else return '';
 		},
 		test: function(element, props){
@@ -2100,38 +2839,38 @@ FormValidator.addAllThese([
 	}],
 
 	['validate-integer', {
-		errorMsg: FormValidator.getMsg.pass('integer'),
+		errorMsg: Form.Validator.getMsg.pass('integer'),
 		test: function(element){
-			return FormValidator.getValidator('IsEmpty').test(element) || (/^(-?[1-9]\d*|0)$/).test(element.get('value'));
+			return Form.Validator.getValidator('IsEmpty').test(element) || (/^(-?[1-9]\d*|0)$/).test(element.get('value'));
 		}
 	}],
 
 	['validate-numeric', {
-		errorMsg: FormValidator.getMsg.pass('numeric'),
+		errorMsg: Form.Validator.getMsg.pass('numeric'),
 		test: function(element){
-			return FormValidator.getValidator('IsEmpty').test(element) ||
+			return Form.Validator.getValidator('IsEmpty').test(element) ||
 				(/^-?(?:0$0(?=\d*\.)|[1-9]|0)\d*(\.\d+)?$/).test(element.get('value'));
 		}
 	}],
 
 	['validate-digits', {
-		errorMsg: FormValidator.getMsg.pass('digits'),
+		errorMsg: Form.Validator.getMsg.pass('digits'),
 		test: function(element){
-			return FormValidator.getValidator('IsEmpty').test(element) || (/^[\d() .:\-\+#]+$/.test(element.get('value')));
+			return Form.Validator.getValidator('IsEmpty').test(element) || (/^[\d() .:\-\+#]+$/.test(element.get('value')));
 		}
 	}],
 
 	['validate-alpha', {
-		errorMsg: FormValidator.getMsg.pass('alpha'),
+		errorMsg: Form.Validator.getMsg.pass('alpha'),
 		test: function(element){
-			return FormValidator.getValidator('IsEmpty').test(element) ||  (/^[a-zA-Z]+$/).test(element.get('value'));
+			return Form.Validator.getValidator('IsEmpty').test(element) ||  (/^[a-zA-Z]+$/).test(element.get('value'));
 		}
 	}],
 
 	['validate-alphanum', {
-		errorMsg: FormValidator.getMsg.pass('alphanum'),
+		errorMsg: Form.Validator.getMsg.pass('alphanum'),
 		test: function(element){
-			return FormValidator.getValidator('IsEmpty').test(element) || !(/\W/).test(element.get('value'));
+			return Form.Validator.getValidator('IsEmpty').test(element) || !(/\W/).test(element.get('value'));
 		}
 	}],
 
@@ -2139,13 +2878,13 @@ FormValidator.addAllThese([
 		errorMsg: function(element, props){
 			if (Date.parse){
 				var format = props.dateFormat || '%x';
-				return FormValidator.getMsg('dateSuchAs').substitute({date: new Date().format(format)});
+				return Form.Validator.getMsg('dateSuchAs').substitute({date: new Date().format(format)});
 			} else {
-				return FormValidator.getMsg('dateInFormatMDY');
+				return Form.Validator.getMsg('dateInFormatMDY');
 			}
 		},
 		test: function(element, props){
-			if (FormValidator.getValidator('IsEmpty').test(element)) return true;
+			if (Form.Validator.getValidator('IsEmpty').test(element)) return true;
 			var d;
 			if (Date.parse){
 				var format = props.dateFormat || '%x';
@@ -2165,34 +2904,34 @@ FormValidator.addAllThese([
 	}],
 
 	['validate-email', {
-		errorMsg: FormValidator.getMsg.pass('email'),
+		errorMsg: Form.Validator.getMsg.pass('email'),
 		test: function(element){
-			return FormValidator.getValidator('IsEmpty').test(element) || (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i).test(element.get('value'));
+			return Form.Validator.getValidator('IsEmpty').test(element) || (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i).test(element.get('value'));
 		}
 	}],
 
 	['validate-url', {
-		errorMsg: FormValidator.getMsg.pass('url'),
+		errorMsg: Form.Validator.getMsg.pass('url'),
 		test: function(element){
-			return FormValidator.getValidator('IsEmpty').test(element) || (/^(https?|ftp|rmtp|mms):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\/?/i).test(element.get('value'));
+			return Form.Validator.getValidator('IsEmpty').test(element) || (/^(https?|ftp|rmtp|mms):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\/?/i).test(element.get('value'));
 		}
 	}],
 
 	['validate-currency-dollar', {
-		errorMsg: FormValidator.getMsg.pass('currencyDollar'),
+		errorMsg: Form.Validator.getMsg.pass('currencyDollar'),
 		test: function(element){
 			// [$]1[##][,###]+[.##]
 			// [$]1###+[.##]
 			// [$]0.##
 			// [$].##
-			return FormValidator.getValidator('IsEmpty').test(element) ||  (/^\$?\-?([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}\d*(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)$/).test(element.get('value'));
+			return Form.Validator.getValidator('IsEmpty').test(element) ||  (/^\$?\-?([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}\d*(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)$/).test(element.get('value'));
 		}
 	}],
 
 	['validate-one-required', {
-		errorMsg: FormValidator.getMsg.pass('oneRequired'),
+		errorMsg: Form.Validator.getMsg.pass('oneRequired'),
 		test: function(element, props){
-			var p = document.id(props['validate-one-required']) || element.parentNode;
+			var p = document.id(props['validate-one-required']) || element.getParent();
 			return p.getElements('input').some(function(el){
 				if (['checkbox', 'radio'].contains(el.get('type'))) return el.get('checked');
 				return el.get('value');
@@ -2213,7 +2952,7 @@ Element.Properties.validator = {
 	get: function(options){
 		if (options || !this.retrieve('validator')){
 			if (options || !this.retrieve('validator:options')) this.set('validator', options);
-			this.store('validator', new FormValidator(this, this.retrieve('validator:options')));
+			this.store('validator', new Form.Validator(this, this.retrieve('validator:options')));
 		}
 		return this.retrieve('validator');
 	}
@@ -2228,21 +2967,32 @@ Element.implement({
 	}
 
 });
+//legacy
+var FormValidator = Form.Validator;
 
 /*
-Script: FormValidator.Inline.js
-	Extends FormValidator to add inline messages.
+---
 
-	License:
-		MIT-style license.
+script: Form.Validator.Inline.js
 
-	Authors:
-		Aaron Newton
+description: Extends Form.Validator to add inline messages.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- /Form.Validator
+
+provides: [Form.Validator.Inline]
+
+...
 */
 
-FormValidator.Inline = new Class({
+Form.Validator.Inline = new Class({
 
-	Extends: FormValidator,
+	Extends: Form.Validator,
 
 	options: {
 		scrollToErrorsOnSubmit: true,
@@ -2275,7 +3025,7 @@ FormValidator.Inline = new Class({
 		var cssClass = (warn) ? 'warning-advice' : 'validation-advice';
 		var advice = this.getAdvice(className, field);
 		if(advice) {
-			advice = advice.clone(true, true).set('html', errorMsg).replaces(advice);
+			advice = advice.set('html', errorMsg);
 		} else {
 			advice = new Element('div', {
 				html: errorMsg,
@@ -2386,16 +3136,25 @@ FormValidator.Inline = new Class({
 
 
 /*
-Script: FormValidator.Extras.js
-	Additional validators for the FormValidator class.
+---
 
-	License:
-		MIT-style license.
+script: Form.Validator.Extras.js
 
-	Authors:
-		Aaron Newton
+description: Additional validators for the Form.Validator class.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- /Form.Validator
+
+provides: [Form.Validator.Extras]
+
+...
 */
-FormValidator.addAllThese([
+Form.Validator.addAllThese([
 
 	['validate-enforce-oncheck', {
 		test: function(element, props){
@@ -2426,7 +3185,7 @@ FormValidator.addAllThese([
 
 	['validate-nospace', {
 		errorMsg: function(){
-			return FormValidator.getMsg('noSpace');
+			return Form.Validator.getMsg('noSpace');
 		},
 		test: function(element, props){
 			return !element.get('value').test(/\s/);
@@ -2454,7 +3213,7 @@ FormValidator.addAllThese([
 
 	['validate-reqchk-bynode', {
 		errorMsg: function(){
-			return FormValidator.getMsg('reqChkByNode');
+			return Form.Validator.getMsg('reqChkByNode');
 		},
 		test: function(element, props){
 			return (document.id(props.nodeId).getElements(props.selector || 'input[type=checkbox], input[type=radio]')).some(function(item){
@@ -2465,7 +3224,7 @@ FormValidator.addAllThese([
 
 	['validate-required-check', {
 		errorMsg: function(element, props){
-			return props.useTitle ? element.get('title') : FormValidator.getMsg('requiredChk');
+			return props.useTitle ? element.get('title') : Form.Validator.getMsg('requiredChk');
 		},
 		test: function(element, props){
 			return !!element.checked;
@@ -2474,7 +3233,7 @@ FormValidator.addAllThese([
 
 	['validate-reqchk-byname', {
 		errorMsg: function(element, props){
-			return FormValidator.getMsg('reqChkByName').substitute({label: props.label || element.get('type')});
+			return Form.Validator.getMsg('reqChkByName').substitute({label: props.label || element.get('type')});
 		},
 		test: function(element, props){
 			var grpName = props.groupName || element.get('name');
@@ -2489,7 +3248,7 @@ FormValidator.addAllThese([
 
 	['validate-match', {
 		errorMsg: function(element, props){
-			return FormValidator.getMsg('match').substitute({matchName: props.matchName || document.id(props.matchInput).get('name')});
+			return Form.Validator.getMsg('match').substitute({matchName: props.matchName || document.id(props.matchInput).get('name')});
 		},
 		test: function(element, props){
 			var eleVal = element.get('value');
@@ -2500,8 +3259,8 @@ FormValidator.addAllThese([
 
 	['validate-after-date', {
 		errorMsg: function(element, props){
-			return FormValidator.getMsg('afterDate').substitute({
-				label: props.afterLabel || (props.afterElement ? FormValidator.getMsg('startDate') : FormValidator.getMsg('currentDate'))
+			return Form.Validator.getMsg('afterDate').substitute({
+				label: props.afterLabel || (props.afterElement ? Form.Validator.getMsg('startDate') : Form.Validator.getMsg('currentDate'))
 			});
 		},
 		test: function(element, props){
@@ -2513,8 +3272,8 @@ FormValidator.addAllThese([
 
 	['validate-before-date', {
 		errorMsg: function(element, props){
-			return FormValidator.getMsg('beforeDate').substitute({
-				label: props.beforeLabel || (props.beforeElement ? FormValidator.getMsg('endDate') : FormValidator.getMsg('currentDate'))
+			return Form.Validator.getMsg('beforeDate').substitute({
+				label: props.beforeLabel || (props.beforeElement ? Form.Validator.getMsg('endDate') : Form.Validator.getMsg('currentDate'))
 			});
 		},
 		test: function(element, props){
@@ -2526,7 +3285,7 @@ FormValidator.addAllThese([
 
 	['validate-custom-required', {
 		errorMsg: function(){
-			return FormValidator.getMsg('required');
+			return Form.Validator.getMsg('required');
 		},
 		test: function(element, props){
 			return element.get('value') != props.emptyValue;
@@ -2537,33 +3296,99 @@ FormValidator.addAllThese([
 		errorMsg: function(element, props){
 			var startMo = document.id(props.sameMonthAs) && document.id(props.sameMonthAs).get('value');
 			var eleVal = element.get('value');
-			if (eleVal != '') return FormValidator.getMsg(startMo ? 'sameMonth' : 'startMonth');
+			if (eleVal != '') return Form.Validator.getMsg(startMo ? 'sameMonth' : 'startMonth');
 		},
 		test: function(element, props){
 			var d1 = Date.parse(element.get('value'));
 			var d2 = Date.parse(document.id(props.sameMonthAs) && document.id(props.sameMonthAs).get('value'));
 			return d1 && d2 ? d1.format('%B') == d2.format('%B') : true;
 		}
+	}],
+
+
+	['validate-cc-num', {
+		errorMsg: function(element){
+			var ccNum = element.get('value').ccNum.replace(/[^0-9]/g, '');
+			return Form.Validator.getMsg('creditcard').substitute({length: ccNum.length});
+		},
+		test: function(element){
+			// required is a different test
+			if (Form.Validator.getValidator('IsEmpty').test(element)) { return true; }
+
+			// Clean number value
+			var ccNum = element.get('value');
+			ccNum = ccNum.replace(/[^0-9]/g, '');
+
+			var valid_type = false;
+
+			if (ccNum.test(/^4[0-9]{12}([0-9]{3})?$/)) valid_type = 'Visa';
+			else if (ccNum.test(/^5[1-5]([0-9]{14})$/)) valid_type = 'Master Card';
+			else if (ccNum.test(/^3[47][0-9]{13}$/)) valid_type = 'American Express';
+			else if (ccNum.test(/^6011[0-9]{12}$/)) valid_type = 'Discover';
+
+			if (valid_type) {
+				var sum = 0;
+				var cur = 0;
+
+				for(var i=ccNum.length-1; i>=0; --i) {
+					cur = ccNum.charAt(i).toInt();
+					if (cur == 0) { continue; }
+
+					if ((ccNum.length-i) % 2 == 0) { cur += cur; }
+					if (cur > 9) { cur = cur.toString().charAt(0).toInt() + cur.toString().charAt(1).toInt(); }
+
+					sum += cur;
+				}
+				if ((sum % 10) == 0) { return true; }
+			}
+
+			var chunks = '';
+			while (ccNum != '') {
+				chunks += ' ' + ccNum.substr(0,4);
+				ccNum = ccNum.substr(4);
+			}
+
+			element.getParent('form').retrieve('validator').ignoreField(element);
+			element.set('value', chunks.clean());
+			element.getParent('form').retrieve('validator').enforceField(element);
+			return false;
+		}
 	}]
+
 
 ]);
 
 /*
-Script: OverText.js
-	Shows text over an input that disappears when the user clicks into it. The text remains hidden if the user adds a value.
+---
 
-	License:
-		MIT-style license.
+script: OverText.js
 
-	Authors:
-		Aaron Newton
+description: Shows text over an input that disappears when the user clicks into it. The text remains hidden if the user adds a value.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Options
+- core:1.2.4/Events
+- core:1.2.4/Element.Event
+- /Class.Binds
+- /Class.Occlude
+- /Element.Position
+- /Element.Shortcuts
+
+provides: [OverText]
+
+...
 */
 
 var OverText = new Class({
 
 	Implements: [Options, Events, Class.Occlude],
 
-	Binds: ['reposition', 'assert', 'focus'],
+	Binds: ['reposition', 'assert', 'focus', 'hide'],
 
 	options: {/*
 		textOverride: null,
@@ -2580,7 +3405,8 @@ var OverText = new Class({
 			}
 		},
 		poll: false,
-		pollInterval: 250
+		pollInterval: 250,
+		wrap: false
 	},
 
 	property: 'OverText',
@@ -2606,14 +3432,29 @@ var OverText = new Class({
 			'class': 'overTxtLabel',
 			styles: {
 				lineHeight: 'normal',
-				position: 'absolute'
+				position: 'absolute',
+				cursor: 'text'
 			},
 			html: val,
 			events: {
-				click: this.hide.pass(true, this)
+				click: this.hide.pass(this.options.element == 'label', this)
 			}
 		}).inject(this.element, 'after');
-		if (this.options.element == 'label') this.text.set('for', this.element.get('id'));
+		if (this.options.element == 'label') {
+			if (!this.element.get('id')) this.element.set('id', 'input_' + new Date().getTime());
+			this.text.set('for', this.element.get('id'));
+		}
+
+		if (this.options.wrap) {
+			this.textHolder = new Element('div', {
+				styles: {
+					lineHeight: 'normal',
+					position: 'relative'
+				},
+				'class':'overTxtWrapper'
+			}).adopt(this.text).inject(this.element, 'before');
+		}
+
 		this.element.addEvents({
 			focus: this.focus,
 			blur: this.assert,
@@ -2622,6 +3463,13 @@ var OverText = new Class({
 		window.addEvent('resize', this.reposition.bind(this));
 		this.assert(true);
 		this.reposition();
+	},
+
+	wrap: function(){
+		if (this.options.element == 'label') {
+			if (!this.element.get('id')) this.element.set('id', 'input_' + new Date().getTime());
+			this.text.set('for', this.element.get('id'));
+		}
 	},
 
 	startPolling: function(){
@@ -2648,24 +3496,25 @@ var OverText = new Class({
 	},
 
 	focus: function(){
-		if (!this.text.isDisplayed() || this.element.get('disabled')) return;
+		if (this.text && (!this.text.isDisplayed() || this.element.get('disabled'))) return;
 		this.hide();
 	},
 
-	hide: function(suppressFocus){
-		if (this.text.isDisplayed() && !this.element.get('disabled')){
+	hide: function(suppressFocus, force){
+		if (this.text && (this.text.isDisplayed() && (!this.element.get('disabled') || force))){
 			this.text.hide();
 			this.fireEvent('textHide', [this.text, this.element]);
 			this.pollingPaused = true;
 			try {
-				if (!suppressFocus) this.element.fireEvent('focus').focus();
+				if (!suppressFocus) this.element.fireEvent('focus');
+				this.element.focus();
 			} catch(e){} //IE barfs if you call focus on hidden elements
 		}
 		return this;
 	},
 
 	show: function(){
-		if (!this.text.isDisplayed()){
+		if (this.text && !this.text.isDisplayed()){
 			this.text.show();
 			this.reposition();
 			this.fireEvent('textShow', [this.text, this.element]);
@@ -2685,8 +3534,8 @@ var OverText = new Class({
 
 	reposition: function(){
 		this.assert(true);
-		if (!this.element.getParent() || !this.element.offsetHeight) return this.stopPolling().hide();
-		if (this.test()) this.text.position($merge(this.options.positionOptions, {relativeTo: this.element}));
+		if (!this.element.isVisible()) return this.stopPolling().hide();
+		if (this.text && this.test()) this.text.position($merge(this.options.positionOptions, {relativeTo: this.element}));
 		return this;
 	}
 
@@ -2694,14 +3543,38 @@ var OverText = new Class({
 
 OverText.instances = [];
 
-OverText.update = function(){
+$extend(OverText, {
 
-	return OverText.instances.map(function(ot){
-		if (ot.element && ot.text) return ot.reposition();
-		return null; //the input or the text was destroyed
-	});
+	each: function(fn) {
+		return OverText.instances.map(function(ot, i){
+			if (ot.element && ot.text) return fn.apply(OverText, [ot, i]);
+			return null; //the input or the text was destroyed
+		});
+	},
+	
+	update: function(){
 
-};
+		return OverText.each(function(ot){
+			return ot.reposition();
+		});
+
+	},
+
+	hideAll: function(){
+
+		return OverText.each(function(ot){
+			return ot.hide(true, true);
+		});
+
+	},
+
+	showAll: function(){
+		return OverText.each(function(ot) {
+			return ot.show();
+		});
+	}
+
+});
 
 if (window.Fx && Fx.Reveal) {
 	Fx.Reveal.implement({
@@ -2710,14 +3583,24 @@ if (window.Fx && Fx.Reveal) {
 }
 
 /*
-Script: Fx.Elements.js
-	Effect to change any number of CSS properties of any number of Elements.
+---
 
-	License:
-		MIT-style license.
+script: Fx.Elements.js
 
-	Authors:
-		Valerio Proietti
+description: Effect to change any number of CSS properties of any number of Elements.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+
+requires:
+- core:1.2.4/Fx.CSS
+- /MooTools.More
+
+provides: [Fx.Elements]
+
+...
 */
 
 Fx.Elements = new Class({
@@ -2763,14 +3646,24 @@ Fx.Elements = new Class({
 });
 
 /*
-Script: Fx.Accordion.js
-	An Fx.Elements extension which allows you to easily create accordion type controls.
+---
 
-	License:
-		MIT-style license.
+script: Fx.Accordion.js
 
-	Authors:
-		Valerio Proietti
+description: An Fx.Elements extension which allows you to easily create accordion type controls.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+
+requires:
+- core:1.2.4/Element.Event
+- /Fx.Elements
+
+provides: [Fx.Accordion]
+
+...
 */
 
 var Accordion = Fx.Accordion = new Class({
@@ -2779,18 +3672,19 @@ var Accordion = Fx.Accordion = new Class({
 
 	options: {/*
 		onActive: $empty(toggler, section),
-		onBackground: $empty(toggler, section),*/
+		onBackground: $empty(toggler, section),
+		fixedHeight: false,
+		fixedWidth: false,
+		*/
 		display: 0,
 		show: false,
 		height: true,
 		width: false,
 		opacity: true,
-		fixedHeight: false,
-		fixedWidth: false,
-		wait: false,
 		alwaysHide: false,
 		trigger: 'click',
-		initialDisplayFx: true
+		initialDisplayFx: true,
+		returnHeightToAuto: true
 	},
 
 	initialize: function(){
@@ -2799,6 +3693,7 @@ var Accordion = Fx.Accordion = new Class({
 		this.togglers = $$(params.togglers);
 		this.container = document.id(params.container);
 		this.previous = -1;
+		this.internalChain = new Chain();
 		if (this.options.alwaysHide) this.options.wait = true;
 		if ($chk(this.options.show)){
 			this.options.display = false;
@@ -2821,6 +3716,7 @@ var Accordion = Fx.Accordion = new Class({
 			}
 		}, this);
 		if ($chk(this.options.display)) this.display(this.options.display, this.options.initialDisplayFx);
+		this.addEvent('complete', this.internalChain.callChain.bind(this.internalChain));
 	},
 
 	addSection: function(toggler, element){
@@ -2830,7 +3726,9 @@ var Accordion = Fx.Accordion = new Class({
 		this.togglers.include(toggler);
 		this.elements.include(element);
 		var idx = this.togglers.indexOf(toggler);
-		toggler.addEvent(this.options.trigger, this.display.bind(this, idx));
+		var displayer = this.display.bind(this, idx);
+		toggler.store('accordion:display', displayer);
+		toggler.addEvent(this.options.trigger, displayer);
 		if (this.options.height) element.setStyles({'padding-top': 0, 'border-top': 'none', 'padding-bottom': 0, 'border-bottom': 'none'});
 		if (this.options.width) element.setStyles({'padding-left': 0, 'border-left': 'none', 'padding-right': 0, 'border-right': 'none'});
 		element.fullOpacity = 1;
@@ -2843,33 +3741,69 @@ var Accordion = Fx.Accordion = new Class({
 		return this;
 	},
 
+	detach: function(){
+		this.togglers.each(function(toggler) {
+			toggler.removeEvent(this.options.trigger, toggler.retrieve('accordion:display'));
+		}, this);
+	},
+
 	display: function(index, useFx){
+		if (!this.check(index, useFx)) return this;
 		useFx = $pick(useFx, true);
+		if (this.options.returnHeightToAuto){
+			var prev = this.elements[this.previous];
+			if (prev && !this.selfHidden){
+				for (var fx in this.effects){
+					prev.setStyle(fx, prev[this.effects[fx]]);
+				}
+			}
+		}
 		index = ($type(index) == 'element') ? this.elements.indexOf(index) : index;
 		if ((this.timer && this.options.wait) || (index === this.previous && !this.options.alwaysHide)) return this;
 		this.previous = index;
 		var obj = {};
 		this.elements.each(function(el, i){
 			obj[i] = {};
-			var hide = (i != index) || (this.options.alwaysHide && (el.offsetHeight > 0));
+			var hide;
+			if (i != index){
+				hide = true;
+			} else if (this.options.alwaysHide && ((el.offsetHeight > 0 && this.options.height) || el.offsetWidth > 0 && this.options.width)){
+				hide = true;
+				this.selfHidden = true;
+			}
 			this.fireEvent(hide ? 'background' : 'active', [this.togglers[i], el]);
 			for (var fx in this.effects) obj[i][fx] = hide ? 0 : el[this.effects[fx]];
 		}, this);
+		this.internalChain.chain(function(){
+			if (this.options.returnHeightToAuto && !this.selfHidden){
+				var el = this.elements[index];
+				if (el) el.setStyle('height', 'auto');
+			};
+		}.bind(this));
 		return useFx ? this.start(obj) : this.set(obj);
 	}
 
 });
 
 /*
-Script: Fx.Move.js
-	Defines Fx.Move, a class that works with Element.Position.js to transition an element from one location to another.
+---
 
-	License:
-		MIT-style license.
+script: Fx.Move.js
 
-	Authors:
-		Aaron Newton
+description: Defines Fx.Move, a class that works with Element.Position.js to transition an element from one location to another.
 
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Fx.Morph
+- /Element.Position
+
+provides: [Fx.Move]
+
+...
 */
 
 Fx.Move = new Class({
@@ -2918,15 +3852,25 @@ Element.implement({
 
 
 /*
-Script: Fx.Reveal.js
-	Defines Fx.Reveal, a class that shows and hides elements with a transition.
+---
 
-	License:
-		MIT-style license.
+script: Fx.Reveal.js
 
-	Authors:
-		Aaron Newton
+description: Defines Fx.Reveal, a class that shows and hides elements with a transition.
 
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Fx.Morph
+- /Element.Shortcuts
+- /Element.Measure
+
+provides: [Fx.Reveal]
+
+...
 */
 
 Fx.Reveal = new Class({
@@ -2939,6 +3883,7 @@ Fx.Reveal = new Class({
 		onComplete: $empty(thisElement),
 		heightOverride: null,
 		widthOverride: null, */
+		link: 'cancel',
 		styles: ['padding', 'border', 'margin'],
 		transitionOpacity: !Browser.Engine.trident4,
 		mode: 'vertical',
@@ -2953,18 +3898,17 @@ Fx.Reveal = new Class({
 					this.hiding = true;
 					this.showing = false;
 					this.hidden = true;
+					this.cssText = this.element.style.cssText;
 					var startStyles = this.element.getComputedSize({
 						styles: this.options.styles,
 						mode: this.options.mode
 					});
-					var setToAuto = (this.element.style.height === ''||this.element.style.height == 'auto');
 					this.element.setStyle('display', 'block');
 					if (this.options.transitionOpacity) startStyles.opacity = 1;
 					var zero = {};
 					$each(startStyles, function(style, name){
 						zero[name] = [style, 0];
 					}, this);
-					var overflowBefore = this.element.getStyle('overflow');
 					this.element.setStyle('overflow', 'hidden');
 					var hideThese = this.options.hideInputs ? this.element.getElements(this.options.hideInputs) : null;
 					this.$chain.unshift(function(){
@@ -2973,11 +3917,8 @@ Fx.Reveal = new Class({
 							$each(startStyles, function(style, name){
 								startStyles[name] = style;
 							}, this);
-							this.element.setStyles($merge({display: 'none', overflow: overflowBefore}, startStyles));
-							if (setToAuto){
-								if (['vertical', 'both'].contains(this.options.mode)) this.element.style.height = '';
-								if (['width', 'both'].contains(this.options.mode)) this.element.style.width = '';
-							}
+							this.element.style.cssText = this.cssText;
+							this.element.setStyle('display', 'none');
 							if (hideThese) hideThese.setStyle('visibility', 'visible');
 						}
 						this.fireEvent('hide', this.element);
@@ -3013,12 +3954,11 @@ Fx.Reveal = new Class({
 					 this.element.getStyle('visiblity') == 'hidden' ||
 					 this.element.getStyle('opacity') == 0){
 					this.showing = true;
-					this.hiding = false;
-					this.hidden = false;
-					var setToAuto, startStyles;
+					this.hiding = this.hidden =  false;
+					var startStyles;
+					this.cssText = this.element.style.cssText;
 					//toggle display, but hide it
 					this.element.measure(function(){
-						setToAuto = (this.element.style.height === '' || this.element.style.height == 'auto');
 						//create the styles for the opened/visible state
 						startStyles = this.element.getComputedSize({
 							styles: this.options.styles,
@@ -3041,7 +3981,6 @@ Fx.Reveal = new Class({
 						display: this.options.display
 					};
 					$each(startStyles, function(style, name){ zero[name] = 0; });
-					var overflowBefore = this.element.getStyle('overflow');
 					//set to zero
 					this.element.setStyles($merge(zero, {overflow: 'hidden'}));
 					//hide inputs
@@ -3050,11 +3989,8 @@ Fx.Reveal = new Class({
 					//start the effect
 					this.start(startStyles);
 					this.$chain.unshift(function(){
-						this.element.setStyle('overflow', overflowBefore);
-						if (!this.options.heightOverride && setToAuto){
-							if (['vertical', 'both'].contains(this.options.mode)) this.element.style.height = '';
-							if (['width', 'both'].contains(this.options.mode)) this.element.style.width = '';
-						}
+						this.element.style.cssText = this.cssText;
+						this.element.setStyle('display', this.options.display);
 						if (!this.hidden) this.showing = false;
 						if (hideThese) hideThese.setStyle('visibility', 'visible');
 						this.callChain();
@@ -3094,6 +4030,13 @@ Fx.Reveal = new Class({
 			this.dissolve();
 		}
 		return this;
+	},
+
+	cancel: function(){
+		this.parent.apply(this, arguments);
+		this.element.style.cssText = this.cssText;
+		this.hidding = false;
+		this.showing = false;
 	}
 
 });
@@ -3103,7 +4046,7 @@ Element.Properties.reveal = {
 	set: function(options){
 		var reveal = this.retrieve('reveal');
 		if (reveal) reveal.cancel();
-		return this.eliminate('reveal').store('reveal:options', $extend({link: 'cancel'}, options));
+		return this.eliminate('reveal').store('reveal:options', options);
 	},
 
 	get: function(options){
@@ -3152,14 +4095,26 @@ Element.implement({
 });
 
 /*
-Script: Fx.Scroll.js
-	Effect to smoothly scroll any element, including the window.
+---
 
-	License:
-		MIT-style license.
+script: Fx.Scroll.js
 
-	Authors:
-		Valerio Proietti
+description: Effect to smoothly scroll any element, including the window.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+
+requires:
+- core:1.2.4/Fx
+- core:1.2.4/Element.Event
+- core:1.2.4/Element.Dimensions
+- /MooTools.More
+
+provides: [Fx.Scroll]
+
+...
 */
 
 Fx.Scroll = new Class({
@@ -3192,6 +4147,7 @@ Fx.Scroll = new Class({
 
 	set: function(){
 		var now = Array.flatten(arguments);
+		if (Browser.Engine.gecko) now = [Math.round(now[0]), Math.round(now[1])];
 		this.element.scrollTo(now[0], now[1]);
 	},
 
@@ -3203,11 +4159,12 @@ Fx.Scroll = new Class({
 
 	start: function(x, y){
 		if (!this.check(x, y)) return this;
-		var offsetSize = this.element.getSize(), scrollSize = this.element.getScrollSize();
-		var scroll = this.element.getScroll(), values = {x: x, y: y};
+		var scrollSize = this.element.getScrollSize(),
+			scroll = this.element.getScroll(), 
+			values = {x: x, y: y};
 		for (var z in values){
-			var max = scrollSize[z] - offsetSize[z];
-			if ($chk(values[z])) values[z] = ($type(values[z]) == 'number') ? values[z].limit(0, max) : max;
+			var max = scrollSize[z];
+			if ($chk(values[z])) values[z] = ($type(values[z]) == 'number') ? values[z] : max;
 			else values[z] = scroll[z];
 			values[z] += this.options.offset[z];
 		}
@@ -3257,20 +4214,54 @@ Fx.Scroll = new Class({
 		}, this);
 		if (to.x != scroll.x || to.y != scroll.y) this.start(to.x, to.y);
 		return this;
+	},
+
+	scrollToCenter: function(el, axes, offset){
+		axes = axes ? $splat(axes) : ['x', 'y'];
+		el = $(el);
+		var to = {},
+			pos = el.getPosition(this.element),
+			size = el.getSize(),
+			scroll = this.element.getScroll(),
+			containerSize = this.element.getSize(),
+			edge = {
+				x: pos.x + size.x,
+				y: pos.y + size.y
+			};
+
+		['x','y'].each(function(axis){
+			if(axes.contains(axis)){
+				to[axis] = pos[axis] - (containerSize[axis] - size[axis])/2;
+			}
+			if(to[axis] == null) to[axis] = scroll[axis];
+			if(offset && offset[axis]) to[axis] = to[axis] + offset[axis];
+		}, this);
+		if (to.x != scroll.x || to.y != scroll.y) this.start(to.x, to.y);
+		return this;
 	}
 
 });
 
 
 /*
-Script: Fx.Slide.js
-	Effect to slide an element in and out of view.
+---
 
-	License:
-		MIT-style license.
+script: Fx.Slide.js
 
-	Authors:
-		Valerio Proietti
+description: Effect to slide an element in and out of view.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+
+requires:
+- core:1.2.4/Fx Element.Style
+- /MooTools.More
+
+provides: [Fx.Slide]
+
+...
 */
 
 Fx.Slide = new Class({
@@ -3278,7 +4269,8 @@ Fx.Slide = new Class({
 	Extends: Fx,
 
 	options: {
-		mode: 'vertical'
+		mode: 'vertical',
+		hideOverflow: true
 	},
 
 	initialize: function(element, options){
@@ -3289,8 +4281,10 @@ Fx.Slide = new Class({
 		this.element = this.subject = document.id(element);
 		this.parent(options);
 		var wrapper = this.element.retrieve('wrapper');
+		var styles = this.element.getStyles('margin', 'position', 'overflow');
+		if (this.options.hideOverflow) styles = $extend(styles, {overflow: 'hidden'});
 		this.wrapper = wrapper || new Element('div', {
-			styles: $extend(this.element.getStyles('margin', 'position'), {overflow: 'hidden'})
+			styles: styles
 		}).wraps(this.element);
 		this.element.store('wrapper', this.wrapper).setStyle('margin', 0);
 		this.now = [];
@@ -3405,14 +4399,24 @@ Element.implement({
 
 
 /*
-Script: Fx.SmoothScroll.js
-	Class for creating a smooth scrolling effect to all internal links on the page.
+---
 
-	License:
-		MIT-style license.
+script: Fx.SmoothScroll.js
 
-	Authors:
-		Valerio Proietti
+description: Class for creating a smooth scrolling effect to all internal links on the page.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+
+requires:
+- core:1.2.4/Selectors
+- /Fx.Scroll
+
+provides: [Fx.SmoothScroll]
+
+...
 */
 
 var SmoothScroll = Fx.SmoothScroll = new Class({
@@ -3424,7 +4428,7 @@ var SmoothScroll = Fx.SmoothScroll = new Class({
 		this.doc = context.getDocument();
 		var win = context.getWindow();
 		this.parent(this.doc, options);
-		this.links = this.options.links ? $$(this.options.links) : $$(this.doc.links);
+		this.links = $$(this.options.links || this.doc.links);
 		var location = win.location.href.match(/^[^#]*/)[0] + '#';
 		this.links.each(function(link){
 			if (link.href.indexOf(location) != 0) {return;}
@@ -3445,24 +4449,35 @@ var SmoothScroll = Fx.SmoothScroll = new Class({
 			if (el) {
 				event.preventDefault();
 				this.anchor = anchor;
-				this.toElement(el);
+				this.toElement(el).chain(function(){
+					this.fireEvent('scrolledTo', [link, el]);
+				}.bind(this));
 				link.blur();
 			}
 		}.bind(this));
 	}
-
 });
 
 /*
-Script: Fx.Sort.js
-	Defines Fx.Sort, a class that reorders lists with a transition.
+---
 
-	License:
-		MIT-style license.
+script: Fx.Sort.js
 
-	Authors:
-		Aaron Newton
+description: Defines Fx.Sort, a class that reorders lists with a transition.
 
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Element.Dimensions
+- /Fx.Elements
+- /Element.Measure
+
+provides: [Fx.Sort]
+
+...
 */
 
 Fx.Sort = new Class({
@@ -3489,10 +4504,11 @@ Fx.Sort = new Class({
 
 	sort: function(newOrder){
 		if ($type(newOrder) != 'array') return false;
-		var top = 0;
-		var left = 0;
-		var zero = {};
-		var vert = this.options.mode == 'vertical';
+		var top = 0,
+			left = 0,
+			next = {},
+			zero = {},
+			vert = this.options.mode == 'vertical';
 		var current = this.elements.map(function(el, index){
 			var size = el.getComputedSize({styles: ['border', 'padding', 'margin']});
 			var val;
@@ -3526,10 +4542,7 @@ Fx.Sort = new Class({
 			if (newOrder.length > this.elements.length)
 				newOrder.splice(this.elements.length-1, newOrder.length - this.elements.length);
 		}
-		top = 0;
-		left = 0;
-		var margin = 0;
-		var next = {};
+		var margin = top = left = 0;
 		newOrder.each(function(item, index){
 			var newPos = {};
 			if (vert){
@@ -3600,22 +4613,34 @@ Fx.Sort = new Class({
 		var newOrder = $A(this.currentOrder);
 		newOrder[this.currentOrder.indexOf(one)] = two;
 		newOrder[this.currentOrder.indexOf(two)] = one;
-		this.sort(newOrder);
+		return this.sort(newOrder);
 	}
 
 });
 
 /*
-Script: Drag.js
-	The base Drag Class. Can be used to drag and resize Elements using mouse events.
+---
 
-	License:
-		MIT-style license.
+script: Drag.js
 
-	Authors:
-		Valerio Proietti
-		Tom Occhinno
-		Jan Kassens
+description: The base Drag Class. Can be used to drag and resize Elements using mouse events.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+- Tom Occhinno
+- Jan Kassens
+
+requires:
+- core:1.2.4/Events
+- core:1.2.4/Options
+- core:1.2.4/Element.Event
+- core:1.2.4/Element.Style
+- /MooTools.More
+
+provides: [Drag]
+
 */
 
 var Drag = new Class({
@@ -3637,6 +4662,7 @@ var Drag = new Class({
 		handle: false,
 		invert: false,
 		preventDefault: false,
+		stopPropagation: false,
 		modifiers: {x: 'left', y: 'top'}
 	},
 
@@ -3674,7 +4700,9 @@ var Drag = new Class({
 	},
 
 	start: function(event){
+		if (event.rightClick) return;
 		if (this.options.preventDefault) event.preventDefault();
+		if (this.options.stopPropagation) event.stopPropagation();
 		this.mouse.start = event.page;
 		this.fireEvent('beforeStart', this.element);
 		var limit = this.options.limit;
@@ -3724,8 +4752,11 @@ var Drag = new Class({
 				}
 			}
 			if (this.options.grid[z]) this.value.now[z] -= ((this.value.now[z] - (this.limit[z][0]||0)) % this.options.grid[z]);
-			if (this.options.style) this.element.setStyle(this.options.modifiers[z], this.value.now[z] + this.options.unit);
-			else this.element[this.options.modifiers[z]] = this.value.now[z];
+			if (this.options.style) {
+				this.element.setStyle(this.options.modifiers[z], this.value.now[z] + this.options.unit);
+			} else {
+				this.element[this.options.modifiers[z]] = this.value.now[z];
+			}
 		}
 		this.fireEvent('drag', [this.element, event]);
 	},
@@ -3762,16 +4793,29 @@ Element.implement({
 
 
 /*
-Script: Drag.Move.js
-	A Drag extension that provides support for the constraining of draggables to containers and droppables.
+---
 
-	License:
-		MIT-style license.
+script: Drag.Move.js
 
-	Authors:
-		Valerio Proietti
-		Tom Occhinno
-		Jan Kassens*/
+description: A Drag extension that provides support for the constraining of draggables to containers and droppables.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+- Tom Occhinno
+- Jan Kassens
+- Aaron Newton
+- Scott Kyle
+
+requires:
+- core:1.2.4/Element.Dimensions
+- /Drag
+
+provides: [Drag.Move]
+
+...
+*/
 
 Drag.Move = new Class({
 
@@ -3790,14 +4834,20 @@ Drag.Move = new Class({
 
 	initialize: function(element, options){
 		this.parent(element, options);
+		element = this.element;
+		
 		this.droppables = $$(this.options.droppables);
 		this.container = document.id(this.options.container);
-		if (this.container && $type(this.container) != 'element') this.container = document.id(this.container.getDocument().body);
-
-		var position = this.element.getStyle('position');
-		if (position=='static') position = 'absolute';
-		if ([this.element.getStyle('left'), this.element.getStyle('top')].contains('auto')) this.element.position(this.element.getPosition(this.element.offsetParent));
-		this.element.setStyle('position', position);
+		
+		if (this.container && $type(this.container) != 'element')
+			this.container = document.id(this.container.getDocument().body);
+		
+		var styles = element.getStyles('left', 'right', 'position');
+		if (styles.left == 'auto' || styles.top == 'auto')
+			element.setPosition(element.getPosition(element.getOffsetParent()));
+		
+		if (styles.position == 'static')
+			element.setStyle('position', 'absolute');
 
 		this.addEvent('start', this.checkDroppables, true);
 
@@ -3805,41 +4855,80 @@ Drag.Move = new Class({
 	},
 
 	start: function(event){
-		if (this.container){
-			var ccoo = this.container.getCoordinates(this.element.getOffsetParent()), cbs = {}, ems = {};
-
-			['top', 'right', 'bottom', 'left'].each(function(pad){
-				cbs[pad] = this.container.getStyle('border-' + pad).toInt();
-				ems[pad] = this.element.getStyle('margin-' + pad).toInt();
-			}, this);
-
-			var width = this.element.offsetWidth + ems.left + ems.right;
-			var height = this.element.offsetHeight + ems.top + ems.bottom;
-
-			if (this.options.includeMargins) {
-				$each(ems, function(value, key) {
-					ems[key] = 0;
-				});
-			}
-			if (this.container == this.element.getOffsetParent()) {
-				this.options.limit = {
-					x: [0 - ems.left, ccoo.right - cbs.left - cbs.right - width + ems.right],
-					y: [0 - ems.top, ccoo.bottom - cbs.top - cbs.bottom - height + ems.bottom]
-				};
-			} else {
-				this.options.limit = {
-					x: [ccoo.left + cbs.left - ems.left, ccoo.right - cbs.right - width + ems.right],
-					y: [ccoo.top + cbs.top - ems.top, ccoo.bottom - cbs.bottom - height + ems.bottom]
-				};
-			}
-
-		}
+		if (this.container) this.options.limit = this.calculateLimit();
+		
 		if (this.options.precalculate){
-			this.positions = this.droppables.map(function(el) {
+			this.positions = this.droppables.map(function(el){
 				return el.getCoordinates();
 			});
 		}
+		
 		this.parent(event);
+	},
+	
+	calculateLimit: function(){
+		var offsetParent = this.element.getOffsetParent(),
+			containerCoordinates = this.container.getCoordinates(offsetParent),
+			containerBorder = {},
+			elementMargin = {},
+			elementBorder = {},
+			containerMargin = {},
+			offsetParentPadding = {};
+
+		['top', 'right', 'bottom', 'left'].each(function(pad){
+			containerBorder[pad] = this.container.getStyle('border-' + pad).toInt();
+			elementBorder[pad] = this.element.getStyle('border-' + pad).toInt();
+			elementMargin[pad] = this.element.getStyle('margin-' + pad).toInt();
+			containerMargin[pad] = this.container.getStyle('margin-' + pad).toInt();
+			offsetParentPadding[pad] = offsetParent.getStyle('padding-' + pad).toInt();
+		}, this);
+
+		var width = this.element.offsetWidth + elementMargin.left + elementMargin.right,
+			height = this.element.offsetHeight + elementMargin.top + elementMargin.bottom,
+			left = 0,
+			top = 0,
+			right = containerCoordinates.right - containerBorder.right - width,
+			bottom = containerCoordinates.bottom - containerBorder.bottom - height;
+
+		if (this.options.includeMargins){
+			left += elementMargin.left;
+			top += elementMargin.top;
+		} else {
+			right += elementMargin.right;
+			bottom += elementMargin.bottom;
+		}
+		
+		if (this.element.getStyle('position') == 'relative'){
+			var coords = this.element.getCoordinates(offsetParent);
+			coords.left -= this.element.getStyle('left').toInt();
+			coords.top -= this.element.getStyle('top').toInt();
+			
+			left += containerBorder.left - coords.left;
+			top += containerBorder.top - coords.top;
+			right += elementMargin.left - coords.left;
+			bottom += elementMargin.top - coords.top;
+			
+			if (this.container != offsetParent){
+				left += containerMargin.left + offsetParentPadding.left;
+				top += (Browser.Engine.trident4 ? 0 : containerMargin.top) + offsetParentPadding.top;
+			}
+		} else {
+			left -= elementMargin.left;
+			top -= elementMargin.top;
+			
+			if (this.container == offsetParent){
+				right -= containerBorder.left;
+				bottom -= containerBorder.top;
+			} else {
+				left += containerCoordinates.left + containerBorder.left;
+				top += containerCoordinates.top + containerBorder.top;
+			}
+		}
+		
+		return {
+			x: [left, right],
+			y: [top, bottom]
+		};
 	},
 
 	checkAgainst: function(el, i){
@@ -3883,14 +4972,27 @@ Element.implement({
 
 
 /*
-Script: Slider.js
-	Class for creating horizontal and vertical slider controls.
+---
 
-	License:
-		MIT-style license.
+script: Slider.js
 
-	Authors:
-		Valerio Proietti
+description: Class for creating horizontal and vertical slider controls.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+
+requires:
+- core:1.2.4/Element.Dimensions
+- /Class.Binds
+- /Drag
+- /Element.Dimensions
+- /Element.Measure
+
+provides: [Slider]
+
+...
 */
 
 var Slider = new Class({
@@ -3907,6 +5009,7 @@ var Slider = new Class({
 			if (this.options.snap) position = this.toPosition(this.step);
 			this.knob.setStyle(this.property, position);
 		},
+		initialStep: 0,
 		snap: false,
 		offset: 0,
 		range: false,
@@ -3932,8 +5035,12 @@ var Slider = new Class({
 				this.property = 'left';
 				offset = 'offsetWidth';
 		}
-		this.half = this.knob[offset] / 2;
-		this.full = this.element[offset] - this.knob[offset] + (this.options.offset * 2);
+		
+		this.full = this.element.measure(function(){ 
+			this.half = this.knob[offset] / 2; 
+			return this.element[offset] - this.knob[offset] + (this.options.offset * 2); 
+		}.bind(this));
+		
 		this.min = $chk(this.options.range[0]) ? this.options.range[0] : 0;
 		this.max = $chk(this.options.range[1]) ? this.options.range[1] : this.options.steps;
 		this.range = this.max - this.min;
@@ -3941,25 +5048,22 @@ var Slider = new Class({
 		this.stepSize = Math.abs(this.range) / this.steps;
 		this.stepWidth = this.stepSize * this.full / Math.abs(this.range) ;
 
-		this.knob.setStyle('position', 'relative').setStyle(this.property, - this.options.offset);
+		this.knob.setStyle('position', 'relative').setStyle(this.property, this.options.initialStep ? this.toPosition(this.options.initialStep) : - this.options.offset);
 		modifiers[this.axis] = this.property;
 		limit[this.axis] = [- this.options.offset, this.full - this.options.offset];
-
-		this.bound = {
-			clickedElement: this.clickedElement.bind(this),
-			scrolledElement: this.scrolledElement.bindWithEvent(this),
-			draggedKnob: this.draggedKnob.bind(this)
-		};
 
 		var dragOptions = {
 			snap: 0,
 			limit: limit,
 			modifiers: modifiers,
-			onDrag: this.bound.draggedKnob,
-			onStart: this.bound.draggedKnob,
+			onDrag: this.draggedKnob,
+			onStart: this.draggedKnob,
 			onBeforeStart: (function(){
 				this.isDragging = true;
 			}).bind(this),
+			onCancel: function() {
+				this.isDragging = false;
+			}.bind(this),
 			onComplete: function(){
 				this.isDragging = false;
 				this.draggedKnob();
@@ -3976,15 +5080,15 @@ var Slider = new Class({
 	},
 
 	attach: function(){
-		this.element.addEvent('mousedown', this.bound.clickedElement);
-		if (this.options.wheel) this.element.addEvent('mousewheel', this.bound.scrolledElement);
+		this.element.addEvent('mousedown', this.clickedElement);
+		if (this.options.wheel) this.element.addEvent('mousewheel', this.scrolledElement);
 		this.drag.attach();
 		return this;
 	},
 
 	detach: function(){
-		this.element.removeEvent('mousedown', this.bound.clickedElement);
-		this.element.removeEvent('mousewheel', this.bound.scrolledElement);
+		this.element.removeEvent('mousedown', this.clickedElement);
+		this.element.removeEvent('mousewheel', this.scrolledElement);
 		this.drag.detach();
 		return this;
 	},
@@ -4053,14 +5157,23 @@ var Slider = new Class({
 });
 
 /*
-Script: Sortables.js
-	Class for creating a drag and drop sorting interface for lists of items.
+---
 
-	License:
-		MIT-style license.
+script: Sortables.js
 
-	Authors:
-		Tom Occhino
+description: Class for creating a drag and drop sorting interface for lists of items.
+
+license: MIT-style license
+
+authors:
+- Tom Occhino
+
+requires:
+- /Drag.Move
+
+provides: [Slider]
+
+...
 */
 
 var Sortables = new Class({
@@ -4144,7 +5257,7 @@ var Sortables = new Class({
 			position: 'absolute',
 			visibility: 'hidden',
 			'width': element.getStyle('width')
-		}).inject(this.list).position(element.getPosition(element.getOffsetParent()));
+		}).inject(this.list).setPosition(element.getPosition(element.getOffsetParent()));
 	},
 
 	getDroppables: function(){
@@ -4234,15 +5347,26 @@ var Sortables = new Class({
 
 
 /*
-Script: Request.JSONP.js
-	Defines Request.JSONP, a class for cross domain javascript via script injection.
+---
 
-	License:
-		MIT-style license.
+script: Request.JSONP.js
 
-	Authors:
-		Aaron Newton
-		Guillermo Rauch
+description: Defines Request.JSONP, a class for cross domain javascript via script injection.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+- Guillermo Rauch
+
+requires:
+- core:1.2.4/Element
+- core:1.2.4/Request
+- /Log
+
+provides: [Request.JSONP]
+
+...
 */
 
 Request.JSONP = new Class({
@@ -4254,7 +5378,9 @@ Request.JSONP = new Class({
 		onRequest: $empty(scriptElement),
 		onComplete: $empty(data),
 		onSuccess: $empty(data),
-		onCancel: $empty(),*/
+		onCancel: $empty(),
+		log: false,
+		*/
 		url: '',
 		data: {},
 		retries: 0,
@@ -4266,6 +5392,7 @@ Request.JSONP = new Class({
 
 	initialize: function(options){
 		this.setOptions(options);
+		if (this.options.log) this.enableLog();
 		this.running = false;
 		this.requests = 0;
 		this.triesRemaining = [];
@@ -4283,7 +5410,9 @@ Request.JSONP = new Class({
 	send: function(options){
 		if (!$chk(arguments[1]) && !this.check(options)) return this;
 
-		var type = $type(options), old = this.options, index = $chk(arguments[1]) ? arguments[1] : this.requests++;
+		var type = $type(options), 
+				old = this.options, 
+				index = $chk(arguments[1]) ? arguments[1] : this.requests++;
 		if (type == 'string' || type == 'element') options = {data: options};
 
 		options = $extend({data: old.data, url: old.url}, options);
@@ -4302,13 +5431,11 @@ Request.JSONP = new Class({
 					this.triesRemaining[index] = remaining - 1;
 					if (script){
 						script.destroy();
-						this.send(options, index);
-						this.fireEvent('retry', this.triesRemaining[index]);
+						this.send(options, index).fireEvent('retry', this.triesRemaining[index]);
 					}
 				} else if(script && this.options.timeout){
 					script.destroy();
-					this.cancel();
-					this.fireEvent('failure');
+					this.cancel().fireEvent('failure');
 				}
 			}).delay(this.options.timeout, this);
 		}).delay(Browser.Engine.trident ? 50 : 0, this);
@@ -4323,7 +5450,8 @@ Request.JSONP = new Class({
 	},
 
 	getScript: function(options){
-		var index = Request.JSONP.counter, data;
+		var index = Request.JSONP.counter,
+				data;
 		Request.JSONP.counter++;
 
 		switch ($type(options.data)){
@@ -4356,14 +5484,25 @@ Request.JSONP.counter = 0;
 Request.JSONP.request_map = {};
 
 /*
-Script: Request.Queue.js
-	Controls several instances of Request and its variants to run only one request at a time.
+---
 
-	License:
-		MIT-style license.
+script: Request.Queue.js
 
-	Authors:
-		Aaron Newton
+description: Controls several instances of Request and its variants to run only one request at a time.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Element
+- core:1.2.4/Request
+- /Log
+
+provides: [Request.Queue]
+
+...
 */
 
 Request.Queue = new Class({
@@ -4378,7 +5517,9 @@ Request.Queue = new Class({
 		onComplete: $empty(argsPassedToOnComplete),
 		onCancel: $empty(argsPassedToOnCancel),
 		onException: $empty(argsPassedToOnException),
-		onFailure: $empty(argsPassedToOnFailure),*/
+		onFailure: $empty(argsPassedToOnFailure),
+		onEnd: $empty,
+		*/
 		stopOnFailure: true,
 		autoAdvance: true,
 		concurrent: 1,
@@ -4386,11 +5527,16 @@ Request.Queue = new Class({
 	},
 
 	initialize: function(options){
+		if(options){
+			var requests = options.requests;
+			delete options.requests;	
+		}
 		this.setOptions(options);
 		this.requests = new Hash;
-		this.addRequests(this.options.requests);
 		this.queue = [];
 		this.reqBinders = {};
+		
+		if(requests) this.addRequests(requests);
 	},
 
 	addRequest: function(name, request){
@@ -4441,11 +5587,13 @@ Request.Queue = new Class({
 	},
 
 	getRunning: function(){
-		return this.requests.filter(function(r){ return r.running; });
+		return this.requests.filter(function(r){
+			return r.running;
+		});
 	},
 
 	isRunning: function(){
-		return !!this.getRunning().getKeys().length;
+		return !!(this.getRunning().getKeys().length);
 	},
 
 	send: function(name, options){
@@ -4515,6 +5663,7 @@ Request.Queue = new Class({
 
 	onComplete: function(){
 		this.fireEvent('complete', arguments);
+		if (!this.queue.length) this.fireEvent('end');
 	},
 
 	onCancel: function(){
@@ -4543,15 +5692,24 @@ Request.Queue = new Class({
 
 
 /*
-Script: Request.Periodical.js
-	Requests the same url at a time interval that increases when no data is returned from the requested server
+---
 
-	License:
-		MIT-style license.
+script: Request.Periodical.js
 
-	Authors:
-		Christoph Pojer
+description: Requests the same URL to pull data from a server but increases the intervals if no data is returned to reduce the load
 
+license: MIT-style license
+
+authors:
+- Christoph Pojer
+
+requires:
+- core:1.2.4/Request
+- /MooTools.More
+
+provides: [Request.Periodical]
+
+...
 */
 
 Request.implement({
@@ -4563,38 +5721,45 @@ Request.implement({
 	},
 
 	startTimer: function(data){
-		var fn = (function(){
+		var fn = function(){
 			if (!this.running) this.send({data: data});
-		});
+		};
 		this.timer = fn.delay(this.options.initialDelay, this);
 		this.lastDelay = this.options.initialDelay;
-		this.completeCheck = function(j){
+		this.completeCheck = function(response){
 			$clear(this.timer);
-			if (j) this.lastDelay = this.options.delay;
-			else this.lastDelay = (this.lastDelay+this.options.delay).min(this.options.limit);
+			this.lastDelay = (response) ? this.options.delay : (this.lastDelay + this.options.delay).min(this.options.limit);
 			this.timer = fn.delay(this.lastDelay, this);
 		};
-		this.addEvent('complete', this.completeCheck);
-		return this;
+		return this.addEvent('complete', this.completeCheck);
 	},
 
 	stopTimer: function(){
 		$clear(this.timer);
-		this.removeEvent('complete', this.completeCheck);
-		return this;
+		return this.removeEvent('complete', this.completeCheck);
 	}
 
 });
 
 /*
-Script: Assets.js
-	Provides methods to dynamically load JavaScript, CSS, and Image files into the document.
+---
 
-	License:
-		MIT-style license.
+script: Assets.js
 
-	Authors:
-		Valerio Proietti
+description: Provides methods to dynamically load JavaScript, CSS, and Image files into the document.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+
+requires:
+- core:1.2.4/Element.Event
+- /MooTools.More
+
+provides: [Assets]
+
+...
 */
 
 var Asset = {
@@ -4608,8 +5773,12 @@ var Asset = {
 
 		var script = new Element('script', {src: source, type: 'text/javascript'});
 
-		var load = properties.onload.bind(script), check = properties.check, doc = properties.document;
-		delete properties.onload; delete properties.check; delete properties.document;
+		var load = properties.onload.bind(script), 
+			check = properties.check, 
+			doc = properties.document;
+		delete properties.onload;
+		delete properties.check;
+		delete properties.document;
 
 		script.addEvents({
 			load: load,
@@ -4629,7 +5798,10 @@ var Asset = {
 
 	css: function(source, properties){
 		return new Element('link', $merge({
-			rel: 'stylesheet', media: 'screen', type: 'text/css', href: source
+			rel: 'stylesheet',
+			media: 'screen',
+			type: 'text/css',
+			href: source
 		}, properties)).inject(document.head);
 	},
 
@@ -4690,14 +5862,28 @@ var Asset = {
 };
 
 /*
-Script: Color.js
-	Class for creating and manipulating colors in JavaScript. Supports HSB -> RGB Conversions and vice versa.
+---
 
-	License:
-		MIT-style license.
+script: Color.js
 
-	Authors:
-		Valerio Proietti
+description: Class for creating and manipulating colors in JavaScript. Supports HSB -> RGB Conversions and vice versa.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+
+requires:
+- core:1.2.4/Array
+- core:1.2.4/String
+- core:1.2.4/Number
+- core:1.2.4/Hash
+- core:1.2.4/Function
+- core:1.2.4/$util
+
+provides: [Color]
+
+...
 */
 
 var Color = new Native({
@@ -4775,15 +5961,16 @@ var $HEX = function(hex){
 Array.implement({
 
 	rgbToHsb: function(){
-		var red = this[0], green = this[1], blue = this[2];
-		var hue, saturation, brightness;
-		var max = Math.max(red, green, blue), min = Math.min(red, green, blue);
+		var red = this[0],
+				green = this[1],
+				blue = this[2],
+				hue = 0;
+		var max = Math.max(red, green, blue),
+				min = Math.min(red, green, blue);
 		var delta = max - min;
-		brightness = max / 255;
-		saturation = (max != 0) ? delta / max : 0;
-		if (saturation == 0){
-			hue = 0;
-		} else {
+		var brightness = max / 255,
+				saturation = (max != 0) ? delta / max : 0;
+		if(saturation != 0) {
 			var rr = (max - red) / delta;
 			var gr = (max - green) / delta;
 			var br = (max - blue) / delta;
@@ -4836,14 +6023,24 @@ String.implement({
 
 
 /*
-Script: Group.js
-	Class for monitoring collections of events
+---
 
-	License:
-		MIT-style license.
+script: Group.js
 
-	Authors:
-		Valerio Proietti
+description: Class for monitoring collections of events
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+
+requires:
+- core:1.2.4/Events
+- /MooTools.More
+
+provides: [Group]
+
+...
 */
 
 var Group = new Class({
@@ -4881,15 +6078,26 @@ var Group = new Class({
 
 
 /*
-Script: Hash.Cookie.js
-	Class for creating, reading, and deleting Cookies in JSON format.
+---
 
-	License:
-		MIT-style license.
+script: Hash.Cookie.js
 
-	Authors:
-		Valerio Proietti
-		Aaron Newton
+description: Class for creating, reading, and deleting Cookies in JSON format.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+- Aaron Newton
+
+requires:
+- core:1.2.4/Cookie
+- core:1.2.4/JSON
+- /MooTools.More
+
+provides: [Hash.Cookie]
+
+...
 */
 
 Hash.Cookie = new Class({
@@ -4929,14 +6137,27 @@ Hash.each(Hash.prototype, function(method, name){
 });
 
 /*
-Script: IframeShim.js
-	Defines IframeShim, a class for obscuring select lists and flash objects in IE.
+---
 
-	License:
-		MIT-style license.
+script: IframeShim.js
 
-	Authors:
-		Aaron Newton
+description: Defines IframeShim, a class for obscuring select lists and flash objects in IE.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Element.Event
+- core:1.2.4/Element.Style
+- core:1.2.4/Options Events
+- /Element.Position
+- /Class.Occlude
+
+provides: [IframeShim]
+
+...
 */
 
 var IframeShim = new Class({
@@ -4945,6 +6166,7 @@ var IframeShim = new Class({
 
 	options: {
 		className: 'iframeShim',
+		src: 'javascript:false;document.write("");',
 		display: false,
 		zIndex: null,
 		margin: 0,
@@ -4975,7 +6197,7 @@ var IframeShim = new Class({
 			zIndex = ($chk(this.options.zIndex) && zIndex > this.options.zIndex) ? this.options.zIndex : zIndex - 1;
 			if (zIndex < 0) zIndex = 1;
 			this.shim = new Element('iframe', {
-				src:'javascript:false;document.write("");',
+				src: this.options.src,
 				scrolling: 'no',
 				frameborder: 0,
 				styles: {
@@ -4991,7 +6213,7 @@ var IframeShim = new Class({
 				this[this.options.display ? 'show' : 'hide']();
 				this.fireEvent('inject');
 			}).bind(this);
-			if (Browser.Engine.trident && !IframeShim.ready) window.addEvent('load', inject);
+			if (IframeShim.ready) window.addEvent('load', inject);
 			else inject();
 		} else {
 			this.position = this.hide = this.show = this.dispose = $lambda(this);
@@ -4999,20 +6221,20 @@ var IframeShim = new Class({
 	},
 
 	position: function(){
-		if (!IframeShim.ready) return this;
-		var size = this.element.measure(function(){ return this.getSize(); });
-		if ($type(this.options.margin)){
+		if (!IframeShim.ready || !this.shim) return this;
+		var size = this.element.measure(function(){ 
+			return this.getSize(); 
+		});
+		if (this.options.margin != undefined){
 			size.x = size.x - (this.options.margin * 2);
 			size.y = size.y - (this.options.margin * 2);
 			this.options.offset.x += this.options.margin;
 			this.options.offset.y += this.options.margin;
 		}
-		if (this.shim) {
-			this.shim.set({width: size.x, height: size.y}).position({
-				relativeTo: this.element,
-				offset: this.options.offset
-			});
-		}
+		this.shim.set({width: size.x, height: size.y}).position({
+			relativeTo: this.element,
+			offset: this.options.offset
+		});
 		return this;
 	},
 
@@ -5043,14 +6265,1068 @@ window.addEvent('load', function(){
 });
 
 /*
-Script: Scroller.js
-	Class which scrolls the contents of any Element (including the window) when the mouse reaches the Element's boundaries.
+---
 
-	License:
-		MIT-style license.
+script: HtmlTable.js
 
-	Authors:
-		Valerio Proietti
+description: Builds table elements with methods to add rows.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Options
+- core:1.2.4/Events
+- /Class.Occlude
+
+provides: [HtmlTable]
+
+...
+*/
+
+var HtmlTable = new Class({
+
+	Implements: [Options, Events, Class.Occlude],
+
+	options: {
+		properties: {
+			cellpadding: 0,
+			cellspacing: 0,
+			border: 0
+		},
+		rows: [],
+		headers: [],
+		footers: []
+	},
+
+	property: 'HtmlTable',
+
+	initialize: function(){
+		var params = Array.link(arguments, {options: Object.type, table: Element.type});
+		this.setOptions(params.options);
+		this.element = params.table || new Element('table', this.options.properties);
+		if (this.occlude()) return this.occluded;
+		this.build();
+	},
+
+	build: function(){
+		this.element.store('HtmlTable', this);
+
+		this.body = document.id(this.element.tBodies[0]) || new Element('tbody').inject(this.element);
+		$$(this.body.rows);
+
+		if (this.options.headers.length) this.setHeaders(this.options.headers);
+		else this.thead = document.id(this.element.tHead);
+		if (this.thead) this.head = document.id(this.thead.rows[0]);
+
+		if (this.options.footers.length) this.setFooters(this.options.footers);
+		this.tfoot = document.id(this.element.tFoot);
+		if (this.tfoot) this.foot = document.id(this.thead.rows[0]);
+
+		this.options.rows.each(function(row){
+			this.push(row);
+		}, this);
+
+		['adopt', 'inject', 'wraps', 'grab', 'replaces', 'dispose'].each(function(method){
+				this[method] = this.element[method].bind(this.element);
+		}, this);
+	},
+
+	toElement: function(){
+		return this.element;
+	},
+
+	empty: function(){
+		this.body.empty();
+		return this;
+	},
+
+	setHeaders: function(headers){
+		this.thead = (document.id(this.element.tHead) || new Element('thead').inject(this.element, 'top')).empty();
+		this.push(headers, this.thead, 'th');
+		this.head = document.id(this.thead.rows[0]);
+		return this;
+	},
+
+	setFooters: function(footers){
+		this.tfoot = (document.id(this.element.tFoot) || new Element('tfoot').inject(this.element, 'top')).empty();
+		this.push(footers, this.tfoot);
+		this.foot = document.id(this.thead.rows[0]);
+		return this;
+	},
+
+	push: function(row, target, tag){
+		var tds = row.map(function(data){
+			var td = new Element(tag || 'td', data.properties),
+				type = data.content || data || '',
+				element = document.id(type);
+
+			if(element) td.adopt(element);
+			else td.set('html', type);
+
+			return td;
+		});
+
+		return {
+			tr: new Element('tr').inject(target || this.body).adopt(tds),
+			tds: tds
+		};
+	}
+
+});
+
+
+/*
+---
+
+script: HtmlTable.Zebra.js
+
+description: Builds a stripy table with methods to add rows.
+
+license: MIT-style license
+
+authors:
+- Harald Kirschner
+- Aaron Newton
+
+requires:
+- /HtmlTable
+- /Class.refactor
+
+provides: [HtmlTable.Zebra]
+
+...
+*/
+
+HtmlTable = Class.refactor(HtmlTable, {
+
+	options: {
+		classZebra: 'table-tr-odd',
+		zebra: true
+	},
+
+	initialize: function(){
+		this.previous.apply(this, arguments);
+		if (this.occluded) return this.occluded;
+		if (this.options.zebra) this.updateZebras();
+	},
+
+	updateZebras: function(){
+		Array.each(this.body.rows, this.zebra, this);
+	},
+
+	zebra: function(row, i){
+		return row[((i % 2) ? 'remove' : 'add')+'Class'](this.options.classZebra);
+	},
+
+	push: function(){
+		var pushed = this.previous.apply(this, arguments);
+		if (this.options.zebra) this.updateZebras();
+		return pushed;
+	}
+
+});
+
+/*
+---
+
+script: HtmlTable.Sort.js
+
+description: Builds a stripy, sortable table with methods to add rows.
+
+license: MIT-style license
+
+authors:
+- Harald Kirschner
+- Aaron Newton
+
+requires:
+- core:1.2.4/Hash
+- /HtmlTable
+- /Class.refactor
+- /Element.Delegation
+- /Date
+
+provides: [HtmlTable.Sort]
+
+...
+*/
+
+HtmlTable = Class.refactor(HtmlTable, {
+
+	options: {/*
+		onSort: $empty, */
+		sortIndex: 0,
+		sortReverse: false,
+		parsers: [],
+		defaultParser: 'string',
+		classSortable: 'table-sortable',
+		classHeadSort: 'table-th-sort',
+		classHeadSortRev: 'table-th-sort-rev',
+		classNoSort: 'table-th-nosort',
+		classGroupHead: 'table-tr-group-head',
+		classGroup: 'table-tr-group',
+		classCellSort: 'table-td-sort',
+		classSortSpan: 'table-th-sort-span',
+		sortable: false
+	},
+
+	initialize: function () {
+		this.previous.apply(this, arguments);
+		if (this.occluded) return this.occluded;
+		this.sorted = {index: null, dir: 1};
+		this.bound = {
+			headClick: this.headClick.bind(this)
+		};
+		this.sortSpans = new Elements();
+		if (this.options.sortable) {
+			this.enableSort();
+			if (this.options.sortIndex != null) this.sort(this.options.sortIndex, this.options.sortReverse);
+		}
+	},
+
+	attachSorts: function(attach){
+		this.element[$pick(attach, true) ? 'addEvent' : 'removeEvent']('click:relay(th)', this.bound.headClick);
+	},
+
+	setHeaders: function(){
+		this.previous.apply(this, arguments);
+		if (this.sortEnabled) this.detectParsers();
+	},
+	
+	detectParsers: function(force){
+		if (!this.head) return;
+		var parsers = this.options.parsers, 
+				rows = this.body.rows;
+
+		// auto-detect
+		this.parsers = $$(this.head.cells).map(function(cell, index) {
+			if (!force && (cell.hasClass(this.options.classNoSort) || cell.retrieve('htmltable-sort'))) return cell.retrieve('htmltable-sort');
+			var sortSpan = new Element('span', {'html': '&#160;', 'class': this.options.classSortSpan}).inject(cell, 'top');
+			this.sortSpans.push(sortSpan);
+
+			var parser = parsers[index], 
+					cancel;
+			switch ($type(parser)) {
+				case 'function': parser = {convert: parser}; cancel = true; break;
+				case 'string': parser = parser; cancel = true; break;
+			}
+			if (!cancel) {
+				HtmlTable.Parsers.some(function(current) {
+					var match = current.match;
+					if (!match) return false;
+					if (Browser.Engine.trident) return false;
+					for (var i = 0, j = rows.length; i < j; i++) {
+						var text = rows[i].cells[index].get('html').clean();
+						if (text && match.test(text)) {
+							parser = current;
+							return true;
+						}
+					}
+				});
+			}
+
+			if (!parser) parser = this.options.defaultParser;
+			cell.store('htmltable-parser', parser);
+			return parser;
+		}, this);
+	},
+
+	headClick: function(event, el) {
+		if (!this.head) return;
+		var index = Array.indexOf(this.head.cells, el);
+		this.sort(index);
+		return false;
+	},
+
+	sort: function(index, reverse, pre) {
+		if (!this.head) return;
+		pre = !!(pre);
+		var classCellSort = this.options.classCellSort;
+		var classGroup = this.options.classGroup, 
+				classGroupHead = this.options.classGroupHead;
+
+		if (!pre) {
+			if (index != null) {
+				if (this.sorted.index == index) {
+					this.sorted.reverse = !(this.sorted.reverse);
+				} else {
+					if (this.sorted.index != null) {
+						this.sorted.reverse = false;
+						this.head.cells[this.sorted.index].removeClass(this.options.classHeadSort).removeClass(this.options.classHeadSortRev);
+					} else {
+						this.sorted.reverse = true;
+					}
+					this.sorted.index = index;
+				}
+			} else {
+				index = this.sorted.index;
+			}
+
+			if (reverse != null) this.sorted.reverse = reverse;
+
+			var head = document.id(this.head.cells[index]);
+			if (head) {
+				head.addClass(this.options.classHeadSort);
+				if (this.sorted.reverse) head.addClass(this.options.classHeadSortRev);
+				else head.removeClass(this.options.classHeadSortRev);
+			}
+
+			this.body.getElements('td').removeClass(this.options.classCellSort);
+		}
+
+		var parser = this.parsers[index];
+		if ($type(parser) == 'string') parser = HtmlTable.Parsers.get(parser);
+		if (!parser) return;
+
+		if (!Browser.Engine.trident) {
+			var rel = this.body.getParent();
+			this.body.dispose();
+		}
+
+		var data = Array.map(this.body.rows, function(row, i) {
+			var value = parser.convert.call(document.id(row.cells[index]));
+
+			return {
+				position: i,
+				value: value,
+				toString:  function() {
+					return value.toString();
+				}
+			};
+		}, this);
+		data.reverse(true);
+
+		data.sort(function(a, b){
+			if (a.value === b.value) return 0;
+			return a.value > b.value ? 1 : -1;
+		});
+
+		if (!this.sorted.reverse) data.reverse(true);
+
+		var i = data.length, body = this.body;
+		var j, position, entry, group;
+
+		while (i) {
+			var item = data[--i];
+			position = item.position;
+			var row = body.rows[position];
+			if (row.disabled) continue;
+
+			if (!pre) {
+				if (group === item.value) {
+					row.removeClass(classGroupHead).addClass(classGroup);
+				} else {
+					group = item.value;
+					row.removeClass(classGroup).addClass(classGroupHead);
+				}
+				if (this.zebra) this.zebra(row, i);
+
+				row.cells[index].addClass(classCellSort);
+			}
+
+			body.appendChild(row);
+			for (j = 0; j < i; j++) {
+				if (data[j].position > position) data[j].position--;
+			}
+		};
+		data = null;
+		if (rel) rel.grab(body);
+
+		return this.fireEvent('sort', [body, index]);
+	},
+
+	reSort: function(){
+		if (this.sortEnabled) this.sort.call(this, this.sorted.index, this.sorted.reverse);
+		return this;
+	},
+
+	enableSort: function(){
+		this.element.addClass(this.options.classSortable);
+		this.attachSorts(true);
+		this.detectParsers();
+		this.sortEnabled = true;
+		return this;
+	},
+
+	disableSort: function(){
+		this.element.remove(this.options.classSortable);
+		this.attachSorts(false);
+		this.sortSpans.each(function(span) { span.destroy(); });
+		this.sortSpans.empty();
+		this.sortEnabled = false;
+		return this;
+	}
+
+});
+
+HtmlTable.Parsers = new Hash({
+
+	'date': {
+		match: /^\d{2}[-\/ ]\d{2}[-\/ ]\d{2,4}$/,
+		convert: function() {
+			return Date.parse(this.get('text').format('db'));
+		},
+		type: 'date'
+	},
+	'input-checked': {
+		match: / type="(radio|checkbox)" /,
+		convert: function() {
+			return this.getElement('input').checked;
+		}
+	},
+	'input-value': {
+		match: /<input/,
+		convert: function() {
+			return this.getElement('input').value;
+		}
+	},
+	'number': {
+		match: /^\d+[^\d.,]*$/,
+		convert: function() {
+			return this.get('text').toInt();
+		},
+		number: true
+	},
+	'numberLax': {
+		match: /^[^\d]+\d+$/,
+		convert: function() {
+			return this.get('text').replace(/[^-?^0-9]/, '').toInt();
+		},
+		number: true
+	},
+	'float': {
+		match: /^[\d]+\.[\d]+/,
+		convert: function() {
+			return this.get('text').replace(/[^-?^\d.]/, '').toFloat();
+		},
+		number: true
+	},
+	'floatLax': {
+		match: /^[^\d]+[\d]+\.[\d]+$/,
+		convert: function() {
+			return this.get('text').replace(/[^-?^\d.]/, '');
+		},
+		number: true
+	},
+	'string': {
+		match: null,
+		convert: function() {
+			return this.get('text');
+		}
+	},
+	'title': {
+		match: null,
+		convert: function() {
+			return this.title;
+		}
+	}
+
+});
+
+
+/*
+---
+
+script: HtmlTable.Select.js
+
+description: Builds a stripy, sortable table with methods to add rows. Rows can be selected with the mouse or keyboard navigation.
+
+license: MIT-style license
+
+authors:
+- Harald Kirschner
+- Aaron Newton
+
+requires:
+- /Keyboard
+- /HtmlTable
+- /Class.refactor
+- /Element.Delegation
+
+provides: [HtmlTable.Select]
+
+...
+*/
+
+HtmlTable = Class.refactor(HtmlTable, {
+
+	options: {
+		/*onRowSelect: $empty, 
+		onRowUnselect: $empty,*/
+		useKeyboard: true,
+		classRowSelected: 'table-tr-selected',
+		classRowHovered: 'table-tr-hovered',
+		classSelectable: 'table-selectable',
+		allowMultiSelect: true,
+		selectable: false
+	},
+
+	initialize: function(){
+		this.previous.apply(this, arguments);
+		if (this.occluded) return this.occluded;
+		this.selectedRows = new Elements();
+		this.bound = {
+			mouseleave: this.mouseleave.bind(this),
+			focusRow: this.focusRow.bind(this)
+		};
+		if (this.options.selectable) this.enableSelect();
+	},
+
+	enableSelect: function(){
+		this.selectEnabled = true;
+		this.attachSelects();
+		this.element.addClass(this.options.classSelectable);
+	},
+
+	disableSelect: function(){
+		this.selectEnabled = false;
+		this.attach(false);
+		this.element.removeClass(this.options.classSelectable);
+	},
+
+	attachSelects: function(attach){
+		attach = $pick(attach, true);
+		var method = attach ? 'addEvents' : 'removeEvents';
+		this.element[method]({
+			mouseleave: this.bound.mouseleave
+		});
+		this.body[method]({
+			'click:relay(tr)': this.bound.focusRow
+		});
+		if (this.options.useKeyboard || this.keyboard){
+			if (!this.keyboard) this.keyboard = new Keyboard({
+				events: {
+					down: function(e) {
+						e.preventDefault();
+						this.shiftFocus(1);
+					}.bind(this),
+					up: function(e) {
+						e.preventDefault();
+						this.shiftFocus(-1);
+					}.bind(this),
+					enter: function(e) {
+						e.preventDefault();
+						if (this.hover) this.focusRow(this.hover);
+					}.bind(this)
+				},
+				active: true
+			});
+			this.keyboard[attach ? 'activate' : 'deactivate']();
+		}
+		this.updateSelects();
+	},
+
+	mouseleave: function(){
+		if (this.hover) this.leaveRow(this.hover);
+	},
+
+	focus: function(){
+		if (this.keyboard) this.keyboard.activate();
+	},
+
+	blur: function(){
+		if (this.keyboard) this.keyboard.deactivate();
+	},
+
+	push: function(){
+		var ret = this.previous.apply(this, arguments);
+		this.updateSelects();
+		return ret;
+	},
+
+	updateSelects: function(){
+		Array.each(this.body.rows, function(row){
+			var binders = row.retrieve('binders');
+			if ((binders && this.selectEnabled) || (!binders && !this.selectEnabled)) return;
+			if (!binders){
+				binders = {
+					mouseenter: this.enterRow.bind(this, [row]),
+					mouseleave: this.leaveRow.bind(this, [row])
+				};
+				row.store('binders', binders).addEvents(binders);
+			} else {
+				row.removeEvents(binders);
+			}
+		}, this);
+	},
+
+	enterRow: function(row){
+		if (this.hover) this.hover = this.leaveRow(this.hover);
+		this.hover = row.addClass(this.options.classRowHovered);
+	},
+
+	shiftFocus: function(offset){
+		if (!this.hover) return this.enterRow(this.body.rows[0]);
+		var to = Array.indexOf(this.body.rows, this.hover) + offset;
+		if (to < 0) to = 0;
+		if (to >= this.body.rows.length) to = this.body.rows.length - 1;
+		if (this.hover == this.body.rows[to]) return this;
+		this.enterRow(this.body.rows[to]);
+	},
+
+	leaveRow: function(row){
+		row.removeClass(this.options.classRowHovered);
+	},
+
+	focusRow: function(){
+		var row = arguments[1] || arguments[0]; //delegation passes the event first
+		if (!this.body.getChildren().contains(row)) return;
+		var unfocus = function(row){
+			this.selectedRows.erase(row);
+			row.removeClass(this.options.classRowSelected);
+			this.fireEvent('rowUnfocus', [row, this.selectedRows]);
+		}.bind(this);
+		if (!this.options.allowMultiSelect) this.selectedRows.each(unfocus);
+		if (!this.selectedRows.contains(row)) {
+			this.selectedRows.push(row);
+			row.addClass(this.options.classRowSelected);
+			this.fireEvent('rowFocus', [row, this.selectedRows]);
+		} else {
+			unfocus(row);
+		}
+		return false;
+	},
+
+	selectAll: function(status){
+		status = $pick(status, true);
+		if (!this.options.allowMultiSelect && status) return;
+		if (!status) this.selectedRows.removeClass(this.options.classRowSelected).empty();
+		else this.selectedRows.combine(this.body.rows).addClass(this.options.classRowSelected);
+		return this;
+	},
+
+	selectNone: function(){
+		return this.selectAll(false);
+	}
+
+});
+
+/*
+---
+
+script: Keyboard.js
+
+description: KeyboardEvents used to intercept events on a class for keyboard and format modifiers in a specific order so as to make alt+shift+c the same as shift+alt+c.
+
+license: MIT-style license
+
+authors:
+- Perrin Westrich
+- Aaron Newton
+- Scott Kyle
+
+requires:
+- core:1.2.4/Events
+- core:1.2.4/Options
+- core:1.2.4/Element.Event
+- /Log
+
+provides: [Keyboard]
+
+...
+*/
+
+(function(){
+
+	var parsed = {};
+	var modifiers = ['shift', 'control', 'alt', 'meta'];
+	var regex = /^(?:shift|control|ctrl|alt|meta)$/;
+	
+	var parse = function(type, eventType){
+		type = type.toLowerCase().replace(/^(keyup|keydown):/, function($0, $1){
+			eventType = $1;
+			return '';
+		});
+		
+		if (!parsed[type]){
+			var key = '', mods = {};
+			type.split('+').each(function(part){
+				if (regex.test(part)) mods[part] = true;
+				else key = part;
+			});
+		
+			mods.control = mods.control || mods.ctrl; // allow both control and ctrl
+			var match = '';
+			modifiers.each(function(mod){
+				if (mods[mod]) match += mod + '+';
+			});
+			
+			parsed[type] = match + key;
+		}
+		
+		return eventType + ':' + parsed[type];
+	};
+
+	this.Keyboard = new Class({
+
+		Extends: Events,
+
+		Implements: [Options, Log],
+
+		options: {
+			/*
+			onActivate: $empty,
+			onDeactivate: $empty,
+			*/
+			defaultEventType: 'keydown',
+			active: false,
+			events: {}
+		},
+
+		initialize: function(options){
+			this.setOptions(options);
+			//if this is the root manager, nothing manages it
+			if (Keyboard.manager) Keyboard.manager.manage(this);
+			this.setup();
+		},
+
+		setup: function(){
+			this.addEvents(this.options.events);
+			if (this.options.active) this.activate();
+		},
+
+		handle: function(event, type){
+			//Keyboard.stop(event) prevents key propagation
+			if (!this.active || event.preventKeyboardPropagation) return;
+			
+			var bubbles = !!this.manager;
+			if (bubbles && this.activeKB){
+				this.activeKB.handle(event, type);
+				if (event.preventKeyboardPropagation) return;
+			}
+			this.fireEvent(type, event);
+			
+			if (!bubbles && this.activeKB) this.activeKB.handle(event, type);
+		},
+
+		addEvent: function(type, fn, internal) {
+			return this.parent(parse(type, this.options.defaultEventType), fn, internal);
+		},
+
+		removeEvent: function(type, fn) {
+			return this.parent(parse(type, this.options.defaultEventType), fn);
+		},
+
+		activate: function(){
+			this.active = true;
+			return this.enable();
+		},
+
+		deactivate: function(){
+			this.active = false;
+			return this.fireEvent('deactivate');
+		},
+
+		toggleActive: function(){
+			return this[this.active ? 'deactivate' : 'activate']();
+		},
+
+		enable: function(instance){
+			if (instance) {
+				//if we're stealing focus, store the last keyboard to have it so the relenquish command works
+				if (instance != this.activeKB) this.previous = this.activeKB;
+				//if we're enabling a child, assign it so that events are now passed to it
+				this.activeKB = instance.fireEvent('activate');
+			} else if (this.manager) {
+				//else we're enabling ourselves, we must ask our parent to do it for us
+				this.manager.enable(this);
+			}
+			return this;
+		},
+
+		relenquish: function(){
+			if (this.previous) this.enable(this.previous);
+		},
+
+		//management logic
+		manage: function(instance) {
+			if (instance.manager) instance.manager.drop(instance);
+			this.instances.push(instance);
+			instance.manager = this;
+			if (!this.activeKB) this.enable(instance);
+			else this._disable(instance);
+		},
+
+		_disable: function(instance) {
+			if (this.activeKB == instance) this.activeKB = null;
+		},
+
+		drop: function(instance) {
+			this._disable(instance);
+			this.instances.erase(instance);
+		},
+
+		instances: [],
+
+		trace: function(){
+			this.enableLog();
+			var item = this;
+			this.log('the following items have focus: ');
+			while (item) {
+				this.log(document.id(item.widget) || item.widget || item, 'active: ' + this.active);
+				item = item.activeKB;
+			}
+		}
+
+	});
+
+	Keyboard.stop = function(event) {
+		event.preventKeyboardPropagation = true;
+	};
+
+	Keyboard.manager = new this.Keyboard({
+		active: true
+	});
+	
+	Keyboard.trace = function(){
+		Keyboard.manager.trace();
+	};
+	
+	var handler = function(event){
+		var mods = '';
+		modifiers.each(function(mod){
+			if (event[mod]) mods += mod + '+';
+		});
+		Keyboard.manager.handle(event, event.type + ':' + mods + event.key);
+	};
+	
+	document.addEvents({
+		'keyup': handler,
+		'keydown': handler
+	});
+
+	Event.Keys.extend({
+		'pageup': 33,
+		'pagedown': 34,
+		'end': 35,
+		'home': 36,
+		'capslock': 20,
+		'numlock': 144,
+		'scrolllock': 145
+	});
+
+})();
+
+
+/*
+---
+
+script: Mask.js
+
+description: Creates a mask element to cover another.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Options
+- core:1.2.4/Events
+- core:1.2.4/Element.Event
+- /Class.Binds
+- /Element.Position
+- /IframeShim
+
+provides: [Mask]
+
+...
+*/
+
+var Mask = new Class({
+
+	Implements: [Options, Events],
+
+	Binds: ['resize'],
+
+	options: {
+		// onShow: $empty,
+		// onHide: $empty,
+		// onDestroy: $empty,
+		// onClick: $empty,
+		//inject: {
+		//  where: 'after',
+		//  target: null,
+		//},
+		// hideOnClick: false,
+		// id: null,
+		// destroyOnHide: false,
+		style: {},
+		'class': 'mask',
+		maskMargins: false,
+		useIframeShim: true
+	},
+
+	initialize: function(target, options){
+		this.target = document.id(target) || document.body;
+		this.target.store('mask', this);
+		this.setOptions(options);
+		this.render();
+		this.inject();
+	},
+	
+	render: function() {
+		this.element = new Element('div', {
+			'class': this.options['class'],
+			id: this.options.id || 'mask-' + $time(),
+			styles: $merge(this.options.style, {
+				display: 'none'
+			}),
+			events: {
+				click: function(){
+					this.fireEvent('click');
+					if (this.options.hideOnClick) this.hide();
+				}.bind(this)
+			}
+		});
+		this.hidden = true;
+	},
+
+	toElement: function(){
+		return this.element;
+	},
+
+	inject: function(target, where){
+		where = where || this.options.inject ? this.options.inject.where : '' || this.target == document.body ? 'inside' : 'after';
+		target = target || this.options.inject ? this.options.inject.target : '' || this.target;
+		this.element.inject(target, where);
+		if (this.options.useIframeShim) {
+			this.shim = new IframeShim(this.element);
+			this.addEvents({
+				show: this.shim.show.bind(this.shim),
+				hide: this.shim.hide.bind(this.shim),
+				destroy: this.shim.destroy.bind(this.shim)
+			});
+		}
+	},
+
+	position: function(){
+		this.resize(this.options.width, this.options.height);
+		this.element.position({
+			relativeTo: this.target,
+			position: 'topLeft',
+			ignoreMargins: !this.options.maskMargins,
+			ignoreScroll: this.target == document.body
+		});
+		return this;
+	},
+
+	resize: function(x, y){
+		var opt = {
+			styles: ['padding', 'border']
+		};
+		if (this.options.maskMargins) opt.styles.push('margin');
+		var dim = this.target.getComputedSize(opt);
+		if (this.target == document.body) {
+			var win = window.getSize();
+			if (dim.totalHeight < win.y) dim.totalHeight = win.y;
+			if (dim.totalWidth < win.x) dim.totalWidth = win.x;
+		}
+		this.element.setStyles({
+			width: $pick(x, dim.totalWidth, dim.x),
+			height: $pick(y, dim.totalHeight, dim.y)
+		});
+		return this;
+	},
+
+	show: function(){
+		if (!this.hidden) return this;
+		this.target.addEvent('resize', this.resize);
+		if (this.target != document.body) document.id(document.body).addEvent('resize', this.resize);
+		this.position();
+		this.showMask.apply(this, arguments);
+		return this;
+	},
+
+	showMask: function(){
+		this.element.setStyle('display', 'block');
+		this.hidden = false;
+		this.fireEvent('show');
+	},
+
+	hide: function(){
+		if (this.hidden) return this;
+		this.target.removeEvent('resize', this.resize);
+		this.hideMask.apply(this, arguments);
+		if (this.options.destroyOnHide) return this.destroy();
+		return this;
+	},
+
+	hideMask: function(){
+		this.element.setStyle('display', 'none');
+		this.hidden = true;
+		this.fireEvent('hide');
+	},
+
+	toggle: function(){
+		this[this.hidden ? 'show' : 'hide']();
+	},
+
+	destroy: function(){
+		this.hide();
+		this.element.destroy();
+		this.fireEvent('destroy');
+		this.target.eliminate('mask');
+	}
+
+});
+
+Element.Properties.mask = {
+
+	set: function(options){
+		var mask = this.retrieve('mask');
+		return this.eliminate('mask').store('mask:options', options);
+	},
+
+	get: function(options){
+		if (options || !this.retrieve('mask')){
+			if (this.retrieve('mask')) this.retrieve('mask').destroy();
+			if (options || !this.retrieve('mask:options')) this.set('mask', options);
+			this.store('mask', new Mask(this, this.retrieve('mask:options')));
+		}
+		return this.retrieve('mask');
+	}
+
+};
+
+Element.implement({
+
+	mask: function(options){
+		this.get('mask', options).show();
+		return this;
+	},
+
+	unmask: function(){
+		this.get('mask').hide();
+		return this;
+	}
+
+});
+
+/*
+---
+
+script: Scroller.js
+
+description: Class which scrolls the contents of any Element (including the window) when the mouse reaches the Element's boundaries.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+
+requires:
+- core:1.2.4/Events
+- core:1.2.4/Options
+- core:1.2.4/Element.Event
+- core:1.2.4/Element.Dimensions
+
+provides: [Scroller]
+
+...
 */
 
 var Scroller = new Class({
@@ -5080,16 +7356,17 @@ var Scroller = new Class({
 
 	start: function(){
 		this.listener.addEvents({
-			mouseenter: this.bound.attach,
-			mouseleave: this.bound.detach
+			mouseover: this.bound.attach,
+			mouseout: this.bound.detach
 		});
 	},
 
 	stop: function(){
 		this.listener.removeEvents({
-			mouseenter: this.bound.attach,
-			mouseleave: this.bound.detach
+			mouseover: this.bound.attach,
+			mouseout: this.bound.detach
 		});
+		this.detach();
 		this.timer = $clear(this.timer);
 	},
 
@@ -5125,55 +7402,78 @@ var Scroller = new Class({
 });
 
 /*
-Script: Tips.js
-	Class for creating nice tips that follow the mouse cursor when hovering an element.
+---
 
-	License:
-		MIT-style license.
+script: Tips.js
 
-	Authors:
-		Valerio Proietti
-		Christoph Pojer
+description: Class for creating nice tips that follow the mouse cursor when hovering an element.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+- Christoph Pojer
+
+requires:
+- core:1.2.4/Options
+- core:1.2.4/Events
+- core:1.2.4/Element.Event
+- core:1.2.4/Element.Style
+- core:1.2.4/Element.Dimensions
+- /MooTools.More
+
+provides: [Tips]
+
+...
 */
 
-var Tips = new Class({
+(function(){
+
+var read = function(option, element){
+	return (option) ? ($type(option) == 'function' ? option(element) : element.get(option)) : '';
+};
+
+this.Tips = new Class({
 
 	Implements: [Events, Options],
 
 	options: {
-		onShow: function(tip){
-			tip.setStyle('visibility', 'visible');
+		/*
+		onAttach: $empty(element),
+		onDetach: $empty(element),
+		*/
+		onShow: function(){
+			this.tip.setStyle('display', 'block');
 		},
-		onHide: function(tip){
-			tip.setStyle('visibility', 'hidden');
+		onHide: function(){
+			this.tip.setStyle('display', 'none');
 		},
 		title: 'title',
-		text: function(el){
-			return el.get('rel') || el.get('href');
+		text: function(element){
+			return element.get('rel') || element.get('href');
 		},
 		showDelay: 100,
 		hideDelay: 100,
-		className: null,
+		className: 'tip-wrap',
 		offset: {x: 16, y: 16},
 		fixed: false
 	},
 
 	initialize: function(){
 		var params = Array.link(arguments, {options: Object.type, elements: $defined});
-		if (params.options && params.options.offsets) params.options.offset = params.options.offsets;
 		this.setOptions(params.options);
-		this.container = new Element('div', {'class': 'tip'});
-		this.tip = this.getTip();
+		document.id(this);
 		
 		if (params.elements) this.attach(params.elements);
 	},
 
-	getTip: function(){
-		return new Element('div', {
+	toElement: function(){
+		if (this.tip) return this.tip;
+		
+		this.container = new Element('div', {'class': 'tip'});
+		return this.tip = new Element('div', {
 			'class': this.options.className,
 			styles: {
-				visibility: 'hidden',
-				display: 'none',
 				position: 'absolute',
 				top: 0,
 				left: 0
@@ -5186,20 +7486,22 @@ var Tips = new Class({
 	},
 
 	attach: function(elements){
-		var read = function(option, element){
-			if (option == null) return '';
-			return $type(option) == 'function' ? option(element) : element.get(option);
-		};
 		$$(elements).each(function(element){
-			var title = read(this.options.title, element);
+			var title = read(this.options.title, element),
+				text = read(this.options.text, element);
+			
 			element.erase('title').store('tip:native', title).retrieve('tip:title', title);
-			element.retrieve('tip:text', read(this.options.text, element));
+			element.retrieve('tip:text', text);
+			this.fireEvent('attach', [element]);
 			
 			var events = ['enter', 'leave'];
 			if (!this.options.fixed) events.push('move');
 			
 			events.each(function(value){
-				element.addEvent('mouse' + value, element.retrieve('tip:' + value, this['element' + value.capitalize()].bindWithEvent(this, element)));
+				var event = element.retrieve('tip:' + value);
+				if (!event) event = this['element' + value.capitalize()].bindWithEvent(this, element);
+				
+				element.store('tip:' + value, event).addEvent('mouse' + value, event);
 			}, this);
 		}, this);
 		
@@ -5209,12 +7511,12 @@ var Tips = new Class({
 	detach: function(elements){
 		$$(elements).each(function(element){
 			['enter', 'leave', 'move'].each(function(value){
-				element.removeEvent('mouse' + value, element.retrieve('tip:' + value) || $empty);
+				element.removeEvent('mouse' + value, element.retrieve('tip:' + value)).eliminate('tip:' + value);
 			});
 			
-			element.eliminate('tip:enter').eliminate('tip:leave').eliminate('tip:move');
+			this.fireEvent('detach', [element]);
 			
-			if ($type(this.options.title) == 'string' && this.options.title == 'title'){
+			if (this.options.title == 'title'){ // This is necessary to check if we can revert the title
 				var original = element.retrieve('tip:native');
 				if (original) element.set('title', original);
 			}
@@ -5224,29 +7526,33 @@ var Tips = new Class({
 	},
 
 	elementEnter: function(event, element){
-		$A(this.container.childNodes).each(Element.dispose);
+		this.container.empty();
 		
 		['title', 'text'].each(function(value){
 			var content = element.retrieve('tip:' + value);
-			if (!content) return;
-			
-			this[value + 'Element'] = new Element('div', {'class': 'tip-' + value}).inject(this.container);
-			this.fill(this[value + 'Element'], content);
+			if (content) this.fill(new Element('div', {'class': 'tip-' + value}).inject(this.container), content);
 		}, this);
 		
-		this.timer = $clear(this.timer);
+		$clear(this.timer);
 		this.timer = this.show.delay(this.options.showDelay, this, element);
-		this.tip.setStyle('display', 'block');
-		this.position((!this.options.fixed) ? event : {page: element.getPosition()});
+		this.position((this.options.fixed) ? {page: element.getPosition()} : event);
 	},
 
 	elementLeave: function(event, element){
 		$clear(this.timer);
-		this.tip.setStyle('display', 'none');
 		this.timer = this.hide.delay(this.options.hideDelay, this, element);
+		this.fireForParent(event, element);
 	},
 
-	elementMove: function(event){
+	fireForParent: function(event, element){
+		if (!element) return;
+		parentNode = element.getParent();
+		if (parentNode == document.body) return;
+		if (parentNode.retrieve('tip:enter')) parentNode.fireEvent('mouseenter', event);
+		else this.fireForParent(parentNode, event);
+	},
+
+	elementMove: function(event, element){
 		this.position(event);
 	},
 
@@ -5269,26 +7575,236 @@ var Tips = new Class({
 		else element.adopt(contents);
 	},
 
-	show: function(el){
-		this.fireEvent('show', [this.tip, el]);
+	show: function(element){
+		this.fireEvent('show', [this.tip, element]);
 	},
 
-	hide: function(el){
-		this.fireEvent('hide', [this.tip, el]);
+	hide: function(element){
+		this.fireEvent('hide', [this.tip, element]);
+	}
+
+});
+
+})();
+
+/*
+---
+
+script: Spinner.js
+
+description: Adds a semi-transparent overlay over a dom element with a spinnin ajax icon.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Fx.Tween
+- /Class.refactor
+- /Mask
+
+provides: [Spinner]
+
+...
+*/
+
+var Spinner = new Class({
+
+	Extends: Mask,
+
+	options: {
+		/*message: false,*/
+		'class':'spinner',
+		containerPosition: {},
+		content: {
+			'class':'spinner-content'
+		},
+		messageContainer: {
+			'class':'spinner-msg'
+		},
+		img: {
+			'class':'spinner-img'
+		},
+		fxOptions: {
+			link: 'chain'
+		}
+	},
+
+	initialize: function(){
+		this.parent.apply(this, arguments);
+		this.target.store('spinner', this);
+
+		//add this to events for when noFx is true; parent methods handle hide/show
+		var deactivate = function(){ this.active = false; }.bind(this);
+		this.addEvents({
+			hide: deactivate,
+			show: deactivate
+		});
+	},
+
+	render: function(){
+		this.parent();
+		this.element.set('id', this.options.id || 'spinner-'+$time());
+		this.content = document.id(this.options.content) || new Element('div', this.options.content);
+		this.content.inject(this.element);
+		if (this.options.message) {
+			this.msg = document.id(this.options.message) || new Element('p', this.options.messageContainer).appendText(this.options.message);
+			this.msg.inject(this.content);
+		}
+		if (this.options.img) {
+			this.img = document.id(this.options.img) || new Element('div', this.options.img);
+			this.img.inject(this.content);
+		}
+		this.element.set('tween', this.options.fxOptions);
+	},
+
+	show: function(noFx){
+		if (this.active) return this.chain(this.show.bind(this));
+		if (!this.hidden) {
+			this.callChain.delay(20, this);
+			return this;
+		}
+		this.active = true;
+		return this.parent(noFx);
+	},
+
+	showMask: function(noFx){
+		var pos = function(){
+			this.content.position($merge({
+				relativeTo: this.element
+			}, this.options.containerPosition));
+		}.bind(this);
+		if (noFx) {
+			this.parent();
+			pos();
+		} else {
+			this.element.setStyles({
+				display: 'block',
+				opacity: 0
+			}).tween('opacity', this.options.style.opacity || 0.9);
+			pos();
+			this.hidden = false;
+			this.fireEvent('show');
+			this.callChain();
+		}
+	},
+
+	hide: function(noFx){
+		if (this.active) return this.chain(this.hide.bind(this));
+		if (this.hidden) {
+			this.callChain.delay(20, this);
+			return this;
+		}
+		this.active = true;
+		return this.parent(noFx);
+	},
+
+	hideMask: function(noFx){
+		if (noFx) return this.parent();
+		this.element.tween('opacity', 0).get('tween').chain(function(){
+			this.element.setStyle('display', 'none');
+			this.hidden = true;
+			this.fireEvent('hide');
+			this.callChain();
+		}.bind(this));
+	},
+
+	destroy: function(){
+		this.content.destroy();
+		this.parent();
+		this.target.eliminate('spinner');
+	}
+
+});
+
+Spinner.implement(new Chain);
+
+if (window.Request) {
+	Request = Class.refactor(Request, {
+		
+		options: {
+			useSpinner: false,
+			spinnerOptions: {},
+			spinnerTarget: false
+		},
+		
+		initialize: function(options){
+			this._send = this.send;
+			this.send = function(options){
+				if (this.spinner) this.spinner.chain(this._send.bind(this, options)).show();
+				else this._send(options);
+				return this;
+			};
+			this.previous(options);
+			var update = document.id(this.options.spinnerTarget) || document.id(this.options.update);
+			if (this.options.useSpinner && update) {
+				this.spinner = update.get('spinner', this.options.spinnerOptions);
+				['onComplete', 'onException', 'onCancel'].each(function(event){
+					this.addEvent(event, this.spinner.hide.bind(this.spinner));
+				}, this);
+			}
+		},
+		
+		getSpinner: function(){
+			return this.spinner;
+		}
+		
+	});
+}
+
+Element.Properties.spinner = {
+
+	set: function(options){
+		var spinner = this.retrieve('spinner');
+		return this.eliminate('spinner').store('spinner:options', options);
+	},
+
+	get: function(options){
+		if (options || !this.retrieve('spinner')){
+			if (this.retrieve('spinner')) this.retrieve('spinner').destroy();
+			if (options || !this.retrieve('spinner:options')) this.set('spinner', options);
+			new Spinner(this, this.retrieve('spinner:options'));
+		}
+		return this.retrieve('spinner');
+	}
+
+};
+
+Element.implement({
+
+	spin: function(options){
+		this.get('spinner', options).show();
+		return this;
+	},
+
+	unspin: function(){
+		var opt = Array.link(arguments, {options: Object.type, callback: Function.type});
+		this.get('spinner', opt.options).hide(opt.callback);
+		return this;
 	}
 
 });
 
 /*
-Script: Date.English.US.js
-	Date messages for US English.
+---
 
-	License:
-		MIT-style license.
+script: Date.English.US.js
 
-	Authors:
-		Aaron Newton
+description: Date messages for US English.
 
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- /Lang
+- /Date
+
+provides: [Date.English.US]
+
+...
 */
 
 MooTools.lang.set('en-US', 'Date', {
@@ -5315,29 +7831,51 @@ MooTools.lang.set('en-US', 'Date', {
 	hoursAgo: 'about {delta} hours ago',
 	dayAgo: '1 day ago',
 	daysAgo: '{delta} days ago',
+	weekAgo: '1 week ago',
+	weeksAgo: '{delta} weeks ago',
+	monthAgo: '1 month ago',
+	monthsAgo: '{delta} months ago',
+	yearAgo: '1 year ago',
+	yearsAgo: '{delta} years ago',
 	lessThanMinuteUntil: 'less than a minute from now',
 	minuteUntil: 'about a minute from now',
 	minutesUntil: '{delta} minutes from now',
 	hourUntil: 'about an hour from now',
 	hoursUntil: 'about {delta} hours from now',
 	dayUntil: '1 day from now',
-	daysUntil: '{delta} days from now'
+	daysUntil: '{delta} days from now',
+	weekUntil: '1 week from now',
+	weeksUntil: '{delta} weeks from now',
+	monthUntil: '1 month from now',
+	monthsUntil: '{delta} months from now',
+	yearUntil: '1 year from now',
+	yearsUntil: '{delta} years from now'
 
 });
 
+
 /*
-Script: FormValidator.English.js
-	Date messages for English.
+---
 
-	License:
-		MIT-style license.
+script: Form.Validator.English.js
 
-	Authors:
-		Aaron Newton
+description: Date messages for English.
 
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- /Lang
+- /Form.Validator
+
+provides: [Form.Validator.English]
+
+...
 */
 
-MooTools.lang.set('en-US', 'FormValidator', {
+MooTools.lang.set('en-US', 'Form.Validator', {
 
 	required:'This field is required.',
 	minLength:'Please enter at least {minLength} characters (you entered {length} characters).',
@@ -5356,7 +7894,7 @@ MooTools.lang.set('en-US', 'FormValidator', {
 	errorPrefix: 'Error: ',
 	warningPrefix: 'Warning: ',
 
-	//FormValidator.Extras
+	//Form.Validator.Extras
 
 	noSpace: 'There can be no spaces in this input.',
 	reqChkByNode: 'No items are selected.',
@@ -5369,6 +7907,7 @@ MooTools.lang.set('en-US', 'FormValidator', {
 	afterDate: 'The date should be the same or after {label}.',
 	beforeDate: 'The date should be the same or before {label}.',
 	startMonth: 'Please select a start month',
-	sameMonth: 'These two dates must be in the same month - you must change one or the other.'
+	sameMonth: 'These two dates must be in the same month - you must change one or the other.',
+	creditcard: 'The credit card number entered is invalid. Please check the number and try again. {length} digits entered.'
 
 });

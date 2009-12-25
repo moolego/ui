@@ -37,6 +37,7 @@ UI.Scrollbar = new Class({
         component: 'scrollbar',
         type: 'track',
         
+		direction: 'vertical',
         maxThumbSize: 32,
         wheel: 16
     },
@@ -79,8 +80,12 @@ UI.Scrollbar = new Class({
      <UI.Element::build>
      */
     build: function(){
-        if (!this.options.width) {
-            this.options.width = this.props.width;
+		if (this.options.direction == 'vertical') {
+	        if (!this.options.width) {
+	            this.options.width = this.props.width;
+	        }
+		} else if (!this.options.height) {
+            this.options.height = this.props.height;
         }
         
         this.parent();
