@@ -176,7 +176,6 @@ UI.TabView = new Class({
 		this.list.push(tab);
 		
 		tab.index = this.list.indexOf(tab);
-			console.log(tab.index);
 	},
 	
 	/*
