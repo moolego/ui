@@ -1,4 +1,18 @@
 /*
+---
+description: The UI.Skin class defines object that handle skins.
+
+authors: [moolego,r2d2]
+
+requires:
+- core:1.2.1: '*'
+- mooCanvas
+
+provides: [UI.Canvas]
+ 
+...
+*/
+/*
 	Class: UI.Skin
 		The UI.Skin class defines a singleton object that handle skins.
 	
