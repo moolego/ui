@@ -2,7 +2,7 @@
 ---
 description: Canvas Adapter. Contains basic drawing functions.
 
-author: moolego
+authors: [moolego,r2d2]
 
 requires:
 - core:1.2.1: '*'
