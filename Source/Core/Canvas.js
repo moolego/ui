@@ -4,58 +4,10 @@
  author: moolego
  
  requires:
+ - core:1.2.1: '*'
  - mooCanvas
  
- arguments: options
- 
- options:
- - props - (object) All the stuff needed to draw the canvas (layers, shadows, ...). These properties are generated from a skin sheet.
- - className - (string) The class name set to the canvas element
- - width - (integer) Canvas width
- - height - (integer) Canvas height
- events:
- 
- - onComplete - (function) - function to fire when the canvas is drawn
- returns:
- Canvas object.
- 
- example:
- (start code)
- var canvas = new UI.Canvas({
- props 			: this.props,
- width			: this.element.x,
- height			: this.element.y
- }).inject(this.element);
- (end)
- 
- 
- implied global:
- MooLego - UI
- MooTools - $empty, Class, Element, Events, Options
- 
- 
- members:
- Canvas, Engine, Implements, PI, abs, absSize, addColorStop,
- angle, arc, atan, beginPath, bezier, bezierCurveTo, build, canvas,
- canvasSize, circle, clearRect, closePath, color, composite, context,
- convert2Px, cos, createLinearGradient, createPattern,
- createRadialGradient, ctx, debug, default, direction,
- draw, drawShadows, drawShadowsCalled,
- drawShape, each, endCircle, fill, fillStyle, fireEvent, getContext,
- getProperties, globalCompositeOperation, gradient, height, hexToRgb,
- image, initialize, inject, join, layers, left, length, line, lineTo,
- lineWidth, magnify, match, moveTo, offset, offsetX, offsetY, onComplete,
- onload, opacity, options, pattern, position, pow, props,
- quadraticCurveTo, radius, ratio, relSize, reorder, restore, rotate,
- rotation, roundedRect, save, scale, setColor, setImage, setOffset,
- setOptions, setProperties, setSize, setStyles, setTransformation,
- shadow, shadowMagnify, shadowOffset, shadowSet, shadowSize,
- shadowThickness, shape, sin, size, sqrt, src, startCircle, stop, stroke,
- styles, test, toInt, top, trace, translate, triangle, trident, type,
- url, width, zIndex
- 
- discussion:
- 
+ provides: [UI.Canvas]
  
  */
 UI.Canvas = new Class({
