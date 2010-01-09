@@ -95,7 +95,10 @@ UI.Context = new Class({
 
 	initialize: function(options){
 		this.parent(options);
-
+		if (!this.options.container) {
+			this.options.container = $(document.body);
+			console.log(this.options.container)
+		};
 		this.addContexts(this.options.contexts,this.options.container);
 		this.element.hide();
 		this.element.inject(this.options.container);

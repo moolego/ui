@@ -37,7 +37,9 @@ UI.Scrollbar = new Class({
         component: 'scrollbar',
         type: 'track',
         
-		direction: 'vertical',
+        // direction: 'horizontal',
+        direction: 'vertical',
+		
         maxThumbSize: 32,
         wheel: 16
     },
@@ -52,8 +54,8 @@ UI.Scrollbar = new Class({
      <UI.Element::initialize>
      */
     initialize: function(options){
+    
         this.parent(options);
-        
         this.bound = {
             'start': this.start.bind(this),
             'end': this.end.bind(this),
@@ -62,6 +64,7 @@ UI.Scrollbar = new Class({
             'page': this.page.bind(this)
         };
         
+        this.container = this.options.container;
         this.position = {};
         this.mouse = {};
         this.update();
@@ -80,13 +83,15 @@ UI.Scrollbar = new Class({
      <UI.Element::build>
      */
     build: function(){
-		if (this.options.direction == 'vertical') {
-	        if (!this.options.width) {
-	            this.options.width = this.props.width;
-	        }
-		} else if (!this.options.height) {
-            this.options.height = this.props.height;
+        if (this.options.direction == 'vertical') {
+            if (!this.options.size) {
+                this.options.width = this.props.size;
+            }
         }
+        else 
+            if (!this.options.size) {
+                this.options.height = this.props.size;
+            }
         
         this.parent();
         
@@ -102,9 +107,19 @@ UI.Scrollbar = new Class({
     },
     
     update: function(){
-        this.containerSize = this.options.container.getSize().y;
-        this.setSize(this.options.width.toInt(), this.containerSize);
-        this.containerScrollSize = this.options.container.scrollHeight;
+        if (this.options.direction == 'vertical') {
+            this.containerSize = this.options.container.getComputedSize().totalHeight;
+            this.setSize(this.options.width.toInt(), this.containerSize);
+            this.containerScrollSize = this.options.container.scrollHeight;
+			this.trackSize = this.element.offsetHeight.toInt();
+        }
+        else {
+            this.containerSize = this.options.container.getComputedSize().totalWidth;
+            this.setSize(this.containerSize, this.options.height.toInt());
+            this.containerScrollSize = this.options.container.scrollWidth;
+            this.trackSize = this.element.offsetWidth.toInt();
+        }
+        
         if (this.containerScrollSize === 0) {
             return;
         }
@@ -116,7 +131,7 @@ UI.Scrollbar = new Class({
             this.thumb.element.setStyle('visibility', 'hidden');
         }
         
-        this.trackSize = this.element.offsetHeight.toInt();
+        
         this.containerRatio = this.containerSize / this.containerScrollSize;
         this.thumbSize = this.trackSize * this.containerRatio;
         
@@ -135,19 +150,38 @@ UI.Scrollbar = new Class({
             }
         this.scrollRatio = this.containerScrollSize / offset;
         
-        this.thumb.setSize(this.options.width, this.thumbSize);
+        if (this.options.direction == 'vertical') {
+            this.thumb.setSize(this.options.width, this.thumbSize);
+        }
+        else {
+            this.thumb.setSize(this.thumbSize, this.options.height);
+        }
         
         this.updateThumbFromContentScroll();
         this.updateContentFromThumbPosition();
     },
     
     updateContentFromThumbPosition: function(){
-        this.options.container.scrollTop = this.position.now * this.scrollRatio;
+        if (this.options.direction == 'vertical') {
+            this.options.container.scrollTop = this.position.now * this.scrollRatio;
+        }
+        else {
+            this.options.container.scrollLeft = this.position.now * this.scrollRatio;
+        }
     },
     
     updateThumbFromContentScroll: function(){
-        this.position.now = (this.options.container.scrollTop / this.scrollRatio).limit(0, (this.trackSize));
-        this.thumb.setStyle('top', this.position.now + 'px');
+        if (this.options.direction == 'vertical') {
+            this.position.now = (this.options.container.scrollTop / this.scrollRatio).limit(0, (this.trackSize));
+            this.thumb.setStyle('top', this.position.now + 'px');
+        }
+        else {
+			
+            this.position.now = (this.options.container.scrollLeft / this.scrollRatio).limit((this.trackSize) ,0);
+			console.log(this.position.now + 'px');
+            this.thumb.setStyle(this.position.now + 'px', 'left');
+            
+        }
     },
     
     attach: function(){
@@ -160,25 +194,48 @@ UI.Scrollbar = new Class({
     },
     
     wheel: function(event){
-        this.options.container.scrollTop -= event.wheel * this.options.wheel;
+        if (this.options.direction == 'vertical') {
+            this.options.container.scrollTop -= event.wheel * this.options.wheel;
+        }
+        else {
+            this.options.container.scrollLeft -= event.wheel * this.options.wheel;
+        }
         this.updateThumbFromContentScroll();
         event.stop();
     },
     
     page: function(event){
-        if (event.page.y > this.thumb.element.getPosition().y) {
-            this.options.container.scrollTop += this.options.container.offsetHeight;
+        if (this.options.direction == 'vertical') {
+            if (event.page.y > this.thumb.element.getPosition().y) {
+                this.options.container.scrollTop += this.options.container.offsetHeight;
+            }
+            else {
+                this.options.container.scrollTop -= this.options.container.offsetHeight;
+            }
         }
         else {
-            this.options.container.scrollTop -= this.options.container.offsetHeight;
+            if (event.page.x > this.thumb.element.getPosition().x) {
+                this.options.container.scrollLeft += this.options.container.offsetWidth;
+            }
+            else {
+                this.options.container.scrollLeft -= this.options.container.offsetWidth;
+            }
         }
+        
         this.updateThumbFromContentScroll();
         event.stop();
     },
     
     start: function(event){
-        this.mouse.start = event.page.y;
-        this.position.start = this.thumb.element.getStyle('top').toInt();
+        if (this.options.direction == 'vertical') {
+            this.mouse.start = event.page.y;
+            this.position.start = this.thumb.element.getStyle('top').toInt();
+        }
+        else {
+            this.mouse.start = event.page.x;
+            this.position.start = this.thumb.element.getStyle('left').toInt();
+        }
+        
         document.addEvent('mousemove', this.bound.drag);
         document.addEvent('mouseup', this.bound.end);
         this.thumb.element.addEvent('mouseup', this.bound.end);
@@ -193,7 +250,12 @@ UI.Scrollbar = new Class({
     },
     
     drag: function(event){
-        this.mouse.now = event.page.y;
+        if (this.options.direction == 'vertical') {
+            this.mouse.now = event.page.y;
+        }
+        else {
+            this.mouse.now = event.page.x;
+        }
         this.position.now = (this.position.start + (this.mouse.now - this.mouse.start)).limit(0, (this.trackSize - this.thumbSize));
         this.updateContentFromThumbPosition();
         this.updateThumbFromContentScroll();
@@ -208,5 +270,4 @@ UI.Scrollbar = new Class({
             return false;
         }
     }
-    
 });
