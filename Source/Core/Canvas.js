@@ -542,6 +542,7 @@ UI.Canvas = new Class({
 				opacity: props.opacity || 1
 			};
 		}
+		
 		if (props[p] && $type(props[p].color) == 'array') {
 			if (props[p].type != 'radial') {
 				// convert angle from degree to gradient
@@ -632,7 +633,7 @@ UI.Canvas = new Class({
 				color.addColorStop(props[p].stop[i], gradient);
 			}
 			
-		//Normal color management
+		// plain color management
 		}
 		else {
 			//check if opacity exist, else create it

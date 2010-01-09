@@ -57,11 +57,11 @@
 			
 			
 			new UI.Context({
-				event : 'click',
+				trigger : 'click',
 				contexts : [
 					{
 						name : 'green',
-						selector	: '.green',
+						target	: '.green',
 						menu		: [
 							{ text		: 'Green menu'},
 							{ text		: 'separator' },
@@ -79,7 +79,7 @@
 					},
 					{
 						name : 'red',
-						selector	: '.red',
+						target	: '.red',
 						menu		: [
 							{ text		: 'Red menu'},
 							{ text		: 'separator' },
@@ -97,7 +97,91 @@
 					},
 					{
 						name : 'blue',
-						selector	: '.blue',
+						target	: '.blue',
+						menu		: [
+							{ text		: 'Blue menu'},
+							{ text		: 'Blue menu'},
+							{ text		: 'Blue menu'},
+							{ text		: 'Blue menu'},
+							{ text		: 'separator' },
+							{
+								text 	: 'Hello world...',
+								action	: function(){ alert('Hello world!') }
+							},
+							{
+								text 	: 'New Window',
+								action	: function(){ new UI.Window(); }
+							},
+							{ text		: 'separator' },
+							{ text		: 'Close this context'}
+						]
+					}
+				]
+			});
+			
+			new UI.Context({
+				trigger : 'contextmenu',
+				contexts : [
+					{
+						name : 'green',
+						target	: '.green',
+						menu		: [
+							{ text		: 'Green menu'},
+							{ text		: 'separator' },
+							{
+								text 	: 'Hello world...',
+								action	: function(){ alert('Hello world!') }
+							},
+							{
+								text 	: 'New Window',
+								action	: function(){ new UI.Window(); }
+							},
+							{ text		: 'separator' },
+							{ text		: 'Close this context'}
+						]
+					},
+					{
+						name : 'red',
+						target	: '.red',
+						menu		: [
+							{ text		: 'Red menu'},
+							{ text		: 'separator' },
+							{
+								text 	: 'Hello world...',
+								action	: function(){ alert('Hello world!') }
+							},
+							{
+								text 	: 'New Window',
+								action	: function(){ new UI.Window(); }
+							},
+							{ text		: 'separator' },
+							{ text		: 'Close this context'}
+						]
+					},
+					{
+						name : 'blue',
+						target	: '.blue',
+						menu		: [
+							{ text		: 'Blue menu'},
+							{ text		: 'Blue menu'},
+							{ text		: 'Blue menu'},
+							{ text		: 'Blue menu'},
+							{ text		: 'separator' },
+							{
+								text 	: 'Hello world...',
+								action	: function(){ alert('Hello world!') }
+							},
+							{
+								text 	: 'New Window',
+								action	: function(){ new UI.Window(); }
+							},
+							{ text		: 'separator' },
+							{ text		: 'Close this context'}
+						]
+					},
+					{
+						name : 'blue',
+						target	: '.body',
 						menu		: [
 							{ text		: 'Blue menu'},
 							{ text		: 'Blue menu'},
@@ -122,8 +206,12 @@
 	</script>
 </head>
 
-<body style="overflow:hidden; margin:0;" bgcolor="#e8e8e8">
+<body style="overflow:hidden; margin:0;" bgcolor="#e8e8e8" class="body">
 	<style type="text/css">
+		html, body {
+			height:100%
+			
+		}
 		.blue, .green, .red {
 			width : 150px;
 			height : 150px;
@@ -152,7 +240,7 @@
 	<div class="red"> </div>
 	<div class="blue"> </div>
 	<div class="red"> </div>
-
+<div styles="clear:both"></div>
 </body>
 
 </html>

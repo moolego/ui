@@ -138,7 +138,8 @@ UI.View = new Class({
 			 .setStyles( {
 				height :'100%',
 				position : 'relative',
-				overflow:'hidden'
+				overflow:'hidden',
+				margin:'0'
 			}).inject(this.element);
 
 			if (this.options.overflow == 'hidden') {

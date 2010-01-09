@@ -13,7 +13,7 @@ UI.props.AquaGraphite = {
 	'default': {
 		/* css properties */
 		styles: {
-			fontFamily: 'Helvetica, Arial, sans-serif',
+			fontFamily: 'LucidaGrande, Helvetica, Arial, sans-serif',
 			fontSize: '12px',
 			position: 'relative',
 			color: '#000'
@@ -1474,9 +1474,11 @@ UI.props.AquaGraphite = {
 					},
 					menuItem: {
 						styles: {
-							lineHeight: '1em',
+							lineHeight: '13px',
 							color: '#000',
-							padding: '4px 40px 5px 16px',
+							fontSize: '14px',
+							fontWeight:'',
+							padding: '4px 40px 4px 20px',
 							whiteSpace: 'nowrap',
 							display: 'block'
 						}
@@ -1507,19 +1509,19 @@ UI.props.AquaGraphite = {
 				layers: {
 					'default': {
 						radius: 0,
-						opacity: 0.98
+						opacity: 0.96
 					},
 					border: {
 						color: '#000',
 						offset: 0,
-						opacity: 0.3
+						opacity: 0.15
 					},
 					base: {
 						shadow: {
-							size: 10,
-							blur: 32,
-							offsetY: 6,
-							opacity: 0.2,
+							size: 16,
+							blur: 28,
+							offsetY: 7,
+							opacity: 0.3,
 							color: '#000'
 						}
 					}
@@ -1544,6 +1546,16 @@ UI.props.AquaGraphite = {
 					}
 				}
 			}
+			,over: {
+				/* components properties */
+				components: {
+					menuItem: {
+						styles: {
+							color: '#ddd'
+						}
+					}
+				}
+			}
 		}
 	},
 	
@@ -1551,7 +1563,7 @@ UI.props.AquaGraphite = {
 		'default': {
 			'default': {
 				/* others properties */
-				height: 50,
+				height: 52,
 				presentation: 'both',
 				hideFxDuration: 100,
 				showDelay: 0,
@@ -1566,13 +1578,14 @@ UI.props.AquaGraphite = {
 				components: {
 					wrapper: {
 						styles: {
-							padding: '0 0 0 10px',
+							padding: '0 10px',
 							overflow: 'hidden'
 						}
 					},
 					menuItem: {
 						styles: {
 							padding: '30px 10px 5px',
+							fontSize:'13px',
 							lineHeight: '1.2em',
 							whiteSpace: 'nowrap',
 							color: '#000'
@@ -1945,10 +1958,13 @@ UI.props.AquaGraphite = {
 	scrollbar: {
 		track: {
 			'default': {
-				width: 65,
+				width: 15,
+				height:15,
+				size: 15,
 				styles: {
-					'float': 'right',
-					height: '100%',
+					position:'absolute',
+					right:'0',
+					width: '100%',
 					zIndex: '10000'
 				},
 				layers: {
@@ -2017,6 +2033,87 @@ UI.props.AquaGraphite = {
 						},
 						offset: [4, '65%', 3, 0],
 						radius: [3, 2, 2, 3]
+					}
+				}
+			}
+		},
+		vertical: {
+			track: {
+				'default': {
+					width: 65,
+					height:10,
+					styles: {
+						'float': 'right',
+						height: '100%',
+						zIndex: '10000'
+					},
+					layers: {
+						reorder: ['back', 'main', 'side'],
+						'default': {
+							position: 'absolute'
+						},
+						back: {
+							offset: [0, 0, 0, 0],
+							color: '#fff'
+						},
+						main: {
+							offset: [0, '40%', 0, 0],
+							
+							gradient: {
+								color: ['#c5c5c5', '#fcfcfc'],
+								angle: 0
+							}
+						},
+						side: {
+							offset: [0, 0, 0, '80%'],
+							gradient: {
+								angle: 0,
+								color: ['#fcfcfc', '#efefef']
+							}
+						}
+					}
+				}
+			},
+			thumb: {
+				'default': {
+					styles: {
+						margin: '0',
+						position: 'absolute'
+					},
+					layers: {
+						'default': {
+							direction: 'vertical'
+						},
+						emboss: {
+							offset: [1, 0, 1, 0],
+							color: '#000',
+							radius: 9,
+							opacity: 0.3
+						},
+						main: {
+							gradient: {
+								color: ['#091d38', '#5c5c5c'],
+								angle: 0
+							},
+							radius: 7
+						},
+						light: {
+							gradient: {
+								color: ['#fff', '#fff'],
+								opacity: [0.1, 0.9],
+								angle: 0
+							},
+							radius: 6
+						},
+						reflect: {
+							gradient: {
+								color: ['#fff', '#fff'],
+								opacity: [0.8, 0.5],
+								angle: 0
+							},
+							offset: [4, '65%', 3, 0],
+							radius: [3, 2, 2, 3]
+						}
 					}
 				}
 			}

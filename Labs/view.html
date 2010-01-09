@@ -36,36 +36,51 @@
 			var time = $time();
 			
 			var view = new UI.View({
+				tag:'pre',
 				width: 600,
-				height: 400,
+				height: 160,
+				direction:'horizontal',
 				resizable: false,
 				styles: {
 					margin: '40px',
 					backgroundColor: '#fff',
-					border: '1px solid #ccc'
+					fontFamily: ''
+
 				}
 			}).inject($(document.body))
-			.setContent('ajax','assets/pulp.json');
+			.setContent('ajax','../Source/View/View.js');
 			
-			new UI.Window({
-						title : 'Motion Graphics',
-						type : 'transparent',
-						controls : ['close'],
-						viewOverflow : 'hidden',
-						resizable : false,
-						top: '100px',
-						left : '530px',
-						width : 427,
-						height : 388,
-						view : { overflow:'hidden'}
-			}).setContent('content',
-				'<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/HePWBNcugf8&hl=fr&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/HePWBNcugf8&hl=fr&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>'
-			);
+			var view = new UI.View({
+				width: 400,
+				height: 160,
+				direction:'horizontal',
+				resizable: false,
+				styles: {
+					margin: '40px',
+					backgroundColor: '#fff',
+					border: '1px solid #ccc',
+					fontSize:'8px'
+				}
+			}).inject($(document.body))
+			.setContent('ajax','assets/pulp2.json');
 			
+			var view = new UI.View({
+				width: 400,
+				height: 160,
+				direction:'horizontal',
+				resizable: false,
+				styles: {
+					margin: '40px',
+					backgroundColor: '#fff',
+					border: '1px solid #ccc',
+					fontSize:'8px'
+				}
+			}).inject($(document.body))
+			.setContent('ajax','assets/pulpfull.json');
 		});
 	</script>
 </head>
 
-<body style="overflow:hidden" bgcolor="#e8e8e8"></body>
+<body bgcolor="#e8e8e8"></body>
 
 </html>

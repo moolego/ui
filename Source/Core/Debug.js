@@ -3,8 +3,6 @@ Class: ui.debugger
 	Default element debugger.
 */
 
-
-
 ui.debug = {
 	start: function() {
 		console.log('start debugger');
@@ -32,7 +30,5 @@ ui.debug = {
 		}
 	}
 }
-
-
 
 ui.debug.start();

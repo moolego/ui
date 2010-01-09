@@ -238,6 +238,7 @@ UI.props.TouchBlue = {
 		track: {
 			'default': {
 				width: 8,
+				size: 8,
 				
 				styles: {
 					height: '100%',

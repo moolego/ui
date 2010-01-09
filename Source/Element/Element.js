@@ -308,7 +308,7 @@ UI.Element = new Class({
         if (this.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && $H(this.props.layers).getLength() <= 2) || ($defined(this.props.layers.reorder) && !this.props.layers.reorder.length)) {
             return false;
         }
-        
+
         if (this.element.getComputedSize()) {
             var size = this.element.getComputedSize();
             this.computedSize = size;
