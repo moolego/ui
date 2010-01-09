@@ -1,15 +1,17 @@
 /*
- description: Canvas Adapter. Contains basic drawing functions.
+---
+description: Canvas Adapter. Contains basic drawing functions.
+
+author: moolego
+
+requires:
+- core:1.2.1: '*'
+- mooCanvas
+
+provides: [UI.Canvas]
  
- author: moolego
- 
- requires:
- - core:1.2.1: '*'
- - mooCanvas
- 
- provides: [UI.Canvas]
- 
- */
+...
+*/
 UI.Canvas = new Class({
 
     Implements: [Events, Options],
