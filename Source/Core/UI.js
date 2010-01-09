@@ -1,8 +1,22 @@
 /*
+---
+description: a User Interface Toolkit built on MooTools.
+
+authors: [moolego,r2d2]
+
+requires:
+- core:1.2.1: '*'
+- mooCanvas
+
+provides: [UI.Canvas]
+ 
+...
+*/
+/*
 Object: UI
   MooLego UI - a User Interface Library built on MooTools.
  
-License:
+license:
   MIT-style license.
  
 Copyright:
