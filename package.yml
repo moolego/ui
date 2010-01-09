@@ -1,8 +1,9 @@
 name: MooLego UI
 author:
     - moolego
-    - Jerome Vial   
-    - Luca Pilonel
+    - jvial
+    - lpillonel
+
 category: Interface
 tags: [ui, user interface, components, canvas, toolkit]
 docs: http://ui.moolego.net/docs/
