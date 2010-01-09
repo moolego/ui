@@ -1,27 +1,28 @@
 /*
-	Class: UI.Canvas
-		Contains basic drawing functions.
+	description: Canvas Adapter. Contains basic drawing functions.
 	
-	Require:
-		mooCanvas
+	author : moolego
+	
+	requires:
+	- mooCanvas
 		
-	Arguments:
+	arguments:
 		options
 		
-	Options:
+	options:
 		- props - (object) All the stuff needed to draw the canvas (layers, shadows, ...). These properties are generated from a skin sheet.
 		- className - (string) The class name set to the canvas element
 		- width - (integer) Canvas width
 		- height - (integer) Canvas height
 
-	Events:	
+	events:	
 	
 		- onComplete - (function) - function to fire when the canvas is drawn
 
-	Returns:
+	returns:
 		Canvas object.
 		
-	Example:
+	example:
 		(start code)
 		var canvas = new UI.Canvas({
 			props 			: this.props,
@@ -32,12 +33,12 @@
 	
 	
 
-	Implied global:
+	implied global:
 		MooLego - UI
 		MooTools - $empty, Class, Element, Events, Options
 		
 		
-	Members:
+	members:
 		Canvas, Engine, Implements, PI, abs, absSize, addColorStop, 
 	    angle, arc, atan, beginPath, bezier, bezierCurveTo, build, canvas, 
 	    canvasSize, circle, clearRect, closePath, color, composite, context, 
@@ -58,7 +59,7 @@
 	    url, width, zIndex
 
 	
-	Discussion:
+	discussion:
 		
 	
 */
