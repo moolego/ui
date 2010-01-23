@@ -91,7 +91,7 @@ UI.Canvas = new Class({
         zIndex: -1,
         context: '2d',
         
-        debug: false,
+        debug: true,
         onComplete: $empty
     },
     
@@ -148,7 +148,8 @@ UI.Canvas = new Class({
         if (props) {
             this.props = props;
         }
-        
+        console.log(props);
+		
         if (this.props.layers.base && this.props.layers.base.shadow && this.props.layers.base.shadow) {
             this.shadowSize = this.props.layers.base.shadow.size;
             if (!this.props.layers.base.shadow.offsetX) {

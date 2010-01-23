@@ -1,4 +1,18 @@
 /*
+---
+description: UI.Image is used to make a skinnable image container
+
+authors: [moolego,r2d2]
+
+requires:
+- core:1.2.1: '*'
+- mooCanvas
+
+provides: [UI.Canvas]
+ 
+...
+*/
+/*
 	Class: UI.Image
 		UI.Image is used to make a skinnable image container
 	

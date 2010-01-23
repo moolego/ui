@@ -1,4 +1,18 @@
 /*
+---
+description: UI.Label is used to make text element with css skin
+
+authors: [moolego,r2d2]
+
+requires:
+- core:1.2.1: '*'
+- mooCanvas
+
+provides: [UI.Canvas]
+ 
+...
+*/
+/*
 	Class: UI.Label
 		UI.Label is used to make text element with css skin
 	

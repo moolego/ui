@@ -1,4 +1,18 @@
 /*
+---
+description: Creates Bubble and let you attach events action
+
+authors: [moolego,r2d2]
+
+requires:
+- core:1.2.1: '*'
+- mooCanvas
+
+provides: [UI.Canvas]
+ 
+...
+*/
+/*
 	Class: UI.Bubble
 		Creates Bubble and let you attach events action
 	

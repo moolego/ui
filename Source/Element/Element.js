@@ -1,4 +1,18 @@
 /*
+---
+description: UI.Element is the root class of most class of Moolego UI.
+
+authors: [moolego,r2d2]
+
+requires:
+- core:1.2.1: '*'
+- mooCanvas
+
+provides: [UI.Canvas]
+ 
+...
+*/
+/*
 	 Class: UI.Element
 	 UI.Element is the root class of most class of Moolego UI. It is used by :
 	 - <UI.View>
