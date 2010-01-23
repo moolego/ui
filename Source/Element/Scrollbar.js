@@ -1,4 +1,18 @@
 /*
+---
+description: Canvas Adapter. Contains basic drawing functions.
+
+authors: [moolego,r2d2]
+
+requires:
+- core:1.2.1: '*'
+- mooCanvas
+
+provides: [UI.Canvas]
+ 
+...
+*/
+/*
  Class: UI.Scrollbar
  Manage scrolls for views.
  

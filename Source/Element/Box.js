@@ -1,4 +1,18 @@
 /*
+---
+description: UI.Box is used to make a skinnable container
+
+authors: [moolego,r2d2]
+
+requires:
+- core:1.2.1: '*'
+- mooCanvas
+
+provides: [UI.Canvas]
+ 
+...
+*/
+/*
 	Class: UI.Box
 		UI.Box is used to make a skinnable container
 	
@@ -49,8 +63,8 @@ UI.Box = new Class({
 	build: function(options){
 		this.parent(options);
 		
-		this.title = new UI.Label(this.props.components.title)
-		 .inject(this.head);
+		/*this.title = new UI.Label(this.props.components.title)
+		 .inject(this.head);*/
 		
 	}
 	

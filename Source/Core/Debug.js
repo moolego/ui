@@ -2,19 +2,21 @@
 ---
 description: Default element debugger.
 
-authors: [moolego,r2d2]
+authors: [moolego,legoman,r2d2]
 
 requires:
 - core:1.2.1: '*'
 - mooCanvas
 
-provides: [UI.Canvas]
+provides: [ui.debug]
  
 ...
 */
 /*
 Class: ui.debugger
 	Default element debugger.
+	
+Discussion
 */
 
 ui.debug = {

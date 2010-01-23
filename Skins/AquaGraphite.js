@@ -3377,7 +3377,6 @@ UI.props.AquaGraphite = {
 				/* layers properties */
 				
 				layers: {
-					reorder : ['border','inner1','inner2','base'],
 					border: {
 						radius: 6,
 						color: ['#ababab','#dbdbdb'],

@@ -1,4 +1,18 @@
 /*
+---
+description: UI.Segment allows to group elements visually (buttons for example)
+
+authors: [moolego,r2d2]
+
+requires:
+- core:1.2.1: '*'
+- mooCanvas
+
+provides: [UI.Canvas]
+ 
+...
+*/
+/*
 	Class: UI.Segment
 		Allows to group elements visually (buttons for example)
 	
