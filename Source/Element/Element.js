@@ -1,18 +1,4 @@
 /*
----
-description: UI.Element is the root class of most class of Moolego UI.
-
-authors: [moolego,r2d2]
-
-requires:
-- core:1.2.1: '*'
-- mooCanvas
-
-provides: [UI.Canvas]
- 
-...
-*/
-/*
 	 Class: UI.Element
 	 UI.Element is the root class of most class of Moolego UI. It is used by :
 	 - <UI.View>
@@ -319,7 +305,7 @@ UI.Element = new Class({
      Create a canvas element inject it and add a redraw event
      */
     setCanvas: function(){
-        if (this.canvas || (this.props && !this.props.layers) || (this.props && this.props.layers && $H(this.props.layers).getLength() <= 2) || ($defined(this.props.layers.reorder) && !this.props.layers.reorder.length)) {
+        if (this.paint || (this.props && !this.props.layers) || (this.props && this.props.layers && $H(this.props.layers).getLength() <= 2) || ($defined(this.props.layers.def) && !this.props.layers.def.length)) {
             return false;
         }
 
@@ -335,7 +321,7 @@ UI.Element = new Class({
         var offsetWidth = (size.computedLeft + size.computedRight);
         var offsetHeight = (size.computedTop + size.computedBottom);
         
-        this.canvas = new UI.Canvas({
+        this.paint = new UI.Paint({
             props: this.props,
             width: this.element.x + offsetWidth,
             height: this.element.y + offsetHeight,
@@ -358,7 +344,7 @@ UI.Element = new Class({
                 props = this.skin[state] || this.props;
             }
             
-            this.canvas.setSize(this.element.x + offsetWidth, this.element.y + offsetHeight, props);
+            this.paint.setSize(this.element.x + offsetWidth, this.element.y + offsetHeight, props);
         });
     },
     
@@ -519,6 +505,8 @@ UI.Element = new Class({
      Add resizable capabilities for the element.
      */
     enableResize: function(){
+		var that = this;
+		
         if (!this.options.resizeLimitX) {
             this.options.resizeLimitX = 10;
         }
@@ -530,21 +518,18 @@ UI.Element = new Class({
         this.element.makeResizable({
             handle: this.resizer,
             limit: {
-                x: this.options.resizeLimitX,
-                y: this.options.resizeLimitY
+                x: that.options.resizeLimitX,
+                y: that.options.resizeLimitY
             },
             onStart: function(){
-                this.fireEvent('resizeStart');
-            }
-.bind(this)            ,
+                that.fireEvent('resizeStart');
+            },
             onDrag: function(){
-                this.fireEvent('resizeDrag');
-            }
-.bind(this)            ,
+                that.fireEvent('resizeDrag');
+            } ,
             onComplete: function(){
-                this.fireEvent('resizeComplete');
-            }
-.bind(this)
+                that.fireEvent('resizeComplete');
+            }.bind(this)
         });
         
         this.addEvents({
@@ -901,4 +886,200 @@ Element.implement({
         return this;
     }
 });
+
+
+
+/*
+	Object: ui.controller.element
+
+	Default element controller.
+	It handle element's z-index as well as group managing and group serialization (usefull for controls values)
+	
+	Implied global:
+		- MooLego - ui
+		- MooTools - $empty
+		- Javascript - window
+
+	Members:
+		addEvent, bind, closeMenu, controller, each, element, elements, 
+	    getStyle, goDown, goUp, group, groups, handelKeys, join, key, list, 
+	    menu, name, options, push, register, serialize, setBehavior, setStyle, 
+	    start, value, zIndex
+
+	Discussion: 
+		For now, the controller structure is not well defined, 
+	
+*/
+
+ui.controller.element = {
+
+	/*
+	Constructor: start
+		Constructor
+		
+	Arguments:
+		options - (object) options
+	*/
+	
+	start: function(){
+		this.list = [];
+		
+		this.zIndex = 1;
+		this.groups = {};
+		this.elements = [];
+		this.closeMenu = $empty;
+		this.setBehavior();
+		this.handelKeys();
+	},
+
+	/*
+	Function: register
+		private function
+		
+		Add passing element to the elements list
+	   
+	Arguments:
+		object - (object) an element class' instance
+	  
+	 */
+	
+	register: function(object){
+		var oid = this.list.push(object) - 1;
+		
+		//set z-index
+		if (object.element.getStyle('zIndex') == 'auto' || object.element.getStyle('zIndex') === 0) {
+			object.element.setStyle('zIndex', object.options.zIndex || this.zIndex++);
+		}
+			
+		//add element to the group if needed
+		if (object.options.group) {
+			this.group(oid);
+		}
+		
+		/*
+		//get first element parent made with UI
+		var element = object.element.getParent();
+		while (element && !element.ui) {
+			element = element.getParent();
+		}
+		
+		//store element in first element parent made with UI
+		if (element) {
+			if (!element.elements) element.elements = new Hash();
+			if (!element.elements[object.options.component]) element.elements[object.options.component] = new Array();
+			element.elements[object.options.component].push(object);	
+		
+		//store element in UI (element is not in our UI)
+		} else {
+			if (!this.list[object.options.component]) this.list[object.options.component] = new Array();
+			this.list[object.options.component].push(object);
+		}
+		
+		//replace tips
+		// should in tips contreller in tips.js
+		
+		if (object.options.component != 'tip') {
+			window.fireEvent('setTipsPosition');
+		}
+		*/
+		
+	},
+	
+	/*
+	Function: group
+		private function
+		
+		Add passing element to the provided group
+	   
+	Arguments:
+		object - (object) an element class' instance
+	  
+	 */
+	
+	group: function(oid) {
+		//we check if the group exists, else we create it
+		this.groups[this.list[oid].options.group] = this.groups[this.list[oid].options.group] || [];
+		this.groups[this.list[oid].options.group].push(oid);
+	},
+	
+	/*
+	Function: serialize
+		private function
+		
+		Add passing element to the elements list
+	   
+	Arguments:
+		groupID - (string) name of the group you want to serialize element's value.
+		
+	Discussion:
+	
+		Not implemented
+	  
+	*/
+	
+	serialize: function(groupID) {
+		if (!this.groups[groupID]) {
+			return false;
+		}
+
+		var string = [];
+		this.groups[groupID].each(function(eC){
+			if (eC.value) {
+				string.push(eC.options.name + '=' + eC.value);
+			}
+		});
+		
+		return string.join('&');
+	},
+
+	/*
+	Function: handelKeys
+		private function
+		
+		Listen to the keyboard and propagate effect on menu
+		
+	Discussion:
+	
+		Should be handled by ui.notification and UI.Menu
+		or by ui.controller.menu eventual
+		and should be optional
+	  
+	*/
+	
+	setBehavior: function(){
+		document.addEvent('mousedown', function(e){
+			this.closeMenu(e);
+		}.bind(this));
+	},
+	
+	/*
+	Function: handelKeys
+		private function
+		
+		Listen to the keyboard and propagate effect on menu
+		
+	Discussion:
+	
+		Should be also handled by ui.notification and UI.Menu
+		
+	  
+	*/
+
+	handelKeys : function(){
+		window.addEvent('keydown', function(e){
+			if (e.key == 'down' && this.menu) {
+				this.menu.goDown();
+			}
+			else if (e.key == 'up' && this.menu) {
+				this.menu.goUp();
+			}
+			
+			//var ev = new Event(e).stop();
+		}.bind(this));
+	}
+	
+};
+
+ui.controller.element.start();
+
 

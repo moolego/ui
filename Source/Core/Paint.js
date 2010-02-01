@@ -1,85 +1,75 @@
 /*
----
-description: Canvas Adapter. Contains basic drawing functions.
-
-authors: [moolego,r2d2]
-
-requires:
-- core:1.2.1: '*'
-- mooCanvas
-
-provides: [UI.Canvas]
+ ---
+ description: Canvas Adapter. Contains basic drawing functions.
+ authors: [moolego,r2d2]
+ requires:
+ - core:1.2.1: '*'
+ - mooCanvas
+ provides: [UI.Paint]
  
-...
-*/
-
+ ...
+ */
 /*
-	Class: UI.Canvas
-		Contains basic drawing functions.
-	
-	Require:
-		mooCanvas
-		
-	Arguments:
-		options
-		
-	Options:
-		- props - (object) All the stuff needed to draw the canvas (layers, shadows, ...). These properties are generated from a skin sheet.
-		- className - (string) The class name set to the canvas element
-		- width - (integer) Canvas width
-		- height - (integer) Canvas height
-
-	Events:	
-	
-		- onComplete - (function) - function to fire when the canvas is drawn
-
-	Returns:
-		Canvas object.
-		
-	Example:
-		(start code)
-		var canvas = new UI.Canvas({
-			props 			: this.props,
-			width			: this.element.x,
-			height			: this.element.y
-		}).inject(this.element);
-		(end)
-	
-	
-
-	Implied global:
-		MooLego - UI
-		MooTools - $empty, Class, Element, Events, Options
-		
-		
-	Members:
-		Canvas, Engine, Implements, PI, abs, absSize, addColorStop, 
-	    angle, arc, atan, beginPath, bezier, bezierCurveTo, build, canvas, 
-	    canvasSize, circle, clearRect, closePath, color, composite, context, 
-	    convert2Px, cos, createLinearGradient, createPattern, 
-	    createRadialGradient, ctx, debug, default, direction, 
-	    draw, drawShadows, drawShadowsCalled, 
-	    drawShape, each, endCircle, fill, fillStyle, fireEvent, getContext, 
-	    getProperties, globalCompositeOperation, gradient, height, hexToRgb, 
-	    image, initialize, inject, join, layers, left, length, line, lineTo, 
-	    lineWidth, magnify, match, moveTo, offset, offsetX, offsetY, onComplete, 
-	    onload, opacity, options, pattern, position, pow, props, 
-	    quadraticCurveTo, radius, ratio, relSize, reorder, restore, rotate, 
-	    rotation, roundedRect, save, scale, setColor, setImage, setOffset, 
-	    setOptions, setProperties, setSize, setStyles, setTransformation, 
-	    shadow, shadowMagnify, shadowOffset, shadowSet, shadowSize, 
-	    shadowThickness, shape, sin, size, sqrt, src, startCircle, stop, stroke, 
-	    styles, test, toInt, top, trace, translate, triangle, trident, type, 
-	    url, width, zIndex
-
-	
-	Discussion:
-		
-	
-*/
-
-
-UI.Canvas = new Class({
+ Class: UI.Paint
+ Contains drawing functions.
+ 
+ Require:
+ mooCanvas
+ 
+ Arguments:
+ options
+ 
+ Options:
+ - props - (object) All the stuff needed to draw the canvas (layers, shadows, ...). These properties are generated from a skin sheet.
+ - className - (string) The class name set to the canvas element
+ - width - (integer) Canvas width
+ - height - (integer) Canvas height
+ Events:
+ 
+ - onComplete - (function) - function to fire when the canvas is drawn
+ Returns:
+ Canvas object.
+ 
+ Example:
+ (start code)
+ var canvas = new UI.Paint({
+ props 			: this.props,
+ width			: this.element.x,
+ height			: this.element.y
+ }).inject(this.element);
+ (end)
+ 
+ 
+ Implied global:
+ MooLego - UI
+ MooTools - $empty, Class, Element, Events, Options
+ 
+ 
+ Members:
+ Canvas, Engine, Implements, PI, abs, absSize, addColorStop,
+ angle, arc, atan, beginPath, bezier, bezierCurveTo, build, canvas,
+ canvasSize, circle, clearRect, closePath, color, composite, context,
+ convert2Px, cos, createLinearGradient, createPattern,
+ createRadialGradient, ctx, debug, default, direction,
+ draw, drawShadows, drawShadowsCalled,
+ drawShape, each, endCircle, fill, fillStyle, fireEvent, getContext,
+ getProperties, globalCompositeOperation, gradient, height, hexToRgb,
+ image, initialize, inject, join, layers, left, length, line, lineTo,
+ lineWidth, magnify, match, moveTo, offset, offsetX, offsetY, onComplete,
+ onload, opacity, options, pattern, position, pow, props,
+ quadraticCurveTo, radius, ratio, relSize, def, restore, rotate,
+ rotation, roundedRect, save, scale, setColor, setImage, setOffset,
+ setOptions, setProperties, setSize, setStyles, setTransformation,
+ shadow, shadowMagnify, shadowOffset, shadowSet, shadowSize,
+ shadowThickness, shape, sin, size, sqrt, src, startCircle, stop, stroke,
+ styles, test, toInt, top, trace, translate, triangle, trident, type,
+ url, width, zIndex
+ 
+ Discussion:
+ 
+ 
+ */
+UI.Paint = new Class({
 
     Implements: [Events, Options],
     
@@ -91,7 +81,7 @@ UI.Canvas = new Class({
         zIndex: -1,
         context: '2d',
         
-        debug: true,
+        debug: false,
         onComplete: $empty
     },
     
@@ -129,7 +119,7 @@ UI.Canvas = new Class({
             }
         });
         
-        this.ctx = this.canvas.getContext("2d");
+        this.ctx = this.canvas.getContext(this.options.context);
     },
     
     /* 
@@ -145,11 +135,8 @@ UI.Canvas = new Class({
      (void)
      */
     setSize: function(width, height, props){
-        if (props) {
-            this.props = props;
-        }
-        console.log(props);
-		
+        if (props) this.props = props;
+        
         if (this.props.layers.base && this.props.layers.base.shadow && this.props.layers.base.shadow) {
             this.shadowSize = this.props.layers.base.shadow.size;
             if (!this.props.layers.base.shadow.offsetX) {
@@ -200,28 +187,39 @@ UI.Canvas = new Class({
      (void)
      */
     draw: function(props){
-    
-        var layers = new Hash(this.props.layers);
-        if (this.props.layers.reorder) {
-            this.props.layers.reorder.each(function(key){
-                if (key != 'default' && key != 'reorder' && key != 'shadow') {
-                    this.trace(key);
-                }
-            }, this);
-        }
-        else {
-            layers.each(function(layer, key){
-                if (key != 'default' && key != 'reorder' && key != 'shadow') {
-                    this.trace(key);
-                }
-            }, this);
-        }
-        
+    	this.processLayers(props);
         this.offset = [this.shadowSize, this.shadowSize];
         this.relSize = [this.canvasSize[0] - this.shadowSize * 2 - Math.abs(this.shadowOffset[0]), this.canvasSize[1] - this.shadowSize * 2 - Math.abs(this.shadowOffset[1])];
         this.fireEvent('complete');
     },
     
+    /*
+     Function: draw
+     Draw layers defined in props
+     
+     Arguments:
+     - props - (object) draw properties
+     
+     Returns:
+     (void)
+     */
+	processLayers: function() {
+		
+        var layers = new Hash(this.props.layers);
+        if (this.props.layers.def) {
+            this.props.layers.def.each(function(key){
+            	this.trace(key);
+            }, this);
+        }
+        else {
+            layers.each(function(layer, key){
+            	this.trace(key);
+            }, this);
+        }
+        
+	
+	},
+	
     /*
      Function: trace
      private function
@@ -234,42 +232,45 @@ UI.Canvas = new Class({
      (void)
      */
     trace: function(key){
-        var properties = this.getProperties(key);
-        
-        if (this.options.debug) {
-            console.log(key + ':', properties);
-        }
-        
-        this.ctx.save();
-        
-        this.setTransformation(properties);
-        
-        switch (properties.shape) {
-            case 'circle':
-                this.circle(properties);
-                break;
-            case 'roundedRect' || 'roundRect':
-                this.roundedRect(properties);
-                break;
-            case 'line' || 'lineDown':
-                properties.direction = 'down';
-                this.line(properties);
-                break;
-            case 'lineUp':
-                properties.direction = 'up';
-                this.line(properties);
-                break;
-            case 'triangle':
-                this.triangle(properties);
-                break;
-            case 'complex':
-                this.complex(properties);
-                break;
-        }
-        
-        this.drawShape(properties);
-        
-        this.ctx.restore();
+		if (key != 'default' && key != 'def' && key != 'shadow') {
+		
+			var properties = this.getProperties(key);
+			
+			if (this.options.debug) {
+				console.log(key + ':', properties);
+			}
+			
+			this.ctx.save();
+			
+			this.setTransformation(properties);
+			
+			switch (properties.shape) {
+				case 'circle':
+					this.circle(properties);
+					break;
+				case 'roundedRect' || 'roundRect':
+					this.roundedRect(properties);
+					break;
+				case 'line' || 'lineDown':
+					properties.direction = 'down';
+					this.line(properties);
+					break;
+				case 'lineUp':
+					properties.direction = 'up';
+					this.line(properties);
+					break;
+				case 'triangle':
+					this.triangle(properties);
+					break;
+				case 'complex':
+					this.complex(properties);
+					break;
+			}
+			
+			this.drawShape(properties);
+			
+			this.ctx.restore();
+		}
     },
     
     
@@ -321,8 +322,8 @@ UI.Canvas = new Class({
      
      Arguments:
      - value - (array) Array with three entries to determine offset
-     - position - (string) Determine if the position is relative to previous element or absolute (relative to canvas)
-     - size - (array) Array containing layer's width and height. Could be either a number or 'auto' to determine it from offset
+     - position - (string) Determine if the position is relative to previous element or absolute (relative to the canvas)
+     - size - (array) Array containing layer's width and height. Could be either a number or 'auto' to determine it from its offset
      
      Return:
      offset - (array) An array with x and y start point coordinates, as well as width and height
@@ -727,11 +728,11 @@ UI.Canvas = new Class({
         if (props.image) {
             this.setImage(props);
         }
-        else 
-            if (props.color || props.gradient) {
-                this.setColor('fill', props);
-                this.ctx.fill();
-            }
+      
+        if (props.color || props.gradient) {
+            this.setColor('fill', props);
+            this.ctx.fill();
+        }
         
         if (props.stroke) {
             //determine lineWidth
@@ -778,7 +779,7 @@ UI.Canvas = new Class({
      */
     setImage: function(props){
     
-        var self = this;
+        var that = this;
         
         //set vars
         props.image.pattern = props.image.pattern || 'repeat';
@@ -787,9 +788,9 @@ UI.Canvas = new Class({
         var img = new Image();
         img.onload = function(){
             // create pattern
-            var ptrn = this.ctx.createPattern(img, props.image.pattern);
-            self.ctx.fillStyle = ptrn;
-            self.ctx.fill();
+            var ptrn = that.ctx.createPattern(img, props.image.pattern);
+            that.ctx.fillStyle = ptrn;
+            that.ctx.fill();
         };
         //we draw it as a pattern
         img.src = props.image.url;

@@ -115,7 +115,7 @@ UI.Window = new Class({
 		// Drag options
 		draggable: true,
 		dragLimitX: [-1000, window.getWidth() + 1000],
-		dragLimitY: [49, window.getHeight() + 1000],
+		dragLimitY: [51, window.getHeight() + 1000],
 		dragHandlers: ['head', 'foot'],
 		hideOnDrag : false,
 		
@@ -147,8 +147,8 @@ UI.Window = new Class({
 	initialize: function(options){
 		// call parent constructor
 		this.parent(options);
-
-		// set windnow position
+		
+		// set window position
 		var location = this.getInitialLocation();
 		this.options.top = location.top;
 		this.options.left = location.left;
@@ -186,8 +186,8 @@ UI.Window = new Class({
 		
 		this.inject(this.options.container || $(document.body));
 		
-		if (this.canvas) {
-			this.canvas.canvas.addEvent('click', function(e){
+		if (this.paint) {
+			this.paint.canvas.addEvent('click', function(e){
 				ui.controller.window.propagateUnderShadow(e);
 			});
 		}
@@ -279,7 +279,7 @@ UI.Window = new Class({
 		this.toolbar = new UI.Toolbar(toolbar).inject(this.head);
 
 		// not really nice because related to a specific layer ... 
-		if (this.canvas) {
+		if (this.paint) {
 			this.props.layers.head.size[1] = this.head.getSize().y;
 		}
 		
@@ -344,7 +344,6 @@ UI.Window = new Class({
 		
 		this.content = this.view.content;
 	},
-
 	/* 
 	Function: buildTabview
 		private function
@@ -426,7 +425,7 @@ UI.Window = new Class({
 			
 			// newt line is vorbidden
 			
-			if (this.canvas) {
+			if (this.paint) {
 				this.props.layers.head.size[1] = this.head.getSize().y;
 			}
 			this.toolbar.element.hide();
@@ -438,7 +437,7 @@ UI.Window = new Class({
 			});
 			
 			// next line is vorbidden
-			if (this.canvas) {
+			if (this.paint) {
 				this.props.layers.head.size[1] = this.head.getSize().y;
 			}
 		}
@@ -725,7 +724,7 @@ UI.Window = new Class({
 		if (this.options.tabView) { 
 			this.view.tabbar.setStyle('width', element.x);
 		}
-		if (this.canvas && this.props.layers.head.size) {
+		if (this.paint && this.props.layers.head.size) {
 			this.props.layers.head.size[1] = this.head.getSize().y;
 			this.skin.inactive.layers.head.size[1] = this.head.getSize().y;
 		}

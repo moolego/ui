@@ -183,14 +183,14 @@ UI.RadiosGroup = new Class({
 			return false;
 		}
 			
-		radio.canvas = new UI.Canvas({
+		radio.paint = new UI.Paint({
 			props: this.props,
 			width: this.props.width,
 			height: this.props.height
 		}).inject(radio);
 		
 		radio.addEvent('drawCanvas', function(){
-			this.canvas.setSize(this.element.x,this.element.y, this.props);
+			this.paint.setSize(this.element.x,this.element.y, this.props);
 		});
 	},
 	
@@ -209,7 +209,7 @@ UI.RadiosGroup = new Class({
 	*/
 	
 	setState: function(radio, state){
-		radio.canvas.draw(this.skin[state]);
+		radio.paint.draw(this.skin[state]);
 	}
 	
 });

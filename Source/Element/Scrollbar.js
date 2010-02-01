@@ -1,17 +1,14 @@
 /*
----
-description: Canvas Adapter. Contains basic drawing functions.
-
-authors: [moolego,r2d2]
-
-requires:
-- core:1.2.1: '*'
-- mooCanvas
-
-provides: [UI.Canvas]
+ ---
+ description: Canvas Adapter. Contains basic drawing functions.
+ authors: [moolego,r2d2]
+ requires:
+ - core:1.2.1: '*'
+ - mooCanvas
+ provides: [UI.Canvas]
  
-...
-*/
+ ...
+ */
 /*
  Class: UI.Scrollbar
  Manage scrolls for views.
@@ -53,7 +50,7 @@ UI.Scrollbar = new Class({
         
         // direction: 'horizontal',
         direction: 'vertical',
-		
+        
         maxThumbSize: 32,
         wheel: 16
     },
@@ -125,7 +122,7 @@ UI.Scrollbar = new Class({
             this.containerSize = this.options.container.getComputedSize().totalHeight;
             this.setSize(this.options.width.toInt(), this.containerSize);
             this.containerScrollSize = this.options.container.scrollHeight;
-			this.trackSize = this.element.offsetHeight.toInt();
+            this.trackSize = this.element.offsetHeight.toInt();
         }
         else {
             this.containerSize = this.options.container.getComputedSize().totalWidth;
@@ -190,9 +187,8 @@ UI.Scrollbar = new Class({
             this.thumb.setStyle('top', this.position.now + 'px');
         }
         else {
-			
-            this.position.now = (this.options.container.scrollLeft / this.scrollRatio).limit((this.trackSize) ,0);
-			console.log(this.position.now + 'px');
+            this.position.now = (this.options.container.scrollLeft / this.scrollRatio).limit((this.trackSize), 0);
+            //console.log(this.position.now + 'px');
             this.thumb.setStyle(this.position.now + 'px', 'left');
             
         }
@@ -200,7 +196,6 @@ UI.Scrollbar = new Class({
     
     attach: function(){
         this.thumb.element.addEvent('mousedown', this.bound.start);
-        //this.thumb.element.addEvent('whileclick', this.bound.start);
         if (this.options.wheel) {
             this.options.container.addEvent('mousewheel', this.bound.wheel);
         }

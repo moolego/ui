@@ -132,7 +132,7 @@ UI.Slider = new Class({
 		this.setCanvas();
 		ui.controller.element.register(this);
 
-		this.slider = new Slider(this.canvas.canvas, this.handler.element, {
+		this.slider = new Slider(this.paint.canvas, this.handler.element, {
 			snap: this.options.snap,
 			offset: this.options.offset,
 			range: this.options.range,

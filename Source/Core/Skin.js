@@ -8,7 +8,7 @@ requires:
 - core:1.2.1: '*'
 - mooCanvas
 
-provides: [UI.Canvas]
+provides: [UI.Skin]
  
 ...
 */

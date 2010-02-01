@@ -14,7 +14,7 @@ provides: [ui.debug]
 */
 /*
 Class: ui.debugger
-	Default element debugger.
+	Singleton object containing useful functions for debugging skin process
 	
 Discussion
 */

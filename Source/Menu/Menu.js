@@ -115,32 +115,6 @@ UI.Menu = new Class({
 	},
 	
 	
-	/*
-	Function: setBehavior
-		private function
-		
-		Call UI.Element build, then create a menu wrapper
-	
-	Return:
-		(void)
-	
-	See also:
-		<UI.Element::build>
-	*/
-
-	setBehavior : function(){
-		this.parent();
-		if (!this.options.closeMenu) {
-			this.addEvent('onCloseMenu', function(e){
-				ui.controller.element.closeMenu = $empty;
-				this.hide(300);
-			}.bind(this));
-		} else { 
-			this.addEvent('onCloseMenu', function(){
-				this.options.closeMenu();
-			}.bind(this));
-		}
-	},
 	
 	
 	/* 
@@ -190,7 +164,35 @@ UI.Menu = new Class({
 		},this);
 		return this;
 	},
+
+
+	/*
+	Function: setBehavior
+		private function
+		
+		Call UI.Element build, then create a menu wrapper
 	
+	Return:
+		(void)
+	
+	See also:
+		<UI.Element::build>
+	*/
+
+	setBehavior : function(){
+		this.parent();
+		if (!this.options.closeMenu) {
+			this.addEvent('onCloseMenu', function(e){
+				ui.controller.element.closeMenu = $empty;
+				this.hide(300);
+			}.bind(this));
+		} else { 
+			this.addEvent('onCloseMenu', function(){
+				this.options.closeMenu();
+			}.bind(this));
+		}
+	},
+		
 	/* 
 	Method: addSubmenuEvents
 		private function
@@ -653,7 +655,7 @@ UI.Menu = new Class({
 		this.fireEvent('addArrows');
 		
 		if (this.options.closeOnRollout) {
-			this.canvas.canvas.addEvent('mouseleave', function(){
+			this.paint.canvas.addEvent('mouseleave', function(){
 				this.fireEvent('closeMenu');
 			}.bind(this));
 		}
