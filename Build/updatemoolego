@@ -1,0 +1,5 @@
+echo update moolego
+cp /usr/local/www/floor/moolego/Build/moolego-yc.js /usr/local/www/floor/CS2/client/lib/admin/js/moolego/.
+echo update moolego skin
+cp /usr/local/www/floor/moolego/Build/aquag-yc.js /usr/local/www/floor/CS2/client/lib/admin/js/moolego/.
+
