@@ -1104,4 +1104,4 @@ UI.Paint = new Class({
         this.canvas.inject(target, position);
         return this;
     }
-});
+});//end
