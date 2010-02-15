@@ -123,7 +123,7 @@ UI.Paint = new Class({
     },
     
     /* 
-     Function : setSize
+     Function: setSize
      set size of the canvas object handling the shadow, then draw it.
      
      Arguments:
@@ -135,7 +135,8 @@ UI.Paint = new Class({
      (void)
      */
     setSize: function(width, height, props){
-        if (props) this.props = props;
+        if (props) 
+            this.props = props;
         
         if (this.props.layers.base && this.props.layers.base.shadow && this.props.layers.base.shadow) {
             this.shadowSize = this.props.layers.base.shadow.size;
@@ -187,7 +188,7 @@ UI.Paint = new Class({
      (void)
      */
     draw: function(props){
-    	this.processLayers(props);
+        this.processLayers(props);
         this.offset = [this.shadowSize, this.shadowSize];
         this.relSize = [this.canvasSize[0] - this.shadowSize * 2 - Math.abs(this.shadowOffset[0]), this.canvasSize[1] - this.shadowSize * 2 - Math.abs(this.shadowOffset[1])];
         this.fireEvent('complete');
@@ -203,23 +204,23 @@ UI.Paint = new Class({
      Returns:
      (void)
      */
-	processLayers: function() {
-		
+    processLayers: function(){
+    
         var layers = new Hash(this.props.layers);
         if (this.props.layers.def) {
             this.props.layers.def.each(function(key){
-            	this.trace(key);
+                this.trace(key);
             }, this);
         }
         else {
             layers.each(function(layer, key){
-            	this.trace(key);
+                this.trace(key);
             }, this);
         }
         
-	
-	},
-	
+        
+    },
+    
     /*
      Function: trace
      private function
@@ -232,45 +233,45 @@ UI.Paint = new Class({
      (void)
      */
     trace: function(key){
-		if (key != 'default' && key != 'def' && key != 'shadow') {
-		
-			var properties = this.getProperties(key);
-			
-			if (this.options.debug) {
-				console.log(key + ':', properties);
-			}
-			
-			this.ctx.save();
-			
-			this.setTransformation(properties);
-			
-			switch (properties.shape) {
-				case 'circle':
-					this.circle(properties);
-					break;
-				case 'roundedRect' || 'roundRect':
-					this.roundedRect(properties);
-					break;
-				case 'line' || 'lineDown':
-					properties.direction = 'down';
-					this.line(properties);
-					break;
-				case 'lineUp':
-					properties.direction = 'up';
-					this.line(properties);
-					break;
-				case 'triangle':
-					this.triangle(properties);
-					break;
-				case 'complex':
-					this.complex(properties);
-					break;
-			}
-			
-			this.drawShape(properties);
-			
-			this.ctx.restore();
-		}
+        if (key != 'default' && key != 'def' && key != 'shadow') {
+        
+            var properties = this.getProperties(key);
+            
+            if (this.options.debug) {
+                console.log(key + ':', properties);
+            }
+            
+            this.ctx.save();
+            
+            this.setTransformation(properties);
+            
+            switch (properties.shape) {
+                case 'circle':
+                    this.circle(properties);
+                    break;
+                case 'roundedRect' || 'roundRect':
+                    this.roundedRect(properties);
+                    break;
+                case 'line' || 'lineDown':
+                    properties.direction = 'down';
+                    this.line(properties);
+                    break;
+                case 'lineUp':
+                    properties.direction = 'up';
+                    this.line(properties);
+                    break;
+                case 'triangle':
+                    this.triangle(properties);
+                    break;
+                case 'complex':
+                    this.complex(properties);
+                    break;
+            }
+            
+            this.drawShape(properties);
+            
+            this.ctx.restore();
+        }
     },
     
     
@@ -728,7 +729,7 @@ UI.Paint = new Class({
         if (props.image) {
             this.setImage(props);
         }
-      
+        
         if (props.color || props.gradient) {
             this.setColor('fill', props);
             this.ctx.fill();
@@ -1104,4 +1105,4 @@ UI.Paint = new Class({
         this.canvas.inject(target, position);
         return this;
     }
-});//end
+});

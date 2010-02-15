@@ -28,6 +28,7 @@
 	Members:
 		Control, Extends, Input, addEvents, bind, blur, component, 
     	focus, name, options, parent, setBehavior, setState, value
+    	
 */
 
 UI.Input = new Class({
