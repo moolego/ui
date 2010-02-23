@@ -1,7 +1,7 @@
 MooLego UI
 ==========
 
-MooLego UI is a small, minimal & extensible, Object-Oriented JavaScript User Interface Framework based on Mootools.
+MooLego UI is an experimental, small, minimal & extensible, Object-Oriented JavaScript User Interface Framework based on Mootools.
 
 How to use
 ----------
