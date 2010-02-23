@@ -178,6 +178,7 @@ offset - (*array*) An array with x and y start point coordinates, as well as wid
 UI.Paint Method: getProperties {#UI.Paint:getProperties}
 ---------------------------------------------------------
 
+Set all values to draw the canvas and prepare arrays for radius, offsets, size, ...
 
 ### Syntax:
 
@@ -185,160 +186,230 @@ UI.Paint Method: getProperties {#UI.Paint:getProperties}
 
 ### Arguments:
 
-1. key - (**)
+1. key - (*string*) Layer name
 
 ### Returns:
 
-
-
-
+* properties - (*object*) An object to be drawn
 
 UI.Paint Method: setColor {#UI.Paint:setColor}
 -----------------------------------------------
 
+Set the fill color, handling direction, gradient and opacity
 
 ### Syntax:
 
-
+	this.setColor('fill|stroke',props);
 
 ### Arguments:
 
-1. part - (**)
-2. props - (**)
+1. part - (*string*) Determine for which part the color is set. Could be 'fill' or 'stroke'.
+2. props - (*object*) The layer properties.
 
 
 UI.Paint Method: setTransformation {#UI.Paint:setTransformation}
 -----------------------------------------------------------------
 
+Apply transformations, like rotation, scale and composite mode.
 
 ### Syntax:
 
-
+	this.setTransformation(props);
 
 ### Arguments:
 
-1. props - (**)
+1. props - (*object*) The layer properties.
 
 
 UI.Paint Method: drawShape {#UI.Paint:drawShape}
 -------------------------------------------------
 
+Draw the stroke and fill the shape
 
 ### Syntax:
 
-
+	this.drawShape();
 
 ### Arguments:
 
-1. props - (**)
+1. props - (*object*) The layer properties.
 
 
 UI.Paint Method: setShadow {#UI.Paint:setShadow}
 -------------------------------------------------
 
+Set Shadow Options
 
 ### Syntax:
 
-
+	this.setShadow({});
 
 ### Arguments:
 
-1. shadow - (**)
+1. props - (*object*) The shadow properties.
 
 
 UI.Paint Method: setImage {#UI.Paint:setImage}
 -----------------------------------------------
 
+Draw an image on canvas handling patterns
 
 ### Syntax:
 
 
-
 ### Arguments:
 
-1. props - (**)
+1. props - (*object*) The layer properties.
 
+### Note:
+
+Experimental!
 
 UI.Paint Method: roundedRect {#UI.Paint:roundedRect}
 -----------------------------------------------------
 
+Draw a rounded rectangle path
 
 ### Syntax:
 
+	this.roundedRect({
+		offset: 1,
+		color: ['#494949', '#5f5f5f'],
+		opacity: 1,
+		radius: 4
+	});
 
 
 ### Arguments:
 
-1. props - (**)
+1. props - (object) The layer properties.
+     
+### Example:
 
+
+
+     
+### Return:
+
+     (void)
 
 UI.Paint Method: circle {#UI.Paint:circle}
 -------------------------------------------
 
-
-### Syntax:
-
-
+Draw a circle or a circle part, determined width props.angle (array).
 
 ### Arguments:
-
-1. props - (**)
+1. props - (object) The layer properties.
+    
+### Example:
+    
+	layers: {
+		circle: {
+			shape: 'circle',
+			position: 'absolute',
+			size: [10, 10],
+			opacity: 1,
+			offset: 0
+		}
+	}
 
 
 UI.Paint Method: line {#UI.Paint:line}
 ---------------------------------------
 
+Draw a line
 
 ### Syntax:
 
-
+1. props - (*object*) The layer properties.
 
 ### Arguments:
 
-1. props - (**)
+1. shape - (*string*) lineUp|lineDown
+2. width - (*width*)
+3. opacity - (*float*)
+4. color - (*string*)
+5. offset - (*float|array*)
+
+### Example:
+    
+     layers: {
+		line: {
+			position: 'absolute',
+			shape: 'lineUp',
+			opacity: 1,
+			width: 1,
+			color: '#000'
+		}
+	}
+
 
 
 UI.Paint Method: triangle {#UI.Paint:triangle}
 -----------------------------------------------
 
+Draw a triangle in a rectangle determine with props.size (array)
 
 ### Syntax:
 
-
+	this.circle({
+		shape: 'triangle',
+		radius: [8, 8, 8, 8],
+		position: 'abolute',
+		offset: 13,
+		color: '#fff'
+	});
 
 ### Arguments:
 
-1. props - (**)
-
+1. props - (*object*) The layer properties.
 
 UI.Paint Method: complex {#UI.Paint:complex}
 ---------------------------------------------
 
+Draw complex shapes
 
 ### Syntax:
 
-
+	this.complex({
+		shape: 'complex',
+		baseSize: [150, 150],
+		def: [
+			['moveTo', 75, 25],
+			['quadraticCurveTo', 25, 25, 25, 62.5],
+			['quadraticCurveTo', 25, 100, 50, 100],
+			['quadraticCurveTo', 50, 120, 30, 125],
+			['quadraticCurveTo', 60, 120, 65, 100],
+			['quadraticCurveTo', 125, 100, 125, 62.5],
+			['quadraticCurveTo', 125, 25, 75, 25]
+		]
+	});
 
 ### Arguments:
 
-1. props - (**)
+1. props - (*object*) Object that containing the layer properties.
+
+### Examples:
+
+
+### Notes:
+	
+This method is an experiment. Doesn't work properly! see complex.html in the labs.
+
 
 
 UI.Paint Method: inject {#UI.Paint:inject}
 -------------------------------------------
 
-
-### Syntax:
-
-
+Inject canvas then return class instance
 
 ### Arguments:
 
-1. target - (**)
-2. position - (**)
+1. target - (*element*) the target dom element
+2. position - (*string*) the position were to inject
 
 ### Returns:
 
-
+1. (*object*) This
 
 
