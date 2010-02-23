@@ -1,7 +1,7 @@
 name: MooLego UI
 author: moolego
 category: Interface
-tags: [ui, user interface, components, canvas, toolkit]
-docs: http://ui.moolego.net/docs/
-demo: http://ui.moolego.net/demos/
-#current: 0.2
+tags: [moolego, ui, user interface, components, canvas, toolkit]
+docs: http://ui.moolego.org/docs/
+demo: http://ui.moolego.org/demos/
+#current: 0.3
