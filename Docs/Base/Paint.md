@@ -5,8 +5,34 @@ Class: UI.Paint {#UI.Paint}
 
 Events, Options
 
+### Arguments:
 
+1. options - (*object*)
 
+### Options:
+
+1. props - (*object*) All the stuff needed to draw the canvas (layers, shadows, ...). These properties are generated from a skin sheet.
+2. className - (*string*) The class name set to the canvas element
+3. width - (*integer*) Canvas width
+4. height - (*integer*) Canvas height
+
+### Returns:
+
+* (*object*) A new Paint instance.
+
+### Examples:
+
+	this.paint = new UI.Paint({
+		props: this.props,
+		width: this.element.x + offsetWidth,
+		height: this.element.y + offsetHeight,
+		debug: this.options.debug,
+		element: this.element,
+		skin: this.options.skin,
+		component: this.options.component,
+		type: this.options.type,
+		state: this.options.state
+	});
 
 UI.Paint Method: constructor {#UI.Paint:constructor}
 -----------------------------------------------------

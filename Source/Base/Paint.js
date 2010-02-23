@@ -32,7 +32,7 @@
  
  Example:
  (start code)
- var canvas = new UI.Paint({
+ var paint = new UI.Paint({
  props 			: this.props,
  width			: this.element.x,
  height			: this.element.y
