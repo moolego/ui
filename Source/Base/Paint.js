@@ -124,15 +124,16 @@ UI.Paint = new Class({
     
     /* 
      Function: setSize
-     set size of the canvas object handling the shadow, then draw it.
+     	
+     	set size of the canvas object handling the shadow, then draw it.
      
      Arguments:
-     - width - (integer) Width of the canvas without shadow offsets
-     - height - (integer) Width of the canvas without shadow offsets
-     - props - (object) Skin properties. If not set, will get props passed on initialize
+     - width - (*integer*) Width of the canvas without shadow offsets
+     - height - (*integer*) Width of the canvas without shadow offsets
+     - props - (*object*) Skin properties. If not set, will get props passed on initialize
      
      Return:
-     (void)
+     	(void)
      */
     setSize: function(width, height, props){
         if (props) 
@@ -179,10 +180,11 @@ UI.Paint = new Class({
     
     /*
      Function: draw
-     Draw layers defined in props
+     
+     	Draw layers defined in props
      
      Arguments:
-     - props - (object) draw properties
+     - props - (*object*) draw properties
      
      Returns:
      (void)
@@ -551,8 +553,8 @@ UI.Paint = new Class({
      
      Set the fill color, handling direction, gradient and opacity
      
-     Arguments:
-     part - (string) Determine for wich part the color is set. Could be 'fill' or 'stroke'.
+     Arguments
+     part - (string) Determine for which part the color is set. Could be 'fill' or 'stroke'.
      
      Return:
      (void)
