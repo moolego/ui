@@ -12,32 +12,6 @@ provides: [UI.Skin]
  
 ...
 */
-/*
-	Class: UI.Skin
-		The UI.Skin class defines a singleton object that handle skins.
-	
-	Arguments:
-		Options
-		
-	Options: 
-		- skin - (string) skin name defined in skins. ie: AquaGraphite
-	
-	Example:
-		(start code)
-		UI.skin = new UI.Skin('AquaGraphite');
-		(end)
-
-	Implied global:
-		- MooLego -UI
-		- MooTools - $H,$type,$unlink,Class,Events,Options
-	
-	Members:
-		Implements, Skin, component, components, default, defaultSkin, 
-	    each, get, getComponentProps, initialize, layers, length, merge, 
-	    options, preprocessed, processSkin, props, setOptions, shadow, shadows, 
-	    shortcuts, size, skin, styles, type
-
- */
 
 UI.Skin = new Class({
 	
@@ -46,19 +20,6 @@ UI.Skin = new Class({
 	options: {
 		skin: 'AquaGraphite'
 	},
-	
-	/*
-	Constructor: initialize
-		Constructor
-
-		Set the default skin
-		
-	Arguments:
-		- options - (object) options
-	
-	Returns:
-		this
-	*/
  	
 	initialize : function(options) {
 		this.setOptions(options);
@@ -66,19 +27,6 @@ UI.Skin = new Class({
 		
 		return this;
 	},
-	
-	/* 
-	Function : processSkin
-		private function
-	
-		Merge what can be merged on the skin sheet the first time it's called so it will be faster for next calls.
-		
-	Arguments:
-		- skinName - (string) the name of the skin who should be preprocessed.
-	
-	Return:
-		(void)
-	*/
 
 	processSkin: function(skinName) {
 		
@@ -114,27 +62,6 @@ UI.Skin = new Class({
 		}
 		UI.props[skinName].preprocessed = true;
 	},
-	
-
-	/*
-	Function: get
-		get properties for provided class. This methos will check in the options of the instance needed parameters.
-		
-	Properties:
-		- className - (object) A UI.Element (or a child class) instance.
-		
-	className: (object)
-		the get method will use in the provided instance following options :
-			options.skin
-			options.component
-			option.type
-			options.props
-			options.style
-		It will also check for other options, as defined in skin sheet as shortkeys
-		
-	Return:
-		- properties - (object) An object containing skin properties for current type, merged with optional provided custom properties.
-	 */
 	
 	get: function(className){
 		var
@@ -196,17 +123,6 @@ UI.Skin = new Class({
 		return type;
 	},
 	
-	/*
-	Function: getComponentProps
-		get skin definition for specified component (inside an other element)
-		
-	Properties:
-		- component - (string) the name of the component
-		
-	Return:
-		- properties - (object) Object containing component properties
-	*/
-	
 	getComponentProps: function(skin, component){
 		var componentProps = {};
 		$H(skin).each(function(state, key){
@@ -216,17 +132,6 @@ UI.Skin = new Class({
 		});
 		return componentProps;
 	},
-		
-	/*
-	Function: merge
-		private function
-		
-		merge is a lighter version of the core mootools merge function
-		Merges any number of objects recursively without referencing them or their sub-objects.
-		
-	See also:
-		mootools merge function	
-	*/	
 	
 	merge: function() {
 		var mix = {};

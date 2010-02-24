@@ -1,74 +1,18 @@
 /*
  ---
  description: Canvas Adapter. Contains basic drawing functions.
+ 
  authors: [moolego,r2d2]
+ 
  requires:
  - core:1.2.1: '*'
  - mooCanvas
+ 
  provides: [UI.Paint]
  
  ...
  */
-/*
- Class: UI.Paint
- Contains drawing functions.
- 
- Require:
- mooCanvas
- 
- Arguments:
- options
- 
- Options:
- - props - (object) All the stuff needed to draw the canvas (layers, shadows, ...). These properties are generated from a skin sheet.
- - className - (string) The class name set to the canvas element
- - width - (integer) Canvas width
- - height - (integer) Canvas height
- Events:
- 
- - onComplete - (function) - function to fire when the canvas is drawn
- Returns:
- Canvas object.
- 
- Example:
- (start code)
- var paint = new UI.Paint({
- props 			: this.props,
- width			: this.element.x,
- height			: this.element.y
- }).inject(this.element);
- (end)
- 
- 
- Implied global:
- MooLego - UI
- MooTools - $empty, Class, Element, Events, Options
- 
- 
- Members:
- Canvas, Engine, Implements, PI, abs, absSize, addColorStop,
- angle, arc, atan, beginPath, bezier, bezierCurveTo, build, canvas,
- canvasSize, circle, clearRect, closePath, color, composite, context,
- convert2Px, cos, createLinearGradient, createPattern,
- createRadialGradient, ctx, debug, default, direction,
- draw, drawShadows, drawShadowsCalled,
- drawShape, each, endCircle, fill, fillStyle, fireEvent, getContext,
- getProperties, globalCompositeOperation, gradient, height, hexToRgb,
- image, initialize, inject, join, layers, left, length, line, lineTo,
- lineWidth, magnify, match, moveTo, offset, offsetX, offsetY, onComplete,
- onload, opacity, options, pattern, position, pow, props,
- quadraticCurveTo, radius, ratio, relSize, def, restore, rotate,
- rotation, roundedRect, save, scale, setColor, setImage, setOffset,
- setOptions, setProperties, setSize, setStyles, setTransformation,
- shadow, shadowMagnify, shadowOffset, shadowSet, shadowSize,
- shadowThickness, shape, sin, size, sqrt, src, startCircle, stop, stroke,
- styles, test, toInt, top, trace, translate, triangle, trident, type,
- url, width, zIndex
- 
- Discussion:
- 
- 
- */
+
 UI.Paint = new Class({
 
     Implements: [Events, Options],
@@ -84,15 +28,7 @@ UI.Paint = new Class({
         debug: false,
         onComplete: $empty
     },
-    
-    /*
-     Constructor: initialize
-     Constructor
-     Create a new canvas object and draw it
-     
-     Arguments:
-     - options - (object) options
-     */
+
     initialize: function(options){
         this.setOptions(options);
         this.props = this.options.props;
@@ -102,15 +38,7 @@ UI.Paint = new Class({
         
         this.draw();
     },
-    
-    /* 
-     Function : build
-     private function
-     Create a new canvas object and get the 2D context
-     
-     Returns:
-     (void)
-     */
+ 
     build: function(){
         this.canvas = new Element('canvas', {
             styles: {
@@ -121,20 +49,7 @@ UI.Paint = new Class({
         
         this.ctx = this.canvas.getContext(this.options.context);
     },
-    
-    /* 
-     Function: setSize
-     	
-     	set size of the canvas object handling the shadow, then draw it.
-     
-     Arguments:
-     - width - (*integer*) Width of the canvas without shadow offsets
-     - height - (*integer*) Width of the canvas without shadow offsets
-     - props - (*object*) Skin properties. If not set, will get props passed on initialize
-     
-     Return:
-     	(void)
-     */
+
     setSize: function(width, height, props){
         if (props) 
             this.props = props;
@@ -177,35 +92,14 @@ UI.Paint = new Class({
             this.draw();
         }
     },
-    
-    /*
-     Function: draw
-     
-     	Draw layers defined in props
-     
-     Arguments:
-     - props - (*object*) draw properties
-     
-     Returns:
-     (void)
-     */
+
     draw: function(props){
         this.processLayers(props);
         this.offset = [this.shadowSize, this.shadowSize];
         this.relSize = [this.canvasSize[0] - this.shadowSize * 2 - Math.abs(this.shadowOffset[0]), this.canvasSize[1] - this.shadowSize * 2 - Math.abs(this.shadowOffset[1])];
         this.fireEvent('complete');
     },
-    
-    /*
-     Function: draw
-     Draw layers defined in props
-     
-     Arguments:
-     - props - (object) draw properties
-     
-     Returns:
-     (void)
-     */
+
     processLayers: function(){
     
         var layers = new Hash(this.props.layers);
@@ -222,18 +116,7 @@ UI.Paint = new Class({
         
         
     },
-    
-    /*
-     Function: trace
-     private function
-     draw the shape depending on the skin component props definition
-     
-     Arguments:
-     - key - (string) key
-     
-     Return
-     (void)
-     */
+
     trace: function(key){
         if (key != 'default' && key != 'def' && key != 'shadow') {
         
@@ -275,23 +158,7 @@ UI.Paint = new Class({
             this.ctx.restore();
         }
     },
-    
-    
-    
-    /*
-     Function: convert2Px
-     private function
-     
-     draw the shape depending on the skin component props definition
-     
-     Arguments:
-     - value - (string/integer/float) value
-     - direction - (string) Direction. Could be either 'x' or 'y'
-     - absolute - (boolean) Determine if the position is relative to previous element or absolute (relative to canvas)
-     
-     Return
-     value - (float) The value converted in pixel
-     */
+
     convert2Px: function(value, direction, absolute){
         direction = (direction == 'x') ? 0 : 1;
         var refSize = absolute ? this.absSize[direction] : this.relSize[direction];
@@ -316,21 +183,7 @@ UI.Paint = new Class({
             return value;
         }
     },
-    
-    /*
-     Function: setOffset
-     private function
-     
-     Determine the start point's coordinates as width and height for a shape
-     
-     Arguments:
-     - value - (array) Array with three entries to determine offset
-     - position - (string) Determine if the position is relative to previous element or absolute (relative to the canvas)
-     - size - (array) Array containing layer's width and height. Could be either a number or 'auto' to determine it from its offset
-     
-     Return:
-     offset - (array) An array with x and y start point coordinates, as well as width and height
-     */
+
     setOffset: function(value, position, size){
         var absolute = (position == 'relative') ? false : true;
         value = [this.convert2Px(value[0], 'y', absolute), this.convert2Px(value[1], 'x', absolute), this.convert2Px(value[2], 'y', absolute), this.convert2Px(value[3], 'x', absolute)];
@@ -476,19 +329,7 @@ UI.Paint = new Class({
         }
         return [offsetX, offsetY, width, height];
     },
-    
-    /*
-     Function: getProperties
-     private function
-     
-     Set all values to draw the canvas and prepare arrays for radius, offsets, size, ...
-     
-     Arguments:
-     key - (string) Layer name
-     
-     Return:
-     properties - (object) an object to be drawn
-     */
+
     getProperties: function(key){
         var properties = {
             position: $pick(this.props.layers[key].position, this.props.layers['default'].position),
@@ -546,19 +387,7 @@ UI.Paint = new Class({
         
         return properties;
     },
-    
-    /*
-     Function: setColor
-     private function
-     
-     Set the fill color, handling direction, gradient and opacity
-     
-     Arguments
-     part - (string) Determine for which part the color is set. Could be 'fill' or 'stroke'.
-     
-     Return:
-     (void)
-     */
+
     setColor: function(part, props){
         var ax, ay, bx, by, cx, cy, color;
         
@@ -675,19 +504,7 @@ UI.Paint = new Class({
         
         this.ctx[part + 'Style'] = color;
     },
-    
-    /*
-     Function: setTransformation
-     private function
-     
-     apply transformations, like rotation, scale and composite mode.
-     
-     Arguments:
-     props - (object) The layer properties.
-     
-     Return:
-     (void)
-     */
+
     setTransformation: function(props){
         if (props.shape != 'complex') {
             this.ctx.translate(props.size[0] / 2 + props.offset[0], props.size[1] / 2 + props.offset[1]);
@@ -710,19 +527,7 @@ UI.Paint = new Class({
             this.ctx.globalCompositeOperation = props.composite;
         }
     },
-    
-    /*
-     Function: drawShape
-     private function
-     
-     Draw the stroke and fill the shape
-     
-     Arguments:
-     props - (object) The layer properties.
-     
-     Return:
-     (void)
-     */
+
     drawShape: function(props){
         if (props.shadow) {
             this.setShadow(props.shadow);
@@ -744,19 +549,7 @@ UI.Paint = new Class({
             this.ctx.stroke();
         }
     },
-    
-    /*
-     Function: setShadow
-     private function
-     
-     Set Shadow Options
-     
-     Arguments:
-     props - (object) The shadow properties.
-     
-     Return:
-     (void)
-     */
+
     setShadow: function(shadow){
         var opacity = shadow.opacity || 1;
         var color = shadow.color || '#000000';
@@ -767,19 +560,7 @@ UI.Paint = new Class({
         this.ctx.shadowOffsetY = shadow.offsetY || 0;
         this.ctx.shadowBlur = shadow.blur || 0;
     },
-    
-    /*
-     Function: setImage
-     private function - experimental
-     
-     Draw an image on canvas handling patterns
-     
-     Arguments:
-     props - (object) The layer properties.
-     
-     Return:
-     (void)
-     */
+
     setImage: function(props){
     
         var that = this;
@@ -798,33 +579,9 @@ UI.Paint = new Class({
         //we draw it as a pattern
         img.src = props.image.url;
     },
-    
-    /*
-     Function: roundedRect
-     private function
-     
-     Draw a rounded rectangle path
-     
-     Arguments:
-     - props - (object) The layer properties.
-     
-     Example:
-     (start code)
-     layers: {
-     roundRect: {
-     offset: 1,
-     color: ['#494949', '#5f5f5f'],
-     opacity: 1,
-     radius: 4
-     }
-     }
-     (end)
-     
-     Return:
-     (void)
-     */
+ 
     roundedRect: function(props){
-        // preparing data befaore drawing
+        // preparing data before drawing
         var s0 = props.size[0];
         var s1 = props.size[1];
         
@@ -850,33 +607,7 @@ UI.Paint = new Class({
         
         this.ctx.closePath();
     },
-    
-    /*
-     Function: circle
-     private function
-     
-     Draw a circle or a circle part, determined width props.angle (array).
-     
-     Arguments:
-     - props - (object) The layer properties.
-     
-     Example:
-     (start code)
-     layers: {
-     circle: {
-     shape: 'circle',
-     position: 'absolute',
-     size: [10, 10],
-     opacity: 1,
-     offset: 0
-     }
-     }
-     (end)
-     
-     
-     Return:
-     (void)
-     */
+
     circle: function(props){
         //get angle
         props.angle = props.angle || [0, 360];
@@ -893,41 +624,7 @@ UI.Paint = new Class({
         this.ctx.arc(x, y, r, a, b, true);
         this.ctx.closePath();
     },
-    
-    /*
-     Function: line
-     private function
-     
-     Draw a line
-     
-     Arguments:
-     - props - (object) The layer properties.
-     
-     Props:
-     - shape - (string)lineUp/lineDown
-     - width -
-     - opacity - (float)
-     - color - (string)
-     - offset - (float/array)
-     Example:
-     (start code)
-     layers: {
-     line: {
-     position: 'absolute',
-     shape: 'lineUp',
-     opacity: 1,
-     width: 1,
-     color: '#000'
-     }
-     }
-     (end)
-     
-     Discussion:
-     
-     
-     Return:
-     (void)
-     */
+  
     line: function(props){
         // prepare datas
         props.stroke = props.stroke ||
@@ -952,34 +649,7 @@ UI.Paint = new Class({
             this.ctx.lineTo(h0 - 0.5, h1 - 0.5);
         }
     },
-    
-    /*
-     Function: triangle
-     private function
-     
-     Draw a triangle in a rectangle determine with props.size (array)
-     
-     Arguments:
-     - props - (object) The layer properties.
-     
-     Example:
-     (start code)
-     layers: {
-     triangle: {
-     shape: 'triangle',
-     radius: [8, 8, 8, 8],
-     position: 'abolute',
-     offset: 13,
-     color: '#fff'
-     }
-     }
-     (end)
-     
-     
-     
-     Return:
-     (void)
-     */
+ 
     triangle: function(props){
         // prepare datas
         var h0 = props.size[0] / 2;
@@ -992,42 +662,7 @@ UI.Paint = new Class({
         this.ctx.lineTo(0, -h1);
         this.ctx.closePath();
     },
-    
-    /*
-     Function: complex
-     private function
-     
-     to draw complex shapes
-     
-     Arguments:
-     - props - (object) The layer properties.
-     
-     Example of a layer using complex shape:
-     (start code)
-     layers: {
-     complex: {
-     shape: 'complex',
-     baseSize: [150, 150],
-     def: [
-     ['moveTo', 75, 25],
-     ['quadraticCurveTo', 25, 25, 25, 62.5],
-     ['quadraticCurveTo', 25, 100, 50, 100],
-     ['quadraticCurveTo', 50, 120, 30, 125],
-     ['quadraticCurveTo', 60, 120, 65, 100],
-     ['quadraticCurveTo', 125, 100, 125, 62.5],
-     ['quadraticCurveTo', 125, 25, 75, 25]
-     ]
-     }
-     }
-     (end)
-     
-     Return:
-     (void)
-     
-     Discussion:
-     This method is an experiment
-     
-     */
+
     complex: function(props){
         var ctx = this.ctx;
         
@@ -1091,18 +726,7 @@ UI.Paint = new Class({
         
         ctx.closePath();
     },
-    
-    /*
-     Function: inject
-     inject canvas then return class instance
-     
-     Arguments:
-     - target		: (element) - the target dom element
-     - position	: (string - optional) the position were to inject
-     
-     Returns:
-     this
-     */
+
     inject: function(target, position){
         this.canvas.inject(target, position);
         return this;
