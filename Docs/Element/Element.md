@@ -23,17 +23,13 @@ Options
 - component - (*string*) Component name, used for skinning
 - type - (*string*) Type name, used for skinning
 - state - (*string*) Default state applied on initialize
-
 - className - (*string*) If this is defined, UI.Element will use this as element class name instead of generating one with options.lib, component and type
 - tag - (*string*) The element tag. By default it is 'div'
-	 
 - resizable - (*boolean*) Define if the element will be resizable. By default set to false
 - draggable - (*boolean*) Define if the element will be draggable. By default set to false
 - selectable - (*boolean*) Define if element content is selectable
-	 
 - skin - (*string*) The skin name to use by default for components
 - props - (*object*) Skin properties that will overwrite properties defined in skin sheet
-	 
 - style - (*object*) Element styles properties that will overwrite styles defined in skin sheet
 
 
@@ -192,12 +188,13 @@ Set the element location
 
 ### Arguments:
 
-1. left - (**)
-2. top - (**)
-3. morph - (**)
+1. left - (*integer*) new element left position
+2. top - (*integer*) new element top position
+3. morph - (*string*) If specified, a morph transition will be done to new location
 
 ### Returns:
-
+	
+	this
 
 
 
@@ -205,39 +202,12 @@ Set the element location
 UI.Element Method: setBehavior {#UI.Element:setBehavior}
 ---------------------------------------------------------
 
+Set default element behavior, addind general events (mouse events)
 
-### Syntax:
-
-
-
-
-UI.Element Method: mousedown {#UI.Element:mousedown}
------------------------------------------------------
-
-
-### Syntax:
-
-
-
-### Arguments:
-
-1. e - (**)
-
-
-UI.Element Method: click {#UI.Element:click}
----------------------------------------------
-
-
-### Syntax:
-
-
-
-
-UI.Element Method: mouseup {#UI.Element:mouseup}
--------------------------------------------------
-
-
-### Syntax:
+### Return:
+     (void)
+### Note:
+	     onClick event is fired on mouse up because of Explorer. Sometimes it doesn't fire onClick event (f.e. if a button has no label).
 
 
 
@@ -245,86 +215,45 @@ UI.Element Method: mouseup {#UI.Element:mouseup}
 UI.Element Method: enableDrag {#UI.Element:enableDrag}
 -------------------------------------------------------
 
+Add draggable capabilities for the element.
 
 ### Syntax:
 
-
+	this.enableDrag();
 
 ### Returns:
 
-
+this
 
 
 
 UI.Element Method: disableDrag {#UI.Element:disableDrag}
 ---------------------------------------------------------
 
+Remove draggable capabilities for the element.
 
 ### Syntax:
 
-
-
+	this.disableDrag();
+	
 ### Returns:
 
-
-
+this
 
 
 UI.Element Method: enableResize {#UI.Element:enableResize}
 -----------------------------------------------------------
 
+Add resizable capabilities for the element.
 
 ### Syntax:
 
-
+	this.enableResize()
 
 ### Returns:
 
+this
 
-
-
-
-UI.Element Method: onStart {#UI.Element:onStart}
--------------------------------------------------
-
-
-### Syntax:
-
-
-
-
-UI.Element Method: onDrag {#UI.Element:onDrag}
------------------------------------------------
-
-
-### Syntax:
-
-
-
-
-UI.Element Method: onComplete {#UI.Element:onComplete}
--------------------------------------------------------
-
-
-### Syntax:
-
-
-
-
-UI.Element Method: resizeDrag {#UI.Element:resizeDrag}
--------------------------------------------------------
-
-
-### Syntax:
-
-
-
-
-UI.Element Method: resizeComplete {#UI.Element:resizeComplete}
----------------------------------------------------------------
-
-
-### Syntax:
 
 
 
@@ -332,6 +261,7 @@ UI.Element Method: resizeComplete {#UI.Element:resizeComplete}
 UI.Element Method: getCenterLocation {#UI.Element:getCenterLocation}
 ---------------------------------------------------------------------
 
+Get the coordinates to place the element at center's window
 
 ### Syntax:
 
@@ -339,65 +269,75 @@ UI.Element Method: getCenterLocation {#UI.Element:getCenterLocation}
 
 ### Returns:
 
-
+* location - (*object*) An object containing top and left properties.
 
 
 
 UI.Element Method: adaptLocation {#UI.Element:adaptLocation}
 -------------------------------------------------------------
 
+Adapt element location if it is dragged out of its boundaries
 
 ### Syntax:
 
-
+	this.adaptLocation();
 
 
 UI.Element Method: show {#UI.Element:show}
 -------------------------------------------
 
+Fire the onShow event, and set display block and full opacity to element
 
 ### Syntax:
 
-
+	this.show();
 
 ### Returns:
 
-
+this
 
 
 
 UI.Element Method: hide {#UI.Element:hide}
 -------------------------------------------
 
+Fire the onHide Event, and set display none to element
 
 ### Syntax:
 
-
+	this.hide();
 
 ### Returns:
 
-
+this
 
 
 
 UI.Element Method: setStyle {#UI.Element:setStyle}
 ---------------------------------------------------
 
+Sets a CSS property to the Element.
 
 ### Syntax:
 
-
+	this.setStyle(property,value);
 
 ### Arguments:
 
-1. style - (**)
-2. value - (**)
+1. property - (*string*) The property to set.
+2. value - (*mixed*) The value to which to set it. Numeric values of properties requiring a unit will automatically be appended with 'px'.
 
 ### Returns:
 
+* (*instance*) This class.
 
 
+### Example:
 
+	this.setStyle('height', '480px');
+
+### Note:
+	Reimplementation of the setStyle Native Element method from mootools
 
 UI.Element Method: setStyles {#UI.Element:setStyles}
 -----------------------------------------------------
@@ -413,7 +353,7 @@ UI.Element Method: setStyles {#UI.Element:setStyles}
 
 ### Returns:
 
-
+* (*instance*) This class.
 
 
 
