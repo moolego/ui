@@ -1,80 +1,17 @@
 /*
-	 Class: UI.Element
-	 UI.Element is the root class of most class of Moolego UI. It is used by :
-	 - <UI.View>
-	 - <UI.Window>
-	 - <UI.Menu> (also <UI.Context>)
-	 - Most Controls elements (<UI.Button>, ...)
-	 
-	 Arguments:
-	 Options
-	 
-	 Options:
-	 - lib - (string) The prefix used for element class
-	 - component - (string) Component name, used for skinning
-	 - type - (string) Type name, used for skinning
-	 - state - (string) Default state applied on initialize
-	 
-	 - className - (string) If this is defined, UI.Element will use this as element class name instead of generating one with options.lib, component and type
-	 - tag - (string) The element tag. By default it is 'div'
-	 
-	 - resizable - (boolean) Define if the element will be resizable. By default set to false
-	 - draggable - (boolean) Define if the element will be draggable. By default set to false
-	 - selectable - (boolean) Define if element content is selectable
-	 
-	 - skin - (string) The skin name to use by default for components
-	 - props - (object) Skin properties that will overwrite properties defined in skin sheet
-	 
-	 - style - (object) Element styles properties that will overwrite styles defined in skin sheet
-	 
-	 Events:
-	 - onClick - (function) A function who will be fired on element click
-	 - onMouseDown - (function) A function who will be fired on element mousedown
-	 - onBuild - (function) A function who will be fired on element build start
-	 - onBuildComplete - (function) A function who will be fired on element build complete
-	 - onResizeStart - (function) A function who will be fired on element resize start
-	 - onResize - (function) A function who will be fired on element resize
-	 - onResizeComplete - (function) A function who will be fired on element complete
-	 - onDragStart - (function) A function who will be fired on element drag start
-	 - onDrag - (function) A function who will be fired on element drag
-	 - onDragComplete - (function) A function who will be fired on element drag complete
-	 
-	 Example:
-	 (start code)
-	 var element = new UI.Element({
-	 html : 'Hello World'
-	 }).inject(document.body);
-	 (end)
-	 Implied global:
-	 window,UI,ui,
-	 Browser,Class,Drag,Element,Event,Events,Fx,Options,
-	 $H,$defined,$empty,$random,$type
-	 
-	 Members:
-	 Canvas, Element, Engine, Implements, Morph, MozUserSelect,
-	 Skin, adaptLocation, addClass, addEvent, addEvents, adopt, bind, build,
-	 buildResizer, canvas, class, className, click, closeMenu, component,
-	 controller, cursor, debug, defaultLeft, defaultTop, destroy,
-	 disableDrag, disableSelect, dragHandler, dragHandlers, dragLimitX,
-	 dragLimitY, draggable, element, enableDrag, enableResize, enableSelect,
-	 events, fireEvent, for, fx, get, getCenterLocation, getCoordinates,
-	 getHeight, getLength, getSize, getStyle, getWidth, group, handle,
-	 height, hide, html, id, implement, initialize, inject, label, layers,
-	 left, length, lib, limit, makeResizable, mouseOut, mousedown,
-	 mouseenter, mouseleave, mouseover, mouseup, name, onBuild,
-	 onBuildComplete, onClick, onComplete, onDrag, onDragComplete,
-	 onDragStart, onHide, onMouseDown, onResize, onResizeComplete,
-	 onResizeStart, onShow, onStart, onmousedown, onselectstart, options,
-	 props, register, reorder, reposFx, resizable, resizeDrag, resizeLimitX,
-	 resizeLimitY, resizer, selectable, set, setBehavior, setCanvas,
-	 setClassName, setLocation, setOptions, setSize, setSkin, setState,
-	 setStyle, setStyles, shadowMagnify, show, skin, start, state, stop,
-	 style, styles, tag, toElement, toInt, top, trident, type, ui,
-	 useAutoClass, width, x, y, zIndex
-	 Discussion:
-	 Why don't we extend Mootools native Element or refactor...
+ ---
+ description: Canvas Adapter. Contains basic drawing functions.
  
+ authors: [moolego,r2d2]
+ 
+ requires:
+ - core:1.2.1: '*'
+ 
+ provides: [UI.Element]
+ 
+ ...
  */
+
 UI.Element = new Class({
 
     Implements: [Events, Options],
@@ -130,14 +67,7 @@ UI.Element = new Class({
          onShow: $empty,
          onHide: $empty*/
     },
-    
-    /* 
-     Constructor: initialize
-     Construtor
-     
-     Arguments:
-     options - (object) options
-     */
+
     initialize: function(options){
         this.setOptions(options);
         this.state = this.options.state;
@@ -148,42 +78,11 @@ UI.Element = new Class({
         this.build();
         this.setBehavior();
     },
-    
-    /* 
-     Function: toElement
-     This method allows to get the DOM element built with <UI.Element> in this way :
-     (start code)
-     var myElement = new UI.Element({
-     html : 'Hello World'
-     }).inject(document.body);
-     var coord = $(myElement).getCoordinates();
-     (end)
-     It will actually return myElement.element.
-     
-     But as most used mootools functions are directly reimplemented in <UI.Element>, you can most of time simply do :
-     (start code)
-     var myElement = new UI.Element({
-     html : 'Hello World'
-     }).inject(document.body);
-     var coord = myElement.getCoordinates();
-     (end)
-     
-     Return:
-     this.element - (element) The DOM element
-     */
+   
     toElement: function(){
         return this.element;
     },
-    
-    /* 
-     Function: build
-     private function
-     
-     Create a native element
-     
-     Return:
-     (void)
-     */
+
     build: function(){
         this.fireEvent('build');
         
@@ -204,16 +103,7 @@ UI.Element = new Class({
             this.buildResizer();
         }
     },
-    
-    /*
-     Function: buildResizeHandler
-     private function
-     
-     Create a new element as resize handler
-     
-     Returns:
-     (void)
-     */
+
     buildResizer: function(){
         this.resizer = new UI.Element({
             skin: this.options.skin,
@@ -230,16 +120,7 @@ UI.Element = new Class({
             var ev = new Event(e).stop();
         });
     },
-    
-    /*
-     Function: setClassName
-     private function
-     
-     define class name from this.options.lib, component and type or with className if defined
-     
-     Return:
-     (void)
-     */
+
     setClassName: function(){
         if (this.options.className) {
             this.className = this.options.className;
@@ -257,16 +138,7 @@ UI.Element = new Class({
                 }
             }
     },
-    
-    /* 
-     Method: setSkin
-     private function
-     
-     Get the skin for the current component and set this props with default properties
-     
-     Return:
-     (void)
-     */
+
     setSkin: function(){
         this.options.skin = this.options.skin ? this.options.skin : ui.defaultSkin;
         UI.skin = new UI.Skin(this.options.skin);
@@ -274,18 +146,6 @@ UI.Element = new Class({
         this.props = this.skin[this.options.state];
     },
     
-    
-    /* 
-     Method: setState
-     Set the element state
-     
-     Arguments:
-     state - (string) the name of new state to set and draw
-     size - (object) Optional - An object containing width and height to set a new size while changing state
-     
-     Return:
-     this
-     */
     setState: function(state, size){
         if (this.skin[state]) {
             this.state = state;
@@ -297,13 +157,7 @@ UI.Element = new Class({
         }
         return this;
     },
-    
-    /* 
-     Method: setCanvas
-     private function
-     
-     Create a canvas element inject it and add a redraw event
-     */
+	
     setCanvas: function(){
         if (this.paint || (this.props && !this.props.layers) || (this.props && this.props.layers && $H(this.props.layers).getLength() <= 2) || ($defined(this.props.layers.def) && !this.props.layers.def.length)) {
             return false;
@@ -348,19 +202,6 @@ UI.Element = new Class({
         });
     },
     
-    
-    /* 
-     Method: setSize
-     Set the element size and optionaly a new state
-     
-     Arguments:
-     width - (integer) new element width
-     height - (integer) new element height
-     state - (string) (optional) state to draw
-     
-     Return:
-     this
-     */
     setSize: function(width, height, state, target){
         this.fireEvent('resize');
         
@@ -376,29 +217,7 @@ UI.Element = new Class({
         this.fireEvent('render', state);
         return this;
     },
-    
-    /* 
-     Method: setLocation
-     Set the element location
-     
-     Arguments:
-     left - (integer) new element left position
-     top - (integer) new element top position
-     moprh - (string) (optional) If specified, a morph transition will be done to new location
-     
-     Return:
-     this
-     
-     Example:
-     (start code)
-     var myWindow = new UI.Window();
-     var coord = myWindow.getCenterLocation();
-     myWindow.setLocation(coord.left, coord.top, 'morph');
-     (end)
-     
-     Discussion:
-     
-     */
+
     setLocation: function(left, top, morph){
         this.element.left = left || this.options.left || this.props.defaultLeft || this.element.getCoordinates().x - this.props.shadowMagnify * 2;
         this.element.top = top || this.options.top || this.props.defaultTop || this.element.getCoordinates().y - this.props.shadowMagnify * 2;
@@ -410,19 +229,7 @@ UI.Element = new Class({
         
         return this;
     },
-    
-    /*
-     Function: setBehavior
-     private function
-     
-     Set default element behavior, addind general events (mouse events)
-     
-     Return:
-     (void)
-     
-     Discussion:
-     onClick event is fired on mouse up because of Explorer. Sometimes it doesn't fire onClick event (f.e. if a button has no label).
-     */
+
     setBehavior: function(){
     
         var self = this;
@@ -459,11 +266,7 @@ UI.Element = new Class({
             mouseOut: this.fireEvent.bind(this, 'mouseOut')
         });
     },
-    
-    /*
-     Function: enableDrag
-     Add draggable capabilities for the element.
-     */
+
     enableDrag: function(){
         if (this.dragHandlers.length === 0) {
             this.dragHandlers = null;
@@ -487,11 +290,7 @@ UI.Element = new Class({
         
         return this;
     },
-    
-    /*
-     Function: enableDrag
-     Remove draggable capabilities for the element.
-     */
+
     disableDrag: function(){
         if (this.dragHandler) {
             this.dragHandler.stop();
@@ -499,11 +298,7 @@ UI.Element = new Class({
         
         return this;
     },
-    
-    /*
-     Function: enableResize
-     Add resizable capabilities for the element.
-     */
+
     enableResize: function(){
 		var that = this;
 		
@@ -545,14 +340,7 @@ UI.Element = new Class({
         
         return this;
     },
-    
-    /* 
-     Method: getCenterLocation
-     Get the coordinates to place the element at center's window
-     
-     Return:
-     location - (object) An object containing top and left properties.
-     */
+
     getCenterLocation: function(){
         var location = {};
         
@@ -561,14 +349,7 @@ UI.Element = new Class({
         
         return location;
     },
-    
-    /*
-     Function: adaptLocation
-     Adapt element location if it is dragged out of its boundaries
-     
-     Return:
-     (void)
-     */
+
     adaptLocation: function(){
         var location = {};
         var needed = false;
@@ -603,14 +384,7 @@ UI.Element = new Class({
             }
         }
     },
-    
-    /*
-     Function: show
-     Fire the onShow event, and set display block and full opacity to element
-     
-     Return:
-     this
-     */
+ 
     show: function(){
         this.fireEvent('show');
         this.element.setStyle('opacity', 1);
@@ -618,14 +392,7 @@ UI.Element = new Class({
         
         return this;
     },
-    
-    /*
-     Function: hide
-     Fire the onHide Event, and set display none to element
-     
-     Return:
-     this
-     */
+ 
     hide: function(){
         this.fireEvent('hide');
         this.element.hide();

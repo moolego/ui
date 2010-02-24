@@ -1,93 +1,118 @@
 Class: UI.Element {#UI.Element}
 ===============================
 
-
+UI.Element is the root class of most class of Moolego UI.
 
 ### Implements:
 
 Events, Options
 
-
-
-
-UI.Element Method: constructor {#UI.Element:constructor}
----------------------------------------------------------
-
-
 ### Syntax:
 
-	var myUI.Element = new UI.Element(options);
-
+	var element = new UI.Element({
+		html : 'Hello World'
+	}).inject(document.body);
+	
 ### Arguments:
 
-1. options - (**)
+Options
 
 ### Options:
 
-* lib - (**)
-* component - (**)
-* type - (**)
-* state - (**)
-* props - (**)
-* skin - (**)
-* styles - (**)
-* group - (**)
-* className - (**)
-* useAutoClass - (**)
-* tag - (**)
-* selectable - (**)
-* draggable - (**)
-* dragLimitX - (**)
-* dragLimitY - (**)
-* resizable - (**)
-* resizeLimitX - (**)
-* resizeLimitY - (**)
+- lib - (*string*) The prefix used for element class
+- component - (*string*) Component name, used for skinning
+- type - (*string*) Type name, used for skinning
+- state - (*string*) Default state applied on initialize
 
+- className - (*string*) If this is defined, UI.Element will use this as element class name instead of generating one with options.lib, component and type
+- tag - (*string*) The element tag. By default it is 'div'
+	 
+- resizable - (*boolean*) Define if the element will be resizable. By default set to false
+- draggable - (*boolean*) Define if the element will be draggable. By default set to false
+- selectable - (*boolean*) Define if element content is selectable
+	 
+- skin - (*string*) The skin name to use by default for components
+- props - (*object*) Skin properties that will overwrite properties defined in skin sheet
+	 
+- style - (*object*) Element styles properties that will overwrite styles defined in skin sheet
+
+
+## Events:
+
+- onClick - (*function*) A function who will be fired on element click
+- onMouseDown - (*function*) A function who will be fired on element mousedown
+- onBuild - (*function*) A function who will be fired on element build start
+- onBuildComplete - (*function*) A function who will be fired on element build complete
+- onResizeStart - (*function*) A function who will be fired on element resize start
+- onResize - (*function*) A function who will be fired on element resize
+- onResizeComplete - (*function*) A function who will be fired on element complete
+- onDragStart - (*function*) A function who will be fired on element drag start
+- onDrag - (*function*) A function who will be fired on element drag
+- onDragComplete - (*function*) A function who will be fired on element drag complete
 
 UI.Element Method: toElement {#UI.Element:toElement}
 -----------------------------------------------------
 
+This method allows to get the DOM element built with <UI.Element>
 
 ### Syntax:
 
+	var myElement = new UI.Element({
+		html : 'Hello World'
+	}).inject(document.body);
 
+	var coord = $(myElement).getCoordinates();
 
-### Returns:
+It will actually return myElement.element.
 
+But as most used mootools functions are directly reimplemented in <UI.Element>, you can most of time simply do :
+     
+	var myElement = new UI.Element({
+		html : 'Hello World'
+	}).inject(document.body);
+	var coord = myElement.getCoordinates();
+     
+### Return:
 
-
-
+* (*element*) The DOM element
 
 UI.Element Method: build {#UI.Element:build}
 ---------------------------------------------
 
+Create a native element
 
 ### Syntax:
 
+	this.build();
 
+### Return:
 
+	(*void*)
 
 UI.Element Method: buildResizer {#UI.Element:buildResizer}
 -----------------------------------------------------------
 
+Create a new element as resize handler
 
 ### Syntax:
 
-
+	this.buildResizer();
 
 
 UI.Element Method: setClassName {#UI.Element:setClassName}
 -----------------------------------------------------------
 
+Define class name from this.options.lib, component and type or with className if defined
 
 ### Syntax:
 
-
+	this.setClassName();
 
 
 UI.Element Method: setSkin {#UI.Element:setSkin}
 -------------------------------------------------
 
+Get the skin for the current component and set this props with default properties
 
 ### Syntax:
 
@@ -97,53 +122,57 @@ UI.Element Method: setSkin {#UI.Element:setSkin}
 UI.Element Method: setState {#UI.Element:setState}
 ---------------------------------------------------
 
+Set the element state
 
 ### Syntax:
 
-
+	this.setStat('default');
 
 ### Arguments:
 
-1. state - (**)
-2. size - (**)
+Arguments:
+1. state - (*string*) the name of new state to set and draw
+2. size - (*object*) Optional - An object containing width and height to set a new size while changing state
 
 ### Returns:
 
-
+this
 
 
 
 UI.Element Method: setCanvas {#UI.Element:setCanvas}
 -----------------------------------------------------
 
+Create a canvas element inject it and add a redraw event
 
 ### Syntax:
 
-
+	this.setCanvas();
 
 ### Returns:
 
-
-
-
+void
 
 UI.Element Method: setSize {#UI.Element:setSize}
 -------------------------------------------------
 
+Set the element size and optionaly a new state
 
 ### Syntax:
 
+	this.setSize
 
 
 ### Arguments:
 
-1. width - (**)
-2. height - (**)
-3. state - (**)
-4. target - (**)
+width - (*integer*) new element width
+height - (*integer*) new element height
+state - (*string*) (*optional*) state to draw
+target - (**)
 
 ### Returns:
 
+this
 
 
 
@@ -151,10 +180,15 @@ UI.Element Method: setSize {#UI.Element:setSize}
 UI.Element Method: setLocation {#UI.Element:setLocation}
 ---------------------------------------------------------
 
+Set the element location
 
 ### Syntax:
 
-
+	var myWindow = new UI.Window();
+	
+	var coord = myWindow.getCenterLocation();
+	
+	myWindow.setLocation(coord.left, coord.top, 'morph');
 
 ### Arguments:
 

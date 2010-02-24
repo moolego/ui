@@ -1,6 +1,8 @@
 Class: UI.Paint {#UI.Paint}
 ===========================
 
+Canvas Adapter. Contains basic drawing functions.
+
 ### Implements:
 
 Events, Options
