@@ -202,12 +202,15 @@ Set the element location
 UI.Element Method: setBehavior {#UI.Element:setBehavior}
 ---------------------------------------------------------
 
-Set default element behavior, addind general events (mouse events)
+Set default element behavior, adding general events (mouse events)
 
 ### Return:
+
      (void)
+
 ### Note:
-	     onClick event is fired on mouse up because of Explorer. Sometimes it doesn't fire onClick event (f.e. if a button has no label).
+
+onClick event is fired on mouse up because of Explorer. Sometimes it doesn't fire onClick event (f.e. if a button has no label).
 
 
 
@@ -253,8 +256,6 @@ Add resizable capabilities for the element.
 ### Returns:
 
 this
-
-
 
 
 
@@ -342,54 +343,84 @@ Sets a CSS property to the Element.
 UI.Element Method: setStyles {#UI.Element:setStyles}
 -----------------------------------------------------
 
+Applies a collection of styles to the Element.
 
 ### Syntax:
 
-
+	this.setStyles(styles);
 
 ### Arguments:
 
-1. styles - (**)
+1. styles - (*object*) An object of property/value pairs for all the styles to apply.
 
 ### Returns:
 
 * (*instance*) This class.
 
+### Example:
+
+	this.setStyles({
+    	border: '1px solid #fff',
+    	width: 600,
+    	height: 480
+	});
+
+### Note:
+
+Reimplementation of the setStyle Native Element method from mootools. 
+See mootools native method for more info.
 
 
 UI.Element Method: getStyle {#UI.Element:getStyle}
 ---------------------------------------------------
 
+Returns the style of the Element given the property passed in.
 
 ### Syntax:
 
-
+	var style = this.getStyle(property);
 
 ### Arguments:
 
-1. style - (**)
+1. property - (*string*) The css style property you want to retrieve.
 
 ### Returns:
 
+* (*string*) The style value.
 
+### Examples:
 
+	myComponent.getStyle('height'); // Returns "480px".
+	myComponent.getStyle('height').toInt(); // Returns 480.
+
+### Note:
+
+Reimplementation of the getStyle Native Element method from mootools. 
+See mootools native method for more info.
 
 
 UI.Element Method: inject {#UI.Element:inject}
 -----------------------------------------------
 
+Injects, or inserts, the Component at a particular place relative to the Element's children (specified by the second the argument).
 
 ### Syntax:
 
-
+	myComponent.inject(el[, where]);
 
 ### Arguments:
 
-1. container - (**)
-2. position - (**)
+1. el - (*mixed*) el can be the id of an element or an element.
+2. where - (*string, optional: defaults to 'bottom'*) The place to inject this Element. Can be 'top', 'bottom', 'after', or 'before'.
 
 ### Returns:
 
+* (*instance*) This class.
+
+### Note
+
+Reimplementation of the inject Native Element method from mootools. 
+See mootools native method for more info.
 
 
 
