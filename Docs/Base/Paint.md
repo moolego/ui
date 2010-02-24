@@ -40,24 +40,8 @@ Events, Options
 	MooTools - $empty, Class, Element, Events, Options
 
 ### Members:
-	Canvas, Engine, Implements, PI, abs, absSize, addColorStop,
-	angle, arc, atan, beginPath, bezier, bezierCurveTo, build, canvas,
-	canvasSize, circle, clearRect, closePath, color, composite, context,
-	convert2Px, cos, createLinearGradient, createPattern,
-	createRadialGradient, ctx, debug, default, direction,
-	draw, drawShadows, drawShadowsCalled,
-	drawShape, each, endCircle, fill, fillStyle, fireEvent, getContext,
-	getProperties, globalCompositeOperation, gradient, height, hexToRgb,
-	image, initialize, inject, join, layers, left, length, line, lineTo,
-	lineWidth, magnify, match, moveTo, offset, offsetX, offsetY, onComplete,
-	onload, opacity, options, pattern, position, pow, props,
-	quadraticCurveTo, radius, ratio, relSize, def, restore, rotate,
-	rotation, roundedRect, save, scale, setColor, setImage, setOffset,
-	setOptions, setProperties, setSize, setStyles, setTransformation,
-	shadow, shadowMagnify, shadowOffset, shadowSet, shadowSize,
-	shadowThickness, shape, sin, size, sqrt, src, startCircle, stop, stroke,
-	styles, test, toInt, top, trace, translate, triangle, trident, type,
-	url, width, zIndex
+
+	Canvas, Engine, Implements, PI, abs, absSize, addColorStop, angle, arc, atan, beginPath, bezier, bezierCurveTo, build, canvas, canvasSize, circle, clearRect, closePath, color, composite, context, convert2Px, cos, createLinearGradient, createPattern, createRadialGradient, ctx, debug, default, direction, draw, drawShadows, drawShadowsCalled, drawShape, each, endCircle, fill, fillStyle, fireEvent, getContext,  getProperties, globalCompositeOperation, gradient, height, hexToRgb, image, initialize, inject, join, layers, left, length, line, lineTo, lineWidth, magnify, match, moveTo, offset, offsetX, offsetY, onComplete, onload, opacity, options, pattern, position, pow, props, quadraticCurveTo, radius, ratio, relSize, def, restore, rotate, rotation, roundedRect, save, scale, setColor, setImage, setOffset, setOptions, setProperties, setSize, setStyles, setTransformation, shadow, shadowMagnify, shadowOffset, shadowSet, shadowSize, shadowThickness, shape, sin, size, sqrt, src, startCircle, stop, stroke, styles, test, toInt, top, trace, translate, triangle, trident, type, url, width, zIndex
 
 
 UI.Paint Method: build {#UI.Paint:build}
