@@ -52,7 +52,7 @@
 	    onScroll, openOnRollover, options, padding, parent, position, props, 
 	    push, radius, removeEvents, removeRollover, removeScrolls, 
 	    removeSubmenu, right, rollover, rolloverType, scrollMargin, 
-	    scrollToSelected, scrolls, selected, separator, set, setBehavior, 
+	    scrollToSelected, scrolls, selected, separator, set, attach, 
 	    setCanvas, setCorners, setPosition, setRollover, setSize, setState, 
 	    setStyle, setStyles, show, showDelay, skin, start, stop, styles, 
 	    submenu, tag, target, text, time, toInt, top, type, width, wrapper, x, 
@@ -167,7 +167,7 @@ UI.Menu = new Class({
 
 
 	/*
-	Function: setBehavior
+	Function: attach
 		private function
 		
 		Call UI.Element build, then create a menu wrapper
@@ -179,7 +179,7 @@ UI.Menu = new Class({
 		<UI.Element::build>
 	*/
 
-	setBehavior : function(){
+	attach : function(){
 		this.parent();
 		if (!this.options.closeMenu) {
 			this.addEvent('onCloseMenu', function(e){

@@ -22,14 +22,14 @@ provides: [UI.Image]
 	Options:
 		- tag - (string) element tag, by default 'span'
 		- html - (string) label text, by default Label
-	
+		- src - (string) path to the image 
 	Returns:
 		Box element
 		
 	Example:
 		(start code)
-		var box = new UI.Box({
-			html	: 'Hello world!',
+		var image = new UI.Image({
+			src	: 'http://ui.moolego.org/img/head/moolego.png',
 		}).inject(this.element);
 		(end)
 	
@@ -45,9 +45,7 @@ UI.Image = new Class({
 		component: 'image',
 		
 		tag: 'div',
-		html: 'Box',
-		
-		emboss: false,
+		html: 'div',
 		
 		selectable: false
 	},

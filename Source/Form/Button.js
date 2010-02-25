@@ -29,7 +29,7 @@
 		Button, Control, Extends, Label, addEvents, bind, build, 
 	    component, components, element, getForm, html, image, inject, label, 
 	    mousedown, mouseenter, mouseleave, mouseup, onImageLoad, options, 
-	    parent, props, setBehavior, setSize, setState, setStyles, skin, state, 
+	    parent, props, attach, setSize, setState, setStyles, skin, state, 
 	    stop, styles, submit
 */
 
@@ -96,7 +96,7 @@ UI.Button = new Class({
 	},
 	
 	/* 
-	Function: setBehavior
+	Function: attach
 		private function
 		
 		Set behavior relative to button (mouseenter, mousedown, mouseup, mouseleave)
@@ -105,11 +105,11 @@ UI.Button = new Class({
 		(void)
 	
 	See also:
-		<UI.Control::setBehavior>
-		<UI.Element::setBehavior>
+		<UI.Control::attach>
+		<UI.Element::attach>
 	*/
 	
-	setBehavior: function(){
+	attach: function(){
 		this.parent();
 
 		this.element.addEvents({

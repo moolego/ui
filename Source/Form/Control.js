@@ -19,7 +19,7 @@
 		Control, Element, Extends, addEvents, bind, blur, build, 
 	    components, control, element, fireEvent, focus, get, getForm, getParent, 
 	    getProperty, getSize, height, inject, input, label, name, options, 
-	    parent, props, set, setBehavior, setInput, setSize, type, value, width, 
+	    parent, props, set, attach, setInput, setSize, type, value, width, 
 	    x, y
 	
 	Discussion:
@@ -143,7 +143,7 @@ UI.Control = new Class({
 	},
 	
 	/* 
-	Function: setBehavior
+	Function: attach
 		private function
 		
 		Set control relative behavior (blur and focus)
@@ -152,10 +152,10 @@ UI.Control = new Class({
 		(void)
 	
 	See also:
-		<UI.Element::setBehavior>
+		<UI.Element::attach>
 	*/
 	
-	setBehavior : function(){
+	attach : function(){
 		this.parent();
 		if (this.input) {
 			this.input.addEvents({

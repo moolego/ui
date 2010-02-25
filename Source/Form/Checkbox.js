@@ -104,7 +104,7 @@ UI.Checkbox = new Class({
 	},
 
 	/* 
-	Function: setBehavior
+	Function: attach
 		private function
 		
 		Set control relative behavior (blur and focus)
@@ -113,11 +113,11 @@ UI.Checkbox = new Class({
 		(void)
 	
 	See also:
-		<UI.Control::setBehavior>
-		<UI.Element::setBehavior>
+		<UI.Control::attach>
+		<UI.Element::attach>
 	*/
 	
-	setBehavior : function(){
+	attach : function(){
 		this.parent();
 		this.element.addEvents({
 			click: function(e){

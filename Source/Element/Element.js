@@ -49,23 +49,6 @@ UI.Element = new Class({
         resizable: false,
         resizeLimitX: [100, Window.getWidth()],
         resizeLimitY: [100, Window.getHeight()]
-    
-        // implemeted events
-    
-        /*
-         onClick: $empty,
-         onMouseDown: $empty,
-         onBuild: $empty,
-         onBuildComplete: $empty,
-         onResizeStart: $empty,
-         onResize: $empty,
-         onResizeComplete: $empty,
-         onDragStart: $empty,
-         onDrag: $empty,
-         onDragComplete: $empty,
-         
-         onShow: $empty,
-         onHide: $empty*/
     },
 
     initialize: function(options){
@@ -190,15 +173,14 @@ UI.Element = new Class({
         });
         
         this.addEvent('render', function(state){
-            var props;
             if (!state) {
-                props = this.props;
+                this.paint.props = this.props;
             }
             else {
-                props = this.skin[state] || this.props;
+                this.paint.props = this.skin[state] || this.props;
             }
             
-            this.paint.setSize(this.element.x + offsetWidth, this.element.y + offsetHeight, props);
+            this.paint.draw(this.element.x + offsetWidth, this.element.y + offsetHeight);
         });
     },
     
@@ -399,66 +381,23 @@ UI.Element = new Class({
         
         return this;
     },
-    
-    /*
-     Native Mootools Element:
-     Bind some native mootools element methods to element, so we can chain methods as in mootools
-     
-     Example:
-     (start code)
-     var element = new UI.Element({
-     html : 'Hello World'
-     }).inject(document.body).setStyle('border', '1px solid black).addClass('customElement');
-     (end)
-     */
-    /*
-     Function: setStyle
-     See mootools setStyle documentation
-     
-     Return:
-     this
-     */
+
     setStyle: function(style, value){
         this.element.setStyle(style, value);
         
         return this;
     },
-    
-    /*
-     Function: setStyles
-     See mootools setStyles documentation
-     
-     Return:
-     this
-     */
+
     setStyles: function(styles){
         this.element.setStyles(styles);
         
         return this;
     },
-    
-    /*
-     Function: getStyle
-     See mootools getStyle documentation
-     
-     Return:
-     this.element style
-     */
+
     getStyle: function(style){
         return this.element.getStyle(style);
     },
-    
-    /*
-     Function: inject
-     Inject the element element into container, fire an inject event at beginning and an injected event at the end
-     
-     Argument:
-     container - see mootools inject documentation
-     position - see mootools inject documentation
-     
-     Return:
-     this
-     */
+
     inject: function(container, position){
         this.fireEvent('inject');
 		
@@ -472,39 +411,6 @@ UI.Element = new Class({
         return this;
     },
     
-    /*
-     Function: adopt
-     See mootools adopt documentation
-     
-     Return:
-     this
-     */
-    adopt: function(element){
-        this.element.adopt(element);
-        this.setSize();
-        return this;
-    },
-    
-    /*
-     Function: addClass
-     See mootools addClas documentation
-     
-     Return:
-     this
-     */
-    addClass: function(className){
-        this.element.addClass(className);
-        
-        return this;
-    },
-    
-    /*
-     Function: set
-     See mootools set documentation
-     
-     Return:
-     this
-     */
     set: function(property, value){
         if (property == 'html' && this.label) {
             this.label.set(property, value);
@@ -526,69 +432,27 @@ UI.Element = new Class({
             }
         return this;
     },
-    
-    /*
-     Function: get
-     See mootools get documentation
-     
-     Return:
-     this.element properties
-     */
+
     get: function(property){
         return this.element.get(property);
     },
-    
-    /*
-     Function: getSize
-     See mootools getSize documentation
-     
-     Return:
-     this.element size
-     */
+
     getSize: function(){
         return this.element.getSize();
     },
-	
-	/*
-     Function: morph
-     See mootools morph documentation
-     
-     Return:
-     this.element moprh
-     */
+
     morph: function(props){
         return this.element.morph(props);
     },
-    
-    /*
-     Function: getComputedSize
-     See mootools more getComputedSize documentation
-     
-     Return:
-     this.element size
-     */
+
     getComputedSize: function(){
         return this.element.getComputedSize();
     },
-    
-    /*
-     Function: set
-     See mootools getCoordinates documentation
-     
-     Return:
-     this.element coordinates
-     */
+
     getCoordinates: function(ref){
         return this.element.getCoordinates(ref);
     },
-    
-    /*
-     Function: destroy
-     See mootools getCoordinates documentation
-     
-     Return:
-     (void)
-     */
+
     destroy: function(){
         this.element.destroy();
         return;

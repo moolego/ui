@@ -36,7 +36,7 @@
 		Element, Extends, Slider, addEvent, build, canvas, component, 
 	    controller, element, fireEvent, handler, initialize, inject, knob, mode, 
 	    offset, onChange, onComplete, onStart, onTick, options, parent, 
-	    property, range, register, set, setBehavior, setCanvas, setSize, 
+	    property, range, register, set, attach, setCanvas, setSize, 
 	    setStyle, skin, slider, snap, step, steps, toPosition, type, value, 
 	    wheel
 	
@@ -160,7 +160,7 @@ UI.Slider = new Class({
 	},
 	
 	/* 
-	Function: setBehavior
+	Function: attach
 		private function
 		
 		Set behavior relative to slider (complete)
@@ -169,7 +169,7 @@ UI.Slider = new Class({
 		(void)
 	*/
 	
-	setBehavior: function(){
+	attach: function(){
 		this.parent();
 		this.addEvent('complete', function(step){
 			this.value = step;

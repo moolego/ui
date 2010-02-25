@@ -52,7 +52,7 @@
 	    addMenuActions, bind, body, build, closeMenu, component, components, 
 	    content, controller, each, element, getFirst, getSize, getStyle, html, 
 	    inject, input, label, list, menu, mousedown, options, parent, position, 
-	    props, scrollToSelected, set, setBehavior, setInput, setStyle, show, 
+	    props, scrollToSelected, set, attach, setInput, setStyle, show, 
 	    skin, stop, styles, target, text, toInt, value, width, x
 		
 */
@@ -114,7 +114,7 @@ UI.Select = new Class({
 	},
 
 	/*
-		Method: setBehavior
+		Method: attach
 			private function
 			
 			Add events on element
@@ -123,11 +123,11 @@ UI.Select = new Class({
 			(void)
 		
 		See also:
-			<UI.Control::setBehavior>
-			<UI.Element::setBehavior>
+			<UI.Control::attach>
+			<UI.Element::attach>
 	*/
 
-	setBehavior: function(){
+	attach: function(){
 		this.parent();
 
 		//we add events on select

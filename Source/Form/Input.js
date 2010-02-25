@@ -27,7 +27,7 @@
 		
 	Members:
 		Control, Extends, Input, addEvents, bind, blur, component, 
-    	focus, name, options, parent, setBehavior, setState, value
+    	focus, name, options, parent, attach, setState, value
     	
 */
 
@@ -86,7 +86,7 @@ UI.Input = new Class({
 	},
 	
 	/* 
-	Function: setBehavior
+	Function: attach
 		private function
 		
 		Set control relative behavior (blur and focus)
@@ -95,11 +95,11 @@ UI.Input = new Class({
 		(void)
 	
 	See also:
-		<UI.Control::setBehavior>
-		<UI.Element::setBehavior>
+		<UI.Control::attach>
+		<UI.Element::attach>
 	*/
 	
-	setBehavior: function() {
+	attach: function() {
 		this.parent();
 		this.addEvents({
 			blur: this.setState.bind(this, 'default'),

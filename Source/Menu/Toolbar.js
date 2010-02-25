@@ -44,7 +44,7 @@
 	    initialize, inject, menu, menuWithAction, menus, mousedown, mouseenter, 
 	    mouseleave, mouseup, moveRollover, onComplete, openOnRollover, options, 
 	    overflow, parent, position, props, register, removeRollover, 
-	    removeSubmenu, rolloverType, setBehavior, setCanvas, setSize, setStyle, 
+	    removeSubmenu, rolloverType, attach, setCanvas, setSize, setStyle, 
 	    setStyles, start, stop, styles, submenu, tag, time, width, x, zIndex
 */
 
@@ -95,7 +95,7 @@ UI.Toolbar = new Class({
 		});
 	},
 	
-	setBehavior: function(){
+	attach: function(){
 
 		this.addEvent('onCloseMenu', function(){
 			this.removeSubmenu();

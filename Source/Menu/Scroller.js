@@ -50,7 +50,7 @@
 	    margin, marginBottom, marginTop, mouseout, mouseover, onResize, 
 	    onScroll, options, overflow, paddingBottom, paddingTB, paddingTop, 
 	    periodical, position, removeEvents, removeScrolls, resetSize, 
-	    scrollDown, scrollUp, scroller, setBehavior, setOptions, setStyle, 
+	    scrollDown, scrollUp, scroller, attach, setOptions, setStyle, 
 	    setStyles, setWrapper, skin, speed, state, stop, styles, target, toInt, 
 	    top, type, wheel, width, wrapper, y, zIndex
 */
@@ -85,7 +85,7 @@ UI.MenuScroller = new Class({
 		
 		this.resetSize();
 		this.setWrapper();
-		this.setBehavior();
+		this.attach();
 	},
 	
 	/* 
@@ -181,7 +181,7 @@ UI.MenuScroller = new Class({
 	},
 	
 	/* 
-	 Method: setBehavior
+	 Method: attach
 	 private function
 	 
 	 Add mousewheel event
@@ -189,7 +189,7 @@ UI.MenuScroller = new Class({
 	 Return:
 	 (void)
 	 */
-	setBehavior: function(){
+	attach: function(){
 		this.element.addEvent('mousewheel', function(e){
 			var ev = new Event(e).stop();
 			if (e.wheel > 0) {

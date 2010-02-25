@@ -69,7 +69,7 @@
 	    overlay, parent, position, propagateUnderShadow, props, push, register, 
 	    resetMinimizedLocation, resizable, resizeComplete, resizeLimitX, 
 	    resizeLimitY, resizeOnDragIfMaximized, resizer, right, scrollbar, set, 
-	    setBehavior, setContent, setLocation, setSize, setState, setStatus, 
+	    attach, setContent, setLocation, setSize, setState, setStatus, 
 	    setStyle, setStyles, setTitle, show, size, skin, state, status, styles, 
 	    tabView, tabbar, tag, title, toggle, toggleInterface, toolbar, top, 
 	    type, updateSize, useEffects, view, visibility, width, window, 
@@ -464,18 +464,18 @@ UI.Window = new Class({
 	},
 
 	/*
-	    Function: setBehavior
+	    Function: attach
 	    	private function
 	    	
-	    	Define the specific window behavior
+	    	Define the specific window attach
 	    
 	    Returns:
 	    	(void)
 	    
 	    See also:
-	    	<UI.Element::setBehavior>
+	    	<UI.Element::attach>
 	*/
-	setBehavior: function(){
+	attach: function(){
 		this.parent();
 		
 		// bizarre bizarre...

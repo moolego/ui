@@ -45,7 +45,7 @@ provides: [UI.Canvas]
 	    fade, fx, getCoordinates, getLocation, getSize, getStyle, height, hide, 
 	    html, image, initialize, inject, label, left, onComplete, onImageLoad, 
 	    onStart, options, parent, posFx, props, removeEvent, reposition, 
-	    resetPosition, resize, right, setBehavior, setLocation, setSize, 
+	    resetPosition, resize, right, attach, setLocation, setSize, 
 	    setStyles, setTipsPosition, show, start, styles, target, top, type, 
 	    wait, width, x, y, zIndex
 */
@@ -127,7 +127,7 @@ UI.Bubble = new Class({
 	},
 	
 	/* 
-	 Function: setBehavior
+	 Function: attach
 	 private function
 	 
 	 Add a click event to close the bubble
@@ -136,9 +136,9 @@ UI.Bubble = new Class({
 	 (void)
 	 
 	 See also:
-	 <UI.Element::setBehavior>
+	 <UI.Element::attach>
 	 */
-	setBehavior: function(){
+	attach: function(){
 		this.parent();
 		
 		this.element.addEvents({

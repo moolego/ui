@@ -65,7 +65,7 @@ UI.Textarea = new Class({
 	},
 	
 	/* 
-		Method: setBehavior
+		Method: attach
 			private function
 		
 			Set behavior
@@ -74,11 +74,11 @@ UI.Textarea = new Class({
 			(void)
 		
 		See also:
-			<UI.Control::setBehavior>
-			<UI.Element::setBehavior>
+			<UI.Control::attach>
+			<UI.Element::attach>
 	*/
 	
-	setBehavior: function(){
+	attach: function(){
 		this.parent();
 		this.addEvents({
 			blur: this.setState.bind(this, 'default'),

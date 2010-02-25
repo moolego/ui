@@ -34,7 +34,7 @@
 	    addEvents, bind, build, buildTabs, component, components, container, 
 	    content, each, element, fireEvent, height, hide, initialize, inject, 
 	    label, length, name, onClick, options, overflow, parent, props, push, 
-	    scrollbar, selected, setActiveTab, setBehavior, setContent, setState, 
+	    scrollbar, selected, setActiveTab, attach, setContent, setState, 
 	    setStyle, show, state, tab, tabbar, tabs, type, update, url, view
 
 */
@@ -180,12 +180,12 @@ UI.TabView = new Class({
 	},
 	
 	/*
-    	Function: setBehavior
+    	Function: attach
     
     		Set some behaviours
 	*/		
 	
-	setBehavior: function() {
+	attach: function() {
 		this.parent();
 		
 		this.addEvent('injected', function(){

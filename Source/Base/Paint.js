@@ -34,9 +34,8 @@ UI.Paint = new Class({
         this.props = this.options.props;
         
         this.build();
-        this.setSize();
         
-        this.draw();
+        this.draw(this.options.width,this.options.height);
     },
  
     build: function(){
@@ -50,11 +49,9 @@ UI.Paint = new Class({
         this.ctx = this.canvas.getContext(this.options.context);
     },
 
-    setSize: function(width, height, props){
-        if (props) 
-            this.props = props;
+    setSize: function(width, height){
         
-        if (this.props.layers.base && this.props.layers.base.shadow && this.props.layers.base.shadow) {
+        if (this.props.layers.base && this.props.layers.base.shadow) {
             this.shadowSize = this.props.layers.base.shadow.size;
             if (!this.props.layers.base.shadow.offsetX) {
                 this.props.layers.base.shadow.offsetX = 0;
@@ -69,7 +66,7 @@ UI.Paint = new Class({
             this.shadowOffset = [0, 0];
         }
         
-        this.canvasSize = [(width || this.options.width) + this.shadowSize * 2 + Math.abs(this.shadowOffset[0]), (height || this.options.height) + this.shadowSize * 2 + Math.abs(this.shadowOffset[1])];
+        this.canvasSize = [width + this.shadowSize * 2 + Math.abs(this.shadowOffset[0]), height + this.shadowSize * 2 + Math.abs(this.shadowOffset[1])];
         
         this.canvas.setProperties({
             width: this.canvasSize[0],
@@ -87,17 +84,14 @@ UI.Paint = new Class({
         
         this.relSize = this.absSize;
         this.offset = [this.shadowSize, this.shadowSize];
-        
-        if (width && height) {
-            this.draw();
-        }
     },
 
-    draw: function(props){
-        this.processLayers(props);
-        this.offset = [this.shadowSize, this.shadowSize];
-        this.relSize = [this.canvasSize[0] - this.shadowSize * 2 - Math.abs(this.shadowOffset[0]), this.canvasSize[1] - this.shadowSize * 2 - Math.abs(this.shadowOffset[1])];
-        this.fireEvent('complete');
+    draw: function(width,height){		
+		this.setSize(width, height);
+		this.processLayers();
+		this.offset = [this.shadowSize, this.shadowSize];
+		this.relSize = [this.canvasSize[0] - this.shadowSize * 2 - Math.abs(this.shadowOffset[0]), this.canvasSize[1] - this.shadowSize * 2 - Math.abs(this.shadowOffset[1])];
+		this.fireEvent('complete');
     },
 
     processLayers: function(){
@@ -113,8 +107,6 @@ UI.Paint = new Class({
                 this.trace(key);
             }, this);
         }
-        
-        
     },
 
     trace: function(key){
@@ -163,25 +155,10 @@ UI.Paint = new Class({
         direction = (direction == 'x') ? 0 : 1;
         var refSize = absolute ? this.absSize[direction] : this.relSize[direction];
         if ($type(value) == 'string') {
-            // size is in %
-            if (value.match(/%$/)) {
-                return value.toInt() / 100 * refSize;
-                //size is in px	
-            }
-            else 
-                if (value.match(/px$/)) {
-                    return value.toInt();
-                //size is auto
-                }
-                else 
-                    if (value == 'auto') {
-                        return value;
-                    }
-        }
-        else {
-            // size is in px (int or float)
-            return value;
-        }
+            if (value.match(/%$/)) return value.toInt() / 100 * refSize;
+            else  if (value.match(/px$/))  return value.toInt();
+			else  if (value == 'auto')  return value;
+        } else  return value;
     },
 
     setOffset: function(value, position, size){
@@ -506,44 +483,37 @@ UI.Paint = new Class({
     },
 
     setTransformation: function(props){
-        if (props.shape != 'complex') {
+        if (props.shape != 'complex')
             this.ctx.translate(props.size[0] / 2 + props.offset[0], props.size[1] / 2 + props.offset[1]);
-        }
-        //rotation
-        if (props.rotation) {
+
+        if (props.rotation)
             this.ctx.rotate(Math.PI * props.rotation / 180);
-        }
-        
-        //scale
+
         if (props.scale) {
             if ($type(props.scale) != 'array') {
                 props.scale = [props.scale, props.scale];
             }
             this.ctx.scale(props.scale[0], props.scale[1]);
         }
-        
-        //composite
-        if (props.composite) {
+
+        if (props.composite)
             this.ctx.globalCompositeOperation = props.composite;
-        }
+
     },
 
     drawShape: function(props){
-        if (props.shadow) {
+        if (props.shadow) 
             this.setShadow(props.shadow);
-        }
-        
-        if (props.image) {
+
+        if (props.image) 
             this.setImage(props);
-        }
-        
+
         if (props.color || props.gradient) {
             this.setColor('fill', props);
             this.ctx.fill();
         }
         
         if (props.stroke) {
-            //determine lineWidth
             this.ctx.lineWidth = (props.stroke.width) ? props.stroke.width : 1;
             this.setColor('stroke', props);
             this.ctx.stroke();
