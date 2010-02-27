@@ -5,7 +5,7 @@
  License:
  MIT-style license.
  Copyright:
- copyright (c) 2007 Jerome Vial, <http://iframework.org>
+ copyright (c) 2007 Jerome Vial, <http://moolego.org>
  Require:
  UI/Container/Vertical.js
  UI/Design/Core.js
@@ -82,7 +82,7 @@ App.Demo = new Class({
             height: 520,
             location: 'center'
         },
-        url: 'button01.html'
+        url: 'form/button01.html'
     },
     
     /*
@@ -230,22 +230,22 @@ App.Demo.implement({
                     menu: [{
                         text: 'Example 1',
                         action: function(){
-                        	that.browse('button01.html')
+                        	that.browse('form/button01.html')
                     	}
                     }, {
                         text: 'Example 2',
                         action: function(){
-                        	that.browse('button02.html')
+                        	that.browse('form/button02.html')
                     	}
                     }, {
                         text: 'Example 3',
                         action: function(){
-                        	that.browse('button03.html')
+                        	that.browse('form/button03.html')
                     	}
                     }, {
                         text: 'Example 4',
                         action: function(){
-                        	that.browse('button04.html')
+                        	that.browse('form/button04.html')
                     	}
 
                     }]
@@ -256,27 +256,27 @@ App.Demo.implement({
                     menu: [{
                         text: 'Example 1',
                         action: function(){
-                        	that.browse('window01.html')
+                        	that.browse('window/window01.html')
                     	}
                     }, {
                         text: 'Example 2',
                         action: function(){
-                        	that.browse('window02.html')
+                        	that.browse('window/window02.html')
                     	}
                     }, {
                         text: 'Example 3',
                         action: function(){
-                        	that.browse('window03.html')
+                        	that.browse('window/window03.html')
                     	}
                     }, {
                         text: 'Example 4',
                         action: function(){
-                        	that.browse('window04.html')
+                        	that.browse('window/window04.html')
                     	}
 					}, {
                         text: 'Example 5',
                         action: function(){
-                        	that.browse('window05.html')
+                        	that.browse('window/window05.html')
                     	}
                     }]
 				},{
@@ -486,7 +486,7 @@ App.Demo.implement({
                 }, {
 					text: 'Report Bug',
 					action: function(){
-						that.launch('http://www.lighthouse.com/moolego/ui');
+						that.launch('http://moolego.lighthouseapp.com/projects/19046-ui');
 					}
 				}]
             }, {
