@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	
+		<title>MooLego - Components Playground</title>
+		
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/mootools/1.2.4/mootools-yui-compressed.js"></script>
+			
+		<script type="text/javascript" src="../../Utils/mooCanvas.js"></script>
+		<script type="text/javascript" src="../../Utils/mooTree.js"></script>
+		
+		<script type="text/javascript" src="../../../ui/Source/Base/UI.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Base/Paint.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Base/Skin.js"></script>
+		
+		<script type="text/javascript" src="../../../ui/Source/Element/Element.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Element/Label.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Element/Bubble.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Element/Scrollbar.js"></script>
+		
+		<script type="text/javascript" src="../../../ui/Source/Menu/Menu.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Menu/Scroller.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Menu/Context.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Menu/Toolbar.js"></script>
+		
+		<script type="text/javascript" src="../../../ui/Source/Form/Control.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Form/Button.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Form/Checkbox.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Form/Input.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Form/RadiosGroup.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Form/Select.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Form/Slider.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Form/Textarea.js"></script>
+		
+		<script type="text/javascript" src="../../../ui/Source/View/View.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/View/ListView.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/View/PaneView.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/View/SplitView.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/View/TabView.js"></script>
+	
+		<script type="text/javascript" src="../../../ui/Source/Window/Window.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Window/Dialog.js"></script>
+		<script type="text/javascript" src="../../../ui/Source/Window/Panel.js"></script>
+		
+		<script type="text/javascript" src="../../../skins/AquaGraphite.js"></script>
+		<script type="text/javascript" src="../../../skins/Demo.js"></script>
+		<script type="text/javascript" src="../../../skins/TouchBlue.js"></script>
+			
+		<script type="text/javascript" src="js/examples.js"></script>
+		
+		<script type="text/javascript">
+			window.addEvent('load', function() {
+				var time = $time();
+				
+				toolbar = new UI['Toolbar']({
+					displayMode : 'text',
+					menu		: [
+						{
+							text	: 'MooLego',
+							styles	: {
+								position	: 'relative'
+							},
+							menu : [
+								{
+									text : 'About',
+									action : function() { 
+										new UI.Window({
+											title			: 'about',
+											width			: 300,
+											height			: 160,
+											head			: false,
+											viewOverflow 	: 'hidden',
+											controls		: ['close']
+										});
+									}
+								}
+							]
+						}
+					]						
+				}).inject(document.body,'top');
+	
+	
+				this.workspace = new UI.SplitView({
+					width:300
+				}).inject(document.body);
+				
+				
+				new UI.TabView({
+					tabs : [
+						{
+							name : 'Layers',
+							url	: 'assets/pulp1.json'
+						},
+						{
+							name : 'Components',
+							url	: 'assets/pulp0.json'
+						},
+						{
+							name : 'Styles',
+							url	: 'assets/pulp3.json'
+						}
+					],
+					height : 200,
+					styles: {
+						backgroundColor : '#fff',
+						borderBottom : '1px solid #000',
+						position : 'relative'
+					}
+				}).inject(workspace.view[0].content);
+				
+				new UI.TabView({
+					tabs : [
+						{
+							name : 'Chapter 1',
+							url	: 'assets/pulp1.json'
+						},
+						{
+							name : 'Chapter 2',
+							url	: 'assets/pulp2.json'
+						},
+						{
+							name : 'Chapter 3',
+							url	: 'assets/pulp3.json'
+						},
+						{
+							name : 'Chapter 4',
+							url	: 'assets/pulp4.json'
+						}
+					],
+					height : 200,
+					styles: {
+						backgroundColor : '#fff',
+						borderBottom : '1px solid #000',
+						position : 'relative'
+					}
+				}).inject(workspace.view[0].content);
+				
+				
+				
+				
+			});
+		</script>
+		<style>
+			html {
+				height:100%;
+			}
+			body{
+				overflow:hidden;
+				height:100%;
+				margin:0;
+				padding:0;
+				background:#e8e8e8
+			}
+		</style>
+	</head>
+
+	<body style=">
+	</body>
+
+</html>

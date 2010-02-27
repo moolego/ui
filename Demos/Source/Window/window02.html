@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="content-script-type" content="text/javascript">
+	
+	<script type="text/javascript" src="../../Utils/mootools/core.js"></script>
+	<script type="text/javascript" src="../../Utils/mootools/more.js"></script>
+	<script type="text/javascript" src="../../Utils/mooCanvas.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Base/UI.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Base/Paint.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Base/Skin.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Label.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Scrollbar.js"></script>
+
+	<script type="text/javascript" src="../../../ui/Source/Form/Control.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Button.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Menu/Menu.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Menu/Scroller.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Menu/Context.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/View/View.js"></script>
+
+	<script type="text/javascript" src="../../../ui/Source/Window/Window.js"></script>
+
+	<script type="text/javascript" src="../../../skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../../../skins/AquaBlack.js"></script>
+	<script type="text/javascript" src="../../../skins/Demo.js"></script>
+		
+	<script type="text/javascript" src="js/examples.js"></script>
+
+	<title>moolego - Components Playground</title>
+	
+	<script type="text/javascript">
+		
+		
+		
+		ui.controller.window = $merge(ui.controller.window,{
+			
+			// inspired by http://blog.greghoustondesign.com/arranging-an-array-of-html-elements-in-a-cascade-circle-or-grid/
+			
+			/*
+			Function: grid
+				Move every windows to its position in the grid
+			
+			Returns:
+				(void)
+			*/
+		
+			grid: function(group){
+				//should be define in the skin sheet
+				var columns = 7;
+				var offset = [100,100];
+				var start = [120,150];
+				var zIndex = this.zIndex;
+				var i = 1;	
+				
+				ui.controller.window.list.each(function(win){
+					if (win.state == 'minimized') { next; }
+					
+					win.element.style.zIndex = zIndex++;
+					
+					if (i > 1 && i <= columns){
+						start[0] += offset[0];
+					} else if (i > 1){
+						start[0] = 150;
+						start[1] += offset[1];
+						i = 1;
+					}
+		
+					win.element.morph({ 
+						top: start[0], 
+						left: start[1] 
+					});
+					
+					win.adaptLocation();
+					win.location = 'grid';			
+				});
+				
+				this.zIndex = zIndex;
+			},
+		
+			/*
+			Function: circle
+				Move every windows to its position in the circle
+			
+			Returns:
+				(void)
+			*/
+			
+			circle: function(group){
+				//should be define in the skin sheet
+				var center = [200,300];
+				var offset = [];
+				var radius = 200;
+				var zIndex = this.zIndex;
+				
+				var i = 1;
+				var length = (ui.controller.window.list.length);
+				
+				ui.controller.window.list.each(function(win){
+					if (win.state == 'minimized') { next; }
+					
+					win.element.style.zIndex = zIndex++;
+						
+					var ratio = i/length*2;
+					
+					offset[0] = Math.cos(ratio*Math.PI);
+					offset[1] = Math.sin(ratio*Math.PI);
+					
+					var left = center[0] + offset[0] * radius;
+					var top = center[1] + offset[1] * radius;
+					
+					i++;
+					
+					win.element.morph({ 
+						top: top, 
+						left: left 
+					});	
+		
+					win.adaptLocation();
+					win.location = 'circle';			
+				});
+				
+				this.zIndex = zIndex;
+			},
+		
+			/*
+			Function: circle
+				Move every windows to its position in a circle
+			
+			Returns:
+				(void)
+			*/
+			
+			wave: function(group){
+				var center = [50,200];
+				var offset = [];
+				var radius = 200;
+				var zIndex = this.zIndex;
+				
+				var i = 1;
+				var length = (ui.controller.window.list.length);
+				
+				ui.controller.window.list.each(function(win){
+					if (win.state == 'minimized') { next; }
+					
+					win.element.style.zIndex = zIndex++;
+		
+					var ratio = i/length;
+					
+					offset[0] = i/10;
+					offset[1] = (Math.cos(ratio*Math.PI))/2;
+					 
+					var left = center[0] + offset[0] * radius;
+					var top = center[1] + offset[1] * radius;
+					
+					i++;
+					
+					win.element.morph({ 
+						top: top, 
+						left: left 
+					});	
+					
+					win.adaptLocation();
+					win.location = 'wave';			
+				});
+				
+				this.zIndex = zIndex;
+			}
+			
+			
+		});
+		
+		
+		
+		window.addEvent('domready', function() {
+			
+			var background  = new UI.Element({
+				skin	: 'demo',
+				type	: "gradient",
+				state	: 'radial2',
+				width	: Window.getWidth(),
+				height	: Window.getHeight(),
+				styles : {
+					padding: '25px'
+				}
+			}).inject($(document.body)).show();
+		
+			window.addEvents({
+				resize: function(){
+					background.setSize(Window.getWidth(), Window.getHeight());
+					//background.setState('radial2');
+				}
+			});
+			
+			var time = $time();
+			
+			
+			button = new UI.Button({
+				label : "new UI.Window()",
+				skin	: 'demo',
+				type	: "jgood",
+				labelStyles : {
+					fontWeight : 'bold',
+					padding : '10px 20px'
+				},
+				onClick : function(){
+					var time2 = $time();
+					new UI.Window({ 
+						title : time2,
+						height: 400,
+						width: 400
+					});
+					//console.log('draw this window take : ', $time()-time2);
+				}
+			}).inject(background);
+			//console.log('window.html', $time()-time);
+			
+			
+			new UI.Button({
+				label : 'Cascade',
+				skin	: 'demo',
+				type	: "jgood",
+				onClick : function() { 
+					ui.controller.window.cascade();
+				}
+			}).inject(background);
+			
+			
+			
+			new UI.Button({
+				label : 'Grid',
+				skin	: 'demo',
+
+				type	: "jgood",
+				onClick : function() { 
+					ui.controller.window.grid();
+				}
+			}).inject(background);
+			
+			new UI.Button({
+				label : 'Circle',
+				skin	: 'demo',
+				type	: "jgood",
+				onClick : function() { 
+					ui.controller.window.circle();
+				}
+			}).inject(background);
+			
+			new UI.Button({
+				label : 'Wave',
+				skin	: 'demo',
+				type	: "jgood",
+				onClick : function() { 
+					ui.controller.window.wave();
+				}
+			}).inject(background);
+				
+			new UI.Button({
+				label : 'Close',
+				skin	: 'demo',
+				type	: "jgood",
+				onClick : function() { 
+					ui.controller.window.close();
+				}
+			}).inject(background);
+			
+			new UI.Button({
+				label : 'Close All',
+				skin	: 'demo',
+				type	: "jgood",
+				onClick : function() { 
+					ui.controller.window.closeAll();
+				}
+			}).inject(background);
+		});
+	</script>
+</head>
+
+<body style="overflow:hidden; margin:0;"></body>
+
+</html>

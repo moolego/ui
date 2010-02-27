@@ -79,7 +79,7 @@ UI.Scrollbar = new Class({
         this.position = {};
         this.mouse = {};
         this.update();
-        this.attach();
+        this.attachEvent();
     },
     /* 
      Method: build
@@ -194,7 +194,7 @@ UI.Scrollbar = new Class({
         }
     },
     
-    attach: function(){
+    attachEvent: function(){
         this.thumb.element.addEvent('mousedown', this.bound.start);
         if (this.options.wheel) {
             this.options.container.addEvent('mousewheel', this.bound.wheel);

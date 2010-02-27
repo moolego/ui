@@ -47,8 +47,8 @@ UI.Element = new Class({
         
         // Resize options
         resizable: false,
-        resizeLimitX: [100, Window.getWidth()],
-        resizeLimitY: [100, Window.getHeight()]
+        resizeLimitX: [100, screen.width],
+        resizeLimitY: [100, screen.height]
     },
 
     initialize: function(options){
@@ -59,7 +59,7 @@ UI.Element = new Class({
         this.setClassName();
         this.setSkin();
         this.build();
-        this.setBehavior();
+        this.attach();
     },
    
     toElement: function(){
@@ -124,6 +124,7 @@ UI.Element = new Class({
 
     setSkin: function(){
         this.options.skin = this.options.skin ? this.options.skin : ui.defaultSkin;
+		
         UI.skin = new UI.Skin(this.options.skin);
         this.skin = UI.skin.get(this);
         this.props = this.skin[this.options.state];
@@ -212,7 +213,7 @@ UI.Element = new Class({
         return this;
     },
 
-    setBehavior: function(){
+    attach: function(){
     
         var self = this;
         
@@ -532,9 +533,9 @@ Element.implement({
 		- Javascript - window
 
 	Members:
-		addEvent, bind, closeMenu, controller, each, element, elements, 
+		addEvent, attach, bind, closeMenu, controller, each, element, elements, 
 	    getStyle, goDown, goUp, group, groups, handelKeys, join, key, list, 
-	    menu, name, options, push, register, serialize, setBehavior, setStyle, 
+	    menu, name, options, push, register, serialize, setStyle, 
 	    start, value, zIndex
 
 	Discussion: 
@@ -559,7 +560,7 @@ ui.controller.element = {
 		this.groups = {};
 		this.elements = [];
 		this.closeMenu = $empty;
-		this.setBehavior();
+		this.attach();
 		this.handelKeys();
 	},
 
@@ -677,7 +678,7 @@ ui.controller.element = {
 	  
 	*/
 	
-	setBehavior: function(){
+	attach: function(){
 		document.addEvent('mousedown', function(e){
 			this.closeMenu(e);
 		}.bind(this));

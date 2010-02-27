@@ -1,0 +1,241 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+	<title>An example of a minimal, extensible table sort</title>
+ 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script type="text/javascript" src="../../Utils/mootools/mootools-1.2-core-nc.js"></script>
+	<script type="text/javascript" src="../../Utils/mootools/mootools-1.2-more.js"></script>
+	
+	<script type="text/javascript" src="sorting_table.js"></script>
+	<script type="text/javascript" src="paginating_table.js"></script>
+	<link href="css/table.css" rel="stylesheet" type="text/css" media="screen" />
+</head>
+<body> 
+
+<div id="header">
+  This is an example of a javascript sort based on <a href="http://www.mootools.net/">mootools</a>.  There is a <a href="http://madhatted.com/2008/6/20/the-joy-of-tables-on-cows">blog posting</a> the goes with this page.
+</div>
+ 
+<div id="example_1">
+<h2>A sorting table that uses a minimal javascript</h2>
+ 
+<table id="example_1_table" cellpadding="0" cellspacing="0">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Birthday</th>
+    <th>Timezone</th>
+    <th>Birthplace</th>
+    <th>Sign</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="alt">
+    <td>Alexander Pope</td>
+    <td>1688-5-21</td>
+    <td>GMT</td>
+    <td>London, England</td>
+    <td>Taurus</td>
+  </tr>
+  <tr class="">
+    <td>Percy Bysshe Shelley</td>
+    <td>1792-8-4</td>
+    <td>GMT</td>
+    <td>Horsham, England</td>
+    <td>Leo</td>
+  </tr>
+  <tr class="alt">
+    <td>Sara Teasdale</td>
+    <td>1884-8-8</td>
+    <td>CST</td>
+    <td>St. Louis, MS</td>
+    <td>Leo</td>
+  </tr>
+  <tr class="">
+    <td>Pablo Neruda</td>
+    <td>1904-7-12</td>
+    <td>CLT</td>
+    <td>Parral, Chile</td>
+    <td>Cancer</td>
+  </tr>
+  </tbody>
+</table>
+
+</div>
+ 
+<div id="example_2">
+<h2>A sorting table with collapsed rows</h2>
+ 
+<table id="example_2_table" cellpadding="0" cellspacing="0">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Birthday</th>
+    <th>Timezone</th>
+    <th>Birthplace</th>
+    <th>Sign</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="alt">
+    <td><a href="#" id="pope">Alexander Pope</a></td>
+    <td>1699-5-21</td>
+    <td>GMT</td>
+    <td>London, England</td>
+    <td>Taurus</td>
+  </tr>
+  <tr class="collapsed alt">
+    <td colspan="5">
+      
+    <div class="collapsed" id="pope_details">
+Now wits gain praise by copying other wits
+As one Hog lives on what another sh---.
+    </div></td>
+  </tr>
+  <tr class="">
+    <td><a href="#" id="shelley">Percy Bysshe Shelley</a></td>
+    <td>1792-8-4</td>
+    <td>GMT</td>
+    <td>Horsham, England</td>
+    <td>Leo</td>
+  </tr>
+  <tr class="collapsed">
+    <td colspan="5">
+      
+    <div class="collapsed" id="shelley_details">
+O WORLD! O life! O time!
+On whose last steps I climb,
+Trembling at that where I had stood before;
+When will return the glory of your prime?
+No more -- oh, never more!
+    </div></td>
+  </tr>
+  <tr class="alt">
+    <td><a href="#" id="teasdale">Sara Teasdale</a></td>
+    <td>1884-8-8</td>
+    <td>CST</td>
+    <td>St. Louis, MS</td>
+    <td>Leo</td>
+  </tr>
+  <tr class="collapsed alt">
+    <td colspan="5">
+      
+    <div class="collapsed" id="teasdale_details">
+What do I care, in the dreams and the languor of spring,
+That my songs do not show me at all?
+For they are a fragrance, and I am a flint and a fire,
+I am an answer, they are only a call.
+    </div></td>
+  </tr>
+  <tr class="">
+    <td><a href="#" id="neruda">Pablo Neruda</a></td>
+    <td>1904-7-12</td>
+    <td>CLT</td>
+    <td>Parral, Chile</td>
+    <td>Cancer</td>
+  </tr>
+  <tr class="collapsed">
+    <td colspan="5">
+      
+    <div class="collapsed" id="neruda_details">
+Leaning into the afternoons I cast my sad nets
+towards your oceanic eyes.
+ 
+There in the highest blaze my solitude lengthens and flames,
+its arms turning like a drowning man's.
+    </div></td>
+  </tr>
+  </tbody>
+</table>
+
+</div>
+ 
+<div id="example_4">
+<h2>A sorting paginated table with collapsed rows</h2>
+ 
+<ul class="pagination" id="example_4_pagination"></ul>
+<div style="clear:both;"></div>
+ 
+<table id="example_4_table" cellpadding="0" cellspacing="0">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Party</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><a href="#" id="mccain">McCain</a></td>
+    <td>GOP</td>
+  </tr>
+  <tr class="collapsed">
+    <td colspan="2">
+      <div id="mccain_details">
+        And, if we lost, then who win? Did Al Qaida win? When on the floor of the House of Representatives they cheer - they cheer - when they pass a withdrawal motion that is a certain date for surrender, what were they cheering? Surrender? Defeat?
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td><a href="#" id="obama">Obama</a></td>
+    <td>Dem</td>
+  </tr>
+  <tr class="collapsed">
+    <td colspan="2">
+      <div id="obama_details">
+A good compromise, a good piece of legislation, is like a good sentence; or a good piece of music. Everybody can recognize it. They say, 'Huh. It works. It makes sense.' 
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td><a href="#" id="hillary">Clinton</a></td>
+    <td>Dem</td>
+  </tr>
+  <tr class="collapsed">
+    <td colspan="2">
+      <div id="hillary_details">
+Let's not leave an educational vacuum to be filled by religious extremists who go to families who have no other option and offer meals, housing and some form of education. If we are going to combat extremism then we must educate those very same children.
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td><a href="#" id="gravel">Gravel</a></td>
+    <td>Dem</td>
+  </tr>
+  <tr class="collapsed">
+    <td colspan="2">
+      <div id="gravel_details">
+The entire deaths of Vietnam died in vain. And they're dying in vain right this very second. And you know what's worse than a soldier dying in vain? It's more soldiers dying in vain. That's what's worse.
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td><a href="#" id="huck">Huckabee</a></td>
+    <td>GOP</td>
+  </tr>
+  <tr class="collapsed">
+    <td colspan="2">
+      <div id="huck_details">
+How could I get up there and say, 'People, we've got to do better,' when I was the poster child for everything that was wrong? I've always believed leaders don't ask others to do what they're unwilling to do. 
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td><a href="#" id="barr">Barr</a></td>
+    <td>Green</td>
+  </tr>
+  <tr class="collapsed">
+    <td colspan="2">
+      <div id="barr_details">
+They have this sort of idea in their minds, bless their hearts, that nobody should do anything to upset the Republican nominee. This notion that the political world swirls around two galaxies only, Republican and Democrat only, and anybody else who enters that fray is going to affect the other two and that's bad --- that's a very myopic notion.
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+ 
+</div>
+ 
+</body>
+</html>

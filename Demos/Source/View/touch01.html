@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		
+	<script type="text/javascript" src="../../Utils/mootools/core.js"></script>
+	<script type="text/javascript" src="../../Utils/mootools/more.js"></script>
+		
+	<script type="text/javascript" src="../../Utils/mooCanvas.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Base/UI.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Base/Paint.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Base/Skin.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Label.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Bubble.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Scrollbar.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Menu/Menu.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Menu/Scroller.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Menu/Context.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Menu/Toolbar.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Form/Control.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Button.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Checkbox.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Input.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/RadiosGroup.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Select.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Slider.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Textarea.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/View/View.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/View/ListView.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/View/PanelView.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/View/SplitView.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/View/TabView.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Window/Window.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Window/Dialog.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Window/Panel.js"></script>
+	
+	<script type="text/javascript" src="../../../skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../../../skins/Demo.js"></script>
+	<script type="text/javascript" src="../../../skins/TouchBlue.js"></script>
+		
+	<script type="text/javascript" src="js/examples.js"></script>
+	
+	<title>MooLego ListView Component Playground</title>
+	
+	<script type="text/javascript">
+		window.addEvent('load', function() {
+			var panel = new UI.Window({
+				skin : 'BlueTouch',
+				width : 320,
+				height : 460,
+				controls : [],
+				resizable : false,
+				view : { overflow: 'hidden'}
+			}).inject(document.body);
+			
+			
+			
+			new UI.ListView({
+				skin : 'BlueTouch',
+				width : '100%',
+				height : '100%',
+				styles : {
+					backgroundColor : '#e8e8e8'
+				},
+				data : [
+					{
+						"type" : "core",
+						"title" : "UI",
+						"desc"	: "Core/UI.js"
+					},
+					{
+						"type" : "core",
+						"title" : "UI.Canvas",
+						"desc"	: "Core/Canvas.js"
+					},
+					{
+						"type" : "core",
+						"title" : "UI.Interface",
+						"desc"	: "Core/Interface.js"
+					},
+					{
+						"type" : "core",
+						"title" : "UI.Skin",
+						"desc"	: "Core/Skin.js"
+					},
+					{
+						"type" : "core",
+						"title" : "UI.Styles",
+						"desc"	: "Core/Styles.js"
+					},
+					{
+						"type" : "element",
+						"title" : "UI.Element",
+						"desc"	: "Element/Element.js"
+					},
+					{
+						"type" : "element",
+						"title" : "UI.Bubble",
+						"desc"	: "Element/Bubble.js"
+					},
+					{
+						"type" : "element",
+						"title" : "UI.Label",
+						"desc"	: "Element/Label.js"
+					},
+					{
+						"type" : "element",
+						"title" : "UI.Scrollbar",
+						"desc"	: "Element/Scrollbar.js"
+					},
+					{
+						"type" : "element",
+						"title" : "UI.ElementController",
+						"desc"	: "Element/Element.Controller.js"
+					},
+					{
+						"type" : "form",
+						"title" : "UI.Control",
+						"desc"	: "Form/Control.js"
+					},
+					{
+						"type" : "form",
+						"title" : "UI.Button",
+						"desc"	: "Form/Button.js"
+					},
+					{
+						"type" : "form",
+						"title" : "UI.Checkbox",
+						"desc"	: "Form/Checkbox.js"
+					},
+					{
+						"type" : "form",
+						"title" : "UI.Input",
+						"desc"	: "Form/Input.js"
+					},
+					{
+						"type" : "form",
+						"title" : "UI.RadioGroup",
+						"desc"	: "Form/RadioGroup.js"
+					},
+					{
+						"type" : "form",
+						"title" : "UI.Select",
+						"desc"	: "Form/Select.js"
+					},
+					{
+						"type" : "form",
+						"title" : "UI.Slider",
+						"desc"	: "Form/Slider.js"
+					},
+					{
+						"type" : "form",
+						"title" : "UI.Textarea",
+						"desc"	: "Form/Textarea.js"
+					},
+					{
+						"type" : "menu",
+						"title" : "UI.Menu",
+						"desc"	: "Menu/Menu.js"
+					},
+					{
+						"type" : "menu",
+						"title" : "UI.Context",
+						"desc"	: "Menu/Context.js"
+					},
+					{
+						"type" : "menu",
+						"title" : "UI.Toolbar",
+						"desc"	: "menu/Select.js"
+					},
+					{
+						"type" : "menu",
+						"title" : "UI.Scroller",
+						"desc"	: "Menu/Scroller.js"
+					},
+					{
+						"type" : "view",
+						"title" : "UI.View",
+						"desc"	: "View/View.js"
+					},
+					{
+						"type" : "view",
+						"title" : "UI.ListView",
+						"desc"	: "view/ListView.js"
+					},
+					{
+						"type" : "view",
+						"title" : "UI.PanelView",
+						"desc"	: "View/PanelView.js"
+					},
+					{
+						"type" : "view",
+						"title" : "UI.SplitView",
+						"desc"	: "View/SplitView.js"
+					},
+					{
+						"type" : "view",
+						"title" : "UI.TabView",
+						"desc"	: "View/TabView.js"
+					},
+					{
+						"type" : "window",
+						"title" : "UI.Window",
+						"desc"	: "Window/Window.js"
+					},
+					{
+						"type" : "window",
+						"title" : "UI.WindowController",
+						"desc"	: "View/Window.Controller.js"
+					}
+				]
+			}).inject(panel.content);
+		});
+	</script>
+</head>
+
+<body style="overflow:hidden; background-color:#ccc">
+</body>
+
+</html>

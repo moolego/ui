@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="UTF-8">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<title>MooLego - Components Playground</title>
+	
+	<script type="text/javascript" src="../../Utils/mootools/core.js"></script>
+	<script type="text/javascript" src="../../Utils/mootools/more.js"></script>
+
+	<script type="text/javascript" src="../../Utils/mooCanvas.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Base/UI.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Base/Paint.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Base/Skin.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Label.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Scrollbar.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Form/Control.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Button.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/View/View.js"></script>
+
+	<script type="text/javascript" src="../../../ui/Source/Window/Window.js"></script>
+	
+	<script type="text/javascript" src="../../../skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../../../skins/AquaBlue.js"></script>
+	<script type="text/javascript" src="../../../skins/AeroTrans.js"></script>
+	<script type="text/javascript" src="../../../skins/Demo.js"></script>
+	<script type="text/javascript" src="../../../skins/TouchBlue.js"></script>
+
+	
+	<script type="text/javascript">
+		window.addEvent('load', function() {
+			new UI.Window({
+				title		: 'Default Framed Window ',
+				width		: 640,
+				height		: 480,
+				overflow	: 'scrollbar',
+				location	: 'center'
+			}).setContent('iframe','../Asset/formular02.html');
+
+			
+			new UI.Window({
+				title		: 'Default Window with ajax content',
+				overflow	: 'scrollbar'
+			}).setContent('ajax','../../Asset/assets/window.json');
+			
+
+		});
+	</script>
+</head>
+
+<body style="overflow:hidden; background-color: #ccc"></body>
+
+</html>

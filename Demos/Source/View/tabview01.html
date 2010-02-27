@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		
+	<script type="text/javascript" src="../../Utils/mootools/core.js"></script>
+	<script type="text/javascript" src="../../Utils/mootools/more.js"></script>
+		
+	<script type="text/javascript" src="../../Utils/mooCanvas.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Base/UI.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Base/Paint.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Base/Skin.js"></script>
+
+	<script type="text/javascript" src="../../../ui/Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Element.Controller.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Label.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Scrollbar.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Form/Control.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Button.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/View/View.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/View/TabView.js"></script>
+
+	<script type="text/javascript" src="../../../skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../../../skins/Demo.js"></script>
+	<script type="text/javascript" src="../../../skins/TouchBlue.js"></script>
+	
+	<title>MooLego TabView Component Playground</title>
+	
+	<script type="text/javascript">
+		window.addEvent('load', function() {
+			var time = $time();
+			
+			
+			var background  = new UI.Element({
+				skin	: 'demo',
+				type	: "gradient",
+				state	: 'radial2',
+				width	: Window.getWidth(),
+				height	: Window.getHeight(),
+				styles : {
+					padding: '25px'
+				}
+			}).inject($(document.body)).show();
+		
+			window.addEvents({
+				resize: function(){
+					background.setSize(Window.getWidth(), Window.getHeight());
+					//background.setState('radial2');
+				}
+			});
+			
+			var time = $time();
+			
+			
+			button = new UI.Button({
+				label : "add Tab",
+				skin	: 'demo',
+				type	: "jgood",
+				labelStyles : {
+					fontWeight : 'bold',
+					padding : '10px 20px'
+				},
+				onClick : function(){
+					console.log('add tab');
+					myTab.add({
+						name : 'Chapter 4',
+						url	: 'assets/pulp4.json'
+					});
+					//console.log('draw this window take : ', $time()-time2);
+				}
+			}).inject(background);
+			//console.log('window.html', $time()-time);
+			
+			
+			new UI.Button({
+				label : 'Cascade',
+				skin	: 'demo',
+				type	: "jgood",
+				onClick : function() { 
+					ui.controller.window.cascade();
+				}
+			}).inject(background);
+			
+			
+			
+			new UI.Button({
+				label : 'Grid',
+				skin	: 'demo',
+
+				type	: "jgood",
+				onClick : function() { 
+					ui.controller.window.grid();
+				}
+			}).inject(background);
+			
+			new UI.Button({
+				label : 'Circle',
+				skin	: 'demo',
+				type	: "jgood",
+				onClick : function() { 
+					ui.controller.window.circle();
+				}
+			}).inject(background);
+			
+			new UI.Button({
+				label : 'Wave',
+				skin	: 'demo',
+				type	: "jgood",
+				onClick : function() { 
+					ui.controller.window.wave();
+				}
+			}).inject(background);
+			
+			myTab = new UI.TabView({
+				resizable: true,
+				tabs : [
+					{
+						name : 'Chapter 1',
+						url	: 'assets/pulp1.json'
+					},
+					{
+						name : 'Chapter 2',
+						url	: 'assets/pulp2.json',
+						selected : true
+					},
+					{
+						name : 'Chapter 3',
+						url	: 'assets/pulp3.json'
+					},
+					{
+						name : 'Chapter 4',
+						url	: 'assets/pulp4.json'
+					}
+				],
+				width : 600,
+				height : 400,
+				styles: {
+					margin : '40px',
+					backgroundColor : '#e8e8e8',
+					border: '1px solid #000'
+				}
+			}).inject(background);
+		});
+	</script>
+</head>
+
+<body style="overflow:hidden: padding:0; margin:0"></body>
+
+</html>

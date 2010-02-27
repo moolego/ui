@@ -1,0 +1,564 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		
+	<script type="text/javascript" src="../../Utils/mootools/core.js"></script>
+	<script type="text/javascript" src="../../Utils/mootools/more.js"></script>
+		
+	<script type="text/javascript" src="../../Utils/mooCanvas.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Base/UI.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Base/Paint.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Base/Skin.js"></script>
+
+	<script type="text/javascript" src="../../../ui/Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Element.Controller.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Label.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Bubble.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Scrollbar.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Menu/Menu.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Menu/Scroller.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Menu/Context.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Menu/Toolbar.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Form/Control.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Button.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Checkbox.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Input.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/RadiosGroup.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Select.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Slider.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Textarea.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/View/View.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/View/ListView.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/View/PanelView.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/View/SplitView.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/View/TabView.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Window/Window.Controller.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Window/Window.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Window/Dialog.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Window/Panel.js"></script>
+	
+	<script type="text/javascript" src="../../../skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../../../skins/TouchBlue.js"></script>
+	<script type="text/javascript" src="../../../skins/Demo.js"></script>
+		
+	<script type="text/javascript" src="js/examples.js"></script>
+	
+	<title>MooLego - Components Playground</title>
+	
+	<script type="text/javascript">
+		window.addEvent('load', function() {
+		
+			/* Elements in page */
+			var form = new Element('form', {
+				id				: 'controltest',
+				method			: 'get',
+				styles			: {
+					margin		: '50px 50px 0'
+				}
+			}).inject($(document.body));
+			
+			
+				
+			button = new UI.Button({
+				label : "Launch a new Control test",
+				labelStyles : {
+					fontWeight : 'bold',
+					padding : '10px 20px'
+				},
+				styles		: {
+					margin	: 10
+				}
+			}).inject(form);
+			
+			
+			/*
+			new UI.Bubble({
+				target : $(this.slider),
+				props : {
+					'default' : {
+						layers			: {
+							background	: {
+								color	: ['#A00','#000']
+							}
+						}
+					}
+				},
+				label : "Under Construction!"
+			});
+			
+		*/
+			
+			
+			
+		
+	
+			
+			this.googlemap = new UI.Button({
+				label				: 'Falling',
+				labelStyles			: {
+					fontSize		: '26px',
+					fontWeight		: 'bold',
+					opacity			: '.7',
+					padding			: '18px 26px',
+					color			: '#fff'
+				},
+				onClick: function(){
+					tip.fade(0);
+				}.bind(this),
+				props				: {
+					'default'				: {
+						layers				: {
+							def			: ['emboss','background','front','reflect'],
+							
+							emboss			: {
+								offset		: '0px',
+								color		: '#000',
+								opacity		: '.17',
+								radius		: 7
+							},
+							background		: {
+								offset		: 3,
+								color		: ['#2a5179','#2a5179'],
+								opacity		: 1,
+								radius		: 5
+							},
+							front			: {
+								offset		: 1,
+								color		: ['#6094cf','#1d5591'],
+							 	opacity		: 1,
+								radius		: 4
+							},
+							reflect			: {
+								offset		: ['1px', '1px', '35%'],
+								color		: ['#FFF', '#FFF'],
+								opacity		: [.9, .1],
+								radius		: [3, 3, 3, 3]
+							}
+						}
+					},
+					over					: {
+						components			: {
+							label			: {
+								styles		: {
+									opacity : .8
+								}
+							}
+						}
+					},
+					down					: {
+						components			: {
+							label			: {
+								styles		: {
+									color 	: '#ccc'
+								}
+							}
+						}
+					}
+				},
+				styles		: {
+					margin	: 10
+				}
+			}).inject(form);
+			
+			
+			this.youtube = new UI.Button({
+				skin				: 'demo',
+				type				: 'tube',
+				label				: 'Tube',
+				labelStyles			: {
+					fontSize		: '42px',
+					fontWeight		: 'bold',
+					padding			: '8px 8px 4px',
+					color			: '#fff'
+				},
+				onClick: function(){
+					new UI.Window({
+						type 				: 'transparent',
+						view : { overflow : 'hidden' }
+					}).setContent('iframe','http://www.youtube.com');
+				}.bind(this),
+				styles		: {
+					margin	: 10
+				}
+			}).inject(form);
+			
+			
+			
+			var counter = 1;
+			
+			this.counter = new UI.Button({
+				label				: 'Bubble counter',
+				labelStyles			: {
+					fontSize		: '20px',
+					fontWeight		: 'bold',
+					opacity			: '1',
+					color			: '#fff',
+					padding			: '10px 26px'
+				},
+				location			: 'center',
+				draggable			: true,
+				onClick				: function() { 
+					
+					if (this.bubble) {
+					
+						this.bubble.label.set('html', counter++);
+						this.bubble.setSize();
+					
+					} else {
+					
+						this.bubble = new UI.Bubble({
+							target: $(this),
+							label: counter++,
+							labelStyles: {
+								fontSize: '74px',
+								fontWeight: 'bold',
+								padding: '4px 10px'
+							},
+							props: {
+								'default': {
+									layers: {
+										background: {
+											offset: [0, 0, 4],
+											color: ['#33cc33', '#000'],
+											opacity: 1
+										},
+										arrow: {
+											size: [9, 4],
+											offset: ['auto', 9, 0],
+											opacity: 1,
+											color: '#000'
+										}
+									}
+								}
+							}
+						
+						});
+					}
+				},
+				props				: {
+					'default'				: {
+						layers				: {
+							def			: ['emboss','underlay','front','reflect'],
+							
+							emboss			: {
+								offset		: 0,
+								color		: '#4b5461',
+								opacity		: 1,
+								radius		: 12
+							},
+							underlay		: {
+								offset		: [3,3,2,3],
+								color		: ['#eeb7bf','#262c32'],
+								radius		: 9
+							},
+							front			: {
+								offset		: [1,0],
+								color		: ['#c4020e','#f81e0f'],
+							 	opacity		: 1,
+								radius		: [9,9,8,8]
+							},
+							reflect			: {
+								offset		: ['0px', '0px', '50%'],
+								color		: ['#FFF', '#FFF'],
+								opacity		: [.5, .2],
+								radius		: [8, 8, 0, 0]
+							}
+						}
+					},
+					over					: {
+						components			: {
+							label			: {
+								styles		: { opacity	: .8 }
+							}
+						},
+						layers				: {
+							emboss			: {
+								color		: '#00CC00'
+							}
+						}
+					},
+					down					: {
+						components			: {
+							label			: {
+								styles		: { color	: '#ccc' }
+							}
+						}
+					}
+				},
+				styles						: {
+					margin					: 5
+				}
+			}).inject(form);
+			
+			
+			
+			this.cancel = new UI.Button({
+				label				: 'Black button',
+				labelStyles			: {
+					fontSize		: '20px',
+					fontWeight		: 'bold',
+					fontOpacity		: '1',
+					color			: '#fff',
+					padding			: '10px 26px'
+				},
+				props				: {
+					'default'				: {
+						layers				: {
+							def			: ['emboss','underlay','front','reflect'],
+							
+							emboss			: {
+								offset		: 0,
+								color		: '#4b5461',
+								opacity		: 1,
+								radius		: 12
+							},
+							underlay		: {
+								offset		: [3,3,2,3],
+								color		: ['#6b6e74','#262c32'],
+								radius		: 9
+							},
+							front			: {
+								offset		: [1,0],
+								color		: ['#0f1621','#282d37'],
+							 	opacity		: 1,
+								radius		: 8
+							},
+							reflect			: {
+								offset		: ['0px', '0px', '50%'],
+								color		: ['#FFF', '#FFF'],
+								opacity		: [.5, .3],
+								radius		: [8, 8, 0, 0]
+							}
+						}
+					},
+					over					: {
+						components			: {
+							label			: {
+								styles		: { opacity	: .8 }
+							}
+						},
+						layers				: {
+							emboss			: {
+								color		: '#00CC00'
+							}
+						}
+					},
+					down					: {
+						components			: {
+							label			: {
+								styles		: { color	: '#ccc' }
+							}
+						}
+					}
+				},
+				styles						: {
+					margin					: 5
+				}
+			}).inject(form);
+			
+			
+			new UI.Button({
+				label						: 'Falling',
+				labelStyles					: {
+					fontSize				: '16px',
+					fontWeight				: 'bold',
+					opacity					: '.7',
+					padding					: '24px 26px',
+					color					: '#fff'
+				},
+				draggable					: true,
+				props				: {
+					'default'				: {
+						layers				: {
+							def			: ['emboss','front','reflect','reflect2'],
+							'default'		: {
+								rotation	: 3
+							},
+							
+							emboss			: {
+								offset		: 5,
+								color		: ['#000','#fff'],
+								opacity		: .3,
+								radius		: 9
+							},
+							front			: {
+								offset		: 2,
+								color		: ['#b11a23','#000'],
+							 	opacity		: 1,
+								radius		: 7
+							},
+							reflect			: {
+								offset		: [1, 0, '60%', 2],
+								color		: ['#FFF', '#FFF'],
+								opacity		: [.6, .1],
+								radius		: [5, 5, 9, 9]
+							},
+							reflect2		: {
+								offset		: [1, 1, 2],
+								color		: ['#000', '#000'],
+								opacity		: [.1,0],
+								radius		: [7, 7, 9, 9]
+							}
+						}
+					},
+					over					: {
+						components			: {
+							label			: {
+								styles		: { opacity	: .8 }
+							}
+						},
+						layers				: {
+							emboss			: { color : '#000' }
+						}
+					},
+					down					: {
+						components			: {
+							label			: {
+								styles		: { color : '#ccc' }
+							}
+						}
+					}
+				},
+				styles						: {
+					margin					: 5
+				}
+			}).inject(form);
+			
+			
+			this.digitalclock = new UI.Button({
+				label				: '18:07',
+				labelStyles					: {
+					fontSize			: '26px',
+					fontWeight			: 'bold',
+					opacity				: '.7',
+					padding				: '12px 26px',
+					color				: '#fff'
+				},
+				draggable				: true,
+				props				: {
+					'default'				: {
+						layers				: {
+							def			: ['emboss','front','reflect','reflect2'],
+							
+							emboss			: {
+								offset		: 0,
+								color		: ['#000','#fff'],
+								opacity		: .3,
+								radius		: 9
+							},
+							front			: {
+								offset		: 2,
+								color		: ['#1624a7','#000'],
+							 	opacity		: 1,
+								radius		: 6
+							},
+							reflect			: {
+								offset		: ['1px', '1px', '60%'],
+								color		: ['#FFF', '#FFF'],
+								opacity		: [.6, .2],
+								radius		: [5, 5, 9, 9]
+							},
+							reflect2		: {
+								offset		: ['1px', '1px', '2px'],
+								color		: ['#000', '#000'],
+								opacity		: [.1,0],
+								radius		: [7, 7, 9, 9]
+							}
+						}
+					},
+					over					: {
+						components			: {
+							label			: {
+								styles		: { opacity	: .8 }
+							}
+						},
+						layers				: {
+							emboss			: { color : '#00CC00' }
+						}
+					},
+					down					: {
+						components			: {
+							label			: {
+								styles		: { color : '#ccc' }
+							}
+						}
+					}
+				},
+				styles						: {
+					margin					: 5
+				}
+			}).inject(form);
+			
+			
+			this.hardest = new UI.Button({
+				skin					: 'demo',
+				type					: 'hardest',
+				label					: 'Hardest Button to Button',
+				labelStyles				: {
+					fontSize			: '16px',
+					fontWeight			: 'bold',
+					opacity				: '.7',
+					padding				: '18px 26px',
+					color				: '#fff'
+				},
+				onClick					: function() {
+					new UI.Window({
+						type			: 'transparent',
+						title			: 'Hardest Button to Button',
+						controls		: ['close'],
+						view : { overflow : 'hidden' },
+						resizable		: false,
+						width			: 214,
+						height			: 230
+					}).setContent('content','<object width="212" height="184"><param name="movie" value="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1"></param><param name="allowFullScreen" value="true"><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/WLSH1CFwPrg&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="212" wmode="transparent" height="184"></embed></object>');
+				},
+				styles						: {
+					margin					: 5
+				}
+			}).inject(form);
+
+			
+			this.starGuitar = new UI.Button({
+				type						: 'roundtextured',
+				label						: 'Star Guitar',
+				onClick						: function() {
+					new UI.Window({
+						title				: 'Star Guitar',
+						controls			: ['close'],
+						view : { overflow : 'hidden' },
+						resizable			: false,
+						width				: 427,
+						height				: 388
+					}).setContent('content','<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>');
+				},
+				styles						: {
+					margin					: 5
+				}
+			}).inject(form);
+
+			
+			
+			new UI.Bubble({
+				skin						: 'demo',
+				target 						: $(this.hardest),
+				label 						: 'Michel Gondry',
+				labelStyles					: {
+					padding					: '10px 10px 18px'
+				}
+			});
+			
+			
+			
+		});
+	</script>
+</head>
+
+<body style="overflow:hidden" bgcolor="#e8e8e8"></body>
+
+</html>

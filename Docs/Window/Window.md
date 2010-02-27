@@ -194,7 +194,7 @@ UI.Window Method: toggleInterface {#UI.Window:toggleInterface}
 
 
 
-UI.Window Method: setBehavior {#UI.Window:setBehavior}
+UI.Window Method: attach {#UI.Window:attach}
 -------------------------------------------------------
 
 

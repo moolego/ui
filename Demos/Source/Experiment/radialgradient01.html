@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		
+	<script type="text/javascript" src="../../Utils/mootools/core.js"></script>
+	<script type="text/javascript" src="../../Utils/mootools/more.js"></script>
+		
+	<script type="text/javascript" src="../../Utils/mooCanvas.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Base/UI.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Base/Paint.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Base/Skin.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Element.Controller.js"></script>
+
+	<script type="text/javascript" src="../../../skins/Demo.js"></script>
+		
+	<script type="text/javascript" src="js/examples.js"></script>
+	
+	<title>MooLego - Components Playground</title>
+
+	<script type="text/javascript">
+		window.addEvent('domready', function() {
+			
+			var time = $time();
+			
+			/* Elements in page */
+			
+			new UI.Element({
+				label : "new window",
+				skin	: 'demo',
+				type	: "gradient",
+				state	: 'radial',
+				width	: 400,
+				height	: 400,
+				styles		: {
+					margin	: 100
+				}
+			}).inject(document.body);
+		});
+	</script>
+</head>
+
+<body>
+	
+</body>
+
+</html>

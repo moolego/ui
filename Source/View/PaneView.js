@@ -37,7 +37,7 @@
 	    destroy, direction, duration, each, easeOut, element, erase, float, 
 	    getLast, getSize, height, indexOf, inject, list, next, onTransition, 
 	    options, overflow, pane, parent, previous, properties, push, remove, 
-	    removeAllNext, resize, scrollbar, setBehaviour, setStyle, styles, 
+	    removeAllNext, resize, scrollbar, attach, setStyle, styles, 
 	    toElement, transition, transitionFx, transitionType, update, wait, 
 	    width, x
 		
@@ -88,18 +88,18 @@ UI.PaneView = new Class({
  	build: function (){
 		this.list = [];
 		this.parent();
-		this.setBehaviour();
+		this.attach();
 		
 		
 	},
 	/*
-    Function: setBehaviour
+    Function: attach
    
     	Add pane(subview), intect it in the container, resize container and return it
 
 	*/
 	
-	setBehaviour : function(){
+	attach : function(){
 		this.transitionFx = new Fx.Scroll(this.element, this.options.transitionFx);
 	},
 

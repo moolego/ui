@@ -121,8 +121,8 @@ UI.Window = new Class({
 		
 		// Resize options
 		resizable: true,
-		resizeLimitX: [200, Window.getWidth()],
-		resizeLimitY: [200, Window.getHeight()],
+		resizeLimitX: [200, screen.width],
+		resizeLimitY: [200, screen.height],
 		resizeOnDragIfMaximized: false,
 		
 		onMinimize: $empty,

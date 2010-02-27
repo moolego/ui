@@ -1,0 +1,642 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="content-script-type" content="text/javascript">
+	
+	<title>MooLego - Components Playground</title>
+	
+	<script type="text/javascript" src="../../Utils/mootools/core.js"></script>
+	<script type="text/javascript" src="../../Utils/mootools/more.js"></script>
+	
+	<script type="text/javascript" src="../../Utils/mooCanvas.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Base/UI.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Base/Paint.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Base/Skin.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Element/Element.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Box.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Label.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Bubble.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Element/Scrollbar.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Menu/Menu.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Menu/Scroller.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Menu/Context.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Menu/Toolbar.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Form/Control.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Button.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Checkbox.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Input.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/RadiosGroup.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Select.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Slider.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Form/Textarea.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/View/View.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/View/ListView.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/View/PaneView.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/View/SplitView.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/View/TabView.js"></script>
+
+	<script type="text/javascript" src="../../../ui/Source/Window/Window.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Window/Dialog.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Window/Panel.js"></script>
+	
+	<script type="text/javascript" src="../../../skins/AquaBlack.js"></script>
+	<script type="text/javascript" src="../../../skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../../../skins/TouchBlue.js"></script>
+	<script type="text/javascript" src="../../../skins/Demo.js"></script>
+	
+
+	
+	<script type="text/javascript">
+		//<!--/*--><![CDATA[//><!--
+		
+		
+	
+		window.addEvent('load', function(){
+			var time = $time();
+			
+			// instanciate toolbar
+			
+			toolbar = new UI['Toolbar']({
+				displayMode: 'text',
+				draggable: false,
+				menu: [{
+					text: 'MooLego',
+					styles: {
+						position: 'relative'
+					},
+					menu: [{
+						text: 'About',
+						action: function(){
+							new UI.Window({
+								title: 'About MooLego',
+								width: 300,
+								height: 160,
+								foot: false,
+								view: {
+									overflow: 'hidden'
+								},
+								resizable: false,
+								controls: ['close']
+							});
+						}
+					}, {
+						text: 'Software version...',
+						action: function(){
+							this.test('about');
+							alert('click')
+						}
+.bind(this)
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Préférences systemes...',
+						action: function(){
+							new App.Settings()
+						}
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Elements récents',
+						menu: [{
+							text: 'Finder'
+						}, {
+							text: 'Safari'
+						}, {
+							text: 'Mail'
+						}, {
+							text: 'Protoshop'
+						}, {
+							text: 'Nasty Explorer'
+						}]
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Fermer la session'
+					}]
+				}, {
+					text: 'New',
+					options: {
+						'class': 'ui-dd-new'
+					},
+					menu: [{
+						text: 'Button',
+						action: function(){
+							new UI.Button().inject(form, 'top');
+						}
+.bind(this)
+					}, {
+						text: 'Window',
+						action: function(){
+							new UI.Window();
+						}
+.bind(this)
+					}]
+				}, {
+					text: 'Window',
+					options: {
+						'class': 'ui-dd-new'
+					},
+					menu: [{
+						text: 'Close',
+						action: function(){
+							ui.windowController.close()
+						}
+					}, {
+						text: 'Close All',
+						action: function(){
+							ui.windowController.closeAll()
+						}
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Cascade',
+						action: function(){
+							ui.windowController.cascade()
+						}
+						
+					}, {
+						text: 'Wave',
+						action: function(){
+							ui.windowController.wave()
+						}
+						
+					}, {
+						text: 'Grid',
+						action: function(){
+							ui.windowController.grid()
+						}
+						
+					}]
+				}, {
+					text: 'Help',
+					options: {
+						'class': 'ui-dd-help'
+					},
+					menu: [{
+						text: 'Welcome'
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Update...'
+					}, {
+						text: 'separator'
+					}, {
+						text: 'Settings...'
+					}]
+				}]
+			}).inject(document.body, 'top');
+			
+			/* Elements in page */
+			var form = new Element('form', {
+				id: 'controltest',
+				method: 'get',
+				styles: {
+					margin: '50px 50px 0'
+				}
+			}).inject(document.body);
+			
+			var radiosGroup = new UI.RadiosGroup({
+				name: 'radiotest'
+			});
+			
+			var radio = radiosGroup.newRadio({
+				label: 'Test 1',
+				value: 'test_1',
+				selected: true,
+				styles: {
+					margin: 10
+				}
+			}).inject(form);
+			
+			
+			radiosGroup.newRadio({
+				label: 'Test 2',
+				value: 'test_2',
+				styles: {
+					margin: 10
+				}
+			}).inject(form);
+			
+			var bubbleslider;
+			
+			var updateBubble = function(step){
+				if (bubbleslider) {
+					bubbleslider.set('html', step);
+					
+				}
+				else {
+					bubbleslider = new UI.Bubble({
+						skin: 'demo',
+						type: 'rounded',
+						target: $(firstslider),
+						label: step
+					});
+				}
+			};
+			
+			var firstslider = new UI.Slider({
+				group: 'test',
+				type: 'horizontal',
+				range: [0, 100],
+				styles: {
+					margin: '20px 10px'
+				},
+				wheel: true,
+				onChange: function(step){
+					updateBubble(step.toString());
+				}
+			}).inject(form);
+			
+			
+			bubbleslider = new UI.Bubble({
+				skin: 'demo',
+				type: 'rounded',
+				target: $(firstslider),
+				label: '0'
+			});
+			
+			//updateBubble('0');
+			
+			
+			button = new UI.Button({
+				group: 'test',
+				label: "O",
+				labelStyles: {
+					fontWeight: 'bold',
+					padding: '10px 20px'
+				}
+			}).inject(form);
+			
+			ip = new UI.Input({
+				name: 'text-input-canvas',
+				value: 'A text input with canvas, a very long text',
+				id: 'test',
+				styles: {
+					margin: 10
+				}
+			}).inject(form);
+			
+			var tip = new UI.Bubble({
+				target: $(button),
+				label: "Babybel c'est de la balle<br/>Mais que fait la police?"
+			});
+			
+			this.googlemap = new UI.Button({
+				skin: 'demo',
+				type: 'jgood',
+				label: 'JGood',
+				labelStyles: {
+					fontSize: '26px',
+					fontWeight: 'bold',
+					opacity: '.7',
+					padding: '18px 26px',
+					color: '#fff'
+				},
+				onClick: function(){
+					tip.fade(0);
+				}
+.bind(this)				,
+				styles: {
+					margin: 10
+				}
+			}).inject(form);
+			
+			
+			this.checkbox = new UI.Checkbox({
+				skin: 'demo',
+				type: 'small',
+				styles: {
+					margin: 10
+				}
+			}).inject(form);
+			
+			this.youtube = new UI.Button({
+				skin: 'demo',
+				type: 'tube',
+				label: 'moolego',
+				labelStyles: {
+					fontSize: '30px',
+					fontWeight: 'bold',
+					padding: '4px 16px',
+					color: '#fff',
+					lineHeight: '40px'
+				},
+				styles: {
+					margin: 10
+				}
+			}).inject(form);
+			
+			var touchfoot = new UI.Element({
+				skin: 'TouchBlue',
+				type: 'touchfoot',
+				styles: {
+					padding: '5px',
+					height: '50px',
+					backgroundColor: '#000'
+				}
+			}).inject(form)
+			
+			var counter = 1;
+			
+			this.counter = new UI.Button({
+				//skin : 'TouchBlue',
+				label: 'Bubble counter',
+				onClick: function(){
+				
+					if (this.bubble && this.bubble.element) {
+					
+						this.bubble.label.set('html', counter++);
+						this.bubble.setSize();
+						
+					}
+					else {
+					
+						this.bubble = new UI.Bubble({
+							skin: 'demo',
+							type: 'green',
+							target: $(this),
+							label: counter++,
+							labelStyles: {
+								fontSize: '14px',
+								fontWeight: 'bold',
+								padding: '4px 8px 6px'
+							}
+						});
+					}
+				},
+				
+				styles: {
+					margin: 5
+				}
+			}).inject(touchfoot);
+			
+			this.daselect = new UI.Select({
+				skin: 'AquaBlack',
+				name: 'testselect',
+				styles: {
+					margin: 10
+				},
+				list: [{
+					text: 'Please choose'
+				}, {
+					text: 'Core'
+				}, {
+					text: 'Control'
+				}, {
+					text: 'Desktop is a long entry'
+				}, {
+					text: 'Menu'
+				}, {
+					text: 'Form'
+				}, {
+					text: 'Un menu'
+				}, {
+					text: 'Plage'
+				}, {
+					text: 'Venise'
+				}]
+			}).inject(form);
+			
+			this.cancel = new UI.Button({
+				label: 'Cancel',
+				labelStyles: {
+					fontSize: '20px',
+					fontWeight: 'bold',
+					fontOpacity: '1',
+					color: '#fff',
+					padding: '10px 26px'
+				},
+				props: {
+					'default': {
+						layers: {
+							def: ['emboss', 'underlay', 'front', 'reflect'],
+							
+							emboss: {
+								offset: 0,
+								color: '#4b5461',
+								opacity: 1,
+								radius: 12
+							},
+							underlay: {
+								offset: [3, 3, 2, 3],
+								color: ['#6b6e74', '#262c32'],
+								radius: 8
+							},
+							front: {
+								offset: [1, 0],
+								color: ['#0f1621', '#282d37'],
+								opacity: 1,
+								radius: 8
+							},
+							reflect: {
+								offset: ['0px', '0px', '50%'],
+								color: ['#FFF', '#FFF'],
+								opacity: [.5, .3],
+								radius: [8, 8, 0, 0]
+							}
+						}
+					},
+					over: {
+						components: {
+							label: {
+								styles: {
+									opacity: .8
+								}
+							}
+						},
+						layers: {
+							emboss: {
+								color: '#00CC00'
+							}
+						}
+					},
+					down: {
+						components: {
+							label: {
+								styles: {
+									color: '#ccc'
+								}
+							}
+						}
+					}
+				},
+				styles: {
+					margin: 5
+				}
+			}).inject(touchfoot);
+			
+			
+			new UI.Button({
+				skin: 'demo',
+				type: 'widget',
+				label: '18:07',
+				resizable: true,
+				draggable: true,
+				
+				styles: {
+					margin: 5
+				}
+			}).inject(form);
+			
+			
+			this.digitalclock = new UI.Button({
+				label: '18:07',
+				labelStyles: {
+					fontSize: '16px',
+					fontWeight: 'bold',
+					opacity: '.7',
+					padding: '12px 26px',
+					color: '#fff'
+				},
+				draggable: true,
+				props: {
+					'default': {
+						layers: {
+							def: ['emboss', 'front', 'reflect', 'reflect2'],
+							
+							emboss: {
+								offset: 0,
+								color: ['#000', '#fff'],
+								opacity: .3,
+								radius: 9
+							},
+							front: {
+								offset: 2,
+								color: ['#1624a7', '#000'],
+								opacity: 1,
+								radius: 6
+							},
+							reflect: {
+								offset: ['1px', '1px', '60%'],
+								color: ['#FFF', '#FFF'],
+								opacity: [.6, .2],
+								radius: [5, 5, 9, 9]
+							},
+							reflect2: {
+								offset: ['1px', '1px', '2px'],
+								color: ['#000', '#000'],
+								opacity: [.1, 0],
+								radius: [7, 7, 9, 9]
+							}
+						}
+					},
+					over: {
+						components: {
+							label: {
+								styles: {
+									opacity: .8
+								}
+							}
+						},
+						layers: {
+							emboss: {
+								color: '#00CC00'
+							}
+						}
+					},
+					down: {
+						components: {
+							label: {
+								styles: {
+									color: '#ccc'
+								}
+							}
+						}
+					}
+				},
+				styles: {
+					margin: 5
+				}
+			}).inject(form);
+			
+			
+			this.hardest = new UI.Button({
+				skin: 'demo',
+				type: 'hardest',
+				label: 'Hardest Button to Button',
+				labelStyles: {
+					fontSize: '16px',
+					fontWeight: 'bold',
+					opacity: '.7',
+					padding: '18px 26px',
+					color: '#fff'
+				},
+				onClick: function(){
+					new UI.Window({
+						type: 'transparent',
+						title: 'Hardest Button to Button',
+						controls: ['close'],
+						overflow: 'hidden',
+						resizable: false,
+						width: 212,
+						height: 230
+					}).setContent('content', '<object width="210" height="184"><param name="movie" value="http://www.youtube.com/v/gWe-7Cm1GHg&hl=fr&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/gWe-7Cm1GHg&hl=fr&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="210" height="184"></embed></object>');
+				},
+				styles: {
+					margin: 5
+				}
+			}).inject(form);
+			
+			
+			this.starGuitar = new UI.Button({
+				type: 'roundtextured',
+				label: 'Star Guitar',
+				onClick: function(){
+					new UI.Window({
+						title: 'Star Guitar',
+						controls: ['close'],
+						viewOverflow: 'hidden',
+						resizable: false,
+						width: 427,
+						height: 388,
+						view: {
+							overflow: 'hidden'
+						}
+					}).setContent('content', '<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/CBgf2ZxIDZk&hl=fr&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>');
+				},
+				styles: {
+					margin: 5
+				}
+			}).inject(form);
+			
+			
+			
+			this.b = new UI.Bubble({
+				skin: 'demo',
+				type: 'green',
+				target: $(this.hardest),
+				label: 'directed by <div style="display:block; font-size:16px; font-weight:bold">Michel Gondry</div>',
+				labelStyles: {
+					padding: '10px 10px 16px'
+				}
+			});
+			
+			this.checkbox = new UI.Checkbox({
+				label: 'check or not?',
+				styles: {
+					margin: 10
+				}
+			}).inject(form);
+			
+			this.checkbox = new UI.Checkbox({
+				skin: 'TouchBlue',
+				type: 'default',
+				styles: {
+					margin: '20px'
+				}
+			}).inject(form);
+		//console.log('window.html', $time()-time);
+		
+		});
+	</script>
+</head>
+
+<body style="overflow:hidden; margin:0;" bgcolor="#e8e8e8"></body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		
+	<script type="text/javascript" src="../../Utils/mootools/core.js"></script>
+	<script type="text/javascript" src="../../Utils/mootools/more.js"></script>
+		
+	<script type="text/javascript" src="../../Utils/mooCanvas.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Base/UI.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Base/Paint.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/Base/Skin.js"></script>
+	
+	<script type="text/javascript" src="../../../ui/Source/Element/Element.js"></script>
+
+	<script type="text/javascript" src="../../../ui/Source/Element/Scrollbar.js"></script>
+	<script type="text/javascript" src="../../../ui/Source/View/View.js"></script>
+	
+	<script type="text/javascript" src="../../../skins/AquaGraphite.js"></script>
+	<script type="text/javascript" src="../../../skins/TouchBlue.js"></script>
+		
+	<script type="text/javascript" src="js/examples.js"></script>
+
+	<title>MooLego SplitView - Component Playground</title>
+	
+	<script type="text/javascript">
+		window.addEvent('load', function() {
+			var time = $time();
+			
+			var view = new UI.View({
+				width : 600,
+				height : 400,
+				styles: {
+					border : '1px solid #ccc'
+				}
+			}).inject($(document.body))
+			.setContent('ajax','assets/pulp.json');
+			
+			
+			var view02 = new UI.View({
+				skin : 'TouchBlue',
+				width : 600,
+				height : 400,
+				styles: {
+					border : '1px solid #ccc'
+				}
+			}).setContent('ajax','assets/pulpfull.json')
+			.inject($(document.body));
+			
+		});
+	</script>
+</head>
+
+<body bgcolor="#e8e8e8"></body>
+
+</html>
